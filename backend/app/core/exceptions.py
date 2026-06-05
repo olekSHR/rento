@@ -1,0 +1,19 @@
+class NotFoundException(Exception):
+
+    def __init__(self, message: str):
+
+        self.message = message
+
+
+class BadRequestException(Exception):
+
+    def __init__(self, detail: str):
+
+        self.detail = detail
+
+
+class UnauthorizedException(Exception):
+
+    def __init__(self, detail: str):
+
+        self.detail = detail

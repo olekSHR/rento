@@ -1,0 +1,114 @@
+from sqlalchemy.orm import Session
+
+from app.repositories import property_repository
+from app.core.exceptions import NotFoundException
+
+
+def get_all_properties(
+    db: Session,
+    limit: int,
+    offset: int,
+    city: str | None = None,
+    min_price: int | None = None,
+    max_price: int | None = None,
+    rooms: int | None = None,
+    sort_by: str = "created_at",
+    order: str = "desc"
+):
+
+    return property_repository.get_all_properties(
+    db,
+    limit,
+    offset,
+    city,
+    min_price,
+    max_price,
+    rooms,
+    sort_by,
+    order
+)
+
+
+def get_property_by_id(
+    db: Session,
+    property_id: int
+):
+
+    property_item = property_repository.get_property_by_id(
+        db,
+        property_id
+    )
+
+    if not property_item:
+
+        raise NotFoundException(
+            "Property not found"
+        )
+
+    return property_item
+
+
+def create_property(
+    db: Session,
+    title: str,
+    description: str,
+    price: int,
+    city: str,
+    rooms: int,
+    image_url: str | None = None
+):
+
+    return property_repository.create_property(
+        db,
+        title,
+        description,
+        price,
+        city,
+        rooms,
+        image_url
+    )
+
+
+def update_property(
+    db: Session,
+    property_item,
+    title: str,
+    description: str,
+    price: int,
+    city: str,
+    rooms: int,
+    image_url: str | None = None
+):
+
+    return property_repository.update_property(
+        db,
+        property_item,
+        title,
+        description,
+        price,
+        city,
+        rooms,
+        image_url
+    )
+
+
+def delete_property(
+    db: Session,
+    property_id: int
+):
+
+    property_item = property_repository.get_property_by_id(
+        db,
+        property_id
+    )
+
+    if not property_item:
+
+        raise NotFoundException(
+            "Property not found"
+        )
+
+    property_repository.delete_property(
+        db,
+        property_item
+    )
