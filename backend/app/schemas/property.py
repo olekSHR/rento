@@ -106,7 +106,9 @@ class PropertyCardResponse(BaseModel):
 
     last_verified_at: datetime | None
 
-    model_config = ConfigDict(from_attributes=True)
+    report_count: int = 0
+    
+model_config = ConfigDict(from_attributes=True)
 
 
 class PropertyResponse(BaseModel):
@@ -134,6 +136,8 @@ class PropertyResponse(BaseModel):
     whatsapp: str | None
 
     last_verified_at: datetime | None
+
+    report_count: int = 0
 
     images: list[PropertyImageResponse] = []
 

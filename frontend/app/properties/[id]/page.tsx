@@ -3,13 +3,15 @@ import { notFound } from "next/navigation"
 import FavoriteButton from "@/components/FavoriteButton"
 import BackButton from "@/components/BackButton"
 import PropertyGallery from "@/components/PropertyGallery"
-
+import ShareButton from "@/components/ShareButton"
+import ReportButton from "@/components/ReportButton"
 import {
   getPropertyById,
   getPropertyImages,
 } from "@/services/api"
 
 import type { Property } from "@/types/property"
+
 
 type Props = {
   params: Promise<{
@@ -87,7 +89,11 @@ export default async function PropertyPage({ params }: Props) {
       <div className="mx-auto min-h-screen max-w-md bg-white">
         <div className="relative">
           <BackButton />
-          <FavoriteButton propertyId={property.id} />
+<div className="absolute right-4 top-4 z-20 flex items-center gap-2">
+  <ShareButton title={property.title} />
+  <FavoriteButton propertyId={property.id} />
+</div>
+          
 
           <PropertyGallery
             title={property.title}
@@ -157,7 +163,9 @@ export default async function PropertyPage({ params }: Props) {
               </div>
             </div>
           )}
-        </div>
+        
+         <ReportButton propertyId={property.id} />
+       </div>
       </div>
     </main>
   )

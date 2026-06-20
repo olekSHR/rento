@@ -121,7 +121,7 @@ export default function PropertyGallery({
 
       {images.length > 1 && (
         <>
-          <div className="absolute right-4 top-4 rounded-full bg-black/60 px-3 py-1 text-sm font-medium text-white">
+          <div className="absolute bottom-3 right-4 rounded-full bg-black/60 px-3 py-1 text-sm font-medium text-white">
             {activeIndex + 1} / {images.length}
           </div>
           

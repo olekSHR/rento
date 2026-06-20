@@ -262,6 +262,21 @@ export async function activateProperty(
   return response.json()
 }
 
+export async function reportProperty(id: number) {
+  const response = await fetch(
+    `${API_URL}/properties/${id}/report`,
+    {
+      method: "POST",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to report property")
+  }
+
+  return response.json()
+}
+
 /* =========================
    Property Gallery API
 ========================= */

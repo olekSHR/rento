@@ -25,4 +25,5 @@ export type Property = {
   phone?: string | null
   whatsapp?: string | null
   last_verified_at?: string | null
+  report_count?: number
 }

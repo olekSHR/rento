@@ -207,3 +207,18 @@ def delete_property(
     db.delete(property_item)
 
     db.commit()
+
+def report_property(
+    db: Session,
+    property_item
+):
+
+    property_item.report_count = (
+        property_item.report_count or 0
+    ) + 1
+
+    db.commit()
+
+    db.refresh(property_item)
+
+    return property_item

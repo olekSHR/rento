@@ -233,3 +233,24 @@ def activate_property(
         property_item.phone,
         property_item.whatsapp,
     )
+
+def report_property(
+    db: Session,
+    property_id: int
+):
+
+    property_item = property_repository.get_property_by_id(
+        db,
+        property_id
+    )
+
+    if not property_item:
+
+        raise NotFoundException(
+            "Property not found"
+        )
+
+    return property_repository.report_property(
+        db,
+        property_item
+    )

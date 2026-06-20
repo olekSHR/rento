@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import FavoriteButton from "./FavoriteButton"
-
+import ShareButton from "./ShareButton"
 import { getImageUrl } from "@/lib/getImageUrl"
 import type { Property } from "@/types/property"
 
@@ -71,9 +71,13 @@ function getVerificationLabel(
 
   return (
     <article className="relative mx-auto mb-4 w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 active:scale-[0.98] md:max-w-lg">
-      <FavoriteButton propertyId={id} />
+  <ShareButton
+    title={title}
+    url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://rentonow.ro"}/properties/${id}`}
+  />
+  <FavoriteButton propertyId={id} />
 
-      <Link href={`/properties/${id}`} className="block">
+  <Link href={`/properties/${id}`} className="block">
         <div className="relative h-52 w-full bg-zinc-200">
           {coverImage ? (
             <Image

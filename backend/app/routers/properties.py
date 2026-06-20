@@ -114,6 +114,20 @@ def activate_property(
         property_id
     )
 
+@router.post(
+    "/{property_id}/report",
+    response_model=PropertyResponse
+)
+def report_property(
+    property_id: int,
+    db: Session = Depends(get_db)
+):
+
+    return property_service.report_property(
+        db,
+        property_id
+    )
+
 @router.get("/{property_id}", response_model=PropertyResponse)
 def get_property(
     property_id: int,

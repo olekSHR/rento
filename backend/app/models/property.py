@@ -81,6 +81,13 @@ class Property(Base):
         nullable=True
 )
 
+    report_count = Column(
+        Integer,
+        nullable=False,
+        default=0,
+        server_default="0",
+    )
+
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(UTC)

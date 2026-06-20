@@ -47,6 +47,34 @@ function getVerificationLabel(
   return "Needs Verification"
 }
 
+function getVerificationColor(
+  lastVerifiedAt?: string | null,
+) {
+  if (!lastVerifiedAt) {
+    return "text-red-400"
+  }
+
+  const verifiedDate = new Date(lastVerifiedAt)
+  const now = new Date()
+
+  const diffMs =
+    now.getTime() - verifiedDate.getTime()
+
+  const diffDays = Math.floor(
+    diffMs / (1000 * 60 * 60 * 24),
+  )
+
+  if (diffDays <= 1) {
+    return "text-emerald-400"
+  }
+
+  if (diffDays <= 7) {
+    return "text-yellow-400"
+  }
+
+  return "text-red-400"
+}
+
 export default function AdminPropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);
 const [filter, setFilter] = useState<
@@ -307,6 +335,11 @@ const filteredProperties =
       property.last_verified_at
     )
 
+const verificationColor =
+  getVerificationColor(
+    property.last_verified_at
+  )
+
   return (
       <div
         key={property.id}
@@ -336,13 +369,48 @@ const filteredProperties =
                       {property.city}
                     </p>
 
-                    <p className="mt-2 text-sm font-medium text-emerald-400">
-                      {verificationLabel}
-                    </p>                    
+                                       
+<div className="mt-3 flex flex-wrap items-center gap-2">
 
+<span
+  className={`
+    inline-flex
+    rounded-full
+    px-3
+    py-1
+    text-xs
+    font-semibold
+    ${verificationColor}
+    bg-slate-800
+  `}
+>
+  {verificationLabel}
+</span>
+
+{property.report_count &&
+  property.report_count > 0 && (
+    <span
+      className={`
+        inline-flex
+        rounded-full
+        px-3
+        py-1
+        text-xs
+        font-semibold
+        ${
+          property.report_count >= 3
+            ? "bg-red-500/15 text-red-400"
+            : "bg-yellow-500/15 text-yellow-400"
+        }
+      `}
+    >
+      ⚠ Reports: {property.report_count}
+    </span>
+)}
+</div>
+<div className="mt-3 flex flex-wrap items-center gap-2">
                     <span
                       className={`
-                        mt-3
                         inline-flex
                         rounded-full
                         px-3
@@ -376,15 +444,15 @@ const filteredProperties =
       handleVerify(property.id)
     }
     className="
-      flex-1
-      rounded-2xl
-      bg-emerald-500
-      px-4
-      py-3
-      text-sm
-      font-semibold
-      text-white
-    "
+  inline-flex
+  rounded-full
+  bg-emerald-500/15
+  px-3
+  py-1
+  text-xs
+  font-semibold
+  text-emerald-400
+"
   >
     Verify
   </button>
@@ -399,24 +467,24 @@ const filteredProperties =
                       )
                     }
                     className={`
-                      flex-1
-                      rounded-2xl
-                      px-4
-                      py-3
-                      text-sm
-                      font-semibold
-                      text-white
-                      ${
-                        property.status === "archived"
-                          ? "bg-blue-500"
-                          : "bg-slate-700"
-                      }
-                    `}
+  inline-flex
+  rounded-full
+  px-3
+  py-1
+  text-xs
+  font-semibold
+  ${
+    property.status === "archived"
+      ? "bg-blue-500/15 text-blue-400"
+      : "bg-slate-700 text-slate-300"
+  }
+`}
                    >
                      {property.status === "archived"
                        ? "Activate"
                        : "Archive"}
                     </button>
+                    </div>
 
                     <div className="mt-4 flex gap-3">
                       <Link
