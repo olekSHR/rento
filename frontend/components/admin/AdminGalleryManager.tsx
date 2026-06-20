@@ -164,13 +164,16 @@ const canGoNext =
     const token = getToken()
     if (!token) return
 
-    const files = event.target.files
-    if (!files || files.length === 0) return
+    const files = Array.from(event.target.files || [])
+
+    event.target.value = ""
+
+    if (files.length === 0) return
 
     try {
       setIsUploading(true)
 
-      for (const file of Array.from(files)) {
+      for (const file of files) {
         const uploadedImage = await uploadImage(file)
 
         await addPropertyImage(
@@ -336,6 +339,7 @@ async function handleDragEnd(event: DragEndEvent) {
 
   <Image
   src={getImageUrl(image.url) || ""}
+  unoptimized
   alt="Property image"
   fill
   sizes="(max-width: 768px) 50vw, 25vw"
@@ -404,6 +408,7 @@ async function handleDragEnd(event: DragEndEvent) {
                   images.find((image) => image.id === activeImageId)?.url || ""
                 ) || ""
               }
+              unoptimized
               alt="Dragging property image"
               fill
               sizes="160px"

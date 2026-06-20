@@ -37,6 +37,7 @@ export default function PropertyCard({
               src={getImageUrl(coverImage) || ""}
               alt={title}
               fill
+              unoptimized
               sizes="(max-width: 768px) 100vw, 512px"
               className="object-cover transition-transform duration-500 hover:scale-105"
             />

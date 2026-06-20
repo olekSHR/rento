@@ -38,11 +38,15 @@ export default function CreatePropertyPage() {
     city: "",
     rooms: "",
     image_url: "",
+    status: "available",
+    contact_name: "",
+    phone: "",
+    whatsapp: "",
   });
 
   function handleChange(
     e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) {
     setFormData((prev) => ({
@@ -124,6 +128,10 @@ function handleRemoveGalleryImage(indexToRemove: number) {
     city: formData.city,
     rooms: Number(formData.rooms),
     image_url: formData.image_url,
+    status: formData.status,
+    contact_name: formData.contact_name,
+    phone: formData.phone,
+    whatsapp: formData.whatsapp,
   },
   token
 );
@@ -273,9 +281,57 @@ await Promise.all(
                 outline-none
               "
             />
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="
+                w-full
+                rounded-2xl
+                border
+                border-slate-800
+                bg-slate-900
+                p-4
+                text-white
+                outline-none
+              "
+            >
+              <option value="available">Available</option>
+              <option value="reserved">Reserved</option>
+              <option value="rented">Rented</option>
+              <option value="archived">Archived</option>
+            </select>
 
             <div>
-  <label className="mb-2 block text-sm font-semibold text-white">
+  
+<input
+  type="text"
+  name="contact_name"
+  placeholder="Contact Name"
+  value={formData.contact_name}
+  onChange={handleChange}
+  className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
+/>
+
+<input
+  type="text"
+  name="phone"
+  placeholder="Phone"
+  value={formData.phone}
+  onChange={handleChange}
+  className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
+/>
+
+<input
+  type="text"
+  name="whatsapp"
+  placeholder="WhatsApp"
+  value={formData.whatsapp}
+  onChange={handleChange}
+  className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
+/>
+
+<label className="mb-2 block text-sm font-semibold text-white">
     Photos
   </label>
 

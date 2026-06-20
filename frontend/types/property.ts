@@ -1,3 +1,9 @@
+export type PropertyStatus =
+  | "available"
+  | "reserved"
+  | "rented"
+  | "archived"
+
 export type PropertyImage = {
   id: number
   url: string
@@ -13,5 +19,9 @@ export type Property = {
   city: string | null
   rooms: number | null
   image_url: string | null
+  status: PropertyStatus
   images?: PropertyImage[]
+  contact_name?: string | null
+  phone?: string | null
+  whatsapp?: string | null
 }

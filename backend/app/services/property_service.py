@@ -28,6 +28,17 @@ def get_all_properties(
     order
 )
 
+def get_all_properties_admin(
+    db: Session,
+    limit: int = 100,
+    offset: int = 0
+):
+
+    return property_repository.get_all_properties_admin(
+        db,
+        limit,
+        offset
+    )
 
 def get_property_by_id(
     db: Session,
@@ -55,7 +66,11 @@ def create_property(
     price: int,
     city: str,
     rooms: int,
-    image_url: str | None = None
+    image_url: str | None = None,
+    status: str = "available",
+    contact_name: str | None = None,
+    phone: str | None = None,
+    whatsapp: str | None = None,
 ):
 
     return property_repository.create_property(
@@ -65,7 +80,11 @@ def create_property(
         price,
         city,
         rooms,
-        image_url
+        image_url,
+        status,
+        contact_name,
+        phone,
+        whatsapp
     )
 
 
@@ -77,7 +96,11 @@ def update_property(
     price: int,
     city: str,
     rooms: int,
-    image_url: str | None = None
+    image_url: str | None = None,
+    status: str = "available",
+    contact_name: str | None = None,
+    phone: str | None = None,
+    whatsapp: str | None = None,
 ):
 
     return property_repository.update_property(
@@ -88,7 +111,11 @@ def update_property(
         price,
         city,
         rooms,
-        image_url
+        image_url,
+        status,
+        contact_name,
+        phone,
+        whatsapp,
     )
 
 

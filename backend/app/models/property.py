@@ -54,6 +54,28 @@ class Property(Base):
         nullable=True
     )
 
+    status = Column(
+        String,
+        nullable=False,
+        default="available",
+        server_default="available",
+)
+
+    contact_name = Column(
+       String,
+       nullable=True
+)
+
+    phone = Column(
+       String,
+       nullable=True
+)
+
+    whatsapp = Column(
+       String,
+       nullable=True
+)
+
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(UTC)

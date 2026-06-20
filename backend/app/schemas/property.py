@@ -27,6 +27,10 @@ class PropertyCreate(BaseModel):
     )
 
     image_url: str | None = None
+    status: str = "available"
+    contact_name: str | None = None
+    phone: str | None = None
+    whatsapp: str | None = None
 
 
 class PropertyUpdate(BaseModel):
@@ -55,6 +59,10 @@ class PropertyUpdate(BaseModel):
     )
 
     image_url: str | None = None
+    status: str = "available"
+    contact_name: str | None = None
+    phone: str | None = None
+    whatsapp: str | None = None
 
 
 class PropertyImageResponse(BaseModel):
@@ -92,6 +100,8 @@ class PropertyCardResponse(BaseModel):
 
     image_url: str | None
 
+    status: str
+
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -110,6 +120,14 @@ class PropertyResponse(BaseModel):
     rooms: int
 
     image_url: str | None
+
+    status: str
+
+    contact_name: str | None
+    
+    phone: str | None
+    
+    whatsapp: str | None
 
     images: list[PropertyImageResponse] = []
 

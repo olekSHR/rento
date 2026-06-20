@@ -4,7 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import AdminRoute from "@/components/AdminRoute";
-import { deleteProperty, getProperties } from "@/services/api";
+import {
+  deleteProperty,
+  getAdminProperties,
+} from "@/services/api";
 import type { Property } from "@/types/property";
 import Image from "next/image"
 import { getImageUrl } from "@/lib/getImageUrl"
@@ -19,7 +22,13 @@ export default function AdminPropertiesPage() {
 
   async function loadProperties() {
     try {
-      const data = await getProperties();
+      const token = localStorage.getItem("access_token");
+
+     if (!token) {
+       throw new Error("No token");
+     }
+
+const data = await getAdminProperties(token);
 
       if (!isMounted) {
         return;
@@ -151,6 +160,7 @@ export default function AdminPropertiesPage() {
             fill
             sizes="(max-width: 768px) 100vw, 448px"
             className="object-cover"
+            unoptimized
           />
         </div>
 
@@ -162,6 +172,35 @@ export default function AdminPropertiesPage() {
                     <p className="mt-1 text-sm text-slate-400">
                       {property.city}
                     </p>
+                    
+                    <span
+                      className={`
+                        mt-3
+                        inline-flex
+                        rounded-full
+                        px-3
+                        py-1
+                        text-xs
+                        font-semibold
+                        ${
+                          property.status === "available"
+                            ? "bg-emerald-500/15 text-emerald-400"
+                            : property.status === "reserved"
+                              ? "bg-yellow-500/15 text-yellow-400"
+                              : property.status === "rented"
+                                ? "bg-red-500/15 text-red-400"
+                                : "bg-slate-700 text-slate-300"
+                        }
+                     `}
+                    >
+                      {property.status === "available"
+                        ? "🟢 Available"
+                        : property.status === "reserved"
+                          ? "🟡 Reserved"
+                          : property.status === "rented"
+                            ? "🔴 Rented"
+                            : "⚫ Archived"}
+                    </span>
 
                     <div className="mt-4 flex gap-3">
                       <Link

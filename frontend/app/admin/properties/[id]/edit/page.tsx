@@ -34,6 +34,10 @@ export default function EditPropertyPage() {
     city: "",
     rooms: "",
     image_url: "",
+    status: "available",
+    contact_name: "",
+    phone: "",
+    whatsapp: "",
   });
 
   useEffect(() => {
@@ -50,6 +54,10 @@ export default function EditPropertyPage() {
           city: property.city ?? "",
           rooms: property.rooms?.toString() ?? "",
           image_url: property.image_url ?? "",
+          status: property.status,
+          contact_name: property.contact_name ?? "",
+          phone: property.phone ?? "",
+          whatsapp: property.whatsapp ?? "",
         });
 
         setImagePreview(property.image_url ?? "");
@@ -67,7 +75,11 @@ export default function EditPropertyPage() {
   }, [propertyId]);
 
   function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+  HTMLInputElement |
+  HTMLTextAreaElement |
+  HTMLSelectElement
+>
   ) {
     setFormData((prev) => ({
       ...prev,
@@ -121,7 +133,11 @@ export default function EditPropertyPage() {
     price: Number(formData.price),
     city: formData.city,
     rooms: Number(formData.rooms),
-    
+    status: formData.status,
+    contact_name: formData.contact_name,
+    phone: formData.phone,
+    whatsapp: formData.whatsapp,
+
   },
   token
 );
@@ -209,7 +225,44 @@ export default function EditPropertyPage() {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
                 />
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
+                >
+                  <option value="available">Available</option>
+                  <option value="reserved">Reserved</option>
+                  <option value="rented">Rented</option>
+                  <option value="archived">Archived</option>
+                </select>
+<input
+  type="text"
+  name="contact_name"
+  placeholder="Contact Name"
+  value={formData.contact_name}
+  onChange={handleChange}
+  className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
+/>
 
+<input
+  type="text"
+  name="phone"
+  placeholder="Phone"
+  value={formData.phone}
+  onChange={handleChange}
+  className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
+/>
+
+<input
+  type="text"
+  name="whatsapp"
+  placeholder="WhatsApp"
+  value={formData.whatsapp}
+  onChange={handleChange}
+  className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 text-white outline-none"
+/>
+  
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-white">
                     Photos

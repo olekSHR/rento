@@ -26,6 +26,22 @@ router = APIRouter(
 
 
 
+@router.get(
+    "/admin/all",
+    response_model=PropertyListResponse
+)
+def get_properties_admin(
+    limit: int = 100,
+    offset: int = 0,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_admin)
+):
+
+    return property_service.get_all_properties_admin(
+        db,
+        limit,
+        offset
+    )
 @router.get("/", response_model=PropertyListResponse)
 def get_properties(
     limit: int = 10,
@@ -83,7 +99,11 @@ def create_property(
     property.price,
     property.city,
     property.rooms,
-    property.image_url
+    property.image_url,
+    property.status,
+    property.contact_name,
+    property.phone,
+    property.whatsapp,
 )
 
     return new_property
@@ -112,7 +132,11 @@ def update_property(
     property.price,
     property.city,
     property.rooms,
-    property.image_url
+    property.image_url,
+    property.status,
+    property.contact_name,
+    property.phone,
+    property.whatsapp,
 )
 
 

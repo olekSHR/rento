@@ -17,6 +17,14 @@ def get_all_properties(
 ):
 
     query = db.query(models.Property)
+    query = query.filter(
+        models.Property.status.in_(
+            [
+                "available",
+                "reserved",
+            ]
+        )
+    )
 
     if city:
 
@@ -78,6 +86,30 @@ def get_all_properties(
         "offset": offset
     }
 
+def get_all_properties_admin(
+    db: Session,
+    limit: int = 100,
+    offset: int = 0
+):
+
+    query = db.query(models.Property)
+
+    total = query.count()
+
+    items = (
+        query
+        .order_by(models.Property.created_at.desc())
+        .limit(limit)
+        .offset(offset)
+        .all()
+    )
+
+    return {
+        "items": items,
+        "total": total,
+        "limit": limit,
+        "offset": offset
+    }
 
 def get_property_by_id(
     db: Session,
@@ -98,7 +130,11 @@ def create_property(
     price: int,
     city: str,
     rooms: int,
-    image_url: str | None = None
+    image_url: str | None = None,
+    status: str = "available",
+    contact_name: str | None = None,
+    phone: str | None = None,
+    whatsapp: str | None = None,
 ):
 
     new_property = models.Property(
@@ -107,7 +143,11 @@ def create_property(
         price=price,
         city=city,
         rooms=rooms,
-        image_url=image_url
+        image_url=image_url,
+        status=status,
+        contact_name=contact_name,
+        phone=phone,
+        whatsapp=whatsapp
     )
 
     db.add(new_property)
@@ -128,7 +168,11 @@ def update_property(
     price: int,
     city: str,
     rooms: int,
-    image_url: str | None = None
+    image_url: str | None = None,
+    status: str = "available",
+    contact_name: str | None = None,
+    phone: str | None = None,
+    whatsapp: str | None = None,
 ):
 
     property_item.title = title
@@ -136,6 +180,10 @@ def update_property(
     property_item.price = price
     property_item.city = city
     property_item.rooms = rooms
+    property_item.status = status
+    property_item.contact_name = contact_name
+    property_item.phone = phone
+    property_item.whatsapp = whatsapp
 
     if image_url is not None:
         property_item.image_url = image_url

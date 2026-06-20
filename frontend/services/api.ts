@@ -28,8 +28,8 @@ export async function getProperties(
   const query = params.toString()
 
   const url = query
-    ? `${API_URL}/properties?${query}`
-    : `${API_URL}/properties`
+    ? `${API_URL}/properties/?${query}`
+    : `${API_URL}/properties/`
 
   const response = await fetch(url, {
     cache: "no-store",
@@ -37,6 +37,27 @@ export async function getProperties(
 
   if (!response.ok) {
     throw new Error("Failed to fetch properties")
+  }
+
+  return response.json()
+}
+
+export async function getAdminProperties(
+  token: string
+) {
+  const response = await fetch(
+    `${API_URL}/properties/admin/all`,
+    {
+      cache: "no-store",
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch admin properties")
   }
 
   return response.json()
@@ -64,6 +85,10 @@ type CreatePropertyData = {
   city: string
   rooms: number
   image_url: string
+  status: string
+  contact_name?: string
+  phone?: string
+  whatsapp?: string
 }
 
 export async function createProperty(
@@ -71,7 +96,7 @@ export async function createProperty(
   token: string
 ) {
   const response = await fetch(
-    `${API_URL}/properties`,
+    `${API_URL}/properties/`,
     {
       method: "POST",
 
@@ -122,6 +147,10 @@ type UpdatePropertyData = {
   city: string
   rooms: number
   image_url?: string | null
+  status: string
+  contact_name?: string
+  phone?: string
+  whatsapp?: string
 }
 
 export async function updateProperty(

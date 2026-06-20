@@ -87,6 +87,41 @@ export default async function PropertyPage({ params }: Props) {
           <p className="mt-6 leading-7 text-zinc-700">
             {property.description || "No description available."}
           </p>
+{(property.phone || property.whatsapp) && (
+  <div className="mt-8 rounded-3xl border border-zinc-200 bg-zinc-50 p-4">
+    <p className="text-sm font-semibold text-zinc-500">
+      Contact
+    </p>
+
+    {property.contact_name && (
+      <p className="mt-1 text-lg font-bold text-black">
+        {property.contact_name}
+      </p>
+    )}
+
+    <div className="mt-4 space-y-3">
+      {property.phone && (
+        <a
+          href={`tel:${property.phone}`}
+          className="block w-full rounded-2xl bg-black p-4 text-center font-semibold text-white active:scale-[0.98]"
+        >
+          Call
+        </a>
+      )}
+
+      {property.whatsapp && (
+        <a
+          href={`https://wa.me/${property.whatsapp.replace(/[^0-9]/g, "")}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full rounded-2xl border border-zinc-300 bg-white p-4 text-center font-semibold text-black active:scale-[0.98]"
+        >
+          WhatsApp
+        </a>
+      )}
+    </div>
+  </div>
+)}
         </div>
       </div>
     </main>
