@@ -76,6 +76,11 @@ class Property(Base):
        nullable=True
 )
 
+    last_verified_at = Column(
+        DateTime(timezone=True),
+        nullable=True
+)
+
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(UTC)

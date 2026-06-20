@@ -195,6 +195,28 @@ export async function deleteProperty(
   return response.json()
 }
 
+export async function verifyProperty(
+  id: number,
+  token: string
+) {
+  const response = await fetch(
+    `${API_URL}/properties/${id}/verify`,
+    {
+      method: "POST",
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to verify property")
+  }
+
+  return response.json()
+}
+
 /* =========================
    Property Gallery API
 ========================= */

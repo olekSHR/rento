@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel, Field, ConfigDict
 
 
@@ -102,6 +104,8 @@ class PropertyCardResponse(BaseModel):
 
     status: str
 
+    last_verified_at: datetime | None
+
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -128,6 +132,8 @@ class PropertyResponse(BaseModel):
     phone: str | None
     
     whatsapp: str | None
+
+    last_verified_at: datetime | None
 
     images: list[PropertyImageResponse] = []
 

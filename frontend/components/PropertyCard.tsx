@@ -8,7 +8,14 @@ import type { Property } from "@/types/property"
 
 type PropertyCardProps = Pick<
   Property,
-  "id" | "title" | "price" | "city" | "rooms" | "image_url" | "images"
+  | "id"
+  | "title"
+  | "price"
+  | "city"
+  | "rooms"
+  | "image_url"
+  | "images"
+  | "last_verified_at"
 >
 
 export default function PropertyCard({
@@ -19,12 +26,48 @@ export default function PropertyCard({
   rooms,
   image_url,
   images,
+  last_verified_at,
 }: PropertyCardProps) {
   const coverImage =
     images?.find((image) => image.is_cover)?.url ??
     images?.[0]?.url ??
     image_url ??
     null
+
+const verificationLabel =
+  getVerificationLabel(last_verified_at)
+
+function getVerificationLabel(
+  lastVerifiedAt?: string | null,
+) {
+  if (!lastVerifiedAt) {
+    return "Needs Verification"
+  }
+
+  const verifiedDate = new Date(lastVerifiedAt)
+  const now = new Date()
+
+  const diffMs =
+    now.getTime() - verifiedDate.getTime()
+
+  const diffDays = Math.floor(
+    diffMs / (1000 * 60 * 60 * 24),
+  )
+
+  if (diffDays <= 0) {
+    return "Verified Today"
+  }
+
+  if (diffDays === 1) {
+    return "Verified Yesterday"
+  }
+
+  if (diffDays <= 7) {
+    return `Verified ${diffDays} days ago`
+  }
+
+  return "Needs Verification"
+}
 
   return (
     <article className="relative mx-auto mb-4 w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 active:scale-[0.98] md:max-w-lg">
@@ -49,6 +92,9 @@ export default function PropertyCard({
         </div>
 
         <div className="p-4">
+          <div className="mb-2 inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+            {verificationLabel}
+          </div>
           <h2 className="text-xl font-semibold text-black">{title}</h2>
 
           <p className="mt-1 text-zinc-600">

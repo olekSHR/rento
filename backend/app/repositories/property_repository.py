@@ -4,6 +4,8 @@ from app.models import property as models
 
 from sqlalchemy import func
 
+from datetime import datetime, UTC
+
 def get_all_properties(
     db: Session,
     limit: int = 10,
@@ -147,7 +149,8 @@ def create_property(
         status=status,
         contact_name=contact_name,
         phone=phone,
-        whatsapp=whatsapp
+        whatsapp=whatsapp,
+        last_verified_at=datetime.now(UTC)
     )
 
     db.add(new_property)
@@ -184,6 +187,7 @@ def update_property(
     property_item.contact_name = contact_name
     property_item.phone = phone
     property_item.whatsapp = whatsapp
+    property_item.last_verified_at = datetime.now(UTC)
 
     if image_url is not None:
         property_item.image_url = image_url

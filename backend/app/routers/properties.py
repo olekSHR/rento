@@ -68,6 +68,20 @@ def get_properties(
     order
 )
 
+@router.post(
+    "/{property_id}/verify",
+    response_model=PropertyResponse
+)
+def verify_property(
+    property_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_admin)
+):
+
+    return property_service.verify_property(
+        db,
+        property_id
+    )
 
 @router.get("/{property_id}", response_model=PropertyResponse)
 def get_property(

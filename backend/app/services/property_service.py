@@ -139,3 +139,34 @@ def delete_property(
         db,
         property_item
     )
+
+def verify_property(
+    db: Session,
+    property_id: int
+):
+
+    property_item = property_repository.get_property_by_id(
+        db,
+        property_id
+    )
+
+    if not property_item:
+
+        raise NotFoundException(
+            "Property not found"
+        )
+
+    return property_repository.update_property(
+        db,
+        property_item,
+        property_item.title,
+        property_item.description,
+        property_item.price,
+        property_item.city,
+        property_item.rooms,
+        property_item.image_url,
+        property_item.status,
+        property_item.contact_name,
+        property_item.phone,
+        property_item.whatsapp,
+    )

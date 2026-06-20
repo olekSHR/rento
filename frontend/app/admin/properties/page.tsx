@@ -7,10 +7,43 @@ import AdminRoute from "@/components/AdminRoute";
 import {
   deleteProperty,
   getAdminProperties,
+  verifyProperty,
 } from "@/services/api";
 import type { Property } from "@/types/property";
 import Image from "next/image"
 import { getImageUrl } from "@/lib/getImageUrl"
+
+function getVerificationLabel(
+  lastVerifiedAt?: string | null,
+) {
+  if (!lastVerifiedAt) {
+    return "Needs Verification"
+  }
+
+  const verifiedDate = new Date(lastVerifiedAt)
+  const now = new Date()
+
+  const diffMs =
+    now.getTime() - verifiedDate.getTime()
+
+  const diffDays = Math.floor(
+    diffMs / (1000 * 60 * 60 * 24),
+  )
+
+  if (diffDays <= 0) {
+    return "Verified Today"
+  }
+
+  if (diffDays === 1) {
+    return "Verified Yesterday"
+  }
+
+  if (diffDays <= 7) {
+    return `Verified ${diffDays} days ago`
+  }
+
+  return "Needs Verification"
+}
 
 export default function AdminPropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -80,6 +113,36 @@ const data = await getAdminProperties(token);
     }
   }
 
+async function handleVerify(id: number) {
+  try {
+    const token =
+      localStorage.getItem("access_token")
+
+    if (!token) {
+      throw new Error("No token")
+    }
+
+    const updatedProperty =
+      await verifyProperty(id, token)
+
+    setProperties((prev) =>
+      prev.map((property) =>
+        property.id === id
+          ? {
+              ...property,
+              last_verified_at:
+                updatedProperty.last_verified_at,
+            }
+          : property
+      )
+    )
+  } catch (error) {
+    console.error(error)
+
+    alert("Failed to verify property")
+  }
+}
+
   return (
     <AdminRoute>
       <main
@@ -144,7 +207,13 @@ const data = await getAdminProperties(token);
   </div>
 ) : (
   <div className="space-y-4">
-    {properties.map((property) => (
+    {properties.map((property) => {
+  const verificationLabel =
+    getVerificationLabel(
+      property.last_verified_at
+    )
+
+  return (
       <div
         key={property.id}
         className="
@@ -172,7 +241,11 @@ const data = await getAdminProperties(token);
                     <p className="mt-1 text-sm text-slate-400">
                       {property.city}
                     </p>
-                    
+
+                    <p className="mt-2 text-sm font-medium text-emerald-400">
+                      {verificationLabel}
+                    </p>                    
+
                     <span
                       className={`
                         mt-3
@@ -201,6 +274,25 @@ const data = await getAdminProperties(token);
                             ? "🔴 Rented"
                             : "⚫ Archived"}
                     </span>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleVerify(property.id)
+                      }
+                      className="
+                        flex-1
+                        rounded-2xl
+                        bg-emerald-500
+                        px-4
+                        py-3
+                        text-sm
+                        font-semibold
+                        text-white
+                      "
+                    >
+                      Verify
+                    </button>
 
                     <div className="mt-4 flex gap-3">
                       <Link
@@ -241,7 +333,8 @@ const data = await getAdminProperties(token);
                     </div>
                   </div>
                 </div>
-              ))}
+               )
+             })}
             </div>
           )}
         </div>

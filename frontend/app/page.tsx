@@ -89,6 +89,7 @@ export default async function HomePage({
                 rooms={property.rooms}
                 image_url={property.image_url}
                 images={property.images}
+                last_verified_at={property.last_verified_at}
               />
             ))}
           </HomePageContent>
