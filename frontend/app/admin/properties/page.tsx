@@ -49,7 +49,9 @@ function getVerificationLabel(
 
 export default function AdminPropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);
-
+const [filter, setFilter] = useState<
+  "all" | "active" | "archived"
+>("all");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -181,6 +183,19 @@ async function handleArchiveToggle(
   }
 }
 
+const filteredProperties =
+  filter === "all"
+    ? properties
+    : filter === "archived"
+      ? properties.filter(
+          (property) =>
+            property.status === "archived"
+        )
+      : properties.filter(
+          (property) =>
+            property.status !== "archived"
+        )
+
   return (
     <AdminRoute>
       <main
@@ -194,32 +209,73 @@ async function handleArchiveToggle(
         "
       >
         <div className="mx-auto max-w-md">
-          <div className="mb-8 flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">
-                Properties
-              </h1>
+          <div className="mb-6 flex items-start justify-between gap-4">
+  <div>
+    <h1 className="text-3xl font-bold">
+      Properties
+    </h1>
 
-              <p className="mt-2 text-sm text-slate-400">
-                Управление объектами недвижимости.
-              </p>
-            </div>
+    <p className="mt-2 text-sm text-slate-400">
+      Управление объектами недвижимости.
+    </p>
+  </div>
 
-            <Link
-              href="/admin/properties/create"
-              className="
-                rounded-2xl
-                bg-white
-                px-4
-                py-2
-                text-sm
-                font-semibold
-                text-black
-              "
-            >
-              + Add
-            </Link>
-          </div>
+  <Link
+    href="/admin/properties/create"
+    className="
+      shrink-0
+      rounded-2xl
+      bg-white
+      px-4
+      py-2
+      text-sm
+      font-semibold
+      text-black
+    "
+  >
+    + Add
+  </Link>
+</div>
+
+<div className="mb-6 flex gap-2 overflow-x-auto pb-1">
+  
+  <button
+    type="button"
+    onClick={() => setFilter("all")}
+    className={`rounded-2xl px-4 py-2 text-sm font-semibold ${
+      filter === "all"
+        ? "bg-white text-black"
+        : "bg-slate-800 text-white"
+    }`}
+  >
+    All
+  </button>
+
+  <button
+    type="button"
+    onClick={() => setFilter("active")}
+    className={`rounded-2xl px-4 py-2 text-sm font-semibold ${
+      filter === "active"
+        ? "bg-white text-black"
+        : "bg-slate-800 text-white"
+    }`}
+  >
+    Active
+  </button>
+
+  <button
+    type="button"
+    onClick={() => setFilter("archived")}
+    className={`rounded-2xl px-4 py-2 text-sm font-semibold ${
+      filter === "archived"
+        ? "bg-white text-black"
+        : "bg-slate-800 text-white"
+    }`}
+  >
+    Archived
+  </button>
+</div>
+                    
 
           {isLoading ? (
   <div className="space-y-4">
@@ -245,7 +301,7 @@ async function handleArchiveToggle(
   </div>
 ) : (
   <div className="space-y-4">
-    {properties.map((property) => {
+    {filteredProperties.map((property) => {
   const verificationLabel =
     getVerificationLabel(
       property.last_verified_at
