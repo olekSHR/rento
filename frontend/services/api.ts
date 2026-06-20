@@ -217,6 +217,51 @@ export async function verifyProperty(
   return response.json()
 }
 
+export async function archiveProperty(
+  id: number,
+  token: string
+) {
+  const response = await fetch(
+    `${API_URL}/properties/${id}/archive`,
+    {
+      method: "POST",
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to archive property")
+  }
+
+  return response.json()
+}
+
+
+export async function activateProperty(
+  id: number,
+  token: string
+) {
+  const response = await fetch(
+    `${API_URL}/properties/${id}/activate`,
+    {
+      method: "POST",
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Failed to activate property")
+  }
+
+  return response.json()
+}
+
 /* =========================
    Property Gallery API
 ========================= */

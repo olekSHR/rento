@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 import AdminRoute from "@/components/AdminRoute";
 import {
+  activateProperty,
+  archiveProperty,
   deleteProperty,
   getAdminProperties,
   verifyProperty,
@@ -143,6 +145,42 @@ async function handleVerify(id: number) {
   }
 }
 
+async function handleArchiveToggle(
+  id: number,
+  status: Property["status"]
+) {
+  try {
+    const token =
+      localStorage.getItem("access_token")
+
+    if (!token) {
+      throw new Error("No token")
+    }
+
+    const updatedProperty =
+      status === "archived"
+        ? await activateProperty(id, token)
+        : await archiveProperty(id, token)
+
+    setProperties((prev) =>
+      prev.map((property) =>
+        property.id === id
+          ? {
+              ...property,
+              status: updatedProperty.status,
+              last_verified_at:
+                updatedProperty.last_verified_at,
+            }
+          : property
+      )
+    )
+  } catch (error) {
+    console.error(error)
+
+    alert("Failed to update property status")
+  }
+}
+
   return (
     <AdminRoute>
       <main
@@ -275,23 +313,53 @@ async function handleVerify(id: number) {
                             : "⚫ Archived"}
                     </span>
 
+                    {property.status !== "archived" && (
+  <button
+    type="button"
+    onClick={() =>
+      handleVerify(property.id)
+    }
+    className="
+      flex-1
+      rounded-2xl
+      bg-emerald-500
+      px-4
+      py-3
+      text-sm
+      font-semibold
+      text-white
+    "
+  >
+    Verify
+  </button>
+)}
+
                     <button
                       type="button"
                       onClick={() =>
-                        handleVerify(property.id)
+                        handleArchiveToggle(
+                        property.id,
+                        property.status
+                      )
+                    }
+                    className={`
+                      flex-1
+                      rounded-2xl
+                      px-4
+                      py-3
+                      text-sm
+                      font-semibold
+                      text-white
+                      ${
+                        property.status === "archived"
+                          ? "bg-blue-500"
+                          : "bg-slate-700"
                       }
-                      className="
-                        flex-1
-                        rounded-2xl
-                        bg-emerald-500
-                        px-4
-                        py-3
-                        text-sm
-                        font-semibold
-                        text-white
-                      "
-                    >
-                      Verify
+                    `}
+                   >
+                     {property.status === "archived"
+                       ? "Activate"
+                       : "Archive"}
                     </button>
 
                     <div className="mt-4 flex gap-3">

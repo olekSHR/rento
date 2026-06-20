@@ -83,6 +83,37 @@ def verify_property(
         property_id
     )
 
+@router.post(
+    "/{property_id}/archive",
+    response_model=PropertyResponse
+)
+def archive_property(
+    property_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_admin)
+):
+
+    return property_service.archive_property(
+        db,
+        property_id
+    )
+
+
+@router.post(
+    "/{property_id}/activate",
+    response_model=PropertyResponse
+)
+def activate_property(
+    property_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_admin)
+):
+
+    return property_service.activate_property(
+        db,
+        property_id
+    )
+
 @router.get("/{property_id}", response_model=PropertyResponse)
 def get_property(
     property_id: int,
