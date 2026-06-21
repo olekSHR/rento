@@ -131,7 +131,7 @@ export default async function PropertyPage({ params }: Props) {
             {verificationLabel}
           </div>
 
-          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950">
+          <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
             {property.title}
           </h1>
 
@@ -156,6 +156,35 @@ export default async function PropertyPage({ params }: Props) {
               </div>
             </div>
           </div>
+
+          <div className="mt-5 grid grid-cols-3 gap-2">
+  <div className="rounded-2xl bg-zinc-50 p-3 ring-1 ring-zinc-200">
+    <p className="text-[11px] font-semibold uppercase text-zinc-400">
+      City
+    </p>
+    <p className="mt-1 truncate text-sm font-bold text-zinc-900">
+      {property.city || "Unknown"}
+    </p>
+  </div>
+
+  <div className="rounded-2xl bg-zinc-50 p-3 ring-1 ring-zinc-200">
+    <p className="text-[11px] font-semibold uppercase text-zinc-400">
+      Rooms
+    </p>
+    <p className="mt-1 text-sm font-bold text-zinc-900">
+      {property.rooms || 0}
+    </p>
+  </div>
+
+  <div className="rounded-2xl bg-zinc-50 p-3 ring-1 ring-zinc-200">
+    <p className="text-[11px] font-semibold uppercase text-zinc-400">
+      Status
+    </p>
+    <p className="mt-1 truncate text-sm font-bold text-emerald-700">
+      Verified
+    </p>
+  </div>
+</div>
 
           <div className="mt-6">
             <h2 className="text-lg font-bold text-zinc-950">
