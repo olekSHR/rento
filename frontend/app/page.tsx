@@ -3,7 +3,7 @@ import HomePageContent from "@/components/HomePageContent"
 import PropertyCard from "@/components/PropertyCard"
 import { getProperties } from "@/services/api"
 import type { Property } from "@/types/property"
-
+import HeaderAuthButton from "@/components/HeaderAuthButton"
 export default async function HomePage({
   searchParams,
 }: {
@@ -34,7 +34,7 @@ export default async function HomePage({
           border-zinc-200
         "
       >
-                <div className="max-w-md mx-auto px-4 h-16 flex items-center">
+                <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-3 w-3 rounded-full bg-emerald-500" />
 
@@ -49,6 +49,8 @@ export default async function HomePage({
               Rento
             </h1>
           </div>
+
+         <HeaderAuthButton />
         </div>
       </header>
 
