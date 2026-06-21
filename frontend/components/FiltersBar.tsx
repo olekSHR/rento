@@ -82,6 +82,7 @@ export default function FiltersBar({
 
             <input
               type="number"
+              min="1"
               placeholder="Min price"
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
@@ -102,7 +103,16 @@ export default function FiltersBar({
               type="number"
               placeholder="Rooms"
               value={rooms}
-              onChange={(e) => setRooms(e.target.value)}
+              onChange={(e) => {
+  const value = Number(e.target.value)
+
+  if (value < 1 && e.target.value !== "") {
+    setRooms("1")
+    return
+  }
+
+  setRooms(e.target.value)
+}}
               className="
                 w-full
                 min-w-0
