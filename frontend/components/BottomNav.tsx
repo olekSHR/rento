@@ -8,7 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 export default function BottomNav() {
   const pathname = usePathname();
 
-  const { isAuthenticated, isAdmin, logout } = useAuth();
+const { isAuthenticated, isAdmin } = useAuth();
 
   const isHome = pathname === "/";
   const isFavorites = pathname === "/favorites";
@@ -80,21 +80,13 @@ export default function BottomNav() {
           </Link>
         )}
 
-        {isAuthenticated ? (
-          <button
-            type="button"
-            onClick={logout}
-            className={itemClass(false)}
-          >
-            <span className="text-lg leading-none">🚪</span>
-            <span className="mt-1">Logout</span>
-          </button>
-        ) : (
-          <Link href="/login" className={itemClass(isProfile)}>
-            <span className="text-lg leading-none">👤</span>
-            <span className="mt-1">Profile</span>
-          </Link>
-        )}
+<Link
+  href={isAuthenticated ? "/profile" : "/login"}
+  className={itemClass(isProfile)}
+>
+  <span className="text-lg leading-none">👤</span>
+  <span className="mt-1">Profile</span>
+</Link>
       </div>
     </nav>
   );
