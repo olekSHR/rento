@@ -34,20 +34,51 @@ export default async function HomePage({
         "
       >
                 <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded-full bg-emerald-500" />
+          <div className="flex items-center gap-3">
+  <div
+    className="
+      flex
+      h-10
+      w-10
+      items-center
+      justify-center
+      rounded-2xl
+      bg-blue-700
+      text-lg
+      font-black
+      text-white
+      shadow-[0_10px_25px_rgba(29,78,216,0.28)]
+    "
+  >
+    R
+  </div>
 
-            <h1
-              className="
-                text-4xl
-                font-extrabold
-                tracking-tight
-                text-blue-800
-              "
-            >
-              Rento
-            </h1>
-          </div>
+  <div className="leading-none">
+    <h1
+      className="
+        text-3xl
+        font-black
+        tracking-[-0.04em]
+        text-zinc-950
+      "
+    >
+      Rento
+    </h1>
+
+    <p
+      className="
+        mt-1
+        text-[11px]
+        font-semibold
+        uppercase
+        tracking-[0.18em]
+        text-zinc-400
+      "
+    >
+      Rentals
+    </p>
+  </div>
+</div>
 
          <HeaderAuthButton />
         </div>
