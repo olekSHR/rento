@@ -40,22 +40,28 @@ export default function ShareButton({ title, url }: Props) {
       onClick={handleShare}
       aria-label="Share property"
       className="
-        absolute
-        right-16
-        top-3
-        z-10
-        flex
-        h-11
-        w-11
-        items-center
-        justify-center
-        rounded-full
-        bg-black/50
-        backdrop-blur-md
-        active:scale-90
-      "
+  absolute
+  right-[4.25rem]
+  top-3
+  z-10
+  flex
+  h-12
+  w-12
+  items-center
+  justify-center
+  rounded-full
+  border
+  border-white/70
+  bg-white/90
+  text-zinc-900
+  shadow-[0_10px_25px_rgba(15,23,42,0.18)]
+  backdrop-blur-xl
+  transition-all
+  duration-200
+  active:scale-90
+"
     >
-      <Share2 className="h-5 w-5 text-white" />
+      <Share2 className="h-5 w-5 text-zinc-800" />
     </button>
   )
 }
