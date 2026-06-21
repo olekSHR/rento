@@ -1,4 +1,3 @@
-import BottomNav from "@/components/BottomNav"
 import HomePageContent from "@/components/HomePageContent"
 import PropertyCard from "@/components/PropertyCard"
 import { getProperties } from "@/services/api"
@@ -109,7 +108,6 @@ export default async function HomePage({
         )}
       </div>
 
-      <BottomNav />
     </main>
   )
 }
