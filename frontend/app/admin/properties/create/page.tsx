@@ -44,6 +44,41 @@ export default function CreatePropertyPage() {
     whatsapp: "",
   });
 
+  const qualityChecks = [
+    {
+      label: "Title has at least 8 characters",
+      passed: formData.title.trim().length >= 8,
+    },
+    {
+      label: "Description has at least 40 characters",
+      passed: formData.description.trim().length >= 40,
+    },
+    {
+      label: "Price is greater than 0",
+      passed: Number(formData.price) > 0,
+    },
+    {
+      label: "Rooms is at least 1",
+      passed: Number(formData.rooms) >= 1,
+    },
+    {
+      label: "City is filled",
+      passed: formData.city.trim().length > 0,
+    },
+    {
+      label: "Phone or WhatsApp is filled",
+      passed:
+        formData.phone.trim().length > 0 ||
+        formData.whatsapp.trim().length > 0,
+    },
+    {
+      label: "At least 1 photo is uploaded",
+      passed: galleryImages.length > 0,
+    },
+  ];
+
+  const isQualityPassed = qualityChecks.every((check) => check.passed);
+
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -109,6 +144,10 @@ function handleRemoveGalleryImage(indexToRemove: number) {
     e: React.FormEvent<HTMLFormElement>
   ) {
     e.preventDefault();
+      if (!isQualityPassed) {
+        alert("Please complete listing quality checks before publishing.");
+        return;
+     }
 
     try {
       setIsLoading(true);
@@ -467,11 +506,77 @@ await Promise.all(
   </label>
 </div>
 
-  
+              <div className="rounded-3xl border border-slate-800 bg-slate-900 p-4">
+              <div className="mb-3 flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-bold text-white">
+                    Listing Quality
+                  </p>
+                  <p className="mt-1 text-xs text-slate-400">
+                    Complete these checks before publishing.
+                  </p>
+                </div>
+
+                <div
+                  className={`
+                    rounded-full
+                    px-3
+                    py-1
+                    text-xs
+                    font-bold
+                    ${
+                      isQualityPassed
+                        ? "bg-emerald-500/15 text-emerald-400"
+                        : "bg-amber-500/15 text-amber-400"
+                    }
+                  `}
+                >
+                  {qualityChecks.filter((check) => check.passed).length}/
+                  {qualityChecks.length}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                {qualityChecks.map((check) => (
+                  <div
+                    key={check.label}
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    <span
+                      className={`
+                        flex
+                        h-5
+                        w-5
+                        items-center
+                        justify-center
+                        rounded-full
+                        text-xs
+                        font-bold
+                        ${
+                          check.passed
+                            ? "bg-emerald-500 text-white"
+                            : "bg-slate-800 text-slate-500"
+                        }
+                      `}
+                    >
+                      {check.passed ? "✓" : "•"}
+                    </span>
+
+                    <span
+                      className={
+                        check.passed ? "text-slate-200" : "text-slate-500"
+                      }
+                    >
+                      {check.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !isQualityPassed}
               className="
                 w-full
                 rounded-2xl
