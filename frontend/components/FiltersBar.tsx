@@ -78,7 +78,7 @@ export default function FiltersBar({
             "
           />
 
-          <div className="flex gap-3">
+          <div className="grid grid-cols-[minmax(0,1fr)_7rem] gap-3">
 
             <input
               type="number"
@@ -86,7 +86,8 @@ export default function FiltersBar({
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
               className="
-                flex-1
+                min-w-0
+                w-full
                 h-12
                 px-4
                 rounded-xl
@@ -103,7 +104,8 @@ export default function FiltersBar({
               value={rooms}
               onChange={(e) => setRooms(e.target.value)}
               className="
-                w-28
+                w-full
+                min-w-0
                 h-12
                 px-4
                 rounded-xl
