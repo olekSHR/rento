@@ -34,10 +34,21 @@ export default async function HomePage({
           border-zinc-200
         "
       >
-        <div className="max-w-md mx-auto px-4 h-16 flex items-center">
-          <h1 className="text-2xl font-bold text-black">
-            Real Estate
-          </h1>
+                <div className="max-w-md mx-auto px-4 h-16 flex items-center">
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-emerald-500" />
+
+            <h1
+              className="
+                text-4xl
+                font-extrabold
+                tracking-tight
+                text-blue-800
+              "
+            >
+              Rento
+            </h1>
+          </div>
         </div>
       </header>
 

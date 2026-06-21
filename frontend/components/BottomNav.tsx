@@ -8,11 +8,32 @@ import { useAuth } from "@/context/AuthContext";
 export default function BottomNav() {
   const pathname = usePathname();
 
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, isAdmin, logout } = useAuth();
 
   const isHome = pathname === "/";
   const isFavorites = pathname === "/favorites";
-  const isLogin = pathname === "/login";
+  const isAdminActive = pathname === "/admin" || pathname.startsWith("/admin/");
+  const isProfile = pathname === "/login" || pathname === "/profile";
+
+  const itemClass = (isActive: boolean) => `
+    flex
+    h-14
+    min-w-16
+    flex-1
+    flex-col
+    items-center
+    justify-center
+    rounded-2xl
+    text-xs
+    font-medium
+    transition
+    active:scale-95
+    ${
+      isActive
+        ? "bg-blue-50 text-blue-700"
+        : "text-zinc-500 hover:text-zinc-800"
+    }
+  `;
 
   return (
     <nav
@@ -24,97 +45,54 @@ export default function BottomNav() {
         z-50
         border-t
         border-zinc-200
-        bg-white/90
-        backdrop-blur-md
-        pb-safe
+        bg-white/95
+        px-3
+        pb-[max(env(safe-area-inset-bottom),0.75rem)]
+        pt-2
+        backdrop-blur-xl
       "
     >
       <div
         className="
           mx-auto
           flex
-          h-16
           max-w-md
           items-center
-          justify-around
+          gap-1
+          rounded-3xl
+          bg-white
         "
       >
-        <Link
-          href="/"
-          className={`
-            flex
-            h-14
-            min-w-20
-            flex-col
-            items-center
-            justify-center
-            rounded-xl
-            transition
-            active:scale-95
-            ${isHome ? "font-semibold text-black" : "text-zinc-500"}
-          `}
-        >
-          <span className="text-xl">🏠</span>
-          <span className="text-xs">Home</span>
+        <Link href="/" className={itemClass(isHome)}>
+          <span className="text-lg leading-none">🏠</span>
+          <span className="mt-1">Home</span>
         </Link>
 
-        <Link
-          href="/favorites"
-          className={`
-            flex
-            h-14
-            min-w-20
-            flex-col
-            items-center
-            justify-center
-            rounded-xl
-            transition
-            active:scale-95
-            ${isFavorites ? "font-semibold text-black" : "text-zinc-500"}
-          `}
-        >
-          <span className="text-xl">❤️</span>
-          <span className="text-xs">Favorites</span>
+        <Link href="/favorites" className={itemClass(isFavorites)}>
+          <span className="text-lg leading-none">❤️</span>
+          <span className="mt-1">Favorites</span>
         </Link>
+
+        {isAdmin && (
+          <Link href="/admin" className={itemClass(isAdminActive)}>
+            <span className="text-lg leading-none">🛡️</span>
+            <span className="mt-1">Admin</span>
+          </Link>
+        )}
 
         {isAuthenticated ? (
           <button
             type="button"
             onClick={logout}
-            className="
-              flex
-              h-14
-              min-w-20
-              flex-col
-              items-center
-              justify-center
-              rounded-xl
-              text-zinc-500
-              transition
-              active:scale-95
-            "
+            className={itemClass(false)}
           >
-            <span className="text-xl">🚪</span>
-            <span className="text-xs">Logout</span>
+            <span className="text-lg leading-none">🚪</span>
+            <span className="mt-1">Logout</span>
           </button>
         ) : (
-          <Link
-            href="/login"
-            className={`
-              flex
-              h-14
-              min-w-20
-              flex-col
-              items-center
-              justify-center
-              rounded-xl
-              transition
-              active:scale-95
-              ${isLogin ? "font-semibold text-black" : "text-zinc-500"}
-            `}
-          >
-            <span className="text-xl">👤</span>
-            <span className="text-xs">Login</span>
+          <Link href="/login" className={itemClass(isProfile)}>
+            <span className="text-lg leading-none">👤</span>
+            <span className="mt-1">Profile</span>
           </Link>
         )}
       </div>
