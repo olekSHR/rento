@@ -213,7 +213,7 @@ def update_property(
     property_id: int,
     property: PropertyUpdate,
     db: Session = Depends(get_db),
-    current_user = Depends(require_admin)
+    current_user=Depends(require_admin_or_realtor)
 ):
 
     property_item = property_service.get_property_by_id(
@@ -221,21 +221,41 @@ def update_property(
         property_id
     )
 
-    return property_service.update_property(
-    db,
-    property_item,
-    property.title,
-    property.description,
-    property.price,
-    property.city,
-    property.rooms,
-    property.image_url,
-    property.status,
-    property.contact_name,
-    property.phone,
-    property.whatsapp,
-)
+    ensure_property_access(
+        property_item,
+        current_user
+    )
 
+    if current_user.role == "realtor":
+        return property_service.update_property(
+            db,
+            property_item,
+            property.title,
+            property.description,
+            property.price,
+            property.city,
+            property.rooms,
+            property.image_url,
+            property_item.status,
+            property_item.contact_name,
+            property_item.phone,
+            property_item.whatsapp,
+        )
+
+    return property_service.update_property(
+        db,
+        property_item,
+        property.title,
+        property.description,
+        property.price,
+        property.city,
+        property.rooms,
+        property.image_url,
+        property.status,
+        property.contact_name,
+        property.phone,
+        property.whatsapp,
+    )
 
 @router.delete(
     "/{property_id}",

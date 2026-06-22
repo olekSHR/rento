@@ -223,6 +223,12 @@ export default function RealtorDashboardPage() {
                 <p className="mt-4 text-2xl font-extrabold text-zinc-900">
                   €{property.price || 0}
                 </p>
+                <Link
+                  href={`/realtor/properties/${property.id}/edit`}
+                  className="mt-4 flex h-11 items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-50 text-sm font-bold text-zinc-700"
+                >
+                  Edit
+               </Link> 
               </article>
             ))
           )}
