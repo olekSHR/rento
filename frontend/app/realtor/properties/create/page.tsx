@@ -6,9 +6,11 @@ import { useState } from "react"
 
 import RealtorRoute from "@/components/RealtorRoute"
 import { getImageUrl } from "@/lib/getImageUrl"
+
 import {
   addPropertyImage,
   createProperty,
+  generateAIListing,
   uploadImage,
 } from "@/services/api"
 
@@ -16,7 +18,7 @@ export default function RealtorCreatePropertyPage() {
   const router = useRouter()
 
   const [isLoading, setIsLoading] = useState(false)
-
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false)
   const [galleryImages, setGalleryImages] = useState<
     {
       url: string
@@ -71,6 +73,46 @@ export default function RealtorCreatePropertyPage() {
       [event.target.name]: event.target.value,
     }))
   }
+
+async function handleGenerateAI() {
+  if (!formData.city || !formData.price || !formData.rooms) {
+    alert("Fill city, price and rooms before using AI.")
+    return
+  }
+
+  try {
+    setIsGeneratingAI(true)
+
+    const token = localStorage.getItem("access_token")
+
+    if (!token) {
+      throw new Error("No token found")
+    }
+
+    const result = await generateAIListing(
+      {
+        city: formData.city,
+        price: Number(formData.price),
+        rooms: Number(formData.rooms),
+        property_type: "apartment",
+        features: [],
+        language: "ro",
+      },
+      token
+    )
+
+    setFormData((prev) => ({
+      ...prev,
+      title: result.title,
+      description: result.description,
+    }))
+  } catch (error) {
+    console.error(error)
+    alert("Failed to generate listing with AI")
+  } finally {
+    setIsGeneratingAI(false)
+  }
+}
 
   async function handleImageUpload(
     event: React.ChangeEvent<HTMLInputElement>
@@ -216,6 +258,15 @@ export default function RealtorCreatePropertyPage() {
               rows={4}
               className="w-full rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-900 outline-none"
             />
+
+            <button
+              type="button"
+              onClick={handleGenerateAI}
+              disabled={isGeneratingAI || !formData.city || !formData.price || !formData.rooms}
+              className="w-full rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm font-bold text-blue-700 transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
+             >
+              {isGeneratingAI ? "Generating..." : "✨ Generate with AI"}
+            </button>
 
             <input
               type="number"

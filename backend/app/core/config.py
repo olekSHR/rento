@@ -11,6 +11,8 @@ class Settings(BaseSettings):
 
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
+    OPENAI_API_KEY: str | None = None
+
 
     class Config:
 

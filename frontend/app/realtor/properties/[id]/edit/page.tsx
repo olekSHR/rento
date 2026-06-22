@@ -9,7 +9,7 @@ import {
   updateProperty,
 } from "@/services/api"
 import type { Property } from "@/types/property"
-
+import PropertyGalleryManager from "@/components/gallery/PropertyGalleryManager"
 export default function RealtorEditPropertyPage() {
   const params = useParams()
   const router = useRouter()
@@ -119,7 +119,8 @@ export default function RealtorEditPropertyPage() {
               <div className="h-14 animate-pulse rounded-2xl bg-zinc-200" />
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <>
+             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
                 name="title"
@@ -178,7 +179,11 @@ export default function RealtorEditPropertyPage() {
                 {isSaving ? "Saving..." : "Save Changes"}
               </button>
             </form>
-          )}
+           <div className="mt-6">
+             <PropertyGalleryManager propertyId={propertyId} />
+          </div>
+         </>
+         )}
         </div>
       </main>
     </RealtorRoute>

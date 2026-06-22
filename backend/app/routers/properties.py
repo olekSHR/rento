@@ -433,7 +433,9 @@ def set_cover_image(
 
     property_item.image_url = image.url
 
+    db.add(property_item)
     db.commit()
+    db.refresh(property_item)
     db.refresh(image)
 
     return image

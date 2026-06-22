@@ -493,3 +493,40 @@ export async function updateMyRealtorProfile(
 
   return response.json()
 }
+
+export type AIListingRequest = {
+  city: string
+  price: number
+  rooms: number
+  property_type: string
+  features: string[]
+  language: "ro" | "en"
+}
+
+export type AIListingResponse = {
+  title: string
+  description: string
+  short_marketing_text: string
+}
+
+export async function generateAIListing(
+  data: AIListingRequest,
+  token: string
+): Promise<AIListingResponse> {
+  const response = await fetch(`${API_URL}/ai/listing-description`, {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    throw new Error("Failed to generate AI listing")
+  }
+
+  return response.json()
+}
