@@ -45,8 +45,8 @@ export default function ShareButton({ title, url }: Props) {
   top-3
   z-10
   flex
-  h-12
-  w-12
+  h-11
+  w-11
   items-center
   justify-center
   rounded-full

@@ -14,17 +14,33 @@ from app.schemas.property import (
 )
 
 from app.services import property_service
+from app.services import realtor_profile_service
 from app.models.property import Property
+
 from app.core.security.dependencies import (
     get_current_user,
-    require_admin
+    require_admin,
+    require_admin_or_realtor,
 )
+
 router = APIRouter(
     prefix="/properties",
     tags=["Properties"]
 )
 
+def ensure_property_access(
+    property_item,
+    current_user
+):
 
+    if current_user.role == "admin":
+        return
+
+    if property_item.owner_id != current_user.id:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied"
+        )
 
 @router.get(
     "/admin/all",
@@ -148,27 +164,49 @@ def get_property(
 def create_property(
     property: PropertyCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(require_admin)
+    current_user=Depends(require_admin_or_realtor)
 ):
 
+    owner_id = None
+    status = property.status
+    contact_name = property.contact_name
+    phone = property.phone
+    whatsapp = property.whatsapp
+
+    if current_user.role == "realtor":
+        profile = realtor_profile_service.get_or_create_profile(
+            db,
+            current_user.id,
+        )
+
+        if not profile.is_completed:
+            raise HTTPException(
+                status_code=400,
+                detail="Complete realtor profile before creating property",
+            )
+
+        owner_id = current_user.id
+        status = "pending"
+        contact_name = profile.full_name
+        phone = profile.phone
+        whatsapp = profile.whatsapp
+
     new_property = property_service.create_property(
-    db,
-    property.title,
-    property.description,
-    property.price,
-    property.city,
-    property.rooms,
-    property.image_url,
-    property.status,
-    property.contact_name,
-    property.phone,
-    property.whatsapp,
-)
+        db,
+        property.title,
+        property.description,
+        property.price,
+        property.city,
+        property.rooms,
+        owner_id,
+        property.image_url,
+        status,
+        contact_name,
+        phone,
+        whatsapp,
+    )
 
     return new_property
-
-   
-
 
 @router.put("/{property_id}", response_model=PropertyResponse)
 def update_property(
@@ -255,12 +293,17 @@ def add_property_image(
     property_id: int,
     image: PropertyImageCreate,
     db: Session = Depends(get_db),
-    current_user=Depends(require_admin)
+    current_user=Depends(require_admin_or_realtor)
 ):
 
-    property_service.get_property_by_id(
+    property_item = property_service.get_property_by_id(
         db,
         property_id
+    )
+
+    ensure_property_access(
+        property_item,
+        current_user
     )
 
     if image.is_cover:
@@ -289,11 +332,16 @@ def update_property_image_sort_order(
     image_id: int,
     sort_order: int,
     db: Session = Depends(get_db),
-    current_user=Depends(require_admin)
+    current_user=Depends(require_admin_or_realtor)
 ):
-    property_service.get_property_by_id(
+    property_item = property_service.get_property_by_id(
         db,
         property_id
+    )
+
+    ensure_property_access(
+        property_item,
+        current_user
     )
 
     image = db.query(PropertyImage).filter(
@@ -322,12 +370,17 @@ def set_cover_image(
     property_id: int,
     image_id: int,
     db: Session = Depends(get_db),
-    current_user=Depends(require_admin)
+    current_user=Depends(require_admin_or_realtor)
 ):
 
-    property_service.get_property_by_id(
+    property_item = property_service.get_property_by_id(
         db,
         property_id
+    )
+
+    ensure_property_access(
+        property_item,
+        current_user
     )
 
     image = (
@@ -374,12 +427,17 @@ def delete_property_image(
     property_id: int,
     image_id: int,
     db: Session = Depends(get_db),
-    current_user=Depends(require_admin)
+    current_user=Depends(require_admin_or_realtor)
 ):
 
-    property_service.get_property_by_id(
+    property_item = property_service.get_property_by_id(
         db,
         property_id
+    )
+
+    ensure_property_access(
+        property_item,
+        current_user
     )
 
     image = (

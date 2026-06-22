@@ -9,6 +9,7 @@ from app.routers.auth import router as auth_router
 from app.routers.uploads import router as upload_router
 from app.routers import users
 from app.routers import favorites
+from app.routers import realtor_profiles
 from app.database.database import Base, engine
 from app.models import user, property, favorite
 from app.core.exceptions import (
@@ -46,6 +47,7 @@ app.include_router(auth_router)
 app.include_router(upload_router)
 app.include_router(users.router)
 app.include_router(favorites.router)
+app.include_router(realtor_profiles.router)
 app.add_exception_handler(
     NotFoundException,
     not_found_exception_handler,

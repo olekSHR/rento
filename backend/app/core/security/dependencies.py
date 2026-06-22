@@ -63,3 +63,15 @@ def require_admin(
         )
 
     return current_user
+
+def require_admin_or_realtor(
+    current_user = Depends(get_current_user)
+):
+
+    if current_user.role not in ["admin", "realtor"]:
+
+        raise BadRequestException(
+            "Admin or realtor access required"
+        )
+
+    return current_user

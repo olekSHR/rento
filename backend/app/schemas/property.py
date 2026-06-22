@@ -92,6 +92,8 @@ class PropertyCardResponse(BaseModel):
 
     id: int
 
+    owner_id: int | None = None
+
     title: str
 
     price: int | None
@@ -107,13 +109,14 @@ class PropertyCardResponse(BaseModel):
     last_verified_at: datetime | None
 
     report_count: int = 0
-    
-model_config = ConfigDict(from_attributes=True)
 
+    model_config = ConfigDict(from_attributes=True)
 
 class PropertyResponse(BaseModel):
 
     id: int
+
+    owner_id: int | None = None
 
     title: str
 

@@ -174,7 +174,10 @@ const canGoNext =
       setIsUploading(true)
 
       for (const file of files) {
-        const uploadedImage = await uploadImage(file)
+        const uploadedImage = await uploadImage(
+          file,
+          token
+        )
 
         await addPropertyImage(
           propertyId,

@@ -24,6 +24,12 @@ class Property(Base):
         index=True
     )
 
+    owner_id = Column(
+        Integer,
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True
+    )
+
     title = Column(
         String,
         nullable=False
@@ -59,27 +65,27 @@ class Property(Base):
         nullable=False,
         default="available",
         server_default="available",
-)
+    )
 
     contact_name = Column(
        String,
        nullable=True
-)
+    )
 
     phone = Column(
        String,
        nullable=True
-)
+    )
 
     whatsapp = Column(
        String,
        nullable=True
-)
+    )
 
     last_verified_at = Column(
         DateTime(timezone=True),
         nullable=True
-)
+    )
 
     report_count = Column(
         Integer,

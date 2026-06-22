@@ -97,7 +97,13 @@ export default function EditPropertyPage() {
         return;
       }
 
-      const response = await uploadImage(file);
+      const token = localStorage.getItem("access_token");
+
+      if (!token) {
+        throw new Error("No token");
+      }
+
+      const response = await uploadImage(file, token);
 
       setFormData((prev) => ({
         ...prev,

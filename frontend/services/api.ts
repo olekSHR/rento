@@ -122,7 +122,8 @@ type UploadImageResponse = {
 }
 
 export async function uploadImage(
-  file: File
+  file: File,
+  token: string
 ): Promise<UploadImageResponse> {
   const formData = new FormData()
 
@@ -130,6 +131,11 @@ export async function uploadImage(
 
   const response = await fetch(`${API_URL}/upload/`, {
     method: "POST",
+
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+
     body: formData,
   })
 

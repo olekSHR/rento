@@ -100,8 +100,14 @@ export default function CreatePropertyPage() {
       return
     }
 
+    const token = localStorage.getItem("access_token")
+
+    if (!token) {
+      throw new Error("No token")
+    }
+
     for (const file of files) {
-      const response = await uploadImage(file)
+      const response = await uploadImage(file, token)
 
       setGalleryImages((prev) => [
         ...prev,

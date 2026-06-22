@@ -2,7 +2,10 @@ import shutil
 from uuid import uuid4
 
 from fastapi import APIRouter, UploadFile, File
-
+from fastapi import Depends
+from app.core.security.dependencies import (
+    require_admin_or_realtor
+)
 
 router = APIRouter(
     prefix="/upload",
@@ -12,9 +15,11 @@ router = APIRouter(
 
 @router.post("/")
 def upload_image(
-    image: UploadFile = File(...)
+    image: UploadFile = File(...),
+    current_user=Depends(
+        require_admin_or_realtor
+    )
 ):
-
     file_extension = image.filename.split(".")[-1]
 
     filename = f"{uuid4()}.{file_extension}"
