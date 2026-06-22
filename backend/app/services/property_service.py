@@ -40,6 +40,20 @@ def get_all_properties_admin(
         offset
     )
 
+def get_properties_by_owner_id(
+    db: Session,
+    owner_id: int,
+    limit: int = 100,
+    offset: int = 0,
+):
+
+    return property_repository.get_properties_by_owner_id(
+        db,
+        owner_id,
+        limit,
+        offset,
+    )
+
 def get_property_by_id(
     db: Session,
     property_id: int

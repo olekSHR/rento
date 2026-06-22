@@ -113,6 +113,35 @@ def get_all_properties_admin(
         "offset": offset
     }
 
+def get_properties_by_owner_id(
+    db: Session,
+    owner_id: int,
+    limit: int = 100,
+    offset: int = 0,
+):
+
+    query = (
+        db.query(models.Property)
+        .filter(models.Property.owner_id == owner_id)
+    )
+
+    total = query.count()
+
+    items = (
+        query
+        .order_by(models.Property.created_at.desc())
+        .limit(limit)
+        .offset(offset)
+        .all()
+    )
+
+    return {
+        "items": items,
+        "total": total,
+        "limit": limit,
+        "offset": offset
+    }
+
 def get_property_by_id(
     db: Session,
     property_id: int

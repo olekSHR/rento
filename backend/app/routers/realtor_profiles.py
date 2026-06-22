@@ -9,7 +9,8 @@ from app.schemas.realtor_profile import (
     RealtorProfileUpdate,
 )
 from app.services import realtor_profile_service
-
+from app.schemas.property import PropertyListResponse
+from app.services import property_service
 router = APIRouter(
     prefix="/realtor",
     tags=["realtor"],
@@ -55,4 +56,21 @@ def update_my_realtor_profile(
         db,
         current_user.id,
         profile_update,
+    )
+
+@router.get(
+    "/properties",
+    response_model=PropertyListResponse,
+)
+def get_my_realtor_properties(
+    limit: int = 100,
+    offset: int = 0,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_realtor),
+):
+    return property_service.get_properties_by_owner_id(
+        db,
+        current_user.id,
+        limit,
+        offset,
     )
