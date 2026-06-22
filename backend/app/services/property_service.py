@@ -181,7 +181,7 @@ def verify_property(
         property_item.city,
         property_item.rooms,
         property_item.image_url,
-        property_item.status,
+        "available",
         property_item.contact_name,
         property_item.phone,
         property_item.whatsapp,

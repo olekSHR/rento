@@ -19,6 +19,7 @@
     isLoading: boolean;
     isAuthenticated: boolean;
     isAdmin: boolean;
+    isRealtor: boolean;
     login: (data: LoginRequest) => Promise<void>;
     register: (data: RegisterRequest) => Promise<void>;
     logout: () => void;
@@ -76,6 +77,7 @@
         isLoading,
         isAuthenticated: user !== null,
         isAdmin: user?.role === "admin",
+        isRealtor: user?.role === "realtor",
         login,
         register,
         logout,

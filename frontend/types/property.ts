@@ -1,4 +1,5 @@
 export type PropertyStatus =
+  | "pending"
   | "available"
   | "reserved"
   | "rented"
@@ -13,6 +14,7 @@ export type PropertyImage = {
 
 export type Property = {
   id: number
+  owner_id?: number | null
   title: string
   description: string | null
   price: number | null

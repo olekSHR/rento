@@ -2,8 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Home, Search, ShieldCheck, User } from "lucide-react";
-
+import {
+  Heart,
+  Home,
+  Search,
+  ShieldCheck,
+  User,
+  Building2,
+} from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 type BottomNavProps = {
@@ -13,11 +19,14 @@ type BottomNavProps = {
 export default function BottomNav({ onOpenFilters }: BottomNavProps) {
   const pathname = usePathname();
 
-  const { isAdmin } = useAuth();
+  const { isAdmin, isRealtor } = useAuth();
 
   const isHome = pathname === "/";
   const isFavorites = pathname === "/favorites";
   const isAdminActive = pathname === "/admin" || pathname.startsWith("/admin/");
+  const isRealtorActive =
+  pathname === "/realtor" ||
+  pathname.startsWith("/realtor/");
   const isProfile = pathname === "/login" || pathname === "/profile";
 
   const itemClass = (isActive: boolean) => `
@@ -122,6 +131,23 @@ export default function BottomNav({ onOpenFilters }: BottomNavProps) {
             )}
             <ShieldCheck className={iconClass(isAdminActive)} />
             <span className="mt-1">Admin</span>
+          </Link>
+        )}
+
+        {isRealtor && (
+          <Link
+            href="/realtor"
+            className={itemClass(isRealtorActive)}
+          >
+            {isRealtorActive && (
+              <span className="absolute top-1 h-1 w-5 rounded-full bg-blue-700" />
+            )}
+
+            <Building2 className={iconClass(isRealtorActive)} />
+
+            <span className="mt-1">
+              Realtor
+            </span>
           </Link>
         )}
 
