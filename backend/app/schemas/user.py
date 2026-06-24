@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -21,6 +23,11 @@ class UserResponse(BaseModel):
     class Config:
 
         from_attributes = True
+
+
+class UserRoleUpdate(BaseModel):
+
+    role: Literal["user", "realtor", "admin"]
 
 
 class UserLogin(BaseModel):

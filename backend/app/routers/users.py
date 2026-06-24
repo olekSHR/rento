@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
+from app.core.security.dependencies import require_admin
 from app.database.database import get_db
-from app.schemas.user import UserResponse
+from app.schemas.user import UserResponse, UserRoleUpdate
 from app.services import user_service
 
 
@@ -21,3 +22,21 @@ def get_me(
 ):
 
     return current_user
+
+
+@router.patch(
+    "/{user_id}/role",
+    response_model=UserResponse
+)
+def update_user_role(
+    user_id: int,
+    role_update: UserRoleUpdate,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_admin),
+):
+
+    return user_service.update_user_role(
+        db,
+        user_id,
+        role_update.role
+    )

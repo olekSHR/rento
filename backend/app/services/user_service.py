@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.database.database import get_db
 from app.repositories import user_repository
-from app.core.exceptions import UnauthorizedException
+from app.core.exceptions import NotFoundException, UnauthorizedException
 from app.core.security.jwt import verify_access_token
 
 
@@ -46,3 +46,27 @@ def get_current_user(
         )
 
     return user
+
+
+def update_user_role(
+    db: Session,
+    user_id: int,
+    role: str
+):
+
+    user = user_repository.get_user_by_id(
+        db,
+        user_id
+    )
+
+    if not user:
+
+        raise NotFoundException(
+            "User not found"
+        )
+
+    return user_repository.update_user_role(
+        db,
+        user,
+        role
+    )
