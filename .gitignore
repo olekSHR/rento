@@ -36,3 +36,8 @@ pnpm-debug.log*
 
 # Docker local
 *.pid
+
+backend/local_test.db
+*.db
+
+.cursor/
