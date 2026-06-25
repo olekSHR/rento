@@ -18,7 +18,7 @@ from app.services import realtor_profile_service
 from app.models.property import Property
 
 from app.core.security.dependencies import (
-    get_current_user,
+    get_current_user_optional,
     require_admin,
     require_admin_or_realtor,
 )
@@ -147,13 +147,15 @@ def report_property(
 @router.get("/{property_id}", response_model=PropertyResponse)
 def get_property(
     property_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user_optional),
 ):
 
-    return property_service.get_property_by_id(
-    db,
-    property_id
-)
+    return property_service.get_property_by_id_for_viewer(
+        db,
+        property_id,
+        current_user,
+    )
 
 
 @router.post(

@@ -4,6 +4,9 @@ from app.repositories import property_repository
 from app.core.exceptions import NotFoundException
 
 
+PUBLIC_PROPERTY_STATUSES = ("available", "reserved")
+
+
 def get_all_properties(
     db: Session,
     limit: int,
@@ -65,6 +68,56 @@ def get_property_by_id(
     )
 
     if not property_item:
+
+        raise NotFoundException(
+            "Property not found"
+        )
+
+    return property_item
+
+
+def get_property_by_id_for_viewer(
+    db: Session,
+    property_id: int,
+    current_user=None,
+):
+
+    property_item = property_repository.get_property_by_id(
+        db,
+        property_id
+    )
+
+    if not property_item:
+
+        raise NotFoundException(
+            "Property not found"
+        )
+
+    if current_user is None:
+
+        if property_item.status not in PUBLIC_PROPERTY_STATUSES:
+
+            raise NotFoundException(
+                "Property not found"
+            )
+
+        return property_item
+
+    if current_user.role == "admin":
+
+        return property_item
+
+    if current_user.role == "realtor":
+
+        if property_item.owner_id != current_user.id:
+
+            raise NotFoundException(
+                "Property not found"
+            )
+
+        return property_item
+
+    if property_item.status not in PUBLIC_PROPERTY_STATUSES:
 
         raise NotFoundException(
             "Property not found"

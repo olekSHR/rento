@@ -17,6 +17,11 @@ oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/auth/login"
 )
 
+oauth2_scheme_optional = OAuth2PasswordBearer(
+    tokenUrl="/auth/login",
+    auto_error=False,
+)
+
 
 def get_current_user(
     token: str = Depends(oauth2_scheme),
@@ -63,6 +68,46 @@ def require_admin(
         )
 
     return current_user
+
+
+def get_current_user_optional(
+    token: str | None = Depends(oauth2_scheme_optional),
+    db: Session = Depends(get_db)
+):
+
+    if not token:
+
+        return None
+
+    payload = verify_access_token(token)
+
+    if not payload:
+
+        raise BadRequestException(
+            "Invalid token"
+        )
+
+    email = payload.get("sub")
+
+    if not email:
+
+        raise BadRequestException(
+            "Invalid token payload"
+        )
+
+    user = user_repository.get_user_by_email(
+        db,
+        email
+    )
+
+    if not user:
+
+        raise BadRequestException(
+            "User not found"
+        )
+
+    return user
+
 
 def require_admin_or_realtor(
     current_user = Depends(get_current_user)
