@@ -305,12 +305,20 @@ export type CreatePropertyImageData = {
 }
 
 export async function getPropertyImages(
-  propertyId: number
+  propertyId: number,
+  token?: string
 ): Promise<PropertyImage[]> {
+  const headers: HeadersInit = {}
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
   const response = await fetch(
     `${API_URL}/properties/${propertyId}/images`,
     {
       cache: "no-store",
+      headers,
     }
   )
 

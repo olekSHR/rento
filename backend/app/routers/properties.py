@@ -290,12 +290,14 @@ def delete_property(
 )
 def get_property_images(
     property_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user_optional),
 ):
 
-    property_service.get_property_by_id(
+    property_service.get_property_by_id_for_viewer(
         db,
-        property_id
+        property_id,
+        current_user,
     )
 
     return (

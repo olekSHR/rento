@@ -12,6 +12,8 @@ import {
   uploadImage,
 } from "@/services/api";
 
+import { getToken } from "@/lib/tokenStorage";
+
 import type { Property } from "@/types/property";
 import AdminGalleryManager from "@/components/admin/AdminGalleryManager"
 import Image from "next/image"
@@ -45,7 +47,13 @@ export default function EditPropertyPage() {
       try {
         setIsLoading(true);
 
-        const property: Property = await getPropertyById(propertyId);
+        const token = getToken();
+
+        if (!token) {
+          throw new Error("No token");
+        }
+
+        const property: Property = await getPropertyById(propertyId, token);
 
         setFormData({
           title: property.title,

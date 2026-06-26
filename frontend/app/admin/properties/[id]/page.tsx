@@ -8,6 +8,7 @@ import {
   getPropertyImages,
 } from "@/services/api"
 import { getImageUrl } from "@/lib/getImageUrl"
+import { getToken } from "@/lib/tokenStorage"
 import type { Property } from "@/types/property"
 import Image from "next/image"
 
@@ -26,8 +27,14 @@ export default function PropertyDetailsPage() {
 
   async function loadProperty() {
     try {
-      const data = await getPropertyById(propertyId)
-      const images = await getPropertyImages(propertyId)
+      const token = getToken()
+
+      if (!token) {
+        throw new Error("No token")
+      }
+
+      const data = await getPropertyById(propertyId, token)
+      const images = await getPropertyImages(propertyId, token)
 
     
 

@@ -14,13 +14,15 @@ import { getToken } from "@/lib/tokenStorage"
 import { getPropertyById, updateProperty } from "@/services/api"
 import type { Property, PropertyStatus } from "@/types/property"
 
+type LoadState = "loading" | "ready" | "not-found"
+
 export default function RealtorEditPropertyPage() {
   const params = useParams()
   const router = useRouter()
 
   const propertyId = Number(params.id)
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [loadState, setLoadState] = useState<LoadState>("loading")
   const [isSaving, setIsSaving] = useState(false)
   const [propertyStatus, setPropertyStatus] = useState<PropertyStatus>("pending")
   const [saveMessage, setSaveMessage] = useState("")
@@ -31,10 +33,15 @@ export default function RealtorEditPropertyPage() {
     price: "",
     city: "",
     rooms: "",
-    image_url: "",
   })
 
+  const isValidPropertyId = Number.isFinite(propertyId)
+
   useEffect(() => {
+    if (!isValidPropertyId) {
+      return
+    }
+
     async function loadProperty() {
       try {
         const token = getToken()
@@ -52,20 +59,41 @@ export default function RealtorEditPropertyPage() {
           price: property.price?.toString() ?? "",
           city: property.city ?? "",
           rooms: property.rooms?.toString() ?? "",
-          image_url: property.image_url ?? "",
         })
+        setLoadState("ready")
       } catch (error) {
         console.error(error)
-        alert("Failed to load property")
-      } finally {
-        setIsLoading(false)
+        setLoadState("not-found")
       }
     }
 
-    if (Number.isFinite(propertyId)) {
-      loadProperty()
-    }
-  }, [propertyId])
+    loadProperty()
+  }, [propertyId, isValidPropertyId])
+
+  if (!isValidPropertyId) {
+    return (
+      <RealtorRoute>
+        <main className="min-h-screen bg-zinc-100 px-4 pb-32 pt-6">
+          <div className="mx-auto max-w-md">
+            <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-center shadow-sm">
+              <h2 className="text-lg font-bold text-zinc-900">
+                Property not found
+              </h2>
+              <p className="mt-2 text-sm text-zinc-500">
+                This listing does not exist or you do not have access to it.
+              </p>
+              <Link
+                href="/realtor"
+                className="mt-6 flex h-12 w-full items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white"
+              >
+                Back to Workspace
+              </Link>
+            </div>
+          </div>
+        </main>
+      </RealtorRoute>
+    )
+  }
 
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -89,6 +117,8 @@ export default function RealtorEditPropertyPage() {
         throw new Error("No token")
       }
 
+      const property = await getPropertyById(propertyId, token)
+
       await updateProperty(
         propertyId,
         {
@@ -97,7 +127,7 @@ export default function RealtorEditPropertyPage() {
           price: Number(formData.price),
           city: formData.city,
           rooms: Number(formData.rooms),
-          image_url: formData.image_url,
+          image_url: property.image_url ?? "",
           status: propertyStatus,
         },
         token
@@ -125,35 +155,56 @@ export default function RealtorEditPropertyPage() {
               ← Back to workspace
             </Link>
 
-            <div className="mt-4 flex items-start justify-between gap-3">
-              <div>
-                <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900">
-                  Edit Property
-                </h1>
-                <p className="mt-2 text-sm text-zinc-500">
-                  Update listing details and manage your gallery.
-                </p>
-              </div>
+            {loadState !== "not-found" && (
+              <div className="mt-4 flex items-start justify-between gap-3">
+                <div>
+                  <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900">
+                    Edit Property
+                  </h1>
+                  <p className="mt-2 text-sm text-zinc-500">
+                    Update listing details and manage your gallery.
+                  </p>
+                </div>
 
-              {!isLoading && (
-                <span
-                  className={`rounded-full px-3 py-1 text-[11px] font-bold ring-1 ${getPropertyStatusTone(
-                    propertyStatus
-                  )}`}
-                >
-                  {getPropertyStatusLabel(propertyStatus)}
-                </span>
-              )}
-            </div>
+                {loadState === "ready" && (
+                  <span
+                    className={`rounded-full px-3 py-1 text-[11px] font-bold ring-1 ${getPropertyStatusTone(
+                      propertyStatus
+                    )}`}
+                  >
+                    {getPropertyStatusLabel(propertyStatus)}
+                  </span>
+                )}
+              </div>
+            )}
           </header>
 
-          {isLoading ? (
+          {loadState === "loading" && (
             <div className="space-y-4">
               <div className="h-14 animate-pulse rounded-2xl bg-zinc-200" />
               <div className="h-32 animate-pulse rounded-2xl bg-zinc-200" />
               <div className="h-48 animate-pulse rounded-3xl bg-zinc-200" />
             </div>
-          ) : (
+          )}
+
+          {loadState === "not-found" && (
+            <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-center shadow-sm">
+              <h2 className="text-lg font-bold text-zinc-900">
+                Property not found
+              </h2>
+              <p className="mt-2 text-sm text-zinc-500">
+                This listing does not exist or you do not have access to it.
+              </p>
+              <Link
+                href="/realtor"
+                className="mt-6 flex h-12 w-full items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white"
+              >
+                Back to Workspace
+              </Link>
+            </div>
+          )}
+
+          {loadState === "ready" && (
             <>
               <form
                 id="edit-property-form"
@@ -218,7 +269,7 @@ export default function RealtorEditPropertyPage() {
 
                 <p className="rounded-2xl bg-blue-50 p-3 text-xs text-blue-800">
                   Contacts and publication status are managed automatically by
-                  Rento.
+                  Rento. Cover image is managed in the gallery below.
                 </p>
               </form>
 
@@ -229,7 +280,7 @@ export default function RealtorEditPropertyPage() {
           )}
         </div>
 
-        {!isLoading && (
+        {loadState === "ready" && (
           <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200 bg-white/95 px-4 py-4 backdrop-blur">
             <div className="mx-auto max-w-md space-y-2">
               {saveMessage && (

@@ -70,7 +70,11 @@ const canGoNext =
 )
 
   const refreshImages = useCallback(async () => {
-  const updatedImages = await getPropertyImages(propertyId)
+  const token = getToken()
+  const updatedImages = await getPropertyImages(
+    propertyId,
+    token ?? undefined
+  )
 
   const sortedImages = [...updatedImages].sort(
     (a, b) => a.sort_order - b.sort_order
