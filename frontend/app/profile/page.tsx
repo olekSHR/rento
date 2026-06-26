@@ -142,7 +142,7 @@ export default function ProfilePage() {
               your own listings.
             </p>
             <div className="mt-4">
-              <PrimaryButton disabled>Request access — Coming soon</PrimaryButton>
+              <PrimaryButton href="/become-realtor">Become a Realtor</PrimaryButton>
             </div>
           </SectionCard>
         )}
