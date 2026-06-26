@@ -19,7 +19,9 @@ type BottomNavProps = {
 export default function BottomNav({ onOpenFilters }: BottomNavProps) {
   const pathname = usePathname();
 
-  const { isAdmin, isRealtor } = useAuth();
+  const { isAdmin, isRealtor, isAuthenticated } = useAuth();
+
+  const profileHref = isAuthenticated ? "/profile" : "/login";
 
   const isHome = pathname === "/";
   const isFavorites = pathname === "/favorites";
@@ -151,7 +153,7 @@ export default function BottomNav({ onOpenFilters }: BottomNavProps) {
           </Link>
         )}
 
-        <Link href="/login" className={itemClass(isProfile)}>
+        <Link href={profileHref} className={itemClass(isProfile)}>
           {isProfile && (
             <span className="absolute top-1 h-1 w-5 rounded-full bg-blue-700" />
           )}
