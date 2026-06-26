@@ -147,7 +147,7 @@ export default async function PropertyPage({ params }: Props) {
 
             <div className="mt-2 flex items-end justify-between gap-4">
               <p className="text-4xl font-extrabold tracking-tight text-zinc-950">
-                ${property.price || 0}
+                €{property.price || 0}
               </p>
 
               <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm font-semibold text-zinc-700 ring-1 ring-zinc-200">

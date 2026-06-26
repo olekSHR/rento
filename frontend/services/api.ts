@@ -556,3 +556,42 @@ export async function generateAIListing(
 
   return response.json()
 }
+
+type RegisterUserResponse = {
+  id: number
+  email: string
+  role: string
+}
+
+export async function registerUser(
+  email: string,
+  password: string
+): Promise<RegisterUserResponse> {
+  const response = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  })
+
+  if (!response.ok) {
+    let message = "Registration failed. Please try again."
+
+    try {
+      const data = (await response.json()) as { detail?: string }
+
+      if (data.detail === "Email already registered") {
+        message = "This email is already registered."
+      } else if (typeof data.detail === "string") {
+        message = data.detail
+      }
+    } catch {
+      // Keep default message
+    }
+
+    throw new Error(message)
+  }
+
+  return response.json()
+}

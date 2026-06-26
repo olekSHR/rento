@@ -20,7 +20,7 @@
     isAuthenticated: boolean;
     isAdmin: boolean;
     isRealtor: boolean;
-    login: (data: LoginRequest) => Promise<void>;
+    login: (data: LoginRequest) => Promise<User>;
     register: (data: RegisterRequest) => Promise<void>;
     logout: () => void;
   };
@@ -55,6 +55,8 @@
   const currentUser = await getCurrentUser();
 
   setUser(currentUser);
+
+  return currentUser;
 }, []);
 
     const register = useCallback(
