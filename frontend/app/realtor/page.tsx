@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { ChevronRight, Plus, Search, Sparkles } from "lucide-react"
@@ -9,6 +10,7 @@ import PropertyEmptyState from "@/components/realtor/PropertyEmptyState"
 import PropertyListSkeleton from "@/components/realtor/PropertyListSkeleton"
 import RealtorPropertyCard from "@/components/realtor/RealtorPropertyCard"
 import { useAuth } from "@/context/AuthContext"
+import { getImageUrl } from "@/lib/getImageUrl"
 import {
   PROPERTY_FILTER_OPTIONS,
   buildWorkspaceActions,
@@ -16,7 +18,6 @@ import {
   filterProperties,
   getContinueEditingProperty,
   getPropertyStatusLabel,
-  getWorkspaceGreetingName,
   searchProperties,
   type PropertyFilter,
 } from "@/lib/realtorWorkspace"
@@ -27,6 +28,34 @@ import {
   type RealtorProfile,
 } from "@/services/api"
 import type { Property } from "@/types/property"
+
+function getProfileDisplayName(profile: RealtorProfile | null): string {
+  const name = profile?.full_name?.trim()
+
+  if (name) {
+    return name
+  }
+
+  return "Realtor Profile"
+}
+
+function getProfileInitials(profile: RealtorProfile | null): string {
+  const name = profile?.full_name?.trim()
+
+  if (!name) {
+    return "R"
+  }
+
+  const parts = name.split(/\s+/).filter(Boolean)
+
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase()
+  }
+
+  return (
+    parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+  ).toUpperCase()
+}
 
 function WorkspaceSkeleton() {
   return (
@@ -93,8 +122,13 @@ export default function RealtorWorkspacePage() {
   }, [toastMessage])
 
   const profileCompletion = computeProfileCompletionPercent(profile)
-  const greetingName = getWorkspaceGreetingName(profile, user?.email)
   const canCreateListing = profile?.is_completed === true
+  const profileActionLabel = canCreateListing
+    ? "Edit Profile"
+    : "Complete Profile"
+  const avatarUrl = profile?.avatar_url
+    ? getImageUrl(profile.avatar_url)
+    : null
 
   const stats = useMemo(
     () => ({
@@ -165,28 +199,49 @@ export default function RealtorWorkspacePage() {
     <main className="min-h-screen bg-zinc-100 px-4 py-6 pb-24">
       <div className="mx-auto max-w-md space-y-5">
         <header className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">
-                Property Management
-              </p>
-              <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-900">
-                Welcome back, {greetingName}
-              </h1>
-              <p className="mt-1 text-sm text-zinc-500">
-                {properties.length} listing{properties.length === 1 ? "" : "s"}{" "}
-                in your workspace
-              </p>
+          <div className="flex items-start gap-4">
+            <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-2 ring-blue-100">
+              {avatarUrl ? (
+                <Image
+                  src={avatarUrl}
+                  alt={getProfileDisplayName(profile)}
+                  fill
+                  unoptimized
+                  className="object-cover"
+                  sizes="56px"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center text-lg font-bold text-white">
+                  {getProfileInitials(profile)}
+                </div>
+              )}
             </div>
-            {profile?.is_verified ? (
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-200">
-                Verified
-              </span>
-            ) : (
-              <span className="rounded-full bg-zinc-100 px-3 py-1 text-[11px] font-semibold text-zinc-500 ring-1 ring-zinc-200">
-                Verified soon
-              </span>
-            )}
+
+            <div className="min-w-0 flex-1">
+              <h1 className="truncate text-lg font-extrabold tracking-tight text-zinc-900">
+                {getProfileDisplayName(profile)}
+              </h1>
+              <p className="mt-0.5 text-sm text-zinc-500">Realtor Workspace</p>
+              <div className="mt-2">
+                {profile?.is_verified ? (
+                  <span className="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-200">
+                    Verified
+                  </span>
+                ) : (
+                  <span className="inline-flex rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-semibold text-zinc-500 ring-1 ring-zinc-200">
+                    Verification soon
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <Link
+              href="/realtor/profile"
+              aria-label={profileActionLabel}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 ring-1 ring-zinc-200 active:scale-95"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Link>
           </div>
 
           <div className="mt-4">
@@ -201,6 +256,13 @@ export default function RealtorWorkspacePage() {
               />
             </div>
           </div>
+
+          <Link
+            href="/realtor/profile"
+            className="mt-4 flex h-11 w-full items-center justify-center rounded-2xl bg-zinc-900 text-sm font-bold text-white active:scale-[0.98]"
+          >
+            {profileActionLabel}
+          </Link>
         </header>
 
         {canCreateListing ? (
