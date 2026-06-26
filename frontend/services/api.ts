@@ -63,13 +63,17 @@ export async function getAdminProperties(
   return response.json()
 }
 
-export async function getPropertyById(id: number) {
-  const response = await fetch(
-    `${API_URL}/properties/${id}`,
-    {
-      cache: "no-store",
-    }
-  )
+export async function getPropertyById(id: number, token?: string) {
+  const headers: HeadersInit = {}
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
+  const response = await fetch(`${API_URL}/properties/${id}`, {
+    cache: "no-store",
+    headers,
+  })
 
   if (!response.ok) {
     throw new Error("Failed to fetch property")
@@ -84,8 +88,8 @@ type CreatePropertyData = {
   price: number
   city: string
   rooms: number
-  image_url: string
-  status: string
+  image_url?: string
+  status?: string
   contact_name?: string
   phone?: string
   whatsapp?: string
