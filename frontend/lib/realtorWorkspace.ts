@@ -1,7 +1,25 @@
 import type { RealtorProfile } from "@/services/api"
 import type { Property } from "@/types/property"
 
-export type PropertyFilter = "all" | "active" | "drafts" | "archive"
+export type PropertyFilter =
+  | "all"
+  | "active"
+  | "pending"
+  | "reserved"
+  | "rented"
+  | "archived"
+
+export const PROPERTY_FILTER_OPTIONS: {
+  id: PropertyFilter
+  label: string
+}[] = [
+  { id: "all", label: "All" },
+  { id: "active", label: "Active" },
+  { id: "pending", label: "Pending" },
+  { id: "reserved", label: "Reserved" },
+  { id: "rented", label: "Rented" },
+  { id: "archived", label: "Archived" },
+]
 
 export type WorkspaceAction = {
   id: string
@@ -58,20 +76,58 @@ export function filterProperties(
 ): Property[] {
   switch (filter) {
     case "active":
-      return properties.filter(
-        (property) =>
-          property.status === "available" || property.status === "reserved"
-      )
-    case "drafts":
+      return properties.filter((property) => property.status === "available")
+    case "pending":
       return properties.filter((property) => property.status === "pending")
-    case "archive":
-      return properties.filter(
-        (property) =>
-          property.status === "archived" || property.status === "rented"
-      )
+    case "reserved":
+      return properties.filter((property) => property.status === "reserved")
+    case "rented":
+      return properties.filter((property) => property.status === "rented")
+    case "archived":
+      return properties.filter((property) => property.status === "archived")
     default:
       return properties
   }
+}
+
+export function searchProperties(
+  properties: Property[],
+  query: string
+): Property[] {
+  const normalizedQuery = query.trim().toLowerCase()
+
+  if (!normalizedQuery) {
+    return properties
+  }
+
+  return properties.filter((property) => {
+    const title = property.title.toLowerCase()
+    const city = property.city?.toLowerCase() ?? ""
+    const price = String(property.price ?? "")
+
+    return (
+      title.includes(normalizedQuery) ||
+      city.includes(normalizedQuery) ||
+      price.includes(normalizedQuery)
+    )
+  })
+}
+
+export function getPropertyUpdatedLabel(property: Property): string {
+  if (property.last_verified_at) {
+    const date = new Date(property.last_verified_at)
+
+    if (!Number.isNaN(date.getTime())) {
+      return date.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    }
+  }
+
+  // TODO: Replace with created_at / updated_at when API exposes it
+  return "recently"
 }
 
 export function buildWorkspaceActions(
@@ -143,7 +199,7 @@ export function getContinueEditingProperty(
 export function getPropertyStatusLabel(status: Property["status"]): string {
   switch (status) {
     case "pending":
-      return "Draft"
+      return "Pending"
     case "available":
       return "Active"
     case "reserved":
