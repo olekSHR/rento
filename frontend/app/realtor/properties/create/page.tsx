@@ -396,6 +396,7 @@ export default function RealtorCreatePropertyPage() {
                             src={getImageUrl(image.url) || "/placeholder.jpg"}
                             alt={`Preview ${index + 1}`}
                             fill
+                            unoptimized
                             sizes="(max-width: 768px) 50vw, 200px"
                             className="object-cover"
                           />
@@ -478,6 +479,7 @@ export default function RealtorCreatePropertyPage() {
                       src={getImageUrl(coverImageUrl) || "/placeholder.jpg"}
                       alt={formData.title}
                       fill
+                      unoptimized
                       className="object-cover"
                       sizes="(max-width: 448px) 100vw, 448px"
                     />

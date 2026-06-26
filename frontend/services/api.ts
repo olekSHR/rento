@@ -1,3 +1,5 @@
+import { normalizeImagePath } from "@/lib/getImageUrl"
+
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://127.0.0.1:8000"
@@ -147,7 +149,19 @@ export async function uploadImage(
     throw new Error("Failed to upload image")
   }
 
-  return response.json()
+  const data: UploadImageResponse = await response.json()
+  const storedUrl =
+    normalizeImagePath(data.url) ??
+    (data.filename ? `/uploads/${data.filename}` : null)
+
+  if (!storedUrl) {
+    throw new Error("Upload response missing image url")
+  }
+
+  return {
+    filename: data.filename,
+    url: storedUrl,
+  }
 }
 
 type UpdatePropertyData = {
