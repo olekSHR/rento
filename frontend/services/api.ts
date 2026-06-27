@@ -786,3 +786,45 @@ export async function getAdminStats(token: string): Promise<AdminStats> {
 
   return response.json()
 }
+
+export type AdminUserListItem = {
+  id: number
+  email: string
+  role: string
+  display_name: string
+  application_status: string | null
+  listings_count: number
+  is_verified_realtor: boolean
+  registered_at: string | null
+}
+
+export type AdminUsersResponse = {
+  items: AdminUserListItem[]
+  total: number
+  page: number
+  limit: number
+}
+
+export async function getAdminUsers(
+  token: string,
+  page = 1,
+  limit = 20
+): Promise<AdminUsersResponse> {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  })
+
+  const response = await fetch(`${API_URL}/admin/users?${params}`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error("Unable to load users.")
+  }
+
+  return response.json()
+}

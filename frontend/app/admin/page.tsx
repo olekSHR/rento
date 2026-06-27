@@ -49,7 +49,7 @@ const METRIC_CONFIG: MetricConfig[] = [
     description: "Registered accounts",
     icon: Users,
     color: "blue",
-    comingSoon: true,
+    href: "/admin/users",
   },
   {
     key: "total_realtors",
@@ -57,7 +57,7 @@ const METRIC_CONFIG: MetricConfig[] = [
     description: "Verified realtor accounts",
     icon: Building2,
     color: "purple",
-    comingSoon: true,
+    href: "/admin/users",
   },
   {
     key: "pending_realtor_applications",
@@ -121,10 +121,10 @@ const QUICK_ACTIONS: QuickAction[] = [
     description: "Review and approve realtor access requests.",
   },
   {
+    href: "/admin/users",
     icon: Users,
     title: "Users",
     description: "Manage platform accounts and roles.",
-    comingSoon: true,
   },
 ]
 
