@@ -141,11 +141,11 @@ const CARD_INTERACTIVE_CLASSES =
 
 function StatsSkeleton() {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 gap-3">
       {Array.from({ length: 5 }).map((_, index) => (
         <div
           key={index}
-          className="h-36 animate-pulse rounded-2xl bg-zinc-200"
+          className="h-28 animate-pulse rounded-2xl bg-zinc-200"
         />
       ))}
     </div>
@@ -153,66 +153,55 @@ function StatsSkeleton() {
 }
 
 function PlatformStatusSkeleton() {
-  return <div className="h-28 animate-pulse rounded-3xl bg-zinc-200" />
-}
-
-function formatCountLabel(count: number, singular: string, plural: string) {
-  return `${count.toLocaleString()} ${count === 1 ? singular : plural}`
+  return <div className="h-36 animate-pulse rounded-3xl bg-zinc-200" />
 }
 
 function PlatformStatus({ stats }: { stats: AdminStats }) {
   const pending = stats.pending_realtor_applications
   const reports = stats.reported_listings
-  const isHealthy = pending === 0 && reports === 0
 
-  if (isHealthy) {
-    return (
-      <SectionCard className="border-emerald-100 bg-emerald-50">
-        <div className="space-y-1">
-          <p className="text-sm font-bold text-zinc-900">
-            🟢 Platform Status
-          </p>
-          <p className="text-sm font-semibold text-emerald-800">
-            Everything is operating normally.
-          </p>
-          <p className="text-sm text-emerald-700">All systems look healthy.</p>
-        </div>
-      </SectionCard>
-    )
-  }
+  const statusCardClassName =
+    reports > 0
+      ? "border-red-100 bg-red-50"
+      : pending > 0
+        ? "border-amber-100 bg-amber-50"
+        : "border-emerald-100 bg-emerald-50"
+
+  const statusHeadline =
+    reports > 0
+      ? "🔴 Moderation Required"
+      : pending > 0
+        ? "🟠 Attention Required"
+        : "🟢 Healthy"
+
+  const pendingLine =
+    pending > 0
+      ? `${pending.toLocaleString()} ${pending === 1 ? "realtor application awaiting review." : "realtor applications awaiting review."}`
+      : "No pending realtor applications."
+
+  const reportsLine =
+    reports > 0
+      ? `${reports.toLocaleString()} ${reports === 1 ? "listing requires moderation." : "listings require moderation."}`
+      : "No reported listings."
 
   return (
-    <SectionCard className="border-amber-100 bg-amber-50">
+    <SectionCard className={statusCardClassName}>
       <div className="space-y-3">
-        {pending > 0 && (
-          <div className="space-y-1">
-            <p className="text-sm font-bold text-zinc-900">
-              🟠 Attention required
-            </p>
-            <p className="text-sm text-amber-900">
-              {formatCountLabel(
-                pending,
-                "realtor application awaiting review.",
-                "realtor applications awaiting review."
-              )}
-            </p>
-          </div>
-        )}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            Platform Status
+          </p>
+          <p className="mt-1 text-sm font-bold text-zinc-900">{statusHeadline}</p>
+        </div>
 
-        {reports > 0 && (
-          <div className="space-y-1">
-            <p className="text-sm font-bold text-zinc-900">
-              🔴 Moderation required
-            </p>
-            <p className="text-sm text-red-800">
-              {formatCountLabel(
-                reports,
-                "reported listing requires attention.",
-                "reported listings require attention."
-              )}
-            </p>
-          </div>
-        )}
+        <ul className="space-y-1.5 text-sm text-zinc-700">
+          <li className={pending > 0 ? "font-medium text-amber-900" : ""}>
+            {pendingLine}
+          </li>
+          <li className={reports > 0 ? "font-medium text-red-800" : ""}>
+            {reportsLine}
+          </li>
+        </ul>
       </div>
     </SectionCard>
   )
@@ -302,7 +291,7 @@ function PlatformOverview({
               {error}
             </p>
           ) : stats ? (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               {METRIC_CONFIG.map((metric) => (
                 <MetricCard
                   key={metric.key}
