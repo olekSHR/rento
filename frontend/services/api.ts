@@ -763,3 +763,26 @@ export async function reviewRealtorApplication(
 
   return response.json()
 }
+
+export type AdminStats = {
+  total_users: number
+  total_realtors: number
+  pending_realtor_applications: number
+  active_listings: number
+  reported_listings: number
+}
+
+export async function getAdminStats(token: string): Promise<AdminStats> {
+  const response = await fetch(`${API_URL}/admin/stats`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error("Unable to load dashboard stats.")
+  }
+
+  return response.json()
+}
