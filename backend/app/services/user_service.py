@@ -51,7 +51,9 @@ def get_current_user(
 def update_user_role(
     db: Session,
     user_id: int,
-    role: str
+    role: str,
+    *,
+    commit: bool = True,
 ):
 
     user = user_repository.get_user_by_id(
@@ -68,5 +70,6 @@ def update_user_role(
     return user_repository.update_user_role(
         db,
         user,
-        role
+        role,
+        commit=commit,
     )

@@ -7,6 +7,7 @@ from app.models.realtor_application import RealtorApplication
 from app.models.user import User
 from app.repositories import realtor_application_repository
 from app.schemas.realtor_application import RealtorApplicationCreate
+from app.services import user_service
 
 
 def create_application(
@@ -93,13 +94,39 @@ def review_application(
 
     if application.status != "pending":
         raise BadRequestException(
-            "Only pending applications can be reviewed"
+            "Application has already been reviewed"
         )
+
+    reviewed_at = datetime.now(timezone.utc)
+
+    if status == "approved":
+        try:
+            realtor_application_repository.update_review(
+                db,
+                application,
+                status,
+                admin_user.id,
+                reviewed_at,
+                commit=False,
+            )
+            user_service.update_user_role(
+                db,
+                application.user_id,
+                "realtor",
+                commit=False,
+            )
+            db.commit()
+            db.refresh(application)
+        except Exception:
+            db.rollback()
+            raise
+
+        return application
 
     return realtor_application_repository.update_review(
         db,
         application,
         status,
         admin_user.id,
-        datetime.now(timezone.utc),
+        reviewed_at,
     )

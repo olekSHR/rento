@@ -30,14 +30,16 @@ def get_user_by_id(
 def update_user_role(
     db: Session,
     user: User,
-    role: str
+    role: str,
+    *,
+    commit: bool = True,
 ):
 
     user.role = role
 
-    db.commit()
-
-    db.refresh(user)
+    if commit:
+        db.commit()
+        db.refresh(user)
 
     return user
 

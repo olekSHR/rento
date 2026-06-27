@@ -85,12 +85,15 @@ def update_review(
     status: str,
     reviewed_by: int,
     reviewed_at,
+    *,
+    commit: bool = True,
 ) -> RealtorApplication:
     application.status = status
     application.reviewed_by = reviewed_by
     application.reviewed_at = reviewed_at
 
-    db.commit()
-    db.refresh(application)
+    if commit:
+        db.commit()
+        db.refresh(application)
 
     return application
