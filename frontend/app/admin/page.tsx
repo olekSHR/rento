@@ -54,6 +54,33 @@ export default function AdminPage() {
   </p>
 </Link>
 
+            <Link
+              href="/admin/realtor-applications"
+              className="
+                block
+                w-full
+                rounded-3xl
+                bg-slate-900
+                p-5
+                text-left
+                transition-all
+                duration-200
+                active:scale-[0.98]
+              "
+            >
+              <div className="mb-2 text-2xl">
+                📋
+              </div>
+
+              <h2 className="text-lg font-semibold">
+                Realtor Applications
+              </h2>
+
+              <p className="mt-1 text-sm text-slate-400">
+                Review and approve realtor access requests.
+              </p>
+            </Link>
+
             <button
               type="button"
               className="

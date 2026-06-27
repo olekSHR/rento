@@ -694,3 +694,72 @@ export async function createRealtorApplication(
 
   return response.json()
 }
+
+export type RealtorApplicationListResponse = {
+  items: RealtorApplication[]
+  total: number
+}
+
+export async function getRealtorApplications(
+  token: string,
+  status?: string
+): Promise<RealtorApplicationListResponse> {
+  const url = status
+    ? `${API_URL}/realtor-applications/?status=${encodeURIComponent(status)}`
+    : `${API_URL}/realtor-applications/`
+
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseRealtorApplicationError(
+        response,
+        "Failed to load applications."
+      )
+    )
+  }
+
+  return response.json()
+}
+
+export async function reviewRealtorApplication(
+  applicationId: number,
+  status: "approved" | "rejected",
+  token: string
+): Promise<RealtorApplication> {
+  const response = await fetch(
+    `${API_URL}/realtor-applications/${applicationId}/review`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status }),
+    }
+  )
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseRealtorApplicationError(
+        response,
+        "Failed to update application."
+      )
+    )
+  }
+
+  return response.json()
+}
