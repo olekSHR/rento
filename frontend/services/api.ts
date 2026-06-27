@@ -595,3 +595,102 @@ export async function registerUser(
 
   return response.json()
 }
+
+export type RealtorApplication = {
+  id: number
+  user_id: number
+  full_name: string
+  phone: string
+  agency_name: string | null
+  message: string | null
+  status: string
+  created_at: string
+  reviewed_at: string | null
+  reviewed_by: number | null
+}
+
+export type RealtorApplicationCreateData = {
+  full_name: string
+  phone: string
+  agency_name?: string
+  message?: string
+}
+
+async function parseRealtorApplicationError(
+  response: Response,
+  fallback: string
+): Promise<string> {
+  try {
+    const data = (await response.json()) as {
+      message?: string
+      detail?: string
+    }
+
+    if (typeof data.message === "string") {
+      return data.message
+    }
+
+    if (typeof data.detail === "string") {
+      return data.detail
+    }
+  } catch {
+    // Keep fallback message
+  }
+
+  return fallback
+}
+
+export async function getMyRealtorApplication(
+  token: string
+): Promise<RealtorApplication | null> {
+  const response = await fetch(`${API_URL}/realtor-applications/me`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (response.status === 404) {
+    return null
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseRealtorApplicationError(
+        response,
+        "Failed to load your application."
+      )
+    )
+  }
+
+  return response.json()
+}
+
+export async function createRealtorApplication(
+  data: RealtorApplicationCreateData,
+  token: string
+): Promise<RealtorApplication> {
+  const response = await fetch(`${API_URL}/realtor-applications/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (response.status === 401) {
+    throw new Error("Please sign in to submit your application.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseRealtorApplicationError(
+        response,
+        "Something went wrong. Please try again later."
+      )
+    )
+  }
+
+  return response.json()
+}

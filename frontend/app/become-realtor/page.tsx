@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   BadgeCheck,
   Building2,
@@ -12,13 +12,18 @@ import {
 } from "lucide-react"
 
 import BottomNav from "@/components/BottomNav"
-import Modal from "@/components/Modal"
 import ProtectedRoute from "@/components/ProtectedRoute"
+import EmptyState from "@/components/ui/EmptyState"
 import PageHeader from "@/components/ui/PageHeader"
 import PageShell from "@/components/ui/PageShell"
 import PrimaryButton from "@/components/ui/PrimaryButton"
 import SectionCard from "@/components/ui/SectionCard"
 import StatusBadge from "@/components/ui/StatusBadge"
+import { getToken } from "@/lib/tokenStorage"
+import {
+  createRealtorApplication,
+  getMyRealtorApplication,
+} from "@/services/api"
 
 const BENEFITS = [
   {
@@ -76,11 +81,141 @@ const ROADMAP = [
   },
 ] as const
 
-export default function BecomeRealtorPage() {
-  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false)
+const EMPTY_FORM = {
+  full_name: "",
+  phone: "",
+  agency_name: "",
+  message: "",
+}
 
-  function openRequestModal() {
-    setIsRequestModalOpen(true)
+function formatApplicationError(message: string): string {
+  const normalized = message.toLowerCase()
+
+  if (normalized.includes("pending application")) {
+    return "You already have a pending application."
+  }
+
+  if (normalized.includes("already a realtor")) {
+    return "Your account already has realtor access."
+  }
+
+  if (normalized.includes("invalid token") || normalized.includes("sign in")) {
+    return "Please sign in to submit your application."
+  }
+
+  return message
+}
+
+function scrollToApplicationForm() {
+  document.getElementById("application-form")?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  })
+}
+
+export default function BecomeRealtorPage() {
+  const [formData, setFormData] = useState(EMPTY_FORM)
+  const [isLoadingApplication, setIsLoadingApplication] = useState(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    async function loadExistingApplication() {
+      try {
+        const token = getToken()
+
+        if (!token) {
+          return
+        }
+
+        const application = await getMyRealtorApplication(token)
+
+        if (application?.status === "pending") {
+          setIsSubmitted(true)
+        }
+      } catch (loadError) {
+        console.error(loadError)
+      } finally {
+        setIsLoadingApplication(false)
+      }
+    }
+
+    loadExistingApplication()
+  }, [])
+
+  function handleChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setFormData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }))
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setError("")
+
+    const fullName = formData.full_name.trim()
+    const phone = formData.phone.trim()
+
+    if (!fullName) {
+      setError("Full name is required.")
+      return
+    }
+
+    if (fullName.length < 2) {
+      setError("Full name must be at least 2 characters.")
+      return
+    }
+
+    if (!phone) {
+      setError("Phone is required.")
+      return
+    }
+
+    if (phone.length < 3) {
+      setError("Phone must be at least 3 characters.")
+      return
+    }
+
+    const token = getToken()
+
+    if (!token) {
+      setError("Please sign in to submit your application.")
+      return
+    }
+
+    try {
+      setIsSubmitting(true)
+
+      await createRealtorApplication(
+        {
+          full_name: fullName,
+          phone,
+          ...(formData.agency_name.trim()
+            ? { agency_name: formData.agency_name.trim() }
+            : {}),
+          ...(formData.message.trim()
+            ? { message: formData.message.trim() }
+            : {}),
+        },
+        token
+      )
+
+      setIsSubmitted(true)
+    } catch (submitError) {
+      setError(
+        formatApplicationError(
+          submitError instanceof Error
+            ? submitError.message
+            : "Something went wrong. Please try again later."
+        )
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -103,16 +238,92 @@ export default function BecomeRealtorPage() {
               subtitle="Grow your business with a professional workspace built for modern real estate agents."
             />
 
-            <div className="space-y-2">
-              <PrimaryButton onClick={openRequestModal}>
-                Request Access
-              </PrimaryButton>
-              <p className="text-center text-xs font-medium text-zinc-500">
-                Free during Early Access
-              </p>
-            </div>
+            {!isSubmitted && (
+              <div className="space-y-2">
+                <PrimaryButton onClick={scrollToApplicationForm}>
+                  Request Access
+                </PrimaryButton>
+                <p className="text-center text-xs font-medium text-zinc-500">
+                  Free during Early Access
+                </p>
+              </div>
+            )}
           </div>
         </SectionCard>
+
+        <div id="application-form">
+          <SectionCard>
+          <h2 className="text-sm font-bold text-zinc-900">Application</h2>
+
+          {isLoadingApplication ? (
+            <div className="mt-4 space-y-3">
+              <div className="h-12 animate-pulse rounded-2xl bg-zinc-200" />
+              <div className="h-12 animate-pulse rounded-2xl bg-zinc-200" />
+              <div className="h-24 animate-pulse rounded-2xl bg-zinc-200" />
+            </div>
+          ) : isSubmitted ? (
+            <div className="mt-4">
+              <EmptyState
+                title="Your application has been submitted."
+                description="Our team will review your request shortly."
+                action={
+                  <PrimaryButton href="/">Back to Home</PrimaryButton>
+                }
+              />
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+              <input
+                type="text"
+                name="full_name"
+                placeholder="Full name *"
+                required
+                value={formData.full_name}
+                onChange={handleChange}
+                className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-zinc-900 outline-none"
+              />
+
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone *"
+                required
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-zinc-900 outline-none"
+              />
+
+              <input
+                type="text"
+                name="agency_name"
+                placeholder="Agency name (optional)"
+                value={formData.agency_name}
+                onChange={handleChange}
+                className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-zinc-900 outline-none"
+              />
+
+              <textarea
+                name="message"
+                placeholder="Message (optional)"
+                value={formData.message}
+                onChange={handleChange}
+                rows={4}
+                className="w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-zinc-900 outline-none"
+              />
+
+              {error && (
+                <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
+                  {error}
+                </p>
+              )}
+
+              <PrimaryButton type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Submit Application"}
+              </PrimaryButton>
+            </form>
+          )}
+          </SectionCard>
+        </div>
 
         <SectionCard>
           <div className="mb-4 flex items-center gap-2">
@@ -207,42 +418,22 @@ export default function BecomeRealtorPage() {
           </div>
         </SectionCard>
 
-        <SectionCard className="border-blue-100 bg-blue-50 text-center">
-          <h2 className="text-xl font-extrabold tracking-tight text-zinc-900">
-            Ready to grow your business?
-          </h2>
-          <p className="mt-2 text-sm text-zinc-600">
-            Join Rento&apos;s Early Access program for professional realtors.
-          </p>
-          <div className="mt-5">
-            <PrimaryButton onClick={openRequestModal}>Request Access</PrimaryButton>
-          </div>
-        </SectionCard>
+        {!isSubmitted && (
+          <SectionCard className="border-blue-100 bg-blue-50 text-center">
+            <h2 className="text-xl font-extrabold tracking-tight text-zinc-900">
+              Ready to grow your business?
+            </h2>
+            <p className="mt-2 text-sm text-zinc-600">
+              Join Rento&apos;s Early Access program for professional realtors.
+            </p>
+            <div className="mt-5">
+              <PrimaryButton onClick={scrollToApplicationForm}>
+                Request Access
+              </PrimaryButton>
+            </div>
+          </SectionCard>
+        )}
       </PageShell>
-
-      <Modal
-        isOpen={isRequestModalOpen}
-        onClose={() => setIsRequestModalOpen(false)}
-      >
-        <div className="space-y-4 text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <Building2 className="h-6 w-6" />
-          </div>
-
-          <h3 className="text-lg font-bold text-zinc-900">
-            Applications will open soon
-          </h3>
-
-          <p className="text-sm leading-6 text-zinc-500">
-            Thank you for your interest. Realtor workspace access is granted by
-            Rento during Early Access. We will notify you when applications open.
-          </p>
-
-          <PrimaryButton onClick={() => setIsRequestModalOpen(false)}>
-            Got it
-          </PrimaryButton>
-        </div>
-      </Modal>
 
       <BottomNav />
     </ProtectedRoute>
