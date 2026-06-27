@@ -12,6 +12,7 @@ from app.routers import favorites
 from app.routers import realtor_profiles
 from app.routers import realtor_applications
 from app.routers import ai
+from app.routers import admin_stats
 from app.database.database import Base, engine
 from app.models import user, property, favorite, realtor_application
 from app.core.exceptions import (
@@ -52,6 +53,7 @@ app.include_router(favorites.router)
 app.include_router(realtor_profiles.router)
 app.include_router(realtor_applications.router)
 app.include_router(ai.router)
+app.include_router(admin_stats.router)
 app.add_exception_handler(
     NotFoundException,
     not_found_exception_handler,
