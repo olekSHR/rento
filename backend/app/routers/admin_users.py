@@ -20,6 +20,9 @@ router = APIRouter(
 def list_admin_users(
     page: int = Query(default=1, ge=1),
     limit: int = Query(default=20, ge=1, le=100),
+    q: str | None = Query(default=None),
+    role: str | None = Query(default=None),
+    application_status: str | None = Query(default=None),
     db: Session = Depends(get_db),
     current_user: User = Depends(require_admin),
 ):
@@ -27,4 +30,7 @@ def list_admin_users(
         db,
         page,
         limit,
+        q=q,
+        role=role,
+        application_status=application_status,
     )

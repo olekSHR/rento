@@ -805,15 +805,42 @@ export type AdminUsersResponse = {
   limit: number
 }
 
+export type AdminUsersQuery = {
+  page?: number
+  limit?: number
+  q?: string
+  role?: string
+  application_status?: string
+}
+
 export async function getAdminUsers(
   token: string,
-  page = 1,
+  pageOrQuery: number | AdminUsersQuery = 1,
   limit = 20
 ): Promise<AdminUsersResponse> {
+  const query: AdminUsersQuery =
+    typeof pageOrQuery === "number"
+      ? { page: pageOrQuery, limit }
+      : { page: 1, limit: 20, ...pageOrQuery }
+
   const params = new URLSearchParams({
-    page: String(page),
-    limit: String(limit),
+    page: String(query.page ?? 1),
+    limit: String(query.limit ?? 20),
   })
+
+  const normalizedQuery = query.q?.trim()
+
+  if (normalizedQuery && normalizedQuery.length >= 2) {
+    params.set("q", normalizedQuery)
+  }
+
+  if (query.role) {
+    params.set("role", query.role)
+  }
+
+  if (query.application_status) {
+    params.set("application_status", query.application_status)
+  }
 
   const response = await fetch(`${API_URL}/admin/users?${params}`, {
     cache: "no-store",

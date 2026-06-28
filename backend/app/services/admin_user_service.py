@@ -1,6 +1,12 @@
 from sqlalchemy.orm import Session
 
+from app.core.exceptions import BadRequestException
 from app.repositories import admin_user_repository
+
+VALID_ROLES = frozenset({"user", "realtor", "admin"})
+VALID_APPLICATION_STATUSES = frozenset(
+    {"pending", "approved", "rejected", "none"}
+)
 
 
 def _resolve_display_name(
@@ -22,15 +28,75 @@ def _resolve_display_name(
     return "User"
 
 
+def _normalize_search_query(q: str | None) -> str | None:
+    if q is None:
+        return None
+
+    normalized = q.strip()
+
+    if not normalized:
+        return None
+
+    if len(normalized) < 2:
+        raise BadRequestException(
+            "Search query must be at least 2 characters."
+        )
+
+    return normalized
+
+
+def _validate_role(role: str | None) -> str | None:
+    if role is None or not role.strip():
+        return None
+
+    role = role.strip()
+
+    if role not in VALID_ROLES:
+        raise BadRequestException(
+            "Invalid role filter."
+        )
+
+    return role
+
+
+def _validate_application_status(
+    application_status: str | None,
+) -> str | None:
+    if application_status is None or not application_status.strip():
+        return None
+
+    application_status = application_status.strip()
+
+    if application_status not in VALID_APPLICATION_STATUSES:
+        raise BadRequestException(
+            "Invalid application status filter."
+        )
+
+    return application_status
+
+
 def list_users(
     db: Session,
     page: int,
     limit: int,
+    *,
+    q: str | None = None,
+    role: str | None = None,
+    application_status: str | None = None,
 ) -> dict:
+    normalized_q = _normalize_search_query(q)
+    validated_role = _validate_role(role)
+    validated_application_status = _validate_application_status(
+        application_status
+    )
+
     result = admin_user_repository.list_users(
         db,
         page,
         limit,
+        q=normalized_q,
+        role=validated_role,
+        application_status=validated_application_status,
     )
 
     items = []

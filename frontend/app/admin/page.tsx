@@ -57,7 +57,7 @@ const METRIC_CONFIG: MetricConfig[] = [
     description: "Verified realtor accounts",
     icon: Building2,
     color: "purple",
-    href: "/admin/users",
+    href: "/admin/users?role=realtor",
   },
   {
     key: "pending_realtor_applications",
