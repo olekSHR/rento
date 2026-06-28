@@ -19,11 +19,13 @@ from app.models import user, property, favorite, realtor_application
 from app.core.exceptions import (
     NotFoundException,
     BadRequestException,
+    ForbiddenException,
 )
 
 from app.core.handlers import (
     not_found_exception_handler,
     bad_request_exception_handler,
+    forbidden_exception_handler,
 )
 
 Base.metadata.create_all(bind=engine)
@@ -64,6 +66,11 @@ app.add_exception_handler(
 app.add_exception_handler(
     BadRequestException,
     bad_request_exception_handler,
+)
+
+app.add_exception_handler(
+    ForbiddenException,
+    forbidden_exception_handler,
 )
 
 

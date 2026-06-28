@@ -11,6 +11,8 @@ from app.core.exceptions import (
 )
 from app.core.security.jwt import verify_access_token
 
+from app.services import account_status_service
+
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/auth/login"
@@ -53,6 +55,8 @@ def get_current_user(
         raise UnauthorizedException(
             "User not found"
         )
+
+    account_status_service.assert_can_authenticate(user)
 
     return user
 

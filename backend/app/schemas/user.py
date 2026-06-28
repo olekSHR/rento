@@ -20,6 +20,8 @@ class UserResponse(BaseModel):
 
     role: str
 
+    account_status: str = "active"
+
     class Config:
 
         from_attributes = True

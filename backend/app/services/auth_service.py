@@ -10,6 +10,8 @@ from app.core.security.hashing import verify_password
 
 from app.core.security.jwt import create_access_token
 
+from app.services import account_status_service
+
 def login_user(
     db: Session,
     email: str,
@@ -37,6 +39,8 @@ def login_user(
         raise BadRequestException(
             "Invalid email or password"
         )
+
+    account_status_service.assert_can_login(user)
 
     access_token = create_access_token({
         "sub": user.email

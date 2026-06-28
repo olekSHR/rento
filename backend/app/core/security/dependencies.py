@@ -12,6 +12,8 @@ from app.repositories import user_repository
 
 from app.core.exceptions import BadRequestException
 
+from app.services import account_status_service
+
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/auth/login"
@@ -54,6 +56,8 @@ def get_current_user(
         raise BadRequestException(
             "User not found"
         )
+
+    account_status_service.assert_can_authenticate(user)
 
     return user
 
@@ -105,6 +109,8 @@ def get_current_user_optional(
         raise BadRequestException(
             "User not found"
         )
+
+    account_status_service.assert_can_authenticate(user)
 
     return user
 

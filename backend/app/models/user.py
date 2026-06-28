@@ -25,3 +25,10 @@ class User(Base):
         String,
         default="user"
     )
+
+    account_status = Column(
+        String,
+        nullable=False,
+        default="active",
+        server_default="active",
+    )

@@ -27,3 +27,17 @@ async def bad_request_exception_handler(
             "message": exc.detail
         }
     )
+
+
+async def forbidden_exception_handler(
+    request,
+    exc
+):
+
+    return JSONResponse(
+        status_code=403,
+        content={
+            "success": False,
+            "message": exc.detail
+        }
+    )
