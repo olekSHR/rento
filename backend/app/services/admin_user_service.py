@@ -1,12 +1,13 @@
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import BadRequestException, NotFoundException
-from app.repositories import admin_user_repository
+from app.repositories import admin_user_repository, user_repository
 
 VALID_ROLES = frozenset({"user", "realtor", "admin"})
 VALID_APPLICATION_STATUSES = frozenset(
     {"pending", "approved", "rejected", "none"}
 )
+VALID_ACCOUNT_STATUSES = frozenset({"active", "suspended", "blocked"})
 
 
 def _resolve_display_name(
@@ -55,6 +56,7 @@ def _map_user_row(row) -> dict:
         "listings_count": int(row.listings_count),
         "is_verified_realtor": bool(row.is_verified),
         "registered_at": None,
+        "account_status": row.account_status,
     }
 
 
@@ -164,3 +166,45 @@ def get_user_by_id(
     )
 
     return user
+
+
+def update_account_status(
+    db: Session,
+    user_id: int,
+    account_status: str,
+    admin_user,
+) -> dict:
+    if account_status not in VALID_ACCOUNT_STATUSES:
+        raise BadRequestException(
+            "Invalid account status."
+        )
+
+    target = user_repository.get_user_by_id(db, user_id)
+
+    if not target:
+        raise NotFoundException(
+            "User not found"
+        )
+
+    if target.role == "admin":
+        raise BadRequestException(
+            "Admin account status cannot be changed"
+        )
+
+    if target.id == admin_user.id:
+        raise BadRequestException(
+            "Cannot change your own account status"
+        )
+
+    if target.account_status == account_status:
+        raise BadRequestException(
+            "Account status is already set"
+        )
+
+    user_repository.update_account_status(
+        db,
+        target,
+        account_status,
+    )
+
+    return get_user_by_id(db, user_id)

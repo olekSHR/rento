@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session
 from app.core.security.dependencies import require_admin
 from app.database.database import get_db
 from app.models.user import User
-from app.schemas.admin_user import AdminUserDetailResponse, AdminUserListResponse
+from app.schemas.admin_user import (
+    AdminAccountStatusUpdate,
+    AdminUserDetailResponse,
+    AdminUserListResponse,
+)
 from app.services import admin_user_service
 
 router = APIRouter(
@@ -48,4 +52,22 @@ def get_admin_user(
     return admin_user_service.get_user_by_id(
         db,
         user_id,
+    )
+
+
+@router.patch(
+    "/users/{user_id}/account-status",
+    response_model=AdminUserDetailResponse,
+)
+def update_admin_user_account_status(
+    user_id: int,
+    status_update: AdminAccountStatusUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin),
+):
+    return admin_user_service.update_account_status(
+        db,
+        user_id,
+        status_update.account_status,
+        current_user,
     )

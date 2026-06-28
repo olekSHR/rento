@@ -15,8 +15,10 @@ import StatusBadge from "@/components/ui/StatusBadge"
 import { getToken } from "@/lib/tokenStorage"
 import {
   getAdminUserById,
+  updateAdminUserAccountStatus,
   updateUserRole,
   type AdminUserDetail,
+  type ManageableAccountStatus,
   type ManageableUserRole,
 } from "@/services/api"
 
@@ -86,6 +88,34 @@ function isManageableRole(role: string): role is ManageableUserRole {
   return role === "user" || role === "realtor"
 }
 
+function canManageAccountStatus(role: string): boolean {
+  return role !== "admin"
+}
+
+function getAccountStatusVariant(
+  status: string
+): "success" | "warning" | "danger" | "neutral" {
+  if (status === "active") {
+    return "success"
+  }
+
+  if (status === "suspended") {
+    return "warning"
+  }
+
+  if (status === "blocked") {
+    return "danger"
+  }
+
+  return "neutral"
+}
+
+function isAccountStatusValue(
+  value: string
+): value is ManageableAccountStatus {
+  return value === "active" || value === "suspended" || value === "blocked"
+}
+
 function DetailSkeleton() {
   return (
     <PageShell>
@@ -113,6 +143,9 @@ function ProfileSection({ user }: { user: AdminUserDetail }) {
           <div className="mt-3 flex flex-wrap gap-1">
             <StatusBadge variant={getRoleVariant(user.role)}>
               {user.role}
+            </StatusBadge>
+            <StatusBadge variant={getAccountStatusVariant(user.account_status)}>
+              {user.account_status}
             </StatusBadge>
             {user.is_verified_realtor && (
               <StatusBadge variant="success">Verified</StatusBadge>
@@ -144,6 +177,10 @@ function AccountSection({ user }: { user: AdminUserDetail }) {
         <div>
           <dt className="font-semibold text-zinc-700">Role</dt>
           <dd className="mt-0.5 text-zinc-500">{user.role}</dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-zinc-700">Account Status</dt>
+          <dd className="mt-0.5 text-zinc-500">{user.account_status}</dd>
         </div>
         <div>
           <dt className="font-semibold text-zinc-700">Listings</dt>
@@ -377,6 +414,209 @@ function RoleManagementSection({
   )
 }
 
+function AccountStatusConfirmDialog({
+  isOpen,
+  isSaving,
+  onCancel,
+  onConfirm,
+}: {
+  isOpen: boolean
+  isSaving: boolean
+  onCancel: () => void
+  onConfirm: () => void
+}) {
+  if (!isOpen) {
+    return null
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center"
+      role="presentation"
+      onClick={isSaving ? undefined : onCancel}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="account-status-confirm-title"
+        className="w-full max-w-md rounded-3xl bg-white p-6 ring-1 ring-zinc-200 shadow-lg"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <h2
+          id="account-status-confirm-title"
+          className="text-base font-bold text-zinc-900"
+        >
+          Confirm account status change
+        </h2>
+        <p className="mt-2 text-sm text-zinc-500">
+          Are you sure you want to change this user&apos;s account status?
+        </p>
+
+        <div className="mt-6 space-y-3">
+          <PrimaryButton disabled={isSaving} onClick={onConfirm}>
+            {isSaving ? "Saving..." : "Confirm"}
+          </PrimaryButton>
+          <SecondaryButton disabled={isSaving} onClick={onCancel}>
+            Cancel
+          </SecondaryButton>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function AccountStatusManagementSection({
+  user,
+  onUserUpdated,
+  onSuccess,
+}: {
+  user: AdminUserDetail
+  onUserUpdated: (updatedUser: AdminUserDetail) => void
+  onSuccess: () => void
+}) {
+  const initialStatus = isAccountStatusValue(user.account_status)
+    ? user.account_status
+    : "active"
+
+  const [selectedStatus, setSelectedStatus] =
+    useState<ManageableAccountStatus>(initialStatus)
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveError, setSaveError] = useState("")
+  const [showConfirm, setShowConfirm] = useState(false)
+
+  const hasStatusChange =
+    canManageAccountStatus(user.role) &&
+    selectedStatus !== user.account_status
+
+  function handleSaveClick() {
+    if (!hasStatusChange || isSaving) {
+      return
+    }
+
+    setSaveError("")
+    setShowConfirm(true)
+  }
+
+  function handleCancelConfirm() {
+    if (isSaving) {
+      return
+    }
+
+    setShowConfirm(false)
+  }
+
+  async function handleConfirmStatusChange() {
+    if (!hasStatusChange || isSaving) {
+      return
+    }
+
+    setSaveError("")
+
+    try {
+      setIsSaving(true)
+
+      const token = getToken()
+
+      if (!token) {
+        throw new Error("Unable to update account status.")
+      }
+
+      const refreshedUser = await updateAdminUserAccountStatus(
+        token,
+        user.id,
+        selectedStatus
+      )
+
+      onUserUpdated(refreshedUser)
+      sessionStorage.setItem(ADMIN_USERS_RELOAD_KEY, "1")
+      setShowConfirm(false)
+      onSuccess()
+    } catch (updateError) {
+      setSaveError(
+        updateError instanceof Error
+          ? updateError.message
+          : "Unable to update account status."
+      )
+      setShowConfirm(false)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  if (!canManageAccountStatus(user.role)) {
+    return (
+      <SectionCard>
+        <h2 className="text-sm font-bold text-zinc-900">Account Status</h2>
+        <p className="mt-2 text-sm text-zinc-500">
+          Admin account status is protected and cannot be changed from this page.
+        </p>
+      </SectionCard>
+    )
+  }
+
+  return (
+    <>
+      <SectionCard>
+        <h2 className="text-sm font-bold text-zinc-900">Account Status</h2>
+
+        <div className="mt-4 space-y-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wide text-zinc-500">
+              Current Status
+            </p>
+            <div className="mt-2">
+              <StatusBadge variant={getAccountStatusVariant(user.account_status)}>
+                {user.account_status}
+              </StatusBadge>
+            </div>
+          </div>
+
+          <label className="block">
+            <span className="text-xs font-bold uppercase tracking-wide text-zinc-500">
+              New Status
+            </span>
+            <select
+              value={selectedStatus}
+              disabled={isSaving}
+              onChange={(event) => {
+                const value = event.target.value
+                if (isAccountStatusValue(value)) {
+                  setSelectedStatus(value)
+                }
+              }}
+              className="mt-2 w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-900 outline-none disabled:opacity-50"
+            >
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+              <option value="blocked">Blocked</option>
+            </select>
+          </label>
+
+          {saveError && (
+            <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
+              {saveError}
+            </p>
+          )}
+
+          <PrimaryButton
+            disabled={!hasStatusChange || isSaving}
+            onClick={handleSaveClick}
+          >
+            Save
+          </PrimaryButton>
+        </div>
+      </SectionCard>
+
+      <AccountStatusConfirmDialog
+        isOpen={showConfirm}
+        isSaving={isSaving}
+        onCancel={handleCancelConfirm}
+        onConfirm={() => void handleConfirmStatusChange()}
+      />
+    </>
+  )
+}
+
 export default function AdminUserDetailPage() {
   const params = useParams()
   const userId = Number(params.id)
@@ -489,7 +729,7 @@ export default function AdminUserDetailPage() {
           <>
             <PageHeader
               title="User Details"
-              subtitle="Account overview and role management."
+              subtitle="Account overview, role, and status management."
             />
 
             <ProfileSection user={user} />
@@ -500,6 +740,14 @@ export default function AdminUserDetailPage() {
               user={user}
               onRoleUpdated={setUser}
               onSuccess={() => setToastMessage("Role updated successfully.")}
+            />
+            <AccountStatusManagementSection
+              key={`${user.id}-${user.account_status}`}
+              user={user}
+              onUserUpdated={setUser}
+              onSuccess={() =>
+                setToastMessage("Account status updated successfully.")
+              }
             />
 
             {user.application_status && (

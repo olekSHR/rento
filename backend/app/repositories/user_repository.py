@@ -44,6 +44,23 @@ def update_user_role(
     return user
 
 
+def update_account_status(
+    db: Session,
+    user: User,
+    account_status: str,
+    *,
+    commit: bool = True,
+):
+
+    user.account_status = account_status
+
+    if commit:
+        db.commit()
+        db.refresh(user)
+
+    return user
+
+
 def create_user(
     db: Session,
     email: str,

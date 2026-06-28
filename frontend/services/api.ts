@@ -796,6 +796,7 @@ export type AdminUserListItem = {
   listings_count: number
   is_verified_realtor: boolean
   registered_at: string | null
+  account_status: string
 }
 
 export type AdminUsersResponse = {
@@ -934,6 +935,42 @@ export async function updateUserRole(
   if (!response.ok) {
     throw new Error(
       await parseUserRoleError(response, "Unable to update user role.")
+    )
+  }
+
+  return response.json()
+}
+
+export type ManageableAccountStatus = "active" | "suspended" | "blocked"
+
+export async function updateAdminUserAccountStatus(
+  token: string,
+  userId: number,
+  accountStatus: ManageableAccountStatus
+): Promise<AdminUserDetail> {
+  const response = await fetch(
+    `${API_URL}/admin/users/${userId}/account-status`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ account_status: accountStatus }),
+    }
+  )
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (response.status === 404) {
+    throw new Error("User not found.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseUserRoleError(response, "Unable to update account status.")
     )
   }
 
