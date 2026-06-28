@@ -10,7 +10,7 @@ async def not_found_exception_handler(
         status_code=404,
         content={
             "success": False,
-            "message": exc.detail
+            "message": getattr(exc, "message", getattr(exc, "detail", "Not found"))
         }
     )
 

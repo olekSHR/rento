@@ -855,3 +855,30 @@ export async function getAdminUsers(
 
   return response.json()
 }
+
+export type AdminUserDetail = AdminUserListItem & {
+  phone: string | null
+  agency_name: string | null
+}
+
+export async function getAdminUserById(
+  token: string,
+  userId: number
+): Promise<AdminUserDetail> {
+  const response = await fetch(`${API_URL}/admin/users/${userId}`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  if (response.status === 404) {
+    throw new Error("User not found.")
+  }
+
+  if (!response.ok) {
+    throw new Error("Unable to load user.")
+  }
+
+  return response.json()
+}

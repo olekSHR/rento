@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from app.core.exceptions import BadRequestException
+from app.core.exceptions import BadRequestException, NotFoundException
 from app.repositories import admin_user_repository
 
 VALID_ROLES = frozenset({"user", "realtor", "admin"})
@@ -26,6 +26,36 @@ def _resolve_display_name(
         return local_part
 
     return "User"
+
+
+def _resolve_optional_field(
+    profile_value: str | None,
+    application_value: str | None,
+) -> str | None:
+    if profile_value and profile_value.strip():
+        return profile_value.strip()
+
+    if application_value and application_value.strip():
+        return application_value.strip()
+
+    return None
+
+
+def _map_user_row(row) -> dict:
+    return {
+        "id": row.id,
+        "email": row.email,
+        "role": row.role,
+        "display_name": _resolve_display_name(
+            row.email,
+            row.profile_full_name,
+            row.application_full_name,
+        ),
+        "application_status": row.application_status,
+        "listings_count": int(row.listings_count),
+        "is_verified_realtor": bool(row.is_verified),
+        "registered_at": None,
+    }
 
 
 def _normalize_search_query(q: str | None) -> str | None:
@@ -102,22 +132,7 @@ def list_users(
     items = []
 
     for row in result["rows"]:
-        items.append(
-            {
-                "id": row.id,
-                "email": row.email,
-                "role": row.role,
-                "display_name": _resolve_display_name(
-                    row.email,
-                    row.profile_full_name,
-                    row.application_full_name,
-                ),
-                "application_status": row.application_status,
-                "listings_count": int(row.listings_count),
-                "is_verified_realtor": bool(row.is_verified),
-                "registered_at": None,
-            }
-        )
+        items.append(_map_user_row(row))
 
     return {
         "items": items,
@@ -125,3 +140,27 @@ def list_users(
         "page": result["page"],
         "limit": result["limit"],
     }
+
+
+def get_user_by_id(
+    db: Session,
+    user_id: int,
+) -> dict:
+    row = admin_user_repository.get_user_by_id(db, user_id)
+
+    if not row:
+        raise NotFoundException(
+            "User not found"
+        )
+
+    user = _map_user_row(row)
+    user["phone"] = _resolve_optional_field(
+        row.profile_phone,
+        row.application_phone,
+    )
+    user["agency_name"] = _resolve_optional_field(
+        row.profile_agency_name,
+        row.application_agency_name,
+    )
+
+    return user

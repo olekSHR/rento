@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
+import AdminUserListCard from "@/components/admin/AdminUserListCard"
 import AdminRoute from "@/components/AdminRoute"
 import EmptyState from "@/components/ui/EmptyState"
 import PageHeader from "@/components/ui/PageHeader"
@@ -12,7 +13,6 @@ import PageShell from "@/components/ui/PageShell"
 import PrimaryButton from "@/components/ui/PrimaryButton"
 import SecondaryButton from "@/components/ui/SecondaryButton"
 import SectionCard from "@/components/ui/SectionCard"
-import StatusBadge from "@/components/ui/StatusBadge"
 import { getToken } from "@/lib/tokenStorage"
 import {
   getAdminUsers,
@@ -38,62 +38,6 @@ const APPLICATION_FILTERS = [
 
 type RoleFilter = (typeof ROLE_FILTERS)[number]["value"]
 type ApplicationFilter = (typeof APPLICATION_FILTERS)[number]["value"]
-
-function getDisplayInitials(displayName: string): string {
-  const parts = displayName.trim().split(/\s+/).filter(Boolean)
-
-  if (parts.length >= 2) {
-    return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase()
-  }
-
-  if (parts.length === 1) {
-    return parts[0].charAt(0).toUpperCase()
-  }
-
-  return "U"
-}
-
-function getRoleVariant(
-  role: string
-): "success" | "warning" | "neutral" | "info" {
-  if (role === "admin") {
-    return "info"
-  }
-
-  if (role === "realtor") {
-    return "success"
-  }
-
-  return "neutral"
-}
-
-function getApplicationVariant(
-  status: string
-): "success" | "warning" | "danger" | "neutral" {
-  if (status === "approved") {
-    return "success"
-  }
-
-  if (status === "rejected") {
-    return "danger"
-  }
-
-  if (status === "pending") {
-    return "warning"
-  }
-
-  return "neutral"
-}
-
-function formatRegisteredAt(value: string | null): string {
-  if (!value) {
-    return "—"
-  }
-
-  return new Date(value).toLocaleDateString(undefined, {
-    dateStyle: "medium",
-  })
-}
 
 function parsePageParam(value: string | null): number {
   const parsed = Number(value)
@@ -169,62 +113,6 @@ function FilterChip({
     >
       {label}
     </button>
-  )
-}
-
-function UserCard({ user }: { user: AdminUserListItem }) {
-  return (
-    <SectionCard>
-      <div className="flex items-start gap-3">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white">
-          {getDisplayInitials(user.display_name)}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-start justify-between gap-2">
-            <div className="min-w-0">
-              <h2 className="truncate text-base font-bold text-zinc-900">
-                {user.display_name}
-              </h2>
-              <p className="mt-0.5 truncate text-sm text-zinc-500">
-                {user.email}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-1">
-              <StatusBadge variant={getRoleVariant(user.role)}>
-                {user.role}
-              </StatusBadge>
-              {user.is_verified_realtor && (
-                <StatusBadge variant="success">Verified</StatusBadge>
-              )}
-              {user.application_status && (
-                <StatusBadge
-                  variant={getApplicationVariant(user.application_status)}
-                >
-                  {user.application_status}
-                </StatusBadge>
-              )}
-            </div>
-          </div>
-
-          <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
-            <div>
-              <dt className="font-semibold text-zinc-700">Listings</dt>
-              <dd className="mt-0.5 text-zinc-500">
-                {user.listings_count.toLocaleString()}
-              </dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-zinc-700">Registered</dt>
-              <dd className="mt-0.5 text-zinc-500">
-                {formatRegisteredAt(user.registered_at)}
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </SectionCard>
   )
 }
 
@@ -476,7 +364,7 @@ export default function AdminUsersPage() {
           <>
             <div className="space-y-3">
               {users.map((user) => (
-                <UserCard key={user.id} user={user} />
+                <AdminUserListCard key={user.id} user={user} />
               ))}
             </div>
 

@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.core.security.dependencies import require_admin
 from app.database.database import get_db
 from app.models.user import User
-from app.schemas.admin_user import AdminUserListResponse
+from app.schemas.admin_user import AdminUserDetailResponse, AdminUserListResponse
 from app.services import admin_user_service
 
 router = APIRouter(
@@ -33,4 +33,19 @@ def list_admin_users(
         q=q,
         role=role,
         application_status=application_status,
+    )
+
+
+@router.get(
+    "/users/{user_id}",
+    response_model=AdminUserDetailResponse,
+)
+def get_admin_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin),
+):
+    return admin_user_service.get_user_by_id(
+        db,
+        user_id,
     )
