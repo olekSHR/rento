@@ -4,13 +4,22 @@ from sqlalchemy.orm import Session
 
 from app.database.database import get_db
 from app.repositories import user_repository
-from app.core.exceptions import NotFoundException, UnauthorizedException
+from app.core.exceptions import (
+    BadRequestException,
+    NotFoundException,
+    UnauthorizedException,
+)
 from app.core.security.jwt import verify_access_token
 
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/auth/login"
 )
+
+ALLOWED_ROLE_TRANSITIONS = {
+    "user": {"realtor"},
+    "realtor": {"user"},
+}
 
 
 def get_current_user(
@@ -65,6 +74,28 @@ def update_user_role(
 
         raise NotFoundException(
             "User not found"
+        )
+
+    if user.role == "admin":
+        raise BadRequestException(
+            "Admin role cannot be changed"
+        )
+
+    if role == "admin":
+        raise BadRequestException(
+            "Cannot assign admin role"
+        )
+
+    if user.role == role:
+        raise BadRequestException(
+            "Role is already set"
+        )
+
+    allowed_targets = ALLOWED_ROLE_TRANSITIONS.get(user.role)
+
+    if not allowed_targets or role not in allowed_targets:
+        raise BadRequestException(
+            f"Cannot change role from {user.role} to {role}"
         )
 
     return user_repository.update_user_role(

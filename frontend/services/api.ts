@@ -882,3 +882,60 @@ export async function getAdminUserById(
 
   return response.json()
 }
+
+export type ManageableUserRole = "user" | "realtor"
+
+async function parseUserRoleError(
+  response: Response,
+  fallback: string
+): Promise<string> {
+  try {
+    const data = (await response.json()) as {
+      message?: string
+      detail?: string
+    }
+
+    if (typeof data.message === "string") {
+      return data.message
+    }
+
+    if (typeof data.detail === "string") {
+      return data.detail
+    }
+  } catch {
+    // Keep fallback message
+  }
+
+  return fallback
+}
+
+export async function updateUserRole(
+  token: string,
+  userId: number,
+  role: ManageableUserRole
+): Promise<{ id: number; email: string; role: string }> {
+  const response = await fetch(`${API_URL}/users/${userId}/role`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ role }),
+  })
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (response.status === 404) {
+    throw new Error("User not found.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseUserRoleError(response, "Unable to update user role.")
+    )
+  }
+
+  return response.json()
+}

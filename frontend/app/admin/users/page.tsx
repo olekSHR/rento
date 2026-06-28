@@ -20,6 +20,7 @@ import {
 } from "@/services/api"
 
 const PAGE_LIMIT = 20
+const ADMIN_USERS_RELOAD_KEY = "adminUsersNeedsReload"
 
 const ROLE_FILTERS = [
   { value: "", label: "All" },
@@ -256,6 +257,22 @@ export default function AdminUsersPage() {
       isMounted = false
     }
   }, [page, effectiveQuery, role, applicationStatus, reloadKey])
+
+  useEffect(() => {
+    function checkReloadFlag() {
+      if (sessionStorage.getItem(ADMIN_USERS_RELOAD_KEY) === "1") {
+        sessionStorage.removeItem(ADMIN_USERS_RELOAD_KEY)
+        setReloadKey((current) => current + 1)
+      }
+    }
+
+    checkReloadFlag()
+    window.addEventListener("pageshow", checkReloadFlag)
+
+    return () => {
+      window.removeEventListener("pageshow", checkReloadFlag)
+    }
+  }, [])
 
   function handlePreviousPage() {
     if (page > 1) {
