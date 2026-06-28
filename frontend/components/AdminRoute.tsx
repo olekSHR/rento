@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import AdminWorkspaceHeader from "@/components/admin/AdminWorkspaceHeader";
 import { useAuth } from "@/context/AuthContext";
 
 interface AdminRouteProps {
@@ -44,5 +45,10 @@ export default function AdminRoute({ children }: AdminRouteProps) {
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <AdminWorkspaceHeader />
+      {children}
+    </>
+  );
 }
