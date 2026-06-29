@@ -86,6 +86,18 @@ export default function ProfilePage() {
           </div>
         </SectionCard>
 
+        {isAdmin && (
+          <SectionCard className="border-zinc-300 bg-zinc-50">
+            <h2 className="text-sm font-bold text-zinc-900">Admin Workspace</h2>
+            <p className="mt-2 text-sm leading-6 text-zinc-600">
+              Manage users, listings, and moderation.
+            </p>
+            <div className="mt-4">
+              <PrimaryButton href="/admin">Open Admin Workspace</PrimaryButton>
+            </div>
+          </SectionCard>
+        )}
+
         <SectionCard>
           <h2 className="text-sm font-bold text-zinc-900">Saved properties</h2>
 

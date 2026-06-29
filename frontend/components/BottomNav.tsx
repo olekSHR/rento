@@ -6,7 +6,6 @@ import {
   Heart,
   Home,
   Search,
-  ShieldCheck,
   User,
   Building2,
 } from "lucide-react";
@@ -19,13 +18,12 @@ type BottomNavProps = {
 export default function BottomNav({ onOpenFilters }: BottomNavProps) {
   const pathname = usePathname();
 
-  const { isAdmin, isRealtor, isAuthenticated } = useAuth();
+  const { isRealtor, isAuthenticated } = useAuth();
 
   const profileHref = isAuthenticated ? "/profile" : "/login";
 
   const isHome = pathname === "/";
   const isFavorites = pathname === "/favorites";
-  const isAdminActive = pathname === "/admin" || pathname.startsWith("/admin/");
   const isRealtorActive =
   pathname === "/realtor" ||
   pathname.startsWith("/realtor/");
@@ -124,16 +122,6 @@ export default function BottomNav({ onOpenFilters }: BottomNavProps) {
             <Search className={iconClass(false)} />
             <span className="mt-1">Filters</span>
           </button>
-        )}
-
-        {isAdmin && (
-          <Link href="/admin" className={itemClass(isAdminActive)}>
-            {isAdminActive && (
-              <span className="absolute top-1 h-1 w-5 rounded-full bg-blue-700" />
-            )}
-            <ShieldCheck className={iconClass(isAdminActive)} />
-            <span className="mt-1">Admin</span>
-          </Link>
         )}
 
         {isRealtor && (
