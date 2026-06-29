@@ -1,10 +1,29 @@
 from sqlalchemy.orm import Session
 
-from app.repositories import property_repository
+from app.repositories import property_repository, realtor_profile_repository
 from app.core.exceptions import BadRequestException, NotFoundException
 
 
 PUBLIC_PROPERTY_STATUSES = ("available", "reserved")
+
+
+def _resolve_property_contacts_from_profile(db: Session, property_item):
+    if not property_item.owner_id:
+        return property_item
+
+    profile = realtor_profile_repository.get_by_user_id(
+        db,
+        property_item.owner_id,
+    )
+
+    if not profile:
+        return property_item
+
+    property_item.contact_name = profile.full_name
+    property_item.phone = profile.phone
+    property_item.whatsapp = profile.whatsapp
+
+    return property_item
 
 
 def get_all_properties(
@@ -101,7 +120,7 @@ def get_property_by_id_for_viewer(
                 "Property not found"
             )
 
-        return property_item
+        return _resolve_property_contacts_from_profile(db, property_item)
 
     if current_user.role == "admin":
 
@@ -123,7 +142,7 @@ def get_property_by_id_for_viewer(
             "Property not found"
         )
 
-    return property_item
+    return _resolve_property_contacts_from_profile(db, property_item)
 
 
 def create_property(
