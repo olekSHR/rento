@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.repositories import property_repository
-from app.core.exceptions import NotFoundException
+from app.core.exceptions import BadRequestException, NotFoundException
 
 
 PUBLIC_PROPERTY_STATUSES = ("available", "reserved")
@@ -223,6 +223,11 @@ def verify_property(
 
         raise NotFoundException(
             "Property not found"
+        )
+
+    if property_item.status != "pending":
+        raise BadRequestException(
+            "Only pending listings can be verified"
         )
 
     return property_repository.update_property(

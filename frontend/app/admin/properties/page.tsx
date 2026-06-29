@@ -75,10 +75,16 @@ function getVerificationColor(
   return "text-red-400"
 }
 
+const ACTIVE_PROPERTY_STATUSES: Property["status"][] = [
+  "available",
+  "reserved",
+  "rented",
+]
+
 export default function AdminPropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);
 const [filter, setFilter] = useState<
-  "all" | "active" | "archived"
+  "all" | "active" | "pending" | "archived"
 >("all");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -162,6 +168,7 @@ async function handleVerify(id: number) {
         property.id === id
           ? {
               ...property,
+              status: updatedProperty.status,
               last_verified_at:
                 updatedProperty.last_verified_at,
             }
@@ -214,15 +221,13 @@ async function handleArchiveToggle(
 const filteredProperties =
   filter === "all"
     ? properties
-    : filter === "archived"
-      ? properties.filter(
-          (property) =>
-            property.status === "archived"
-        )
-      : properties.filter(
-          (property) =>
-            property.status !== "archived"
-        )
+    : filter === "pending"
+      ? properties.filter((property) => property.status === "pending")
+      : filter === "archived"
+        ? properties.filter((property) => property.status === "archived")
+        : properties.filter((property) =>
+            ACTIVE_PROPERTY_STATUSES.includes(property.status)
+          )
 
   return (
     <AdminRoute>
@@ -289,6 +294,18 @@ const filteredProperties =
     }`}
   >
     Active
+  </button>
+
+  <button
+    type="button"
+    onClick={() => setFilter("pending")}
+    className={`rounded-2xl px-4 py-2 text-sm font-semibold ${
+      filter === "pending"
+        ? "bg-white text-black"
+        : "bg-slate-800 text-white"
+    }`}
+  >
+    Pending
   </button>
 
   <button
@@ -424,7 +441,9 @@ const verificationColor =
                               ? "bg-yellow-500/15 text-yellow-400"
                               : property.status === "rented"
                                 ? "bg-red-500/15 text-red-400"
-                                : "bg-slate-700 text-slate-300"
+                                : property.status === "pending"
+                                  ? "bg-amber-500/15 text-amber-400"
+                                  : "bg-slate-700 text-slate-300"
                         }
                      `}
                     >
@@ -434,10 +453,12 @@ const verificationColor =
                           ? "🟡 Reserved"
                           : property.status === "rented"
                             ? "🔴 Rented"
-                            : "⚫ Archived"}
+                            : property.status === "pending"
+                              ? "🟠 Pending"
+                              : "⚫ Archived"}
                     </span>
 
-                    {property.status !== "archived" && (
+                    {property.status === "pending" && (
   <button
     type="button"
     onClick={() =>
