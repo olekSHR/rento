@@ -170,30 +170,13 @@ export function buildWorkspaceActions(
     })
   }
 
-  // TODO: Replace with listing freshness API when available
-  if (properties.length > 0) {
-    actions.push({
-      id: "update-old-listings",
-      title: "Update old listings",
-      description: "Review pricing and availability weekly",
-      href: "/realtor",
-      tone: "default",
-    })
-  }
-
   return actions.slice(0, 4)
 }
 
 export function getContinueEditingProperty(
   properties: Property[]
 ): Property | null {
-  const draft = properties.find((property) => property.status === "pending")
-
-  if (draft) {
-    return draft
-  }
-
-  return properties[0] ?? null
+  return properties.find((property) => property.status === "pending") ?? null
 }
 
 export function getPropertyStatusLabel(status: Property["status"]): string {

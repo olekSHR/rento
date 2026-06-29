@@ -80,7 +80,6 @@ export default function RealtorWorkspacePage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeFilter, setActiveFilter] = useState<PropertyFilter>("all")
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
-  const [toastMessage, setToastMessage] = useState("")
 
   const isRealtor = user?.role === "realtor"
 
@@ -113,13 +112,6 @@ export default function RealtorWorkspacePage() {
 
     loadWorkspace()
   }, [isLoading, isAuthenticated, isRealtor])
-
-  useEffect(() => {
-    if (!toastMessage) return
-
-    const timer = window.setTimeout(() => setToastMessage(""), 2800)
-    return () => window.clearTimeout(timer)
-  }, [toastMessage])
 
   const profileCompletion = computeProfileCompletionPercent(profile)
   const canCreateListing = profile?.is_completed === true
@@ -433,17 +425,7 @@ export default function RealtorWorkspacePage() {
         property={selectedProperty}
         isOpen={selectedProperty !== null}
         onClose={() => setSelectedProperty(null)}
-        onComingSoon={(label) => {
-          setToastMessage(`${label} — Coming Soon`)
-          setSelectedProperty(null)
-        }}
       />
-
-      {toastMessage && (
-        <div className="fixed bottom-24 left-1/2 z-[60] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl bg-zinc-900 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg">
-          {toastMessage}
-        </div>
-      )}
     </main>
   )
 }
