@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import BottomNav from "./BottomNav"
+import ConsumerShell from "./ConsumerShell"
 import Modal from "./Modal"
 import FiltersBar from "./FiltersBar"
 
@@ -26,9 +26,9 @@ export default function HomePageContent({ children }: Props) {
         <FiltersBar onSearch={() => setIsFiltersOpen(false)} />
       </Modal>
 
-      {children}
-
-      <BottomNav onOpenFilters={() => setIsFiltersOpen(true)} />
+      <ConsumerShell onOpenFilters={() => setIsFiltersOpen(true)}>
+        {children}
+      </ConsumerShell>
     </>
   )
 }

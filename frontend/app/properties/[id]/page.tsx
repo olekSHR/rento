@@ -7,6 +7,7 @@ import {
   Phone,
 } from "lucide-react"
 
+import ConsumerShell from "@/components/ConsumerShell"
 import FavoriteButton from "@/components/FavoriteButton"
 import BackButton from "@/components/BackButton"
 import PropertyGallery from "@/components/PropertyGallery"
@@ -92,6 +93,7 @@ export default async function PropertyPage({ params }: Props) {
         : []
 
   return (
+    <ConsumerShell>
     <main className="min-h-screen bg-zinc-100 pb-24">
       <div className="mx-auto min-h-screen max-w-md bg-white">
         <div className="relative">
@@ -244,5 +246,6 @@ export default async function PropertyPage({ params }: Props) {
         </section>
       </div>
     </main>
+    </ConsumerShell>
   )
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 
-import BottomNav from "@/components/BottomNav"
+import ConsumerShell from "@/components/ConsumerShell"
 import PropertyCard from "@/components/PropertyCard"
 import ProtectedRoute from "@/components/ProtectedRoute"
 import EmptyState from "@/components/ui/EmptyState"
@@ -85,6 +85,7 @@ export default function FavoritesPage() {
 
   return (
     <ProtectedRoute>
+      <ConsumerShell>
       <PageShell>
         <FavoritesHeader />
 
@@ -118,8 +119,7 @@ export default function FavoritesPage() {
           </>
         )}
       </PageShell>
-
-      <BottomNav />
+      </ConsumerShell>
     </ProtectedRoute>
   )
 }

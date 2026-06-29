@@ -11,7 +11,7 @@ import {
   Zap,
 } from "lucide-react"
 
-import BottomNav from "@/components/BottomNav"
+import ConsumerShell from "@/components/ConsumerShell"
 import ProtectedRoute from "@/components/ProtectedRoute"
 import EmptyState from "@/components/ui/EmptyState"
 import PageHeader from "@/components/ui/PageHeader"
@@ -220,6 +220,7 @@ export default function BecomeRealtorPage() {
 
   return (
     <ProtectedRoute>
+      <ConsumerShell>
       <PageShell>
         <Link
           href="/profile"
@@ -434,8 +435,7 @@ export default function BecomeRealtorPage() {
           </SectionCard>
         )}
       </PageShell>
-
-      <BottomNav />
+      </ConsumerShell>
     </ProtectedRoute>
   )
 }

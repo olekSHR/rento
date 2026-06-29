@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 
-import BottomNav from "@/components/BottomNav"
+import ConsumerShell from "@/components/ConsumerShell"
 import ProtectedRoute from "@/components/ProtectedRoute"
 import EmptyState from "@/components/ui/EmptyState"
 import PageShell from "@/components/ui/PageShell"
@@ -47,10 +47,9 @@ export default function ProfilePage() {
 
   if (isLoading) {
     return (
-      <>
+      <ConsumerShell>
         <ProfileSkeleton />
-        <BottomNav />
-      </>
+      </ConsumerShell>
     )
   }
 
@@ -64,6 +63,7 @@ export default function ProfilePage() {
 
   return (
     <ProtectedRoute>
+      <ConsumerShell>
       <PageShell>
         <SectionCard>
           <div className="flex items-start gap-4">
@@ -159,8 +159,7 @@ export default function ProfilePage() {
           </div>
         </SectionCard>
       </PageShell>
-
-      <BottomNav />
+      </ConsumerShell>
     </ProtectedRoute>
   )
 }
