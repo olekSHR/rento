@@ -180,8 +180,12 @@ export default async function PropertyPage({ params }: Props) {
     <p className="text-[11px] font-semibold uppercase text-zinc-400">
       Status
     </p>
-    <p className="mt-1 truncate text-sm font-bold text-emerald-700">
-      Verified
+    <p
+      className={`mt-1 truncate text-sm font-bold ${
+        isVerified ? "text-emerald-700" : "text-amber-700"
+      }`}
+    >
+      {verificationLabel}
     </p>
   </div>
 </div>

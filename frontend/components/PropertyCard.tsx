@@ -130,7 +130,7 @@ export default function PropertyCard({
                 Monthly rent
               </p>
               <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-950">
-                ${price || 0}
+                €{price || 0}
               </p>
             </div>
 

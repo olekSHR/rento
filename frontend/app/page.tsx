@@ -84,45 +84,45 @@ export default async function HomePage({
         </div>
       </header>
 
-      <div className="max-w-md mx-auto p-4 pt-6">
-        {properties.items.length === 0 ? (
-          <div
-            className="
-              flex
-              flex-col
-              items-center
-              justify-center
-              py-20
-              text-center
-            "
-          >
-            <div className="text-6xl mb-4">
-              🏠
+      <HomePageContent>
+        <div className="max-w-md mx-auto p-4 pt-6">
+          {properties.items.length === 0 ? (
+            <div
+              className="
+                flex
+                flex-col
+                items-center
+                justify-center
+                py-20
+                text-center
+              "
+            >
+              <div className="text-6xl mb-4">
+                🏠
+              </div>
+
+              <h2
+                className="
+                  text-2xl
+                  font-bold
+                  text-black
+                  mb-2
+                "
+              >
+                No properties found
+              </h2>
+
+              <p
+                className="
+                  text-zinc-500
+                  max-w-xs
+                "
+              >
+                Try changing filters or search another city
+              </p>
             </div>
-
-            <h2
-              className="
-                text-2xl
-                font-bold
-                text-black
-                mb-2
-              "
-            >
-              No properties found
-            </h2>
-
-            <p
-              className="
-                text-zinc-500
-                max-w-xs
-              "
-            >
-              Try changing filters or search another city
-            </p>
-          </div>
-        ) : (
-          <HomePageContent>
-            {properties.items.map((property: Property) => (
+          ) : (
+            properties.items.map((property: Property) => (
               <PropertyCard
                 key={property.id}
                 id={property.id}
@@ -134,10 +134,10 @@ export default async function HomePage({
                 images={property.images}
                 last_verified_at={property.last_verified_at}
               />
-            ))}
-          </HomePageContent>
-        )}
-      </div>
+            ))
+          )}
+        </div>
+      </HomePageContent>
 
     </main>
   )
