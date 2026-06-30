@@ -14,8 +14,7 @@ from app.routers import realtor_applications
 from app.routers import ai
 from app.routers import admin_stats
 from app.routers import admin_users
-from app.database.database import Base, engine
-from app.models import user, property, favorite, realtor_application
+from app.database.database import engine
 from app.core.exceptions import (
     NotFoundException,
     BadRequestException,
@@ -30,7 +29,6 @@ from app.core.handlers import (
     forbidden_exception_handler,
 )
 
-Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 app.add_middleware(
