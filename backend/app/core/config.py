@@ -25,6 +25,18 @@ class Settings(BaseSettings):
 
     RESEND_FROM_NAME: str = "Rento"
 
+    RATE_LIMIT_ENABLED: bool = True
+
+    RATE_LIMIT_TRUST_PROXY_HEADERS: bool = True
+
+    RATE_LIMIT_STORAGE_URI: str = "memory://"
+
+    RATE_LIMIT_LOGIN: str = "5/minute"
+
+    RATE_LIMIT_FORGOT_PASSWORD: str = "3/15minute"
+
+    RATE_LIMIT_UPLOAD: str = "20/minute"
+
 
     class Config:
 

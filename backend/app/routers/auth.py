@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
+from app.core.config import settings
+from app.core.rate_limit import limiter
 
 from app.schemas.user import (
     UserCreate,
@@ -46,7 +48,9 @@ def register(
     "/login",
     response_model=TokenResponse
 )
+@limiter.limit(settings.RATE_LIMIT_LOGIN)
 def login(
+    request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
@@ -62,7 +66,9 @@ def login(
     "/forgot-password",
     response_model=MessageResponse,
 )
+@limiter.limit(settings.RATE_LIMIT_FORGOT_PASSWORD)
 def forgot_password(
+    request: Request,
     body: ForgotPasswordRequest,
     db: Session = Depends(get_db),
 ):

@@ -28,8 +28,11 @@ from app.core.handlers import (
     unauthorized_exception_handler,
     forbidden_exception_handler,
 )
+from app.core.rate_limit import register_rate_limiting
 
 app = FastAPI()
+
+register_rate_limiting(app)
 
 app.add_middleware(
     CORSMiddleware,
