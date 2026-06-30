@@ -13,6 +13,12 @@ class Settings(BaseSettings):
 
     OPENAI_API_KEY: str | None = None
 
+    PASSWORD_RESET_EXPIRE_MINUTES: int = 30
+
+    FRONTEND_URL: str = "http://localhost:3000"
+
+    EMAIL_PROVIDER: str = "console"
+
 
     class Config:
 

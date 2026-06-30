@@ -10,7 +10,14 @@ from app.schemas.user import (
     TokenResponse
 )
 
+from app.schemas.common import MessageResponse
+from app.schemas.password_reset import (
+    ForgotPasswordRequest,
+    ResetPasswordRequest,
+)
+
 from app.services import auth_service
+from app.services import password_reset_service
 
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -48,5 +55,36 @@ def login(
         db,
         form_data.username,
         form_data.password
+    )
+
+
+@router.post(
+    "/forgot-password",
+    response_model=MessageResponse,
+)
+def forgot_password(
+    body: ForgotPasswordRequest,
+    db: Session = Depends(get_db),
+):
+
+    return password_reset_service.request_password_reset(
+        db,
+        body.email,
+    )
+
+
+@router.post(
+    "/reset-password",
+    response_model=MessageResponse,
+)
+def reset_password(
+    body: ResetPasswordRequest,
+    db: Session = Depends(get_db),
+):
+
+    return password_reset_service.reset_password(
+        db,
+        body.token,
+        body.new_password,
     )
 

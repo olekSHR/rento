@@ -79,3 +79,20 @@ def create_user(
     db.refresh(new_user)
 
     return new_user
+
+
+def update_password(
+    db: Session,
+    user: User,
+    hashed_password: str,
+    *,
+    commit: bool = True,
+):
+
+    user.hashed_password = hashed_password
+
+    if commit:
+        db.commit()
+        db.refresh(user)
+
+    return user

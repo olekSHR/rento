@@ -20,6 +20,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 from app.database.database import Base
 from app.models.property import Property
+from app.models.password_reset_token import PasswordResetToken
 
 target_metadata = Base.metadata
 
