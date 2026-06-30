@@ -110,10 +110,11 @@ def _send_via_resend(email: str, reset_url: str) -> None:
         RESEND_API_URL,
         data=json.dumps(payload).encode("utf-8"),
         method="POST",
-        headers={
-            "Authorization": f"Bearer {settings.RESEND_API_KEY}",
-            "Content-Type": "application/json",
-        },
+        headers = {
+    "Authorization": f"Bearer {settings.RESEND_API_KEY}",
+    "Content-Type": "application/json",
+    "User-Agent": "Rento/1.0",
+},
     )
 
     try:
@@ -124,23 +125,8 @@ def _send_via_resend(email: str, reset_url: str) -> None:
                     f"Resend API returned status {response.status}: {error_body}"
                 )
     except urllib.error.HTTPError as exc:
-        error_body = exc.read().decode("utf-8", errors="replace")
-
-        print(
-            f"[resend-debug] HTTP status: {exc.code}",
-            flush=True,
-        )
-        print(
-            f"[resend-debug] response headers: {dict(exc.headers)}",
-            flush=True,
-        )
-        print(
-            f"[resend-debug] response body:\n{error_body}",
-            flush=True,
-        )
-
         raise RuntimeError(
-            f"Resend API HTTP error {exc.code}: {error_body}"
+            f"Failed to send email via Resend (HTTP {exc.code})"
         ) from exc
 
 
