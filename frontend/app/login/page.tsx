@@ -82,6 +82,15 @@ export default function LoginPage() {
             className="h-12 rounded-2xl border border-zinc-300 px-4 outline-none"
           />
 
+          <p className="text-right">
+            <Link
+              href="/forgot-password"
+              className="text-sm font-semibold text-blue-700"
+            >
+              Forgot password?
+            </Link>
+          </p>
+
           {error && (
             <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
               {error}

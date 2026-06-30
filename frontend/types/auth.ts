@@ -16,3 +16,17 @@ export type AuthResponse = {
 };
 
 export type CurrentUserResponse = User;
+
+export type MessageResponse = {
+  success: boolean;
+  message: string;
+};
+
+export type ForgotPasswordRequest = {
+  email: string;
+};
+
+export type ResetPasswordRequest = {
+  token: string;
+  new_password: string;
+};
