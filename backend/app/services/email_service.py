@@ -125,6 +125,20 @@ def _send_via_resend(email: str, reset_url: str) -> None:
                 )
     except urllib.error.HTTPError as exc:
         error_body = exc.read().decode("utf-8", errors="replace")
+
+        print(
+            f"[resend-debug] HTTP status: {exc.code}",
+            flush=True,
+        )
+        print(
+            f"[resend-debug] response headers: {dict(exc.headers)}",
+            flush=True,
+        )
+        print(
+            f"[resend-debug] response body:\n{error_body}",
+            flush=True,
+        )
+
         raise RuntimeError(
             f"Resend API HTTP error {exc.code}: {error_body}"
         ) from exc
