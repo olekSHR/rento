@@ -12,11 +12,16 @@ from app.core.security.jwt import create_access_token
 
 from app.services import account_status_service
 
+def _normalize_email(email: str) -> str:
+    return email.strip().lower()
+
 def login_user(
     db: Session,
     email: str,
     password: str
 ):
+
+    email = _normalize_email(email)
 
     user = user_repository.get_user_by_email(
         db,
@@ -56,6 +61,8 @@ def register_user(
     email: str,
     password: str
 ):
+
+    email = _normalize_email(email)
 
     existing_user = user_repository.get_user_by_email(
         db,

@@ -24,6 +24,15 @@ export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
   });
 
   if (!response.ok) {
+    try {
+      const data = (await response.json()) as { message?: unknown };
+      if (typeof data.message === "string" && data.message.trim()) {
+        throw new Error(data.message);
+      }
+    } catch {
+      // Ignore parse errors and fall back to generic message
+    }
+
     throw new Error("Invalid email or password");
   }
 

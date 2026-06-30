@@ -41,3 +41,17 @@ async def forbidden_exception_handler(
             "message": exc.detail
         }
     )
+
+
+async def unauthorized_exception_handler(
+    request,
+    exc
+):
+
+    return JSONResponse(
+        status_code=401,
+        content={
+            "success": False,
+            "message": exc.detail
+        }
+    )

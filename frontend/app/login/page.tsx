@@ -43,8 +43,12 @@ export default function LoginPage() {
       })
 
       router.push(getPostLoginPath(user.role))
-    } catch {
-      setError("Invalid email or password")
+    } catch (err) {
+      if (err instanceof Error && err.message) {
+        setError(err.message)
+      } else {
+        setError("Invalid email or password")
+      }
     } finally {
       setIsLoading(false)
     }

@@ -579,12 +579,15 @@ export async function registerUser(
     let message = "Registration failed. Please try again."
 
     try {
-      const data = (await response.json()) as { detail?: string }
+      const data = (await response.json()) as { message?: string; detail?: string }
 
-      if (data.detail === "Email already registered") {
+      const backendMessage =
+        typeof data.message === "string" ? data.message : data.detail
+
+      if (backendMessage === "Email already registered") {
         message = "This email is already registered."
-      } else if (typeof data.detail === "string") {
-        message = data.detail
+      } else if (typeof backendMessage === "string") {
+        message = backendMessage
       }
     } catch {
       // Keep default message
