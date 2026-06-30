@@ -1,12 +1,14 @@
+import json
 import logging
-import smtplib
-from email.message import EmailMessage
+import urllib.error
+import urllib.request
 
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
 RESET_SUBJECT = "Reset your Rento password"
+RESEND_API_URL = "https://api.resend.com/emails"
 
 
 def _build_plain_text_body(reset_url: str, expire_minutes: int) -> str:
@@ -83,35 +85,49 @@ def _build_html_body(reset_url: str, expire_minutes: int) -> str:
 </html>"""
 
 
-def _send_via_smtp(email: str, reset_url: str) -> None:
-    if not settings.SMTP_HOST:
-        raise ValueError("SMTP_HOST is not configured")
+def _build_from_address() -> str:
+    return f"{settings.RESEND_FROM_NAME} <{settings.RESEND_FROM_EMAIL}>"
 
-    if not settings.SMTP_USERNAME or not settings.SMTP_PASSWORD:
-        raise ValueError("SMTP credentials are not configured")
 
-    if not settings.SMTP_FROM_EMAIL:
-        raise ValueError("SMTP_FROM_EMAIL is not configured")
+def _send_via_resend(email: str, reset_url: str) -> None:
+    if not settings.RESEND_API_KEY:
+        raise ValueError("RESEND_API_KEY is not configured")
+
+    if not settings.RESEND_FROM_EMAIL:
+        raise ValueError("RESEND_FROM_EMAIL is not configured")
 
     expire_minutes = settings.PASSWORD_RESET_EXPIRE_MINUTES
-    from_header = (
-        f"{settings.SMTP_FROM_NAME} <{settings.SMTP_FROM_EMAIL}>"
+
+    payload = {
+        "from": _build_from_address(),
+        "to": [email],
+        "subject": RESET_SUBJECT,
+        "html": _build_html_body(reset_url, expire_minutes),
+        "text": _build_plain_text_body(reset_url, expire_minutes),
+    }
+
+    request = urllib.request.Request(
+        RESEND_API_URL,
+        data=json.dumps(payload).encode("utf-8"),
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {settings.RESEND_API_KEY}",
+            "Content-Type": "application/json",
+        },
     )
 
-    message = EmailMessage()
-    message["Subject"] = RESET_SUBJECT
-    message["From"] = from_header
-    message["To"] = email
-    message.set_content(_build_plain_text_body(reset_url, expire_minutes))
-    message.add_alternative(
-        _build_html_body(reset_url, expire_minutes),
-        subtype="html",
-    )
-
-    with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as smtp:
-        smtp.starttls()
-        smtp.login(settings.SMTP_USERNAME, settings.SMTP_PASSWORD)
-        smtp.send_message(message)
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            if response.status >= 400:
+                error_body = response.read().decode("utf-8", errors="replace")
+                raise RuntimeError(
+                    f"Resend API returned status {response.status}: {error_body}"
+                )
+    except urllib.error.HTTPError as exc:
+        error_body = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(
+            f"Resend API HTTP error {exc.code}: {error_body}"
+        ) from exc
 
 
 def send_password_reset_email(
@@ -126,8 +142,8 @@ def send_password_reset_email(
         )
         return
 
-    if settings.EMAIL_PROVIDER == "smtp":
-        _send_via_smtp(email, reset_url)
+    if settings.EMAIL_PROVIDER == "resend":
+        _send_via_resend(email, reset_url)
         return
 
     logger.warning(

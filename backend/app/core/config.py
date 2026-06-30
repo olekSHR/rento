@@ -19,17 +19,11 @@ class Settings(BaseSettings):
 
     EMAIL_PROVIDER: str = "console"
 
-    SMTP_HOST: str | None = None
+    RESEND_API_KEY: str | None = None
 
-    SMTP_PORT: int = 587
+    RESEND_FROM_EMAIL: str | None = None
 
-    SMTP_USERNAME: str | None = None
-
-    SMTP_PASSWORD: str | None = None
-
-    SMTP_FROM_EMAIL: str | None = None
-
-    SMTP_FROM_NAME: str = "Rento"
+    RESEND_FROM_NAME: str = "Rento"
 
 
     class Config:
