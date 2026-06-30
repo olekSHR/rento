@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from fastapi import APIRouter, UploadFile, File, Request
 from fastapi import Depends
+from starlette.responses import Response
 from app.core.config import settings
 from app.core.exceptions import BadRequestException
 from app.core.rate_limit import get_upload_rate_limit_key, limiter
@@ -39,6 +40,7 @@ def _detect_image_type(header: bytes) -> tuple[str, str]:
 @limiter.limit(settings.RATE_LIMIT_UPLOAD, key_func=get_upload_rate_limit_key)
 def upload_image(
     request: Request,
+    response: Response,
     image: UploadFile = File(...),
     current_user=Depends(
         require_admin_or_realtor

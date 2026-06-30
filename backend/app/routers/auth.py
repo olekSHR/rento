@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, Request
+from starlette.responses import Response
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
@@ -51,6 +52,7 @@ def register(
 @limiter.limit(settings.RATE_LIMIT_LOGIN)
 def login(
     request: Request,
+    response: Response,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
@@ -69,6 +71,7 @@ def login(
 @limiter.limit(settings.RATE_LIMIT_FORGOT_PASSWORD)
 def forgot_password(
     request: Request,
+    response: Response,
     body: ForgotPasswordRequest,
     db: Session = Depends(get_db),
 ):
