@@ -1,5 +1,6 @@
 import hashlib
 import hmac
+import logging
 import secrets
 from datetime import UTC, datetime, timedelta
 from urllib.parse import quote
@@ -11,6 +12,10 @@ from app.core.exceptions import BadRequestException
 from app.core.security.hashing import hash_password
 from app.repositories import password_reset_repository, user_repository
 from app.services.account_status_service import ACCOUNT_STATUS_ACTIVE
+from app.services.email_service import send_password_reset_email
+
+
+logger = logging.getLogger(__name__)
 
 
 FORGOT_PASSWORD_MESSAGE = (
@@ -41,16 +46,6 @@ def _hash_reset_token(token: str) -> str:
 def _build_reset_url(token: str) -> str:
     frontend_url = settings.FRONTEND_URL.rstrip("/")
     return f"{frontend_url}/reset-password?token={quote(token, safe='')}"
-
-
-def _send_reset_email_console(email: str, reset_url: str) -> None:
-    if settings.EMAIL_PROVIDER != "console":
-        return
-
-    print(
-        f"[password-reset] email={email} reset_url={reset_url}",
-        flush=True,
-    )
 
 
 def request_password_reset(
@@ -87,7 +82,13 @@ def request_password_reset(
         db.commit()
 
         reset_url = _build_reset_url(plain_token)
-        _send_reset_email_console(normalized_email, reset_url)
+
+        try:
+            send_password_reset_email(normalized_email, reset_url)
+        except Exception:
+            logger.exception(
+                "Failed to send password reset email",
+            )
 
     return {
         "success": True,
