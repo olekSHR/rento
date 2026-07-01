@@ -3,6 +3,7 @@ import Image from "next/image"
 import {
   BadgeCheck,
   BedDouble,
+  ChevronRight,
   MapPin,
   MessageCircle,
   Phone,
@@ -98,9 +99,14 @@ export default async function PropertyPage({ params }: Props) {
 
   const verificationLabel = getVerificationLabel(property.last_verified_at)
   const isVerified = verificationLabel !== "Needs Verification"
+  const realtorTrustSubtitle = isVerified
+    ? "Verified Realtor"
+    : verificationLabel
   const contactAvatarUrl = property.avatar_url
     ? getImageUrl(property.avatar_url)
     : null
+  const realtorDisplayName =
+    property.contact_name?.trim() || "Property contact"
 
   const galleryImages =
     property.images && property.images.length > 0
@@ -166,55 +172,105 @@ export default async function PropertyPage({ params }: Props) {
             <span>{property.city || "Unknown city"}</span>
           </div>
 
-          <div className="mt-6 rounded-[28px] border border-zinc-200 bg-zinc-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-              Monthly rent
-            </p>
-
-            <div className="mt-2 flex items-end justify-between gap-4">
-              <p className="text-4xl font-extrabold tracking-tight text-zinc-950">
-                €{property.price || 0}
+          <div className="mt-6 overflow-hidden rounded-[28px] border border-zinc-200 bg-zinc-50">
+            <div className="p-4 pb-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
+                Monthly rent
               </p>
 
-              <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm font-semibold text-zinc-700 ring-1 ring-zinc-200">
-                <BedDouble className="h-4 w-4" />
-                <span>{property.rooms || 0} rooms</span>
+              <div className="mt-2 flex items-end justify-between gap-4">
+                <p className="text-4xl font-extrabold tracking-tight text-zinc-950">
+                  €{property.price || 0}
+                </p>
+
+                <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm font-semibold text-zinc-700 ring-1 ring-zinc-200">
+                  <BedDouble className="h-4 w-4" />
+                  <span>{property.rooms || 0} rooms</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mx-4 border-t border-zinc-200" />
+
+            <div className="flex min-h-14 items-center gap-3 px-4 py-3">
+              {contactAvatarUrl ? (
+                <RealtorAvatarEnlargeTrigger
+                  imageUrl={contactAvatarUrl}
+                  alt={realtorDisplayName}
+                  className="relative h-11 w-11 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200 active:scale-95"
+                >
+                  <Image
+                    src={contactAvatarUrl}
+                    alt={realtorDisplayName}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                    sizes="44px"
+                  />
+                </RealtorAvatarEnlargeTrigger>
+              ) : (
+                <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200">
+                  <span className="text-sm font-bold text-white">
+                    {getContactInitials(property.contact_name)}
+                  </span>
+                </div>
+              )}
+
+              <a
+                href="#property-contact"
+                className="flex min-w-0 flex-1 items-center gap-2 rounded-xl py-1 active:opacity-80"
+              >
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-bold text-zinc-950">
+                    {realtorDisplayName}
+                  </p>
+                  <p
+                    className={`mt-0.5 truncate text-xs font-semibold ${
+                      isVerified ? "text-emerald-700" : "text-amber-700"
+                    }`}
+                  >
+                    {realtorTrustSubtitle}
+                  </p>
+                </div>
+                <ChevronRight className="h-5 w-5 shrink-0 text-zinc-400" />
+              </a>
+            </div>
+
+            <div className="mx-4 border-t border-zinc-200" />
+
+            <div className="grid grid-cols-3 gap-2 p-4 pt-3">
+              <div className="rounded-2xl bg-white p-3 ring-1 ring-zinc-200">
+                <p className="text-[11px] font-semibold uppercase text-zinc-400">
+                  City
+                </p>
+                <p className="mt-1 truncate text-sm font-bold text-zinc-900">
+                  {property.city || "Unknown"}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white p-3 ring-1 ring-zinc-200">
+                <p className="text-[11px] font-semibold uppercase text-zinc-400">
+                  Rooms
+                </p>
+                <p className="mt-1 text-sm font-bold text-zinc-900">
+                  {property.rooms || 0}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white p-3 ring-1 ring-zinc-200">
+                <p className="text-[11px] font-semibold uppercase text-zinc-400">
+                  Status
+                </p>
+                <p
+                  className={`mt-1 truncate text-sm font-bold ${
+                    isVerified ? "text-emerald-700" : "text-amber-700"
+                  }`}
+                >
+                  {verificationLabel}
+                </p>
               </div>
             </div>
           </div>
-
-          <div className="mt-5 grid grid-cols-3 gap-2">
-  <div className="rounded-2xl bg-zinc-50 p-3 ring-1 ring-zinc-200">
-    <p className="text-[11px] font-semibold uppercase text-zinc-400">
-      City
-    </p>
-    <p className="mt-1 truncate text-sm font-bold text-zinc-900">
-      {property.city || "Unknown"}
-    </p>
-  </div>
-
-  <div className="rounded-2xl bg-zinc-50 p-3 ring-1 ring-zinc-200">
-    <p className="text-[11px] font-semibold uppercase text-zinc-400">
-      Rooms
-    </p>
-    <p className="mt-1 text-sm font-bold text-zinc-900">
-      {property.rooms || 0}
-    </p>
-  </div>
-
-  <div className="rounded-2xl bg-zinc-50 p-3 ring-1 ring-zinc-200">
-    <p className="text-[11px] font-semibold uppercase text-zinc-400">
-      Status
-    </p>
-    <p
-      className={`mt-1 truncate text-sm font-bold ${
-        isVerified ? "text-emerald-700" : "text-amber-700"
-      }`}
-    >
-      {verificationLabel}
-    </p>
-  </div>
-</div>
 
           <div className="mt-6">
             <h2 className="text-lg font-bold text-zinc-950">
@@ -227,44 +283,18 @@ export default async function PropertyPage({ params }: Props) {
           </div>
 
           {(property.phone || property.whatsapp) && (
-            <div className="mt-7 rounded-[28px] border border-zinc-200 bg-white p-4 shadow-[0_12px_30px_rgba(15,23,42,0.07)]">
+            <div
+              id="property-contact"
+              className="mt-7 scroll-mt-6 rounded-[28px] border border-zinc-200 bg-white p-4 shadow-[0_12px_30px_rgba(15,23,42,0.07)]"
+            >
               <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
                 Contact
               </p>
 
-              <div className="mt-3 flex items-center gap-3">
-                {contactAvatarUrl ? (
-                  <RealtorAvatarEnlargeTrigger
-                    imageUrl={contactAvatarUrl}
-                    alt={property.contact_name || "Realtor"}
-                    className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200 active:scale-95"
-                  >
-                    <Image
-                      src={contactAvatarUrl}
-                      alt={property.contact_name || "Realtor"}
-                      fill
-                      unoptimized
-                      className="object-cover"
-                      sizes="48px"
-                    />
-                  </RealtorAvatarEnlargeTrigger>
-                ) : (
-                  <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200">
-                    <span className="text-sm font-bold text-white">
-                      {getContactInitials(property.contact_name)}
-                    </span>
-                  </div>
-                )}
-
-                <div className="min-w-0">
-                  <p className="truncate text-xl font-bold text-zinc-950">
-                    {property.contact_name || "Property contact"}
-                  </p>
-                  <p className="mt-0.5 text-sm text-zinc-500">
-                    Ask about availability, viewing time, and rental conditions.
-                  </p>
-                </div>
-              </div>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+                Ask {realtorDisplayName} about availability, viewing time, and
+                rental conditions.
+              </p>
 
               <div className="mt-4 grid grid-cols-1 gap-3">
                 {property.whatsapp && (
