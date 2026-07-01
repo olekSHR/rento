@@ -58,3 +58,20 @@ a {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@layer utilities {
+  .pb-bottom-nav {
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .pb-safe-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 1rem);
+  }
+
+  .pb-sheet-bottom {
+    padding-bottom: max(
+      calc(1.25rem + env(safe-area-inset-bottom, 0px)),
+      1.25rem
+    );
+  }
+}

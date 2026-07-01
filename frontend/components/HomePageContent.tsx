@@ -26,7 +26,10 @@ export default function HomePageContent({ children }: Props) {
         <FiltersBar onSearch={() => setIsFiltersOpen(false)} />
       </Modal>
 
-      <ConsumerShell onOpenFilters={() => setIsFiltersOpen(true)}>
+      <ConsumerShell
+        hideBottomNav={isFiltersOpen}
+        onOpenFilters={() => setIsFiltersOpen(true)}
+      >
         {children}
       </ConsumerShell>
     </>

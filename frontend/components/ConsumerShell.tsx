@@ -7,16 +7,18 @@ import BottomNav from "@/components/BottomNav"
 type ConsumerShellProps = {
   children: ReactNode
   onOpenFilters?: () => void
+  hideBottomNav?: boolean
 }
 
 export default function ConsumerShell({
   children,
   onOpenFilters,
+  hideBottomNav = false,
 }: ConsumerShellProps) {
   return (
     <>
       {children}
-      <BottomNav onOpenFilters={onOpenFilters} />
+      {!hideBottomNav && <BottomNav onOpenFilters={onOpenFilters} />}
     </>
   )
 }

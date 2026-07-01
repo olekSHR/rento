@@ -121,7 +121,7 @@ export default function PropertyGallery({
 
       {images.length > 1 && (
         <>
-          <div className="absolute bottom-3 right-4 rounded-full bg-black/60 px-3 py-1 text-sm font-medium text-white">
+          <div className="absolute bottom-10 right-4 rounded-full bg-black/60 px-3 py-1 text-sm font-medium text-white">
             {activeIndex + 1} / {images.length}
           </div>
           
@@ -179,7 +179,7 @@ export default function PropertyGallery({
   </div>
 )}
           
-          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+          <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-2">
             {images.map((_, index) => (
               <button
                 key={index}

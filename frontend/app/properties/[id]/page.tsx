@@ -16,6 +16,7 @@ import PropertyGallery from "@/components/PropertyGallery"
 import ShareButton from "@/components/ShareButton"
 import ReportButton from "@/components/ReportButton"
 import { RealtorAvatarEnlargeTrigger } from "@/components/RealtorAvatarLightbox"
+import { SAFE_BOTTOM_CONTENT_CLASS } from "@/lib/bottomNavLayout"
 import { getImageUrl } from "@/lib/getImageUrl"
 import {
   getPropertyById,
@@ -123,8 +124,8 @@ export default async function PropertyPage({ params }: Props) {
         : []
 
   return (
-    <ConsumerShell>
-    <main className="min-h-screen bg-zinc-100 pb-24">
+    <ConsumerShell hideBottomNav>
+    <main className={`min-h-screen bg-zinc-100 ${SAFE_BOTTOM_CONTENT_CLASS}`}>
       <div className="mx-auto min-h-screen max-w-md bg-white">
         <div className="relative">
           <BackButton />

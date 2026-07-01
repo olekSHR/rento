@@ -35,7 +35,7 @@ export default function Modal({
       className="
         fixed
         inset-0
-        z-50
+        z-[60]
       "
     >
       <div
@@ -56,7 +56,9 @@ export default function Modal({
           right-0
           bg-white
           rounded-t-3xl
-          p-5
+          px-5
+          pt-5
+          pb-sheet-bottom
           animate-slide-up
           max-w-md
           mx-auto

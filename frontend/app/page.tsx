@@ -1,5 +1,6 @@
 import HomePageContent from "@/components/HomePageContent"
 import PropertyCard from "@/components/PropertyCard"
+import { BOTTOM_NAV_CONTENT_CLASS } from "@/lib/bottomNavLayout"
 import { getProperties } from "@/services/api"
 import type { Property } from "@/types/property"
 import HeaderAuthButton from "@/components/HeaderAuthButton"
@@ -21,7 +22,7 @@ export default async function HomePage({
   })
 
   return (
-    <main className="min-h-screen pb-24 bg-zinc-100">
+    <main className={`min-h-screen bg-zinc-100 ${BOTTOM_NAV_CONTENT_CLASS}`}>
       <header
         className="
           sticky
