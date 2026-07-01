@@ -33,6 +33,7 @@ import {
 import type { Property } from "@/types/property"
 
 const AVATAR_OUTPUT_SIZE = 512
+const AVATAR_CROP_PREVIEW_SIZE = 176
 const ALLOWED_AVATAR_TYPES = [
   "image/jpeg",
   "image/png",
@@ -49,9 +50,37 @@ function loadImageElement(src: string): Promise<HTMLImageElement> {
   })
 }
 
+function getAvatarCropSize(
+  imageWidth: number,
+  imageHeight: number,
+  zoom: number
+): number {
+  return Math.min(imageWidth, imageHeight) / zoom
+}
+
+function clampAvatarPan(
+  offsetX: number,
+  offsetY: number,
+  imageWidth: number,
+  imageHeight: number,
+  zoom: number
+) {
+  const cropSize = getAvatarCropSize(imageWidth, imageHeight, zoom)
+  const panScale = AVATAR_CROP_PREVIEW_SIZE / cropSize
+  const maxPanX = ((imageWidth - cropSize) / 2) * panScale
+  const maxPanY = ((imageHeight - cropSize) / 2) * panScale
+
+  return {
+    offsetX: Math.max(-maxPanX, Math.min(maxPanX, offsetX)),
+    offsetY: Math.max(-maxPanY, Math.min(maxPanY, offsetY)),
+  }
+}
+
 async function createCroppedAvatarFile(
   image: HTMLImageElement,
   zoom: number,
+  offsetX: number,
+  offsetY: number,
   sourceFile: File
 ): Promise<File> {
   const canvas = document.createElement("canvas")
@@ -64,11 +93,19 @@ async function createCroppedAvatarFile(
     throw new Error("Canvas not supported")
   }
 
-  const minSide = Math.min(image.width, image.height)
-  // Zoom narrows the source square taken from the image center.
-  const cropSize = minSide / zoom
-  const sourceX = (image.width - cropSize) / 2
-  const sourceY = (image.height - cropSize) / 2
+  const cropSize = getAvatarCropSize(image.width, image.height, zoom)
+  // Preview pan is in viewport pixels; convert to image-space center shift.
+  const panScale = cropSize / AVATAR_CROP_PREVIEW_SIZE
+  const centerX = image.width / 2 - offsetX * panScale
+  const centerY = image.height / 2 - offsetY * panScale
+  const sourceX = Math.max(
+    0,
+    Math.min(image.width - cropSize, centerX - cropSize / 2)
+  )
+  const sourceY = Math.max(
+    0,
+    Math.min(image.height - cropSize, centerY - cropSize / 2)
+  )
 
   context.drawImage(
     image,
@@ -175,7 +212,21 @@ export default function RealtorWorkspacePage() {
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null)
   const [avatarSelectedFile, setAvatarSelectedFile] = useState<File | null>(null)
   const [avatarZoom, setAvatarZoom] = useState(1)
+  const [avatarOffsetX, setAvatarOffsetX] = useState(0)
+  const [avatarOffsetY, setAvatarOffsetY] = useState(0)
+  const [avatarImageSize, setAvatarImageSize] = useState<{
+    width: number
+    height: number
+  } | null>(null)
+  const [isAvatarDragging, setIsAvatarDragging] = useState(false)
   const avatarInputRef = useRef<HTMLInputElement>(null)
+  const avatarDragStartRef = useRef<{
+    pointerId: number
+    startX: number
+    startY: number
+    offsetX: number
+    offsetY: number
+  } | null>(null)
 
   const isRealtor = user?.role === "realtor"
 
@@ -225,6 +276,11 @@ export default function RealtorWorkspacePage() {
     setAvatarPreviewUrl(null)
     setAvatarSelectedFile(null)
     setAvatarZoom(1)
+    setAvatarOffsetX(0)
+    setAvatarOffsetY(0)
+    setAvatarImageSize(null)
+    setIsAvatarDragging(false)
+    avatarDragStartRef.current = null
     setIsAvatarPreviewOpen(false)
 
     if (avatarInputRef.current) {
@@ -262,8 +318,94 @@ export default function RealtorWorkspacePage() {
     setAvatarSelectedFile(file)
     setAvatarPreviewUrl(previewUrl)
     setAvatarZoom(1)
+    setAvatarOffsetX(0)
+    setAvatarOffsetY(0)
     setIsAvatarPreviewOpen(true)
     event.target.value = ""
+
+    void loadImageElement(previewUrl).then((image) => {
+      setAvatarImageSize({
+        width: image.width,
+        height: image.height,
+      })
+    })
+  }
+
+  function handleAvatarZoomChange(nextZoom: number) {
+    setAvatarZoom(nextZoom)
+
+    if (!avatarImageSize) {
+      return
+    }
+
+    const clamped = clampAvatarPan(
+      avatarOffsetX,
+      avatarOffsetY,
+      avatarImageSize.width,
+      avatarImageSize.height,
+      nextZoom
+    )
+
+    setAvatarOffsetX(clamped.offsetX)
+    setAvatarOffsetY(clamped.offsetY)
+  }
+
+  function handleAvatarCropPointerDown(
+    event: React.PointerEvent<HTMLDivElement>
+  ) {
+    if (isAvatarUploading) {
+      return
+    }
+
+    event.currentTarget.setPointerCapture(event.pointerId)
+    avatarDragStartRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      offsetX: avatarOffsetX,
+      offsetY: avatarOffsetY,
+    }
+    setIsAvatarDragging(true)
+  }
+
+  function handleAvatarCropPointerMove(
+    event: React.PointerEvent<HTMLDivElement>
+  ) {
+    const dragStart = avatarDragStartRef.current
+
+    if (!dragStart || !avatarImageSize || dragStart.pointerId !== event.pointerId) {
+      return
+    }
+
+    const deltaX = event.clientX - dragStart.startX
+    const deltaY = event.clientY - dragStart.startY
+    const clamped = clampAvatarPan(
+      dragStart.offsetX + deltaX,
+      dragStart.offsetY + deltaY,
+      avatarImageSize.width,
+      avatarImageSize.height,
+      avatarZoom
+    )
+
+    setAvatarOffsetX(clamped.offsetX)
+    setAvatarOffsetY(clamped.offsetY)
+  }
+
+  function handleAvatarCropPointerEnd(
+    event: React.PointerEvent<HTMLDivElement>
+  ) {
+    const dragStart = avatarDragStartRef.current
+
+    if (!dragStart || dragStart.pointerId !== event.pointerId) {
+      return
+    }
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+
+    avatarDragStartRef.current = null
+    setIsAvatarDragging(false)
   }
 
   async function handleAvatarSave() {
@@ -285,6 +427,8 @@ export default function RealtorWorkspacePage() {
       const croppedFile = await createCroppedAvatarFile(
         image,
         avatarZoom,
+        avatarOffsetX,
+        avatarOffsetY,
         avatarSelectedFile
       )
       const uploaded = await uploadImage(croppedFile, token)
@@ -723,15 +867,27 @@ export default function RealtorWorkspacePage() {
             <p className="mt-1 text-sm text-zinc-500">
               Zoom and preview how your avatar will appear.
             </p>
+            <p className="mt-2 text-xs text-zinc-400">
+              Drag to position. Use slider to zoom.
+            </p>
 
-            <div className="mx-auto mt-6 flex h-44 w-44 items-center justify-center overflow-hidden rounded-full bg-zinc-100 ring-4 ring-blue-100">
+            <div
+              className={`mx-auto mt-5 flex h-44 w-44 touch-none items-center justify-center overflow-hidden rounded-full bg-zinc-100 ring-4 ring-blue-100 ${
+                isAvatarDragging ? "cursor-grabbing" : "cursor-grab"
+              }`}
+              onPointerDown={handleAvatarCropPointerDown}
+              onPointerMove={handleAvatarCropPointerMove}
+              onPointerUp={handleAvatarCropPointerEnd}
+              onPointerCancel={handleAvatarCropPointerEnd}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={avatarPreviewUrl}
                 alt="Avatar preview"
-                className="h-full w-full object-cover"
+                className="pointer-events-none h-full w-full select-none object-cover"
+                draggable={false}
                 style={{
-                  transform: `scale(${avatarZoom})`,
+                  transform: `translate(${avatarOffsetX}px, ${avatarOffsetY}px) scale(${avatarZoom})`,
                   transformOrigin: "center center",
                 }}
               />
@@ -749,7 +905,7 @@ export default function RealtorWorkspacePage() {
                 step={0.05}
                 value={avatarZoom}
                 onChange={(event) =>
-                  setAvatarZoom(Number(event.target.value))
+                  handleAvatarZoomChange(Number(event.target.value))
                 }
                 disabled={isAvatarUploading}
                 className="h-2 w-full cursor-pointer accent-blue-700"

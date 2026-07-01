@@ -1,9 +1,12 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { BadgeCheck, BedDouble, MapPin } from "lucide-react"
 
 import FavoriteButton from "./FavoriteButton"
 import ShareButton from "./ShareButton"
+import { RealtorAvatarEnlargeTrigger } from "./RealtorAvatarLightbox"
 import { getImageUrl } from "@/lib/getImageUrl"
 import type { Property } from "@/types/property"
 
@@ -116,7 +119,7 @@ export default function PropertyCard({
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/55 to-transparent" />
         </div>
 
-        <div className="p-4">
+        <div className="p-4 pb-0">
           <div
             className={`
               mb-3
@@ -163,35 +166,41 @@ export default function PropertyCard({
               <span>{rooms || 0} rooms</span>
             </div>
           </div>
-
-          {showRealtorRow && (
-            <div className="mt-4 flex items-center gap-2.5 border-t border-zinc-100 pt-4">
-              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-blue-700 ring-1 ring-zinc-200">
-                {realtorAvatarUrl ? (
-                  <Image
-                    src={realtorAvatarUrl}
-                    alt={contact_name || "Realtor"}
-                    fill
-                    unoptimized
-                    className="object-cover"
-                    sizes="36px"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-xs font-bold text-white">
-                    {getContactInitials(contact_name)}
-                  </div>
-                )}
-              </div>
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-zinc-800">
-                  {contact_name || "Realtor"}
-                </p>
-                <p className="text-xs text-zinc-500">Listing agent</p>
-              </div>
-            </div>
-          )}
         </div>
       </Link>
+
+      {showRealtorRow && (
+        <div className="flex items-center gap-2.5 border-t border-zinc-100 px-4 pb-4 pt-4">
+          {realtorAvatarUrl ? (
+            <RealtorAvatarEnlargeTrigger
+              imageUrl={realtorAvatarUrl}
+              alt={contact_name || "Realtor"}
+              className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-blue-700 ring-1 ring-zinc-200 active:scale-95"
+            >
+              <Image
+                src={realtorAvatarUrl}
+                alt={contact_name || "Realtor"}
+                fill
+                unoptimized
+                className="object-cover"
+                sizes="36px"
+              />
+            </RealtorAvatarEnlargeTrigger>
+          ) : (
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-700 ring-1 ring-zinc-200">
+              <span className="text-xs font-bold text-white">
+                {getContactInitials(contact_name)}
+              </span>
+            </div>
+          )}
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-zinc-800">
+              {contact_name || "Realtor"}
+            </p>
+            <p className="text-xs text-zinc-500">Listing agent</p>
+          </div>
+        </div>
+      )}
     </article>
   )
 }

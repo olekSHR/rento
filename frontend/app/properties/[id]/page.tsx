@@ -14,6 +14,7 @@ import BackButton from "@/components/BackButton"
 import PropertyGallery from "@/components/PropertyGallery"
 import ShareButton from "@/components/ShareButton"
 import ReportButton from "@/components/ReportButton"
+import { RealtorAvatarEnlargeTrigger } from "@/components/RealtorAvatarLightbox"
 import { getImageUrl } from "@/lib/getImageUrl"
 import {
   getPropertyById,
@@ -232,8 +233,12 @@ export default async function PropertyPage({ params }: Props) {
               </p>
 
               <div className="mt-3 flex items-center gap-3">
-                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200">
-                  {contactAvatarUrl ? (
+                {contactAvatarUrl ? (
+                  <RealtorAvatarEnlargeTrigger
+                    imageUrl={contactAvatarUrl}
+                    alt={property.contact_name || "Realtor"}
+                    className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200 active:scale-95"
+                  >
                     <Image
                       src={contactAvatarUrl}
                       alt={property.contact_name || "Realtor"}
@@ -242,12 +247,14 @@ export default async function PropertyPage({ params }: Props) {
                       className="object-cover"
                       sizes="48px"
                     />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center text-sm font-bold text-white">
+                  </RealtorAvatarEnlargeTrigger>
+                ) : (
+                  <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200">
+                    <span className="text-sm font-bold text-white">
                       {getContactInitials(property.contact_name)}
-                    </div>
-                  )}
-                </div>
+                    </span>
+                  </div>
+                )}
 
                 <div className="min-w-0">
                   <p className="truncate text-xl font-bold text-zinc-950">
