@@ -106,6 +106,14 @@ class PropertyCardResponse(BaseModel):
 
     status: str
 
+    contact_name: str | None = None
+
+    phone: str | None = None
+
+    whatsapp: str | None = None
+
+    avatar_url: str | None = None
+
     last_verified_at: datetime | None
 
     report_count: int = 0
@@ -137,6 +145,8 @@ class PropertyResponse(BaseModel):
     phone: str | None
     
     whatsapp: str | None
+
+    avatar_url: str | None = None
 
     last_verified_at: datetime | None
 

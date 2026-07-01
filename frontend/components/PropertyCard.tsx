@@ -17,7 +17,27 @@ type PropertyCardProps = Pick<
   | "image_url"
   | "images"
   | "last_verified_at"
+  | "contact_name"
+  | "avatar_url"
 >
+
+function getContactInitials(contactName?: string | null): string {
+  const name = contactName?.trim()
+
+  if (!name) {
+    return "R"
+  }
+
+  const parts = name.split(/\s+/).filter(Boolean)
+
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase()
+  }
+
+  return (
+    parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+  ).toUpperCase()
+}
 
 function getVerificationLabel(lastVerifiedAt?: string | null) {
   if (!lastVerifiedAt) {
@@ -54,6 +74,8 @@ export default function PropertyCard({
   image_url,
   images,
   last_verified_at,
+  contact_name,
+  avatar_url,
 }: PropertyCardProps) {
   const coverImage =
     images?.find((image) => image.is_cover)?.url ??
@@ -63,6 +85,8 @@ export default function PropertyCard({
 
   const verificationLabel = getVerificationLabel(last_verified_at)
   const isVerified = verificationLabel !== "Needs Verification"
+  const realtorAvatarUrl = avatar_url ? getImageUrl(avatar_url) : null
+  const showRealtorRow = Boolean(realtorAvatarUrl || contact_name?.trim())
 
   return (
     <article className="relative mx-auto mb-5 w-full max-w-md overflow-hidden rounded-[28px] border border-zinc-200/80 bg-white shadow-[0_14px_35px_rgba(15,23,42,0.08)] transition-all duration-300 active:scale-[0.985] md:max-w-lg">
@@ -139,6 +163,33 @@ export default function PropertyCard({
               <span>{rooms || 0} rooms</span>
             </div>
           </div>
+
+          {showRealtorRow && (
+            <div className="mt-4 flex items-center gap-2.5 border-t border-zinc-100 pt-4">
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-blue-700 ring-1 ring-zinc-200">
+                {realtorAvatarUrl ? (
+                  <Image
+                    src={realtorAvatarUrl}
+                    alt={contact_name || "Realtor"}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                    sizes="36px"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-xs font-bold text-white">
+                    {getContactInitials(contact_name)}
+                  </div>
+                )}
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-zinc-800">
+                  {contact_name || "Realtor"}
+                </p>
+                <p className="text-xs text-zinc-500">Listing agent</p>
+              </div>
+            </div>
+          )}
         </div>
       </Link>
     </article>

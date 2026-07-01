@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import Image from "next/image"
 import {
   BadgeCheck,
   BedDouble,
@@ -13,6 +14,7 @@ import BackButton from "@/components/BackButton"
 import PropertyGallery from "@/components/PropertyGallery"
 import ShareButton from "@/components/ShareButton"
 import ReportButton from "@/components/ReportButton"
+import { getImageUrl } from "@/lib/getImageUrl"
 import {
   getPropertyById,
   getPropertyImages,
@@ -52,6 +54,24 @@ function getVerificationLabel(lastVerifiedAt?: string | null) {
   return "Needs Verification"
 }
 
+function getContactInitials(contactName?: string | null): string {
+  const name = contactName?.trim()
+
+  if (!name) {
+    return "R"
+  }
+
+  const parts = name.split(/\s+/).filter(Boolean)
+
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase()
+  }
+
+  return (
+    parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+  ).toUpperCase()
+}
+
 export default async function PropertyPage({ params }: Props) {
   const { id } = await params
 
@@ -77,6 +97,9 @@ export default async function PropertyPage({ params }: Props) {
 
   const verificationLabel = getVerificationLabel(property.last_verified_at)
   const isVerified = verificationLabel !== "Needs Verification"
+  const contactAvatarUrl = property.avatar_url
+    ? getImageUrl(property.avatar_url)
+    : null
 
   const galleryImages =
     property.images && property.images.length > 0
@@ -208,13 +231,33 @@ export default async function PropertyPage({ params }: Props) {
                 Contact
               </p>
 
-              <p className="mt-1 text-xl font-bold text-zinc-950">
-                {property.contact_name || "Property contact"}
-              </p>
+              <div className="mt-3 flex items-center gap-3">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200">
+                  {contactAvatarUrl ? (
+                    <Image
+                      src={contactAvatarUrl}
+                      alt={property.contact_name || "Realtor"}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                      sizes="48px"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-sm font-bold text-white">
+                      {getContactInitials(property.contact_name)}
+                    </div>
+                  )}
+                </div>
 
-              <p className="mt-1 text-sm text-zinc-500">
-                Ask about availability, viewing time, and rental conditions.
-              </p>
+                <div className="min-w-0">
+                  <p className="truncate text-xl font-bold text-zinc-950">
+                    {property.contact_name || "Property contact"}
+                  </p>
+                  <p className="mt-0.5 text-sm text-zinc-500">
+                    Ask about availability, viewing time, and rental conditions.
+                  </p>
+                </div>
+              </div>
 
               <div className="mt-4 grid grid-cols-1 gap-3">
                 {property.whatsapp && (

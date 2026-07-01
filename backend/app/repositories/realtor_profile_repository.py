@@ -12,6 +12,22 @@ def get_by_user_id(db: Session, user_id: int) -> RealtorProfile | None:
     )
 
 
+def get_by_user_ids(
+    db: Session,
+    user_ids: list[int],
+) -> dict[int, RealtorProfile]:
+    if not user_ids:
+        return {}
+
+    profiles = (
+        db.query(RealtorProfile)
+        .filter(RealtorProfile.user_id.in_(user_ids))
+        .all()
+    )
+
+    return {profile.user_id: profile for profile in profiles}
+
+
 def create_empty_profile(db: Session, user_id: int) -> RealtorProfile:
     profile = RealtorProfile(user_id=user_id)
 

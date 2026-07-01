@@ -7,6 +7,15 @@ from app.core.exceptions import BadRequestException, NotFoundException
 PUBLIC_PROPERTY_STATUSES = ("available", "reserved")
 
 
+def _apply_profile_contacts(property_item, profile):
+    property_item.contact_name = profile.full_name
+    property_item.phone = profile.phone
+    property_item.whatsapp = profile.whatsapp
+    property_item.avatar_url = profile.avatar_url
+
+    return property_item
+
+
 def _resolve_property_contacts_from_profile(db: Session, property_item):
     if not property_item.owner_id:
         return property_item
@@ -19,11 +28,30 @@ def _resolve_property_contacts_from_profile(db: Session, property_item):
     if not profile:
         return property_item
 
-    property_item.contact_name = profile.full_name
-    property_item.phone = profile.phone
-    property_item.whatsapp = profile.whatsapp
+    return _apply_profile_contacts(property_item, profile)
 
-    return property_item
+
+def _resolve_properties_contacts_batch(db: Session, items):
+    owner_ids = list(
+        {
+            property_item.owner_id
+            for property_item in items
+            if property_item.owner_id
+        }
+    )
+
+    profiles_by_user_id = realtor_profile_repository.get_by_user_ids(
+        db,
+        owner_ids,
+    )
+
+    for property_item in items:
+        profile = profiles_by_user_id.get(property_item.owner_id)
+
+        if profile:
+            _apply_profile_contacts(property_item, profile)
+
+    return items
 
 
 def get_all_properties(
@@ -38,7 +66,7 @@ def get_all_properties(
     order: str = "desc"
 ):
 
-    return property_repository.get_all_properties(
+    result = property_repository.get_all_properties(
     db,
     limit,
     offset,
@@ -49,6 +77,13 @@ def get_all_properties(
     sort_by,
     order
 )
+
+    result["items"] = _resolve_properties_contacts_batch(
+        db,
+        result["items"],
+    )
+
+    return result
 
 def get_all_properties_admin(
     db: Session,
