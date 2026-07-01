@@ -18,6 +18,7 @@ import {
   filterProperties,
   getContinueEditingProperty,
   getPropertyStatusLabel,
+  getWorkspaceGreetingName,
   searchProperties,
   type PropertyFilter,
 } from "@/lib/realtorWorkspace"
@@ -28,6 +29,20 @@ import {
   type RealtorProfile,
 } from "@/services/api"
 import type { Property } from "@/types/property"
+
+function getTimeGreeting(): string {
+  const hour = new Date().getHours()
+
+  if (hour < 12) {
+    return "Good morning"
+  }
+
+  if (hour < 17) {
+    return "Good afternoon"
+  }
+
+  return "Good evening"
+}
 
 function getProfileDisplayName(profile: RealtorProfile | null): string {
   const name = profile?.full_name?.trim()
@@ -61,7 +76,7 @@ function WorkspaceSkeleton() {
   return (
     <main className="min-h-screen bg-zinc-100 px-4 py-6 pb-24">
       <div className="mx-auto max-w-md space-y-4">
-        <div className="h-28 animate-pulse rounded-3xl bg-zinc-200" />
+        <div className="h-72 animate-pulse rounded-3xl bg-zinc-200" />
         <div className="h-14 animate-pulse rounded-2xl bg-zinc-200" />
         <div className="h-10 animate-pulse rounded-2xl bg-zinc-200" />
         <PropertyListSkeleton />
@@ -151,6 +166,9 @@ export default function RealtorWorkspacePage() {
     PROPERTY_FILTER_OPTIONS.find((option) => option.id === activeFilter)
       ?.label ?? "filtered"
 
+  const greetingName = getWorkspaceGreetingName(profile, user?.email)
+  const nextAction = actionItems[0] ?? null
+
   if (isLoading || (isAuthenticated && isRealtor && isDataLoading)) {
     return <WorkspaceSkeleton />
   }
@@ -190,71 +208,122 @@ export default function RealtorWorkspacePage() {
   return (
     <main className="min-h-screen bg-zinc-100 px-4 py-6 pb-24">
       <div className="mx-auto max-w-md space-y-5">
-        <header className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm">
-          <div className="flex items-start gap-4">
-            <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-2 ring-blue-100">
-              {avatarUrl ? (
-                <Image
-                  src={avatarUrl}
-                  alt={getProfileDisplayName(profile)}
-                  fill
-                  unoptimized
-                  className="object-cover"
-                  sizes="56px"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center text-lg font-bold text-white">
-                  {getProfileInitials(profile)}
-                </div>
-              )}
-            </div>
-
-            <div className="min-w-0 flex-1">
-              <h1 className="truncate text-lg font-extrabold tracking-tight text-zinc-900">
-                {getProfileDisplayName(profile)}
-              </h1>
-              <p className="mt-0.5 text-sm text-zinc-500">Realtor Workspace</p>
-              <div className="mt-2">
-                {profile?.is_verified ? (
-                  <span className="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-200">
-                    Verified
-                  </span>
+        <header className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+          <div className="bg-gradient-to-br from-blue-700 via-blue-700 to-blue-800 px-5 pb-5 pt-5 text-white">
+            <div className="flex items-start gap-3.5">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-blue-600 ring-2 ring-white/20">
+                {avatarUrl ? (
+                  <Image
+                    src={avatarUrl}
+                    alt={getProfileDisplayName(profile)}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                    sizes="56px"
+                  />
                 ) : (
-                  <span className="inline-flex rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-semibold text-zinc-500 ring-1 ring-zinc-200">
-                    Verification soon
-                  </span>
+                  <div className="flex h-full w-full items-center justify-center text-lg font-bold text-white">
+                    {getProfileInitials(profile)}
+                  </div>
                 )}
               </div>
+
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-blue-100">
+                  {getTimeGreeting()},
+                </p>
+                <h1 className="mt-0.5 truncate text-2xl font-extrabold tracking-tight">
+                  {greetingName}
+                </h1>
+                <div className="mt-2.5">
+                  {profile?.is_verified ? (
+                    <span className="inline-flex rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold text-white ring-1 ring-white/25">
+                      Verified
+                    </span>
+                  ) : (
+                    <span className="inline-flex rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-blue-100 ring-1 ring-white/20">
+                      Verification soon
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <Link
+                href="/realtor/profile"
+                aria-label={profileActionLabel}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/20 active:scale-95"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Link>
+            </div>
+
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              <div className="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
+                <p className="text-2xl font-extrabold leading-none">
+                  {stats.active}
+                </p>
+                <p className="mt-1.5 text-xs font-semibold text-blue-100">
+                  Active listings
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
+                <p className="text-2xl font-extrabold leading-none">
+                  {stats.pending}
+                </p>
+                <p className="mt-1.5 text-xs font-semibold text-blue-100">
+                  Pending listings
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4 px-5 py-5">
+            {nextAction && (
+              <Link
+                href={nextAction.href}
+                className={`block rounded-2xl px-4 py-3.5 active:scale-[0.99] ${
+                  nextAction.tone === "urgent"
+                    ? "bg-blue-50 ring-1 ring-blue-100"
+                    : "bg-zinc-50 ring-1 ring-zinc-100"
+                }`}
+              >
+                <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-500">
+                  Suggested next step
+                </p>
+                <p className="mt-1 text-sm font-bold text-zinc-900">
+                  {nextAction.title}
+                </p>
+                <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">
+                  {nextAction.description}
+                </p>
+              </Link>
+            )}
+
+            <div>
+              <div className="mb-2.5 flex items-center justify-between text-xs font-semibold text-zinc-500">
+                <span>Profile completion</span>
+                <span className="text-zinc-900">{profileCompletion}%</span>
+              </div>
+              <div className="h-2.5 overflow-hidden rounded-full bg-zinc-100">
+                <div
+                  className="h-full rounded-full bg-blue-600 transition-all duration-300"
+                  style={{ width: `${profileCompletion}%` }}
+                />
+              </div>
+              {!canCreateListing && (
+                <p className="mt-2 text-xs leading-relaxed text-zinc-500">
+                  Complete your profile to publish listings.
+                </p>
+              )}
             </div>
 
             <Link
               href="/realtor/profile"
-              aria-label={profileActionLabel}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-50 text-zinc-500 ring-1 ring-zinc-200 active:scale-95"
+              className="flex h-11 w-full items-center justify-center rounded-2xl bg-zinc-900 text-sm font-bold text-white active:scale-[0.98]"
             >
-              <ChevronRight className="h-5 w-5" />
+              {profileActionLabel}
             </Link>
           </div>
-
-          <div className="mt-4">
-            <div className="mb-2 flex items-center justify-between text-xs font-semibold text-zinc-500">
-              <span>Profile completion</span>
-              <span className="text-zinc-900">{profileCompletion}%</span>
-            </div>
-            <div className="h-2 overflow-hidden rounded-full bg-zinc-100">
-              <div
-                className="h-full rounded-full bg-blue-600 transition-all duration-300"
-                style={{ width: `${profileCompletion}%` }}
-              />
-            </div>
-          </div>
-
-          <Link
-            href="/realtor/profile"
-            className="mt-4 flex h-11 w-full items-center justify-center rounded-2xl bg-zinc-900 text-sm font-bold text-white active:scale-[0.98]"
-          >
-            {profileActionLabel}
-          </Link>
         </header>
 
         {canCreateListing ? (
