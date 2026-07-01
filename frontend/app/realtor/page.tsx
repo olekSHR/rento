@@ -2,8 +2,8 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
-import { ChevronRight, Pencil, Plus, Search, Sparkles } from "lucide-react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { Camera, ChevronRight, Pencil, Plus, Search, Sparkles } from "lucide-react"
 
 import PropertyBottomSheet from "@/components/realtor/PropertyBottomSheet"
 import PropertyEmptyState from "@/components/realtor/PropertyEmptyState"
@@ -26,6 +26,8 @@ import { getToken } from "@/lib/tokenStorage"
 import {
   getMyRealtorProfile,
   getMyRealtorProperties,
+  updateMyRealtorProfile,
+  uploadImage,
   type RealtorProfile,
 } from "@/services/api"
 import type { Property } from "@/types/property"
@@ -95,6 +97,9 @@ export default function RealtorWorkspacePage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeFilter, setActiveFilter] = useState<PropertyFilter>("all")
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
+  const [isAvatarUploading, setIsAvatarUploading] = useState(false)
+  const [avatarError, setAvatarError] = useState("")
+  const avatarInputRef = useRef<HTMLInputElement>(null)
 
   const isRealtor = user?.role === "realtor"
 
@@ -127,6 +132,40 @@ export default function RealtorWorkspacePage() {
 
     loadWorkspace()
   }, [isLoading, isAuthenticated, isRealtor])
+
+  async function handleAvatarChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const file = event.target.files?.[0]
+
+    if (!file) {
+      return
+    }
+
+    const token = getToken()
+
+    if (!token) {
+      return
+    }
+
+    try {
+      setAvatarError("")
+      setIsAvatarUploading(true)
+
+      const uploaded = await uploadImage(file, token)
+      const updatedProfile = await updateMyRealtorProfile(
+        { avatar_url: uploaded.url },
+        token
+      )
+
+      setProfile(updatedProfile)
+    } catch {
+      setAvatarError("Failed to upload avatar. Use JPEG, PNG, or WebP.")
+    } finally {
+      setIsAvatarUploading(false)
+      event.target.value = ""
+    }
+  }
 
   const profileCompletion = computeProfileCompletionPercent(profile)
   const canCreateListing = profile?.is_completed === true
@@ -211,21 +250,47 @@ export default function RealtorWorkspacePage() {
         <header className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
           <div className="bg-gradient-to-br from-blue-700 via-blue-700 to-blue-800 px-5 pb-5 pt-5 text-white">
             <div className="flex items-start gap-3.5">
-              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-blue-600 ring-2 ring-white/20">
-                {avatarUrl ? (
-                  <Image
-                    src={avatarUrl}
-                    alt={getProfileDisplayName(profile)}
-                    fill
-                    unoptimized
-                    className="object-cover"
-                    sizes="56px"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-lg font-bold text-white">
-                    {getProfileInitials(profile)}
-                  </div>
-                )}
+              <div className="relative shrink-0">
+                <button
+                  type="button"
+                  onClick={() => avatarInputRef.current?.click()}
+                  disabled={isAvatarUploading}
+                  aria-label="Upload profile photo"
+                  className="relative h-14 w-14 overflow-hidden rounded-2xl bg-blue-600 ring-2 ring-white/20 active:scale-95 disabled:opacity-80"
+                >
+                  {avatarUrl ? (
+                    <Image
+                      src={avatarUrl}
+                      alt={getProfileDisplayName(profile)}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                      sizes="56px"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-lg font-bold text-white">
+                      {getProfileInitials(profile)}
+                    </div>
+                  )}
+
+                  {isAvatarUploading ? (
+                    <div className="absolute inset-0 flex items-center justify-center bg-blue-900/60">
+                      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    </div>
+                  ) : (
+                    <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full bg-white text-blue-700 shadow-sm ring-2 ring-blue-700">
+                      <Camera className="h-3.5 w-3.5" />
+                    </span>
+                  )}
+                </button>
+
+                <input
+                  ref={avatarInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={handleAvatarChange}
+                />
               </div>
 
               <div className="min-w-0 flex-1">
@@ -256,6 +321,12 @@ export default function RealtorWorkspacePage() {
                 <Pencil className="h-5 w-5" />
               </Link>
             </div>
+
+            {avatarError && (
+              <p className="mt-3 text-xs font-medium text-red-200">
+                {avatarError}
+              </p>
+            )}
 
             <div className="mt-5 grid grid-cols-2 gap-3">
               <div className="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
