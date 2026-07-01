@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
-import { ChevronRight, Plus, Search, Sparkles } from "lucide-react"
+import { ChevronRight, Pencil, Plus, Search, Sparkles } from "lucide-react"
 
 import PropertyBottomSheet from "@/components/realtor/PropertyBottomSheet"
 import PropertyEmptyState from "@/components/realtor/PropertyEmptyState"
@@ -251,9 +251,9 @@ export default function RealtorWorkspacePage() {
               <Link
                 href="/realtor/profile"
                 aria-label={profileActionLabel}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/20 active:scale-95"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white ring-1 ring-white/20 active:scale-95"
               >
-                <ChevronRight className="h-5 w-5" />
+                <Pencil className="h-5 w-5" />
               </Link>
             </div>
 
@@ -310,19 +310,19 @@ export default function RealtorWorkspacePage() {
                   style={{ width: `${profileCompletion}%` }}
                 />
               </div>
-              {!canCreateListing && (
-                <p className="mt-2 text-xs leading-relaxed text-zinc-500">
-                  Complete your profile to publish listings.
+              {canCreateListing ? (
+                <p className="mt-2.5 text-xs leading-relaxed text-zinc-500">
+                  Your profile is complete
                 </p>
+              ) : (
+                <Link
+                  href="/realtor/profile"
+                  className="mt-2.5 block text-xs font-semibold leading-relaxed text-blue-700 active:opacity-80"
+                >
+                  Complete your profile to publish listings
+                </Link>
               )}
             </div>
-
-            <Link
-              href="/realtor/profile"
-              className="flex h-11 w-full items-center justify-center rounded-2xl bg-zinc-900 text-sm font-bold text-white active:scale-[0.98]"
-            >
-              {profileActionLabel}
-            </Link>
           </div>
         </header>
 
