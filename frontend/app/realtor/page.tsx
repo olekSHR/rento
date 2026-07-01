@@ -32,6 +32,78 @@ import {
 } from "@/services/api"
 import type { Property } from "@/types/property"
 
+const AVATAR_OUTPUT_SIZE = 512
+const ALLOWED_AVATAR_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const
+
+function loadImageElement(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new window.Image()
+
+    image.onload = () => resolve(image)
+    image.onerror = () => reject(new Error("Failed to load image"))
+    image.src = src
+  })
+}
+
+async function createCroppedAvatarFile(
+  image: HTMLImageElement,
+  zoom: number,
+  sourceFile: File
+): Promise<File> {
+  const canvas = document.createElement("canvas")
+  canvas.width = AVATAR_OUTPUT_SIZE
+  canvas.height = AVATAR_OUTPUT_SIZE
+
+  const context = canvas.getContext("2d")
+
+  if (!context) {
+    throw new Error("Canvas not supported")
+  }
+
+  const minSide = Math.min(image.width, image.height)
+  // Zoom narrows the source square taken from the image center.
+  const cropSize = minSide / zoom
+  const sourceX = (image.width - cropSize) / 2
+  const sourceY = (image.height - cropSize) / 2
+
+  context.drawImage(
+    image,
+    sourceX,
+    sourceY,
+    cropSize,
+    cropSize,
+    0,
+    0,
+    AVATAR_OUTPUT_SIZE,
+    AVATAR_OUTPUT_SIZE
+  )
+
+  const mimeType =
+    sourceFile.type === "image/webp" ? "image/webp" : "image/jpeg"
+  const extension = mimeType === "image/webp" ? "webp" : "jpg"
+
+  const blob = await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (result) => {
+        if (result) {
+          resolve(result)
+          return
+        }
+
+        reject(new Error("Failed to create image"))
+      },
+      mimeType,
+      0.92
+    )
+  })
+
+  return new File([blob], `avatar.${extension}`, { type: mimeType })
+}
+
 function getTimeGreeting(): string {
   const hour = new Date().getHours()
 
@@ -99,6 +171,10 @@ export default function RealtorWorkspacePage() {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
   const [isAvatarUploading, setIsAvatarUploading] = useState(false)
   const [avatarError, setAvatarError] = useState("")
+  const [isAvatarPreviewOpen, setIsAvatarPreviewOpen] = useState(false)
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null)
+  const [avatarSelectedFile, setAvatarSelectedFile] = useState<File | null>(null)
+  const [avatarZoom, setAvatarZoom] = useState(1)
   const avatarInputRef = useRef<HTMLInputElement>(null)
 
   const isRealtor = user?.role === "realtor"
@@ -133,12 +209,65 @@ export default function RealtorWorkspacePage() {
     loadWorkspace()
   }, [isLoading, isAuthenticated, isRealtor])
 
-  async function handleAvatarChange(
+  useEffect(() => {
+    return () => {
+      if (avatarPreviewUrl) {
+        URL.revokeObjectURL(avatarPreviewUrl)
+      }
+    }
+  }, [avatarPreviewUrl])
+
+  function closeAvatarPreview() {
+    if (avatarPreviewUrl) {
+      URL.revokeObjectURL(avatarPreviewUrl)
+    }
+
+    setAvatarPreviewUrl(null)
+    setAvatarSelectedFile(null)
+    setAvatarZoom(1)
+    setIsAvatarPreviewOpen(false)
+
+    if (avatarInputRef.current) {
+      avatarInputRef.current.value = ""
+    }
+  }
+
+  function handleAvatarChange(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     const file = event.target.files?.[0]
 
     if (!file) {
+      return
+    }
+
+    if (
+      !ALLOWED_AVATAR_TYPES.includes(
+        file.type as (typeof ALLOWED_AVATAR_TYPES)[number]
+      )
+    ) {
+      setAvatarError("Failed to upload avatar. Use JPEG, PNG, or WebP.")
+      event.target.value = ""
+      return
+    }
+
+    setAvatarError("")
+
+    if (avatarPreviewUrl) {
+      URL.revokeObjectURL(avatarPreviewUrl)
+    }
+
+    const previewUrl = URL.createObjectURL(file)
+
+    setAvatarSelectedFile(file)
+    setAvatarPreviewUrl(previewUrl)
+    setAvatarZoom(1)
+    setIsAvatarPreviewOpen(true)
+    event.target.value = ""
+  }
+
+  async function handleAvatarSave() {
+    if (!avatarSelectedFile || !avatarPreviewUrl) {
       return
     }
 
@@ -152,19 +281,29 @@ export default function RealtorWorkspacePage() {
       setAvatarError("")
       setIsAvatarUploading(true)
 
-      const uploaded = await uploadImage(file, token)
+      const image = await loadImageElement(avatarPreviewUrl)
+      const croppedFile = await createCroppedAvatarFile(
+        image,
+        avatarZoom,
+        avatarSelectedFile
+      )
+      const uploaded = await uploadImage(croppedFile, token)
       const updatedProfile = await updateMyRealtorProfile(
         { avatar_url: uploaded.url },
         token
       )
 
       setProfile(updatedProfile)
+      closeAvatarPreview()
     } catch {
       setAvatarError("Failed to upload avatar. Use JPEG, PNG, or WebP.")
     } finally {
       setIsAvatarUploading(false)
-      event.target.value = ""
     }
+  }
+
+  function handleAvatarCancel() {
+    closeAvatarPreview()
   }
 
   const profileCompletion = computeProfileCompletionPercent(profile)
@@ -254,7 +393,7 @@ export default function RealtorWorkspacePage() {
                 <button
                   type="button"
                   onClick={() => avatarInputRef.current?.click()}
-                  disabled={isAvatarUploading}
+                  disabled={isAvatarUploading || isAvatarPreviewOpen}
                   aria-label="Upload profile photo"
                   className="relative h-14 w-14 overflow-hidden rounded-2xl bg-blue-600 ring-2 ring-white/20 active:scale-95 disabled:opacity-80"
                 >
@@ -566,6 +705,79 @@ export default function RealtorWorkspacePage() {
         isOpen={selectedProperty !== null}
         onClose={() => setSelectedProperty(null)}
       />
+
+      {isAvatarPreviewOpen && avatarPreviewUrl && (
+        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/50 p-4">
+          <div
+            className="w-full max-w-md overflow-hidden rounded-3xl bg-white p-5 shadow-xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="avatar-preview-title"
+          >
+            <h2
+              id="avatar-preview-title"
+              className="text-lg font-bold text-zinc-900"
+            >
+              Adjust profile photo
+            </h2>
+            <p className="mt-1 text-sm text-zinc-500">
+              Zoom and preview how your avatar will appear.
+            </p>
+
+            <div className="mx-auto mt-6 flex h-44 w-44 items-center justify-center overflow-hidden rounded-full bg-zinc-100 ring-4 ring-blue-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={avatarPreviewUrl}
+                alt="Avatar preview"
+                className="h-full w-full object-cover"
+                style={{
+                  transform: `scale(${avatarZoom})`,
+                  transformOrigin: "center center",
+                }}
+              />
+            </div>
+
+            <div className="mt-6">
+              <div className="mb-2 flex items-center justify-between text-xs font-semibold text-zinc-500">
+                <span>Zoom</span>
+                <span className="text-zinc-900">{avatarZoom.toFixed(2)}x</span>
+              </div>
+              <input
+                type="range"
+                min={1}
+                max={3}
+                step={0.05}
+                value={avatarZoom}
+                onChange={(event) =>
+                  setAvatarZoom(Number(event.target.value))
+                }
+                disabled={isAvatarUploading}
+                className="h-2 w-full cursor-pointer accent-blue-700"
+                aria-label="Avatar zoom"
+              />
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={handleAvatarCancel}
+                disabled={isAvatarUploading}
+                className="flex h-12 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700 active:scale-[0.98] disabled:opacity-60"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleAvatarSave}
+                disabled={isAvatarUploading}
+                className="flex h-12 items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white active:scale-[0.98] disabled:opacity-60"
+              >
+                {isAvatarUploading ? "Saving..." : "Save photo"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
