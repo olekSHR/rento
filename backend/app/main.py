@@ -28,9 +28,14 @@ from app.core.handlers import (
     unauthorized_exception_handler,
     forbidden_exception_handler,
 )
+from app.core.config import settings
 from app.core.rate_limit import register_rate_limiting
 
-app = FastAPI()
+app = FastAPI(
+    docs_url="/docs" if settings.ENABLE_API_DOCS else None,
+    redoc_url="/redoc" if settings.ENABLE_API_DOCS else None,
+    openapi_url="/openapi.json" if settings.ENABLE_API_DOCS else None,
+)
 
 register_rate_limiting(app)
 

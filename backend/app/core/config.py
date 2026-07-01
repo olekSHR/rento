@@ -37,6 +37,8 @@ class Settings(BaseSettings):
 
     RATE_LIMIT_UPLOAD: str = "20/minute"
 
+    ENABLE_API_DOCS: bool = False
+
 
     class Config:
 
