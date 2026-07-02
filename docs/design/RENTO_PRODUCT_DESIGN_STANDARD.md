@@ -38,12 +38,13 @@ This standard is **not** implementation documentation. It does not specify code,
 | 10 | [Navigation System](#chapter-10--navigation-system) | Navigation | APPROVED |
 | 11 | [Component Philosophy & Component System](#chapter-11--component-philosophy--component-system) | Design System | APPROVED |
 | 12 | [Form System & Data Collection Experience](#chapter-12--form-system--data-collection-experience) | Forms & Data Collection | APPROVED |
+| 13 | [Search Experience System](#chapter-13--search-experience-system) | Search & Discovery | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 13+ | Future chapters per design standard roadmap (e.g., Search Experience System) |
+| 14+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -52,6 +53,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-07-03 | Initial consolidation — Chapters 1–12 approved and assembled |
+| 1.0 | 2026-07-03 | Chapter 13 — Search Experience System approved and added |
 
 ---
 
@@ -6521,3 +6523,1633 @@ Every field is a question the product asks of a human being. In housing, those a
 ---
 
 **End of Chapter 12**
+
+---
+
+## Chapter 13 — Search Experience System
+
+**Section:** X — Search & Discovery  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Search & Discovery, Reviewers  
+**Authority:** Subordinate to Chapters 1–12; operationalizes Information Architecture (Chapter 4), Navigation (Chapter 10), and Form System (Chapter 12) for discovery and refinement; defines principles only — not implementation, APIs, ranking algorithms, or visual tokens.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **search and discovery experience philosophy** for Rento.
+
+Search is not a text box. Search is how users **find homes they can trust** in a long-term rental marketplace where availability, location, price, and professional identity matter more than novelty or volume.
+
+Rento’s search experience must help users move from **open exploration** to **confident shortlist** without overload, false abundance, or dead ends. It must respect the seriousness of housing decisions, the mobile-first context of use, and the product promise that **only what is real** appears in public discovery.
+
+Where Chapter 4 defines structural hierarchy, Chapter 10 defines movement through the product, and Chapter 12 defines how criteria are collected, this chapter defines **how users discover, refine, evaluate, and return to listings** — as a coherent product system, not a feature bundle.
+
+This chapter governs:
+
+- Consumer browse and search  
+- Filter and sort behavior  
+- Result presentation and prioritization  
+- Persistence, saved criteria, and recovery  
+- Empty and no-results states  
+- Mobile search behavior  
+- Realtor-facing search within workspace scope  
+- Trust, transparency, accessibility, and AI compatibility in discovery  
+
+This chapter does **not** specify ranking formulas, database queries, design tokens, or screen layouts.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Discovery** | Browse-first behavior, curated entry, exploration before explicit query |
+| **Search** | Text query, location intent, structured criteria, refinement loops |
+| **Filters** | Philosophy, hierarchy, application, visibility, and reset behavior |
+| **Sort** | Meaning, defaults, and user control |
+| **Results** | Architecture, prioritization, scannability, and trust signals in lists |
+| **Persistence** | Session continuity, saved searches, recent activity |
+| **States** | Loading, empty, no results, partial results, error |
+| **Recovery** | Paths back to useful results without restart |
+| **Roles** | Consumer discovery; realtor portfolio search within owned listings |
+| **Cross-cutting** | Mobile-first, accessibility, scalability, AI-assisted discovery |
+
+### 2.2 Out of Scope
+
+- Listing detail evaluation (governed by marketplace experience chapters)  
+- Contact and conversion flows (governed by trust and conversion chapters)  
+- Realtor listing creation forms (Chapter 12)  
+- Implementation of search indexes, geocoding services, or ML ranking  
+- Admin moderation queue search (admin operations — separate standard when authored)  
+- SEO and public web crawl strategy (later phase per product roadmap)  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where users **find or narrow listings**, including but not limited to:
+
+- Home / browse  
+- Search entry and results  
+- Filter sheets and refinement panels  
+- Saved and recent search access  
+- Map-assisted discovery (when product ships)  
+- Realtor workspace listing lookup  
+
+If a surface helps users answer *“Which homes should I look at?”* — this chapter applies.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When search decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (listing ownership, moderation status, contact source)  
+2. Chapter 1 — Product Philosophy  
+3. Chapters 2–4 — Experience, brand, and structure  
+4. **This chapter** — for discovery and search behavior  
+5. Chapters 5–12 — governance, visual language, navigation, forms, components  
+6. Pattern specifications and screen-level exceptions (Chapter 5 Exception Policy)  
+
+Search must never override domain truth. Public discovery shows **only available listings**. Pending, rejected, or withdrawn listings do not appear in consumer search regardless of ranking desire.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Only what is real; trust before conversion; One Source of Truth; respect user time; progressive disclosure; no dead ends |
+| Chapter 2 — Experience Principles | Scannability, error prevention, ethical conversion, recovery quality |
+| Chapter 3 — Brand Experience & Visual Identity | Calm discovery; professional marketplace tone; trust without stimulation |
+| Chapter 4 — Layout & Information Architecture | Result hierarchy levels; primary facts in list cards; one purpose per screen; disclosure layers |
+| Chapter 5 — Product Design Decision Framework | Filter necessity tests; exception policy for search experiments |
+| Chapter 6 — Typography & Reading System | Scannable result labels; price and location prominence roles |
+| Chapter 7 — Color Meaning & Semantic Color System | Status, availability, and warning semantics in results — not decorative urgency |
+| Chapter 8 — Spatial System & Layout Rhythm | List density, filter sheet rhythm, thumb-zone refinement |
+| Chapter 9 — Motion & Interaction System | Apply filter transitions; scroll preservation; calm feedback |
+| Chapter 10 — Navigation System | Search is navigation; task layer for filters; return and back integrity |
+| Chapter 11 — Component Philosophy & Component System | Result cards, chips, filter controls as governed behaviors |
+| Chapter 12 — Form System & Data Collection Experience | Filter criteria as form family; validation tone; honest optional vs required |
+
+### 3.3 What This Chapter Adds
+
+Earlier chapters define **how the product thinks and moves**. This chapter defines **how users find what matters** within that model — the discovery loop that connects browse, refine, evaluate, save, and return.
+
+Without this chapter, teams treat search as a utility feature. With it, search becomes a **governed marketplace system** aligned with Rento’s long-term rental mission.
+
+---
+
+## 4. Search Philosophy
+
+Search on Rento serves **confident housing decisions**, not maximum engagement time.
+
+### 4.1 Discovery Serves Decision, Not Distraction
+
+The goal of search is to reduce the candidate set to listings worth serious attention — not to keep users scrolling indefinitely. Every design choice is measured against *Does this help someone find a real home faster?*
+
+### 4.2 Quality Over Volume
+
+Fewer honest, current, well-represented results outperform inflated result counts. The product must never simulate abundance through stale inventory, irrelevant matches, or misleading proximity.
+
+### 4.3 Browse and Search Are One System
+
+Users do not think in product categories of “browse” versus “search.” They think: *Show me homes I should consider.* Entry mode differs; mental model is unified.
+
+### 4.4 Criteria Must Earn Their Place
+
+Every filter, sort option, and query affordance must justify its existence against user value and marketplace integrity (Chapter 5). Search complexity is a product cost paid by every user.
+
+### 4.5 Refinement Is Conversation, Not Punishment
+
+Adjusting criteria is normal. The product welcomes refinement — it does not treat changed minds as failure or reset progress punitively.
+
+### 4.6 Results Are Previews, Not Promises
+
+List cards surface enough to decide **continue or skip** — not to replace detail evaluation. Search optimizes for triage; detail optimizes for commitment.
+
+### 4.7 Trust Is Part of Findability
+
+A listing users cannot trust is not a successful find. Verification, realtor identity, and status honesty belong in the discovery layer at appropriate hierarchy (Chapter 4) — not deferred entirely to detail.
+
+### 4.8 Search Remembers Respectfully
+
+Persistence helps users resume — it does not surveil or manipulate. Saved and recent behavior serves user goals, not dark retention patterns.
+
+### 4.9 Mobile Context Is Default
+
+Search is designed for interrupted, one-handed, on-the-go use — commuting, comparing with a partner, checking before a viewing. Desktop extends; mobile defines.
+
+### 4.10 Search Scales Without Reinvention
+
+New cities, attributes, and modules attach to the same discovery grammar — not new search products per market.
+
+---
+
+## 5. Search Mental Model
+
+Users hold a simple mental model of Rento discovery:
+
+```
+Where → What kind → What budget → Who can I trust → Shortlist → Detail → Contact
+```
+
+### 5.1 The Five Questions
+
+At any discovery moment, users implicitly ask:
+
+1. **Where am I looking?** — city, area, proximity  
+2. **What fits my life?** — rooms, type, essentials  
+3. **What can I afford?** — price for stated rental period  
+4. **Can I trust this?** — availability, realtor, verification cues  
+5. **What should I do next?** — open, save, refine, or leave  
+
+Search experience must answer or enable progress on these questions — in order of decision urgency, not internal data model order.
+
+### 5.2 Listings as Objects in a Space
+
+Users imagine listings in **geography and suitability space**, not in database rows. Location and price anchor the model; attributes refine it; trust filters noise.
+
+### 5.3 Active Criteria as User Intent
+
+Applied filters and query text represent **declared intent**. The product must make active criteria visible and editable — users must never wonder *“Why am I seeing these?”*
+
+### 5.4 Depth Is Forward, Return Is Back
+
+Moving from results to detail is **forward depth** (Chapter 10). Refinement is **lateral adjustment** — same discovery layer, changed criteria. Users must not lose orientation when switching between these modes.
+
+### 5.5 Saved Items Are Personal Shortlist
+
+Favorites and saved searches are **memory extensions** — not separate product universes. Discovery, save, and return must feel connected.
+
+---
+
+## 6. Discovery Before Search
+
+Rento is a **marketplace**, not a query engine. Discovery begins before the user types.
+
+### 6.1 Browse-First Philosophy
+
+Most users start with **exploration** — scrolling current inventory in a relevant geography — not with a perfected query. The default experience surfaces worthwhile listings without demanding upfront specification.
+
+### 6.2 Implicit Criteria
+
+Location context, recent activity, and sensible defaults may pre-shape discovery — always **transparently** and **reversibly**. Users must be able to see and clear what was assumed.
+
+### 6.3 Curated Entry
+
+Home and browse entry may highlight:
+
+- Fresh or recently updated available listings  
+- Logical geographic defaults (last searched, detected city with user consent)  
+- Paths into refinement — not forced filter walls before first value  
+
+Curated entry must not hide that results are a subset or imply exclusivity that is false.
+
+### 6.4 Exploration Teaches the Market
+
+Scrolling teaches price levels, neighborhood density, and quality baseline. Discovery UX should support learning — users refine because they understand the market better, not because they failed initially.
+
+### 6.5 When Explicit Search Takes Over
+
+Explicit search dominates when:
+
+- User knows location name or landmark precisely  
+- User returns with saved criteria  
+- Browse density is too high for scroll-only triage  
+- User names attributes hard to browse-scan (specific building, street)  
+
+The product offers search without penalizing browse-first users.
+
+### 6.6 Discovery Without Account
+
+Visitors discover listings without authentication. Gating search behind sign-up violates respect for user time (Chapter 1) unless domain rules require identity for a specific action — not for looking.
+
+---
+
+## 7. Search Entry Points
+
+Search must be **findable without instruction** and **consistent across entry paths**.
+
+### 7.1 Primary Entry Points
+
+| Entry | User expectation |
+|-------|------------------|
+| **Home / browse** | See listings immediately; optional refinement |
+| **Search field** | Express location or keyword intent |
+| **Filters control** | Adjust structured criteria |
+| **Saved searches** | Resume prior intent |
+| **Recent searches** | Quick return to prior criteria |
+| **External link** | Land on relevant discovery or detail with orientation outward |
+
+### 7.2 Entry Point Rules
+
+- One obvious path to refinement from browse — not hidden gestures  
+- Search field placeholder and labels describe **rental intent** — not generic “Search…” without domain context where product copy allows  
+- Filters entry visible on discovery surfaces where refinement is core task  
+- Saved and recent access subordinate to primary browse — not competing top-level clutter  
+
+### 7.3 Role-Specific Entry
+
+**Consumer:** discovery of available public listings.  
+**Realtor:** search within **owned portfolio** — operational lookup, not consumer marketplace duplication.  
+**Visitor:** same consumer discovery without account features (save may prompt auth at intent moment).
+
+### 7.4 Deep Link Entry
+
+Links into search results or filtered browse must:
+
+- Preserve orientation (where, what criteria active)  
+- Allow outward exploration (change city, clear filters)  
+- Not trap users in dead-end partial states  
+
+### 7.5 AI-Assisted Entry (Future-Compatible)
+
+Natural-language or assisted entry maps to **visible criteria** users can inspect and edit — not opaque magic boxes. AI proposes; user governs (see §29).
+
+---
+
+## 8. Search Flow
+
+Search flow is the **repeatable loop** users traverse during discovery.
+
+### 8.1 Standard Consumer Flow
+
+```
+Enter discovery
+    → Scan results (or empty state)
+    → Optional: open listing detail
+    → Optional: save listing
+    → Optional: refine criteria
+    → Review updated results
+    → Repeat until shortlist sufficient or exit
+```
+
+### 8.2 Flow Principles
+
+| Principle | Rule |
+|-----------|------|
+| **Low cost to start** | First value without mandatory filter form |
+| **Low cost to refine** | Criteria change does not wipe unrelated context unnecessarily |
+| **Low cost to evaluate** | Detail one tap away; return preserves list position where possible |
+| **Low cost to resume** | Recent and saved criteria recover intent |
+| **Honest interruption** | Auth, errors, connectivity — preserve or explain state |
+
+### 8.3 Filter Application Flow
+
+Filters operate as **task navigation** (Chapter 10):
+
+1. User opens filter task layer  
+2. Adjusts criteria in form grammar (Chapter 12)  
+3. Applies or cancels with predictable outcome  
+4. Returns to results with visible summary of active criteria  
+5. Results reflect applied state — or explain why not  
+
+Cancel must not silently apply. Apply must not leave criteria ambiguous.
+
+### 8.4 Detail Detour Flow
+
+From results → detail → back:
+
+- User returns to **same discovery context** (criteria, scroll position when feasible)  
+- Saved state from detail does not corrupt search criteria  
+- Contact intent from detail does not break return path  
+
+### 8.5 Shortlist Flow
+
+Save/favorite during discovery:
+
+- Action is lightweight — no form interruption  
+- Saved items accessible from persistent navigation (Chapter 10)  
+- Saving does not remove listing from current results unless product rules explicitly define that behavior with user understanding  
+
+### 8.6 Exit Flow
+
+Users leave discovery for many reasons — found enough, need break, app interrupt. Exit states preserve **recent criteria** and **saved searches** where product rules allow — welcoming return without guilt or loss.
+
+---
+
+## 9. Search Lifecycle
+
+Search experience spans states beyond “showing results.”
+
+### 9.1 Lifecycle States
+
+| State | User need | Product obligation |
+|-------|-----------|-------------------|
+| **Initial** | See relevant starting set | Sensible defaults; no empty paralysis |
+| **Active discovery** | Scan and compare | Scannable architecture; stable hierarchy |
+| **Refining** | Narrow or broaden | Visible criteria; reversible changes |
+| **Evaluating** | Open detail from candidates | Preserve return context |
+| **Paused** | Leave and return | Recent persistence |
+| **Intent saved** | Repeat same search later | Saved search fidelity |
+| **Empty input** | Understand what to do | Guided empty search — not blank wall |
+| **No matches** | Recover without defeat | Recovery strategy (§18) |
+| **Partial / degraded** | Know limits | Honest messaging; no false completeness |
+| **Error** | Retry or alternate path | No dead end; blameless tone |
+
+### 9.2 State Transitions
+
+Transitions must be **calm and legible** (Chapter 9). Loading states do not flash empty. Error states do not masquerade as no results.
+
+### 9.3 Criteria Lifecycle
+
+Criteria move through:
+
+```
+Unset → Suggested → Active → Modified → Cleared → Saved (optional)
+```
+
+Each transition visible. Clearing is always available. Saving is optional enhancement — not required to search.
+
+### 9.4 Result Set Lifecycle
+
+Result sets may change because:
+
+- User changed criteria  
+- New listings became available  
+- Listings exited availability  
+
+User-initiated change is explicit. Background refresh must not disorient — preserve scroll and explain meaningful change when necessary.
+
+### 9.5 Session vs Persistent
+
+**Session:** current criteria, scroll, recent queries — supports immediate return.  
+**Persistent:** saved searches, account-linked favorites — supports days-later return.  
+Both obey respect-for-time — no surprise overwrite of user-defined saved intent.
+
+---
+
+## 10. Search Intent
+
+Search intent on Rento falls into governed categories. Design must support each without conflating them.
+
+### 10.1 Intent Types
+
+| Intent | Description | Product response |
+|--------|-------------|------------------|
+| **Geographic** | City, district, area, proximity | Location criteria primary; map when available |
+| **Economic** | Budget ceiling/floor, period clarity | Price filters with explicit period semantics |
+| **Physical** | Rooms, size, property type, features | Structured filters; progressive disclosure |
+| **Temporal** | Move timing, availability window | Honest availability — no false “available now” |
+| **Trust** | Verified realtor, agency, quality signals | Trust filters and badges at list level where meaningful |
+| **Specific** | Street, building, known listing | Query or deep link; high precision expectations |
+| **Exploratory** | “See what exists” | Browse-first; low criteria |
+| **Return** | Resume prior search | Saved/recent; criteria restoration |
+
+### 10.2 Intent Recognition Without Over-Guessing
+
+The product may infer intent from query text or behavior — never **silently overriding** user-visible criteria. Inference surfaces as suggestion users accept or dismiss.
+
+### 10.3 Multi-Intent Queries
+
+Users combine intents (“2 camere Florești under 500 euro”). Parsed intent maps to **visible structured criteria** where possible — users edit structure, not hidden parser output alone.
+
+### 10.4 Intent–Result Contract
+
+When user expresses clear intent, results must **visibly align** — if most results ignore stated hard criteria, trust breaks. Mismatch triggers recovery (§18), not silent irrelevance.
+
+### 10.5 Intent and Role
+
+Realtor portfolio search intent is **operational** — find my listing by title, status, date — not renter geographic discovery. Same grammar principles; different scope and fields.
+
+---
+
+## 11. Query Principles
+
+Text query complements structured filters — it does not replace structural clarity.
+
+### 11.1 Query Purpose
+
+Query captures **language the user already knows** — place names, neighborhood words, building names, informal local terms — especially important in Romanian and multilingual contexts across cities.
+
+### 11.2 Query Design Principles
+
+| Principle | Rule |
+|-----------|------|
+| **Complement structure** | Query augments filters; critical constraints remain structured when possible |
+| **Predictable effect** | User understands query affects location/text matching — not hidden ranking magic |
+| **Forgiving input** | Typos and diacritics handled gracefully; recovery when zero results |
+| **No query required** | Browse valid with empty query |
+| **Transparent combination** | Query + filters = visible combined intent |
+| **Clear reset** | One action clears query without destroying unrelated filters unless user chooses full reset |
+
+### 11.3 Query Placeholder and Guidance
+
+Placeholder text educates without manual — examples reflect **real rental language** for target market, not generic tech product tone.
+
+### 11.4 Query Length and Complexity
+
+Long queries are rare in mobile context. Design for **short place-first input**; advanced boolean syntax is out of scope for consumer mobile-first experience.
+
+### 11.5 Query Privacy
+
+Recent queries are user convenience — not public profile data. Display scope follows privacy rules; users can clear history.
+
+### 11.6 Query and One Source of Truth
+
+Query matches against listing facts — not against stale or moderated-out inventory in public discovery. Moderation status is domain truth, not search tuning.
+
+---
+
+## 12. Progressive Refinement
+
+Refinement is the **core skill** of rental search — markets are dense; first pass is rarely final.
+
+### 12.1 Refinement Philosophy
+
+- Refinement is **expected**, not exceptional  
+- Broadening is as valid as narrowing — users learn market shape  
+- Each refinement teaches — result count and sample listings inform next step  
+
+### 12.2 Refinement Layers
+
+Align with progressive disclosure (Chapters 1, 4):
+
+| Layer | Typical criteria |
+|-------|------------------|
+| **Essential** | Location, price range |
+| **Common** | Rooms, property type |
+| **Advanced** | Features, floor, amenities, policy flags |
+| **Expert / rare** | Low-frequency attributes — hidden until requested |
+
+Essential layer accessible immediately. Advanced layer never blocks first results.
+
+### 12.3 Refinement Feedback
+
+After apply, user sees:
+
+- **Active criteria summary** — chips, labels, or equivalent visible grammar  
+- **Result count or honest absence** — not fake numbers  
+- **Clear edit path** — tap criterion to adjust  
+
+### 12.4 Refinement Without Reset Trauma
+
+Changing one filter must not clear others unless user chooses **reset all**. Users refining price must not lose city.
+
+### 12.5 Suggested Refinement
+
+When results are too many or too few, product may **suggest** refinement — widen area, raise budget, remove restrictive filter. Suggestions are advisory, blameless, dismissible.
+
+### 12.6 Refinement Loops and Fatigue
+
+Avoid forcing repeated filter open/apply cycles for common adjustments. High-frequency criteria belong in fast-access refinement UI when product patterns support it — still governed by filter hierarchy (§14).
+
+---
+
+## 13. Filter Philosophy
+
+Filters translate intent into **structured, honest constraints**.
+
+### 13.1 Filters Serve Clarity, Not Power User Flexibility
+
+Every filter must map to a **user-understandable question**. If the team cannot phrase the question in plain language, the filter is suspect.
+
+### 13.2 Filters Respect Marketplace Truth
+
+Filters reflect real listing attributes — not aspirational fields realtors rarely complete. Empty filter options (zero listings) handled honestly — hide or disable with explanation, not dead apply.
+
+### 13.3 Filters Are Form Family
+
+Filter UI follows Chapter 12 — grouping, validation tone, apply/cancel, error recovery. Filter sheet is task form, not alien interaction dialect.
+
+### 13.4 Filter Transparency
+
+Applied filters always visible on discovery surface after apply. User never scrolls results wondering which constraints are active.
+
+### 13.5 Filter Defaults
+
+Defaults are **conservative and transparent**:
+
+- No hidden default that secretly excludes most inventory  
+- Geographic default explained and clearable  
+- Price default absent unless user sets — no assumed budget  
+
+### 13.6 Filter Integrity
+
+“Apply” means commit to criteria visible in summary. Partial apply with hidden side effects forbidden.
+
+### 13.7 Filter and Trust
+
+Trust-related filters (e.g., verified realtor) mean what Chapter 1 and trust chapters define — filter labels cannot overclaim verification scope.
+
+### 13.8 Anti-Patterns
+
+| Anti-pattern | Why forbidden |
+|--------------|---------------|
+| 40 filters before first result | Violates respect for time |
+| Duplicate filters in query and structure without sync | Violates One Source of Truth |
+| Filters that do not affect results | Breaks intent–result contract |
+| Mandatory filter walls | Blocks browse-first philosophy |
+| Dark defaults excluding inventory | Erodes trust |
+
+---
+
+## 14. Filter Hierarchy
+
+Not all filters are equal. Hierarchy prevents cognitive overload and places **decision-critical criteria first**.
+
+### 14.1 Primary Filters (Tier 1)
+
+**Always govern result set meaningfully:**
+
+- Location / geography  
+- Price (with rental period clarity)  
+- Availability alignment (only available in public consumer discovery — may be implicit domain rule rather than toggle)  
+
+Primary filters appear first in filter task UI and in active summary prominence.
+
+### 14.2 Secondary Filters (Tier 2)
+
+**Common refinement:**
+
+- Number of rooms  
+- Property type (apartment, house, etc.)  
+- Key lifestyle constraints surfaced by market research  
+
+Secondary filters follow primary in UI order and chip summary — visually subordinate but easy to reach.
+
+### 14.3 Tertiary Filters (Tier 3)
+
+**Advanced refinement:**
+
+- Floor, year, parking, pets policy, furnishing, etc.  
+- Revealed through progressive disclosure within filter task — not on first screen of filter sheet unless market proves daily necessity  
+
+### 14.4 Quaternary / Experimental (Tier 4)
+
+**Low frequency or pilot attributes:**
+
+- Require explicit expansion  
+- Subject to Chapter 5 exception policy  
+- Removed if unused or unmaintained — filter debt is product debt  
+
+### 14.5 Hierarchy Rules
+
+| Rule | Application |
+|------|-------------|
+| **Decision order** | Hierarchy follows user decision sequence (§5.1) |
+| **One home per criterion** | Same constraint not in two tiers under different labels |
+| **Summary prominence** | Primary filters always visible in active summary |
+| **Mobile thumb path** | Primary refinement reachable without deep scroll in filter task |
+| **Realtor scope** | Portfolio filters use operational hierarchy — status, date, title — not consumer geography tree |
+
+### 14.6 Filter Grouping
+
+Within filter task, group by **user question**:
+
+- “Where?”  
+- “How much?”  
+- “What kind of home?”  
+- “What matters for daily life?”  
+
+Groups separated by spatial rhythm (Chapter 8) — not one undifferentiated slab.
+
+---
+
+## 15. Sorting Principles
+
+Sort controls **order of preview**, not listing truth.
+
+### 15.1 Sort Philosophy
+
+- Default sort serves **user benefit** — typically recency or relevance — not realtor pay-to-win  
+- Sort options are **few and meaningful** — not exhaustive database columns  
+- Sort never hides that listing is unavailable in public discovery — domain excludes ineligible inventory before sort  
+
+### 15.2 Governed Sort Meanings
+
+| Sort (conceptual) | User expectation |
+|-------------------|------------------|
+| **Newest / recently updated** | Fresh inventory first — aligns with actual availability promise |
+| **Price ascending** | Cheapest preview first — clear period |
+| **Price descending** | Premium preview first — clear period |
+| **Relevance** | Best match to stated criteria — explainable, not opaque pay rank |
+
+New sort modes require user-understandable meaning and council review if they affect trust perception.
+
+### 15.3 Sort Visibility
+
+Active sort visible alongside active filters — user understands ordering. Changing sort preserves filters.
+
+### 15.4 Sort vs Rank
+
+**Sort** is user-selected order. **Rank** (relevance scoring) may incorporate match quality — must still respect hard filters and domain eligibility. Paid placement, if ever introduced, requires explicit labeling and governance — never disguised as relevance.
+
+### 15.5 Sort Stability
+
+Rapid resort does not reset scroll punitively unless necessary for comprehension — motion calm (Chapter 9).
+
+### 15.6 Realtor Portfolio Sort
+
+Realtor sorts owned listings by status, updated date, price — operational clarity first.
+
+---
+
+## 16. Search Result Architecture
+
+Result architecture is how listings appear in **discovery lists** — cards, rows, or map pins — before detail.
+
+### 16.1 Architecture Goal
+
+Enable **scan → compare → decide to open** in seconds per listing on mobile.
+
+### 16.2 Primary Card Content
+
+Each result preview must communicate at hierarchy level **Primary** (Chapter 4):
+
+| Element | Requirement |
+|---------|-------------|
+| **Visual evidence** | Representative photo — honest, not misleading crop |
+| **Location context** | City / area user needs for geographic decision |
+| **Price** | Clear amount and rental period |
+| **Identity hook** | Enough to distinguish this listing — title or type + rooms |
+| **Trust minimum** | Availability honest; realtor identity accessible without opening if product rules place it at list level |
+
+Exact composition may vary by view mode; hierarchy rules do not.
+
+### 16.3 Secondary Card Content
+
+Secondary preview information:
+
+- Key attributes (rooms, area if available)  
+- Freshness signal when meaningful  
+- Verification badge if applicable and defined  
+
+Secondary never competes with price and location for first glance.
+
+### 16.4 Card Interaction Model
+
+| Gesture / action | Outcome |
+|------------------|---------|
+| **Tap card body** | Open listing detail — forward depth |
+| **Save action** | Add to favorites — subordinate, non-destructive |
+| **Explicit secondary actions** | Share, etc. — subordinate, never primary over open |
+
+One dominant action per card: **evaluate further**.
+
+### 16.5 List Structure
+
+- Consistent card anatomy across results — no random layout variants per row  
+- Stable vertical rhythm (Chapter 8)  
+- Section headers only when structurally meaningful — not decorative noise  
+- Pagination or infinite scroll — loading honest; end state clear  
+
+### 16.6 Map Architecture (When Present)
+
+Map and list are **two views of same criteria** — not divergent inventories. Selected pin and list selection synchronized. Map respects mobile legibility and touch targets.
+
+### 16.7 Duplicate and Fragment Prevention
+
+Same listing must not appear twice in one result set. Split variants of same fact on one card violate One Source of Truth.
+
+---
+
+## 17. Search Result Prioritization
+
+Prioritization determines **what appears first** within eligible results.
+
+### 17.1 Prioritization Principles
+
+| Principle | Rule |
+|-----------|------|
+| **Eligibility first** | Only domain-eligible listings enter set |
+| **Match fidelity** | Hard criteria respected before soft ranking |
+| **Freshness matters** | Stale listings must not dominate — aligns with product promise |
+| **Trust signals** | Meaningful verification influences confidence — not gimmick badges |
+| **User sort overrides** | User-selected sort takes precedence over default rank |
+| **Explainability** | Team must articulate why default order helps renter — not only business metric |
+
+### 17.2 What Must Not Prioritize
+
+- Incomplete or misleading listings over complete honest ones  
+- Pending moderation inventory in public consumer discovery  
+- Paid placement without disclosure  
+- Engagement bait listings with thin content  
+
+### 17.3 Personalization Boundaries
+
+Personalization — recent views, saved preferences — may shape **default entry** or **suggested refinement**, not secretly hide eligible inventory without user criteria. Personalized ranking requires transparency policy when materially affecting order.
+
+### 17.4 Zero-Result Prevention vs Honesty
+
+Prioritization must not **relax** hard criteria silently to avoid empty states. Recovery is user-visible (§18).
+
+### 17.5 Diversity and Saturation
+
+Result sets avoid unhealthy saturation — e.g., same building repeated beyond user benefit unless user intent is that building. Architectural repetition erodes scan efficiency.
+
+### 17.6 Monitoring Philosophy
+
+Teams monitor search quality through **user success proxies** — detail opens, saves, contact, return rate — not scroll depth alone. Metric gaming that harms trust violates Chapter 1.
+
+---
+
+## 18. Search Persistence
+
+Persistence supports **return and continuity** without trapping users in stale intent.
+
+### 18.1 What Persists
+
+| Artifact | Scope | Purpose |
+|----------|-------|---------|
+| **Active criteria** | Session | Resume refinement loop |
+| **Scroll position** | Session | Return from detail |
+| **Recent queries** | Session / device | Fast re-run |
+| **Saved searches** | Account | Long-term intent |
+| **Dismissed suggestions** | Session | Do not nag |
+
+### 18.2 Persistence Rules
+
+- Persist **user-authored intent** faithfully  
+- Do not persist error states as if criteria  
+- Clear persistence on explicit reset  
+- Auth boundaries honest — saved searches require account; session recent may not  
+
+### 18.3 Staleness
+
+Persisted criteria may yield different counts when user returns — product accepts this honestly. Optional gentle note when market changed materially — not alarmist.
+
+### 18.4 Cross-Device
+
+Saved searches sync with account. Session state may not sync — user expectation set accordingly without data loss surprise on intentional save.
+
+### 18.5 Privacy
+
+Recent queries and saved criteria are sensitive — user can clear. Not exposed on public profiles.
+
+---
+
+## 19. Saved Searches
+
+Saved searches are **named intent** users choose to keep.
+
+### 19.1 Purpose
+
+Allow users to repeat valuable criteria without reconstructing filters — especially for active housing hunts spanning weeks.
+
+### 19.2 Save Trigger
+
+Save offered when:
+
+- User has meaningful criteria applied  
+- User explicitly requests save — not forced modal after every apply  
+
+### 19.3 Saved Search Fidelity
+
+Restored saved search must restore **visible criteria** — filters, query, sort if saved — not approximate memory.
+
+### 19.4 Naming and Management
+
+Users can name, edit, delete saved searches. Management UI subordinate to discovery — task or profile area per navigation architecture (Chapter 10).
+
+### 19.5 Notifications (Future-Compatible)
+
+New matches for saved search may notify user — opt-in, calm, frequency-capped. Notifications link to results with criteria visible — not engagement bait.
+
+### 19.6 Saved vs Saved Listings
+
+Saved **searches** are criteria. Saved **listings** are favorites. Never conflate in copy or UI structure.
+
+---
+
+## 20. Recent Searches
+
+Recent searches reduce friction for **ephemeral repeat intent**.
+
+### 20.1 Scope
+
+Recent captures queries and/or criterion sets user actually ran — not every keystroke unless product explicitly defines typing preview separate from committed search.
+
+### 20.2 Display
+
+Recent list:
+
+- Compact, scannable  
+- Shows distinguishing label — city + key filters  
+- Tap restores and runs  
+
+### 20.3 Limits
+
+Bounded list length — oldest drop off. User clear-all available.
+
+### 20.4 Sensitive Context
+
+Shared device consideration — recent must not expose housing search to wrong party beyond platform privacy model; clear path provided.
+
+---
+
+## 21. Empty Search
+
+Empty search is **no query and no or minimal criteria** — not the same as no results.
+
+### 21.1 Empty Search Is Valid
+
+User opening search or landing browse without criteria is normal — not error.
+
+### 21.2 Empty Search Response
+
+Product provides:
+
+- Sensible geographic or market default with transparency  
+- Representative available listings or honest empty market message  
+- Guidance toward refinement — not blank screen  
+- No punitive “enter something” blocking wall  
+
+### 21.3 Empty Search Copy Tone
+
+Professional, welcoming — *Browse current listings in [city]* — not scolding.
+
+### 21.4 Empty vs Loading
+
+Do not show empty state while loading. Skeleton or calm loading until first truth known.
+
+---
+
+## 22. No Results Experience
+
+No results means **criteria yielded zero eligible listings** — distinct from error and empty search.
+
+### 22.1 No Results Philosophy
+
+Zero results is **information**, not failure. User learned market constraint — product helps next step.
+
+### 22.2 Required Elements
+
+| Element | Purpose |
+|---------|---------|
+| **Clear statement** | No listings match current criteria |
+| **Active criteria recap** | User sees what to change |
+| **Recovery actions** | Broaden, clear filter, change location |
+| **Suggestions** | Optional intelligent widen — dismissible |
+| **Escape** | Browse wider or home — no dead end |
+
+### 22.3 Tone
+
+Blameless — never imply user error. Criteria may be valid; inventory may be thin.
+
+### 22.4 No Fake Results
+
+Never pad no-results with ineligible, irrelevant, or sponsored listings without explicit criteria change user accepts.
+
+### 22.5 Partial Relaxation
+
+If product offers “show nearby areas” or “raise max price,” user **confirms** broadening — criteria update visible after.
+
+---
+
+## 23. Recovery Strategy
+
+Recovery reconnects users to **useful discovery** after dead ends, errors, or frustration.
+
+### 23.1 Recovery Hierarchy
+
+Try in order:
+
+1. **Adjust single criterion** — remove most restrictive filter  
+2. **Suggest geographic broaden** — nearby cities, wider radius  
+3. **Clear non-primary criteria** — keep location and budget  
+4. **Reset to browse default** — transparent fresh start  
+5. **Alternate path** — saved searches, favorites, human support if product offers  
+
+### 23.2 Error Recovery
+
+Network or server failure:
+
+- Preserve typed and selected criteria  
+- Retry action  
+- Offline honesty when applicable (Chapter 10 future offline)  
+
+### 23.3 Detail Dead End Recovery
+
+If listing from results becomes unavailable on open:
+
+- Explain status change honestly  
+- Offer return to results or similar listings — not trap  
+
+### 23.4 Auth Interruption Recovery
+
+Auth gate during save or contact preserves discovery context on return — Chapter 10 auth return rules apply to search context.
+
+### 23.5 Recovery Metrics
+
+Measure recovery success — users reaching detail or save after no-results — without pressuring dark patterns.
+
+---
+
+## 24. Mobile Search Principles
+
+Mobile is the **reference platform** for search experience.
+
+### 24.1 Thumb-Zone Priority
+
+Primary refinement entry and dominant result actions sit in reachable zones — filter entry, apply, open listing.
+
+### 24.2 Vertical Scanning
+
+Results optimized for **vertical list scan** — one column, stable card height bands, no horizontal carousel required to assess basics.
+
+### 24.3 Filter Sheets
+
+Filters in task layer sheet (Chapters 4, 8, 10):
+
+- One primary task  
+- Full criteria scroll inside sheet  
+- Apply fixed accessible — not buried  
+- Sheet does not permanently obscure results context without user understanding  
+
+### 24.4 Keyboard and Input
+
+Search field triggers appropriate keyboard; dismiss does not apply mystery criteria. Focus management accessible.
+
+### 24.5 Performance Perception
+
+Search feels **responsive** — optimistic UI only when truth guaranteed; otherwise calm loading. Jank during filter apply erodes trust in listing freshness.
+
+### 24.6 Interruption
+
+App backgrounding mid-search preserves criteria and position when feasible — user returns to same hunt.
+
+### 24.7 One-Handed Use
+
+Critical path completable one-handed — refine, scan, open, back, save.
+
+### 24.8 Bottom Navigation Coordination
+
+Discovery coexists with global navigation (Chapter 10) — sheets and sticky zones respect bottom nav and safe areas without hiding primary actions.
+
+---
+
+## 25. Realtor Search Considerations
+
+Realtors search **their portfolio**, not the public marketplace as operators.
+
+### 25.1 Purpose
+
+Enable realtors to find and manage **own listings** quickly — by status, title, location, date, moderation state.
+
+### 25.2 Scope Boundary
+
+Realtor search never implies access to other realtors’ unpublished inventory. Consumer discovery and realtor portfolio search share grammar, not data scope.
+
+### 25.3 Status-Aware Results
+
+Portfolio results show **true moderation status** — pending, available, rejected — with next action clear. Status from One Source of Truth.
+
+### 25.4 Operational Filters
+
+Primary: status, recency, city. Secondary: price band, rooms. Search field matches title or internal identifiers user knows.
+
+### 25.5 Connection to Workspace
+
+Search within workspace navigation family — return to dashboard and list views preserves operational context (Chapter 10 realtor architecture).
+
+### 25.6 No Consumer Confusion
+
+Realtor must never think portfolio search is how renters see market — labeling and role context explicit.
+
+---
+
+## 26. Trust & Transparency
+
+Search is where **first trust** forms — before detail and contact.
+
+### 26.1 Only Available in Public Discovery
+
+Consumer search surfaces **available** listings per domain rules. Pending listings invisible publicly — not “sort lower.”
+
+### 26.2 Honest Representation in Previews
+
+Photos and price in results match detail — no bait card. Freshness signals honest — not “New” without definition.
+
+### 26.3 Realtor Identity in Discovery
+
+Where product places realtor identity at list level, it comes from **realtor profile source of truth** — not duplicated per listing ad hoc.
+
+### 26.4 Verification Claims
+
+Verification badges in results mean only what verification system defines — filter labels aligned.
+
+### 26.5 Result Count Honesty
+
+Display counts matching actual eligible set — approximate only if labeled approximate.
+
+### 26.6 Sponsored or Promoted (If Ever)
+
+Explicit labeled placement — never mimics organic result card. User distinguishes paid visibility.
+
+### 26.7 Algorithm Transparency Posture
+
+Users need not read whitepapers — but must not feel tricked. Sort and filter effects visible; mystery meat navigation forbidden.
+
+---
+
+
+## Search Ethics
+
+Search carries ethical weight in a housing marketplace. Discovery shapes which homes people consider, which realtors they meet, and whether the product feels fair. This section defines **ethical obligations** that search must uphold — reinforcing Product Philosophy (Chapter 1) regardless of business pressure or metric targets.
+
+### Never Manipulate Ranking for Hidden Commercial Purposes
+
+Ranking and sort order must serve **user-understandable benefit**. Commercial placement, if ever permitted, is disclosed and governed (§26.6). Undisclosed ranking manipulation for revenue — favoring paying realtors, burying organic results, or tuning order to maximize ad impressions — violates trust before conversion (Chapter 1).
+
+### Never Fake Scarcity
+
+Result counts, availability signals, and urgency cues must reflect **real inventory**. Artificial scarcity — inflated “only 2 left” framing, false freshness, or countdown pressure unrelated to listing truth — is forbidden in a long-term rental product built on calm professionalism.
+
+### Never Hide Valid Listings
+
+Eligible, available listings that match declared user criteria must not be **withheld** to engineer engagement loops, force refinement, or promote paid alternatives. Discovery serves the user’s stated intent — not hidden inventory games.
+
+### Never Disguise Advertising
+
+Sponsored or promoted results are **visually and verbally distinct** from organic results. Advertising must never mimic organic card grammar, verification signals, or editorial curation without explicit labeling.
+
+### Never Optimize Engagement Over Successful Housing Decisions
+
+Time-on-site, scroll depth, and session count are **not** success definitions for search. Optimizing for endless browsing at the expense of clarity, recovery, and forward progress toward detail, save, or contact violates respect for user time (Chapter 1).
+
+### Trust Before Monetization
+
+When monetization and trust conflict, **trust wins** until governance explicitly approves a disclosed exception (Chapter 5). Search must not become a revenue surface that erodes the believability of the marketplace.
+
+### User Benefit Before Marketplace Metrics
+
+Marketplace health metrics — inventory coverage, realtor satisfaction, geographic fill — inform product decisions but do **not** override renter-facing honesty. A metric that improves when users are misled is a metric that must not drive search design.
+
+---
+
+## 27. Marketplace Scalability
+
+Search experience must survive **more cities, more listings, more attributes, more roles** without redesign.
+
+### 27.1 Geographic Scale
+
+New cities attach to same location hierarchy and filter grammar — not city-specific search products.
+
+### 27.2 Inventory Scale
+
+Performance and UX degrade gracefully — pagination, honest loading, refinement encouraged at high density — not broken infinite scroll.
+
+### 27.3 Attribute Scale
+
+New listing fields enter filter hierarchy at appropriate tier (§14) — quaternary until proven frequent.
+
+### 27.4 Locale Scale
+
+Romania first; European expansion requires translated labels, currency clarity, diacritic-friendly query — structure invariant.
+
+### 27.5 Role Scale
+
+Agency or enterprise features add portfolio views — consumer discovery map unchanged.
+
+### 27.6 Module Scale
+
+Chat, scheduling, AI — attach to listing objects from discovery — not new search paradigms per module.
+
+### 27.7 Governance of Growth
+
+Every new filter, sort, or entry point passes Chapter 5 decision framework and §31 checklist.
+
+---
+
+
+## Search Success Metrics
+
+Search quality is evaluated at the **product philosophy level** — not through implementation dashboards alone. These principles define how teams judge whether discovery serves Rento’s mission over time. They describe **what good search feels like and accomplishes**, not target numbers or engineering KPIs.
+
+### Time to Meaningful Result
+
+Success is when users reach listings **worth opening** without prolonged confusion or empty loops — not when they scroll indefinitely. Meaningful result means the preview set supports real triage toward a shortlist.
+
+### Refinement Success
+
+Users who refine criteria should **move toward clarity** — tighter relevant sets or conscious broadening — not churn through filters without comprehension. Refinement that teaches the market and reduces uncertainty is success; refinement that feels like punishment is failure.
+
+### Search Completion
+
+A search session completes when the user **advances intent** — opens detail, saves a listing, saves criteria, or exits having learned the market honestly. Completion is not forced conversion; it is forward progress with confidence.
+
+### Saved Search Adoption
+
+When users save criteria, it signals **sustained housing intent** the product served well enough to remember. Adoption reflects trust that saved intent will restore faithfully — not gamified nudges to save.
+
+### Return Search Rate
+
+Users who return to discovery — same session or days later — should **resume without friction**. Return rate reflects persistence quality and respect for ongoing housing hunts, not notification spam.
+
+### Contact After Search
+
+Discovery succeeds when search leads to **informed contact** — user reached detail, understood listing and realtor context, and chose to inquire deliberately. Contact without comprehension is not success; informed contact is.
+
+### Recovery Success after Zero Results
+
+Zero results handled well — user broadens, adjusts, or exits with understanding — is **product success**. Recovery that restores useful discovery without deception measures search maturity.
+
+### Long-term Search Satisfaction
+
+Over weeks, users should feel the product **helped their housing journey** — honest inventory, calm refinement, recoverable states — even if they have not signed a lease through Rento yet. Satisfaction is trust accumulated across sessions, not single-session engagement spikes.
+
+Teams review search changes against these principles in design critique and council review — alongside the Product Review Checklist (§31).
+
+---
+
+
+## Search Performance Experience
+
+Search performance is experienced as **confidence and continuity** — not milliseconds. Users judge discovery by whether the product feels responsive, stable, and respectful during the hunt. This section defines perceived performance principles; engineering targets implement them separately.
+
+### Immediate Acknowledgement
+
+Every user action — query submit, filter apply, sort change — receives **prompt visible acknowledgement** that the product received intent. Silence after action reads as failure or distrust in a mobile, interrupted context.
+
+### Visible Progress
+
+Loading and updating states communicate **honest progress** — not blank screens, not fake instant results that snap away. Users tolerate wait when they understand something is happening (Chapters 2, 9).
+
+### Stable Results
+
+Result sets and card content should not **shift unpredictably** beneath the user without explanation. Stability supports scan and comparison; chaotic reorder erodes trust in listing freshness and ranking honesty.
+
+### Preserved Context
+
+Performance includes **preserving criteria, scroll, and orientation** across waits and transitions. A fast reload that amnesia-resets the hunt feels slower than a calm update that preserves place (§18, Chapter 10).
+
+### Calm Transitions
+
+Movement between browse, filter task, and results obeys motion grammar (Chapter 9) — brief, purposeful, reduced-motion respectful. Performance must not introduce jitter, flash, or aggressive animation to simulate speed.
+
+### Continuity During Refinement
+
+Applying or adjusting criteria should feel like **continuing one conversation** — not restarting a new product. Filter apply transitions maintain mental model continuity (Chapters 4, 12).
+
+### Predictable Updates
+
+Users predict what will change when they refine — results update in expected ways; counts and summaries align with criteria. Surprise updates without visible cause feel like performance and trust defects.
+
+Perceived performance is inseparable from layout stability (Chapter 8), experience quality (Chapter 2), and navigation return integrity (Chapter 10).
+
+---
+
+## 28. Accessibility
+
+Search must be usable by **keyboard, screen reader, voice control, and low-vision users** — not only touch pointer.
+
+### 28.1 Result List Semantics
+
+Results in semantic list structure — position in set announced; card content read in decision order (location, price, key attributes).
+
+### 28.2 Filter Task Accessibility
+
+All criteria operable without pointer; labels persistent; errors associated with fields (Chapter 12).
+
+### 28.3 Focus Management
+
+Opening filter sheet traps focus appropriately; closing returns focus to trigger; detail navigation preserves logical focus order on return.
+
+### 28.4 Touch Targets
+
+Filter chips, save actions, cards meet minimum touch size — inclusive design is premium (Chapter 1).
+
+### 28.5 Motion and Vestibular
+
+Respect reduced motion — filter transitions degrade calmly (Chapter 9).
+
+### 28.6 Color Independence
+
+Active filters and states not color-only — text or icon redundancy (Chapter 7).
+
+### 28.7 Cognitive Accessibility
+
+Clear language, consistent patterns, no time pressure — housing search is stressful enough.
+
+---
+
+## 29. AI Compatibility
+
+AI-assisted discovery may arrive in later product phases — search architecture **reserves compatibility** without requiring AI.
+
+### 29.1 AI as Proposal Layer
+
+AI suggests criteria, natural language interpretations, or refinement — user **reviews and applies** visibly.
+
+### 29.2 No Opaque Criteria
+
+AI must not set hidden filters. User sees same active criteria grammar whether set manually or from AI assist.
+
+### 29.3 Generate–Review–Accept Loop
+
+Same loop as forms (Chapter 12): AI output is draft; user accepts or edits; system never auto-applies consequential criteria without confirmation.
+
+### 29.4 Trust and Disclosure
+
+AI-generated summaries in cards or query interpretation labeled when material — not indistinguishable from realtor-authored facts.
+
+### 29.5 Failure Mode
+
+AI unavailable — manual search fully functional; no degraded dead end.
+
+### 29.6 Ranking and AI
+
+If AI influences ranking, policy governed separately — must comply with §17 explainability and trust rules.
+
+### 29.7 Future Chapter Handoff
+
+Extended AI discovery patterns defer to AI Assisted Experience chapter when authored — this chapter defines search invariants AI must not violate.
+
+---
+
+
+## Search Consistency
+
+Rento operates as **One Search System** — not parallel discovery behaviors per surface or team.
+
+### Surfaces Under One System
+
+Search and discovery behavior must remain **conceptually identical** across:
+
+| Surface | Consistency expectation |
+|---------|-------------------------|
+| **Home** | Same criteria grammar and result meaning as browse |
+| **Browse** | Reference discovery experience — not alternate logic |
+| **Search** | Unified with browse; entry mode differs only |
+| **Favorites** | Return to listings without breaking search mental model |
+| **Saved Searches** | Restore same logical criteria as when saved |
+| **Realtor Workspace** | Portfolio search uses same refinement and persistence principles within role scope |
+| **Future modules** | Attach to discovery objects — not independent search dialects |
+
+### Same Criteria, Same Logical Result
+
+Identical active criteria — location, price, filters, query, sort — must produce the **same logical result set** for the same role and domain eligibility rules, regardless of entry surface. Divergent behavior for identical intent is a defect unless documented exception (Chapter 5).
+
+### One Summary Grammar
+
+Active criteria display, chip language, reset behavior, and empty/no-results tone use **one vocabulary** everywhere. Users learn once.
+
+### One Form Family
+
+Filter and refinement interactions follow Chapter 12 form grammar on every surface — not surface-specific filter dialects.
+
+### Role Scope Is Not Inconsistency
+
+Consumer public discovery and realtor portfolio search differ in **data scope** — not in interaction philosophy. Scope boundaries are explicit; behavior grammar remains shared.
+
+Future features extend the system — they do not fork it.
+
+---
+
+## 30. Governance
+
+### 30.1 Decision Ownership
+
+| Decision type | Owner |
+|---------------|-------|
+| New primary filter | Product + Design Council |
+| Default sort change | Product Director + Design Director |
+| Saved search notifications | Product + Trust review |
+| Paid placement in results | Leadership + explicit labeling standard |
+| AI criteria application | Product + Design Council |
+| Realtor portfolio search fields | Head of Product Design + Realtor UX |
+
+### 30.2 Exception Policy
+
+Search experiments (new UI, ranking tests) follow Chapter 5 — time-boxed, measurable, reversible, no trust regression without disclosure.
+
+### 30.3 Filter Deprecation
+
+Remove unused filters — do not accumulate cemetery of zero-use toggles. Deprecation communicates to any users with saved criteria containing deprecated field.
+
+### 30.4 Cross-Team Review
+
+Search changes require UX, content design, and engineering architecture review for persistence and performance — design standard leads experience contract.
+
+### 30.5 Documentation Requirement
+
+Shipped search changes update pattern specs and note chapter compliance — exceptions documented.
+
+---
+
+## 31. Product Review Checklist
+
+Before shipping any search or discovery change, reviewers confirm:
+
+### 31.1 Philosophy & Intent
+
+- [ ] Serves confident housing decision — not engagement vanity  
+- [ ] Respects “only what is real” in public discovery  
+- [ ] Browse-first and search unified — not warring modes  
+- [ ] Criteria earn their place — no filter debt  
+
+### 31.2 Mental Model & Flow
+
+- [ ] User can answer where / what / budget / trust / next step  
+- [ ] Refinement reversible — no reset trauma  
+- [ ] Detail forward, back preserves context  
+- [ ] Filter task follows navigation task rules (Chapter 10)  
+
+### 31.3 Structure & Results
+
+- [ ] Result cards obey Chapter 4 hierarchy  
+- [ ] One dominant card action — open detail  
+- [ ] One Source of Truth on cards — no duplicate competing facts  
+- [ ] Sort meaning clear and user-controlled  
+
+### 31.4 States & Recovery
+
+- [ ] Empty search guided — not blank  
+- [ ] No results blameless with recovery paths  
+- [ ] Loading, error, partial states honest — no dead ends  
+- [ ] Unavailable listing on open handled  
+
+### 31.5 Persistence
+
+- [ ] Active criteria visible after apply  
+- [ ] Saved search restores faithfully  
+- [ ] Recent searches clearable  
+- [ ] Auth interruption preserves context  
+
+### 31.6 Mobile & Access
+
+- [ ] Mobile-first thumb path verified  
+- [ ] Filter sheet apply/cancel clear  
+- [ ] Screen reader and keyboard paths complete  
+- [ ] Reduced motion respected  
+
+### 31.7 Role & Trust
+
+- [ ] Consumer vs realtor scope correct  
+- [ ] Only available listings in public results  
+- [ ] Verification and price honest in previews  
+- [ ] Sponsored labeled if present  
+
+### 31.8 AI & Scale
+
+- [ ] AI proposals visible and confirmable  
+- [ ] New attributes placed in filter hierarchy tier  
+- [ ] Geographic scale uses existing grammar  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 32. Cross References
+
+| Chapter / Artifact | Relevance to Search |
+|--------------------|---------------------|
+| Chapter 1 — Product Philosophy | Trust, time, truth, disclosure, dead ends |
+| Chapter 2 — Experience Principles | Scan, recovery, ethical patterns |
+| Chapter 4 — Layout & Information Architecture | List hierarchy, card primary facts |
+| Chapter 5 — Product Design Decision Framework | Filter approval, experiments |
+| Chapter 10 — Navigation System | Search as navigation; task sheets; return |
+| Chapter 12 — Form System & Data Collection Experience | Filter forms; validation tone |
+| Chapter 14 — Listing Card & Preview Patterns | When authored — card implementation |
+| Chapter 15 — Filter & Refinement Patterns | When authored — pattern detail |
+| Chapter 16 — Empty & Zero States | When authored — state templates |
+| Chapter 19 — Trust Signals | Verification display in discovery |
+| Chapter 20 — Marketplace Experience | Discovery-to-detail-to-contact journey |
+| Chapter 53 — AI Assisted Experience | AI discovery loops |
+| Chapter 60 — Product Review Checklist | Global ship gate |
+
+---
+
+## 33. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Search as text box only — no structured refinement | Poor mobile intent expression |
+| Hidden active filters | User distrusts results |
+| Filter apply clears unrelated criteria | Reset trauma; abandonment |
+| No results padded with irrelevant listings | Violates only what is real |
+| Pending listings in public search | Domain violation |
+| 30 filters before first value | Time disrespect |
+| Sort meaning opaque or pay-to-win disguised | Trust collapse |
+| Detail back loses list context | Disorientation |
+| Saved search restores wrong criteria | Broken promise |
+| Recent searches not clearable | Privacy anxiety |
+| Filter sheet unlike other forms | Language fracture |
+| Card price without period clarity | Wrong decisions |
+| Duplicate price or city on card | One Source of Truth violation |
+| Infinite scroll without end signal | Anxiety, performance distrust |
+| AI auto-applies hidden criteria | Manipulation perception |
+| Realtor portfolio search looks like consumer market | Role confusion |
+| Empty search blank screen | Dead end |
+| No-results blames user | Tone failure |
+| Engagement metrics drive ranking gimmicks | Long-term trust loss |
+| City-specific search UX fork | Scale debt |
+
+---
+
+## 34. Correct and Incorrect Examples
+
+### 34.1 Active Criteria Visibility
+
+**Correct:** Results show “Cluj-Napoca · 2 camere · max 500 €/lună” with edit path.  
+**Incorrect:** Results look global; user discovers filters only by accident.
+
+### 34.2 No Results Recovery
+
+**Correct:** “No listings match. Try removing ‘pets required’ or expanding to nearby areas.”  
+**Incorrect:** Empty list, no message, no action.
+
+### 34.3 Refinement Preservation
+
+**Correct:** User changes max price; city and rooms unchanged.  
+**Incorrect:** Changing price resets entire filter set.
+
+### 34.4 Browse-First Entry
+
+**Correct:** User lands on scrollable available listings for sensible city; filter optional.  
+**Incorrect:** Full filter wizard blocks all listings until complete.
+
+### 34.5 Detail Return
+
+**Correct:** Back from detail returns to same scroll position and criteria.  
+**Incorrect:** Back drops user on home with amnesia.
+
+### 34.6 Saved Search
+
+**Correct:** Tap saved “București 2 cam sub 600” restores exact criteria and runs.  
+**Incorrect:** Saved item opens home with no criteria.
+
+### 34.7 Trust in List
+
+**Correct:** Card shows honest price and available status; verification badge only if verified.  
+**Incorrect:** “Verified” on unverified realtor; stale “New” badge.
+
+### 34.8 Filter Form Grammar
+
+**Correct:** Apply/Cancel, grouped fields, blameless validation — same as profile forms.  
+**Incorrect:** Mystery icons, instant apply on every tap, no summary.
+
+### 34.9 AI Assist
+
+**Correct:** “Suggested: add ‘parcare’ based on your query” — user taps to apply chip.  
+**Incorrect:** Results change with no visible criteria update.
+
+### 34.10 Realtor Portfolio Search
+
+**Correct:** Realtor finds own pending listing by title; status “Pending moderation” shown.  
+**Incorrect:** Realtor search surfaces other agencies’ draft listings.
+
+---
+
+## 35. Future Scalability
+
+### 35.1 Map-First Discovery
+
+Map-heavy markets extend dual view architecture (§16.6) — criteria synchronized; hierarchy unchanged.
+
+### 35.2 Collaborative Search
+
+Partners sharing shortlists inherit same card and save grammar — criteria sharing explicit, not leaked.
+
+### 35.3 Alerts and Digests
+
+Saved search notifications calm and criteria-linked — Chapter 19 extension with frequency governance.
+
+### 35.4 Cross-Border Expansion
+
+Multi-currency display rules in results — filter hierarchy adds locale tier without restructuring.
+
+### 35.5 Voice and Conversational Entry
+
+Voice maps to visible criteria — same query principles (§11).
+
+### 35.6 Enterprise Inventory
+
+Agency bulk inventory uses realtor search patterns at scale — consumer discovery unaffected.
+
+---
+
+
+## Search Evolution
+
+Search experience must **mature without accumulating debt** — evolving as markets and product grow while preserving user mental model.
+
+### Evolve Rather Than Reinvent
+
+Improvements extend existing discovery grammar — filter tiers, result architecture, recovery paths — before proposing new search paradigms. Reinvention abandons user learning and fractures consistency.
+
+### Avoid Feature Accumulation
+
+New filters, entry points, and sort modes require **necessity proof** (Chapter 5). Features that duplicate existing refinement or serve metrics over users are rejected or retired.
+
+### Remove Obsolete Filters
+
+Filters, sorts, and entry patterns that no longer serve inventory reality or user behavior are **deprecated and removed** — with honest handling of saved criteria that reference retired fields (§30.3).
+
+### Maintain Conceptual Simplicity
+
+Complexity may exist in backend capability; user-facing discovery stays **as simple as the market allows**. Progressive disclosure (Chapters 1, 4) governs growth — not feature walls.
+
+### Preserve User Mental Model
+
+Changes must remain explainable within the model in §5 — where, what kind, budget, trust, next step. Evolution that requires users to relearn discovery violates consistency and respect for time.
+
+### Backward Compatibility of Search Behavior
+
+When criteria grammar changes, **saved searches and user expectations** are honored through migration, visible mapping, or clear communication — not silent breakage. Behavioral compatibility is a product promise wherever feasible.
+
+Search evolution is governed — not improvised per release.
+
+---
+
+## 36. Design Director Review
+
+**Chapter:** 13 — Search Experience System  
+**Section:** X — Search & Discovery  
+**Review type:** Initial standard adoption
+
+### 36.1 Approval Statement
+
+This chapter is approved as the **search and discovery experience contract** for Rento. All browse, query, filter, sort, result, persistence, and recovery behavior must comply. Implementation patterns and ranking systems are subordinate to the principles herein.
+
+**Status:** APPROVED — Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 36.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, truth, and time |
+| Chapter 4 — Layout & Information Architecture | Parent of result hierarchy |
+| Chapter 10 — Navigation System | Search movement and task layers |
+| Chapter 12 — Form System & Data Collection Experience | Filter criteria collection |
+| Chapter 14+ — Pattern chapters | Implementation detail when authored |
+| Chapter 60 — Product Review Checklist | Search compliance at ship gate |
+
+### 36.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What discovery or trust harm is not prevented?  
+2. Can existing filter tier or flow absorb the change?  
+3. Does change preserve mobile-first and return integrity?  
+4. Will mental model remain valid across cities and inventory growth?  
+5. Does change respect domain eligibility rules without exception?
+
+New primary filters, sort modes, or discovery entry points require Design Council approval.
+
+### 36.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on search experience changes |
+| Head of Product Design | Cross-surface discovery consistency |
+| Senior UX Designer | Flow, refinement, and recovery review |
+| Product Management | Filter necessity and marketplace integrity |
+| Content Design Lead | Empty, no-results, and criteria copy |
+| Accessibility Specialist | List semantics, filter task, focus order |
+
+### 36.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new search and discovery work immediately. Existing discovery surfaces align during scheduled improvement cycles.
+
+### 36.6 Design Director Closing Note
+
+Users do not experience search as filters and indexes. They experience it as **hope organized** — a shorter path to a home they can believe in. When discovery lies, overwhelms, or traps, hope turns to fatigue. When discovery is honest, calm, and recoverable, the marketplace earns the right to participate in one of the most important decisions in a person’s life. This chapter exists so Rento’s search never forgets that weight — from the first scroll to the last saved criterion.
+
+---
+
+**End of Chapter 13**
