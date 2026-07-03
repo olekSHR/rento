@@ -39,12 +39,20 @@ This standard is **not** implementation documentation. It does not specify code,
 | 11 | [Component Philosophy & Component System](#chapter-11--component-philosophy--component-system) | Design System | APPROVED |
 | 12 | [Form System & Data Collection Experience](#chapter-12--form-system--data-collection-experience) | Forms & Data Collection | APPROVED |
 | 13 | [Search Experience System](#chapter-13--search-experience-system) | Search & Discovery | APPROVED |
+| 14 | [Listing Card & Preview System](#chapter-14--listing-card--preview-system) | Listing Preview | APPROVED |
+| 15 | [Listing Detail Experience](#chapter-15--listing-detail-experience) | Listing Detail | APPROVED |
+| 16 | [Contact & Communication Experience](#chapter-16--contact--communication-experience) | Contact & Communication | APPROVED |
+| 17 | [Favorites & Saved Properties Experience](#chapter-17--favorites--saved-properties-experience) | Favorites & Saved Properties | APPROVED |
+| 18 | [Realtor Profile Experience](#chapter-18--realtor-profile-experience) | Realtor Profile | APPROVED |
+| 19 | [Realtor Workspace Experience](#chapter-19--realtor-workspace-experience) | Realtor Workspace | APPROVED |
+| 20 | [Trust, Verification & Moderation Experience](#chapter-20--trust-verification--moderation-experience) | Trust & Moderation | APPROVED |
+| 21 | [Notifications & User Re-engagement Experience](#chapter-21--notifications--user-re-engagement-experience) | Notifications & Re-engagement | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 14+ | Future chapters per design standard roadmap |
+| 22+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -54,6 +62,8 @@ This standard is **not** implementation documentation. It does not specify code,
 |---------|------|--------|
 | 1.0 | 2026-07-03 | Initial consolidation — Chapters 1–12 approved and assembled |
 | 1.0 | 2026-07-03 | Chapter 13 — Search Experience System approved and added |
+| 1.0 | 2026-07-03 | Chapters 14–16 approved and added |
+| 1.0 | 2026-07-03 | Chapters 17–21 approved and added |
 
 ---
 
@@ -8153,3 +8163,8923 @@ Users do not experience search as filters and indexes. They experience it as **h
 ---
 
 **End of Chapter 13**
+
+---
+
+## Chapter 14 — Listing Card & Preview System
+
+**Section:** XI — Listing Preview  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Reviewers  
+**Authority:** Subordinate to Chapters 1–13; operationalizes Information Architecture (Chapter 4), Component Philosophy (Chapter 11), and Search Experience (Chapter 13) for listing previews; defines principles only — not implementation, visual tokens, APIs, or code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **listing card and preview philosophy** for Rento.
+
+A listing card is not a UI component. It is the **primary decision surface** between discovery and detail — the moment a user decides whether to open a listing or continue searching.
+
+In a long-term rental marketplace, that decision carries weight. Users are not browsing products; they are evaluating **potential homes** and the **people behind them**. The preview must communicate enough to decide *continue or skip* — honestly, calmly, and comparably — without pretending to be the detail page.
+
+Where Chapter 13 defines how users find listings, this chapter defines **how listings present themselves in lists** — search results, browse feeds, favorites, saved-search results, realtor portfolio views, and every future surface that shows more than one listing at a time.
+
+The purpose of the listing card is to:
+
+- Reduce cognitive load during scan and comparison  
+- Build **trust before conversion**  
+- Expose only **decision-critical information** at preview level  
+- Preserve **One Source of Truth** across surfaces  
+- Enable confident forward movement to detail — or efficient continuation of search  
+
+This chapter does **not** specify pixels, colors, fonts, spacing tokens, component props, database fields, or frontend implementation.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Preview philosophy** | Decision surface, mental model, first impression |
+| **Information hierarchy** | What belongs on a card vs detail |
+| **Card anatomy** | Structural zones and reading order |
+| **Content domains** | Image, price, location, attributes, trust, realtor, status |
+| **Premium / featured** | Ethical presentation of promoted listings |
+| **Interactions** | Open, favorite, share — primary and secondary |
+| **Surfaces** | Search, browse, favorites, saved searches, workspace previews |
+| **Cross-cutting** | Mobile-first, accessibility, consistency, performance perception, evolution |
+
+### 2.2 Out of Scope
+
+- Listing detail page architecture (separate marketplace experience chapter)  
+- Contact and conversion flows  
+- Search criteria and filter grammar (Chapter 13)  
+- Full component library specification (Chapter 11 implementation patterns)  
+- Image upload and moderation mechanics  
+- Ranking algorithms and backend eligibility rules  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces displaying **listing previews in lists or grids**, including but not limited to:
+
+- Search and browse results  
+- Favorites / saved listings  
+- Saved search result sets  
+- Map list companion views  
+- Realtor workspace portfolio lists  
+- Recommendation or similarity rows (when product ships)  
+- Shared link preview cards in external contexts where Rento controls presentation  
+
+If a surface asks *“Should I open this listing?”* at list density — this chapter applies.
+
+### 2.4 One Card, One Listing
+
+Each card represents **exactly one listing** — one home opportunity, one owner, one moderation state. Multi-listing mashups, aggregated teasers, or ambiguous bundles are out of scope for the listing card grammar.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When listing card decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (ownership, moderation status, contact source, public availability)  
+2. Chapter 1 — Product Philosophy  
+3. Chapters 2–4 — Experience, brand, and structure  
+4. Chapter 13 — Search Experience (discovery context for cards in results)  
+5. **This chapter** — for listing preview behavior and content  
+6. Chapters 5–12 — governance, visual language, navigation, forms, components  
+7. Pattern specifications and screen-level exceptions (Chapter 5 Exception Policy)  
+
+Cards must never display public consumer previews for listings that domain rules exclude. Cards must never invent contact or identity data not sourced from governed origins.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust before conversion; only what is real; One Source of Truth; calm; respect time |
+| Chapter 2 — Experience Principles | Scannability, comparison, ethical conversion, recovery |
+| Chapter 3 — Brand Experience & Visual Identity | Professional calm; trust without stimulation |
+| Chapter 4 — Layout & Information Architecture | Hierarchy levels; primary facts; progressive disclosure; one purpose per surface |
+| Chapter 5 — Product Design Decision Framework | Card element necessity; exception policy |
+| Chapter 6 — Typography & Reading System | Price, location, and label roles in preview |
+| Chapter 7 — Color Meaning & Semantic Color System | Status and trust semantics — not decorative urgency |
+| Chapter 8 — Spatial System & Layout Rhythm | Card density, scan rhythm, list spacing |
+| Chapter 9 — Motion & Interaction System | Tap feedback, favorite motion, calm transitions |
+| Chapter 10 — Navigation System | Card tap as forward depth; return preserves list context |
+| Chapter 11 — Component Philosophy & Component System | Listing card as governed component behavior |
+| Chapter 13 — Search Experience | Result architecture parent; card is search output unit |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 13 defines the discovery system. Chapter 4 defines hierarchy in abstract. Chapter 11 defines component governance. **This chapter defines the listing preview contract** — the stable grammar that makes every listing comparable, trustworthy, and scannable across the product lifecycle.
+
+Without this chapter, teams treat cards as layout exercises. With it, cards become a **governed decision instrument** aligned with housing-market seriousness.
+
+---
+
+## 4. Listing Card Philosophy
+
+The listing card serves **one decision**: *Is this listing worth opening now?*
+
+Everything on the card exists to support that decision — not to entertain, not to maximize dwell time, not to replace detail evaluation.
+
+### 4.1 One Card = One Decision
+
+Each card resolves a single question per encounter. It does not ask the user to contact, share, compare deeply, and evaluate media simultaneously at preview level. **Open detail** is the primary forward path; other actions are subordinate.
+
+### 4.2 Cards Never Overwhelm
+
+Preview density is restrained. If the card requires study, it has failed. Overwhelmed users skip good listings and mistrust the marketplace.
+
+### 4.3 Cards Reduce Cognitive Load
+
+Stable anatomy, predictable reading order, and comparable structure let users **learn once and scan many**. Cognitive load reduction is a card responsibility — not only a search responsibility.
+
+### 4.4 Cards Are Comparable
+
+Users compare cards **down a list** — price, place, type, trust. Cards must align structurally so comparison is effortless. Random per-card layouts destroy comparison and feel unstable.
+
+### 4.5 Decision-Critical Information Only
+
+Every element must **justify its existence** against the preview decision (Chapter 5). If a fact does not help continue-or-skip at list speed, it belongs on detail or not at all.
+
+### 4.6 Preview Never Replaces Detail
+
+The card is a **preview**, not a substitute detail page. Photography, description depth, full attribute sets, and contact live at detail. The card teases honestly — it does not truncate deceptively or hide material caveats that detail reveals.
+
+### 4.7 Trust Before Conversion on the Card
+
+Trust signals on the card exist so users do not open listings blind — and so users do not **avoid** opening because the preview feels suspicious. Trust supports forward motion; manipulation destroys it.
+
+### 4.8 Images Inform, Not Decorate
+
+Photography on the card is **evidence** — what kind of home this is — not atmospheric wallpaper. Decorative imagery without informational value violates respect for user time.
+
+### 4.9 Pricing Is Transparent
+
+Price on the card states what the user needs for economic triage — amount and rental period — without tricks, hidden qualifiers, or attention bait.
+
+### 4.10 Location Is Understandable
+
+Location on the card answers *where*, at the geographic level appropriate to decision — city, area, neighborhood context — not cryptic codes or redundant strings.
+
+### 4.11 Trust Is Immediately Visible
+
+Where product rules place trust at preview level, it appears in **stable, honest positions** — not hidden behind interaction or confused with promotion.
+
+### 4.12 Realtor Identity Is Consistent
+
+Realtor presence on the card follows **profile source of truth** — same identity grammar as detail and contact, never a one-off preview variant.
+
+### 4.13 Status Never Misleading
+
+Availability and moderation-visible status on preview cards reflect domain truth. Cards must not imply available when pending, withdrawn, or otherwise ineligible for the viewer’s context.
+
+### 4.14 Featured Never Imitates Organic
+
+Premium or featured listings are **labeled and structurally distinct** — never visually indistinguishable from organic results. Featured placement must not counterfeit trust or ranking.
+
+### 4.15 Favorite Is Lightweight
+
+Saving a listing from the card is **fast and non-destructive** — no interruption of scan flow, no punitive modal, no false commitment.
+
+### 4.16 One Listing, One Identity Everywhere
+
+**The same listing must always look like the same listing everywhere** — search, favorites, saved searches, recommendations, workspace preview. Facts may not drift between surfaces.
+
+---
+
+## 5. Preview Mental Model
+
+Users experience listing cards as **housing opportunities in a list**, not as abstract content blocks.
+
+### 5.1 The Preview Question
+
+When scanning, users ask:
+
+1. **Can I afford it?** — price  
+2. **Is it where I need?** — location  
+3. **Is it the right kind of home?** — type, rooms, key attributes  
+4. **Can I believe it?** — photo honesty, status, trust, realtor  
+5. **Is it worth my next tap?** — overall confidence  
+
+Card structure follows this decision sequence — not internal data model order.
+
+### 5.2 Card as Thumbnail of Truth
+
+Users treat the card as a **honest summary** of detail — if detail contradicts the card sharply, trust breaks for the listing and the product.
+
+### 5.3 Comparison Set Mental Model
+
+Users hold a **mental shortlist** while scrolling. Cards support comparison within the current set — not isolated beauty contests per row.
+
+### 5.4 Forward Depth Contract
+
+Tap opens **that listing’s detail** — forward navigation (Chapter 10). Users expect the listing they tapped to be the listing they see. Identity continuity is non-negotiable.
+
+### 5.5 Saved Card Memory
+
+When users return to favorites or saved searches, cards reactivate **prior interest**. Recognition — same listing, same facts — supports resume; drift creates doubt.
+
+---
+
+## 6. Information Hierarchy
+
+Listing card information maps to Chapter 4 hierarchy levels. Preview cards operate primarily at **Primary** and **Secondary** — rarely Supporting; almost never Metadata at card level.
+
+### 6.1 Primary on Preview Cards
+
+Typically includes:
+
+| Fact | Preview role |
+|------|--------------|
+| **Representative image** | Visual identification — what kind of place |
+| **Price** | Economic triage — with rental period |
+| **Location** | Geographic triage — city / area level |
+| **Listing identifier hook** | Title or type + rooms — distinguish from neighbors |
+
+Primary facts dominate first glance and reading order.
+
+### 6.2 Secondary on Preview Cards
+
+Typically includes:
+
+- Key physical attributes (rooms, area if market-standard)  
+- One or two high-signal features when consistently available  
+- Trust indicator when governed for preview (verification badge)  
+- Freshness signal only when defined and honest  
+
+Secondary supports decision — never competes with price and location for first fixation.
+
+### 6.3 Supporting — Usually Not on Card
+
+Long descriptions, full amenity lists, policy paragraphs, and secondary metadata belong on **detail** or progressive disclosure — not crammed into preview.
+
+### 6.4 Contextual and Metadata
+
+Admin codes, internal IDs, moderation notes, and owner-only status variants appear in **realtor workspace** cards — not consumer public preview grammar.
+
+### 6.5 One Source of Truth on Cards
+
+The same fact appears **once** on the card at one hierarchy level. Price does not compete with price. City does not appear in three zones. Duplication violates Chapters 1 and 4.
+
+### 6.6 Hierarchy Inheritance
+
+Typography roles (Chapter 6), semantic color (Chapter 7), and spatial rhythm (Chapter 8) **express** this hierarchy — they do not redefine it.
+
+---
+
+## 7. First Impression Principles
+
+First impression on a card is measured in **seconds** — often under one second on mobile.
+
+### 7.1 Glance Test
+
+From first glance, user can answer: *What is it, where is it, what does it cost, and does it feel real?* Failure sends scroll continuation.
+
+### 7.2 Calm First Impression
+
+Cards feel **professional and unhurried** (Chapters 1, 3). Flashy badges, fake urgency, and visual shouting violate brand and philosophy.
+
+### 7.3 Honest Photography First
+
+If image is primary visual anchor, it must represent the listing **fairly** — not misleading luxury crop on mediocre inventory, not placeholder that mimics real photo indefinitely.
+
+### 7.4 No Bait-and-Switch Setup
+
+Card must not promise detail the listing cannot fulfill — price that changes on open, location that refines to a different city, photos that detail contradicts.
+
+### 7.5 Comparable First Impression
+
+Every card in a list offers the **same impression contract** — user learns what to expect from first row to fiftieth.
+
+### 7.6 First Impression Serves Search Intent
+
+Cards in filtered results must ** visibly align** with active criteria (Chapter 13) — user trust in the result set starts with the first card.
+
+---
+
+## 8. Card Anatomy
+
+Card anatomy is **structural** — zones and sequence — not pixel specification.
+
+### 8.1 Anatomy Overview
+
+| Zone | Responsibility |
+|------|----------------|
+| **Media** | Visual evidence — primary image |
+| **Primary facts** | Price, location, listing hook |
+| **Secondary facts** | Attributes, trust, status when applicable |
+| **Actions** | Open (whole card), favorite, share — subordinate |
+| **Promotion label** | Featured/sponsored — only when applicable, always explicit |
+
+Zones follow vertical reading order on mobile-first layouts. Wider viewports may rearrange spatially — **reading order invariant**.
+
+### 8.2 One Dominant Tap Target
+
+The card’s body advances to detail — **one obvious primary action**. Secondary actions are isolated so mis-taps are rare.
+
+### 8.3 Action Isolation
+
+Favorite and share controls do not compete with primary open path — separate touch targets, subordinate visual weight (Chapters 4, 9).
+
+### 8.4 Media-to-Facts Transition
+
+Transition from image to facts is **deliberate** — user knows when evidence ends and reading begins. Arbitrary overlap that obscures price or location fails comprehension.
+
+### 8.5 List Rhythm
+
+Cards in sequence share **consistent height bands** where possible — scan rhythm (Chapter 8). Wildly varying card shapes without purpose increase load.
+
+### 8.6 Empty and Partial Anatomy
+
+Missing photo, missing attribute, or pending moderation states use **honest anatomy** — placeholder or omission with defined grammar — not broken layout.
+
+### 8.7 Featured Anatomy Variant
+
+Featured cards may add **labeled zone** for promotion — not reorder primary fact hierarchy to mimic organic cards.
+
+---
+
+## 9. Image Philosophy
+
+Photography on the listing card is the **fastest trust and identification signal**.
+
+### 9.1 Representative, Not Exhaustive
+
+One primary image represents the listing at preview — the gallery belongs on detail. Multi-image carousel on every card is optional product decision; if present, it must not obscure primary facts.
+
+### 9.2 Evidence Standard
+
+Images answer: *What kind of home is this?* — interior/exterior honesty appropriate to listing. Empty or generic images reduce confidence; honest placeholders beat fake richness.
+
+### 9.3 No Misleading Crop
+
+Crop must not hide material defects or misrepresent room type — wide lens fakery that detail contradicts is a trust violation.
+
+### 9.4 Cover Image Authority
+
+Cover image is **One Source of Truth** from listing media — not random frame per surface. Same listing, same cover, everywhere.
+
+### 9.5 Loading and Failure
+
+Image loading is calm — skeleton or neutral placeholder, not flash of wrong content. Failure state honest — not infinite spinner pretending load.
+
+### 9.6 People and Watermarks
+
+People-forward or heavy watermark imagery follows brand and trust guidelines — must not feel like stock fraud or unprofessional clutter.
+
+### 9.7 Image Does Not Replace Attributes
+
+Photo complements — does not replace — room count, type, and price. Users in rental markets need facts alongside evidence.
+
+---
+
+## 10. Price Presentation
+
+Price is the **strongest economic filter** on the card.
+
+### 10.1 Price Must Be Present When Known
+
+If listing has published price, preview **shows it** — hiding price to force detail open violates respect for user time.
+
+### 10.2 Period Clarity
+
+Long-term rental price includes **period semantics** — per month, per month equivalent as product defines — unambiguous on card. Ambiguous number alone fails triage.
+
+### 10.3 Format Consistency
+
+Price format consistent across all cards and surfaces — currency, separators, period label — one grammar (Chapters 6, 22).
+
+### 10.4 No Manipulative Framing
+
+Strike-through fake discounts, “from” without basis, or attention-red price tricks forbidden — calm marketplace, not clearance sale (Chapter 1).
+
+### 10.5 Price Change Honesty
+
+If price changed since user last viewed card in saved list, update honestly — optional subtle freshness signal — not silent bait.
+
+### 10.6 Price and Featured Listings
+
+Featured placement must not ** obscure or inflate** price presentation relative to organic cards.
+
+---
+
+## 11. Location Presentation
+
+Location answers **where** at decision-relevant granularity.
+
+### 11.1 Geographic Level
+
+Typically city plus meaningful sub-area — neighborhood, district, sector — as market standard defines. Exact address belongs on detail when policy allows — not required on public preview.
+
+### 11.2 Understandable Labels
+
+Location uses **human geography** — names users know — not internal zone codes alone.
+
+### 11.3 Consistency With Search
+
+Location on card aligns with **search location intent** (Chapter 13) — user must not see contradictory geography labels vs active filters without explanation.
+
+### 11.4 One Location Zone
+
+One authoritative location presentation per card — not city in header and different city in footer.
+
+### 11.5 Map Context (When Present)
+
+Map pin and card location ** agree** — same listing, same place. Divergence erodes trust.
+
+---
+
+## 12. Property Attribute Presentation
+
+Attributes on the card are **triage signals** — room count, property type, size when available.
+
+### 12.1 High-Signal Attributes Only
+
+Preview shows attributes users use to **continue or skip** — not full feature laundry list.
+
+### 12.2 Stable Attribute Set
+
+Core attribute set **stable across listings** in a market — users compare apples to apples. Random custom badges per listing destroy comparability.
+
+### 12.3 Honest Absence
+
+Missing attribute omitted or shown as unavailable — not invented default. Empty field masquerading as fact violates trust.
+
+### 12.4 Attribute Order
+
+Attribute order follows user decision priority — typically rooms and type before niche amenities.
+
+### 12.5 Alignment With Filters
+
+If user filtered by attribute, card ** reflects match** — visible alignment reinforces result trust (Chapter 13).
+
+### 12.6 No Attribute Spam
+
+Icon rows of low-value amenities on every card increase noise — progressive disclosure to detail instead.
+
+---
+
+## 13. Trust Signals
+
+Trust on the card is **minimum viable confidence** — not full verification dossier.
+
+### 13.1 Trust at Preview Level
+
+Trust signals appear on card only when **defined, honest, and maintainable** — verification badge means what system defines; freshness means what system defines.
+
+### 13.2 Signal Restraint
+
+Too many badges create **badge noise** — users ignore all. Few meaningful signals beat decoration wall.
+
+### 13.3 Trust Inherits Domain Truth
+
+Verification and availability signals pull from **governed sources** — not per-listing ad hoc styling that implies unverified claims.
+
+### 13.4 Trust vs Promotion
+
+Promotional labels must never ** mimic** verification or editorial trust signals.
+
+### 13.5 Trust Before Tap
+
+Purpose: user opens detail with **baseline confidence** — or skips without wasted tap on obvious mismatch.
+
+---
+
+## 14. Realtor Identity
+
+Realtor identity on the card supports **human-centered marketplace** (Chapter 1).
+
+### 14.1 Profile Source of Truth
+
+Realtor name, agency, avatar when shown — from **realtor profile** — not re-entered per listing on card.
+
+### 14.2 Preview-Level Identity
+
+Card may show **compact identity** — name, photo, agency — sufficient to humanize without duplicating full profile block.
+
+### 14.3 Consistent Identity Grammar
+
+Same realtor appears **the same way** on card, detail, and contact — One Source of Truth for identity presentation.
+
+### 14.4 Identity Subordinate to Listing Facts
+
+Realtor supports trust — does not ** overshadow** price, location, and home facts on preview.
+
+### 14.5 No Anonymous Professional Listings
+
+Consumer-facing available listings present **accountable professional presence** per product rules — not anonymous ghost listings.
+
+---
+
+## 15. Status Presentation
+
+Status on cards communicates **eligibility and honesty** — especially in realtor workspace; consumer public cards show available inventory per domain rules.
+
+### 15.1 Consumer Public Cards
+
+Public discovery cards represent **available** listings — status display focuses on availability honesty, not moderation internals.
+
+### 15.2 Realtor Workspace Cards
+
+Portfolio cards show **true status** — pending, available, rejected — with semantic color roles (Chapter 7) and clear next-action orientation.
+
+### 15.3 Status Semantics
+
+Status language **plain** — not internal codes. Pending moderation explained professionally on workspace paths.
+
+### 15.4 No False Urgency Status
+
+“Available now” and similar only when **defined and true** — not default manipulation.
+
+### 15.5 Status Change Visibility
+
+When status changes, card updates on return — user not misled by stale preview in saved lists.
+
+---
+
+## 16. Premium & Featured Listings
+
+Monetized or promoted placement is permitted only under **strict ethical and visual governance**.
+
+### 16.1 Never Imitate Organic Ranking
+
+Featured listings ** never pass as organic** — explicit promotion label required.
+
+### 16.2 Structural Distinction
+
+Promotion uses **defined visual family** — label, placement, or container — distinguishable at scan speed without humiliating organic listings.
+
+### 16.3 Same Card Grammar
+
+Featured listings obey **same primary fact hierarchy** — price, location, image honesty — promotion adds label, not different truth rules.
+
+### 16.4 No Trust Borrowing
+
+Featured must not borrow verification styling, editorial “recommended” cues, or ranking implication without basis.
+
+### 16.5 User Benefit Test
+
+Featured placement must pass Chapter 5 — **user benefit** documented — not only revenue benefit.
+
+### 16.6 Frequency and Fatigue
+
+High featured density in one viewport erodes trust — governance caps promotion saturation per session context.
+
+---
+
+## 17. Interaction Principles
+
+Card interactions are **calm, predictable, and reversible** where product allows.
+
+### 17.1 Primary Interaction — Open Detail
+
+Tap card body → listing detail. Outcome predictable 100% of time from same gesture region.
+
+### 17.2 Secondary Interactions Subordinate
+
+Favorite, share — available without breaking scan — never hijack primary tap.
+
+### 17.3 Feedback
+
+Actions receive **immediate acknowledgement** (Chapter 9) — favorite toggles state; share opens share flow; no silent failure.
+
+### 17.4 No Accidental Commitment
+
+Interactions on card do not trigger contact, payment, or irreversible acts — those belong to detail with deliberate steps.
+
+### 17.5 Motion Restraint
+
+Card interactions use calm motion — no celebratory animation on favorite in serious housing context unless product explicitly defines restrained confirmation.
+
+### 17.6 Interaction Consistency
+
+Same gesture on card in search behaves same in favorites — behavioral contract (Chapter 11).
+
+---
+
+## 18. Favorite Behavior
+
+Favorite from card is **lightweight memory** — shortlist building during search.
+
+### 18.1 One Tap, Clear State
+
+Favorite toggles with **clear on/off state** — user knows saved or not without opening detail.
+
+### 18.2 Non-Blocking
+
+Favorite does not navigate away, open modal, or demand auth until product rules require — and then preserves context on return (Chapter 10).
+
+### 18.3 Reversible
+
+Unfavorite as easy as favorite — no guilt copy, no dark retention.
+
+### 18.4 List Integrity
+
+Favorited listing ** remains in current results** unless product defines explicit “hide saved” filter user understands.
+
+### 18.5 Sync Honesty
+
+Favorite state syncs across surfaces — card in search and favorites shows same saved truth.
+
+---
+
+## 19. Share Behavior
+
+Share from card enables **deliberate sharing** of a listing opportunity — not growth spam.
+
+### 19.1 Share Is Secondary
+
+Share never competes with open and favorite for visual dominance.
+
+### 19.2 Shared Preview Quality
+
+Shared links resolve to experiences that ** honor card truth** — recipient sees honest listing, not broken deep link trap.
+
+### 19.3 Context Preservation
+
+Sharer returns to list context after share sheet — no disorientation.
+
+### 19.4 Privacy Respect
+
+Share exposes only **public listing information** appropriate to recipient context.
+
+---
+
+## 20. Mobile-First Card Behavior
+
+Mobile defines card behavior; larger viewports extend.
+
+### 20.1 Vertical Scan Optimization
+
+Cards optimized for **thumb-driven vertical scan** — one column primary, stable touch targets.
+
+### 20.2 Thumb-Zone Actions
+
+Secondary actions reachable but not where accidental tap floods favorites or shares.
+
+### 20.3 Readable Without Zoom
+
+Primary facts legible at default mobile reading size (Chapter 6) — no pinch-to-read price.
+
+### 20.4 Interrupted Scan
+
+User switches apps mid-scan — return preserves list position and card states where feasible (Chapter 13 persistence).
+
+### 20.5 One-Handed Use
+
+Primary path — scan, open, back, favorite — completable one-handed.
+
+### 20.6 Density vs Breath
+
+Mobile lists balance **information density and calm spacing** (Chapter 8) — neither wasteful nor crushing.
+
+---
+
+## 21. Accessibility
+
+Listing cards must be **perceivable, operable, and understandable** for all users.
+
+### 21.1 Semantic Structure
+
+Each card is a **coherent unit** in list semantics — position in set available to assistive technology.
+
+### 21.2 Reading Order
+
+Screen reader order matches visual decision order — image alt text meaningful, price and location before decorative badges.
+
+### 21.3 Action Labels
+
+Favorite and share have **accessible names** — not icon-only without label.
+
+### 21.4 Focus and Keyboard
+
+Card operable by keyboard where platform supports — focus visible, logical order.
+
+### 21.5 Color Independence
+
+Status and trust not conveyed by color alone (Chapter 7).
+
+### 21.6 Touch Target Size
+
+Interactive elements meet inclusive touch minimums — premium is accessible (Chapter 1).
+
+---
+
+## 22. Card Consistency
+
+**One card system** across the product — Chapter 13 Search Consistency extended to preview grammar.
+
+### 22.1 Same Listing, Same Card
+
+One listing ID → **one preview presentation grammar** on search, favorites, saved searches, recommendations, external embeds Rento controls.
+
+### 22.2 Fact Parity
+
+Price, location, image, attributes ** match** across surfaces — drift is defect.
+
+### 22.3 Workspace Variant
+
+Realtor workspace may add **status and actions** — core listing facts same grammar as consumer card.
+
+### 22.4 No Surface-Specific Dialects
+
+Teams do not ship “favorites card v2” vs “search card v1” without council migration plan.
+
+### 22.5 Component Evolution, Not Fork
+
+Changes evolve **listing card component family** (Chapter 11) — not parallel card species.
+
+---
+
+## 23. Progressive Disclosure
+
+Cards participate in progressive disclosure (Chapters 1, 4) — **preview layer only**.
+
+### 23.1 Card Is Layer One
+
+Layer one answers continue-or-skip. Layer two is detail. Layer three is contact and commitment.
+
+### 23.2 No Detail Smuggling
+
+Do not hide **material decision facts** on detail that preview reasonably should show — user feels tricked. Do not show **full detail** on card — user feels overwhelmed.
+
+### 23.3 Expand-in-Place Caution
+
+Expandable cards in list that reveal detail-like content ** risk hierarchy collapse** — default pattern is forward to detail, not accordion listing novel on mobile.
+
+### 23.4 Attribute Disclosure
+
+Rare attributes disclosed on detail — common triage attributes on card — tier governed by §12.
+
+---
+
+## 24. Emotional Design
+
+Emotional design on cards is **restrained professionalism** — not manipulation.
+
+### 24.1 Appropriate Emotion
+
+Users may feel **hope, curiosity, relief** finding a candidate — not anxiety, FOMO, or pressure from card chrome.
+
+### 24.2 Calm Over Stimulation
+
+No urgency timers, flashing badges, or casino-like favoriting on housing cards (Chapter 1).
+
+### 24.3 Dignity in Housing
+
+Copy and presentation respect that listings are **homes** — not commodities to be gamified.
+
+### 24.4 Positive Recognition
+
+Returning user recognizes saved or viewed listing with **subtle honest signal** if product defines — not creepy surveillance aesthetic.
+
+### 24.5 Emotional Trust
+
+Professional, calm card emotion supports **believed marketplace** — sloppy or hype emotion erodes trust before tap.
+
+---
+
+## 25. Marketplace Trust
+
+Cards are **trust infrastructure** for the whole marketplace.
+
+### 25.1 Aggregate Trust Effect
+
+One dishonest card damages **entire scroll session** — users question neighbors.
+
+### 25.2 Inventory Honesty
+
+Cards represent **real available inventory** in public discovery — phantom cards destroy marketplace credibility.
+
+### 25.3 Professional Presence
+
+Cards collectively communicate **serious marketplace** — consistent grammar, human accountability, calm tone.
+
+### 25.4 Trust Recovery
+
+When listing removed or status changed, card handling in lists and favorites ** honest** — not ghost cards.
+
+---
+
+## Listing Card Ethics
+
+Listing previews carry **ethical obligation** — users decide life trajectory from seconds of scan.
+
+### Never Misrepresent Inventory
+
+Cards must not use image, price, or location presentation that **systematically misleads** about the home or its availability.
+
+### Never Feature Without Disclosure
+
+Paid or promoted cards ** always labeled** — never counterfeit organic trust or ranking.
+
+### Never Withhold Decision-Critical Facts
+
+Material economic or geographic facts known to system must not be **hidden on card** solely to force detail opens.
+
+### Never Exploit Housing Anxiety
+
+Fear-based copy, false scarcity, or urgency manipulation on cards forbidden — trust before conversion (Chapter 1).
+
+### Never Design for Engagement Over Housing Outcomes
+
+Card patterns that maximize scroll without improving **informed shortlist** are ethically out of scope.
+
+### Trust Before Monetization on Cards
+
+Revenue features on preview surfaces yield to **user-understandable benefit** and disclosed promotion — same posture as Search Ethics (Chapter 13).
+
+---
+
+## 26. Performance Experience
+
+Card lists must feel **responsive and stable** — performance as experienced confidence and felt stability and respect, not engineering latency alone (Chapter 13 Search Performance Experience).
+
+### 26.1 Scroll Continuity
+
+Lists scroll without jarring layout shift as images load — stable card skeleton grammar.
+
+### 26.2 Image Load Perception
+
+Images load with **honest placeholder** — user understands media pending vs missing; calm progress — not blank broken lists.
+
+### 26.3 Action Responsiveness
+
+Favorite and tap acknowledge **instantly** — optimistic UI only when truth guaranteed; user knows input registered (Chapters 9, 13).
+
+### 26.4 Batch Stability
+
+Returning to list — cards and order stable unless criteria or inventory changed with explanation.
+
+### 26.5 Stable Results
+
+Cards do not **jump or reorder** without user action or explained refresh — scroll position meaningful (Chapter 13).
+
+### 26.6 Preserved Context
+
+Back from detail to list **preserves place and card states** — performance includes memory (Chapter 10).
+
+### 26.7 Calm Transitions
+
+Forward to detail and back use **restrained motion** — housing context, not entertainment app.
+
+### 26.8 Continuity During List Updates
+
+Criteria change updates cards **predictably** — user connects new set to action taken.
+
+### 26.9 Predictable Card Updates
+
+Price or status change on saved card **visible on return** — no silent stale preview.
+
+Perceived performance inherits spatial rhythm (Chapter 8), motion (Chapter 9), and search continuity (Chapter 13).
+
+---
+
+## 27. Card Scalability
+
+Card grammar scales across **inventory, markets, and features** without reinvention.
+
+### 27.1 Inventory Volume
+
+High listing density — cards remain scannable; list performance perception governed (§26, Listing Card Performance Experience).
+
+### 27.2 Geographic Expansion
+
+New cities use **same card anatomy** — localized labels, same structure.
+
+### 27.3 New Attributes
+
+New listing fields enter card only through **attribute tier review** (§12, Chapter 5) — not automatic badge proliferation.
+
+### 27.4 New Surfaces
+
+Every new list surface ** adopts listing card family** — recommendations, alerts, messages — before inventing preview dialect.
+
+### 27.5 Role Scale
+
+Enterprise or agency views may add columns — ** consumer card grammar unchanged**.
+
+---
+
+## Listing Card Success Metrics
+
+Listing card quality is judged at **product philosophy level** — not vanity click metrics alone.
+
+### Worthy Open Rate
+
+Users open listings from cards and ** detail confirms preview promise** — not bait-and-switch rate.
+
+### Skip Efficiency
+
+Users skip irrelevant listings ** quickly** without fatigue — scan efficiency is success, not forced opens.
+
+### Comparison Confidence
+
+Users compare multiple cards ** without confusion** — structure supports comparison.
+
+### Favorite Quality
+
+Favorites from cards reflect ** genuine shortlist intent** — not mis-tap noise.
+
+### Return Recognition
+
+Users returning to saved lists ** recognize listings** — consistency success.
+
+### Trust Signal Comprehension
+
+Users understand verification and promotion labels ** without explanation** — or labels removed as noise.
+
+### Contact Preparedness
+
+Users who contact after card → detail path show ** informed intent** — card and detail prepared them.
+
+### Long-Term Card Satisfaction
+
+Over weeks, users trust that **cards match reality** — cumulative preview honesty.
+
+Teams evaluate card changes against these principles in design critique and §31 checklist.
+
+---
+
+## 28. Future Compatibility
+
+Card system reserves **forward compatibility** without speculative clutter.
+
+### 28.1 AI-Generated Summaries
+
+If AI summary appears on card — ** labeled, subordinate to facts**, user editable at source — never indistinguishable from realtor truth.
+
+### 28.2 Rich Media
+
+Video or 3D on card — optional, must not ** obscure primary facts** or autoplay disrupt scan.
+
+### 28.3 Personalization
+
+Personalized card ordering or highlights ** transparent** — no hidden reorder of facts on card body.
+
+### 28.4 External Embeds
+
+Partner embeds use ** same card ethics and anatomy** — Rento preview contract travels with brand.
+
+### 28.5 Notification Previews
+
+Push or email listing previews ** match card truth** — mini-card grammar consistent.
+
+---
+
+## 29. Governance
+
+### 29.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| New card zone or primary fact | Design Council |
+| New trust badge on preview | Design Director + Trust review |
+| Featured card visual family | Design Council + Product |
+| Workspace-only status variant | Head of Product Design + Realtor UX |
+| Card anatomy change | Design Council — breaking change |
+
+### 29.2 Exception Policy
+
+Card experiments follow Chapter 5 — measurable, reversible, no trust regression without disclosure.
+
+### 29.3 Deprecation
+
+Retired card elements removed from all surfaces — not left alongside replacements indefinitely (Chapter 11).
+
+### 29.4 Cross-Surface Rollout
+
+Card changes ship ** all surfaces together** when possible — no half-migrated card grammar.
+
+---
+
+## 30. Product Review Checklist
+
+Before shipping listing card changes:
+
+### 30.1 Philosophy
+
+- [ ] One card = one decision — open detail primary  
+- [ ] Decision-critical facts only — each element justified  
+- [ ] Preview never replaces detail  
+- [ ] Trust before conversion on card  
+
+### 30.2 Hierarchy & Anatomy
+
+- [ ] Primary facts dominate — price, location, image honest  
+- [ ] One Source of Truth — no duplicate facts on card  
+- [ ] Stable anatomy across listings in list  
+- [ ] Featured labeled — never imitates organic  
+
+### 30.3 Content Domains
+
+- [ ] Price transparent with period  
+- [ ] Location understandable  
+- [ ] Attributes high-signal only  
+- [ ] Realtor identity from profile source  
+- [ ] Status honest for context and role  
+
+### 30.4 Interaction & Consistency
+
+- [ ] Favorite lightweight, reversible  
+- [ ] Share secondary, returns to context  
+- [ ] Same listing looks same everywhere  
+- [ ] Aligns with Chapter 13 result architecture  
+
+### 30.5 Access & Performance
+
+- [ ] Screen reader order correct  
+- [ ] Color not sole signal  
+- [ ] Calm load and action acknowledgement  
+- [ ] Back from detail preserves list context  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 31. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Card as mini detail page | Overwhelm; scan failure |
+| Missing or hidden price | Time disrespect; distrust |
+| Price without period | Wrong economic decisions |
+| Duplicate price or location on card | One Source of Truth violation |
+| Misleading hero image | Bait-and-switch; detail churn |
+| Badge wall on every card | Noise; ignored trust |
+| Featured mimics organic | Ethical and trust failure |
+| Different card facts in favorites vs search | Consistency breakdown |
+| Favorite hijacks primary tap | Mis-saves; frustration |
+| Icon-only actions without accessible name | Exclusion |
+| Urgency timers on housing cards | Philosophy violation |
+| Random attribute badges per listing | Comparison impossible |
+| Placeholder photo indefinite | False richness |
+| Stale status on saved card | Trust loss |
+| Carousel hides price | Hierarchy failure |
+| Share breaks return context | Navigation defect |
+| Realtor block overshadows home facts | Wrong hierarchy |
+| AI summary as fact | False confidence |
+| New surface invents card dialect | System fracture |
+| Engagement-optimized card clutter | Housing outcome harm |
+
+---
+
+## 32. Correct & Incorrect Examples
+
+### 32.1 Price Presentation
+
+**Correct:** “650 € / lună” clear on every card in list.  
+**Incorrect:** Price only on detail; card shows “Contact for price” for published listings.
+
+### 32.2 Location Clarity
+
+**Correct:** “Cluj-Napoca, Mărăști” — one location zone.  
+**Incorrect:** City in title, different city in metadata line.
+
+### 32.3 Featured Listing
+
+**Correct:** “Promovat” label, same price/photo rules as organic.  
+**Incorrect:** Featured card with extra trust styling, no label.
+
+### 32.4 Favorite Interaction
+
+**Correct:** Heart toggles; user stays in list; state visible.  
+**Incorrect:** Favorite opens auth wall with lost scroll position.
+
+### 32.5 Trust Badge
+
+**Correct:** Verification badge only when realtor verified per system rules.  
+**Incorrect:** “Verified” on all paid placements.
+
+### 32.6 Image Honesty
+
+**Correct:** Representative living room photo; placeholder if none uploaded.  
+**Incorrect:** Stock luxury photo unlike actual listing.
+
+### 32.7 Cross-Surface Consistency
+
+**Correct:** Same cover, price, city on search card and favorites card.  
+**Incorrect:** Favorites card shows outdated lower price.
+
+### 32.8 Attribute Restraint
+
+**Correct:** “2 cam · Apartament” on card; full amenities on detail.  
+**Incorrect:** Twelve amenity icons on preview row.
+
+### 32.9 Workspace Status
+
+**Correct:** Realtor sees “Pending moderation” on portfolio card.  
+**Incorrect:** Pending listing appears as available in public search card.
+
+### 32.10 Open Path
+
+**Correct:** Tap card → that listing’s detail.  
+**Incorrect:** Tap opens different unit in same building without warning.
+
+---
+
+## Listing Card Evolution
+
+Listing cards ** evolve as one system** — not as per-surface experiments.
+
+### Evolve Anatomy, Do Not Fork
+
+Improvements extend **existing card zones and hierarchy** before new card species.
+
+### Resist Feature Accumulation
+
+New badges, rows, and actions require **necessity proof** — cards are not billboards.
+
+### Remove Obsolete Preview Elements
+
+Retired badges and rows ** removed everywhere** — card debt erodes scan speed.
+
+### Preserve Mental Model
+
+Users retain **continue-or-skip** model — evolution does not turn cards into detail replacements.
+
+### Backward Compatibility
+
+Saved lists and user memory of cards honored — ** fact changes visible**, anatomy changes communicated in release notes and migration where breaking.
+
+Listing card evolution is governed — preview is long-lived product infrastructure.
+
+---
+
+## 33. Future Evolution
+
+### 33.1 Map-Linked Cards
+
+Map selection and list card ** synchronized selection state** — same grammar.
+
+### 33.2 Comparison Mode (If Shipped)
+
+Side-by-side comparison pulls ** same card facts** — not alternate summary layer.
+
+### 33.3 Collaborative Shortlists
+
+Shared favorites show ** identical card truth** for all participants.
+
+### 33.4 Deeper Personalization
+
+Highlight features user cares about — ** without hiding** other listings’ primary facts.
+
+---
+
+## 34. Design Director Review
+
+**Chapter:** 14 — Listing Card & Preview System  
+**Section:** XI — Listing Preview  
+**Review type:** Initial standard adoption
+
+### 34.1 Approval Statement
+
+This chapter is approved as the **listing card and preview contract** for Rento. All listing previews in lists and discovery surfaces must comply. Visual patterns and component implementations are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 34.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust, truth, calm, One Source of Truth |
+| Chapter 4 — Layout & Information Architecture | Hierarchy parent |
+| Chapter 11 — Component Philosophy & Component System | Listing card as governed component |
+| Chapter 13 — Search Experience | Discovery output; card is result unit |
+| Chapter 15+ — Pattern chapters | Implementation detail when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 34.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What preview or trust harm is not prevented?  
+2. Can existing card zone absorb the element?  
+3. Does change preserve comparability and cross-surface parity?  
+4. Will users still answer continue-or-skip at scan speed?  
+5. Does change respect featured disclosure and domain status rules?
+
+New primary card zones or anatomy changes require Design Council approval.
+
+### 34.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on card system changes |
+| Head of Product Design | Cross-surface card consistency |
+| Senior UX Designer | Scan, comparison, and interaction review |
+| Product Management | Featured and marketplace integrity |
+| Content Design Lead | Price, location, status copy |
+| Accessibility Specialist | List semantics and action labels |
+
+### 34.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new listing preview work immediately. Existing cards align during scheduled improvement cycles.
+
+### 34.6 Design Director Closing Note
+
+Users will not remember card border radius or shadow depth. They will remember whether ** scrolling felt honest** — whether prices matched detail, whether photos told the truth, whether the marketplace respected their time. The listing card is the handshake before the home viewing. This chapter exists so that handshake is firm, professional, and the same everywhere Rento shows a home — today and years from now.
+
+---
+
+**End of Chapter 14**
+
+
+---
+
+## Chapter 15 — Listing Detail Experience
+
+**Section:** XII — Listing Detail  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Reviewers  
+**Authority:** Subordinate to Chapters 1–14; operationalizes Information Architecture (Chapter 4), Navigation (Chapter 10), Search Experience (Chapter 13), and Listing Card & Preview System (Chapter 14) for listing evaluation and conversion readiness; defines principles only — not implementation, visual tokens, APIs, or code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **listing detail experience philosophy** for Rento.
+
+The listing detail experience is not a screen. It is the **primary decision environment** where a user evaluates whether a property deserves contact, saving, or abandonment.
+
+Where the listing card answers *continue or skip*, detail answers *believe and act, or leave with clarity*. In long-term residential rental, that decision carries financial, geographic, and personal weight. Detail must earn contact — not extract it.
+
+This chapter governs how Rento presents **one listing in full evaluation context** — structure, reading order, trust, contact readiness, and emotional tone — across consumer paths, shared links, and preview-adjacent surfaces that expand into detail.
+
+This chapter does **not** specify layouts in pixels, colors, fonts, spacing tokens, component libraries, database schemas, APIs, backend rules, or frontend architecture.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Decision environment** | Evaluation mindset, comprehension, forward paths |
+| **Information architecture** | Hierarchy, reading order, section purpose |
+| **Hero and gallery** | First depth layer, media evidence |
+| **Core facts** | Summary, price, location, characteristics |
+| **Narrative** | Description philosophy — explain, not market |
+| **People and trust** | Realtor identity, verification, availability |
+| **Contact readiness** | Contact philosophy, primary and secondary actions |
+| **Continuity** | Favorite, share, return to search |
+| **Cross-cutting** | Disclosure, density, rhythm, emotion, trust, access, performance perception |
+
+### 2.2 Out of Scope
+
+- Search, filters, and result lists (Chapter 13)  
+- Listing card preview grammar (Chapter 14)  
+- Contact form implementation and messaging backend (future contact chapter)  
+- Listing creation and edit forms (Chapter 12)  
+- Realtor workspace operational screens beyond consumer-facing detail preview  
+- Payment, scheduling, contract flows (future modules)  
+- SEO and structured data implementation  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where a user **evaluates one listing in depth**, including but not limited to:
+
+- Consumer listing detail from search, browse, favorites, saved searches, or shared links  
+- Realtor preview of published or pending listing as renter would see  
+- External entry via deep link with orientation outward  
+- Future modules that embed full listing evaluation (recommendations handoff, alerts)  
+
+If a surface asks *“Should I contact, save, or abandon this home?”* — this chapter applies.
+
+### 2.4 One Listing, One Truth
+
+Detail presents **exactly one listing** with **one authoritative fact set** — no composite views, no ambiguous multi-unit teasers without explicit user understanding.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When listing detail decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (ownership, moderation status, contact source, public availability)  
+2. Chapter 1 — Product Philosophy  
+3. Chapters 2–4 — Experience, brand, and structure  
+4. Chapters 13–14 — Search and card preview contracts  
+5. **This chapter** — for listing detail behavior and content  
+6. Chapters 5–12 — governance, visual language, navigation, forms, components  
+7. Pattern specifications and screen-level exceptions (Chapter 5 Exception Policy)  
+
+Detail must never show public consumer evaluation for listings domain rules exclude. Contact information originates from **realtor profile source of truth** — never ad hoc per listing entry.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust before conversion; One Source of Truth; calm; respect time; human-centered marketplace |
+| Chapter 2 — Experience Principles | Comprehension, ethical conversion, error recovery, no dead ends |
+| Chapter 4 — Layout & Information Architecture | Hierarchy levels, one purpose per surface, progressive disclosure |
+| Chapter 6 — Typography & Reading System | Reading roles for price, facts, narrative, actions |
+| Chapter 7 — Color Meaning & Semantic Color System | Status, availability, trust — semantic not decorative |
+| Chapter 8 — Spatial System & Layout Rhythm | Section rhythm, density, vertical flow |
+| Chapter 9 — Motion & Interaction System | Calm transitions, gallery behavior, action feedback |
+| Chapter 10 — Navigation System | Forward depth from card; back preserves list context |
+| Chapter 11 — Component Philosophy & Component System | Detail sections as composed governed behaviors |
+| Chapter 13 — Search Experience | Entry context; detail completes discovery loop |
+| Chapter 14 — Listing Card & Preview System | Card promise; detail must honor preview truth |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 14 defines the handshake. **This chapter defines the conversation** — the structured environment where users decide whether this home and this realtor deserve the next step.
+
+Without this chapter, detail becomes a feature dump. With it, detail becomes a **governed decision environment** aligned with Rento’s housing mission.
+
+---
+
+## 4. Listing Detail Philosophy
+
+Detail exists so users reach **informed conviction** — or informed rejection — without pressure, confusion, or hidden facts.
+
+### 4.1 Decision Before Contact
+
+Contact is the outcome of **completed evaluation**, not the opening move. Detail builds understanding first; contact follows when the user is ready.
+
+### 4.2 Transparency Before Persuasion
+
+Facts lead; marketing language follows. Detail persuades through **clarity and honesty**, not through copy tricks or visual manipulation.
+
+### 4.3 One Source of Truth
+
+Every fact on detail has **one authoritative placement and meaning**. Price, location, availability, identity, and status do not compete across zones.
+
+### 4.4 Trust Before Conversion
+
+Contact buttons do not appear credible unless **trust signals and facts** precede them. Conversion without trust produces complaints and churn in local rental markets.
+
+### 4.5 No Hidden Information
+
+Material facts known to the product must not be **buried, collapsed by default, or gated** solely to inflate engagement. Progressive disclosure defers depth — it does not conceal decision-critical truth.
+
+### 4.6 Progressive Disclosure
+
+Detail reveals in **layers** — essentials first, depth on demand — aligned with natural decision sequence (Chapters 1, 4).
+
+### 4.7 Calm Reading Experience
+
+Detail feels **professional and unhurried** — no urgency theater, no attention casino. Long-term rental evaluation requires cognitive space.
+
+### 4.8 Image Supports Decision
+
+Gallery serves **evidence and confidence** — what the home is like — not decorative immersion for its own sake.
+
+### 4.9 Description Explains Rather Than Markets
+
+Description answers user questions about **living in this home** — not billboard hype. Tone is informative and direct.
+
+### 4.10 Realtor Builds Confidence
+
+Realtor presence **humanizes and accountability** — professional, visible, sourced from profile truth — not anonymous or casual.
+
+### 4.11 CTA After Sufficient Understanding
+
+Primary contact action appears when user has **enough structural context** to act with confidence — not before price, place, and trust baseline exist.
+
+### 4.12 User Always Knows What Happens Next
+
+Every section and action implies **clear outcome** — contact reaches realtor; save adds to shortlist; back returns to search; share sends public listing view.
+
+### 4.13 Contact Is Never Forced
+
+No blocking modals, guilt patterns, or dead ends that **require contact to escape**. Evaluation remains voluntary.
+
+### 4.14 Every Section Answers a User Question
+
+If a section cannot be named as a user question it answers, it does not belong on detail.
+
+### 4.15 Every Block Has a Purpose
+
+Ornamental blocks without decision or trust function are removed — restraint scales (Chapter 1).
+
+### 4.16 No Information Duplication
+
+The same fact must not appear in multiple competing formats on one detail view — card promise extends here without redundant noise.
+
+### 4.17 Detail Never Overwhelms
+
+Density is governed. Overwhelmed users abandon good listings and mistrust the platform.
+
+### 4.18 Reading Order Follows Natural Decision Making
+
+Structure follows *what → where → how much → can I believe → who → act* — not internal admin field order.
+
+---
+
+## 5. Decision Environment
+
+Detail is an **environment for judgment** — not a container for fields.
+
+### 5.1 Evaluation Mode
+
+Users enter detail in **evaluation mode** — slower, deeper, more skeptical than scan mode on cards. Detail must respect that shift.
+
+### 5.2 Conviction or Clarity
+
+Successful detail ends in one of two honest outcomes:
+
+- **Conviction** — user saves or initiates contact with justified confidence  
+- **Clarity** — user leaves knowing this listing is not right — without feeling manipulated or confused  
+
+Both are product success. Only confusion and mistrust are failure.
+
+### 5.3 Comparison Memory
+
+Users often compare detail against **other listings in memory** from the same session. Detail must make distinguishing facts **easy to recall** — price, place, type, trust.
+
+### 5.4 Interruption and Return
+
+Users leave detail to message partners, check maps, or pause. Return to same listing must feel **continuous** — state preserved where product rules allow.
+
+### 5.5 Role Context
+
+**Consumer** evaluates for personal housing decision. **Realtor preview** evaluates as renter would see — not mixed with edit controls in same evaluation layer without clear mode separation.
+
+### 5.6 Entry Context Preservation
+
+User arriving from search returns to **search context** on back (Chapters 10, 13). User arriving from share must **orient outward** — where they are in product, how to explore more.
+
+---
+
+## 6. Information Architecture
+
+Detail information maps to Chapter 4 hierarchy — with detail-specific emphasis on **Primary through Supporting**, minimal Metadata on consumer paths.
+
+### 6.1 Primary Information on Detail
+
+Typically includes:
+
+| Fact | Role |
+|------|------|
+| **What this is** | Title or equivalent identifier — home type and scale |
+| **Where it is** | Location at decision-relevant geographic depth |
+| **What it costs** | Price with rental period clarity |
+| **Whether it appears available and credible** | Availability honesty; baseline trust to continue reading |
+
+Primary zone appears **early** — first viewport on mobile where achievable.
+
+### 6.2 Secondary Information
+
+Typically includes:
+
+- Room count, area, key physical attributes  
+- Gallery access and representative media  
+- Structured characteristic groups  
+- Realtor identity compact block  
+- Verification where governed  
+
+Secondary completes **informed evaluation** — still above deep narrative when possible.
+
+### 6.3 Supporting Information
+
+Typically includes:
+
+- Full description narrative  
+- Extended amenity and policy detail  
+- Map context when product provides  
+- Secondary metadata (reference IDs only if user-facing purpose exists)  
+
+Supporting is **progressively disclosed** — not absent, not dumped above fold.
+
+### 6.4 Contextual Information
+
+Appears when relevant — e.g., moderation notice on realtor preview, auth prompt at contact if required — not default noise on every view.
+
+### 6.5 Metadata
+
+Low-frequency system facts **subordinate** — never compete with price or location for fixation.
+
+### 6.6 Section Purpose Contract
+
+Each IA section declares:
+
+- **User question answered**  
+- **Hierarchy level**  
+- **Relationship to card preview** — extends, never contradicts  
+
+---
+
+## 7. Reading Order
+
+Reading order is **decision sequence** — invariant across breakpoints unless wider viewport adds parallel access without reordering meaning.
+
+### 7.1 Standard Consumer Sequence
+
+```
+Orient → See home evidence → Confirm economics and place →
+Understand characteristics → Read explanation →
+Know who is accountable → Assess trust and availability →
+Choose save, contact, share, or leave
+```
+
+### 7.2 Price and Location Early
+
+Economic and geographic triage facts appear **before** long narrative — user must not read paragraphs to discover unaffordable or misplaced listings.
+
+### 7.3 Trust Before Contact Block
+
+Trust and realtor identity precede or **wrap immediately before** primary contact — not buried after contact on first paint.
+
+### 7.4 Actions Reachable, Not Dominating
+
+Primary action is **available when ready** — sticky or persistent contact zones follow Chapter 4 action placement — context before commitment.
+
+### 7.5 Back Is Always Valid
+
+Reading order includes **exit** — back to list is first-class, not hidden (Chapter 10).
+
+---
+
+## 8. Hero Section Philosophy
+
+The hero is the **first depth layer** after card — orientation and emotional grounding, not a billboard.
+
+### 8.1 Orientation First
+
+Hero answers: *Which listing am I viewing?* — continuity from card — same listing identity, no bait switch.
+
+### 8.2 Hero Is Not the Whole Story
+
+Hero introduces — gallery, summary, and facts follow. Hero must not consume entire first session with non-decision content.
+
+### 8.3 Calm Visual Dominance
+
+Hero media may dominate visually — **facts remain findable** without scroll hunt for price. Visual dominance serves evidence, not obscuring economics.
+
+### 8.4 Consistency With Card
+
+Hero image and headline facts ** align with card preview** — sharp contradiction destroys trust (Chapter 14).
+
+### 8.5 Hero on Mobile
+
+Mobile hero respects **vertical flow and thumb reach** — primary orientation without horizontal trap.
+
+---
+
+## 9. Gallery Philosophy
+
+Gallery is **evidence system** for the home — not a slideshow attraction.
+
+### 9.1 Evidence Over Aesthetic
+
+Photos answer: *What would it be like here?* — rooms, condition, light, layout cues — not generic lifestyle stock.
+
+### 9.2 Coverage Honesty
+
+Gallery represents **actual listing media** — empty gallery state honest; placeholder not indefinite.
+
+### 9.3 Navigation Clarity
+
+Users understand **how many images, how to browse, how to exit** gallery — no trapped fullscreen without escape (Chapter 10, no dead ends).
+
+### 9.4 Order Logic
+
+Cover image first — **same cover as card** — then logical room flow when realtor provides order; system does not randomize.
+
+### 9.5 Misrepresentation Forbidden
+
+Gallery must not **systematically mislead** — wide-angle deception, unrelated stock, photo from different unit.
+
+### 9.6 Gallery Supports, Does Not Replace, Facts
+
+User still needs **structured facts** — gallery complements attributes and description; photos alone are insufficient for rental decisions.
+
+### 9.7 Motion Restraint
+
+Gallery transitions calm (Chapter 9) — reduced motion respected; no autoplay video with sound on arrival unless user initiates.
+
+---
+
+## 10. Property Summary
+
+Summary is the **structured identity** of the listing — fast reconfirmation after card.
+
+### 10.1 Summary Role
+
+Answers: *What kind of home is this, at a glance?* — type, rooms, key scale signals.
+
+### 10.2 Scannable Block
+
+Summary is **scannable** — not prose paragraph — aligned with typography roles (Chapter 6).
+
+### 10.3 Card Continuation
+
+Summary **extends card hook** without repeating entire card verbatim — no duplicate price blocks.
+
+### 10.4 Stable Summary Grammar
+
+Summary fields **consistent across listings** — comparable within one detail view and across product.
+
+---
+
+## 11. Price Experience
+
+Price on detail is **authoritative economic fact** — One Source of Truth for listing cost.
+
+### 11.1 Prominence Without Hype
+
+Price visible, clear, calm — not hidden, not shouted with fake urgency.
+
+### 11.2 Period and Currency Clarity
+
+Long-term rental period **explicit** — same grammar as card, expanded only if additional honest context exists (what is included, if product defines).
+
+### 11.3 No Surprise on Contact
+
+Price on detail matches **card and inquiry context** — user never discovers different economic reality after contact intent.
+
+### 11.4 Additional Cost Transparency
+
+If product surfaces utilities, deposits, or fees when data exists — **labeled honestly** as supporting information — not hidden in description only.
+
+### 11.5 Price Change Honesty
+
+If price updated since user saved listing, detail shows **current truth** on open — optional honest freshness note.
+
+---
+
+## 12. Location Experience
+
+Location on detail ** deepens geographic understanding** beyond card — without unsafe oversharing.
+
+### 12.1 Layered Geography
+
+Progression from city/area toward **map or address policy** as product and privacy rules allow — user understands where before contact.
+
+### 12.2 Map When Provided
+
+Map is **context tool** — approximate location honesty; not false precision pin if policy uses zone display.
+
+### 12.3 Location Questions Answered
+
+Answers: *Is this where I need to be for work, school, life?* — narrative and map support, not cryptic labels.
+
+### 12.4 One Location Authority
+
+One location block — not city in title, different coordinates in footer, third string in description.
+
+### 12.5 Alignment With Search Intent
+
+User arriving from location-filtered search sees **coherent geography** — mismatch triggers distrust (Chapter 13).
+
+---
+
+## 13. Property Characteristics
+
+Characteristics are **structured facts** about the home — scannable, grouped, honest.
+
+### 13.1 Grouping by User Questions
+
+Groups follow life questions — *space, building, amenities, policies* — not database table names exposed raw.
+
+### 13.2 Honest Absence
+
+Missing data shown as unavailable — **not invented defaults**.
+
+### 13.3 Depth Over Card
+
+Detail carries ** fuller attribute set** than card — progressive depth, not attribute spam in one grid.
+
+### 13.4 Comparable Structure
+
+Same group types **across listings** where market data supports — user learns once.
+
+### 13.5 Filter Alignment
+
+Characteristics visible on detail ** reflect search filters** user applied — reinforcement of match quality.
+
+---
+
+## 14. Description Philosophy
+
+Description is **explanatory narrative** — not marketing brochure.
+
+### 14.1 Explain Living Here
+
+Description answers practical and emotional questions about **daily life in this home** — layout feel, neighborhood context realtor can honestly describe, relevant constraints.
+
+### 14.2 Tone Standards
+
+Professional, direct, respectful — no ALL CAPS hype, no artificial urgency, no misleading superlatives.
+
+### 14.3 Length and Structure
+
+Long text **broken for readability** — paragraphs, subheads when needed — not wall of text on mobile.
+
+### 14.4 Language Quality
+
+Grammar and clarity matter — sloppy description reads as sloppy listing (brand Chapter 3).
+
+### 14.5 AI-Assisted Description (Future-Compatible)
+
+AI-generated text ** labeled and editable by realtor** — never indistinguishable from verified facts; user can distinguish human accountability.
+
+### 14.6 Description Does Not Hide Facts
+
+Material constraints — pets, smoking, restrictions — belong in **honest characteristic or description placement**, not buried contradications.
+
+---
+
+## 15. Realtor Identity
+
+Realtor block is **accountability surface** — who stands behind this listing.
+
+### 15.1 Profile Source of Truth
+
+Name, agency, photo, contact pathway — from **realtor profile** — One Source of Truth (Chapter 1, domain rules).
+
+### 15.2 Human-Centered Marketplace
+
+Realtor visible as **real professional** — not platform anonymous intermediary fiction.
+
+### 15.3 Identity Supports Contact Decision
+
+User knows **who they will reach** before contact — identity block precedes or integrates with contact zone logically.
+
+### 15.4 Consistency Across Surfaces
+
+Same realtor **same presentation grammar** on card, detail, contact handoff.
+
+### 15.5 Agency Context
+
+Agency information **subordinate to realtor** on consumer path — clear who primary contact is.
+
+### 15.6 No Contact in Creation Grammar on Detail
+
+Detail **displays** contact source — does not reimplement listing-level contact entry fields (domain rules).
+
+---
+
+## 16. Trust Signals
+
+Trust on detail **completes confidence** begun on card — not a badge dump.
+
+### 16.1 Defined Signals Only
+
+Verification, freshness, moderation-approved availability — only **what system defines** — labels match reality.
+
+### 16.2 Placement Near Decision
+
+Trust signals appear **where they inform contact** — not decorative header noise.
+
+### 16.3 Restraint
+
+Few meaningful signals beat **many hollow badges**.
+
+### 16.4 Trust Inheritance
+
+Card trust promise ** honored or upgraded on detail** — never downgraded silently.
+
+---
+
+## 17. Availability Communication
+
+Availability is **domain-critical truth** — especially in actual-availability product promise.
+
+### 17.1 Consumer Public Detail
+
+Public detail shows **available** listings per domain rules — honest availability language; no false “available now” defaults.
+
+### 17.2 Stale Listing Handling
+
+If listing becomes unavailable while user views, product **communicates honestly** on refresh or action — not silent failure at contact.
+
+### 17.3 Move-In Timing
+
+When timing data exists, communicate ** plainly** — supporting decision, not pressure countdown.
+
+### 17.4 Realtor Preview Truth
+
+Realtor preview shows **true moderation and availability state** — pending, rejected, available — with professional explanation.
+
+---
+
+## 18. Contact Philosophy
+
+Contact is **deliberate human connection** — not a trap door.
+
+### 18.1 Contact Follows Evaluation
+
+Contact affordances assume user has **read enough to justify inquiry** — structure enforces sequence, not timer.
+
+### 18.2 Contact Reaches Realtor
+
+Contact path connects to **governed realtor contact** — phone, message, or product-defined channel — from profile truth.
+
+### 18.3 Expectation Setting
+
+User understands **what contact does** — initiates conversation, reveals number, opens form — before commit.
+
+### 18.4 No Dark Contact Patterns
+
+Forced registration walls, hidden charges, or bait contact forbidden — auth gates honest and return-preserving (Chapter 10).
+
+### 18.5 Contact Respects Calm
+
+Contact zone tone **professional** — not aggressive “CALL NOW” housing anxiety exploitation.
+
+### 18.6 Unavailable Listing Contact Block
+
+Contact disabled or redirected with **clear explanation** when listing cannot be contacted — no dead click.
+
+---
+
+## 19. Primary CTA Principles
+
+Primary CTA is **one dominant action** on detail — typically contact or equivalent conversion (Chapter 1, 4).
+
+### 19.1 One Primary Action
+
+Competing primary CTAs ** forbidden** — one clear dominant path; secondary subordinate.
+
+### 19.2 Context Before CTA
+
+User encounters sufficient **price, place, identity, trust** before primary CTA demands commitment.
+
+### 19.3 Label Honesty
+
+CTA label describes **real outcome** — “Contact realtor”, not vague “Learn more” for contact.
+
+### 19.4 Persistent Access, Not Persistent Pressure
+
+Sticky contact may keep action **reachable** — not pulsating or escalating urgency.
+
+### 19.5 CTA After Scroll on Mobile
+
+Mobile may place primary CTA **persistent after initial context** — user scrolls through evidence first; implementation follows this principle, not reverse.
+
+---
+
+## 20. Secondary Actions
+
+Secondary actions **support evaluation** without competing with contact.
+
+### 20.1 Save / Favorite
+
+Lightweight, reversible — same grammar as card (Chapter 14).
+
+### 20.2 Share
+
+Deliberate sharing — recipient gets honest public detail path.
+
+### 20.3 Report or Safety (If Product Provides)
+
+Subordinate, clear purpose — protect marketplace integrity without cluttering primary evaluation.
+
+### 20.4 Visual Subordination
+
+Secondary actions **lower hierarchy** than primary CTA and core facts — never equal visual weight.
+
+---
+
+## 21. Favorite Continuity
+
+Favorite on detail **syncs with card and favorites list** — One Source of Truth for saved state.
+
+### 21.1 State Consistency
+
+Saved on detail → saved on card in list on return — no desync.
+
+### 21.2 Non-Blocking Save
+
+Save does not **navigate away** or interrupt reading unless product defines explicit celebration — restrained confirmation.
+
+### 21.3 Save Without Contact Pressure
+
+Saving **does not trigger** contact upsell or guilt funnels.
+
+---
+
+## 22. Share Continuity
+
+Share from detail preserves **user context on return** — same listing, same scroll position where feasible.
+
+### 22.1 Shared Experience Quality
+
+Recipient lands on **same listing truth** — deep link orientation outward (Chapters 10, 13).
+
+### 22.2 Public Facts Only
+
+Share exposes **appropriate public information** — privacy respected.
+
+---
+
+## 23. Progressive Disclosure
+
+Detail is the **primary progressive disclosure surface** for one listing — layers of depth without collapse.
+
+### 23.1 Essentials First
+
+First screen layers answer **continue reading or leave** — not entire legal packet.
+
+### 23.2 Expand for Depth
+
+Extended characteristics, long description, map — **available without hunting** — clear section entry.
+
+### 23.3 Collapse Is Not Concealment
+
+Collapsing supports scan — **must not hide** decision-critical facts known upfront.
+
+### 23.4 Card-to-Detail Disclosure Step
+
+Detail adds **depth card promised** — does not repeat entire card; adds new layers only.
+
+---
+
+## 24. Information Density
+
+Density is **governed balance** — neither sparse suspicion nor packed exhaustion.
+
+### 24.1 Density Serves Decision
+
+Every block earns space — if removed without loss to evaluation, remove it.
+
+### 24.2 White Space Is Structure
+
+Spatial rhythm (Chapter 8) separates **decision phases** — facts, narrative, people, action.
+
+### 24.3 Mobile Density Priority
+
+Mobile is reference — **one column clarity**; desktop may not inject density that mobile forbids logically.
+
+### 24.4 Density and Trust
+
+Suspiciously empty detail erodes trust; suspiciously stuffed detail erodes confidence — both failures.
+
+---
+
+## 25. Reading Rhythm
+
+Rhythm is **pace of comprehension** — section breaks, consistent headers, steady scroll.
+
+### 25.1 Section Headers as Signposts
+
+Headers name **user questions** — “About this home”, “Location”, “Contact” — not internal codes.
+
+### 25.2 Steady Vertical Flow
+
+No chaotic alternation of dense slabs and empty deserts without purpose.
+
+### 25.3 Typography Roles Support Rhythm
+
+Headline, body, label roles (Chapter 6) create **predictable reading cadence**.
+
+### 25.4 Pause Before Action
+
+Macro pause before contact block — spatial signal that **evaluation transitions to action** (Chapter 8).
+
+---
+
+## 26. Emotional Design
+
+Emotional tone on detail is **grounded hope** — not manipulation.
+
+### 26.1 Housing Dignity
+
+Presentation respects that this is **someone’s home and someone’s search** — not commodity gamification.
+
+### 26.2 Calm Over Stimulation
+
+No countdowns, flashing CTAs, or casino patterns (Chapter 1).
+
+### 26.3 Appropriate Aspiration
+
+Good photography may inspire — **must not mislead** about economic or geographic reality.
+
+### 26.4 Anxiety Reduction
+
+Structure and honesty **reduce fear** — fraud anxiety, hidden cost anxiety, unknown realtor anxiety.
+
+### 26.5 Rejection Without Shame
+
+User leaving detail without contact is **valid outcome** — no guilt copy on back navigation.
+
+---
+
+## 27. Marketplace Trust
+
+Detail is **trust apex** for one listing — where card promise is verified or broken.
+
+### 27.1 Truth Verification Moment
+
+User compares **memory of card to detail reality** — parity required (Chapter 14).
+
+### 27.2 Aggregate Marketplace Effect
+
+One dishonest detail page damages **entire platform credibility** — not only one realtor.
+
+### 27.3 Moderation Integrity
+
+Approved public detail reflects **moderation passed** — consumer trust in platform curation.
+
+### 27.4 Contact Accountability
+
+Contact connects to **identified professional** — marketplace accountability visible.
+
+---
+
+## Listing Detail Ethics
+
+Listing detail carries **maximum ethical weight** — users may sign leases based on what they understood here.
+
+### Never Withhold Material Facts
+
+Economic, geographic, availability, and constraint facts known to the system must not be **hidden to force contact or scroll**.
+
+### Never Misrepresent Through Media or Copy
+
+Gallery and description must not **systematically deceive** about condition, location, or cost.
+
+### Never Pressure Contact
+
+Urgency, guilt, or blocking patterns that ** coerce contact** violate trust before conversion (Chapter 1).
+
+### Never Duplicate Identity or Contact Sources
+
+Contact and realtor facts ** one governed origin** — domain and philosophy aligned.
+
+### Never Optimize Detail for Engagement Over Housing Decisions
+
+Time-on-page and scroll depth are **not** success definitions — informed contact or informed exit are.
+
+### Trust Before Monetization on Detail
+
+Revenue features on detail — ads, upsells, featured modules — **subordinate to evaluation integrity** and disclosed.
+
+---
+
+## 28. Accessibility
+
+Detail must be **fully evaluable** by assistive technology and inclusive design standards.
+
+### 28.1 Landmark Structure
+
+Detail uses **logical landmarks** — main content, navigation, complementary actions — screen reader navigable.
+
+### 28.2 Gallery Accessibility
+
+Images have **meaningful alternatives** — not empty or generic “photo” for all.
+
+### 28.3 Reading Order Match
+
+Assistive reading order **matches visual decision order** — price and location before buried footer CTA-only discovery.
+
+### 28.4 Action Accessibility
+
+Contact, save, share — **named, focusable, keyboard operable** where platform supports.
+
+### 28.5 Color and Motion
+
+Semantic color not sole signal; reduced motion respected in gallery and transitions (Chapters 7, 9).
+
+### 28.6 Cognitive Accessibility
+
+Plain language, clear sections, no time limits on evaluation.
+
+---
+
+## 29. Performance Experience
+
+Detail performance is **felt confidence and experienced respect** — for time, attention, and anxiety; user knows page is working and stable.
+
+### 29.1 Honest Loading
+
+Loading states **truthful** — not fake instant shell that swaps entire content; user never stares at blank while wondering if link failed.
+
+### 29.2 Gallery Load Perception
+
+Images load with **calm progression** — user can begin reading facts while media completes.
+
+### 29.3 Action Feedback
+
+Contact tap and save **acknowledge immediately** — user not left wondering if product responded.
+
+### 29.4 Stability on Scroll
+
+Layout stable as media loads — **no violent shift** hiding price or CTA (Chapter 14 performance parallel).
+
+### 29.5 Immediate Orientation
+
+User lands on detail and **recognizes listing identity** instantly — title, image, or summary confirms correct depth navigation.
+
+### 29.6 Stable Reading Surface
+
+Text and facts **stable while gallery loads** — reading not sabotaged by layout shift.
+
+### 29.7 Preserved Context on Back
+
+Back to list **preserves search context** — performance includes navigation memory (Chapters 10, 13).
+
+### 29.8 Calm Gallery Transitions
+
+Gallery open and close **restrained** — user never lost in media without exit.
+
+### 29.9 Continuity on Revisit
+
+Return to detail **same scroll and saved state** where product allows — ongoing evaluation respected.
+
+### 29.10 Predictable Contact Feedback
+
+Contact initiation **clear state** — sending, sent, failed with recovery — never silent void.
+
+Perceived performance inherits motion (Chapter 9), spatial stability (Chapter 8), and search continuity (Chapter 13).
+
+---
+
+## 30. Cross-Device Consistency
+
+Detail presents **same listing truth** on phone, tablet, and desktop — structure may adapt, facts invariant.
+
+### 30.1 Fact Parity Across Devices
+
+Price, location, availability, identity ** identical** — not desktop-only hidden fees.
+
+### 30.2 Hierarchy Invariant
+
+Reading order meaning **same** — wider layout may use columns, not reorder trust below contact on mobile while desktop differs ethically.
+
+### 30.3 Action Parity
+
+Primary and secondary actions **same outcomes** across devices.
+
+### 30.4 Shared Link Device Handoff
+
+Link opened on different device shows **same listing** — session handoff honest.
+
+---
+
+## 31. Future Compatibility
+
+Detail architecture **extends without reinvention** as product grows.
+
+### 31.1 Scheduling and Viewings
+
+Future booking modules attach **after evaluation sections** — do not replace trust and facts.
+
+### 31.2 Messaging In-App
+
+Chat entry **subordinate to contact philosophy** — same identity visibility.
+
+### 31.3 Virtual Tours
+
+Immersive media **optional layer** — does not obscure price, location, or realtor.
+
+### 31.4 AI Assist on Detail
+
+AI summaries or Q&A ** labeled, subordinate, correctable** — never override governed facts.
+
+### 31.5 Payments and Deposits
+
+Future payment flows **disclosure-heavy** — separate deliberate steps, not smuggled into detail CTA.
+
+---
+
+## Listing Detail Success Metrics
+
+Listing detail quality is evaluated at **product philosophy level** — not engagement vanity alone.
+
+### Informed Contact Rate
+
+Contacts preceded by **evidence of evaluation** — scroll depth alone insufficient; user opened gallery or read characteristics, product can infer meaningfully — contact not mis-tap.
+
+### Informed Abandonment
+
+Users leave without contact **with clarity** — detail answered enough to reject — low confusion exits.
+
+### Card-to-Detail Truth Parity
+
+Users report **no surprise** at economic or geographic facts vs card — parity success.
+
+### Time to Contact Readiness
+
+User reaches **trust and fact baseline** before contact — not fastest contact tap.
+
+### Save Quality
+
+Saves reflect **shortlist conviction** — return visits to saved detail high.
+
+### Return Completion Rate
+
+Users who return to same detail **complete evaluation** — persistence and stability success.
+
+### Trust Comprehension
+
+Users understand **verification and availability** meaning without support — or signals simplified.
+
+### Long-Term Detail Satisfaction
+
+Over weeks, users believe **detail matched reality at viewing** — cumulative honesty metric.
+
+Teams evaluate detail changes against these principles in design critique and §37 checklist.
+
+---
+
+## Listing Detail Evolution
+
+Detail experience **evolves as one system** — the deepest stable contract in consumer evaluation.
+
+### Evolve Sections, Do Not Fragment
+
+New facts and modules **extend IA sections** — not parallel detail templates per city or realtor tier.
+
+### Resist Feature Accumulation
+
+Every new block requires **user question justification** — detail is not infinite landing page.
+
+### Remove Obsolete Sections
+
+Retired blocks ** removed product-wide** — detail debt overwhelms faster than card debt.
+
+### Preserve Mental Model
+
+Evaluation sequence ** invariant** — orient, evidence, facts, people, trust, act.
+
+### Backward Compatibility
+
+Deep links and saved listings ** honor structure** — breaking IA changes require migration communication.
+
+Listing detail evolution requires Design Council approval for **primary IA changes**.
+
+---
+
+## 32. Governance
+
+### 32.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| New primary detail section | Design Council |
+| Primary CTA or contact pattern change | Design Director + Product |
+| New trust badge on detail | Trust review + Design Council |
+| Gallery behavior change | Head of Product Design |
+| IA reorder | Design Council — breaking change |
+
+### 32.2 Exception Policy
+
+Detail experiments follow Chapter 5 — time-boxed, reversible, card-detail parity monitored.
+
+### 32.3 Card-Detail Parity Review
+
+Any card or detail change ** reviewed in pair** — preview and depth cannot diverge (Chapter 14).
+
+### 32.4 Cross-Team Review
+
+Content design, accessibility, and product management sign off on **contact and trust zones**.
+
+---
+
+## 33. Product Review Checklist
+
+Before shipping listing detail changes:
+
+### 33.1 Philosophy
+
+- [ ] Decision before contact — structure supports evaluation first  
+- [ ] Transparency before persuasion  
+- [ ] One Source of Truth — no duplicate competing facts  
+- [ ] Trust before conversion  
+- [ ] Contact never forced  
+
+### 33.2 Architecture & Reading
+
+- [ ] Every section answers a user question  
+- [ ] Reading order follows natural decision sequence  
+- [ ] Progressive disclosure — no hidden material facts  
+- [ ] Information density governed — not overwhelming  
+
+### 33.3 Content Domains
+
+- [ ] Gallery honest; cover matches card  
+- [ ] Price and period clear; location authoritative  
+- [ ] Description explains, not hypes  
+- [ ] Realtor from profile source; contact governed  
+- [ ] Availability honest for role and domain  
+
+### 33.4 Actions & Continuity
+
+- [ ] One primary CTA — honest label  
+- [ ] Secondary actions subordinate  
+- [ ] Favorite and share continuity with card  
+- [ ] Back preserves search context  
+
+### 33.5 Access & Performance
+
+- [ ] Screen reader landmarks and order correct  
+- [ ] Calm load; stable layout; contact feedback  
+- [ ] Cross-device fact parity  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 34. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Contact CTA above price | Decision before context violated |
+| Duplicate price and location blocks | One Source of Truth failure |
+| Card-detail price mismatch | Trust collapse |
+| Gallery only — no structured facts | Decision unsupported |
+| Marketing description wall first | Reading order failure |
+| Hidden utilities or fees in prose only | Transparency failure |
+| Anonymous listing on consumer detail | Human-centered marketplace violation |
+| Badge wall instead of trust | Noise; ignored signals |
+| Forced auth before any reading | Time disrespect |
+| Sticky CTA pulsing urgency | Philosophy violation |
+| Misleading hero vs gallery set | Bait-and-switch |
+| Contact dead on unavailable listing | Dead end |
+| Desktop shows facts mobile hides | Cross-device betrayal |
+| Realtor contact per listing field | Domain violation |
+| AI description as verified fact | False confidence |
+| Detail as SEO keyword dump | User overwhelm |
+| No back path to search | Navigation trap |
+| Share link wrong listing | Identity break |
+| Endless related listings before facts | Hierarchy corruption |
+| Engagement-optimized detail length | Housing outcome harm |
+
+---
+
+## 35. Correct & Incorrect Examples
+
+### 35.1 Reading Order
+
+**Correct:** Price, location, summary, gallery, characteristics, description, realtor, contact.  
+**Incorrect:** Three paragraphs marketing copy before user knows city or price.
+
+### 35.2 Card Parity
+
+**Correct:** Card showed 650 €/lună Cluj — detail confirms same.  
+**Incorrect:** Card low price; detail adds undisclosed fees only in small print.
+
+### 35.3 Contact Placement
+
+**Correct:** User scrolls evidence; contact zone after identity and trust.  
+**Incorrect:** Full-screen contact modal on landing before content.
+
+### 35.4 Description Tone
+
+**Correct:** “Apartament luminos, 2 camere, liniștit, aproape de transport.”  
+**Incorrect:** “ULTRA RARE DEAL!!! GRAB NOW!!!”
+
+### 35.5 Realtor Identity
+
+**Correct:** Realtor name, agency, photo from profile; contact uses profile channel.  
+**Incorrect:** Different phone on detail than profile without explanation.
+
+### 35.6 Availability
+
+**Correct:** Public detail only for available listings; unavailable honestly removed or blocked.  
+**Incorrect:** Pending listing contactable by consumer.
+
+### 35.7 Favorite Continuity
+
+**Correct:** Save on detail; heart filled on card in search results.  
+**Incorrect:** Saved on detail not reflected in favorites list.
+
+### 35.8 Gallery Exit
+
+**Correct:** User closes gallery; returns to same scroll on detail.  
+**Incorrect:** Gallery exit dumps user to home.
+
+### 35.9 Progressive Disclosure
+
+**Correct:** Full amenity list in expandable section after summary.  
+**Incorrect:** Material pet restriction only in collapsed legal footer.
+
+### 35.10 Share Deep Link
+
+**Correct:** Partner opens link; sees same listing with orientation to browse.  
+**Incorrect:** Partner opens link; 404 or wrong city default search.
+
+---
+
+## 36. Design Director Review
+
+**Chapter:** 15 — Listing Detail Experience  
+**Section:** XII — Listing Detail  
+**Review type:** Initial standard adoption
+
+### 36.1 Approval Statement
+
+This chapter is approved as the **listing detail experience contract** for Rento. All consumer and preview-detail evaluation surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 36.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, truth, calm |
+| Chapter 4 — Layout & Information Architecture | IA and hierarchy parent |
+| Chapter 10 — Navigation System | Depth, back, and return integrity |
+| Chapter 13 — Search Experience | Discovery entry; detail completes loop |
+| Chapter 14 — Listing Card & Preview System | Preview promise; detail must honor |
+| Chapter 16+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 36.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What evaluation or trust harm is not prevented?  
+2. Can existing IA section absorb the content?  
+3. Does change preserve card-detail parity and reading order?  
+4. Will contact remain ethical and unforced?  
+5. Does change respect domain contact and availability rules?
+
+New primary sections or CTA philosophy changes require Design Council approval.
+
+### 36.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on detail experience changes |
+| Head of Product Design | Cross-surface parity with card and search |
+| Senior UX Designer | Reading order and evaluation flow |
+| Product Management | Contact and marketplace integrity |
+| Content Design Lead | Description, price, availability copy |
+| Accessibility Specialist | Landmarks, gallery alt text, action labels |
+
+### 36.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new listing detail work immediately. Existing detail surfaces align during scheduled improvement cycles.
+
+### 36.6 Design Director Closing Note
+
+Users will not remember every attribute row on a detail page. They will remember whether **they felt safe deciding** — whether the home they imagined matched the home they saw, whether the person they contact is real, whether the platform treated their search with dignity. Listing detail is where Rento earns or spends the trust built in search and on the card. This chapter exists so that moment of decision — contact, save, or walk away — is always informed, calm, and true.
+
+---
+
+**End of Chapter 15**
+
+
+---
+
+## Chapter 16 — Contact & Communication Experience
+
+**Section:** XIII — Contact & Communication  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–15; operationalizes Product Philosophy contact rules, Listing Detail contact readiness (Chapter 15), and Navigation return integrity (Chapter 10); defines principles only — not messaging infrastructure, APIs, notification systems, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **contact and communication experience philosophy** for Rento.
+
+Communication is not a feature. Communication is the **trust bridge** between marketplace discovery and a real-world housing decision — the moment digital evaluation becomes human conversation about a home.
+
+Where Chapters 13–15 guide users from search to informed evaluation, this chapter defines **how contact is initiated, experienced, and recovered** — with transparency, accountability, and calm professionalism appropriate to long-term residential rental.
+
+Rento connects renters with **identified realtors**, not anonymous intermediaries. Contact information originates from governed profile sources — never ad hoc per listing. Communication design must reinforce that model while respecting privacy, time, and the seriousness of housing commitments.
+
+This chapter governs contact initiation, expectation setting, identity presentation, status communication, failure recovery, and the ethical boundaries of marketplace conversation — across present and future communication channels the product may support.
+
+This chapter does **not** specify chat protocols, SMS gateways, push notification logic, database schemas, frontend components, or backend services.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Trust, respect, readiness, outcome clarity |
+| **Mental model** | How users understand contact on Rento |
+| **Entry points** | Where and when contact may begin |
+| **Primary and secondary contact** | Dominant and supporting communication paths |
+| **Expectations** | Renter and realtor mutual understanding |
+| **Transparency** | What happens when user contacts; what is visible to whom |
+| **Identity and privacy** | Accountability without exposure harm |
+| **Continuity** | Return from contact; context preservation |
+| **Statuses** | Sent, pending, failed, unavailable — honest states |
+| **Recovery** | Failed or blocked communication paths |
+| **Viewing preparation** | Communication as prelude to in-person decision |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- Search and discovery (Chapter 13)  
+- Listing card and detail evaluation (Chapters 14–15)  
+- Listing creation forms and profile editing (Chapter 12)  
+- In-thread message UI patterns (future messaging chapter when authored)  
+- Notification delivery implementation  
+- Telephony or SMS provider integration  
+- Moderation queue operations for admin  
+- Legal contract of lease — product facilitates introduction, not tenancy agreement  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **renters initiate or manage contact with realtors about listings**, including but not limited to:
+
+- Contact initiation from listing detail  
+- Phone or message handoff flows  
+- Auth gates before contact when required  
+- Contact unavailable or listing withdrawn states  
+- Future in-app messaging threads tied to listings  
+- Future viewing request and scheduling handoffs  
+
+If a surface answers *“How do I reach this realtor about this home?”* or *“What happened to my inquiry?”* — this chapter applies.
+
+### 2.4 One Listing, One Realtor, One Contact Source
+
+Contact for a listing connects to **the owning realtor’s governed profile contact** — not parallel numbers, not hidden rerouting, not listing-level contact duplication (immutable domain rules).
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When communication decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (contact from `realtor_profiles`, ownership, moderation status, role boundaries)  
+2. Chapter 1 — Product Philosophy  
+3. Chapters 2–4 — Experience, brand, and structure  
+4. Chapters 13–15 — Discovery and evaluation contracts  
+5. **This chapter** — for contact and communication behavior  
+6. Chapters 5–12 — governance, visual language, navigation, forms, components  
+7. Pattern specifications and screen-level exceptions (Chapter 5 Exception Policy)  
+
+Communication must never expose pending listings as contactable in public consumer paths. Communication must never imply renter–realtor relationship the product does not support.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust before conversion; human-centered marketplace; One Source of Truth; respect time; calm |
+| Chapter 2 — Experience Principles | Ethical conversion, error recovery, no dead ends, clarity |
+| Chapter 4 — Layout & Information Architecture | Contact zones, hierarchy, one primary action |
+| Chapter 6 — Typography & Reading System | Expectation copy, status labels, readable disclosure |
+| Chapter 7 — Color Meaning & Semantic Color System | Status semantics — not alarmist contact urgency |
+| Chapter 8 — Spatial System & Layout Rhythm | Contact block rhythm; separation from evaluation content |
+| Chapter 9 — Motion & Interaction System | Calm contact feedback; no manipulative motion |
+| Chapter 10 — Navigation System | Auth return; back from contact; task layer integrity |
+| Chapter 11 — Component Philosophy & Component System | Contact affordances as governed behaviors |
+| Chapter 13 — Search Experience | Search context preserved through contact detour |
+| Chapter 14 — Listing Card & Preview System | Card does not substitute contact; preview truth carries forward |
+| Chapter 15 — Listing Detail Experience | Contact readiness; decision before contact; primary CTA philosophy |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 15 defines when contact is **earned by evaluation**. **This chapter defines what contact means** — for trust, identity, privacy, outcome, and recovery — across every channel Rento may offer.
+
+Without this chapter, contact becomes a button. With it, contact becomes a **governed trust bridge** consistent with Rento’s housing mission.
+
+---
+
+## 4. Communication Philosophy
+
+Communication on Rento serves **informed housing decisions** — not engagement metrics, not lead volume vanity, not platform anxiety.
+
+### 4.1 Communication Follows Informed Decision
+
+Contact is appropriate after **evaluation readiness** (Chapter 15) — user understands listing, price context, location, and who they are reaching. Communication does not replace evaluation.
+
+### 4.2 Trust Before Conversation
+
+Users must trust **who they contact and why the platform shows them** before the conversation begins. Identity transparency precedes message content.
+
+### 4.3 Communication Is Respectful
+
+Tone, structure, and timing respect **both renter and realtor** — no harassment affordances, no guilt, no pressure theater in housing context.
+
+### 4.4 Identity Is Always Transparent
+
+Renter knows **which realtor and agency** they contact. Realtor knows **inquiry context** — which listing, which entry path — within privacy rules.
+
+### 4.5 Realtor Accountability Is Visible
+
+Realtor is **identifiable professional** — not anonymous broker ghost. Accountability supports marketplace trust (Chapter 1).
+
+### 4.6 Renter Expectations Are Clear
+
+User understands **what contact will do** — reveal phone, open message composer, submit request — before committing.
+
+### 4.7 No Misleading Contact Flows
+
+Labels, icons, and outcomes **match reality** — “Message” does not secretly subscribe; “Call” does not route to wrong party.
+
+### 4.8 No Hidden Communication Barriers
+
+Auth, verification, or unavailable states ** disclosed before user invests emotional commitment** — not after long composition.
+
+### 4.9 Communication Reduces Uncertainty
+
+Successful contact flow ** clarifies next step** — what realtor receives, expected response character, what user should prepare — not adds confusion.
+
+### 4.10 Every Contact Has a Clear Outcome
+
+Initiation ends in **defined state** — call placed, message sent, request submitted, or honest failure with recovery — never ambiguous void.
+
+### 4.11 Privacy Is Respected
+
+Contact exposes **minimum necessary identity and context** — renter and realtor data handled with professional restraint.
+
+### 4.12 Conversation Is Professional
+
+Long-term rental communication defaults to **professional marketplace tone** — warm within boundaries, never casual spam energy.
+
+### 4.13 Communication Remains Calm
+
+No urgency countdown on contact, no flashing call buttons, no fear-based copy (Chapters 1, 3).
+
+### 4.14 Communication Never Manipulates
+
+Dark patterns that ** coerce contact** for platform metrics violate this chapter and Product Philosophy.
+
+### 4.15 Communication Supports Housing Decisions
+
+Success is **better real-world housing outcomes** — informed viewings, appropriate inquiries — not raw contact count.
+
+### 4.16 Communication Continues Established Trust
+
+Search honesty, card truth, and detail integrity ** extend into contact** — broken handoff destroys cumulative trust.
+
+---
+
+## 5. Communication Mental Model
+
+Users hold a simple model of Rento contact:
+
+```
+I evaluated this home → I know who manages it →
+I choose how to reach them → Something clear happens →
+I wait or continue search with orientation preserved
+```
+
+### 5.1 Bridge Model
+
+Contact is a **bridge** from platform evaluation to **offline housing process** — viewing, negotiation, lease — not the whole tenancy inside the app.
+
+### 5.2 Listing-Anchored Inquiry
+
+Consumer contact is **about a specific listing** — context attached — not generic lead spam to random agents unless product explicitly defines alternate flow with equal clarity.
+
+### 5.3 Professional Channel Model
+
+Rento provides **professional channel** — realtor profile contact — not unmoderated public comment chaos on listings.
+
+### 5.4 Outcome Expectation Model
+
+User expects **human response** from professional — product sets reasonable expectation; does not promise instant miracle lease.
+
+### 5.5 Return Path Model
+
+After contact attempt, user **returns to listing or search** without disorientation — bridge has railings (Chapter 10).
+
+---
+
+## 6. Trust Before Conversation
+
+Trust gates precede **message content and phone digits**.
+
+### 6.1 Identity Before Dial
+
+User sees **realtor identity block** — name, agency, verification when applicable — before primary contact action on detail path (Chapter 15).
+
+### 6.2 Listing Truth Before Contact
+
+Contact disabled or discouraged when **listing unavailable or materially incomplete** — trust preserved by honesty.
+
+### 6.3 Platform Credibility
+
+Contact UI communicates **Rento facilitates connection** — does not impersonate realtor or hide that inquiry goes to identified professional.
+
+### 6.4 No False Urgency Trust
+
+Fake “realtor online now” or ** fabricated demand signals** erode trust before conversation begins.
+
+### 6.5 Verification Honesty
+
+Verification badges mean **only what system defines** — contact flow does not overclaim verified scope.
+
+---
+
+## 7. Contact Readiness
+
+Readiness is **user and listing state** — not a growth funnel stage.
+
+### 7.1 User Readiness Signals
+
+Product may infer readiness from **evaluation depth** — optional future enhancement — but never blocks reading detail solely to force contact.
+
+### 7.2 Listing Readiness
+
+Listing must be **publicly available and contact-eligible** per domain rules before consumer contact succeeds.
+
+### 7.3 Realtor Readiness
+
+Realtor profile must contain **governed contact channel** before consumer contact promises delivery — incomplete profile blocks publish/contact honestly on workspace paths.
+
+### 7.4 Readiness Communication
+
+When not ready, user sees **why and what to do** — complete sign-in, listing unavailable, profile incomplete on realtor side — blameless tone (Chapter 2).
+
+---
+
+## 8. Communication Entry Points
+
+Contact may begin only from **governed entry points** with consistent grammar.
+
+### 8.1 Primary Entry — Listing Detail
+
+Primary consumer entry is **listing detail contact zone** after evaluation context (Chapter 15).
+
+### 8.2 Secondary Entry Points
+
+Future entries — saved listing quick contact, notification reply, message inbox — must **preserve listing and identity context**.
+
+### 8.3 No Surprise Contact Surfaces
+
+Contact must not ** hijack unrelated surfaces** — search filters, auth screens, error pages — without user intent.
+
+### 8.4 Card-Level Restraint
+
+Listing card does not ** substitute full contact** — card may favor save and open detail; contact primary on detail (Chapters 14–15).
+
+### 8.5 Workspace Entry
+
+Realtor-initiated communication to renters — when product supports — ** separate role grammar**; not consumer contact mirror without clarity.
+
+### 8.6 Deep Link Entry
+
+Shared listing links land on **evaluable detail** before contact — recipient follows same trust sequence.
+
+---
+
+## 9. Primary Contact Principles
+
+Primary contact is the **dominant intentional reach** — typically call or primary message channel as product defines for market.
+
+### 9.1 One Primary Contact Action Per Context
+
+Detail presents **one dominant contact path** — secondary channels subordinate, not competing billboards.
+
+### 9.2 Label Matches Mechanism
+
+Primary action names **real mechanism** — Call, Message, Request contact — not vague “Connect”.
+
+### 9.3 Minimum Steps to Intent
+
+Primary path minimizes ** unnecessary steps** without skipping trust and disclosure — respect time, not strip safety.
+
+### 9.4 Handoff Clarity
+
+Phone handoff ** launches dialer with correct number from profile source** — user confirms before call where platform requires.
+
+### 9.5 Message Handoff Clarity
+
+Message path ** orients composer** — recipient visible, listing context attached, send outcome defined.
+
+### 9.6 No Irreversible Surprise
+
+Primary contact does not trigger ** payment, contract, or marketing list** without explicit separate consent.
+
+---
+
+## 10. Secondary Contact Principles
+
+Secondary channels ** supplement** primary — email alternate, share listing with partner, schedule viewing when shipped.
+
+### 10.1 Visual Subordination
+
+Secondary contact ** lower hierarchy** than primary — never equal pulsing urgency.
+
+### 10.2 Same Truth Rules
+
+Secondary paths use **same identity and listing source of truth** — no alternate hidden numbers.
+
+### 10.3 Share Is Not Contact
+
+Share listing with friend ** distinct from** contact realtor — labels must not conflate.
+
+### 10.4 Future Scheduling
+
+Viewing request is ** structured secondary** — confirms listing, time intent, identity — not vague “interested” black hole.
+
+---
+
+## 11. Conversation Expectations
+
+Product sets **honest expectations** — what conversation is and is not on Rento.
+
+### 11.1 Scope of Platform Conversation
+
+Rento facilitates **introduction and inquiry** about listed homes — not legal advice, not guaranteed placement, not mediation of full lease unless future product explicitly expands with disclosure.
+
+### 11.2 Response Time Expectation
+
+Product communicates **reasonable response expectation** — not guaranteed instant reply — calm copy, optional realtor response indicators only if honest and maintained.
+
+### 11.3 Language and Locale
+
+Communication respects **Romania-first context** — professional Romanian primary; expansion locales documented without changing trust model.
+
+### 11.4 Conduct Expectation
+
+Marketplace expects **professional conduct** — abuse reporting paths when product provides — without punitive renter tone by default.
+
+### 11.5 Off-Platform Continuation
+
+Users understand **conversation may continue off-platform** after phone or message handoff — Rento orients handoff honestly.
+
+---
+
+## 12. Realtor Responsiveness
+
+Responsiveness shapes **marketplace trust** — governed at product philosophy level, not surveillance dashboard.
+
+### 12.1 Responsiveness as Professional Obligation
+
+Realtors are **visible professionals** — chronic unresponsiveness damages renter trust in platform, not only individual agent.
+
+### 12.2 Product Surfaces Responsiveness Honestly
+
+If product shows response metrics or badges — ** definitions honest**, data maintained, never gamed.
+
+### 12.3 No Public Shaming
+
+Renter-facing UI ** does not shame** realtors with punitive labels — factual status only.
+
+### 12.4 Workspace Accountability
+
+Realtor workspace surfaces ** inquiry status** — pending replies, missed leads — operational accountability separate from consumer anxiety UI.
+
+### 12.5 Vacation and Availability
+
+Realtor may set ** honest unavailability** when product supports — contact expectations adjust transparently.
+
+---
+
+## 13. User Expectations
+
+Renters receive **clear, respectful guidance** on their role in communication.
+
+### 13.1 Inquiry Quality
+
+Product encourages **specific, respectful inquiries** — optional guidance copy — not interrogation forms.
+
+### 13.2 Identity Disclosure to Realtor
+
+Renter understands **what information realtor receives** — name, contact method, listing context — at send or call time.
+
+### 13.3 Auth When Required
+
+If sign-in required before contact — ** reason explained** — save listing, reduce spam, accountability — return to listing after auth (Chapter 10).
+
+### 13.4 No False Promises to Renter
+
+Platform does not promise ** lease approval, price negotiation outcome, or listing reservation** through contact alone unless product explicitly adds such module with legal disclosure.
+
+---
+
+## 14. Communication Transparency
+
+Transparency means **visible cause and effect** in contact flows.
+
+### 14.1 Pre-Contact Disclosure
+
+Before tap: ** who receives, about which listing, via which channel**.
+
+### 14.2 Post-Contact Confirmation
+
+After send or call initiation: ** confirmation state** — sent, dialing, failed — user not left guessing.
+
+### 14.3 Data Use Transparency
+
+If inquiry data used for ** product improvement or notifications** — governed by privacy policy; contact UI does not sneak consent.
+
+### 14.4 Moderation Transparency
+
+If contact blocked for ** fraud, abuse, or listing status** — honest explanation without exposing sensitive moderation internals inappropriately.
+
+### 14.5 Channel Transparency
+
+User always knows ** whether communication is in-app or native phone/SMS** — no disguised channel switch.
+
+---
+
+## 15. Identity & Accountability
+
+Identity presentation follows **One Source of Truth** — realtor profile governs consumer-visible identity.
+
+### 15.1 Realtor Identity Block
+
+Name, agency, photo, verification — ** profile sourced** — consistent on detail, contact handoff, and future thread header.
+
+### 15.2 Renter Identity on Send
+
+Renter presents ** honest identity** required for contact — no anonymous harassment mode on consumer-to-realtor path unless product defines limited alias with abuse controls.
+
+### 15.3 Accountability Chain
+
+User understands ** realtor owns listing** — agency context subordinate but visible when relevant.
+
+### 15.4 No Identity Bait-and-Switch
+
+Contact handoff must not ** swap recipient** — same realtor on detail and dialer.
+
+### 15.5 Listing Ownership Visible
+
+Inquiry context ties to ** owning realtor** per domain — user not confused about who represents listing.
+
+---
+
+## 16. Privacy Principles
+
+Privacy protects **both parties** in high-stakes housing context.
+
+### 16.1 Minimum Necessary Exposure
+
+Share ** minimum data** needed for inquiry — not full profile export to realtor by default beyond contact intent.
+
+### 16.2 Renter Contact Data
+
+Phone or email shared ** only when user initiates** contact mechanism that requires it — not public on listing.
+
+### 16.3 Realtor Contact Data
+
+Realtor phone/email from profile ** professional publication** — user expects visibility; realtor controls via profile governance.
+
+### 16.4 No Public Renter Directory
+
+Renters are ** not browsable** by other users — contact is inquiry-initiated, not reverse spam funnel by default.
+
+### 16.5 Conversation Privacy Posture
+
+Future in-app threads ** access-controlled** — participant visibility clear; no leaking thread content to unrelated parties.
+
+### 16.6 Report and Block
+
+When product supports — renter and realtor ** safety paths** without exposing reporter identity inappropriately to reported party.
+
+---
+
+## 17. Contact Continuity
+
+Contact detours must ** preserve evaluation and search context**.
+
+### 17.1 Return to Listing
+
+After contact attempt from detail — user ** returns to same listing** with scroll and saved state where feasible.
+
+### 17.2 Return to Search
+
+Back from detail through contact detour — ** search criteria and position preserved** (Chapters 10, 13).
+
+### 17.3 Auth Continuity
+
+Auth gate mid-contact — ** return to contact intent** after sign-in — not dump to home.
+
+### 17.4 Cross-Session Continuity
+
+Future message inbox — user ** resumes thread** with listing context visible — not orphan chat.
+
+### 17.5 Favorite State Continuity
+
+Contact does not ** corrupt saved state** — favorite remains as user left it.
+
+---
+
+## 18. Communication Statuses
+
+Every contact attempt has **honest status** — user and realtor where applicable.
+
+### 18.1 Status Vocabulary
+
+Governed status family — **ready, sending, sent, delivered where known, failed, unavailable, blocked** — semantic color roles (Chapter 7), not decorative panic.
+
+### 18.2 Pending Is Not Failure
+
+Pending realtor response is ** normal state** — not error styling unless product defines timeout with recovery.
+
+### 18.3 Failed Send Recovery
+
+Failed message or call — ** retry path, preserved draft, blameless copy** (Chapter 2).
+
+### 18.4 Listing Unavailable During Contact
+
+Listing withdrawn mid-flow — ** block with explanation** — offer return to search or similar listings without dead end.
+
+### 18.5 Status Visibility
+
+User can ** understand current state** without refreshing obsessively — calm updates when product provides tracking.
+
+---
+
+## 19. Failed Communication Recovery
+
+Failure is **information**, not dead end.
+
+### 19.1 Recovery Hierarchy
+
+1. Retry same channel  
+2. Alternate secondary channel if available  
+3. Save listing and try later  
+4. Return to search with context  
+5. Support path if product provides  
+
+### 19.2 Blameless Failure Copy
+
+Network, server, or recipient unavailable — ** never user fault tone**.
+
+### 19.3 Draft Preservation
+
+Composed message ** preserved on failure** — user does not retype from memory.
+
+### 19.4 Call Failure
+
+Dialer fails or number invalid — ** honest message** — suggest profile update on realtor workspace path; consumer sees graceful block.
+
+### 19.5 No Silent Failure
+
+Silent non-delivery ** forbidden** — status or confirmation required.
+
+---
+
+## 20. Viewing Preparation
+
+Contact often precedes ** in-person viewing** — product may support preparation without owning viewing logistics.
+
+### 20.1 Inquiry as Viewing Prelude
+
+Contact copy may ** optionally guide** — ask about viewing availability — not mandatory novel form on first tap.
+
+### 20.2 Realistic Preparation
+
+Product does not promise ** scheduled viewing** until scheduling module exists — language honest.
+
+### 20.3 Location Preparation
+
+User knows ** approximate location policy** from detail before visiting — contact does not replace map truth.
+
+### 20.4 Document Preparation
+
+Future modules may suggest ** documents for viewing** — subordinate disclosure — not contact gate.
+
+### 20.5 Safety Posture
+
+First meeting guidance ** neutral, professional** — meet at property, verify identity — when product provides safety tips, tone calm not fear-mongering.
+
+---
+
+## 21. Mobile-First Communication
+
+Mobile is **primary contact context** — one-handed, interruptible, often immediate call intent.
+
+### 21.1 Thumb-Reach Primary Action
+
+Contact primary action ** reachable** without extreme stretch — coordinated with detail sticky zones (Chapter 15).
+
+### 21.2 Native Handoff Respect
+
+Phone and SMS handoff to ** OS native apps** — return path documented in product behavior — user not lost.
+
+### 21.3 Interruption Handling
+
+User switches to Phone app mid-flow — return to Rento ** restores listing context**.
+
+### 21.4 Compact Disclosure
+
+Pre-contact disclosure ** scannable on small screen** — not legal wall blocking tap.
+
+### 21.5 One-Handed Completion
+
+Primary contact path ** completable one-handed** where mechanism allows.
+
+---
+
+## 22. Accessibility
+
+Contact flows must be ** operable and understandable** for all users.
+
+### 22.1 Action Naming
+
+Contact buttons ** accessible names** — not icon-only dial without label.
+
+### 22.2 Status Announcements
+
+Send confirmation and errors ** announced** to assistive technology.
+
+### 22.3 Focus Management
+
+Contact modal or sheet ** traps and restores focus** appropriately (Chapter 12 form parallels).
+
+### 22.4 Color Independence
+
+Failed and success states ** not color-only**.
+
+### 22.5 Time Limits
+
+Contact composition ** no arbitrary timeouts** — housing message may take thought.
+
+---
+
+## 23. Communication Performance Experience
+
+Contact performance is **felt reliability and confidence that the bridge held** — user trusts the handoff worked; not milliseconds alone.
+
+### 23.1 Immediate Acknowledgement
+
+Tap contact → **instant feedback** — loading, dialing, opening composer — not frozen UI; user knows product responded (Chapters 9, 23).
+
+### 23.2 Send Confirmation Speed
+
+Message sent state **prompt** — user not left in limbo.
+
+### 23.3 Calm Loading
+
+Loading states **honest** — not fake sent before server confirms; drafting, sending, sent, failed — calm progression.
+
+### 23.4 Handoff Latency
+
+Native dialer opens **without perceptible stall** — if delay, explain.
+
+### 23.5 Stable Context
+
+Contact sheet or handoff **does not erase listing context** — orientation preserved.
+
+### 23.6 Preserved Drafts
+
+Interrupted composition **recoverable** — respect time and anxiety.
+
+### 23.7 Calm Transitions
+
+Open composer, dialer return, thread open — **restrained motion** — housing context.
+
+### 23.8 Predictable Outcomes
+
+Same contact action → **same outcome class** — behavioral contract (Chapter 11).
+
+Perceived performance inherits navigation return (Chapter 10) and detail stability (Chapter 15).
+
+---
+
+## 24. Communication Consistency
+
+**One communication system** across surfaces — not parallel contact dialects.
+
+### 24.1 Same Listing, Same Contact Target
+
+Listing ID maps to ** same realtor contact** from detail, future inbox, notifications — always profile source.
+
+### 24.2 Same Labels, Same Outcomes
+
+“Contact realtor” means ** same mechanism family** everywhere — labels not reused for different behaviors.
+
+### 24.3 Search-to-Contact Parity
+
+User contacting from saved search listing ** same flow** as from fresh search detail.
+
+### 24.4 Card–Detail–Contact Chain
+
+Card truth → detail truth → ** contact truth** — no identity drift down funnel.
+
+### 24.5 Future Module Attachment
+
+New channels adopt ** existing disclosure and status grammar** before inventing new contact language.
+
+---
+
+## 25. Marketplace Communication Standards
+
+Rento marketplace communication upholds **professional rental marketplace norms** — Romania-first, European scalability.
+
+### 25.1 Professional Default
+
+All default copy and flows assume ** professional long-term rental** — not short-term travel instant book tone.
+
+### 25.2 Anti-Spam Posture
+
+Product design ** discourages bulk spam inquiries** — rate limits and auth where engineering implements — philosophy: quality inquiries over volume.
+
+### 25.3 Anti-Harassment Posture
+
+Design does not ** facilitate harassment** — block/report paths; no repeated anonymous poke patterns.
+
+### 25.4 Realtor–Renter Asymmetry Honesty
+
+Roles differ — ** expectations differ** — consumer initiates about listing; realtor manages portfolio — UI reflects roles without confusion.
+
+### 25.5 Moderation Alignment
+
+Public contact only on ** moderated-available inventory** — communication standards align with listing status truth.
+
+---
+
+## Communication Ethics
+
+Communication ethics extend Product Philosophy into **human conversation gateway**.
+
+### Never Misrepresent Recipient or Channel
+
+Contact must not ** route to unexpected party or hidden call center** — realtor accountability visible.
+
+### Never Coerce Contact for Metrics
+
+Growth experiments that ** increase contact at expense of informed decision** forbidden.
+
+### Never Expose Renter Data Beyond Intent
+
+Inquiry shares ** declared contact path** — not full behavioral profile to realtor by default.
+
+### Never Use Fear or Urgency in Contact Copy
+
+Housing anxiety exploitation ** violates calm marketplace** (Chapter 1).
+
+### Never Block Recovery After Failure
+
+Failed contact must ** always offer next step** — retry, save, return — no dead ends.
+
+### Trust Before Monetization in Contact
+
+Paid lead products — if ever — ** disclosed, optional, subordinate** to user-understandable contact benefit.
+
+---
+
+## 26. Future Compatibility
+
+Communication architecture ** extends without forking** as channels grow.
+
+### 26.1 In-App Messaging
+
+Threads inherit ** identity block, listing anchor, status grammar, ethics** — not separate chat product tone.
+
+### 26.2 Scheduling Module
+
+Viewing scheduling ** attaches to listing thread** — confirmation and calendar handoff honest.
+
+### 26.3 AI Assist (Future)
+
+AI suggested message drafts — ** generate, review, send** — user edits; never auto-sent without confirmation (Chapter 12 loop).
+
+### 26.4 Multi-Language Messages
+
+Composer supports ** user language** — expectations set; translation assist optional future, labeled.
+
+### 26.5 Agency Team Inboxes
+
+Enterprise routing ** preserves renter-visible accountability** — user knows who represents listing.
+
+---
+
+## Communication Success Metrics
+
+Communication quality judged at **philosophy level** — not raw lead count.
+
+### Informed Contact Rate
+
+Contacts preceded by ** meaningful detail evaluation** — not mis-tap or forced modal contacts.
+
+### Contact Clarity Rate
+
+Users report understanding ** what happened after tap** — outcome comprehension.
+
+### Recovery Success After Failure
+
+Failed sends or blocks lead to ** completed contact or informed save** — not abandonment rage.
+
+### Appropriate Inquiry Quality
+
+Realtors receive ** listing-specific, identifiable inquiries** — spam rate low without renter hostility UX.
+
+### Viewing Progression (When Measurable)
+
+Contacts correlate with ** serious viewing intent** — qualitative research, not platform claims of lease.
+
+### Return Context Success
+
+Users return to ** search or listing without disorientation** after contact — navigation success.
+
+### Long-Term Communication Trust
+
+Users believe ** contacting through Rento is safe and professional** — cumulative trust metric.
+
+### Realtor Accountability Satisfaction
+
+Realtors understand ** inquiry context and can respond professionally** — workspace clarity metric.
+
+Teams evaluate communication changes against these principles in design critique and §32 checklist.
+
+---
+
+## 27. Communication Evolution
+
+Communication experience ** evolves as one trust system** — not per-channel experiments.
+
+### Evolve Channels, Do Not Fork Ethics
+
+New mechanisms extend ** same transparency, identity, and recovery rules**.
+
+### Resist Contact Feature Accumulation
+
+New buttons and prompts require ** necessity proof** — contact zone is not billboard.
+
+### Retire Obsolete Contact Paths
+
+Deprecated channels ** removed with migration guidance** — realtors update profile sources.
+
+### Preserve Renter Mental Model
+
+Bridge model ** invariant** — evaluate, identify, contact, outcome, return.
+
+### Backward Compatibility
+
+Profile contact changes ** handled honestly** — inactive numbers fail gracefully with realtor workspace fix path.
+
+Communication evolution requires Design Council approval for ** primary contact mechanism changes**.
+
+---
+
+## 28. Governance
+
+### 28.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| New primary contact mechanism | Design Council + Product |
+| Contact disclosure copy changes | Content Design Lead + Legal review |
+| New communication status type | Head of Product Design |
+| Auth gate before contact | Product Director + Design Director |
+| In-app messaging philosophy change | Design Council |
+
+### 28.2 Exception Policy
+
+Contact experiments follow Chapter 5 — ** trust and parity monitored** — card-detail-contact chain reviewed.
+
+### 28.3 Domain Compliance Review
+
+All contact flows ** verified against immutable contact source rules** before ship.
+
+### 28.4 Cross-Surface Rollout
+
+Contact grammar ships ** consistently** across entry points — no half-migrated contact language.
+
+---
+
+## 29. Product Review Checklist
+
+Before shipping contact or communication changes:
+
+### 29.1 Philosophy
+
+- [ ] Communication follows informed decision  
+- [ ] Trust before conversation — identity visible first  
+- [ ] Respectful, calm, professional tone  
+- [ ] No manipulation or hidden barriers  
+
+### 29.2 Transparency & Identity
+
+- [ ] Pre-contact disclosure complete  
+- [ ] Post-contact outcome clear  
+- [ ] Realtor identity from profile source of truth  
+- [ ] Listing context attached to inquiry  
+
+### 29.3 Privacy & Ethics
+
+- [ ] Minimum necessary data exposure  
+- [ ] No coercive contact patterns  
+- [ ] Failed paths recoverable  
+
+### 29.4 Continuity & Consistency
+
+- [ ] Auth return preserves contact intent  
+- [ ] Back to search preserves context  
+- [ ] Same listing → same contact target everywhere  
+
+### 29.5 Access & Performance
+
+- [ ] Accessible names and status announcements  
+- [ ] Immediate acknowledgement; honest send states  
+- [ ] Mobile handoff and return verified  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 30. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Contact before identity visible | Trust before conversation violated |
+| Listing-level phone override | Domain and One Source of Truth violation |
+| Generic “Contact” with vague outcome | Transparency failure |
+| Auth wall without reason or return | Time disrespect; abandonment |
+| No confirmation after send | Anxiety; duplicate sends |
+| Silent send failure | Trust destruction |
+| Fake urgency on call button | Philosophy violation |
+| Different contact target detail vs dialer | Identity bait-and-switch |
+| Share confused with contact realtor | User model break |
+| Harassment-enabling anonymous spam | Safety and ethics failure |
+| Realtor response shame UI | Unprofessional marketplace tone |
+| Contact on unavailable listing | Domain and trust failure |
+| Lost search context after call return | Navigation defect |
+| Message lost on error | Rage quit |
+| AI message auto-sent | Consent and trust violation |
+| Multiple competing primary contact CTAs | Hierarchy failure |
+| Exposing renter phone publicly on listing | Privacy violation |
+| Travel-app instant-book tone | Brand and market mismatch |
+| Contact metric-optimized modals | Ethical failure |
+| Thread without listing context | Accountability loss |
+
+---
+
+## 31. Correct & Incorrect Examples
+
+### 31.1 Pre-Contact Disclosure
+
+**Correct:** “You will call [Realtor Name] about [Listing title] using the number from their profile.”  
+**Incorrect:** Tap call — user discovers different number mid-dial.
+
+### 31.2 Auth Gate
+
+**Correct:** Sign-in to contact — “So realtors know who is inquiring” — returns to contact after auth.  
+**Incorrect:** Sign-in dumps to home; inquiry lost.
+
+### 31.3 Unavailable Listing
+
+**Correct:** “This listing is no longer available” — suggest return to search.  
+**Incorrect:** Contact button active; call reaches confused realtor.
+
+### 31.4 Send Confirmation
+
+**Correct:** “Message sent to [Realtor Name]. They typically respond within [honest expectation].”  
+**Incorrect:** Tap send — no feedback; user sends three duplicates.
+
+### 31.5 Identity Consistency
+
+**Correct:** Same realtor photo and name on detail, contact sheet, and future thread header.  
+**Incorrect:** Generic “Agent” on contact only.
+
+### 31.6 Primary vs Secondary
+
+**Correct:** Primary: Call. Secondary: Share listing with partner.  
+**Incorrect:** Two equal pulsing “Call now” and “Message now” heroes.
+
+### 31.7 Recovery
+
+**Correct:** Send failed — “Not sent. Retry or save listing to try later.” Draft preserved.  
+**Incorrect:** Error toast disappears; message lost.
+
+### 31.8 Mobile Return
+
+**Correct:** User returns from Phone app to same listing scroll position.  
+**Incorrect:** User returns to unrelated home feed.
+
+### 31.9 Privacy
+
+**Correct:** Renter phone shared when initiating call — not displayed on public listing page.  
+**Incorrect:** Renter email visible to all visitors pre-contact.
+
+### 31.10 Viewing Language
+
+**Correct:** “Ask about viewing times when you speak with the realtor.”  
+**Incorrect:** “Viewing confirmed!” before any scheduling exists.
+
+---
+
+## 32. Design Director Review
+
+**Chapter:** 16 — Contact & Communication Experience  
+**Section:** XIII — Contact & Communication  
+**Review type:** Initial standard adoption
+
+### 32.1 Approval Statement
+
+This chapter is approved as the **contact and communication experience contract** for Rento. All inquiry initiation, handoff, status, recovery, and expectation-setting behavior must comply. Channel implementations are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 32.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust, human-centered marketplace, contact source truth |
+| Chapter 4 — Layout & Information Architecture | Contact zone hierarchy |
+| Chapter 10 — Navigation System | Return and auth continuity |
+| Chapter 12 — Form System & Data Collection Experience | Message composition grammar |
+| Chapter 15 — Listing Detail Experience | Contact readiness parent surface |
+| Chapter 17+ — Messaging patterns | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 32.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What trust or privacy harm is not prevented?  
+2. Does change preserve profile contact source of truth?  
+3. Does change maintain search-detail-contact continuity?  
+4. Are expectations and outcomes still honest?  
+5. Does change respect calm professional marketplace tone?
+
+New primary contact mechanisms or auth policies require Design Council approval.
+
+### 32.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on communication experience |
+| Head of Product Design | Cross-funnel consistency with detail and search |
+| Senior UX Designer | Flow, recovery, and expectation review |
+| Product Management | Marketplace integrity and realtor accountability |
+| Content Design Lead | Disclosure, status, and expectation copy |
+| Trust & Safety / Legal | Privacy and conduct alignment |
+| Accessibility Specialist | Action labels and status announcements |
+
+### 32.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new contact and communication work immediately. Existing flows align during scheduled improvement cycles.
+
+### 32.6 Design Director Closing Note
+
+Search helps people find possibilities. Cards and detail help them believe or reject. **Contact is where belief meets reality** — a conversation about a home with a person who must be accountable. If that bridge feels shady, rushed, or confusing, the whole marketplace feels unsafe. This chapter exists so every contact moment on Rento is transparent, respectful, and worthy of the housing decisions it supports — today and through every channel the product will grow to include.
+
+---
+
+**End of Chapter 16**
+
+
+---
+
+## Chapter 17 — Favorites & Saved Properties Experience
+
+**Section:** XIV — Favorites & Saved Properties  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Reviewers  
+**Authority:** Subordinate to Chapters 1–16; operationalizes Search persistence (Chapter 13), Listing Card favorite behavior (Chapter 14), Detail save continuity (Chapter 15), and Contact context preservation (Chapter 16); defines principles only — not storage systems, sync infrastructure, APIs, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **favorites and saved properties experience philosophy** for Rento.
+
+Favorites are not a feature. Favorites represent a user’s **evolving housing decision journey** — intent captured across sessions, devices, and weeks of searching in a long-term rental market.
+
+Where Chapters 13–16 move users from discovery to evaluation to contact, this chapter defines **how intent is remembered** — saved without manipulation, revisited without confusion, compared without overload, and updated honestly when listings change or disappear.
+
+Saving a property on Rento means: *This home is worth serious consideration in my search.* The product must honor that meaning with **context preservation, trust, and user control** — not treat favorites as engagement bait or passive bookmarks.
+
+This chapter governs save behavior, collection experience, return visits, status change communication, comparison, continuity across sessions and devices, and relationship to saved searches — for present and future surfaces where users manage saved listings.
+
+This chapter does **not** specify databases, local storage, state management, sync protocols, notification delivery, or frontend architecture.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Intent, progress, trust, user control |
+| **Mental model** | What saving means to users |
+| **Save behavior** | Entry points, toggle principles, feedback |
+| **Collection** | How saved sets are organized and presented |
+| **Comparison** | Cross-listing evaluation within saved set |
+| **Return visits** | Reopening saved listings with context |
+| **Status changes** | Price, availability, moderation, removal |
+| **Continuity** | Session, device, search, card, detail, contact |
+| **Saved search relationship** | Listings vs criteria memory |
+| **Cross-cutting** | Emotion, trust, mobile-first, access, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- Search criteria and filter grammar (Chapter 13 — saved searches as criteria)  
+- Listing card preview anatomy (Chapter 14)  
+- Detail evaluation architecture (Chapter 15)  
+- Contact initiation and messaging (Chapter 16)  
+- Account settings and data export implementation  
+- Push notification strategy implementation  
+- Realtor workspace portfolio management (operational lists — separate grammar)  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where users **save, view, manage, or return to saved listings**, including but not limited to:
+
+- Favorites / saved properties collection  
+- Save toggle on listing card and detail  
+- Saved listing rows within saved search results context  
+- Comparison views when product ships  
+- Auth-gated save with return continuity  
+
+If a surface answers *“What did I decide to keep considering?”* — this chapter applies.
+
+### 2.4 Saved Listings vs Saved Searches
+
+**Saved listings** are specific homes. **Saved searches** are repeatable criteria (Chapter 13). Both support housing intent — this chapter governs **listing saves**; §20 defines relationship to saved searches without duplicating search chapter rules.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When favorites decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (listing status, ownership, public availability)  
+2. Chapter 1 — Product Philosophy  
+3. Chapters 2–4 — Experience, brand, and structure  
+4. Chapters 13–16 — Discovery, preview, detail, contact contracts  
+5. **This chapter** — for saved properties behavior  
+6. Chapters 5–12 — governance, visual language, navigation, forms, components  
+7. Pattern specifications and screen-level exceptions (Chapter 5 Exception Policy)  
+
+Saved presentation must **never misrepresent** listing status. Removed or unavailable listings must not present as contactable public inventory.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Respect time; trust; One Source of Truth; no dead ends; calm |
+| Chapter 2 — Experience Principles | Recovery, scannability, ethical patterns |
+| Chapter 4 — Layout & Information Architecture | Collection hierarchy; one purpose per surface |
+| Chapter 6 — Typography & Reading System | Status labels; scannable saved rows |
+| Chapter 7 — Color Meaning & Semantic Color System | Status semantics for changed or removed listings |
+| Chapter 8 — Spatial System & Layout Rhythm | List rhythm in collection; comparison spacing |
+| Chapter 9 — Motion & Interaction System | Save feedback; calm state transitions |
+| Chapter 10 — Navigation System | Favorites as persistent destination; return paths |
+| Chapter 11 — Component Philosophy & Component System | Save control as governed behavior |
+| Chapter 13 — Search Experience | Search context; saved search complement |
+| Chapter 14 — Listing Card & Preview System | Card save toggle; card truth in collection |
+| Chapter 15 — Listing Detail Experience | Detail save continuity |
+| Chapter 16 — Contact & Communication Experience | Saved listing contact context preserved |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapters 14–15 define **moment of save**. **This chapter defines the lifetime of saved intent** — how Rento respects a housing journey that may span weeks and multiple devices.
+
+Without this chapter, favorites become a junk drawer. With it, favorites become a **governed decision memory** aligned with long-term rental seriousness.
+
+---
+
+## 4. Favorites Philosophy
+
+Saving on Rento expresses **housing intention** — not casual bookmarking, not vanity metric, not platform lock-in trick.
+
+### 4.1 Saving Represents Intention, Not Bookmarking
+
+A saved listing means the user sees **serious candidate potential** — product copy and behavior respect that weight.
+
+### 4.2 Favorites Preserve Decision Progress
+
+Favorites are **memory of evaluation work** — user should not repeat full discovery to recover shortlist.
+
+### 4.3 Saved Properties Never Become Dead Ends
+
+Every saved item state — available, changed, removed — offers **orientation and next step** (Chapters 1, 2, 10).
+
+### 4.4 Users Always Understand Why a Property Changed
+
+Price updates, status shifts, or removal are **communicated honestly** — not silent drift or ghost cards.
+
+### 4.5 Removed Listings Communicated Honestly
+
+Delisted or moderated-out listings ** do not masquerade** as active inventory — clear status, not disappearance without trace.
+
+### 4.6 Rented Listings Remain Understandable
+
+When product surfaces rented or leased state in saved collection — ** plain language** — user understands history vs active opportunity.
+
+### 4.7 Saved Properties Support Comparison
+
+Collection enables ** side-by-side judgment** — price, place, type, trust — without cognitive reassembly from scratch.
+
+### 4.8 Favorites Reduce Cognitive Load
+
+Stable card grammar in collection ** reuses learned scan patterns** (Chapters 4, 14).
+
+### 4.9 Favorites Reduce Repeated Searching
+
+Shortlist persistence ** respects user time** — user returns to candidates, not always to zero.
+
+### 4.10 Favorites Support Long-Term Housing Decisions
+
+Weeks-long searches are ** normal** — favorites architecture supports pause and resume without guilt or loss.
+
+### 4.11 Favorites Never Manipulate Users Into Returning
+
+No fake urgency on saved list, no shame for inactive users, no dark notification patterns — calm reunion with shortlist.
+
+### 4.12 Favorites Strengthen Trust
+
+Honest status handling on saved listings ** reinforces marketplace credibility** — broken saves destroy trust accumulated in search and detail.
+
+### 4.13 Synchronized Intent Across Sessions and Devices
+
+Saved state ** consistent** where account exists — user control and transparency on sync limits when guest.
+
+### 4.14 Users Remain in Control of Their Collection
+
+Remove, sort, filter saved set — ** user agency** — not trapped collections or hidden unsave.
+
+### 4.15 Every Saved Property Retains Context Whenever Possible
+
+Return opens listing with ** search memory, scroll, and evaluation continuity** where product rules allow.
+
+---
+
+## 5. Saved Decision Mental Model
+
+Users model favorites as **their shortlist of possible homes**.
+
+### 5.1 Shortlist, Not Archive
+
+Primary model is **active candidates** — not indefinite hoard. Product may support organization without encouraging endless accumulation guilt.
+
+### 5.2 Progress Marker
+
+Each saved item marks ** progress in housing journey** — “I got this far in my thinking.”
+
+### 5.3 Comparison Set
+
+Mental model includes ** comparing saved items** against each other and against new search results.
+
+### 5.4 Temporal Model
+
+Saved list has ** history** — items added over time; user expects recency and status honesty.
+
+### 5.5 Relationship to Partner or Household
+
+Users may share shortlist mentally with partners — share behavior (Chapter 14, 15) complements but does not replace governed save model.
+
+---
+
+## 6. Why Users Save Properties
+
+Understanding save motivations informs **product restraint** — not notification spam.
+
+### 6.1 Save to Compare Later
+
+User needs ** multiple candidates** before narrowing — save enables batch comparison.
+
+### 6.2 Save to Resume Evaluation
+
+User cannot finish detail now — save ** preserves place** in decision process.
+
+### 6.3 Save to Discuss With Others
+
+Partner, family, roommate — save as ** reference for conversation** — share may follow.
+
+### 6.4 Save Before Contact
+
+User plans to contact after ** shortlist refinement** — save holds candidate until ready (Chapter 16).
+
+### 6.5 Save as Market Reference
+
+User learning market — saves ** anchor examples** — even if not immediate lease intent; product still honest about status.
+
+### 6.6 Product Must Not Assume Single Motive
+
+Save affordance ** universal, lightweight** — does not interrogate motive on every save.
+
+---
+
+## 7. Intent Preservation
+
+Intent preservation is **core product promise** of favorites.
+
+### 7.1 What Must Persist
+
+| Intent element | Preservation expectation |
+|----------------|-------------------------|
+| **Which listings** | Saved set membership accurate |
+| **Save timestamp context** | Optional honest recency signal |
+| **Listing identity** | Same listing ID → same home |
+| **Card truth at save** | Updated honestly when facts change |
+| **Entry context** | Return to detail preserves navigation where feasible |
+
+### 7.2 What Must Not Be Silently Lost
+
+User-initiated save ** must not disappear** without account deletion or explicit user remove — not silent server purge without explanation.
+
+### 7.3 Guest vs Account Intent
+
+Guest save ** honest limits** — local or session persistence explained; account save offers cross-device promise when product defines.
+
+### 7.4 Intent vs Inventory Drift
+
+When listing changes, ** intent preserved** (user still interested in tracking) separate from ** inventory truth** (may no longer available) — both communicated.
+
+---
+
+## 8. Save Entry Points
+
+Save available from **governed entry points** with identical behavioral contract.
+
+### 8.1 Card Save
+
+Listing card — ** lightweight toggle** — does not navigate away (Chapter 14).
+
+### 8.2 Detail Save
+
+Listing detail — ** same state** as card — synchronized (Chapter 15).
+
+### 8.3 No Surprise Save Surfaces
+
+Save not hidden ** only in obscure menu** — discoverable on card and detail; not forced modal after every scroll.
+
+### 8.4 Collection Management Entry
+
+Favorites destination ** persistent navigation** (Chapter 10) — user finds shortlist without hunt.
+
+### 8.5 Post-Contact Save
+
+User may save ** after contact** — contact does not auto-save without user action unless product defines explicit opt-in.
+
+### 8.6 Auth at Save
+
+If auth required — ** explain why, preserve return, restore save intent** after sign-in (Chapters 10, 16).
+
+---
+
+## 9. Save Behavior Principles
+
+Save interaction is **immediate, reversible, honest**.
+
+### 9.1 One Tap Toggle
+
+Save toggles with ** single clear action** — on/off state visible.
+
+### 9.2 Immediate Feedback
+
+Save action receives ** instant acknowledgement** — state change visible; calm motion (Chapter 9).
+
+### 9.3 Reversible Without Friction
+
+Unsave ** as easy as save** — no confirm dialog for routine remove unless bulk destructive action.
+
+### 9.4 No False Save State
+
+UI must not show saved when ** not persisted** — optimistic UI only when truth guaranteed.
+
+### 9.5 Save Does Not Imply Contact or Commitment
+
+Saved ≠ applied, reserved, or messaged — ** language discipline** across product.
+
+### 9.6 Save Does Not Remove From Search Results
+
+Unless user applies explicit filter — saved listings ** remain in discovery results** with saved indicator (Chapter 14).
+
+---
+
+## 10. Collection Philosophy
+
+The favorites collection is a **decision workspace** — not a generic list dump.
+
+### 10.1 One Primary Purpose
+
+Collection surface primary purpose: ** review and act on saved candidates** — open, compare, remove, contact via detail.
+
+### 10.2 Scannable List Grammar
+
+Saved listings use ** listing card family** — comparable, consistent (Chapter 14, §22).
+
+### 10.3 Order and Sort Philosophy
+
+Default order ** user-meaningful** — recently saved, recently updated listing, or user choice when product provides — never arbitrary chaos.
+
+### 10.4 Empty Collection
+
+Empty favorites is ** valid state** — welcoming guidance toward browse, not shame.
+
+### 10.5 Collection Density
+
+Density supports ** comparison scan** — not wallpaper gallery — governed rhythm (Chapter 8).
+
+### 10.6 Collection Size Growth
+
+Large collections ** remain usable** — refinement within favorites when product supports filter/sort — not collapse under scroll weight.
+
+---
+
+## 11. Property Comparison Principles
+
+Comparison is ** explicit evaluation aid** — optional depth, not mandatory cognitive burden.
+
+### 11.1 Comparable Card Truth
+
+Compared listings show ** same primary facts** — price, location, type — aligned for judgment.
+
+### 11.2 Comparison Reduces Load
+
+Side-by-side or sequential compare ** highlights differences** — not duplicate full detail pages.
+
+### 11.3 Comparison Never Replaces Detail
+
+Deep evaluation still on ** detail** — compare supports triage among saved set.
+
+### 11.4 Status Visible in Compare
+
+Unavailable or changed listings ** flagged in compare context** — not hidden to preserve false hope.
+
+### 11.5 Fair Comparison
+
+Featured or promoted listings in saved set ** labeled** if promotion relevant — no hidden advantage in compare UI.
+
+---
+
+## 12. Returning to Saved Listings
+
+Return is ** reunion with intent** — calm, oriented, productive.
+
+### 12.1 Collection Entry
+
+Opening favorites shows ** current truth** of each listing — refresh honest, not stale cache pretending available.
+
+### 12.2 Opening Saved Listing
+
+Tap saved row → ** detail for that listing** — forward depth with identity continuity (Chapter 10).
+
+### 12.3 Return to Collection
+
+Back from detail → ** same position in favorites list** where feasible.
+
+### 12.4 Return After Contact
+
+Contact from saved listing → ** return to favorites or detail** per navigation rules — not lost in unrelated home.
+
+### 12.5 Long Absence Return
+
+User returns after weeks — collection ** honest about market changes** — optional summary signal if many updates, calm tone.
+
+---
+
+## 13. Listing Status Changes
+
+Saved listings ** live in changing marketplace** — status communication is trust-critical.
+
+### 13.1 Price Change
+
+New price ** visible on card in collection** — optional subtle change indicator — honest current price only.
+
+### 13.2 Availability Change
+
+No longer available — ** clear status on card** — contact disabled on detail path.
+
+### 13.3 Content Update
+
+Photos or description updated — ** no alarm** unless material to trust — user sees current detail on open.
+
+### 13.4 Verification Change
+
+Realtor verification revoked or granted — ** card trust signals update** to current truth.
+
+### 13.5 User Understanding
+
+User can answer ** what changed and when** at collection level where product supports — not forensic archaeology.
+
+---
+
+## 14. Removed or Rented Listings
+
+Removed listings are **honest memory**, not zombie inventory.
+
+### 14.1 Removed From Marketplace
+
+Listing withdrawn, rejected, or delisted — saved row shows ** removed state** — not clickable as active listing without explanation.
+
+### 14.2 Rented or Leased
+
+If product tracks leased state — ** plain label** — “No longer available” or “Rented” per product vocabulary — consistent semantic color (Chapter 7).
+
+### 14.3 User Choice to Remove
+
+User can ** dismiss** removed items from collection — one tap — not forced retention.
+
+### 14.4 No Bait Contact on Dead Listings
+
+Contact ** disabled** with explanation — link to similar search optional, not replacement manipulation.
+
+### 14.5 Historical Value
+
+Removed item may retain ** minimal record** — title, last known price, date saved — so user understands what left their shortlist — not blank hole.
+
+### 14.6 Similar Listings Suggestion
+
+Optional recovery — ** similar available homes** — advisory, dismissible — not disguised as original listing.
+
+---
+
+## 15. Favorites Continuity
+
+Continuity links favorites to **search, card, detail, and contact** chains.
+
+### 15.1 Card–Collection Parity
+
+Saved indicator on card in search ** matches** membership in favorites collection.
+
+### 15.2 Detail–Collection Parity
+
+Heart on detail ** matches** collection — no desync.
+
+### 15.3 Search Context Preservation
+
+User saved from filtered search — optional ** remember criteria context** when returning from favorites to search — navigation integrity (Chapter 13).
+
+### 15.4 Contact Continuity
+
+Saved listing contact ** same rules** as unsaved — identity and availability truth (Chapter 16).
+
+### 15.5 One Source of Truth for Saved State
+
+Save state has ** single authority** — not different answers per surface.
+
+---
+
+## 16. Cross-Device Continuity
+
+Account-linked favorites ** represent same shortlist** across devices.
+
+### 16.1 Sync Expectation
+
+Signed-in user expects ** saves on phone visible on desktop** — when product supports; honest when not yet synced.
+
+### 16.2 Conflict Honesty
+
+Sync conflict ** rare but explained** — not silent duplicate or drop.
+
+### 16.3 Device Handoff
+
+User opens saved listing link on second device — ** same listing, same saved state** if account session active.
+
+### 16.4 Guest Limits Clear
+
+Guest-only save ** boundaries explained** — sign-in benefit for persistence without manipulative hostage.
+
+---
+
+## 17. Session Continuity
+
+Within session, favorites ** stable** across interruption.
+
+### 17.1 App Backgrounding
+
+Background mid-browse — return ** saved toggles accurate**.
+
+### 17.2 Tab or Stack Navigation
+
+Navigation stack ** preserves favorites list state** on return.
+
+### 17.3 Session Save Before Auth
+
+Pre-auth save intent ** fulfilled post-auth** — not dropped (Chapters 10, 16).
+
+---
+
+## 18. Favorite Identity
+
+Each saved item ** uniquely identifies one listing** in collection.
+
+### 18.1 Listing ID Authority
+
+Save keyed to ** listing identity** — not photo hash or title alone.
+
+### 18.2 No Duplicate Rows
+
+Same listing saved once — ** duplicate rows forbidden** — toggle off removes single row.
+
+### 18.3 Distinguishable Rows
+
+Neighboring saved listings ** visually distinguishable** — location and price prominent — user does not open wrong home.
+
+### 18.4 Identity Through Status Changes
+
+Listing ID stable through price/status updates — ** same row evolves** — not new row per change unless product defines history log separately.
+
+---
+
+## 19. Saved Search Relationship
+
+Saved listings and saved searches ** complement** housing intent.
+
+### 19.1 Different Memory Types
+
+Saved search = ** criteria to rerun**. Saved listing = ** specific home**.
+
+### 19.2 Navigation Between
+
+User moves from saved search results to ** save individual listings** — grammar consistent; criteria not confused with shortlist.
+
+### 19.3 No Conflation in Copy
+
+UI never labels saved criteria as “favorite home” or saved listing as “saved search”.
+
+### 19.4 Combined Journey
+
+User may hold ** both** — product supports without merging data models in user mental model.
+
+### 19.5 Saved Search Listing Saves
+
+Listings saved from saved search results ** behave identically** to saves from general search.
+
+---
+
+## 20. Emotional Design
+
+Favorites emotion is ** calm continuity** — not FOMO engine.
+
+### 20.1 Relief, Not Pressure
+
+Returning to favorites feels ** organized relief** — “my candidates are here” — not “you’re falling behind”.
+
+### 20.2 Housing Dignity
+
+Saved homes are ** serious choices** — not wishlist toys — tone professional.
+
+### 20.3 Loss Communication
+
+Removed listing messaging ** respectful** — disappointment acknowledged without drama or blame.
+
+### 20.4 No Gamification
+
+Streaks, badges for save count, ** forbidden** in housing context.
+
+### 20.5 Partner Sharing Calm
+
+Share shortlist ** cooperative** — not competitive social feed.
+
+---
+
+## 21. Marketplace Trust
+
+Favorites surface ** tests marketplace honesty over time**.
+
+### 21.1 Longitudinal Truth
+
+User trusts favorites because ** updates are honest** — cumulative trust metric.
+
+### 21.2 Broken Save = Broken Platform
+
+Stale available card for rented home ** damages entire product** — not only one listing.
+
+### 21.3 Only Real in Active Discovery
+
+Favorites may hold ** historical removed** — active discovery still only available inventory (Chapter 1, 13).
+
+### 21.4 Realtor Accountability Preserved
+
+Saved listing still shows ** accountable realtor identity** — unchanged trust model.
+
+---
+
+## Favorites Ethics
+
+Favorites carry **ethical obligation** — users invest hope in saved homes.
+
+### Never Exploit Saved Listings for False Urgency
+
+Notifications or badges implying ** artificial scarcity** on saved items forbidden.
+
+### Never Hide Removal to Drive Engagement
+
+Delisted homes ** disclosed** — not kept looking available to inflate return visits.
+
+### Never Hold Saves Hostage
+
+Unsave and account deletion ** respect user control** — data portability honest per policy.
+
+### Never Manipulate Return Visits
+
+Re-engagement patterns ** serve user housing progress** — not vanity DAU.
+
+### Never Misrepresent Save Meaning
+
+Saved ≠ reserved, leased, or under application — ** language honesty**.
+
+### Trust Before Monetization in Favorites
+
+Promoted placement within favorites collection — if ever — ** labeled and optional**, never counterfeit organic shortlist.
+
+---
+
+## 22. Mobile-First Favorites Experience
+
+Mobile is **primary shortlist context** — quick saves on commute, review before bed.
+
+### 22.1 Persistent Favorites Access
+
+Bottom navigation or equivalent ** reachable favorites** (Chapter 10) — not buried.
+
+### 22.2 One-Thumb Save
+
+Save on card ** thumb-reachable** — consistent position across cards.
+
+### 22.3 Vertical Collection Scan
+
+Favorites list ** single-column scan** — comparison-friendly.
+
+### 22.4 Quick Remove
+
+Swipe or explicit control ** unsave without friction** — accidental save recoverable.
+
+### 22.5 Offline Honesty
+
+Offline favorites view ** shows last known truth with limits** — not fake live availability.
+
+---
+
+## 23. Accessibility
+
+Favorites must be ** fully operable and understandable** for all users.
+
+### 23.1 Save State Announced
+
+Toggle announces ** saved / removed from favorites** clearly.
+
+### 23.2 List Semantics
+
+Collection is ** semantic list** — position and count available.
+
+### 23.3 Status Not Color-Only
+
+Removed or changed status ** text-labeled** (Chapter 7).
+
+### 23.4 Focus on Return
+
+Back from detail to favorites ** restores logical focus**.
+
+### 23.5 Compare Accessibility
+
+Compare mode ** readable by assistive technology** — differences not visual-only.
+
+---
+
+## 24. Favorites Performance Experience
+
+Favorites performance is **felt reliability of memory** — experienced as dependable memory, not latency charts alone.
+
+### 24.1 Immediate Acknowledgement
+
+Save toggle **registers instantly** — state visible; user trusts persistence (Chapters 9, 24).
+
+### 24.2 Visible Progress
+
+Opening favorites and collection loading show **honest progression** — calm loading if needed; skeleton or calm wait — not wrong empty flash.
+
+### 24.3 Stable Collection Surface
+
+Return to list **preserves scroll**; rows do not **jump on passive refresh** — user maintains scan context; performance includes place memory.
+
+### 24.4 Preserved Context on Return
+
+Detail → back → **same scroll and row highlight** where feasible (Chapter 10).
+
+### 24.5 Calm Status Updates
+
+Batch status and price changes **update without alarm animation** — information, not panic; cards do not jump wildly without explanation.
+
+### 24.6 Predictable Sync
+
+Cross-device sync **predictable timing** — user informed if delayed — not silent wrong state.
+
+Perceived performance inherits card stability (Chapter 14) and search continuity (Chapter 13).
+
+---
+
+## Favorites Success Metrics
+
+Favorites quality judged at **product philosophy level** — not save-count vanity.
+
+### Shortlist Utility
+
+Users ** open and act** on saved listings — contact or informed remove — not dead hoard.
+
+### Return Clarity
+
+Users returning after absence ** understand collection state** without support.
+
+### Comparison Effectiveness
+
+Users comparing saved listings ** reach decision faster** than re-searching from zero.
+
+### Status Comprehension
+
+Users understand ** why listing changed or removed** — no confusion surveys spike.
+
+### Sync Trust
+
+Cross-device users report ** consistent shortlist** — sync success as trust proxy.
+
+### Informed Remove Rate
+
+Users remove saved items ** with clarity** — stale items cleaned — healthy collection.
+
+### Contact From Saved
+
+Contacts from saved listings show ** informed intent** — evaluation preceded contact (Chapter 16).
+
+### Long-Term Favorites Satisfaction
+
+Weeks into search, users say favorites ** helped organize housing journey** — qualitative north star.
+
+Teams evaluate favorites changes against these principles in design critique and §32 checklist.
+
+---
+
+## 25. Favorites Consistency
+
+**One favorites system** — not per-surface save dialects.
+
+### 25.1 One Save Grammar
+
+Same iconography, labels, states ** everywhere** — card, detail, collection, future modules.
+
+### 25.2 One Card Grammar in Collection
+
+Saved rows ** match search card anatomy** — One Search System extends to One Shortlist System.
+
+### 25.3 One Status Vocabulary
+
+“Unavailable”, “Removed”, “Price updated” — ** unified terms** across surfaces.
+
+### 25.4 Role Consistency
+
+Consumer favorites ** not mixed** with realtor portfolio lists without role clarity.
+
+### 25.5 Future Module Extension
+
+New surfaces adopt ** existing save and collection rules** before inventing parallel favorites.
+
+---
+
+## 26. Future Compatibility
+
+Favorites architecture ** extends without reinvention**.
+
+### 26.1 Collaborative Shortlists
+
+Shared favorites with partner — ** same truth rules** — all participants see status updates honestly.
+
+### 26.2 Notes on Saved Listings
+
+User private notes — ** subordinate to listing facts** — not confused with listing description.
+
+### 26.3 Folders or Tags
+
+Organization layers ** optional** — do not complicate default shortlist.
+
+### 26.4 Alerts on Saved Listings
+
+Price or status alerts — ** opt-in, calm, honest** — not engagement spam.
+
+### 26.5 AI Suggestions in Collection
+
+AI “compare these three” — ** advisory, dismissible** — user governs.
+
+---
+
+## Favorites Evolution
+
+Favorites experience ** evolves as one trust system**.
+
+### Evolve Collection, Do Not Fork
+
+Improvements extend ** card, collection, and status grammar** — not new favorites product per release.
+
+### Resist Collection Feature Bloat
+
+Every new column, badge, or sort ** justified** — shortlist is not dashboard.
+
+### Retire Obsolete Patterns
+
+Old save UI ** migrated and removed** — not parallel hearts forever.
+
+### Preserve Mental Model
+
+Shortlist model ** invariant** — save, review, compare, act, honest status.
+
+### Backward Compatibility
+
+Save data and user expectations ** honored on changes** — migration communicated.
+
+Favorites evolution requires Design Council approval for ** primary collection purpose or status vocabulary changes**.
+
+---
+
+## 27. Governance
+
+### 27.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| Save behavioral contract change | Design Council |
+| New status type for saved listings | Head of Product Design + Product |
+| Collection default sort change | Senior UX + Product |
+| Notification on saved listing change | Product Director + Design Director |
+| Compare mode introduction | Design Council |
+
+### 27.2 Exception Policy
+
+Favorites experiments follow Chapter 5 — ** trust and parity with card/detail monitored**.
+
+### 27.3 Status Copy Review
+
+All removed/changed labels ** Content Design + Product** — consistent vocabulary.
+
+### 27.4 Cross-Surface Rollout
+
+Save or collection changes ship ** all surfaces together** when possible.
+
+---
+
+## 28. Product Review Checklist
+
+Before shipping favorites changes:
+
+### 28.1 Philosophy
+
+- [ ] Saving represents intention — not bookmark gimmick  
+- [ ] Decision progress preserved  
+- [ ] No dead ends in any saved state  
+- [ ] User control of collection  
+
+### 28.2 Behavior & Continuity
+
+- [ ] Save toggle instant, reversible, synced  
+- [ ] Card, detail, collection state match  
+- [ ] Auth preserves save intent  
+- [ ] Return from detail preserves list context  
+
+### 28.3 Status Honesty
+
+- [ ] Price and availability changes visible  
+- [ ] Removed/rented communicated plainly  
+- [ ] Contact disabled when inappropriate  
+- [ ] User understands what changed  
+
+### 28.4 Comparison & Collection
+
+- [ ] Collection scannable; card grammar consistent  
+- [ ] Compare supports decision without replacing detail  
+- [ ] Empty state welcoming  
+
+### 28.5 Ethics, Access, Performance
+
+- [ ] No false urgency or manipulation  
+- [ ] Accessible save and status  
+- [ ] Calm load and stable scroll  
+- [ ] Cross-device honesty  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 29. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Save state desync card vs detail | Trust breakdown |
+| Removed listing looks available | Marketplace lie |
+| No explanation for price drop | Confusion; suspicion |
+| Favorites empty dead end | No dead ends violated |
+| Save requires modal questionnaire | Friction; abandonment |
+| Different card layout in favorites | Comparison impossible |
+| Duplicate rows same listing | Identity failure |
+| Guest save silent loss on close | Intent destroyed |
+| Notification spam on saved price tick | Ethical failure |
+| Cannot unsave | User control violation |
+| Saved = “reserved” copy | False commitment |
+| Lost scroll on back from detail | Navigation defect |
+| Compare hides unavailable | False hope |
+| Stale cache shows old price | One Source of Truth failure |
+| Favorites buried in profile depths | Discoverability fail |
+| Gamified save streaks | Philosophy violation |
+| Mixed realtor portfolio and consumer favorites | Role confusion |
+| AI auto-saves listings | Consent violation |
+| Removed listing vanishes with no trace | User disorientation |
+| Contact active on delisted save | Domain and trust failure |
+
+---
+
+## 30. Correct & Incorrect Examples
+
+### 30.1 Save Sync
+
+**Correct:** Heart filled on card, detail, and favorites row — one listing, one state.  
+**Incorrect:** Saved on detail; search card still empty heart.
+
+### 30.2 Removed Listing
+
+**Correct:** Row labeled “No longer available”; user may remove or view similar.  
+**Incorrect:** Same card as active; contact still works.
+
+### 30.3 Price Change
+
+**Correct:** Collection shows 650 €; was 600 € with subtle “Price updated” if product defines.  
+**Incorrect:** Silent 650 €; user remembers 600 € from detail — feels deceived.
+
+### 30.4 Empty Favorites
+
+**Correct:** “No saved homes yet. Browse listings to build your shortlist.” + path to search.  
+**Incorrect:** Blank white screen.
+
+### 30.5 Auth Save
+
+**Correct:** Tap save as guest → sign in to sync → returns → listing saved.  
+**Incorrect:** Sign-in loses which listing user wanted to save.
+
+### 30.6 Return Navigation
+
+**Correct:** Detail from favorites → back → same scroll in favorites list.  
+**Incorrect:** Back lands on unrelated home feed.
+
+### 30.7 Comparison
+
+**Correct:** Compare two saved listings — price, rooms, city aligned.  
+**Incorrect:** Compare shows full marketing descriptions only — no fact alignment.
+
+### 30.8 Saved Search Distinction
+
+**Correct:** “Saved searches” and “Saved homes” separate navigation labels.  
+**Incorrect:** One list mixing criteria strings and listing cards.
+
+### 30.9 Unsave
+
+**Correct:** Tap heart off — row removed calmly from favorites.  
+**Incorrect:** Unsave requires three confirmations.
+
+### 30.10 Cross-Device
+
+**Correct:** Save on mobile; open favorites on tablet — listing appears.  
+**Incorrect:** Tablet shows empty without explanation while phone shows saves.
+
+---
+
+## 31. Design Director Review
+
+**Chapter:** 17 — Favorites & Saved Properties Experience  
+**Section:** XIV — Favorites & Saved Properties  
+**Review type:** Initial standard adoption
+
+### 31.1 Approval Statement
+
+This chapter is approved as the **favorites and saved properties experience contract** for Rento. All save behavior, collection presentation, status communication, and return continuity must comply. Implementations are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 31.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust, time, no dead ends |
+| Chapter 10 — Navigation System | Favorites destination; return integrity |
+| Chapter 13 — Search Experience | Saved search complement; search context |
+| Chapter 14 — Listing Card & Preview System | Card save toggle; card in collection |
+| Chapter 15 — Listing Detail Experience | Detail save continuity |
+| Chapter 16 — Contact & Communication Experience | Contact from saved listings |
+| Chapter 18+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 31.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What intent or trust harm is not prevented?  
+2. Does change preserve save state parity across surfaces?  
+3. Are status changes still honest and understandable?  
+4. Does change respect calm, non-manipulative reunion with shortlist?  
+5. Does change align with domain availability rules?
+
+New collection purposes or status vocabularies require Design Council approval.
+
+### 31.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on favorites experience |
+| Head of Product Design | Cross-funnel parity with search, card, detail |
+| Senior UX Designer | Collection, compare, and return flows |
+| Product Management | Status honesty and notification policy |
+| Content Design Lead | Removed/changed listing copy |
+| Accessibility Specialist | Save toggle and list semantics |
+
+### 31.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new favorites work immediately. Existing collection surfaces align during scheduled improvement cycles.
+
+### 31.6 Design Director Closing Note
+
+A saved home is a ** promise the product will remember** — not a trick to pull users back, not a graveyard of stale photos, not a lie waiting on the next open. Housing searches unfold over weeks; life interrupts; partners weigh in; budgets shift. Favorites exist so none of that progress is wasted and none of that hope is exploited. This chapter exists so Rento’s shortlist is as honest, calm, and durable as the marketplace it serves.
+
+---
+
+**End of Chapter 17**
+
+
+---
+
+## Chapter 18 — Realtor Profile Experience
+
+**Section:** XV — Realtor Profile  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Verification, Reviewers  
+**Authority:** Subordinate to Chapters 1–17; operationalizes One Source of Truth for realtor identity and contact (Chapter 1, domain rules); Contact & Communication (Chapter 16), Listing Card and Detail identity blocks (Chapters 14–15); defines principles only — not profile APIs, auth systems, verification backend, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **realtor profile experience philosophy** for Rento.
+
+A realtor profile is not merely an account page. It is the **trust identity** through which users evaluate the credibility, professionalism, and accountability of the person or agency behind every listing.
+
+In a human-centered marketplace, users do not build trust with interfaces — they build trust with **real professionals** (Chapter 1). The profile is where that professional becomes knowable: who they are, how to reach them, what they publish, and what the platform attests about their standing.
+
+The realtor profile must **reduce uncertainty**, **strengthen marketplace trust**, and **support informed housing decisions** — on listing surfaces, in contact flows, in favorites return paths, and on the dedicated public profile view.
+
+Where Chapters 14–16 present compact identity at card, detail, and contact, **this chapter defines the full public identity contract** — what the profile is for, what it may claim, how it relates to listings, and how it evolves without fragmenting truth.
+
+This chapter does **not** specify databases, authentication flows, verification pipelines, frontend components, or admin moderation tools.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Identity philosophy** | Professional presence, accountability, calm tone |
+| **Trust mental model** | How users understand realtor identity on Rento |
+| **Public hierarchy** | What appears on profile and on listing surfaces |
+| **Verification** | Transparent attestation — what it means and does not mean |
+| **Completeness** | Profile quality without coercion theater |
+| **Contact transparency** | Governed contact source of truth |
+| **Listings relationship** | Active inventory as credibility evidence |
+| **Reputation** | Earned trust, not manufactured scores |
+| **Consistency** | One identity across search, card, detail, contact, favorites |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- Realtor workspace operational dashboards (separate B2B chapter when authored)  
+- Listing creation and edit forms (Chapter 12)  
+- Admin grant of realtor role and moderation queues  
+- Verification implementation and document upload mechanics  
+- Consumer user profile / account settings  
+- In-app messaging thread UI (Chapter 16 future patterns)  
+- Agency enterprise administration beyond public identity presentation  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **realtor professional identity is presented to consumers**, including but not limited to:
+
+- Public realtor profile page  
+- Identity blocks on listing card, detail, and contact handoff  
+- Active listings section on profile  
+- Favorites and saved listing identity continuity  
+- Shared links to realtor profile  
+- Future reputation or review surfaces when product ships  
+
+If a surface answers *“Who is this professional and can I trust them?”* — this chapter applies.
+
+### 2.4 One Realtor, One Identity
+
+Each realtor account maps to **one governed public identity** — not parallel profiles per listing, not fragmented contact per ad.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When realtor profile decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (contact from `realtor_profiles`; realtor self-manages profile; admin grants role only)  
+2. Chapter 1 — Product Philosophy  
+3. Chapters 2–4 — Experience, brand, and structure  
+4. Chapters 13–17 — Discovery, preview, detail, contact, favorites contracts  
+5. **This chapter** — for realtor public identity and profile experience  
+6. Chapters 5–12 — governance, visual language, navigation, forms, components  
+7. Pattern specifications and screen-level exceptions (Chapter 5 Exception Policy)  
+
+Profile must never display contact information that bypasses profile source of truth. Profile must never imply verification beyond what the system attests.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Human-centered marketplace; One Source of Truth; trust before conversion; calm professionalism |
+| Chapter 2 — Experience Principles | Clarity, ethical conversion, no dead ends |
+| Chapter 4 — Layout & Information Architecture | Public hierarchy; progressive disclosure; one purpose per surface |
+| Chapter 6 — Typography & Reading System | Name, agency, bio reading roles |
+| Chapter 7 — Color Meaning & Semantic Color System | Verification and status semantics |
+| Chapter 8 — Spatial System & Layout Rhythm | Profile section rhythm; identity block spacing |
+| Chapter 9 — Motion & Interaction System | Calm profile navigation and feedback |
+| Chapter 10 — Navigation System | Profile as depth destination; return integrity |
+| Chapter 11 — Component Philosophy & Component System | Identity block as governed component |
+| Chapter 13 — Search Experience | Search results lead to listings anchored to profile identity |
+| Chapter 14 — Listing Card & Preview System | Compact identity on card |
+| Chapter 15 — Listing Detail Experience | Identity before contact |
+| Chapter 16 — Contact & Communication Experience | Contact from profile source |
+| Chapter 17 — Favorites & Saved Properties Experience | Identity continuity on saved listings |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapters 14–16 show **slices of identity** in context. **This chapter defines the whole professional presence** — and the rules that keep every slice consistent, honest, and purposeful.
+
+Without this chapter, identity fragments across listings. With it, the realtor profile becomes **governed trust infrastructure** for the marketplace.
+
+---
+
+## 4. Realtor Identity Philosophy
+
+Realtor identity on Rento is **professional accountability made visible** — not personal social branding, not anonymous listing factory.
+
+### 4.1 Profile Represents Professional Identity
+
+The profile presents the realtor as **marketplace participant with professional obligations** — accurate listings, reachable contact, honest representation.
+
+### 4.2 Trust Before Promotion
+
+Profile serves **credibility first** — not realtor self-marketing billboard. Promotion of self must not outrank truth and reachability.
+
+### 4.3 One Realtor — One Identity
+
+One account, one public identity grammar — **name, agency, contact, photo** — consistent everywhere.
+
+### 4.4 Profile Never Exaggerates Credibility
+
+Claims, badges, and copy must **match attestable fact** — no self-declared verification, no inflated titles.
+
+### 4.5 Verification Is Transparent
+
+Platform verification means **only what system defines** — scope visible, limits visible, not implied blanket guarantee.
+
+### 4.6 Accountability Is Visible
+
+User can identify **who stands behind listings** — person and agency when applicable — before contact.
+
+### 4.7 Contact Information Is Consistent
+
+Phone, email, messaging entry — **one governed source** on profile and all listing handoffs (domain rules).
+
+### 4.8 Profile Supports Informed Decisions
+
+Profile answers user questions that **reduce uncertainty** about professionalism and reachability — not entertainment.
+
+### 4.9 Active Listings Reinforce Identity
+
+Published inventory on profile is **evidence of active practice** — curated by availability rules, not fake fullness.
+
+### 4.10 Profile Evolves With Professional History
+
+Identity updates over time — ** honestly reflected** — not stale photo from years ago without user maintenance responsibility.
+
+### 4.11 Users Understand Who They Are Contacting
+
+Before contact, user knows ** name, role, agency context** — no mystery intermediary.
+
+### 4.12 Reputation Is Earned, Not Manufactured
+
+Scores, badges, and review systems — when present — reflect ** genuine marketplace behavior** — not gamified vanity.
+
+### 4.13 Profile Strengthens Marketplace Trust
+
+Aggregate profile quality ** lifts platform credibility** — weak identity erodes all listings attached.
+
+### 4.14 Every Public Element Has a Purpose
+
+Each profile field and block ** justifies existence** against user or trust need (Chapter 5).
+
+### 4.15 Profile Remains Calm, Honest, and Professional
+
+Tone and structure ** unhurried, direct, dignified** — long-term rental marketplace, not influencer page.
+
+---
+
+## 5. Trust Mental Model
+
+Users model realtor profile as **professional dossier behind listings**.
+
+### 5.1 Anchor Model
+
+Listing is the home; **profile is the professional behind the home** — linked, not separate products.
+
+### 5.2 Verification Model
+
+User asks: *What did Rento check vs what is self-reported?* — profile makes that distinction legible.
+
+### 5.3 Reachability Model
+
+User asks: *Can I reach this person reliably?* — contact on profile matches contact on listing contact.
+
+### 5.4 Inventory Model
+
+User asks: *Are they actively working in this market?* — available listings on profile support answer.
+
+### 5.5 Accountability Model
+
+User asks: *Who is responsible if something is wrong?* — identified professional, not platform void.
+
+---
+
+## 6. Profile Purpose
+
+The public realtor profile serves **three user jobs** and **one marketplace job**.
+
+### 6.1 User Jobs
+
+| Job | Profile answers |
+|-----|-----------------|
+| **Identify** | Who is this realtor and agency? |
+| **Trust** | What can I believe about their standing? |
+| **Reach** | How do I contact them professionally? |
+
+### 6.2 Marketplace Job
+
+Platform demonstrates **accountable participants** — not anonymous classifieds — supporting Product Philosophy.
+
+### 6.3 Not Profile Purpose
+
+Profile is **not** realtor workspace, not admin console, not social feed, not SEO landing page gimmick.
+
+### 6.4 Profile vs Listing Detail
+
+Detail evaluates **home**; profile evaluates **professional** — cross-linked, distinct purposes.
+
+---
+
+## 7. Professional Identity
+
+Professional identity is **structured public presence** — not full personal life story.
+
+### 7.1 Core Identity Elements
+
+Typically includes:
+
+- **Professional name** — as realtor chooses within policy  
+- **Agency affiliation** — when applicable  
+- **Professional photo** — human presence, appropriate tone  
+- **Professional bio** — concise practice description  
+- **Contact channels** — governed, visible per policy  
+- **Active listings entry** — inventory evidence  
+
+Exact composition may evolve; **professional accountability invariant**.
+
+### 7.2 Human Without Casual
+
+Warmth within **professional boundaries** — not casual social persona inappropriate to housing transactions.
+
+### 7.3 Photo Standards Philosophy
+
+Photo supports **recognition and trust** — not glamour misdirection. Policy may define quality minimums without specifying pixels here.
+
+### 7.4 Name and Agency Clarity
+
+User distinguishes **individual realtor vs agency brand** — hierarchy clear when both shown.
+
+---
+
+## 8. Personal vs Business Identity
+
+Rento profiles are **business-facing identity** for marketplace participation.
+
+### 8.1 Business-First Public Surface
+
+Public profile emphasizes **professional role** — not personal hobbies, politics, or unrelated social content.
+
+### 8.2 Appropriate Personal Touch
+
+Limited personal humanity in bio ** acceptable** — market-appropriate professionalism still dominates.
+
+### 8.3 No Consumer-Style Social Graph
+
+Followers, friend counts, ** out of scope** unless future product explicitly defines professional network with governance.
+
+### 8.4 Agency vs Individual
+
+When realtor represents agency, ** both visible** — user understands organizational context without confusion about contact responsibility.
+
+---
+
+## 9. Realtor Credibility
+
+Credibility is **multi-signal, restrained, honest**.
+
+### 9.1 Credibility Signals
+
+May include:
+
+- Profile completeness  
+- Platform verification attestation  
+- Consistency of listings quality signals  
+- Tenure or activity indicators when honestly defined  
+- Future review signals when governed  
+
+### 9.2 No Single Score Worship
+
+One magic number ** must not replace** nuanced trust judgment — housing is high stakes.
+
+### 9.3 Credibility Follows Behavior
+
+Chronic misleading listings or unreachable contact ** erodes credibility** — profile cannot cosmetic-fix bad practice.
+
+### 9.4 New Realtor Honesty
+
+New participants ** not punished with fake veteran signals** — honest new profile state, not manufactured history.
+
+---
+
+## 10. Verification Principles
+
+Verification is **platform attestation with defined scope** — not moral certification of all future behavior.
+
+### 10.1 What Verification May Mean
+
+Documented checks product defines — identity, agency affiliation, license class when applicable — ** stated plainly**.
+
+### 10.2 What Verification Does Not Mean
+
+Not guarantee of listing accuracy, not insurance, not legal endorsement — ** limits disclosed**.
+
+### 10.3 Verification Display
+
+Badge or label ** consistent grammar** on profile, card, detail — same meaning everywhere (Chapters 7, 14, 15).
+
+### 10.4 Unverified Is Not Shame
+
+Absence of verification ** neutral presentation** — not punitive styling — honest “not verified” vs silent implication of verified.
+
+### 10.5 Verification Revocation
+
+If verification removed, ** badges update everywhere** — no stale trust signals.
+
+### 10.6 No Self-Granted Verification UI
+
+Realtor cannot toggle verified appearance — ** platform-controlled attestation only**.
+
+---
+
+## 11. Profile Completeness
+
+Completeness supports **reachability and trust** — not profile completion gamification.
+
+### 11.1 Minimum Viable Professional Profile
+
+Minimum set to **publish and receive contact** per domain rules — contact, identity, required fields defined by product policy.
+
+### 11.2 Completeness Encouragement
+
+Workspace may guide realtor to complete profile — ** professional tone**, not consumer game progress bar on public view.
+
+### 11.3 Incomplete Public Posture
+
+Consumer-facing surfaces ** do not expose broken identity** — listings may be withheld until minimum met per domain rules.
+
+### 11.4 Optional Enrichment
+
+Additional bio, agency detail — ** improves confidence** — optional, not coerced on renters.
+
+### 11.5 Completeness vs Honesty
+
+Full profile with misleading bio ** worse than** sparse honest profile — completeness never trumps truth.
+
+---
+
+## 12. Public Information Hierarchy
+
+Profile public IA follows Chapter 4 levels — **identity and reachability primary**.
+
+### 12.1 Primary on Profile
+
+- Professional name and photo  
+- Agency when applicable  
+- Verification status when shown  
+- Primary contact affordance or visible contact per policy  
+
+### 12.2 Secondary on Profile
+
+- Professional bio  
+- Active listings summary entry  
+- Secondary credentials or service area when defined  
+
+### 12.3 Supporting
+
+- Extended agency description  
+- Languages spoken, specialties — when product supports  
+- Historical metrics if honest and defined  
+
+### 12.4 Metadata
+
+Internal IDs, moderation flags — ** not on public profile**.
+
+### 12.5 One Source per Fact
+
+Bio does not repeat phone; listings count not in three zones — ** One Source of Truth**.
+
+---
+
+## 13. Contact Transparency
+
+Contact on profile is **authoritative publication** of how to reach realtor (domain rules).
+
+### 13.1 Contact Source of Truth
+
+All consumer contact paths use ** profile-stored contact** — not listing-level duplicates.
+
+### 13.2 Visible Before Deep Engagement
+
+User sees ** how contact works** on profile — phone, message, hours if defined — before committing time on listings.
+
+### 13.3 Contact Parity
+
+Contact on profile ** matches** contact on listing detail handoff — same number, same channel semantics.
+
+### 13.4 Professional Contact Only
+
+Contact fields are ** business-appropriate** — not personal social handles unless product explicitly allows with policy.
+
+### 13.5 Update Responsibility
+
+Realtor maintains contact accuracy — ** workspace prompts** when stale; consumers see current on next load.
+
+### 13.6 No Hidden Routing
+
+Contact does not ** silently route** to call center or third party without disclosure.
+
+---
+
+## 14. Active Listings Relationship
+
+Active listings on profile are **professional portfolio evidence** — governed by same availability rules as search.
+
+### 14.1 Only Available Publicly
+
+Consumer profile listing grid shows ** available** listings per domain — not pending or rejected inventory.
+
+### 14.2 Listings Reinforce Identity
+
+Inventory demonstrates ** active market participation** — empty state honest for new realtors.
+
+### 14.3 Card Grammar on Profile
+
+Listing previews on profile use ** same card contract** as search (Chapter 14) — comparability and trust.
+
+### 14.4 Profile-to-Listing Navigation
+
+Tap listing on profile → ** detail** — forward depth; back returns to profile position.
+
+### 14.5 No Profile Listing Duplication
+
+Same listing ** not repeated** in profile grid for vanity count.
+
+### 14.6 Delisted Listings Leave Profile
+
+Unavailable listings ** remove from public profile grid** promptly — profile inventory truth.
+
+---
+
+## 15. Reputation Principles
+
+Reputation systems — when introduced — must **earn trust**, not manufacture it.
+
+### 15.1 Authentic Feedback Only
+
+Reviews or ratings from ** verified interactions** when product defines — not purchased or seeded.
+
+### 15.2 Response Visibility
+
+Realtor professional responses ** calm and public** where policy allows — not aggressive rebuttal theater.
+
+### 15.3 No Rating Extortion UX
+
+Renters not ** coerced** to review before contact or favoriting.
+
+### 15.4 Reputation Subordinate to Verification
+
+Reviews complement — ** do not replace** platform verification truth.
+
+### 15.5 Manipulation Forbidden
+
+Fake reviews, gamed scores, ** platform liability** — design and policy reject.
+
+### 15.6 Long-Term Rental Tone
+
+Review content guidance ** serious housing context** — not travel hostel banter by default.
+
+---
+
+## 16. Professional Consistency
+
+Realtor presents **one professional story** across time and surfaces.
+
+### 16.1 Cross-Listing Consistency
+
+Same realtor on all listings — ** same name, photo, agency** — not per-listing alias.
+
+### 16.2 Cross-Surface Consistency
+
+Card, detail, contact, profile, favorites — ** identity grammar identical** (Chapters 14–17).
+
+### 16.3 Temporal Consistency
+
+Profile updates ** propagate** to listing surfaces — no week-long stale photo on cards.
+
+### 16.4 Brand Consistency
+
+Agency branding ** restrained** — Rento marketplace frame remains primary; realtor identity not overpowering listing facts on listing surfaces.
+
+---
+
+## 17. User Expectations
+
+Renters approach realtor profile with **specific expectations** the product must meet or honestly decline.
+
+### 17.1 Expectation of Identification
+
+User expects to know ** who they are dealing with** — met or blocked with explanation.
+
+### 17.2 Expectation of Reachability
+
+User expects published contact ** to work** — chronic failure is marketplace failure.
+
+### 17.3 Expectation of Listing Truth Linkage
+
+User expects listings on profile ** to represent that realtor’s inventory** — not others’ listings.
+
+### 17.4 Expectation of Calm Professionalism
+
+User expects ** no hard sell** on profile — information and listings, not pop-up lead forms.
+
+### 17.5 Expectation of Privacy Boundaries
+
+User does not expect ** personal data exposure** about realtor beyond professional scope.
+
+---
+
+## 18. Marketplace Trust
+
+Realtor profiles are **platform trust infrastructure**.
+
+### 18.1 Profiles Scale Trust
+
+Strong profiles across marketplace ** compound user confidence** in Rento as serious rental platform.
+
+### 18.2 Weak Profile Externalities
+
+Anonymous or broken profiles ** harm all listings** attached — quality floor is identity floor.
+
+### 18.3 Alignment With Only What Is Real
+
+Profile inventory and claims align with ** actual availability promise** (Chapter 1).
+
+### 18.4 Moderation Alignment
+
+Profiles of realtors with ** pattern of violations** handled at platform level — public surface may reflect restrictions honestly when policy defines.
+
+---
+
+## 19. Communication Continuity
+
+Profile is **origin of contact truth** for communication chapter.
+
+### 19.1 Contact From Profile
+
+User contacting from profile page ** same handoff rules** as from listing (Chapter 16).
+
+### 19.2 Context Attachment
+
+Inquiry from profile may attach ** general interest** — still identified realtor — not spam broadcast to unrelated listings.
+
+### 19.3 Return From Contact
+
+After contact attempt from profile, user ** returns to profile** — orientation preserved.
+
+### 19.4 Identity in Future Threads
+
+Message thread header shows ** profile-sourced identity** — stable across conversation.
+
+---
+
+## 20. Favorites Relationship
+
+Saved listings ** carry realtor identity** from profile source.
+
+### 20.1 Identity on Saved Cards
+
+Favorites list shows ** same realtor presentation** as search cards — profile truth continuous (Chapter 17).
+
+### 20.2 Profile Discovery From Favorites
+
+User may navigate ** realtor profile from saved listing** — optional depth, not required path.
+
+### 20.3 Trust Continuity
+
+User who saved listing ** expects same realtor** on return — identity drift forbidden.
+
+---
+
+## Realtor Ethics
+
+Realtor profile ethics extend **marketplace integrity** into professional identity.
+
+### Never Misrepresent Verification or Credentials
+
+Self-edited copy must not ** imply licenses or checks** the platform did not attest.
+
+### Never Publish Misleading Contact
+
+Published contact must ** reach the accountable realtor** — not bait-and-switch numbers.
+
+### Never Use Profile for Non-Listing Solicitation
+
+Profile is ** housing professional presence** — not unrelated service advertising without governance.
+
+### Never Suppress Accountability
+
+Design must not ** hide realtor identity** to protect low-quality actors at user expense.
+
+### Never Manufacture Reputation
+
+Fake reviews, purchased badges, ** gamified credibility** forbidden.
+
+### Trust Before Monetization on Profile
+
+Featured realtor placement — if ever — ** labeled, distinct**, never mimics organic trust signals.
+
+---
+
+## 21. Mobile-First Profile Experience
+
+Mobile is **primary profile consumption context** — user checks realtor from listing on phone.
+
+### 21.1 Compact Identity Block Everywhere
+
+Listing surfaces show ** mobile-scannable identity** — name, agency, verification — before profile depth.
+
+### 21.2 Full Profile Vertical Flow
+
+Profile page ** single-column read** — identity, bio, listings — thumb-friendly.
+
+### 21.3 Contact Reachable
+
+Primary contact ** reachable without extreme scroll** on profile when contact is profile purpose.
+
+### 21.4 Listings Grid on Mobile
+
+Active listings ** scannable grid or list** — same card grammar, not desktop-only table.
+
+### 21.5 Share Profile Link
+
+Shared realtor link ** opens mobile-readable profile** — orientation to listings outward.
+
+---
+
+## 22. Accessibility
+
+Realtor identity must be **perceivable and operable** for all users.
+
+### 22.1 Photo Alt Text
+
+Professional photo ** meaningful alt** — name and role — not empty decorative.
+
+### 22.2 Verification Not Color-Only
+
+Verification state ** text-labeled** (Chapter 7).
+
+### 22.3 Contact Action Labels
+
+Call or message actions ** accessible names** — not icon-only without label.
+
+### 22.4 Reading Order
+
+Profile reading order ** identity → bio → listings → contact** — logical for screen readers.
+
+### 22.5 Listing Grid Semantics
+
+Listings on profile in ** semantic list** — navigable structure.
+
+---
+
+## 23. Profile Performance Experience
+
+Profile performance is **felt reliability of professional identity** — confidence that identity is present and true, not milliseconds alone.
+
+### 23.1 Immediate Identity Recognition
+
+On listing open, user **sees who published** without hunt — compact identity block on card/detail **loads with listing**, not as long-delayed afterthought.
+
+### 23.2 Visible Progress
+
+Full profile load shows **honest progress** — calm loading; skeleton acceptable — not blank name while photo alone appears or wrong identity flash.
+
+### 23.3 Stable Identity Across Surfaces
+
+Identity block **does not flicker** different names or photos during session; profile listing grid **stable layout** as images load — no chaotic jump.
+
+### 23.4 Preserved Context
+
+Profile → listing → back → **profile scroll preserved** (Chapter 10).
+
+### 23.5 Calm Transitions
+
+Navigate to profile from detail uses **restrained motion** — professional context.
+
+### 23.6 Predictable Contact
+
+Contact from profile **immediate acknowledgement** with **same outcome class** as listing contact — behavioral contract (Chapter 16).
+
+Perceived performance inherits contact performance (Chapter 16) and card stability (Chapter 14).
+
+---
+
+## Profile Success Metrics
+
+Profile quality judged at **philosophy level** — not vanity profile views.
+
+### Identity Comprehension
+
+Users can ** name who owns listing** before contact — comprehension success.
+
+### Contact Confidence
+
+Users report ** confidence reaching correct professional** after viewing identity block.
+
+### Verification Understanding
+
+Users distinguish ** verified vs unverified** meaning — or system simplified until comprehensible.
+
+### Listing-Profile Parity Trust
+
+Users see ** no contradiction** between listing identity and full profile — parity metric.
+
+### Reachability Success
+
+Published contact ** reaches intended realtor** — qualitative and operational feedback loop.
+
+### Profile-to-Decision Support
+
+Profile visit ** increases informed contact or informed skip** — not confusion.
+
+### Long-Term Profile Trust
+
+Over time, users associate Rento realtors with ** identifiable accountability** — platform trust proxy.
+
+### Realtor Maintenance Health
+
+Realtors keep ** contact and photo current** — workspace health without renter-facing guilt.
+
+Teams evaluate profile changes against these principles in design critique and §31 checklist.
+
+---
+
+## 24. Profile Consistency
+
+**One identity system** across Rento — not per-team profile dialects.
+
+### 24.1 One Identity Component Family
+
+Identity block ** one governed grammar** — card, detail, profile, contact, favorites.
+
+### 24.2 One Verification Grammar
+
+Verification label ** one meaning** — all surfaces.
+
+### 24.3 One Contact Grammar
+
+Phone and message presentation ** identical semantics** everywhere.
+
+### 24.4 Locale Consistency
+
+Translated labels ** same structure** — Romanian primary; expansion without layout fork per language.
+
+### 24.5 Future Module Attachment
+
+New surfaces embed ** existing identity block** — not reinvent realtor header.
+
+---
+
+## 25. Future Compatibility
+
+Profile architecture ** extends without identity fork**.
+
+### 25.1 Reviews Module
+
+Reviews attach ** below trust hierarchy** — do not obscure contact and verification.
+
+### 25.2 Agency Pages
+
+Agency entity may gain ** profile variant** — realtor remains accountable on listings — hierarchy explicit.
+
+### 25.3 Video Introduction
+
+Optional video ** subordinate to facts** — labeled, not autoplay harassment.
+
+### 25.4 Multi-Market Expansion
+
+Profiles support ** multiple cities** honestly — service area fields, not fake local presence.
+
+### 25.5 Enterprise Realtor Teams
+
+Team routing ** preserves renter-visible accountable realtor** on each listing.
+
+---
+
+## Profile Evolution
+
+Realtor profile ** evolves as governed trust layer** — not annual redesign chaos.
+
+### Evolve Identity Block, Do Not Multiply
+
+Improvements extend ** one identity grammar** — not card-identity vs profile-identity divergence.
+
+### Resist Credibility Feature Bloat
+
+New badges and stats require ** attestation and user comprehension proof**.
+
+### Retire Misleading Signals
+
+Deprecated trust chrome ** removed product-wide** — not left beside replacements.
+
+### Preserve Mental Model
+
+Profile remains ** professional dossier behind listings** — model invariant.
+
+### Backward Compatibility
+
+Identity changes ** propagate listing surfaces** — migration communicated to realtors.
+
+Profile evolution requires Design Council approval for ** verification meaning or primary hierarchy changes**.
+
+---
+
+## 26. Governance
+
+### 26.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| New public profile field | Design Council + Product |
+| Verification badge meaning change | Design Director + Trust/Legal |
+| Identity block hierarchy change | Design Council |
+| New credibility signal | Product Director + Design Director |
+| Agency vs individual display rules | Head of Product Design |
+
+### 26.2 Exception Policy
+
+Profile experiments follow Chapter 5 — ** parity with card/detail/contact monitored**.
+
+### 26.3 Domain Compliance
+
+All identity and contact presentation ** verified against immutable contact source rules**.
+
+### 26.4 Realtor Workspace Alignment
+
+Public profile rules ** mirrored in workspace preview** — realtor sees what renters see.
+
+---
+
+## 27. Product Review Checklist
+
+Before shipping realtor profile changes:
+
+### 27.1 Philosophy
+
+- [ ] Professional identity — not social gimmick  
+- [ ] Trust before promotion  
+- [ ] One realtor — one identity  
+- [ ] Calm, honest, professional tone  
+
+### 27.2 Truth & Verification
+
+- [ ] Verification scope transparent  
+- [ ] No exaggerated credibility  
+- [ ] Unverified not punitive  
+- [ ] Revocation updates all surfaces  
+
+### 27.3 Contact & Hierarchy
+
+- [ ] Contact from profile source of truth  
+- [ ] Parity with listing contact handoff  
+- [ ] Public IA hierarchy correct  
+- [ ] Every element purposeful  
+
+### 27.4 Listings & Consistency
+
+- [ ] Active listings only available publicly  
+- [ ] Card grammar on profile listings  
+- [ ] Identity consistent card, detail, profile, favorites  
+
+### 27.5 Access & Performance
+
+- [ ] Accessible identity and actions  
+- [ ] Identity visible without undue delay  
+- [ ] Mobile-first profile flow  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 28. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Listing-level phone override | Domain and One Source of Truth violation |
+| Different photo card vs profile | Consistency breakdown |
+| Self-serve “verified” toggle | Trust fraud |
+| Verification badge without scope explanation | False confidence |
+| Profile as social feed | Purpose drift |
+| Empty profile public with active listings | Trust hole |
+| Pending listings on public profile grid | Domain violation |
+| Hidden realtor identity on detail | Human-centered marketplace failure |
+| Gamified profile completion on public view | Tone violation |
+| Fake review stars | Ethics failure |
+| Agency overshadows listing on detail | Hierarchy corruption |
+| Stale contact on profile | Reachability failure |
+| Profile contact ≠ detail contact | Identity bait-and-switch |
+| Burying contact below endless bio | Contact transparency failure |
+| Multiple identity layouts per surface | Cognitive load |
+| Punitive unverified styling | Unprofessional shame UX |
+| Profile SEO keyword stuffing in bio | User and brand harm |
+| Call routes to unlabeled third party | Ethics violation |
+| No empty state for zero listings | Honesty gap |
+| Identity loads after 10s blank | Performance trust loss |
+
+---
+
+## 29. Correct & Incorrect Examples
+
+### 29.1 Contact Source
+
+**Correct:** All listing contacts use phone from realtor profile; profile shows same number.  
+**Incorrect:** Listing A has one number; profile another.
+
+### 29.2 Verification
+
+**Correct:** “Verificat de Rento — identitate și agenție confirmate” with scope link.  
+**Incorrect:** Gold “TRUSTED” badge with no definition.
+
+### 29.3 Identity on Card
+
+**Correct:** Card shows realtor name, small photo, verification if attested.  
+**Incorrect:** Card shows only “Agent” with no profile link.
+
+### 29.4 Active Listings
+
+**Correct:** Profile grid shows three available listings; tap opens detail.  
+**Incorrect:** Grid shows pending moderation listings to look busy.
+
+### 29.5 New Realtor
+
+**Correct:** Sparse but complete minimum profile; honest “Încă nu există anunțuri active.”  
+**Incorrect:** Fake stock listings or placeholder homes.
+
+### 29.6 Profile From Detail
+
+**Correct:** Tap realtor name → full profile; back → same detail scroll.  
+**Incorrect:** Tap opens unrelated workspace login.
+
+### 29.7 Bio Tone
+
+**Correct:** “Lucrez în Cluj-Napoca, specializare închirieri pe termen lung.”  
+**Incorrect:** “🔥🔥 CEL MAI BUN AGENT!!!”
+
+### 29.8 Favorites Continuity
+
+**Correct:** Saved listing card shows same realtor identity as profile.  
+**Incorrect:** Favorites hide realtor until detail open.
+
+### 29.9 Agency Display
+
+**Correct:** “Maria Popescu · RE/MAX Example” — individual primary.  
+**Incorrect:** Agency name only; person hidden.
+
+### 29.10 Verification Revoked
+
+**Correct:** Badge removed on profile, cards, and details same day.  
+**Incorrect:** Badge remains on old listing cards only.
+
+---
+
+## 30. Design Director Review
+
+**Chapter:** 18 — Realtor Profile Experience  
+**Section:** XV — Realtor Profile  
+**Review type:** Initial standard adoption
+
+### 30.1 Approval Statement
+
+This chapter is approved as the **realtor profile and public identity contract** for Rento. All professional identity presentation, verification display, contact publication, and profile-listing relationships must comply. Implementations are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 30.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Human-centered marketplace; One Source of Truth |
+| Chapter 4 — Layout & Information Architecture | Public hierarchy parent |
+| Chapter 16 — Contact & Communication Experience | Contact from profile source |
+| Chapter 14–15 — Card & Detail | Compact identity slices |
+| Chapter 17 — Favorites & Saved Properties Experience | Identity on saved listings |
+| Chapter 19+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 30.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What trust or accountability harm is not prevented?  
+2. Does change preserve one realtor — one identity?  
+3. Does verification remain transparent and honest?  
+4. Does contact remain profile source of truth?  
+5. Does change respect calm professional marketplace tone?
+
+New verification types or identity hierarchy changes require Design Council approval.
+
+### 30.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on profile experience |
+| Head of Product Design | Cross-surface identity consistency |
+| Senior UX Designer | Profile flow and hierarchy review |
+| Product Management | Verification and marketplace integrity |
+| Content Design Lead | Bio, badge, and expectation copy |
+| Trust & Safety / Legal | Verification scope and claims |
+| Accessibility Specialist | Identity block and profile semantics |
+
+### 30.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new realtor profile work immediately. Existing identity surfaces align during scheduled improvement cycles.
+
+### 30.6 Design Director Closing Note
+
+Listings are what users search. **Realtors are who users trust.** A platform that hides identity behind ads becomes classifieds; a platform that lies about identity becomes liability. Rento chooses accountable professionalism — one name, one contact source, one honest presence behind every home. This chapter exists so that presence is designed with the same rigor as every pixel of search and detail — because in rental, people sign leases with people, not with interfaces.
+
+---
+
+**End of Chapter 18**
+
+
+---
+
+## Chapter 19 — Realtor Workspace Experience
+
+**Section:** XVI — Realtor Workspace  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Realtor Operations, Reviewers  
+**Authority:** Subordinate to Chapters 1–18; operationalizes realtor role boundaries (Chapter 1, domain rules), Navigation realtor architecture (Chapter 10), Form System (Chapter 12), and Realtor Profile (Chapter 18); defines principles only — not permissions implementation, APIs, admin tools, or UI code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **realtor workspace experience philosophy** for Rento.
+
+The realtor workspace is not an admin panel. It is the **professional operating environment** where real estate professionals manage daily business — listings, status, profile obligations, communication responsibilities, and quality of what the public marketplace displays.
+
+Where Chapter 18 defines **public trust identity**, this chapter defines **private professional operations** — how realtors understand state, act with confidence, avoid errors, and maintain accountability without cognitive overload.
+
+The workspace must maximize **clarity, confidence, efficiency, and accountability** while minimizing repetitive work and accidental harm to marketplace trust. It must feel like a **professional operating system** — calm, predictable, consequential — not a feature dump or consumer app skinned for B2B.
+
+This chapter governs workspace purpose, hierarchy, listing lifecycle management, navigation within realtor role, productivity philosophy, decision support, integration with profile and communication, and ethical boundaries of automation — for present and future realtor operational surfaces.
+
+This chapter does **not** specify role permission matrices, database models, frontend frameworks, dashboard widgets, or technical architecture.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Workspace philosophy** | Professional OS, control, calm operations |
+| **Mental model** | How realtors understand the workspace |
+| **Daily workflow** | Recurring jobs and priority logic |
+| **Information hierarchy** | Operational fact priority |
+| **Listing management** | Create, edit, status, moderation awareness |
+| **Listing lifecycle** | Draft through public availability and beyond |
+| **Navigation** | Role home, depth, return, task layers |
+| **Productivity** | Efficiency without complexity worship |
+| **Decision support** | What realtor needs to decide next |
+| **Accountability** | Ownership, consequences, professional duty |
+| **Integrations** | Profile, communication, public preview |
+| **Cross-cutting** | Trust, mobile-first, access, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- Consumer search, card, detail, favorites (Chapters 13–17)  
+- Public realtor profile presentation rules (Chapter 18 — workspace links to profile, does not redefine public grammar)  
+- Admin moderation console and role grant (admin operations — separate standard)  
+- Listing form field-level validation specs (Chapter 12 — workspace applies form philosophy)  
+- Contact consumer initiation flows (Chapter 16)  
+- Verification backend and document review mechanics  
+- Analytics implementation and BI dashboards  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **realtors operate listings and professional obligations** inside realtor role, including but not limited to:
+
+- Workspace home / dashboard entry  
+- Listing portfolio lists and filters  
+- Create and edit listing flows  
+- Listing status and moderation awareness views  
+- Profile completeness and contact maintenance entry  
+- Inquiry or message management when product ships  
+- Preview-as-renter listing and profile views from workspace  
+
+If a surface answers *“What must I do next as a professional on Rento?”* — this chapter applies.
+
+### 2.4 Realtor Role Boundary
+
+Workspace is **realtor role only** — not admin, not consumer. Role clarity is invariant (Chapters 1, 10).
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When workspace decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (realtor owns listings; cannot change `owner_id` or `status` directly; moderation flow; contact from profile)  
+2. Chapter 1 — Product Philosophy  
+3. Chapters 2–4 — Experience, brand, structure  
+4. Chapters 12–18 — forms, navigation, consumer funnel, profile  
+5. **This chapter** — for realtor workspace behavior  
+6. Chapters 5–11 — governance, visual language, components  
+7. Pattern specifications and screen-level exceptions (Chapter 5 Exception Policy)  
+
+Workspace must never expose admin capabilities to realtors. Workspace must never allow bypass of moderation or ownership rules through UI affordances.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Only what is real; calm; accountability; human-centered marketplace |
+| Chapter 2 — Experience Principles | Error prevention, recovery, clarity |
+| Chapter 4 — Layout & Information Architecture | Operational hierarchy; one purpose per screen |
+| Chapter 6 — Typography & Reading System | Status labels, operational reading order |
+| Chapter 7 — Color Meaning & Semantic Color System | Moderation and status semantics |
+| Chapter 8 — Spatial System & Layout Rhythm | Workspace density and section rhythm |
+| Chapter 9 — Motion & Interaction System | Calm save, submit, status feedback |
+| Chapter 10 — Navigation System | Realtor architecture; workspace home; return integrity |
+| Chapter 11 — Component Philosophy & Component System | Operational components reuse consumer grammar where appropriate |
+| Chapter 12 — Form System & Data Collection Experience | Create/edit listing forms |
+| Chapter 13 — Search Experience | Portfolio search within owned listings |
+| Chapter 14–15 — Card & Detail | Preview-as-renter parity |
+| Chapter 16 — Contact & Communication Experience | Inquiry handling integration |
+| Chapter 18 — Realtor Profile Experience | Profile maintenance from workspace |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 18 defines **who the realtor is publicly**. **This chapter defines how the realtor works professionally** — the operating environment that keeps public marketplace trustworthy.
+
+Without this chapter, realtor tools become ad hoc screens. With it, the workspace becomes **governed professional infrastructure** aligned with Rento’s quality bar.
+
+---
+
+## 4. Realtor Workspace Philosophy
+
+The workspace is a **professional operating system** — not a settings graveyard, not a consumer browse clone.
+
+### 4.1 Productivity Before Complexity
+
+Features earn their place by **reducing professional effort** — not by filling empty dashboard space.
+
+### 4.2 Clarity Before Feature Density
+
+Realtor sees **what matters now** — not every possible action at once. Density serves decisions, not catalog exposure.
+
+### 4.3 Every Action Has a Clear Consequence
+
+Publish, submit for moderation, edit live listing, withdraw — ** outcomes explained before commit** — especially irreversible or public-facing acts.
+
+### 4.4 Listing Management Is Calm and Predictable
+
+State transitions follow ** understandable lifecycle** — no surprise publication, no mystery moderation black hole.
+
+### 4.5 Information Is Prioritized
+
+Portfolio health, pending tasks, blocked items — ** hierarchy reflects urgency and user harm if ignored**.
+
+### 4.6 Realtor Remains in Control
+
+Automation ** assists** — does not override professional judgment or silently change public truth.
+
+### 4.7 Workspace Reduces Repetitive Work
+
+Defaults, reuse, draft persistence — ** respect realtor time** without sacrificing accuracy.
+
+### 4.8 Workspace Supports Professional Decision Making
+
+Surfaces answer: *What needs attention? What is blocked? What is live? What is next?*
+
+### 4.9 Workspace Builds Confidence
+
+Realtor leaves workspace understanding ** marketplace state of their inventory** — not anxious or confused.
+
+### 4.10 Workspace Minimizes Errors
+
+Prevention, validation, confirmation on harm — ** errors costly to trust and time**.
+
+### 4.11 Every Workflow Has Continuity
+
+Create → moderation → live → edit → unavailable — ** context preserved** across steps and return navigation.
+
+### 4.12 Professional Identity Remains Visible
+
+Realtor sees ** their name, agency, profile health** — identity is operational responsibility, not separate mystery.
+
+### 4.13 Quality Before Quantity
+
+Workspace encourages ** accurate listings** — not volume gaming or publish rush.
+
+### 4.14 Trust Before Automation
+
+Automated suggestions, AI assists, bulk actions — ** subordinate to trust and accuracy** — never auto-publish harmful state.
+
+### 4.15 Automation Assists Rather Than Replaces Professional Judgment
+
+AI and automation ** propose** — realtor ** confirms** — especially for public-facing content.
+
+---
+
+## 5. Professional Mental Model
+
+Realtors model workspace as **their office on Rento**.
+
+### 5.1 Portfolio Model
+
+Central object is **listing portfolio** — owned homes under professional responsibility — not abstract “content items.”
+
+### 5.2 Status Model
+
+Every listing has **lifecycle state** — draft, pending, available, rejected, unavailable — realtor always knows which.
+
+### 5.3 Obligation Model
+
+Workspace surfaces ** duties** — complete profile, fix rejected listing, respond to inquiry — without nagging theater.
+
+### 5.4 Mirror Model
+
+Preview paths show ** what renters see** — workspace actions map to public consequences.
+
+### 5.5 Accountable Model
+
+Realtor understands ** they are legally and professionally responsible** for published facts — workspace tone supports seriousness.
+
+---
+
+## 6. Workspace Purpose
+
+The workspace primary purpose: **enable realtors to publish and maintain honest, available inventory with professional confidence**.
+
+### 6.1 Secondary Purposes
+
+- Maintain profile and contact source of truth  
+- Respond to renter interest when channels exist  
+- Understand moderation feedback and recover  
+- Monitor portfolio health at a glance  
+
+### 6.2 Not Workspace Purpose
+
+- Consumer discovery  
+- Admin moderation of others’ listings  
+- Marketing analytics vanity for its own sake  
+- Social networking between realtors  
+
+### 6.3 Success Definition
+
+Realtor completes ** necessary professional tasks** with clarity — public marketplace stays current and trustworthy.
+
+---
+
+## 7. Daily Workflow Principles
+
+Daily use follows **recurring professional loops** — not random feature hopping.
+
+### 7.1 Morning Orientation Loop
+
+Realtor opens workspace → sees ** portfolio summary and attention items** — pending moderation, inquiries, profile gaps.
+
+### 7.2 Publish or Update Loop
+
+Create or edit listing → ** review → submit** → track moderation → verify live state matches intent.
+
+### 7.3 Respond Loop
+
+Inquiry arrives → ** identify listing context → respond professionally** — when messaging exists.
+
+### 7.4 Maintain Loop
+
+Price, availability, photos change in real world → ** workspace updated promptly** — actual availability promise.
+
+### 7.5 Close Loop
+
+Listing rented or withdrawn → ** status updated honestly** — not left as false available.
+
+### 7.6 Workflow Interruption
+
+Realtor leaves mid-task → ** returns to preserved draft or clear loss explanation** — Chapter 12 continuity.
+
+---
+
+## 8. Information Hierarchy
+
+Workspace IA follows Chapter 4 — **operational priorities** differ from consumer detail.
+
+### 8.1 Primary in Workspace
+
+- **Attention required** — rejected, blocked, inquiry waiting, profile incomplete blocking publish  
+- **Portfolio status summary** — counts by state when meaningful  
+- **Primary next action** — create listing, fix item, respond  
+
+### 8.2 Secondary
+
+- Full listing list with filters  
+- Recent activity or updates  
+- Profile completeness indicators  
+
+### 8.3 Supporting
+
+- Tips, guidelines, policy references  
+- Historical moderation notes translated for humans  
+
+### 8.4 Metadata
+
+- Internal IDs, timestamps — ** subordinate**, never obscure primary obligations.
+
+### 8.5 One Source of Truth in Workspace
+
+Status shown in list, detail edit, and preview ** must match** — not three conflicting states.
+
+---
+
+## 9. Listing Management Philosophy
+
+Listing management is **stewardship of public trust** — not file upload chore.
+
+### 9.1 Own Listings Only
+
+Realtor manages ** only inventory they own** — domain invariant reflected in UX, not surprise blocking.
+
+### 9.2 Edit Without Ownership Violation
+
+Edit changes ** content realtor controls** — never ownership, never moderation status direct toggle.
+
+### 9.3 Moderation Respect
+
+New and materially changed listings enter ** pending** — realtor understands public visibility rules.
+
+### 9.4 Honest Representation Duty
+
+Forms collect ** accurate facts** — workspace copy reinforces professional obligation, not just validation errors.
+
+### 9.5 Delist and Unavailable
+
+Realtor can mark ** truthful unavailability** — workflow clear, public discovery updates.
+
+### 9.6 No Bulk Publish Without Review
+
+Mass actions — if ever — require ** explicit confirmation and per-listing accountability**.
+
+---
+
+## 10. Listing Lifecycle
+
+Lifecycle is **governed state machine** — realtor mental model must match domain truth.
+
+### 10.1 Lifecycle States (Conceptual)
+
+| State | Realtor understanding | Public consumer visibility |
+|-------|----------------------|----------------------------|
+| **Draft** | Incomplete; not submitted | Not visible |
+| **Pending** | Submitted; awaiting moderation | Not visible |
+| **Available** | Approved; live on marketplace | Visible |
+| **Rejected** | Needs correction; reason provided | Not visible |
+| **Unavailable / withdrawn** | Realtor-ended availability | Not visible |
+
+Exact labels may vary; **semantic honesty invariant**.
+
+### 10.2 Transitions Explained
+
+Each transition shows ** what changed and what happens next** — especially submit and approval.
+
+### 10.3 No Direct Status Hacking
+
+Realtor cannot ** self-approve** to available — moderation path only.
+
+### 10.4 Rejection Recovery
+
+Rejected state includes ** actionable reason and path to fix** — not punitive dead end.
+
+### 10.5 Live Edit Consequences
+
+Editing available listing may ** re-trigger moderation** when product rules define — disclosed before submit.
+
+### 10.6 Lifecycle Visibility in List
+
+Portfolio list ** scannable status** — color semantic roles (Chapter 7), text always present.
+
+---
+
+## 11. Workspace Navigation Principles
+
+Workspace navigation follows Chapter 10 **realtor architecture** — extended for operations.
+
+### 11.1 Home Base
+
+Workspace dashboard is ** role home** — return anchor from deep flows.
+
+### 11.2 Depth: Listing Edit
+
+Portfolio → listing edit → ** sections or steps** — back preserves unsaved state policy honestly.
+
+### 11.3 Task Layers
+
+Create listing, upload media, profile edit — ** task navigation** suspends portfolio dominance until complete or cancel.
+
+### 11.4 Preview Detour
+
+Preview as renter → ** forward depth** — clear “you are previewing” mode — return to edit context.
+
+### 11.5 No Consumer Nav Contamination
+
+Consumer bottom nav ** not shown** in workspace — role clarity.
+
+### 11.6 Emergency Exit
+
+Error or auth loss → ** honest recovery** — draft preservation where promised.
+
+### 11.7 Portfolio Search
+
+Operational search within owned listings — ** Chapter 13 grammar, realtor scope** — not consumer geography discovery misplaced.
+
+---
+
+## 12. Productivity Principles
+
+Productivity serves **accuracy and time** — not busywork.
+
+### 12.1 Reduce Repetition
+
+Reuse prior listing attributes when appropriate — ** realtor confirms** — not silent clone of wrong home.
+
+### 12.2 Draft Persistence
+
+Long create flows ** save progress** — Chapter 12 grammar.
+
+### 12.3 Sensible Defaults
+
+Market-appropriate defaults ** speed honest entry** — never smuggle false data.
+
+### 12.4 Batch Where Safe
+
+Only ** low-risk, high-repetition** tasks batch — never batch hide moderation or status truth.
+
+### 12.5 Keyboard and Power Paths
+
+Efficiency shortcuts may exist — ** discoverable alternatives required** for accessibility.
+
+### 12.6 Noise Reduction
+
+Notifications and badges ** meaningful** — not every pixel change alerts.
+
+---
+
+## 13. Decision Support
+
+Workspace helps realtors ** decide what to do next** — not drown in data.
+
+### 13.1 Attention Queue
+
+Items blocking trust or revenue ** surfaced first** — rejected listings, stale available, unanswered inquiries.
+
+### 13.2 Context for Decision
+
+Opening item shows ** why it needs attention** — moderation note, days live, inquiry age.
+
+### 13.3 No False Precision
+
+Dashboard metrics ** honest definitions** — not vanity charts without action link.
+
+### 13.4 Comparison Within Portfolio
+
+Realtor compares ** own listings** — performance relative to help pricing decisions — subordinate to public honesty, not pay-to-win.
+
+### 13.5 Decision Without Manipulation
+
+Growth nudges ** professional tone** — not fear-based dashboard.
+
+---
+
+## 14. Professional Accountability
+
+Accountability is **visible in workspace** — reinforces marketplace trust.
+
+### 14.1 Ownership Clarity
+
+Every listing row shows ** you own this** — actions available match ownership.
+
+### 14.2 Consequence Preview
+
+Before publish or major edit, ** summary of public impact** — what renters will see.
+
+### 14.3 Moderation Accountability
+
+Rejection reasons ** professional, specific** — realtor accountable for fix, not shamed.
+
+### 14.4 Contact Accountability
+
+Profile contact ** realtor responsibility to maintain** — workspace warns when missing or invalid.
+
+### 14.5 Inquiry Accountability
+
+When inquiries exist, ** response obligation visible** — without consumer-hostility transplanted to B2B.
+
+---
+
+## 15. Workspace Trust
+
+Workspace trust is **internal confidence that actions match marketplace rules**.
+
+### 15.1 Mirror Trust
+
+Preview matches ** public consumer truth** — realtor trusts workspace as accurate simulator.
+
+### 15.2 Rule Transparency
+
+Domain rules ** explained in workspace language** — why status cannot be self-changed.
+
+### 15.3 Platform Fairness
+
+Moderation process ** predictable timing expectations** — honest ranges, not false instant approval.
+
+### 15.4 Data Integrity
+
+Saved edits ** do not corrupt live listing** silently — explicit submit boundaries.
+
+---
+
+## 16. Communication Integration
+
+Workspace integrates ** inquiry handling** without becoming generic email client.
+
+### 16.1 Inquiry Context
+
+Each inquiry ** tied to listing** — realtor sees which home renter asked about.
+
+### 16.2 Identity Context
+
+Renter inquiry shows ** appropriate identity** per privacy rules — enough to respond professionally.
+
+### 16.3 Response From Workspace
+
+Reply paths ** preserve professional tone defaults** — calm, not chat app stickers by default.
+
+### 16.4 Contact Source Reminder
+
+Responses use ** profile contact truth** — workspace does not invent alternate outbound identity.
+
+### 16.5 Chapter 16 Alignment
+
+Consumer contact philosophy ** extends to realtor-side responsibility** — clarity, recovery, no dead ends.
+
+---
+
+## 17. Profile Integration
+
+Profile maintenance is **first-class workspace obligation** — not hidden settings.
+
+### 17.1 Profile Health in Workspace
+
+Completeness and contact validity ** visible on dashboard** — blocks publish when domain requires.
+
+### 17.2 Edit Profile Flow
+
+Profile edit ** same form grammar** as other workspace tasks — return to workspace home.
+
+### 17.3 Public Preview Link
+
+Jump to ** public profile view** — preview-as-renter parity (Chapter 18).
+
+### 17.4 Contact Is Operational
+
+Phone and email ** maintained here** — propagates to all listings automatically — One Source of Truth.
+
+---
+
+## 18. Listing Quality Principles
+
+Quality in workspace means **renter-trustworthy listings** — not checklist gaming.
+
+### 18.1 Completeness vs Accuracy
+
+Complete fields ** only when accurate** — empty honest better than fake fill.
+
+### 18.2 Media Quality Duty
+
+Workspace encourages ** representative photos** — not minimum count checkbox with junk images.
+
+### 18.3 Price and Availability Accuracy
+
+Prominent reminders that ** stale price and false available harm platform** — professional ethics tone.
+
+### 18.4 Pre-Submit Review
+
+Submit step includes ** renter-perspective summary** — realtor confirms before moderation queue.
+
+### 18.5 Quality Over Volume
+
+Workspace does not ** celebrate publish count** without availability truth.
+
+---
+
+## 19. Workspace Continuity
+
+Continuity across **tasks, sessions, and devices** — professional work is interruptible.
+
+### 19.1 Draft Continuity
+
+Listing draft ** survives interruption** — Chapter 12.
+
+### 19.2 Navigation Continuity
+
+Back from edit ** returns to portfolio filter and scroll** where feasible.
+
+### 19.3 Cross-Device Continuity
+
+Signed-in realtor ** same portfolio state** across devices — honest sync limits if any.
+
+### 19.4 Moderation Continuity
+
+After rejection fix, ** return to same listing context** — not lose edit history punitively if save allows.
+
+### 19.5 Preview Continuity
+
+Return from consumer preview ** to same edit section** — not workspace home amnesia.
+
+---
+
+## 20. Mobile-First Workspace
+
+Many realtors work ** from phone between viewings** — mobile is co-primary, not afterthought.
+
+### 20.1 Core Tasks on Mobile
+
+Check status, respond inquiry, minor edit, mark unavailable — ** achievable on mobile**.
+
+### 20.2 Create on Mobile
+
+Full create ** supported** with progressive disclosure — not desktop-only trap.
+
+### 20.3 Thumb-Reach Primary Actions
+
+Save, submit, add listing — ** reachable** on mobile workspace.
+
+### 20.4 Density Restraint on Small Screens
+
+Operational hierarchy ** tighter but not crushed** — Chapter 8 mobile-first.
+
+### 20.5 Desktop Extension
+
+Desktop adds ** horizontal space** — same hierarchy, not different product logic.
+
+---
+
+## 21. Accessibility
+
+Workspace must be **operable by all realtors** — inclusive professionalism.
+
+### 21.1 Status Text Labels
+
+Moderation states ** not color-only**.
+
+### 21.2 Form Accessibility
+
+Create/edit inherits ** Chapter 12 accessibility** — labels, errors, focus.
+
+### 21.3 List Semantics
+
+Portfolio lists ** semantic structure** — position, status announced.
+
+### 21.4 Action Naming
+
+All icon buttons ** named** — publish, withdraw, preview.
+
+### 21.5 Motion Respect
+
+Reduced motion ** honored** on status transitions.
+
+---
+
+## 22. Workspace Performance Experience
+
+Workspace performance is **felt operational reliability** — confidence that professional work persists and reflects truth.
+
+### 22.1 Immediate Acknowledgement
+
+Save, submit, and status change **register instantly** — calm feedback; realtor trusts persistence (Chapter 9).
+
+### 22.2 Visible Progress
+
+Dashboard home summary **prompt or calm loading** — not wrong counts flash; upload progress **honest** — failure recoverable with preserved form.
+
+### 22.3 Stable Operational Surface
+
+Portfolio scroll **stable on refresh** — intentional reorder only when sort changes; layout does not jump without user action explanation.
+
+### 22.4 Preserved Context
+
+Return from edit or preview **preserves portfolio place** — professional memory respected (Chapter 10).
+
+### 22.5 Calm Transitions
+
+State changes use **restrained motion** — serious tool, not game.
+
+### 22.6 Predictable Outcomes
+
+Same submit action → **same moderation path** — behavioral contract.
+
+Perceived performance inherits form continuity (Chapter 12) and navigation return (Chapter 10).
+
+---
+
+## Realtor Workspace Ethics
+
+Workspace ethics protect **renters and marketplace** from professional shortcuts.
+
+### Never Enable False Availability
+
+Workspace must not ** make it easy** to leave rented homes marked available.
+
+### Never Bypass Moderation Through UI
+
+No realtor-facing control ** implies self-approval** to public status.
+
+### Never Obscure Public Consequences
+
+Actions that publish or change live facts ** require informed confirmation**.
+
+### Never Punish With Opaque Rejection
+
+Moderation feedback ** actionable and respectful** — not coded humiliation.
+
+### Never Automate Public Lies
+
+AI or bulk tools ** must not auto-publish** unreviewed content.
+
+### Trust Before Monetization in Workspace
+
+Upsell features ** must not degrade** listing quality or profile honesty.
+
+---
+
+## Workspace Success Metrics
+
+Workspace quality judged at **professional and marketplace philosophy level**.
+
+### Task Completion Clarity
+
+Realtors complete ** intended task without support tickets** — create, fix rejection, mark unavailable.
+
+### Error Prevention Success
+
+Costly mistakes — wrong publish, lost draft, double submit — ** rare**.
+
+### Time to Recover from Rejection
+
+Rejected → fixed → resubmitted ** smooth path** — qualitative flow success.
+
+### Portfolio Truth Alignment
+
+Live workspace state ** matches public marketplace** — mirror trust metric.
+
+### Inquiry Response Readiness
+
+Realtors ** identify and open inquiry context** quickly when channel exists.
+
+### Profile Maintenance Health
+
+Contact and profile ** kept current** — workspace nudges effective without harassment.
+
+### Realtor Confidence Score
+
+Qualitative: realtors describe workspace as ** “clear and professional”** — not “confusing admin.”
+
+### Renter Harm Proxy
+
+Downstream ** stale listing and false available rates** — workspace exists to reduce these.
+
+Teams evaluate workspace changes against these principles in design critique and §30 checklist.
+
+---
+
+## 23. Workspace Consistency
+
+**One workspace system** — not per-feature operational dialects.
+
+### 23.1 One Status Vocabulary
+
+Pending, available, rejected — ** same words** in list, edit header, preview, notifications.
+
+### 23.2 One Form Grammar
+
+All workspace forms ** Chapter 12 family** — create, profile, filters.
+
+### 23.3 One Navigation Model
+
+Dashboard → portfolio → edit → preview — ** stable across releases**.
+
+### 23.4 Consumer Parity in Preview
+
+Preview uses ** consumer card and detail contracts** — not workspace-only preview lies.
+
+### 23.5 Future Module Attachment
+
+Scheduling, analytics tiles — ** attach to workspace home** without new nav planet.
+
+---
+
+## 24. Future Compatibility
+
+Workspace architecture ** extends without reinventing professional OS**.
+
+### 24.1 Team and Agency Inboxes
+
+Agency routing ** preserves listing ownership clarity** — accountable realtor visible.
+
+### 24.2 AI Listing Assist
+
+Generate description or attributes — ** review-before-submit mandatory** — Chapter 12 loop.
+
+### 24.3 Calendar and Viewings
+
+Scheduling ** integrates with inquiry context** — not orphan calendar app.
+
+### 24.4 Verification Workflow
+
+Document upload for verification ** task layer in workspace** — status visible on profile health.
+
+### 24.5 Analytics Depth
+
+Deeper metrics ** optional drill-down** — default dashboard remains calm.
+
+---
+
+## Workspace Evolution
+
+Workspace ** evolves as one professional environment** — not annual dashboard redesign for novelty.
+
+### Evolve Workflows, Do Not Fork
+
+Improvements extend ** portfolio, lifecycle, and task grammar** — not parallel workspace products.
+
+### Resist Dashboard Feature Accumulation
+
+Every new widget ** necessity proof** — workspace is not billboard.
+
+### Retire Obsolete Operational UI
+
+Old flows ** migrated and removed** — not left alongside replacements.
+
+### Preserve Mental Model
+
+Portfolio and lifecycle model ** invariant** — realtors retain learned structure.
+
+### Backward Compatibility
+
+Workflow changes ** honor in-flight drafts and training** — migration communicated.
+
+Workspace evolution requires Design Council approval for ** lifecycle semantics or home dashboard purpose changes**.
+
+---
+
+## 25. Governance
+
+### 25.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| New lifecycle state or transition | Design Council + Product + Domain |
+| Dashboard primary hierarchy change | Design Council |
+| New bulk action | Product Director + Trust review |
+| AI assist in create/edit | Design Council |
+| Realtor portfolio filter addition | Head of Product Design |
+
+### 25.2 Exception Policy
+
+Workspace experiments follow Chapter 5 — ** no moderation or ownership bypass in experiment**.
+
+### 25.3 Domain Compliance Review
+
+All status and ownership UI ** verified against immutable rules** before ship.
+
+### 25.4 Realtor Research
+
+Major workflow changes ** validated with realtor tasks** — not only internal opinion.
+
+---
+
+## 26. Product Review Checklist
+
+Before shipping workspace changes:
+
+### 26.1 Philosophy
+
+- [ ] Productivity before complexity  
+- [ ] Clarity before feature density  
+- [ ] Realtor in control; automation assists only  
+- [ ] Quality before quantity  
+
+### 26.2 Lifecycle & Accountability
+
+- [ ] Status vocabulary honest and consistent  
+- [ ] No direct status hacking  
+- [ ] Rejection recovery actionable  
+- [ ] Actions show clear consequences  
+
+### 26.3 Navigation & Continuity
+
+- [ ] Workspace home return works  
+- [ ] Draft and edit continuity preserved  
+- [ ] Preview-as-renter accurate  
+- [ ] Role separation from consumer  
+
+### 26.4 Integrations
+
+- [ ] Profile contact source of truth maintained  
+- [ ] Inquiry context tied to listing when applicable  
+- [ ] Forms follow Chapter 12  
+
+### 26.5 Ethics, Access, Performance
+
+- [ ] No false availability enablement  
+- [ ] Accessible status and actions  
+- [ ] Save/submit acknowledgement calm and honest  
+- [ ] Mobile core tasks supported  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 27. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Workspace looks like admin panel for all roles | Role confusion |
+| Consumer nav in workspace | Architecture violation |
+| Realtor can set status to available directly | Domain violation |
+| Three different words for same status | Cognitive load |
+| Rejection without reason | Accountability failure |
+| Lost draft on submit error | Professional rage quit |
+| Preview differs from public detail | Mirror trust break |
+| Dashboard vanity metrics only | Decision support failure |
+| Publish celebration before moderation | False expectation |
+| Listing-level contact override UI | Domain violation |
+| Bulk publish without review | Trust catastrophe |
+| AI auto-publish listing | Ethics failure |
+| Desktop-only create flow | Mobile realtor abandonment |
+| Inquiry without listing context | Communication failure |
+| Profile edit buried in settings | Contact truth decays |
+| Color-only rejected status | Accessibility fail |
+| Edit owner_id or foreign listings | Security and domain violation |
+| Nagging notifications every hour | Unprofessional harassment |
+| Hide unavailable action | False availability persists |
+| Workspace search shows others’ listings | Scope violation |
+
+---
+
+## 28. Correct & Incorrect Examples
+
+### 28.1 Lifecycle Display
+
+**Correct:** List row: “În moderare” with explanation tap → moderation note.  
+**Incorrect:** Row shows “Activ” while pending in database.
+
+### 28.2 Rejection Recovery
+
+**Correct:** “Respins: fotografii neclare. Editează și retrimite.” + edit button.  
+**Incorrect:** “Respins.” only — no path.
+
+### 28.3 Submit Consequence
+
+**Correct:** “La trimitere, anunțul intră în moderare și nu este public până la aprobare.”  
+**Incorrect:** Submit → instant public with no disclosure.
+
+### 28.4 Preview
+
+**Correct:** Preview opens consumer detail identical to live available view.  
+**Incorrect:** Preview shows pending listing as if available.
+
+### 28.5 Profile Contact
+
+**Correct:** Edit phone in profile → all listings use new contact on public detail.  
+**Incorrect:** Per-listing phone override on edit form.
+
+### 28.6 Dashboard Attention
+
+**Correct:** Top: “1 anunț respins · 2 mesaje nerăspuns” with links.  
+**Incorrect:** Dashboard only shows logo and generic chart.
+
+### 28.7 Mark Unavailable
+
+**Correct:** One clear action: “Marchează indisponibil” with confirmation.  
+**Incorrect:** Only delete with data loss fear.
+
+### 28.8 Mobile Submit
+
+**Correct:** Create listing completable on phone with saved draft.  
+**Incorrect:** “Use desktop to publish.”
+
+### 28.9 AI Assist
+
+**Correct:** AI draft description → realtor edits → explicit submit.  
+**Incorrect:** AI text live on submit without review screen.
+
+### 28.10 Return Navigation
+
+**Correct:** Back from edit → portfolio at same scroll and filter.  
+**Incorrect:** Back → empty dashboard.
+
+---
+
+## 29. Design Director Review
+
+**Chapter:** 19 — Realtor Workspace Experience  
+**Section:** XVI — Realtor Workspace  
+**Review type:** Initial standard adoption
+
+### 29.1 Approval Statement
+
+This chapter is approved as the **realtor workspace experience contract** for Rento. All professional operational surfaces for the realtor role must comply. Implementations are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 29.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Actual availability; accountability |
+| Chapter 10 — Navigation System | Realtor navigation architecture |
+| Chapter 12 — Form System & Data Collection Experience | Create/edit forms |
+| Chapter 18 — Realtor Profile Experience | Profile integration |
+| Chapter 16 — Contact & Communication Experience | Inquiry handling |
+| Chapter 20+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 29.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What professional or renter harm is not prevented?  
+2. Does change preserve lifecycle and domain truth?  
+3. Does change reduce or increase cognitive load?  
+4. Is preview-public parity maintained?  
+5. Does automation remain subordinate to judgment?
+
+New lifecycle states or dashboard purpose changes require Design Council approval.
+
+### 29.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on workspace experience |
+| Head of Product Design | Cross-role separation and consistency |
+| Senior UX Designer | Workflow and hierarchy review |
+| Product Management | Lifecycle and domain alignment |
+| Content Design Lead | Status, rejection, and consequence copy |
+| Realtor Operations / Research | Task validity |
+| Accessibility Specialist | Operational lists and forms |
+
+### 29.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new realtor workspace work immediately. Existing workspace aligns during scheduled improvement cycles.
+
+### 29.6 Design Director Closing Note
+
+Renters experience Rento as listings and trust. Realtors experience it as ** responsibility made workable** — every home they publish shapes someone’s life. A workspace that confuses, rushes, or hides consequences fails both professional and public. A workspace that is calm, consequential, and honest turns moderation and ownership rules into daily practice, not compliance friction. This chapter exists so Rento’s professional environment matches the seriousness of the marketplace it powers.
+
+---
+
+**End of Chapter 19**
+
+
+---
+
+## Chapter 20 — Trust, Verification & Moderation Experience
+
+**Section:** XVII — Trust, Verification & Moderation  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Trust & Safety, Moderation Operations, Reviewers  
+**Authority:** Subordinate to Chapters 1–19 and immutable domain rules; governs how trust, verification, and moderation are **experienced** across consumer and realtor surfaces; defines principles only — not moderation queues, ML models, APIs, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **trust, verification, and moderation experience philosophy** for Rento.
+
+Trust is not a feature. Trust is the **operating principle** that governs every listing, every realtor, every communication, and every public interaction on the platform.
+
+Verification is not marketing. Verification is **transparent evidence** of what the platform has actually confirmed — no more, no less.
+
+Moderation is not punishment. Moderation **protects marketplace integrity** — renters from deception, honest realtors from unfair competition, and the platform from becoming untrustworthy classifieds.
+
+Where earlier chapters define discovery, evaluation, contact, favorites, public identity, and realtor operations, **this chapter defines the trust layer that binds them** — how users understand what Rento attests, what is self-reported, what is under review, and what happens when integrity fails or recovers.
+
+This chapter governs trust philosophy, verification presentation, moderation communication, appeals posture, fraud prevention principles, transparency, recovery, and ethical boundaries — across every role and journey.
+
+This chapter does **not** specify backend workflows, reviewer tools, machine learning pipelines, databases, APIs, or screen layouts.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Trust philosophy** | Operating principle across product |
+| **Mental model** | What users believe Rento guarantees |
+| **Trust lifecycle** | How trust is built, tested, damaged, recovered |
+| **Verification** | Realtor and listing attestation presentation |
+| **Moderation** | Review philosophy, communication, education |
+| **Human review** | Role of people in integrity decisions |
+| **Automation boundaries** | What machines may suggest, not decide alone |
+| **Appeals** | Fair challenge posture |
+| **Transparency** | Decision explainability |
+| **Fraud prevention** | Design principles against abuse |
+| **Recovery** | Trust repair after failure |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- Implementation of moderation admin console (admin operations chapter when authored)  
+- Technical fraud detection systems  
+- Legal compliance documentation and terms of service text  
+- Consumer search ranking formulas (Chapter 13)  
+- Individual form validation rules (Chapter 12)  
+- Detailed realtor workspace task flows (Chapter 19 — this chapter governs trust meaning on those surfaces)  
+- Public profile field specs beyond verification display (Chapter 18)  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **trust, verification, or moderation state** is communicated, including but not limited to:
+
+- Search and browse (eligible inventory only)  
+- Listing card and detail trust signals  
+- Contact and communication entry  
+- Favorites status for changed or removed listings  
+- Public realtor profile verification  
+- Realtor workspace moderation feedback and lifecycle states  
+- Rejection, approval, and appeal communications  
+- Empty, blocked, and error states with integrity implications  
+
+If a surface answers *“Can I believe this? What did Rento check? Why was this rejected?”* — this chapter applies.
+
+### 2.4 Trust Extends Every Journey
+
+Trust is **not a settings page** — it is continuous across search → card → detail → contact → save → return.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When trust presentation conflicts with lower-level guidance:
+
+1. Immutable domain rules (moderation status, public availability, contact source, ownership)  
+2. Chapter 1 — Product Philosophy  
+3. **This chapter** — for trust, verification, and moderation **experience meaning**  
+4. Chapters 2–4 — experience and structure  
+5. Chapters 13–19 — funnel and role surfaces that **display** trust  
+6. Chapters 5–12 — governance, visual language, navigation, forms, components  
+7. Pattern specifications and exceptions (Chapter 5)  
+
+Trust presentation must never contradict domain truth. Verification labels must never claim checks the platform did not perform.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust before conversion; only what is real; calm; One Source of Truth |
+| Chapter 2 — Experience Principles | Clarity, recovery, no dead ends, blameless tone |
+| Chapter 4 — Layout & Information Architecture | Trust signal hierarchy; supporting vs primary placement |
+| Chapter 7 — Color Meaning & Semantic Color System | Status and verification semantics — not alarm decoration |
+| Chapter 9 — Motion & Interaction System | Calm moderation feedback; no punitive animation |
+| Chapter 10 — Navigation System | Orientation through blocked or appealed states |
+| Chapter 11 — Component Philosophy & Component System | Trust badges as governed behaviors |
+| Chapter 13 — Search Experience | Only available in public discovery |
+| Chapter 14 — Listing Card & Preview System | Trust at preview level |
+| Chapter 15 — Listing Detail Experience | Trust before contact |
+| Chapter 16 — Contact & Communication Experience | Identity and eligibility at contact |
+| Chapter 17 — Favorites & Saved Properties Experience | Honest status on saved inventory |
+| Chapter 18 — Realtor Profile Experience | Verification on public identity |
+| Chapter 19 — Realtor Workspace Experience | Moderation feedback and lifecycle |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Earlier chapters reference trust ** locally**. **This chapter defines the unified trust contract** — what Rento promises to attest, how moderation is experienced, and how integrity is maintained without eroding calm professionalism.
+
+Without this chapter, verification becomes marketing chrome and moderation becomes opaque punishment. With it, trust becomes **governed marketplace infrastructure**.
+
+---
+
+## 4. Trust Philosophy
+
+Trust on Rento is **daily earned integrity** — not a launch slogan.
+
+### 4.1 Trust Before Growth
+
+Growth features ** never outrank** honest inventory and transparent decisions.
+
+### 4.2 Trust Before Monetization
+
+Revenue mechanics ** subordinate** to truthful presentation — disclosed promotion, no paid verification appearance.
+
+### 4.3 Verification Means Only What Was Verified
+
+Every claim maps to ** defined attestation scope** — explainable, limited, current.
+
+### 4.4 Moderation Educates Before Punitive When Appropriate
+
+First failures especially ** teach correction** — professional tone, actionable guidance (Chapter 19 alignment).
+
+### 4.5 Users Understand Platform Decisions
+
+Renters and realtors can answer ** why something is visible, hidden, or rejected** — at appropriate depth.
+
+### 4.6 Transparency Reduces Uncertainty
+
+Opacity breeds fraud anxiety; ** honest limits** build calm confidence.
+
+### 4.7 Appeals Are Fair
+
+Wrong decisions ** challengeable** through governed process — not bureaucratic trap.
+
+### 4.8 Automation Assists Human Judgment
+
+Automated signals ** inform** reviewers and users — do not silently publish or punish without defined rules.
+
+### 4.9 Platform Never Exaggerates Verification
+
+Rento does not ** oversell** its role — not insurer, not guarantor of lease outcome.
+
+### 4.10 Platform Never Hides Moderation
+
+Public visibility rules ** honest** — pending not shown as available; rejection not invisible to realtor.
+
+### 4.11 Marketplace Integrity Is Continuous
+
+Trust is ** operational habit** — moderation, verification refresh, stale listing removal — not one-time launch audit.
+
+### 4.12 Trust Is Earned Daily
+
+Each listing, contact, and profile update ** renews or spends** platform credibility.
+
+### 4.13 Trust Extends Across Every User Journey
+
+Same truth rules ** search through workspace** — no journey gets “cheap trust.”
+
+### 4.14 Every Moderation Action Has Purpose
+
+Reviews exist to ** protect renters and honest professionals** — not to assert power.
+
+### 4.15 Every Verification Claim Is Explainable
+
+User can learn ** what was checked** — plain language, not legal maze required for basics.
+
+---
+
+## 5. Marketplace Trust Mental Model
+
+Users hold a **layered trust model** — not binary “trusted/untrusted.”
+
+### 5.1 Platform Layer
+
+*Does Rento show only what it believes is appropriate to show?* — availability, moderation gate.
+
+### 5.2 Attestation Layer
+
+*What did Rento independently confirm?* — verification scope.
+
+### 5.3 Professional Layer
+
+*Who is accountable?* — identified realtor, profile source (Chapter 18).
+
+### 5.4 Content Layer
+
+*Does this listing’s facts look honest and complete?* — user judgment supported by structure.
+
+### 5.5 Interaction Layer
+
+*Will contact reach the right person honestly?* — Chapter 16.
+
+### 5.6 Relational Rules
+
+Higher layers ** do not replace** lower — verification does not excuse dishonest listing price; platform gate does not replace user scrutiny.
+
+---
+
+## 6. Trust Lifecycle
+
+Trust moves through **states over time** — product must support each honestly.
+
+### 6.1 Lifecycle Phases
+
+| Phase | Description |
+|-------|-------------|
+| **Introduction** | User first encounters Rento — brand calm, no overclaim |
+| **Evaluation** | User judges listing and realtor — signals legible |
+| **Commitment** | Contact or save — eligibility truth critical |
+| **Verification** | Ongoing checks — badges current or removed |
+| **Disruption** | Rejection, removal, fraud flag — communicated clearly |
+| **Recovery** | Fix, appeal, restate — path forward |
+| **Departure** | User leaves — honest last state, no ghost listings |
+
+### 6.2 Trust Debt
+
+Each integrity failure ** accumulates debt** — recovery requires consistent honesty over time.
+
+### 6.3 Trust Refresh
+
+Verification and listings ** expire in meaning** if stale — product philosophy favors refresh over eternal badge.
+
+---
+
+## 7. Verification Philosophy
+
+Verification exists to **reduce uncertainty about identity and standing** — not to sell premium placement.
+
+### 7.1 Verification Is Attestation, Not Endorsement
+
+Rento confirms ** specific facts** — not “this realtor is perfect” or “this home is perfect.”
+
+### 7.2 Verification Is Optional Enhancement
+
+Unverified participants ** not excluded** from marketplace by default unless policy requires minimum gate — unverified styled neutrally (Chapter 18).
+
+### 7.3 Verification Is Maintainable
+
+Checks ** expire or revoke** when facts change — UI updates everywhere.
+
+### 7.4 Verification Scope Is Narrow by Design
+
+Narrow scope ** more believable** than omnibus “verified” label.
+
+### 7.5 Verification Serves Renters and Honest Realtors
+
+Good actors ** benefit** from differentiation — without fake badges for bad actors.
+
+---
+
+## 8. Verification Principles
+
+### 8.1 Defined Check Types Only
+
+Each verification type has ** name, scope, and limits** documented for product and user.
+
+### 8.2 Evidence-Based
+
+Claims require ** evidence reviewed** per policy — not self-assertion alone.
+
+### 8.3 Revocable
+
+Failed reverification or policy breach ** removes badge** promptly.
+
+### 8.4 Consistent Display Grammar
+
+Same badge ** same meaning** on card, detail, profile, contact — One Source of Truth.
+
+### 8.5 No Verification by Payment
+
+Payment ** never buys** verification appearance — ethics invariant.
+
+### 8.6 Graduated Verification (Future-Compatible)
+
+Multiple tiers allowed only if ** each tier comprehensible** — not ladder of confusion.
+
+---
+
+## 9. Verification Transparency
+
+Transparency is **user-legible scope** — not internal process dump.
+
+### 9.1 What We Checked
+
+Plain summary: e.g. identity document match, agency registration — ** market-appropriate examples without legal advice in standard**.
+
+### 9.2 What We Did Not Check
+
+Explicit limits: e.g. listing condition, landlord ownership of property — ** renter still evaluates**.
+
+### 9.3 How to Learn More
+
+Link or expandable ** trust center concept** — optional depth.
+
+### 9.4 Timestamp Honesty
+
+“When verified” shown if ** meaningful** — stale verification indicated when policy defines expiry.
+
+### 9.5 No Fine Print Deception
+
+Limits ** not hidden** in contradicting headline badge.
+
+---
+
+## 10. Realtor Verification
+
+Realtor verification attests ** professional identity standing** — per defined program.
+
+### 10.1 Typical Attestation Targets
+
+May include:
+
+- Identity match  
+- Agency affiliation where applicable  
+- Professional license class where applicable and collectible  
+- Contact reachability test where defined  
+
+Exact program ** product and legal defined** — standard governs presentation only.
+
+### 10.2 Realtor Cannot Self-Verify
+
+No UI for realtor to ** toggle verified** — platform controlled.
+
+### 10.3 Workspace Visibility
+
+Realtor sees ** verification status and next steps** in workspace — Chapter 19 integration.
+
+### 10.4 Public Display
+
+Consumer sees ** compact trust signal** — detail available without overwhelming card.
+
+### 10.5 Revocation Communication
+
+Realtor notified ** professionally** — public badge removed; reason class explained.
+
+---
+
+## 11. Listing Verification
+
+Listing-level trust differs from ** realtor-level** — scope must not blur.
+
+### 11.1 Moderation Approval Is Not Full Verification
+
+**Available** means passed moderation gate — ** not** “Rento inspected home in person” unless separate program exists and is labeled.
+
+### 11.2 Listing-Specific Checks (Future-Compatible)
+
+If product adds listing checks — e.g. address consistency — ** separate label** from realtor verification.
+
+### 11.3 Media Honesty
+
+Moderation may reject ** misleading photos** — communicated as listing quality issue, not moral judgment on realtor character alone.
+
+### 11.4 Availability Truth
+
+Listing marked available ** must be available** per realtor attestation and policy — false available is integrity violation.
+
+### 11.5 No “Verified Home” Overclaim
+
+Language avoids implying ** platform warranty** on property condition.
+
+---
+
+## 12. Moderation Philosophy
+
+Moderation is **quality and integrity gate** before public consumer exposure.
+
+### 12.1 Protect Renters First
+
+Gate exists so ** public discovery shows appropriate inventory** — actual availability promise (Chapter 1).
+
+### 12.2 Protect Honest Realtors
+
+Consistent rules ** prevent race to bottom** — misleading ads moderated out.
+
+### 12.3 Calm Professional Tone
+
+Moderation messages ** respectful** — housing professionals, not criminals by default.
+
+### 12.4 Predictable Process
+
+Realtor understands ** steps and rough timing** — uncertainty bounded honestly.
+
+### 12.5 Proportional Response
+
+Minor issues ** correction request**; severe or repeat ** stronger action** — proportionality principle.
+
+### 12.6 Moderation Is Not Public Shaming
+
+Rejection reasons ** private to realtor** — not displayed on public profile as scarlet letter.
+
+---
+
+## 13. Moderation Principles
+
+### 13.1 New Listings Pending
+
+New realtor listings ** pending until approved** — domain rule reflected in all consumer surfaces.
+
+### 13.2 Only Available Publicly
+
+Consumer discovery ** available only** — not pending, not rejected.
+
+### 13.3 Status Not User-Editable
+
+Realtor cannot ** self-set available** — workspace reflects truth (Chapter 19).
+
+### 13.4 Material Changes Re-Review
+
+Significant edits may ** re-enter review** — disclosed before submit.
+
+### 13.5 Clear Rejection Reasons
+
+Reasons ** specific and actionable** — which fact or media failed, not code only.
+
+### 13.6 Consistent Standards
+
+Same rules ** all realtors** — fairness as trust pillar.
+
+### 13.7 Admin Role Boundary
+
+Only ** admin grants realtor role** — not moderation of own listings by admin posing as realtor in consumer paths.
+
+---
+
+## 14. Human Review Principles
+
+Human judgment remains ** accountable center** for consequential moderation.
+
+### 14.1 Humans Review Edge Cases
+
+Ambiguous, novel, or high-harm cases ** human decided** — automation flags only.
+
+### 14.2 Reviewer Accountability
+
+Internal quality programs ** exist** — standard assumes humans can err; appeals exist.
+
+### 14.3 Consistent Rubric
+
+Reviewers follow ** documented standards** — renter-facing consistency.
+
+### 14.4 Cultural and Market Context
+
+Romania long-term rental context ** informs** review — local relevance without arbitrary bias.
+
+### 14.5 Timeliness Respect
+
+Slow review ** harms realtors and renters** — target ranges honest; backlog communicated in workspace.
+
+---
+
+## 15. Automation Boundaries
+
+Automation ** assists** — does not silently govern public truth without defined policy.
+
+### 15.1 Auto-Reject Only With Clear Rules
+
+Fully automated reject ** only** for objective violations — obvious spam, prohibited content — with realtor path to understand.
+
+### 15.2 Auto-Approve Caution
+
+Auto-approve ** conservative** — when used, monitored; false positive harm asymmetric.
+
+### 15.3 Flag, Don’t Punish Silently
+
+Automation flags for ** human queue** — not shadow suppression without realtor knowledge on owned inventory.
+
+### 15.4 No Opaque User Scores
+
+Hidden renter or realtor “trust scores” ** not shown** unless defined, appealable, and meaningful — default: avoid.
+
+### 15.5 AI in Moderation (Future-Compatible)
+
+AI suggests violation class — ** human or explicit rule confirms** — generate-review-decide loop.
+
+---
+
+## 16. Appeals Philosophy
+
+Appeals are **fair correction path** — not loyalty punishment.
+
+### 16.1 Right to Challenge
+
+Realtor may ** appeal rejection** when product provides — clear entry, status tracking.
+
+### 16.2 New Evidence Welcome
+
+Appeal allows ** corrected facts or context** — not only argument.
+
+### 16.3 Timely Resolution
+
+Appeal ** bounded timeline** — honest expectation; no infinite limbo.
+
+### 16.4 Final Decision Explained
+
+Outcome ** specific** — upheld or overturned with reason.
+
+### 16.5 No Retaliation Design
+
+Appeal UI ** not discouraging** through shame or fear copy.
+
+### 16.6 Renter Appeals (Future-Compatible)
+
+If renters report listings — ** reporter status communicated** within privacy rules.
+
+---
+
+## 17. User Expectations
+
+Renters and realtors ** expect different trust postures** — both must be met honestly.
+
+### 17.1 Renter Expectations
+
+- Public listings ** passed gate**  
+- Verification badges ** mean defined checks**  
+- Contact ** reaches identified realtor**  
+- Changed or removed homes ** not shown as fresh available**  
+
+### 17.2 Realtor Expectations
+
+- Clear ** why rejected**  
+- Path to ** fix and resubmit**  
+- No capricious ** hidden suppression**  
+- Verification ** earned by evidence**, not favoritism  
+
+### 17.3 Platform Honesty About Limits
+
+Rento states ** what it does not guarantee** — visits, lease success, legal title — calm disclaimer posture where appropriate.
+
+---
+
+## 18. Marketplace Integrity
+
+Integrity is **system-wide alignment** — not moderation team KPI alone.
+
+### 18.1 Inventory Honesty
+
+Available means ** available per policy** — favorites and search align.
+
+### 18.2 Identity Honesty
+
+One realtor ** one identity** — no sock puppets rewarded by design.
+
+### 18.3 Communication Honesty
+
+Contact paths ** match profile** — no bait routing.
+
+### 18.4 Continuous Enforcement
+
+Stale, fraudulent, or duplicate listings ** removed from public** — integrity maintenance never “done.”
+
+### 18.5 Integrity Visible in Brand
+
+Calm professional brand ** consistent** with strict gates — not wild west classifieds.
+
+---
+
+## 19. Fraud Prevention Philosophy
+
+Fraud prevention ** protects users** without surveillance theater.
+
+### 19.1 Proportional Friction
+
+High-risk patterns may add ** steps** — auth, limits — explained, not punitive by default.
+
+### 19.2 Report Mechanisms
+
+Users can ** flag suspicious listings or behavior** — subordinate paths, clear outcome expectation.
+
+### 19.3 Duplicate and Scam Patterns
+
+Duplicate photos, impossible price, identity mismatch — ** moderation targets** — user communication calm.
+
+### 19.4 Realtor Fraud Harm
+
+Fraudulent realtors ** removed** — public communication without compromising ongoing investigation inappropriately.
+
+### 19.5 Renter Fraud Harm
+
+Spam inquiries ** blocked** — realtor workspace clarity — without exposing renter PII inappropriately.
+
+### 19.6 Prevention Without Paranoia
+
+UI does not ** treat all users as criminals** — trust default with accountable gates.
+
+---
+
+## 20. Transparency Principles
+
+Transparency is **structured honesty** — across roles.
+
+### 20.1 State Visibility
+
+Listing and verification states ** named plainly** — pending, available, rejected, expired.
+
+### 20.2 Decision Rationale
+
+Moderation decisions include ** human-readable rationale class** — not only internal codes on realtor surfaces.
+
+### 20.3 Policy Accessibility
+
+Trust and moderation policies ** findable** — linked from rejection and verification contexts.
+
+### 20.4 Change Communication
+
+Material policy or badge meaning changes ** communicated** — not silent semantic drift.
+
+### 20.5 Data Use Honesty
+
+If user data used for ** fraud or moderation**, privacy policy governs — product copy does not contradict.
+
+---
+
+## 21. Communication of Moderation Decisions
+
+How rejections and restrictions ** feel** determines professional cooperation.
+
+### 21.1 Blameless Professional Tone
+
+“You need to…” not “You failed as a person…” — Chapter 2 alignment.
+
+### 21.2 Action-Linked Messages
+
+Each message ** ties to fix** — edit photos, clarify price, complete profile.
+
+### 21.3 Severity Levels
+
+Message tone ** scales** — minor correction vs policy violation — not always maximum alarm.
+
+### 21.4 Consumer Silence on Rejection
+
+Renters ** do not see** rejected listing — no public rejection drama.
+
+### 21.5 Notification Calm
+
+Realtor notified ** without panic styling** — semantic color disciplined (Chapter 7).
+
+---
+
+## 22. Trust Recovery
+
+Recovery restores **confidence after failure** — for users and platform.
+
+### 22.1 Realtor Recovery Path
+
+Fix → resubmit → approved → ** live again** — celebrated calmly, not carnival.
+
+### 22.2 Renter Recovery Path
+
+After bad experience — report outcome, ** similar listings** optional — not trapped in dead end.
+
+### 22.3 Platform Recovery
+
+After incident — ** honest communication** if user-affecting — rare, grave, factual.
+
+### 22.4 Verification Re-Entry
+
+Revoked verification ** regain path** when policy allows — steps clear.
+
+### 22.5 No Permanent Invisible Punishment
+
+Shadow bans ** avoided** — if restriction exists, ** realtor informed** appropriately.
+
+---
+
+## 23. Mobile-First Trust Experience
+
+Trust signals and moderation messages ** readable on phone** — primary context.
+
+### 23.1 Compact Trust on Card
+
+Verification ** legible without tap** — not microscopic disclaimer.
+
+### 23.2 Expandable Depth
+
+Tap for ** scope detail** — progressive disclosure.
+
+### 23.3 Rejection on Mobile Workspace
+
+Realtor reads rejection, edits, resubmits ** on mobile** — full loop.
+
+### 23.4 Report Flow Mobile
+
+Renter report ** short, serious, completable** — not desktop-only.
+
+---
+
+## 24. Accessibility
+
+Trust communication ** perceivable by all**.
+
+### 24.1 Badge Text Alternatives
+
+Verification ** text, not icon alone**.
+
+### 24.2 Status Not Color-Only
+
+Rejected, pending, available ** labeled**.
+
+### 24.3 Readable Policy Summaries
+
+Trust center content ** structured headings** — not PDF wall only.
+
+### 24.4 Announcements
+
+Moderation toast or status change ** announced** to assistive tech.
+
+---
+
+## 25. Trust Performance Experience
+
+Trust UX must feel **responsive and credible** — stall feels like hiding; confidence that integrity states are current and true.
+
+### 25.1 Immediate Status Truth
+
+Workspace and detail **show current moderation state** — not stale yesterday; identity on listing surfaces **prompt**, not long-delayed afterthought.
+
+### 25.2 Visible Progress
+
+Verification application and moderation waits show **honest progress stages** — not black hole; loading **truthful** — not fake instant approved.
+
+### 25.3 Stable Trust Signals
+
+Badges **do not flicker** on and off during session without state change; result and status presentation **stable** during session.
+
+### 25.4 Preserved Context
+
+Realtor edits rejected listing **without losing workspace place**; user returns to **same evaluation context** after trust-related detour.
+
+### 25.5 Calm Updates
+
+Approval and status notifications use **restrained delivery** — professional relief, not slot machine; no fake instant approved theater.
+
+### 25.6 Predictable Public Effect
+
+Realtor learns **when public visibility changes** — predictable cause-effect.
+
+Perceived performance inherits workspace performance (Chapter 19) and favorites honesty (Chapter 17).
+
+---
+
+## Trust Ethics
+
+Trust ethics are **non-negotiable marketplace duties**.
+
+### Never Lie Through Badges
+
+Verification labels ** never exceed evidence**.
+
+### Never Hide Rejection from Realtor
+
+Realtors ** entitled to know** listing state on owned inventory.
+
+### Never Show Pending as Available
+
+Consumer discovery ** domain truth** — ethical line one.
+
+### Never Sell Trust
+
+Trust signals ** not for sale** — promotion labeled separately.
+
+### Never Use Moderation to Favor Paying Realtors
+
+Fair rules ** equal application** — ethics and legal alignment.
+
+### Never Exploit Fear
+
+Fraud warnings ** factual, calm** — not engagement manipulation.
+
+---
+
+## Trust Success Metrics
+
+Trust quality judged at **philosophy and outcome level** — not badge count.
+
+### Misrepresentation Rate
+
+Public listings later found ** materially false** — downward trend goal.
+
+### Rejection Comprehension
+
+Realtors ** fix without support** after first rejection message — clarity metric.
+
+### Verification Comprehension
+
+Users articulate ** what badge means** in user research — or badge simplified.
+
+### Appeal Fairness Perception
+
+Realtors rate appeals ** fair** — qualitative.
+
+### Consumer Contact Confidence
+
+Renters contact ** with understood limits** — informed trust, not blind faith.
+
+### Stale Available Rate
+
+Available listings ** actually available** — integrity metric.
+
+### Trust Recovery Success
+
+After rejection or report, ** successful return to honest live state** — recovery metric.
+
+### Long-Term Platform Trust
+
+Brand research: Rento ** believed in rental context** — north star.
+
+Teams evaluate trust changes against these principles in design critique and §33 checklist.
+
+---
+
+## 26. Trust Consistency
+
+**One trust language** across product.
+
+### 26.1 One Verification Vocabulary
+
+Same badge strings ** everywhere** — card, detail, profile, contact.
+
+### 26.2 One Moderation Vocabulary
+
+Pending, available, rejected ** unified** — workspace, notifications, support docs.
+
+### 26.3 One Eligibility Rule Public
+
+Consumer paths ** single rule** — available only — no surface exceptions.
+
+### 26.4 Cross-Role Consistency
+
+Renter-facing and realtor-facing messages ** same facts** — different detail depth, not contradiction.
+
+### 26.5 Future Surface Adoption
+
+New modules ** adopt trust grammar** before inventing badges.
+
+---
+
+## 27. Future Compatibility
+
+Trust system ** extends without credibility inflation**.
+
+### 27.1 Review Systems
+
+Renter reviews ** separate grammar** from verification — no merge confusion.
+
+### 27.2 Insurance or Guarantee Partners
+
+Third-party guarantees ** heavily labeled** — not Rento verification.
+
+### 27.3 Identity Providers
+
+External identity check ** disclosed as such** — scope unchanged.
+
+### 27.4 Automated Listing Quality Scores
+
+If shown, ** defined and appealable** — or not shown.
+
+### 27.5 Cross-Border Expansion
+
+Verification ** market-specific** — labels localized, meaning stable.
+
+---
+
+## Trust Evolution
+
+Trust experience ** evolves without badge inflation or moderation opacity cycles**.
+
+### Evolve Clarity, Do Not Multiply Badges
+
+New signals ** rare** — consolidate before adding chrome.
+
+### Retire Misleading Programs
+
+Old verification programs ** sunset publicly** — badges removed.
+
+### Preserve Mental Model
+
+Layers — platform, attestation, professional, content — ** model stable**.
+
+### Backward Compatibility
+
+Badge meaning changes ** communicated and migrated** — no silent semantic shift.
+
+Trust evolution requires Design Council approval for ** verification scope or public moderation vocabulary changes**.
+
+---
+
+## 28. Governance
+
+### 28.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| New verification type or badge | Design Council + Trust/Legal |
+| Moderation message taxonomy | Content Design + Moderation Ops |
+| Public eligibility rule change | Product Director + Domain owner |
+| Automation auto-reject scope | Trust & Safety + Product |
+| Appeal process UX | Design Council |
+
+### 28.2 Exception Policy
+
+Trust experiments ** never waive** public pending/available rules for experiment group without council crisis approval.
+
+### 28.3 Cross-Chapter Review
+
+Trust changes ** review Chapters 13–19 surfaces** for parity.
+
+### 28.4 Documentation
+
+Badge and status meanings ** documented in trust center** when changed.
+
+---
+
+## 29. Product Review Checklist
+
+Before shipping trust, verification, or moderation UX changes:
+
+### 29.1 Philosophy
+
+- [ ] Trust before growth and monetization  
+- [ ] Verification means only what was verified  
+- [ ] Moderation educational tone when appropriate  
+- [ ] Transparency reduces uncertainty  
+
+### 29.2 Verification
+
+- [ ] Scope and limits visible  
+- [ ] No payment-for-badge  
+- [ ] Revocation updates all surfaces  
+- [ ] Consistent grammar  
+
+### 29.3 Moderation
+
+- [ ] Pending not public as available  
+- [ ] Rejection actionable and professional  
+- [ ] Status not self-set by realtor  
+- [ ] Appeals fair if provided  
+
+### 29.4 Integrity & Recovery
+
+- [ ] Fraud prevention proportional  
+- [ ] Recovery paths exist  
+- [ ] Favorites and search align with status  
+
+### 29.5 Ethics, Access, Performance
+
+- [ ] No trust signal oversell  
+- [ ] Accessible badges and statuses  
+- [ ] Status updates honest and timely  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 30. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| “Verified” without scope | False confidence |
+| Pending listing in search | Domain and ethics violation |
+| Rejection code only | Realtor cannot fix |
+| Punitive red shame styling | Professional hostility |
+| Verification bought by subscription | Trust corruption |
+| Different badge meaning on card vs profile | Consistency break |
+| Hidden delisting from realtor | Accountability failure |
+| Auto-approve obvious scams | Renter harm |
+| No appeal path | Unfairness perception |
+| Trust badge on unverified paid placement | Ethics failure |
+| Moderation reason public on profile | Shaming |
+| Stale verification badge forever | Credibility decay |
+| Consumer sees “under review” listing | Anxiety and confusion |
+| Report flow dead end | Integrity gap |
+| AI auto-reject with no reason | Opaque automation |
+| Overclaim “Rento verified home quality” | Legal and trust risk |
+| Ghost available after lease signed | Marketplace lie |
+| Trust center buried in footer only | Transparency failure |
+| Color-only rejected in workspace | Accessibility fail |
+| Fear-based fraud banners everywhere | Philosophy violation |
+
+---
+
+## 31. Correct & Incorrect Examples
+
+### 31.1 Verification Label
+
+**Correct:** “Verificat: identitate și agenție” + link “Ce înseamnă?”  
+**Incorrect:** Gold shield “100% TRUSTED”.
+
+### 31.2 Public Pending
+
+**Correct:** Consumer search shows only available; pending visible only in realtor workspace.  
+**Incorrect:** Pending listing appears in browse “coming soon.”
+
+### 31.3 Rejection Message
+
+**Correct:** “Fotografiile nu reflectă proprietatea. Încarcă imagini actuale și retrimite.”  
+**Incorrect:** “Error 4421: REJECTED.”
+
+### 31.4 Appeal
+
+**Correct:** “Contestă decizia” → form → status “În analiză” → outcome explained.  
+**Incorrect:** No appeal; email black hole.
+
+### 31.5 Revocation
+
+**Correct:** Verification removed; badge disappears profile, cards, details same day.  
+**Incorrect:** Badge remains on old cards only.
+
+### 31.6 Renter Limit Statement
+
+**Correct:** Trust center: “Rento verifică identitatea agentului, nu starea apartamentului la vizită.”  
+**Incorrect:** Implied platform inspected apartment.
+
+### 31.7 Favorites Removed
+
+**Correct:** Saved listing shows “Nu mai este disponibil” with remove option.  
+**Incorrect:** Shows as available until user contacts.
+
+### 31.8 Automation Flag
+
+**Correct:** Workspace: “Semnal automat: preț neobișnuit. Un reviewer va verifica.”  
+**Incorrect:** Listing silently hidden; realtor unaware.
+
+### 31.9 Report Listing
+
+**Correct:** Report → category → confirmation → thank you with realistic follow-up expectation.  
+**Incorrect:** Report vanishes with no feedback.
+
+### 31.10 Moderation Approval
+
+**Correct:** Realtor notified calmly: “Anunțul este acum public.”  
+**Incorrect:** Confetti animation implying guaranteed rental success.
+
+---
+
+## 32. Design Director Review
+
+**Chapter:** 20 — Trust, Verification & Moderation Experience  
+**Section:** XVII — Trust, Verification & Moderation  
+**Review type:** Initial standard adoption
+
+### 32.1 Approval Statement
+
+This chapter is approved as the **trust, verification, and moderation experience contract** for Rento. All attestation presentation, moderation communication, eligibility display, and recovery paths must comply. Operational and technical systems are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 32.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent trust and truth authority |
+| Chapter 7 — Color Meaning & Semantic Color System | Status semantics |
+| Chapter 13 — Search Experience | Public eligibility |
+| Chapter 18 — Realtor Profile Experience | Verification display |
+| Chapter 19 — Realtor Workspace Experience | Moderation feedback |
+| Chapter 21+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 32.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What renter or realtor harm is not prevented?  
+2. Does verification scope remain honest and explainable?  
+3. Does moderation remain educational and fair where appropriate?  
+4. Is public availability truth preserved on all consumer paths?  
+5. Does change avoid trust-washing or badge inflation?
+
+New verification types or eligibility rules require Design Council approval.
+
+### 32.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on trust experience |
+| Head of Product Design | Cross-surface trust consistency |
+| Trust & Safety Lead | Moderation and fraud alignment |
+| Content Design Lead | Messages, badges, policy copy |
+| Product Management | Domain and eligibility rules |
+| Legal / Compliance | Verification and claim limits |
+| Accessibility Specialist | Badge and status accessibility |
+
+### 32.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new trust-related experience work immediately. Existing surfaces align during scheduled improvement cycles.
+
+### 32.6 Design Director Closing Note
+
+Users do not read moderation policies for pleasure. They read them ** when anxiety demands truth** — Is this listing real? Is this person accountable? Did the platform look, or only hope? Trust is not a badge factory. It is the discipline of showing only what we can defend, hiding only what must be hidden to protect people, and explaining both with calm honesty. This chapter exists so Rento’s integrity is designed as carefully as its search — because in long-term rental, trust is not marketing. It is the product.
+
+---
+
+**End of Chapter 20**
+
+
+---
+
+## Chapter 21 — Notifications & User Re-engagement Experience
+
+**Section:** XVIII — Notifications & Re-engagement  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–20; operationalizes respect for user time (Chapter 1), Navigation return integrity (Chapter 10), and trust communication (Chapter 20); defines principles only — not push providers, email systems, analytics pipelines, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **notifications and user re-engagement experience philosophy** for Rento.
+
+Notifications are not messages. Notifications are **moments of product responsibility** — brief interventions where the platform either helps someone continue a meaningful housing journey or respects their silence.
+
+Re-engagement is not about increasing clicks. Re-engagement exists to help users **continue interrupted journeys** with confidence, context, and respect — after pause, distraction, device change, or marketplace change that affects their shortlist.
+
+Where Chapters 13–20 define discovery, evaluation, contact, favorites, professional operations, and trust, **this chapter defines when and how Rento may interrupt** — and how those interruptions must preserve calm, trust, and user control in a long-term rental context.
+
+This chapter governs notification philosophy, hierarchy, timing, relevance, categories, preferences, ethics, and evolution — for renters, realtors, and future roles — without prescribing delivery technology.
+
+This chapter does **not** specify push tokens, email templates, backend queues, frontend toast components, analytics dashboards, or channel-specific APIs.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Responsibility, value, calm, control |
+| **Re-engagement** | Journey continuation vs manipulation |
+| **Attention** | Respect, interruption justification |
+| **Mental model** | What users expect from Rento interruptions |
+| **Hierarchy** | Priority among notification types |
+| **Timing** | When interruption is appropriate |
+| **Relevance** | Personal value and context |
+| **Lifecycle** | Send, deliver, open, act, dismiss, expire |
+| **Categories** | Listing, favorites, communication, workspace, trust |
+| **Preferences** | User control philosophy |
+| **Silence** | When not to notify |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- In-app messaging thread content and compose UX (Chapter 16)  
+- Contact initiation flows (Chapter 16)  
+- Moderation decision rationale copy detail (Chapter 20 — this chapter governs notification posture only)  
+- Marketing email campaigns and growth newsletters (unless explicitly governed as out-of-product promotion)  
+- SEO and transactional legal email requirements  
+- Implementation of notification center UI patterns (future pattern chapter)  
+- Admin operational alerts to staff  
+
+### 2.3 Surfaces Governed
+
+All present and future **product-initiated interruptions and re-engagement touchpoints**, including but not limited to:
+
+- Push notifications (when product offers)  
+- In-app notification center or inbox summaries  
+- Email notifications tied to housing journey  
+- SMS where product defines (high restraint)  
+- Badge counts on navigation destinations  
+- Saved listing and saved search change alerts  
+- Realtor workspace operational alerts  
+- Trust, verification, and moderation status alerts  
+
+If a touchpoint answers *“Should we interrupt this person now, and with what?”* — this chapter applies.
+
+### 2.4 Notifications Serve Journeys, Not Metrics
+
+Engagement rate is **not** success. Journey continuation with trust is success.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When notification decisions conflict with lower-level guidance:
+
+1. Immutable domain rules and user privacy obligations  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 20 — Trust, Verification & Moderation Experience  
+4. **This chapter** — for interruption and re-engagement behavior  
+5. Chapters 2–4, 9–10 — experience, structure, motion, navigation  
+6. Chapters 13–19 — journey surfaces notifications reference  
+7. Chapter 5 Exception Policy for experiments  
+
+Notifications must never contradict public availability truth. Notifications must never pressure contact or lease decisions through anxiety.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Respect user time; calm; trust before conversion |
+| Chapter 2 — Experience Principles | Recovery, no dead ends, blameless tone |
+| Chapter 4 — Layout & Information Architecture | In-app notification hierarchy |
+| Chapter 9 — Motion & Interaction System | Calm arrival; reduced motion |
+| Chapter 10 — Navigation System | Deep link return; context preservation |
+| Chapter 13 — Search Experience | Saved search alerts; search context on open |
+| Chapter 16 — Contact & Communication Experience | Inquiry reply notifications |
+| Chapter 17 — Favorites & Saved Properties Experience | Listing change on saved homes |
+| Chapter 18 — Realtor Profile Experience | Verification status alerts |
+| Chapter 19 — Realtor Workspace Experience | Operational moderation and inquiry alerts |
+| Chapter 20 — Trust, Verification & Moderation Experience | Honest status communication |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Earlier chapters define **what users do inside Rento**. **This chapter defines when Rento may reach outward** — and the ethical and experiential rules for doing so without betraying housing-market seriousness.
+
+Without this chapter, notifications become growth spam. With it, notifications become **governed journey continuity**.
+
+---
+
+## 4. Notification Philosophy
+
+Notifications exist to **reduce uncertainty and resume meaningful progress** — not to harvest attention.
+
+### 4.1 Notify Only When Valuable
+
+Every notification must pass ** user value test** — would a reasonable user thank Rento for this interruption?
+
+### 4.2 Respect User Attention
+
+Attention is ** finite and stressed** in housing search — spend it rarely and well.
+
+### 4.3 Notifications Continue Journeys
+
+Interruption should ** reconnect user to prior intent** — saved home, open inquiry, pending task — not start unrelated loops.
+
+### 4.4 Every Notification Has Purpose
+
+If purpose cannot be stated in one sentence tied to user benefit, ** do not send**.
+
+### 4.5 Notifications Reduce Uncertainty
+
+Good notifications answer ** what changed, why it matters, what to do** — not vague “check the app.”
+
+### 4.6 Timing Is Part of Experience
+
+When notified matters as much as ** what** — housing decisions are not impulse purchases.
+
+### 4.7 Notifications Never Manipulate
+
+Fear, false urgency, and artificial scarcity in notifications ** forbidden** (Chapters 1, 17, 20).
+
+### 4.8 Silence Is Sometimes Correct
+
+** Not notifying** is a valid product decision — often the most respectful one.
+
+### 4.9 Notifications Reinforce Trust
+
+Honest change alerts on saved listings ** build credibility** — deceptive pings destroy it.
+
+### 4.10 Notifications Preserve Context
+
+Opening from notification ** restores listing, search, or thread context** — not generic home dump.
+
+### 4.11 Users Remain in Control
+
+Preferences, mute, and unsubscribe ** real and honored** — not dark patterns.
+
+### 4.12 Preferences Are Respected
+
+User choices ** persist and apply** — not reset silently for growth experiments.
+
+### 4.13 Notifications Never Create Anxiety for Engagement
+
+Housing anxiety is high enough — ** product does not amplify** for clicks.
+
+### 4.14 Communication Remains Calm and Professional
+
+Copy tone ** direct, neutral, respectful** — not casino, not guilt.
+
+### 4.15 Every Interruption Must Be Justified
+
+Internal review asks: ** why now, why this user, why this channel?**
+
+---
+
+## 5. Re-engagement Philosophy
+
+Re-engagement means **helping users pick up where they left off** — not dragging them back for vanity metrics.
+
+### 5.1 Journey Continuation, Not Addiction
+
+Re-engagement serves ** incomplete housing decisions** — not daily habit formation for its own sake.
+
+### 5.2 Respect Pauses
+
+Users pause search for life reasons — ** silence during pause is healthy** — not failure.
+
+### 5.3 Re-engagement With Memory
+
+Return experience assumes ** prior intent** — shortlist, criteria, inquiry — and honors it.
+
+### 5.4 No Guilt Re-engagement
+
+“You haven’t opened Rento in 3 days” ** shame patterns forbidden**.
+
+### 5.5 Value-First Return
+
+User returns because ** something materially changed or remains important** — not because of streak loss.
+
+### 5.6 Re-engagement Ends at Decision
+
+When user leases or abandons search honestly, ** re-engagement stops** — not infinite nurture.
+
+---
+
+## 6. User Attention Principles
+
+Attention is a **shared resource** between user and platform.
+
+### 6.1 One Thing Per Notification
+
+Single ** clear subject** — not compound alerts in one ping.
+
+### 6.2 Proportionality
+
+Minor updates ** in-app or digest** — not push for every price tick unless user opted into high sensitivity.
+
+### 6.3 Batch and Digest
+
+Multiple low-urgency events ** may combine** — calm summary over notification storm.
+
+### 6.4 Quiet Hours Respect
+
+Product philosophy favors ** quiet hours and locale-appropriate timing** — housing search is not nightlife alerts.
+
+### 6.5 Channel Matches Urgency
+
+Highest urgency only on ** highest interrupt channels** — SMS rarest, push selective, email for durable record.
+
+### 6.6 Attention Debt
+
+Frequent low-value pings ** train ignore** — damaging future critical alerts.
+
+---
+
+## 7. Notification Mental Model
+
+Users model Rento notifications as **updates about my housing search or professional duties** — not as marketing spam.
+
+### 7.1 Personal Relevance Model
+
+*This is about something I saved, asked about, or am responsible for.*
+
+### 7.2 Truth Model
+
+*If Rento says a listing changed, it changed* — notification truth matches app truth (Chapter 17, 20).
+
+### 7.3 Action Model
+
+*Tap takes me where I can act or understand* — not random landing.
+
+### 7.4 Control Model
+
+*I can turn these off without losing core product access* — not hostage settings.
+
+### 7.5 Professional Model (Realtor)
+
+*Alerts tell me what needs professional response* — inquiries, moderation — not consumer browse noise.
+
+---
+
+## 8. Notification Hierarchy
+
+Not all notifications are equal. **Hierarchy prevents alert inflation.**
+
+### 8.1 Tier 1 — Critical Integrity
+
+Requires prompt user awareness:
+
+- Listing user saved ** no longer available**  
+- Material fraud or safety report outcome affecting user  
+- Account or security events affecting access  
+- Moderation outcome blocking realtor publish when they are waiting  
+
+### 8.2 Tier 2 — High Value Journey
+
+Important but not emergency:
+
+- Reply to ** user inquiry** (realtor or renter when in-app)  
+- Saved search ** new matches** (digest or batched)  
+- Moderation ** approval or rejection** with action needed  
+- Verification ** outcome**  
+
+### 8.3 Tier 3 — Useful Awareness
+
+Helpful context:
+
+- Price change on ** saved listing** (if user opted in or default sensitivity allows)  
+- Profile completeness ** blocking task** (realtor workspace)  
+- Draft listing ** reminder** after long inactivity  
+
+### 8.4 Tier 4 — Out of Product Push (Restrained)
+
+Marketing, tips, feature announcements — ** opt-in only**, separate channel preference, never disguised as Tier 1–3.
+
+### 8.5 Hierarchy Rules
+
+Higher tier ** never mimics** higher urgency styling of critical tier. Lower tier ** never uses** fear copy.
+
+---
+
+## 9. Timing Philosophy
+
+Timing respects **housing decision rhythm** — days and weeks, not minutes of FOMO.
+
+### 9.1 Event-Driven First
+
+Notify ** when meaningful event occurs** — not arbitrary schedule to “wake users.”
+
+### 9.2 Debounce and Cooldown
+
+Repeated similar events ** collapsed** — five price micro-changes one digest.
+
+### 9.3 Respect Time Zone
+
+Delivery in ** user-local reasonable hours** — professional marketplace standard.
+
+### 9.4 No Artificial Countdowns
+
+Notification timers ** forbidden** — “expires in 1 hour” unless factual legal deadline exists.
+
+### 9.5 Long Search Horizon
+
+Weeks between notifications ** acceptable** if user inactive and nothing material changed.
+
+### 9.6 Realtor Operational Timing
+
+Inquiry notifications ** timely** — professional duty — but not 3am unless user opts in.
+
+---
+
+## 10. Relevance Principles
+
+Relevance is **personal connection to prior intent** — not segment guesswork alone.
+
+### 10.1 Saved Intent Required
+
+Default notifications tie to ** saved listing, saved search, active inquiry, or workspace obligation** — not generic browse.
+
+### 10.2 Context in Copy
+
+Notification states ** which home or which search** — not “new update.”
+
+### 10.3 No Bait Mismatch
+
+Tap must not land on ** different listing or unrelated promo** — trust violation.
+
+### 10.4 Stale Relevance Expiry
+
+Old notifications ** expire in meaning** — deep link opens honest current state, not dead surprise.
+
+### 10.5 Relevance Decay
+
+After user removes save or completes lease, ** related notifications stop**.
+
+---
+
+## 11. Interruption Management
+
+Interruption is **costly** — managed deliberately.
+
+### 11.1 In-App vs Out-of-App
+
+In-app banners and center ** lower cost** than push — prefer for lower tiers when user recently active.
+
+### 11.2 Push Sparingly
+
+Push reserved for ** Tier 1–2 with clear value** — not default for all events.
+
+### 11.3 Interruption Budget
+
+Product defines ** per-user per-day philosophy** — excessive internal alerts rejected in design review.
+
+### 11.4 Do Not Interrupt Flow
+
+Never push ** during known active session** duplicate of in-app toast unless critical.
+
+### 11.5 Interruptibility Respect
+
+OS focus modes and DND ** honored** — product does not fight system silence except true critical class.
+
+---
+
+## 12. Notification Lifecycle
+
+Notifications move through **defined states** — user and system understand each.
+
+### 12.1 Lifecycle Stages
+
+```
+Created → Delivered (or failed) → Seen → Acted or Dismissed → Archived
+```
+
+### 12.2 Failed Delivery Honesty
+
+Email bounce or push disabled — ** alternate path or in-app only** — not silent loss of critical workspace info for realtors.
+
+### 12.3 Read State
+
+In-app center shows ** read/unread** clearly — not manipulative badge inflation.
+
+### 12.4 Dismissal Respected
+
+Dismiss means ** user acknowledged or rejected** — not resurfacing same alert hourly.
+
+### 12.5 Expiration
+
+Old alerts ** archive** — center not infinite guilt list.
+
+---
+
+## 13. Notification Categories
+
+Categories map to **user mental models** — preferences attach to categories, not opaque toggles.
+
+### 13.1 Category Families
+
+| Family | Primary audience |
+|--------|------------------|
+| **Listing & search** | Renter |
+| **Favorites & saved** | Renter |
+| **Communication** | Renter and realtor |
+| **Workspace** | Realtor |
+| **Trust & moderation** | Realtor primarily; renter when affected |
+| **Account & security** | All roles |
+
+### 13.2 Category Naming
+
+Plain language — ** Saved homes**, ** Messages**, ** Listing status** — not internal codenames in settings.
+
+### 13.3 Category Defaults
+
+Defaults ** conservative outbound interrupt** — user opts into more, not out of flood.
+
+---
+
+## 14. Listing-related Notifications
+
+Listing notifications concern **inventory user cares about**.
+
+### 14.1 New Match Saved Search
+
+Saved search finds ** new eligible available listing** — summary with count, criteria recap (Chapter 13).
+
+### 14.2 Price Change
+
+Notify on saved listing ** material price change** — threshold philosophy avoids noise on rounding.
+
+### 14.3 Availability Change
+
+Saved or inquired listing ** no longer available** — Tier 1 honesty.
+
+### 14.4 Content Update
+
+Minor photo or copy update ** low tier or in-app only** — optional.
+
+### 14.5 No Notify on Pending
+
+Consumers ** not notified** about pending listings they cannot see — irrelevant.
+
+---
+
+## 15. Favorites-related Notifications
+
+Favorites notifications serve **shortlist stewardship** (Chapter 17).
+
+### 15.1 Change on Saved Home
+
+Price, status, removal — ** honest, calm copy**.
+
+### 15.2 No Nag to Save More
+
+Notifications ** never** “save more homes” for engagement.
+
+### 15.3 Removed Listing Compassion
+
+“Home you saved is no longer available” — ** neutral, optional similar paths** — not fear.
+
+### 15.4 Sync With Collection
+
+In-app favorites ** reflects notification truth** immediately on open.
+
+---
+
+## 16. Communication-related Notifications
+
+Communication notifications ** continue conversations** (Chapter 16).
+
+### 16.1 New Reply
+
+Message or inquiry response — ** Tier 2**, context in preview text within privacy limits.
+
+### 16.2 No Preview of Sensitive Content
+
+Notification preview ** avoids leaking** sensitive renter data on lock screen when policy requires.
+
+### 16.3 Contact Not Spam
+
+Missed call logs ** not used** to spam renter if product integrates telephony — professional restraint.
+
+### 16.4 Realtor Inquiry Duty
+
+New inquiry ** clear listing title** in alert — actionable.
+
+---
+
+## 17. Realtor Workspace Notifications
+
+Realtor alerts are **operational responsibility** (Chapter 19).
+
+### 17.1 Moderation Outcomes
+
+Approved, rejected, appeal result — ** actionable, professional**.
+
+### 17.2 Inquiry Waiting
+
+Unanswered inquiry ** reminder after reasonable interval** — not hourly harassment.
+
+### 17.3 Profile Blockers
+
+Contact or verification ** blocking publish** — workspace task link.
+
+### 17.4 No Consumer Marketing to Realtors
+
+Browse promotions ** not pushed** to workspace role.
+
+### 17.5 Volume Discipline
+
+High-volume realtors ** digest** inquiry summaries when appropriate.
+
+---
+
+## 18. Trust & Moderation Notifications
+
+Trust notifications ** communicate integrity state** (Chapter 20).
+
+### 18.1 Verification Result
+
+Approved, rejected, revoked — ** plain scope language**.
+
+### 18.2 Report Outcome
+
+Reporter notified ** within privacy rules** — outcome class, not investigation dossier.
+
+### 18.3 No Public Shame Pushes
+
+Rejection ** private to realtor** — not broadcast.
+
+### 18.4 Security Alerts
+
+Account login or security event — ** Tier 1**, clear action if needed.
+
+---
+
+## 19. Cross-device Continuity
+
+Notifications ** hand off intent across devices**.
+
+### 19.1 Read State Sync
+
+Read on phone ** marks read on desktop** when account sync exists.
+
+### 19.2 Deep Link Parity
+
+Same notification ** same destination** on all devices.
+
+### 19.3 Preference Sync
+
+Notification preferences ** follow account** — not per-device trap.
+
+---
+
+## 20. Notification Preferences Philosophy
+
+Preferences are **user sovereignty** — not illusion of control.
+
+### 20.1 Granular by Category
+
+Users mute ** families** — favorites, marketing, workspace — not single master off hidden in maze.
+
+### 20.2 Opt-In Escalation
+
+Higher interrupt levels ** require opt-in** — especially marketing and high-frequency price alerts.
+
+### 20.3 Easy Undo
+
+Recent preference change ** reversible** — accidental mute recoverable.
+
+### 20.4 Critical Exceptions
+
+True security and legal notices ** may not be fully disableable** — disclosed honestly, rare class.
+
+### 20.5 Default Is Respectful
+
+Out-of-box defaults ** fewer pushes** — user expands if desired.
+
+---
+
+## 21. Respect for Silence
+
+Silence is **product maturity** — not engagement failure.
+
+### 21.1 When Not to Notify
+
+- User inactive with ** no saved intent**  
+- Trivial fluctuation below threshold  
+- User disabled category  
+- Night quiet hours  
+- User recently acted in-app on same item  
+
+### 21.2 Silence After Goal Completion
+
+User marked search complete or lease signed — ** congratulatory spam forbidden** — optional single calm close.
+
+### 21.3 Silence During Grief or Stress
+
+Product ** never exploits** housing stress events in copy.
+
+### 21.4 Realtor Silence on Weekends
+
+Optional ** professional quiet schedule** — inquiries still visible in workspace without push.
+
+---
+
+## 22. Mobile-First Notification Experience
+
+Mobile is **primary notification surface** — lock screen, banner, center.
+
+### 22.1 Lock Screen Clarity
+
+Title answers ** what and which listing** — within privacy policy.
+
+### 22.2 One-Tap Context
+
+Tap opens ** correct depth** — detail, thread, workspace task.
+
+### 22.3 Badge Discipline
+
+App icon badge ** reflects unread count honestly** — not inflated.
+
+### 22.4 In-App Notification Center
+
+Center ** scannable list** — grouped by time or category — mobile-first layout philosophy.
+
+### 22.5 Long Press Actions
+
+Quick actions ** safe** — reply only when secure; no mis-tap call.
+
+---
+
+## 23. Accessibility
+
+Notifications must be **perceivable and configurable** for all users.
+
+### 23.1 Screen Reader Announcements
+
+In-app arrivals ** announced** without stealing focus excessively.
+
+### 23.2 Text Alternatives
+
+Icons in center ** labeled**.
+
+### 23.3 Motion and Haptics
+
+Haptics optional and ** restrained** — reduced motion respected.
+
+### 23.4 Plain Language
+
+Copy ** readable** — not codes only.
+
+---
+
+## 24. Notification Performance Experience
+
+Notification performance is **felt reliability of delivery and landing** — confidence that interruption lands true and fast; performance of respect when preferences apply.
+
+### 24.1 Immediate Preference Honor
+
+User mutes category → **next message respects** — performance of respect; mute **stops next send**, not “within 7 days.”
+
+### 24.2 Visible Progress
+
+In-app center shows **sent notifications** — user not wondering if system forgot; critical alerts **perceived prompt**, not hours late without reason.
+
+### 24.3 Stable Deep Link Context
+
+Landing **preserves listing identity** — not wrong home flash; tap opens **correct depth** without long blank — honest loading if needed.
+
+### 24.4 Calm Arrival
+
+Banners and pushes use **restrained motion** — housing app, not game; digest **arrives complete** — not drip spam same hour.
+
+### 24.5 Predictable Grouping
+
+Multiple low-urgency events **collapsed** — calm summary over notification storm.
+
+### 24.6 Recovery on Failure
+
+Failed open or stale deep link **recovery path** — search, favorites, or honest unavailable state — no dead end.
+
+Perceived performance inherits navigation continuity (Chapter 10) and favorites honesty (Chapter 17).
+
+---
+
+## Notification Ethics
+
+Notification ethics protect **users from their own platform during vulnerable housing search**.
+
+### Never Notify to Manufacture Urgency
+
+False scarcity, fake competition, countdown ** forbidden**.
+
+### Never Notify Misleading Listing State
+
+Available when not, price not changed, “still available” on removed home ** forbidden**.
+
+### Never Notify for Dark Re-engagement
+
+Guilt, streak loss, social pressure ** forbidden**.
+
+### Never Hide Opt-Out
+
+Unsubscribe and mute ** as accessible as subscribe**.
+
+### Never Sell Notification Placement
+
+Promoted listings in ** notification channel** — if ever — labeled and opt-in, never Tier 1 mimicry.
+
+### Trust Before Monetization in Notifications
+
+Revenue alerts ** subordinate** to user value and honesty.
+
+---
+
+## Notification Success Metrics
+
+Notification quality judged at **journey and trust level** — not open rate alone.
+
+### Helpful Interruption Rate
+
+Users rate notification ** helpful** in research — not annoying.
+
+### Contextual Open Success
+
+Opens lead to ** intended action completion** — view listing, reply, fix rejection — not immediate bounce.
+
+### Unsubscribe Health
+
+Low unsubscribe ** because low spam** — not because hidden unsubscribe.
+
+### False Positive Alerts
+
+Alerts about ** non-material changes** — trending down.
+
+### Critical Alert Latency
+
+Tier 1 ** timely** — qualitative operational standard.
+
+### Journey Continuation
+
+Users ** resume saved search or inquiry** after notification — meaningful continuation.
+
+### Trust Preservation
+
+Notifications ** do not correlate** with user trust complaints.
+
+### Silence Appropriateness
+
+When product chooses not to notify, ** no harm metric** — silence success invisible but valued.
+
+Teams evaluate notification changes against these principles in design critique and §32 checklist.
+
+---
+
+## 25. Notification Consistency
+
+**One notification language** across channels and roles.
+
+### 25.1 Same Fact, Same Copy Class
+
+Price drop wording ** consistent** push, email, in-app.
+
+### 25.2 Same Hierarchy Everywhere
+
+Tier styling ** not inverted** per channel.
+
+### 25.3 Cross-Role Clarity
+
+Renter notifications ** never realtor jargon**; workspace ** never consumer browse bait.
+
+### 25.4 Future Module Adoption
+
+New features ** map to category family** before inventing new alert species.
+
+---
+
+## 26. Future Compatibility
+
+Notification system ** extends without alert inflation**.
+
+### 26.1 Collaborative Shortlist Alerts
+
+Partner saved listing ** opt-in shared alerts** — clear who did what.
+
+### 26.2 Scheduling Reminders
+
+Viewing reminder ** Tier 2**, calm, factual — user scheduled.
+
+### 26.3 AI Summaries
+
+AI digest of market ** opt-in**, labeled — not auto push novel.
+
+### 26.4 Multi-Locale
+
+Translated copy ** same hierarchy and honesty** — not different urgency per locale.
+
+### 26.5 Wearables and Widgets
+
+Glance surfaces ** same truth rules** — smaller, not different facts.
+
+---
+
+## Notification Evolution
+
+Notifications ** evolve under strict anti-spam discipline**.
+
+### Evolve Categories, Do Not Multiply Channels
+
+New alert types ** fit taxonomy** — or taxonomy expands with council approval.
+
+### Resist Notification Debt
+
+Legacy campaigns ** retired** — not accumulated alongside new.
+
+### Preserve Mental Model
+
+Users still understand ** why Rento interrupted**.
+
+### Backward Compatibility
+
+Preference migrations ** map old toggles to new** — user intent preserved.
+
+Notification evolution requires Design Council approval for ** new Tier 1 classes or default push policy changes**.
+
+---
+
+## 27. Governance
+
+### 27.1 Decision Ownership
+
+| Decision | Owner |
+|----------|-------|
+| New notification category | Product + Design Council |
+| Tier classification change | Head of Product Design |
+| Default push policy | Product Director + Design Director |
+| Marketing notification channel | Product Director — opt-in only |
+| Critical security alert class | Trust & Safety + Legal |
+
+### 27.2 Exception Policy
+
+Notification experiments ** no dark patterns** — Chapter 5; unsubscribe always works.
+
+### 27.3 Copy Review
+
+All Tier 1–2 copy ** Content Design** — calm, factual.
+
+### 27.4 Cross-Chapter Review
+
+Listing alerts ** review with Chapters 17, 20** — truth parity.
+
+---
+
+## 28. Product Review Checklist
+
+Before shipping notification or re-engagement changes:
+
+### 28.1 Philosophy
+
+- [ ] Notify only when valuable  
+- [ ] Journey continuation, not click farming  
+- [ ] No manipulation or false urgency  
+- [ ] Silence considered as valid option  
+
+### 28.2 Content & Hierarchy
+
+- [ ] Tier assigned correctly  
+- [ ] One clear purpose per notification  
+- [ ] Context in copy — which listing or search  
+- [ ] Calm professional tone  
+
+### 28.3 Landing & Continuity
+
+- [ ] Deep link preserves context  
+- [ ] Stale state handled honestly  
+- [ ] Cross-device parity  
+
+### 28.4 Preferences & Ethics
+
+- [ ] Category preferences respected  
+- [ ] Opt-in for marketing and high-frequency  
+- [ ] No bait mismatch landing  
+
+### 28.5 Access & Performance
+
+- [ ] Accessible in-app announcements  
+- [ ] Critical alerts timely; mute immediate  
+
+**Gate:** All mandatory items pass or documented exception per Chapter 5.
+
+---
+
+## 29. Common Mistakes
+
+| Mistake | Harm |
+|---------|------|
+| Daily “come back” push with no news | Guilt re-engagement |
+| Push on every price tick | Attention debt |
+| “Someone else viewed this home” fake social proof | Manipulation |
+| Notification lands on home, not listing | Context loss |
+| Unsubscribe hidden | Ethics violation |
+| Marketing disguised as inquiry alert | Trust destruction |
+| Pending listing promoted to renter | Domain violation |
+| Removed home “still available” ping | Lie |
+| 10 realtor pings for one inquiry | Harassment |
+| Badge count inflated | Cry wolf |
+| Lock screen leaks renter PII | Privacy harm |
+| Critical alert only email, days late | Operational failure |
+| Default all pushes on | Respect failure |
+| Re-engagement after user leased | Tone deaf |
+| Fear copy on moderation | Shame |
+| Same alert after dismiss | Ignored product |
+| Saved search spam hourly | Uninstall driver |
+| A/B test without unsubscribe | Ethics failure |
+| Notification tier styling on ads | Hierarchy corruption |
+| Deep link to expired listing trap | Dead end |
+
+---
+
+## 30. Correct & Incorrect Examples
+
+### 30.1 Saved Listing Removed
+
+**Correct:** “Apartamentul salvat din Cluj-Napoca nu mai este disponibil.” → opens listing with honest removed state.  
+**Incorrect:** “Grab it before it’s gone!” on already rented home.
+
+### 30.2 Saved Search Match
+
+**Correct:** “3 anunțuri noi pentru căutarea ta: Cluj, 2 camere.” → opens results with criteria visible.  
+**Incorrect:** “New homes!” → home feed.
+
+### 30.3 Inquiry Reply
+
+**Correct:** “Maria Popescu ți-a răspuns despre apartamentul din Mărăști.” → opens thread.  
+**Incorrect:** “You have a message!” → inbox empty wrong account.
+
+### 30.4 Moderation Rejected
+
+**Correct:** “Anunț respins: fotografii neclare. Deschide pentru a edita.” → workspace listing.  
+**Incorrect:** “Listing failed!!!” red alert at 2am default.
+
+### 30.5 Price Change
+
+**Correct:** “Preț actualizat la anunțul salvat: 650 €/lună (era 600 €).”  
+**Incorrect:** Silent change; user discovers at contact.
+
+### 30.6 Preferences
+
+**Correct:** User disables “Price changes” → no price pushes; in-app may still show on visit.  
+**Incorrect:** User disables → pushes continue “for your benefit.”
+
+### 30.7 Re-engagement
+
+**Correct:** No push for 14 days; user saved 2 homes; one removed → notify removal only.  
+**Incorrect:** Day 3 “We miss you! 50 homes waiting!”
+
+### 30.8 Verification
+
+**Correct:** “Verificarea profilului a fost aprobată. Vezi ce înseamnă.”  
+**Incorrect:** “You are now TOP TRUSTED AGENT.”
+
+### 30.9 Digest
+
+**Correct:** One daily digest: 2 new matches, 1 price change.  
+**Incorrect:** Three separate pushes same morning.
+
+### 30.10 Deep Link Failure
+
+**Correct:** Listing gone → “Anunț indisponibil” + similar or favorites return.  
+**Incorrect:** Error page with no navigation.
+
+---
+
+## 31. Design Director Review
+
+**Chapter:** 21 — Notifications & User Re-engagement Experience  
+**Section:** XVIII — Notifications & Re-engagement  
+**Review type:** Initial standard adoption
+
+### 31.1 Approval Statement
+
+This chapter is approved as the **notifications and re-engagement experience contract** for Rento. All product-initiated interruptions, alerts, and journey continuation touchpoints must comply. Delivery implementations are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 31.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Respect time; calm; trust |
+| Chapter 10 — Navigation System | Deep link and return context |
+| Chapter 16 — Contact & Communication Experience | Message alerts |
+| Chapter 17 — Favorites & Saved Properties Experience | Saved listing change alerts |
+| Chapter 19 — Realtor Workspace Experience | Operational alerts |
+| Chapter 20 — Trust, Verification & Moderation Experience | Honest status notifications |
+| Chapter 22+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 31.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What user value does this interruption provide?  
+2. Is tier and channel appropriate?  
+3. Does landing preserve context and truth?  
+4. Can user control or silence without penalty?  
+5. Does copy remain calm and non-manipulative?
+
+New Tier 1 notification types or default push policy changes require Design Council approval.
+
+### 31.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on notification experience |
+| Head of Product Design | Hierarchy and cross-journey consistency |
+| Product Management | Category defaults and tier policy |
+| Content Design Lead | Notification copy and tone |
+| Trust & Safety | Integrity and security alert class |
+| Accessibility Specialist | In-app announcement and center access |
+
+### 31.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new notification and re-engagement work immediately. Existing channels align during scheduled improvement cycles.
+
+### 31.6 Design Director Closing Note
+
+The best notification is often ** none** — the user already found the home, or the silence respects a pause that life required. When Rento does speak off-app, it must speak like a responsible advisor: brief, true, and tied to what the user already cared about. Housing search does not need more noise. It needs ** timely clarity at the moments that matter**. This chapter exists so Rento’s voice outside the app earns trust instead of spending it — and so re-engagement means continuing a journey, not manufacturing addiction.
+
+---
+
+**End of Chapter 21**
+
