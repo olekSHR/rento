@@ -47,12 +47,16 @@ This standard is **not** implementation documentation. It does not specify code,
 | 19 | [Realtor Workspace Experience](#chapter-19--realtor-workspace-experience) | Realtor Workspace | APPROVED |
 | 20 | [Trust, Verification & Moderation Experience](#chapter-20--trust-verification--moderation-experience) | Trust & Moderation | APPROVED |
 | 21 | [Notifications & User Re-engagement Experience](#chapter-21--notifications--user-re-engagement-experience) | Notifications & Re-engagement | APPROVED |
+| 22 | [Personalization & Recommendations Experience](#chapter-22--personalization--recommendations-experience) | Personalization & Recommendations | APPROVED |
+| 23 | [Onboarding & First-Time Experience](#chapter-23--onboarding--first-time-experience) | Onboarding & First-Time | APPROVED |
+| 24 | [Empty, Loading & Error States Experience](#chapter-24--empty-loading--error-states-experience) | Empty, Loading & Error States | APPROVED |
+| 25 | [Feedback, Status & System Communication Experience](#chapter-25--feedback-status--system-communication-experience) | Feedback & System Communication | DRAFT — pending final editorial pass |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 22+ | Future chapters per design standard roadmap |
+| 26+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -64,6 +68,8 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-03 | Chapter 13 — Search Experience System approved and added |
 | 1.0 | 2026-07-03 | Chapters 14–16 approved and added |
 | 1.0 | 2026-07-03 | Chapters 17–21 approved and added |
+| 1.0 | 2026-07-04 | Chapters 22–24 approved and added |
+| 1.0 | 2026-07-04 | Chapter 25 — Feedback & System Communication draft added |
 
 ---
 
@@ -17082,4 +17088,6371 @@ The best notification is often ** none** — the user already found the home, or
 ---
 
 **End of Chapter 21**
+
+---
+
+## Chapter 22 — Personalization & Recommendations Experience
+
+**Section:** XIX — Personalization & Recommendations  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–21; operationalizes Search discovery (Chapter 13), saved intent (Chapter 17), trust communication (Chapter 20), and notification relevance (Chapter 21) for personalized discovery; defines principles only — not ranking algorithms, machine learning systems, recommendation engines, APIs, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **personalization and recommendations experience philosophy** for Rento.
+
+Personalization is not manipulation. Recommendations are not advertising slots dressed as discovery.
+
+Personalization exists to help users **continue meaningful housing decisions** with less friction, better context, and stronger trust — across sessions, devices, and the long arc of a long-term rental search.
+
+Recommendations must help users discover **relevant homes** while preserving user control, transparency, and marketplace integrity. They must reduce search effort without hiding truth, narrowing the world unfairly, or substituting platform interest for user intent.
+
+Where Chapters 13–17 define how users find, evaluate, and remember listings, and Chapters 20–21 define how trust and interruptions are governed, **this chapter defines how Rento may adapt discovery to individual context** — honestly, reversibly, and in service of housing decisions — not engagement metrics.
+
+This chapter governs:
+
+- Personalization philosophy and boundaries  
+- Recommendation types, context, and relevance  
+- Signal use — explicit, implicit, saved, historical  
+- Transparency, user control, and explainability  
+- Similar, nearby, alternative, and recovery recommendations  
+- Sponsored versus organic recommendation distinction  
+- Mobile-first, accessible, and performant recommendation experience  
+- Ethics, success evaluation, consistency, and evolution  
+
+This chapter does **not** specify ranking formulas, collaborative filtering, embedding models, A/B test infrastructure, database schemas, frontend carousels, or analytics pipelines.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Intent-serving personalization; exploration without manipulation |
+| **Recommendations** | Similar, nearby, alternative, recovery, and contextual suggestions |
+| **Signals** | Explicit preferences, implicit behavior, saved intent, search history, favorites, contact |
+| **Boundaries** | What personalization may and may not do |
+| **Relevance** | Meaningful match, explainability, proportionality |
+| **Transparency** | When and how personalization is disclosed |
+| **Control** | Preferences, reset, opt-out, silence |
+| **Trust** | Marketplace truth, moderation status, sponsored integrity |
+| **Roles** | Consumer discovery; restrained realtor-side personalization |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- Search filter and sort mechanics (Chapter 13)  
+- Listing card and detail presentation (Chapters 14–15)  
+- Favorites collection management (Chapter 17)  
+- Contact initiation and messaging (Chapter 16)  
+- Notification delivery and re-engagement policy (Chapter 21)  
+- Trust badge semantics and moderation workflow (Chapter 20)  
+- Implementation of recommendation engines, ML training, or ranking APIs  
+- Third-party ad networks and off-platform retargeting  
+- Admin merchandising tools and internal ops dashboards  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where Rento **adapts discovery or suggests listings based on user context**, including but not limited to:
+
+- Home and browse personalization  
+- “Recommended for you” or equivalent modules  
+- Similar listings on detail  
+- Nearby and alternative suggestions  
+- Recovery modules after no results or abandoned search  
+- Saved-search and favorites-informed suggestions  
+- Post-contact or post-view contextual suggestions  
+- Email or notification content that includes recommended listings (in concert with Chapter 21)  
+- Realtor workspace insights that surface listing performance patterns to the listing owner only  
+
+If a surface answers *“What should we show this person next, based on who they are or what they did?”* — this chapter applies.
+
+### 2.4 Recommendations Serve Housing Decisions, Not Sessions
+
+Time-on-app is **not** success. Meaningful progress toward a confident shortlist or informed rejection is success.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When personalization decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (availability, moderation status, ownership, contact source)  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 20 — Trust, Verification & Moderation Experience  
+4. **This chapter** — for personalization and recommendation behavior  
+5. Chapters 2–4, 9–10 — experience, structure, motion, navigation  
+6. Chapters 13–17 — discovery, preview, detail, saved intent  
+7. Chapter 21 — when recommendations appear in interruptions  
+8. Chapter 5 Exception Policy for experiments  
+
+Personalization must never surface non-available listings as discoverable recommendations. Personalization must never override explicit user criteria without clear user consent. Marketplace integrity precedes engagement.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Only what is real; trust before conversion; calm; respect user time; user control |
+| Chapter 2 — Experience Principles | Scannability, recovery, ethical conversion, no dead ends |
+| Chapter 4 — Layout & Information Architecture | Module hierarchy; recommendation zones subordinate to user task |
+| Chapter 5 — Product Design Decision Framework | Necessity tests; exception policy for personalization experiments |
+| Chapter 10 — Navigation System | Return integrity; deep link context on recommendation open |
+| Chapter 13 — Search Experience System | Search remains primary discovery; recommendations complement, not replace |
+| Chapter 14 — Listing Card & Preview System | Recommended listings use same card contract and truth rules |
+| Chapter 15 — Listing Detail Experience | Similar and related modules subordinate to evaluation context |
+| Chapter 17 — Favorites & Saved Properties Experience | Saved intent is high-trust signal; must be respected |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust signals honest in recommendations; no false prominence |
+| Chapter 21 — Notifications & User Re-engagement Experience | Recommended listings in alerts follow both chapters |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Earlier chapters define **how users search, evaluate, save, and trust**. This chapter defines **how Rento may shorten the path to relevant homes** without betraying that journey — the governed system for relevance, exploration, and adaptation.
+
+Without this chapter, recommendations become opaque growth levers. With it, recommendations become **intent-serving discovery assistance** worthy of a long-term rental marketplace.
+
+---
+
+## 4. Personalization Philosophy
+
+Personalization on Rento serves **user intent**, not platform appetite for attention.
+
+### 4.1 Intent Over Impression
+
+Adaptation exists to help users **continue decisions they already started** — not to manufacture new desires.
+
+### 4.2 Personalization Reduces Friction, Not Judgment
+
+The product remembers context so users do not repeat work — it does not **label or rank users** as good or bad searchers.
+
+### 4.3 Personalization Is Optional in Effect
+
+Users who never engage personalized modules still receive **full honest search** — personalization enhances; it does not gatekeep inventory.
+
+### 4.4 Personalization Respects the Seriousness of Housing
+
+Long-term rental is not entertainment feed optimization — adaptation is **measured, calm, and reversible**.
+
+### 4.5 Personalization Never Replaces User Agency
+
+The user chooses, saves, contacts, and rejects — the product **suggests**; it does not decide.
+
+### 4.6 Personalization Must Be Proportionate
+
+More user data used → **more transparency and control owed** — not less.
+
+### 4.7 Personalization Serves Exploration and Refinement
+
+Good personalization helps users **widen or narrow thoughtfully** — not trap them in a single aesthetic or price band without awareness.
+
+### 4.8 Personalization Honors Pauses
+
+Absence from the product is not a signal to manipulate — **paused search stays respected** (Chapters 1, 21).
+
+### 4.9 Personalization Inherits Marketplace Truth
+
+Adaptation cannot show **pending, unavailable, or misleading listings** as if recommended gems.
+
+### 4.10 Personalization Defers to Explicit Criteria
+
+Active filters and stated requirements **outrank inferred taste** unless user explicitly invites broader suggestions.
+
+### 4.11 AI May Assist, Never Obscure
+
+When AI contributes to suggestions, user can understand **that assistance occurred** and retain edit and dismiss power (Chapter 12 loop posture).
+
+### 4.12 Marketplace Integrity Before Engagement
+
+If relevance conflicts with integrity, **integrity wins** — every time.
+
+---
+
+## 5. Recommendation Philosophy
+
+Recommendations are **curated discovery assistance** — not hidden advertising channels.
+
+### 5.1 Recommendations Reduce Search Effort
+
+Purpose: help users find worth-opening homes **faster** — not scroll longer.
+
+### 5.2 Recommendations Support Decision Progress
+
+Each module should answer a **clear user question** — “What else is like this?” “What is near this?” “What if I adjust one criterion?”
+
+### 5.3 Recommendations Never Hide Marketplace Truth
+
+Suggested homes must meet **same availability and representation rules** as search results — no shadow inventory.
+
+### 5.4 Relevance Must Be Explainable
+
+User can understand **why something was suggested** at least at category level — neighborhood similarity, saved criteria, viewed attributes — not mystical “picked for you.”
+
+### 5.5 Recommendations Must Not Create Filter Bubbles
+
+Product actively avoids **silent narrowing** that excludes valid alternatives the user would want to see in search.
+
+### 5.6 Recommendations Support Exploration, Not Manipulation
+
+Suggestions may introduce **adjacent options** — never artificial scarcity, false competition, or pressure to act.
+
+### 5.7 Recommendations Respect Saved Intent
+
+Favorites, saved searches, and explicit preferences **weight heavily** — ignored shortlist is a product failure.
+
+### 5.8 Recommendations Preserve Trust
+
+One deceptive suggestion damages **entire feed credibility** — conservative relevance preferred over aggressive guessing.
+
+### 5.9 Recommendations Never Override Hard Criteria Silently
+
+Budget cap, location boundary, pet policy, room count — **explicit constraints are sacred** unless user opts into relaxation.
+
+### 5.10 Sponsored Never Pretends Organic
+
+Paid prominence is **labeled, visually distinct, and optional to engage** — never indistinguishable from organic recommendation.
+
+### 5.11 Recommendations Complement Search
+
+Search remains **primary instrument of control** — recommendations are shortcuts, not replacements.
+
+### 5.12 Fewer, Better Suggestions
+
+A short list of strong matches beats **infinite carousel** of weak ones.
+
+---
+
+## 6. User Mental Model
+
+Users think of recommendations as: **“Rento noticed what I care about and is trying to help — honestly.”**
+
+### 6.1 Helpful Assistant, Not Mind Reader
+
+Users accept imperfect suggestions when **trust and control remain**.
+
+### 6.2 Same Homes, Same Rules
+
+Recommended listings are **real listings** — same card grammar, same detail truth, same contact rules.
+
+### 6.3 Suggestions Are Invitations
+
+User may ignore, dismiss, or follow — **no penalty** for ignoring.
+
+### 6.4 Transparency When Surprising
+
+Unexpected suggestion triggers need for **plain explanation** — “Because you saved homes in Mărăști.”
+
+### 6.5 Control Is Always Nearby
+
+Preferences and “show less like this” ** reachable without hunt**.
+
+### 6.6 Personalization Feels Remembering, Not Surveillance
+
+Product remembers **housing context** — not unrelated browsing behavior.
+
+### 6.7 Exploration Remains Possible
+
+User can always return to **neutral search** — personalization does not trap.
+
+---
+
+## 7. Personalization Boundaries
+
+Clear limits prevent personalization from becoming **covert steering**.
+
+### 7.1 No Personalization Without Material Benefit
+
+If adaptation does not help user progress, **do not personalize**.
+
+### 7.2 No Sensitive Inference Display
+
+Personalization must not surface **sensitive guesses** — household composition, income, ethnicity, relationship status — even if inferable.
+
+### 7.3 No Cross-User Exploitation
+
+One user’s behavior must not **expose private information** to another through recommendations.
+
+### 7.4 No Realtor Manipulation of Renter Feeds
+
+Realtors cannot pay to **target individual renters** outside governed sponsored surfaces.
+
+### 7.5 No Dark Opt-In
+
+Personalization features that use behavioral signals require **clear, revocable consent** when material — not buried defaults.
+
+### 7.6 No Silent Criteria Relaxation
+
+Broadening budget, distance, or requirements **requires user-visible action or consent**.
+
+### 7.7 No Recommendation of Non-Available Inventory
+
+Pending, rejected, withdrawn, or expired listings ** excluded** from consumer recommendations.
+
+### 7.8 No Retaliation for Opt-Out
+
+Users who disable personalization receive **equal marketplace access** through search — not degraded experience.
+
+### 7.9 No Infinite Recommendation Loops
+
+Modules have **natural end** — user not pulled through endless “more like this.”
+
+### 7.10 Experiments Disclosed When User-Facing
+
+Material behavior change from experiment ** transparent or reversibly opt-out** per Chapter 5.
+
+---
+
+## 8. Recommendation Relevance
+
+Relevance is **user-meaningful similarity or usefulness** — not internal score alone.
+
+### 8.1 Relevance Serves the Current Task
+
+Detail-page similar listings ** respect current listing context** — not unrelated popular homes.
+
+### 8.2 Relevance Is Multidimensional
+
+Location, price band, size, amenities, building type — **weighted by user signals** — no single-axis obsession.
+
+### 8.3 Relevance Decays With Time
+
+Old views weigh less than **recent intent** — housing search evolves.
+
+### 8.4 Relevance Respects Negative Signals
+
+Dismissed, removed from favorites, or rejected-after-contact patterns ** reduce repetition**.
+
+### 8.5 Relevance Admits Uncertainty
+
+Low-confidence modules ** say so or stay hidden** — guessing displayed as certainty forbidden.
+
+### 8.6 Relevance Includes Diversity of Option
+
+Within bounds, suggestions may show **meaningful variety** — not ten identical flats.
+
+### 8.7 Relevance Validated by Outcome, Not Click
+
+Opening is insufficient — **informed save or contact** signals better relevance over time.
+
+### 8.8 Relevance Never Trades Truth for Match
+
+A highly similar but **misrepresented listing** is never recommended over a less similar honest one.
+
+---
+
+## 9. Explicit vs Implicit Signals
+
+Rento uses **both** — with different weight and transparency obligations.
+
+### 9.1 Explicit Signals Primary
+
+Stated filters, saved searches, favorites, preference settings — **highest authority**.
+
+### 9.2 Implicit Signals Secondary
+
+Views, dwell, compare patterns, return visits — **inform gently** — never punish.
+
+### 9.3 Explicit Overrides Implicit
+
+User says two rooms → **implicit one-room affinity does not override**.
+
+### 9.4 Implicit Never Shown as Fact
+
+Product does not tell user **“you need a garden”** because they viewed gardens — may suggest, not declare.
+
+### 9.5 Signal Minimization
+
+Collect and use **minimum signals necessary** for stated personalization benefit.
+
+### 9.6 Signal Expiry
+
+Implicit signals ** age out** — stale behavior does not define present user.
+
+### 9.7 Cross-Session Continuity
+
+Explicit intent ** persists across devices** when account exists — user expectation.
+
+### 9.8 Guest Session Honesty
+
+Guest personalization ** session-scoped and communicated** — no false sense of long memory without account.
+
+---
+
+## 10. Saved Intent Signals
+
+Saved searches and stated criteria are **contractual intent** with the user.
+
+### 10.1 Saved Search Is a Promise
+
+When user saves criteria, recommendations and alerts ** align to that promise** (Chapters 13, 21).
+
+### 10.2 Changes to Saved Search Are Visible
+
+Criteria drift or broadening ** shown before applied** — not silent.
+
+### 10.3 Saved Search Does Not Collapse Discovery
+
+User can still **search outside** saved parameters freely.
+
+### 10.4 Multiple Saved Searches Respected
+
+Conflicting saves ** not merged opaquely** — user sees which intent drives which module.
+
+### 10.5 Saved Search Retirement
+
+Deleted save ** stops related recommendations** — promptly.
+
+---
+
+## 11. Search History Signals
+
+Recent search behavior informs **continuity**, not judgment.
+
+### 11.1 Recent Queries Inform Recovery
+
+“Continue searching” modules reference **actual recent criteria** — not generic popular.
+
+### 11.2 History Is User-Inspectable
+
+User can view and **clear recent search history** where product stores it.
+
+### 11.3 History Does Not Leak to Realtors
+
+Consumer search history ** private** — not sold or displayed to listing owners.
+
+### 11.4 History Weight Lower Than Explicit Save
+
+Browsed once ≠ **want forever** — light touch.
+
+### 11.5 Sensitive Query Respect
+
+Searches implying vulnerable situations ** handled with extra restraint** in recommendations and notifications.
+
+---
+
+## 12. Favorites Signals
+
+Favorites are **strongest consumer intent signal** (Chapter 17).
+
+### 12.1 Favorites Weight Heavily
+
+Similar and alternative modules ** respect favorited attributes** — price band, area, layout.
+
+### 12.2 Favorites Never Trigger Manipulation
+
+No “your favorite might be taken!” ** unless factually true and status-governed** (Chapters 17, 20, 21).
+
+### 12.3 Removed Favorite Stops Signal
+
+User removes save → ** that signal stops** — immediately for future suggestions.
+
+### 12.4 Compare Patterns Inform, Not Dictate
+
+User comparing three saves → suggest ** fourth comparable** — not unrelated upsell.
+
+### 12.5 Favorites Inform, Not Replace, Search
+
+Shortlist organization remains ** user-led** — recommendations assist triage.
+
+---
+
+## 13. Contact Signals
+
+Contact indicates **serious evaluation** — handle with care.
+
+### 13.1 Post-Contact Recommendations Restrained
+
+After contact, suggestions ** subordinate to open inquiry** — not distract with new homes.
+
+### 13.2 Contact Does Not Expose Renter to Realtors via Ads
+
+Contacting listing A does not enable **realtor B to target** that user.
+
+### 13.3 Similar After Contact Only When Helpful
+
+“Alternatives while you wait” ** optional, calm, dismissible** — not default noise.
+
+### 13.4 Failed Contact Informs Recovery
+
+If contact failed, recovery paths per Chapter 16 — ** not unrelated recommendation spam**.
+
+### 13.5 Contact Signal Decays
+
+Past inquiries ** do not dominate** present search indefinitely.
+
+---
+
+## 14. Realtor-Side Personalization
+
+Realtors receive **operational insight**, not renter surveillance.
+
+### 14.1 Workspace Insights Only for Owned Listings
+
+Performance patterns shown ** for realtor’s inventory** — aggregate, professional.
+
+### 14.2 No Individual Renter Profiling for Realtors
+
+Realtors do not see ** renter personalization scores** or private behavior.
+
+### 14.3 Suggestions to Improve Listing, Not Manipulate Buyer
+
+Tips address ** listing quality, completeness, pricing honesty** — not dark patterns.
+
+### 14.4 Realtor Recommendations Subordinate to Moderation
+
+Suggestions to publish or edit ** respect pending and rejection states** (Chapter 19, 20).
+
+### 14.5 Agency-Level Views Aggregate
+
+Team dashboards ** anonymized** — no renter-identifiable feed.
+
+---
+
+## 15. Transparency Principles
+
+Transparency builds **informed trust** in adaptation.
+
+### 15.1 Label Material Personalization
+
+Modules that adapt to user context ** identifiable as personalized** — plain language.
+
+### 15.2 Explain Category of Reason
+
+“Based on your saved search” / “Similar to homes you viewed” — ** category sufficient** for most cases.
+
+### 15.3 Disclose Sponsored Clearly
+
+Paid placement ** never mimics organic label**.
+
+### 15.4 Disclose When AI Assists
+
+AI-generated suggestion sets ** labeled** — user may dismiss or ignore.
+
+### 15.5 No False Neutrality
+
+If order is influenced by business rules, ** disclosure proportional to user impact**.
+
+### 15.6 Transparency Without Overwhelming
+
+One short line beats ** legal paragraph** — clarity over compliance theater.
+
+### 15.7 Change Notification When Material
+
+Significant personalization policy change ** communicated** — not silent.
+
+---
+
+## 16. User Control
+
+Control is **real, discoverable, and honored**.
+
+### 16.1 Personalization Preferences Exist
+
+User can tune ** recommendation intensity, categories, or opt out** — where product offers personalization.
+
+### 16.2 Reset Personalization
+
+User can **clear inferred profile** and start neutral — without account deletion.
+
+### 16.3 Dismiss Module or Item
+
+“Not interested” / “Hide similar” ** respected** — improves future suggestions.
+
+### 16.4 Opt-Out Without Penalty
+
+Disabling recommendations ** does not degrade search, favorites, or contact**.
+
+### 16.5 Control Persists Across Devices
+
+Account settings ** sync** — not per-device surprise.
+
+### 16.6 No Dark Re-Enable
+
+Opt-out ** not silently reversed** after update.
+
+### 16.7 Control Accessible From Context
+
+User need not hunt in ** buried settings** to fix bad suggestions.
+
+### 16.8 Feedback Loops Visible
+
+User sees that dismiss ** mattered** — suggestions change.
+
+---
+
+## 17. Recommendation Context
+
+Context determines **which recommendation type is appropriate**.
+
+### 17.1 Home Context
+
+Broad, low-pressure ** exploration** — popular in area, continue search — not hyper-specific guessing.
+
+### 17.2 Search Results Context
+
+Refinement assistance ** tied to active criteria** — relax one dimension, nearby areas.
+
+### 17.3 Detail Context
+
+Similar, nearby, alternatives ** subordinate to listing being evaluated**.
+
+### 17.4 Favorites Context
+
+Compare and ** complete shortlist** — not replace user curation.
+
+### 17.5 Post-Contact Context
+
+Minimal distraction — ** support open conversation**.
+
+### 17.6 Empty Results Context
+
+Recovery suggestions ** honest** — broaden criteria with user consent.
+
+### 17.7 Return After Absence Context
+
+Resume ** saved intent** — not guilt re-engagement (Chapter 21).
+
+### 17.8 Notification Context
+
+Deep-linked recommendations ** match notification promise** — no bait-and-switch.
+
+---
+
+## 18. Similar Listings
+
+“Similar” answers: **What else feels like this home?**
+
+### 18.1 Similarity Grounded in Listing Facts
+
+Shared attributes ** defensible** — area, price range, rooms, type — not arbitrary.
+
+### 18.2 Similar Module Subordinate on Detail
+
+Placed ** after core evaluation facts** — does not push price or contact below fold on mobile.
+
+### 18.3 Similar Respects Availability
+
+Only ** available** homes — same rule as search.
+
+### 18.4 Similar Includes Honest Variation
+
+Not twelve clones — ** meaningful differences visible** on card.
+
+### 18.5 Similar Links Preserve Context
+
+Open similar → back returns to ** original listing evaluation**.
+
+### 18.6 Similar Never Recommends Same Home Twice
+
+Duplicate or stale variants ** filtered**.
+
+---
+
+## 19. Nearby Listings
+
+“Nearby” answers: **What else is in this area at comparable intent?**
+
+### 19.1 Geographic Honesty
+
+“Nearby” means ** walkable or same neighborhood intent** — not different city labeled nearby.
+
+### 19.2 Map and List Agreement
+
+Map-based nearby ** matches list claims** — no pin deception.
+
+### 19.3 Nearby Respects Active Location Filter
+
+User locked to sector → ** nearby does not sneak outside** without ask.
+
+### 19.4 Nearby Useful for Area Comparison
+
+Supports ** understanding neighborhood options** — not random inventory dump.
+
+### 19.5 Nearby Calm Density
+
+Reasonable count — ** not infinite map clutter**.
+
+---
+
+## 20. Alternative Suggestions
+
+Alternatives answer: **What if I adjust one thing?**
+
+### 20.1 Explicit Tradeoff
+
+“More space if you expand 2 km” — ** tradeoff named**.
+
+### 20.2 User Invites Broadening
+
+Criteria relaxation ** user tap or confirm** — not automatic.
+
+### 20.3 Alternatives Not Inferior Bait
+
+Suggested alternatives ** honest listings** — not low-quality funnel.
+
+### 20.4 Alternatives Support Budget Reality
+
+Price alternatives ** transparent** — not hidden fee listings.
+
+### 20.5 Alternatives Dismissible
+
+User rejecting alternative type ** remembered**.
+
+---
+
+## 21. Recovery Recommendations
+
+Recovery answers: **How do I move forward when stuck?**
+
+### 21.1 No Results Recovery
+
+Clear path: ** adjust criteria, nearby areas, save search** — not empty manipulation.
+
+### 21.2 Stale Shortlist Recovery
+
+Saved homes unavailable → ** honest status plus comparable replacements** — opt-in.
+
+### 21.3 Interrupted Search Recovery
+
+Resume ** last meaningful criteria** — Chapter 13 continuity.
+
+### 21.4 Error Recovery
+
+Failed load → ** retry and neutral browse** — not random recommendations as distraction.
+
+### 21.5 Recovery Never Blames User
+
+Copy ** neutral** — “No homes match yet” not “You are too picky.”
+
+### 21.6 Recovery Preserves Dignity
+
+Housing search is stressful — ** calm assistance**.
+
+---
+
+## 22. Trust & Integrity
+
+Recommendations are **trust-bearing surfaces**.
+
+### 22.1 Same Moderation Rules as Search
+
+Only ** publicly available** listings in consumer recommendations.
+
+### 22.2 Trust Signals on Recommended Cards
+
+Verification and status ** same grammar** as search cards (Chapters 14, 20).
+
+### 22.3 No Recommendation of Flagged or Deceptive Listings
+
+Integrity holds ** under review** — if shown to owner only, not as consumer suggestion.
+
+### 22.4 Prominence Never Overrides Truth
+
+Business priority ** cannot promote misleading listing**.
+
+### 22.5 Recommendation Auditability
+
+Teams can answer ** why listing appeared** — internal accountability without exposing renter data.
+
+### 22.6 User Report Path
+
+Suspicious recommendation ** reportable** like search result.
+
+---
+
+## 23. Sponsored vs Recommended
+
+Paid prominence is **governed, labeled, and optional**.
+
+### 23.1 Organic Recommendations Default
+
+Most modules ** organic relevance** — sponsored is exception.
+
+### 23.2 Sponsored Always Labeled
+
+Clear ** “Sponsored” or equivalent** — visible on card and module header.
+
+### 23.3 Sponsored Visually Distinct
+
+Not identical styling to organic ** “Recommended for you”**.
+
+### 23.4 Sponsored Meets Listing Quality Bar
+
+Paid does not excuse ** incomplete or misleading listings**.
+
+### 23.5 Sponsored Targeting Limits
+
+Sponsored reaches ** criteria-based audience** — not creepy individual targeting.
+
+### 23.6 Sponsored Frequency Caps
+
+Users not ** flooded** with ads disguised as help.
+
+### 23.7 Sponsored Separable in Preferences
+
+User may reduce sponsored modules ** where product allows** — organic discovery remains.
+
+### 23.8 Trust Before Monetization
+
+Revenue from sponsored recommendations ** never compromises organic integrity** (Chapters 1, 13, 20).
+
+---
+
+## 24. Mobile-First Recommendation Experience
+
+Primary context is **phone between life moments**.
+
+### 24.1 Thumb-Zone Actions
+
+Dismiss, save, open ** reachable** — not only desktop hover patterns.
+
+### 24.2 Horizontal Modules Disciplined
+
+Carousels ** short, labeled, end-visible** — not endless swipe trap.
+
+### 24.3 One Primary Task per Screen
+
+Recommendation module ** supports** current screen purpose — does not hijack.
+
+### 24.4 Offline and Slow Network Honesty
+
+Recommendations ** degrade gracefully** — cached favorites and saved search over fake fresh feed.
+
+### 24.5 Vertical Reading Order
+
+On detail, similar homes ** after decision-critical content**.
+
+### 24.6 Touch Targets and Spacing
+
+Cards ** tappable without mis-tap** — Chapter 8 rhythm.
+
+---
+
+## 25. Accessibility
+
+Recommendations must be **perceivable, operable, and understandable** for all users.
+
+### 25.1 Module Semantics
+
+Personalized regions ** announced** — “Recommended based on your saved search.”
+
+### 25.2 Carousel Not Sole Access
+
+List alternatives ** exist** — not swipe-only prison.
+
+### 25.3 Dismiss and Control Labeled
+
+Icon buttons ** named** — “Hide similar listings.”
+
+### 25.4 Sponsored Read by Assistive Tech
+
+Sponsored label ** in accessible name** — not color-only.
+
+### 25.5 Motion Restraint
+
+Auto-advancing carousels ** avoided or pausable** — Chapter 9.
+
+### 25.6 Contrast and Hierarchy
+
+Recommendation headers ** readable** — not low-contrast subtlety.
+
+---
+
+## 26. Recommendation Performance Experience
+
+Recommendation performance is **felt reliability of relevance** — suggestions appear timely, stable, and worth attention.
+
+### 26.1 Prompt Module Appearance
+
+Recommendation blocks ** load without blocking primary task** — calm skeleton if needed.
+
+### 26.2 Stable Card Layout
+
+Recommended cards ** same dimensions as search cards** — no layout jump (Chapter 14).
+
+### 26.3 Immediate Dismiss Feedback
+
+Hide or not-interested ** registers instantly** — user trusts control.
+
+### 26.4 Scroll and Context Preserved
+
+Return from recommended listing ** preserves prior scroll and module state** (Chapter 10).
+
+### 26.5 Calm Refresh
+
+Updated recommendations ** do not flash entire feed** — restrained update.
+
+### 26.6 Honest Empty Recommendation State
+
+No confident matches → ** say so** — not filler inventory.
+
+### 26.7 Predictable Personalization Latency
+
+First personalized home ** honest wait or neutral fallback** — not wrong-then-swap.
+
+Perceived performance inherits search continuity (Chapter 13), card stability (Chapter 14), and navigation return (Chapter 10).
+
+---
+
+## 27. Recommendation Ethics
+
+Recommendation ethics protect **renters from manipulation during vulnerable housing search**.
+
+### Never Recommend to Manufacture Urgency
+
+False scarcity, countdown, “others are viewing” ** forbidden** unless factual, rare, and governed (Chapters 1, 21).
+
+### Never Recommend Misleading Listings
+
+Bait price, wrong location, unavailable home ** excluded** — no engagement exception.
+
+### Never Recommend to Create Filter Bubbles
+
+Silent exclusion of valid diverse options ** for engagement** forbidden.
+
+### Never Hide Sponsored Nature
+
+Paid placement ** never organic disguise** — ethical and legal baseline.
+
+### Never Use Personalization to Discriminate
+
+Protected characteristics ** not used** to include or exclude listings or neighborhoods.
+
+### Never Punish Opt-Out
+
+Users disabling personalization ** treated fairly** — no dark degradation.
+
+### Never Exploit Contact or Favorites for Upsell
+
+Serious intent signals ** not sold** to competing realtors as targets.
+
+### Never Override User Criteria Silently
+
+Explicit boundaries ** sacred** — ethics of respect.
+
+### Never Recommend Pending as Available
+
+Domain truth ** non-negotiable** (Chapter 20).
+
+### Trust Before Monetization in Recommendations
+
+Revenue modules ** subordinate** to user-understandable benefit.
+
+Teams evaluate recommendation changes against these principles in design critique and §34 checklist.
+
+---
+
+## 28. Recommendation Success Metrics
+
+Recommendation quality judged at **philosophy and outcome level** — not click-through vanity alone.
+
+### Time to Worthy Open
+
+Suggested listings opened and ** detail confirms relevance** — not mislead rate.
+
+### Reduction in Aimless Search
+
+Users reach ** shortlist or informed rejection faster** with assistance — qualitative and behavioral.
+
+### Explanation Comprehension
+
+Users understand ** why module appeared** — research or low confusion.
+
+### Opt-Out and Dismiss Health
+
+Dismiss and opt-out ** improve experience** — not hidden or ignored.
+
+### Bubble Breadth
+
+Users still discover ** outside inferred taste** when they choose — exploration preserved.
+
+### Sponsored Comprehension
+
+Users identify ** sponsored vs organic** — comprehension test.
+
+### Saved Intent Alignment
+
+Recommendations ** match saved search and favorites** — misalignment trending down.
+
+### Trust Preservation
+
+Recommendation changes ** do not correlate** with trust complaints.
+
+### Informed Contact from Recommended Paths
+
+Contacts from recommendations show ** evaluation preceded contact** (Chapter 16).
+
+### Long-Term Recommendation Satisfaction
+
+Users report recommendations ** helped housing search** — north star qualitative.
+
+Teams evaluate recommendation changes against these principles in design critique and §34 checklist.
+
+---
+
+## 29. Recommendation Consistency
+
+**One recommendation system** — not per-surface dialects.
+
+### 29.1 One Card Grammar
+
+Recommended listings use ** listing card family** everywhere (Chapter 14).
+
+### 29.2 One Label Vocabulary
+
+“Similar”, “Nearby”, “Sponsored”, “Recommended” — ** unified meanings** across surfaces.
+
+### 29.3 One Control Grammar
+
+Dismiss, opt-out, preferences ** same behavior** — home, detail, email module.
+
+### 29.4 One Truth Pipeline
+
+Availability and status ** same source as search** — no recommendation-only inventory.
+
+### 29.5 One Ethics Standard
+
+Sponsored and personalization rules ** apply in app, email, and notifications** (Chapter 21).
+
+### 29.6 Future Module Extension
+
+New surfaces adopt ** this chapter before custom recommendation UX**.
+
+---
+
+## 30. Future Compatibility
+
+Personalization architecture **extends without forking**.
+
+### 30.1 Collaborative Search
+
+Partner shared preferences ** explicit and transparent** — both users see signals used.
+
+### 30.2 AI Discovery Assist
+
+Natural language “find me…” ** subordinate to criteria visibility** — user can see resulting filters.
+
+### 30.3 Map-First Recommendations
+
+Geographic modules ** same honesty rules** as list nearby.
+
+### 30.4 Landlord or Owner Role
+
+Future roles ** inherit consumer ethics** — no renter exploitation.
+
+### 30.5 Cross-Market Expansion
+
+New cities ** same personalization ethics** — localized labels, same structure.
+
+### 30.6 Seasonal and Lifecycle Prompts
+
+Lifecycle suggestions ** calm, optional** — not “rent now or lose forever.”
+
+---
+
+## 31. Recommendation Evolution
+
+Recommendation experience **evolves as one governed system**.
+
+### Evolve Modules, Do Not Fragment
+
+New recommendation types ** extend taxonomy** — similar, nearby, alternative, recovery — not parallel secret feeds.
+
+### Resist Recommendation Feature Accumulation
+
+Every module requires ** user question justification** — detail is not recommendation dumping ground.
+
+### Retire Low-Value Modules
+
+Modules that ** confuse or manipulate** removed product-wide — not A/B tested forever.
+
+### Preserve User Mental Model
+
+Personalization remains ** helpful, honest, controllable** — invariant through growth.
+
+### Backward Compatibility
+
+Preference and opt-out settings ** honored across releases** — migration communicated.
+
+### Measurement Serves Philosophy
+
+Metrics that ** reward manipulation** disqualified from primary success evaluation.
+
+Recommendation evolution requires Design Council approval for **new sponsored classes, material personalization policy changes, or new sensitive signal use**.
+
+---
+
+## 32. Governance
+
+### 32.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy and module label clarification | Senior UX + Content Design |
+| New recommendation module type | Head of Product Design + Product |
+| Sponsored format or disclosure change | Design Council |
+| New behavioral signal for personalization | Design Council + Trust review |
+| AI-assisted recommendation surfacing | Design Council |
+| Opt-out and preference model change | Design Council |
+
+### 32.2 Exception Policy
+
+Short experiments ** time-boxed, measurable, reversible** — must not violate ethics §27 or domain truth.
+
+### 32.3 Documentation Requirement
+
+Shipped recommendation surfaces document ** user question answered, signals used, control path, sponsored status**.
+
+### 32.4 Cross-Team Review
+
+Search, trust, notifications, and marketplace ** review intersection changes** — not siloed growth.
+
+---
+
+## 33. Product Review Checklist
+
+Before shipping any recommendation or personalization surface, reviewers confirm:
+
+1. **User question** — What housing decision does this module help?  
+2. **Intent alignment** — Does it respect explicit criteria and saved intent?  
+3. **Truth** — Only available, honestly represented listings?  
+4. **Explainability** — Can user understand why they see this?  
+5. **Control** — Dismiss, opt-out, or preference path reachable?  
+6. **Sponsored integrity** — If paid, clearly labeled and distinct?  
+7. **No silent override** — Hard filters respected?  
+8. **Bubble risk** — Does search still expose broader honest inventory?  
+9. **Context fit** — Appropriate for home, detail, recovery, or notification?  
+10. **Mobile-first** — Works on small screen without hijacking task?  
+11. **Accessibility** — Module, labels, carousel alternatives?  
+12. **Performance perception** — Calm load, stable cards, preserved return?  
+13. **Ethics** — No urgency, discrimination, or surveillance patterns?  
+14. **Consistency** — Same card, label, and control grammar as rest of product?  
+15. **Notification alignment** — If linked from Chapter 21, same promise?  
+16. **Recovery** — If no matches, honest empty and next step?  
+17. **Realtor boundary** — No renter profiling exposed?  
+18. **AI disclosure** — If AI involved, labeled and dismissible?  
+19. **Evolution** — Fits module taxonomy — not one-off feed?  
+20. **Rollback** — Can be disabled without breaking search?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 34. Common Mistakes
+
+### 34.1 Infinite Recommendation Feed
+
+**Mistake:** Home becomes TikTok of listings.  
+**Correction:** Bounded modules tied to user questions.
+
+### 34.2 Sponsored Disguised as “Picked for You”
+
+**Mistake:** Paid listings indistinguishable from organic.  
+**Correction:** Clear sponsored label and visual treatment (§23).
+
+### 34.3 Silent Budget Expansion
+
+**Mistake:** User sets max 500 €; feed shows 700 € “recommendations.”  
+**Correction:** Alternatives require explicit broadening (§20).
+
+### 34.4 Surveillance Tone
+
+**Mistake:** “We know you like luxury.”  
+**Correction:** Neutral “Based on homes you saved.”
+
+### 34.5 Ignoring Dismissals
+
+**Mistake:** User hides similar; same listings return.  
+**Correction:** Dismiss feeds control system (§16).
+
+### 34.6 Similar Module Above the Fold on Mobile
+
+**Mistake:** Distraction before price, location, trust.  
+**Correction:** Similar subordinate on detail (§18).
+
+### 34.7 Recommending Pending Listings
+
+**Mistake:** Growth team surfaces unreleased inventory.  
+**Correction:** Domain truth (§22).
+
+### 34.8 Filter Bubble by Design
+
+**Mistake:** Search hidden behind personalized feed.  
+**Correction:** Search primary; personalization complements (§5).
+
+### 34.9 Post-Contact Upsell Carousel
+
+**Mistake:** User messaged realtor; flooded with other homes.  
+**Correction:** Post-contact restraint (§13, §17).
+
+### 34.10 Opt-Out Dark Patterns
+
+**Mistake:** Disable personalization buried; re-enabled on update.  
+**Correction:** Real control (§16).
+
+---
+
+## 35. Correct & Incorrect Examples
+
+### 35.1 Module Label
+
+**Correct:** “Similar listings in Mărăști — based on this home.”  
+**Incorrect:** “You’ll love these!!!”
+
+### 35.2 Sponsored
+
+**Correct:** “Sponsored — Featured in Cluj” on card corner.  
+**Incorrect:** Featured listing in organic carousel without label.
+
+### 35.3 Criteria Respect
+
+**Correct:** User filter 2 rooms — recommendations 2 rooms or “Show 1-room alternatives” tap.  
+**Incorrect:** Feed silently full of studios.
+
+### 35.4 Empty State
+
+**Correct:** “No similar homes right now. Try nearby areas or adjust budget.”  
+**Incorrect:** Random national popular homes labeled similar.
+
+### 35.5 Explanation
+
+**Correct:** “Because you saved searches in Mărăști and Mănăștur.”  
+**Incorrect:** “Recommended by AI” with no further context.
+
+### 35.6 Dismiss
+
+**Correct:** “Hide similar listings” — module updates.  
+**Incorrect:** Dismiss toast only; same listings return on refresh.
+
+### 35.7 Recovery
+
+**Correct:** No results — “Expand distance by 1 km?” explicit button.  
+**Incorrect:** Auto-expanded results without notice.
+
+### 35.8 Notification Deep Link
+
+**Correct:** Push: “3 new homes match your saved search.” → opens that search results.  
+**Incorrect:** Push: “New for you!” → unrelated home feed.
+
+### 35.9 Favorites Signal
+
+**Correct:** User removes last saved 2-room — similar 2-room suggestions fade.  
+**Incorrect:** Endless 2-room push after user moved to 3-room search.
+
+### 35.10 Realtor Insight
+
+**Correct:** Workspace: “Listings with complete photos receive more opens.”  
+**Incorrect:** Workspace: “Renter Ion viewed your listing 14 times.”
+
+---
+
+## 36. Design Director Review
+
+**Chapter:** 22 — Personalization & Recommendations Experience  
+**Section:** XIX — Personalization & Recommendations  
+**Review type:** Initial standard adoption
+
+### 36.1 Approval Statement
+
+This chapter is approved as the **personalization and recommendations experience contract** for Rento. All adaptive discovery modules, suggestion surfaces, sponsored recommendation disclosure, and user control behavior must comply. Ranking implementations and ML systems are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 36.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust, intent, calm, integrity over engagement |
+| Chapter 2 — Experience Principles | Recovery, control, ethical discovery |
+| Chapter 4 — Layout & Information Architecture | Module hierarchy and disclosure |
+| Chapter 5 — Product Design Decision Framework | Experiment and exception governance |
+| Chapter 10 — Navigation System | Return integrity from recommended listings |
+| Chapter 13 — Search Experience System | Primary discovery; criteria authority |
+| Chapter 14 — Listing Card & Preview System | Card grammar in recommendations |
+| Chapter 15 — Listing Detail Experience | Similar and related module placement |
+| Chapter 17 — Favorites & Saved Properties Experience | Saved intent signals |
+| Chapter 20 — Trust, Verification & Moderation Experience | Truth and sponsored integrity |
+| Chapter 21 — Notifications & User Re-engagement Experience | Recommended content in alerts |
+| Chapter 23+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 36.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What user housing decision does this personalization help?  
+2. Does change preserve explicit criteria and saved intent authority?  
+3. Is relevance explainable and control preserved?  
+4. Does change avoid filter bubbles and manipulation?  
+5. Are sponsored and organic remains clearly distinct?  
+6. Does marketplace truth remain invariant?
+
+New sensitive signal use, sponsored formats, or material opt-out model changes require Design Council approval.
+
+### 36.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on personalization experience |
+| Head of Product Design | Cross-funnel consistency with search and detail |
+| Senior UX Designer | Module context, control, and recovery flows |
+| Product Management | Marketplace integrity and sponsored policy |
+| Content Design Lead | Labels, explanations, and disclosure copy |
+| Trust & Safety | Discrimination, surveillance, and truth alignment |
+| Accessibility Specialist | Module semantics and carousel alternatives |
+
+### 36.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new personalization and recommendation work immediately. Existing modules align during scheduled improvement cycles.
+
+### 36.6 Design Director Closing Note
+
+Search gives users the dignity of criteria. Cards and detail give them evidence. Favorites give them memory. **Recommendations give them momentum** — but only if momentum is honest. The moment personalization feels like steering, surveillance, or advertising, the marketplace loses the trust that long-term rental requires. This chapter exists so Rento’s suggestions feel like a thoughtful colleague who remembers what you asked for, admits when they are guessing, steps back when you say no, and never confuses a sponsored placement with a home chosen for you. Personalization should shorten the path to a home you can believe in — not shorten your patience with the platform.
+
+---
+
+**End of Chapter 22**
+
+
+---
+
+## Chapter 23 — Onboarding & First-Time Experience
+
+**Section:** XX — Onboarding & First-Time Experience  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–22; operationalizes Product Philosophy trust and calm (Chapter 1), Search discovery entry (Chapter 13), listing preview and detail evaluation (Chapters 14–15), contact readiness (Chapter 16), and navigation return integrity (Chapter 10); defines principles only — not authentication systems, registration flows, permission APIs, analytics pipelines, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **onboarding and first-time experience philosophy** for Rento.
+
+Onboarding is not a tutorial. Onboarding is the process through which users **build trust, understand value, and gain confidence** to successfully begin their housing journey in a long-term rental marketplace.
+
+First-time experience is not about showing features. It is about **reducing uncertainty, establishing product credibility, and helping users achieve meaningful progress** as early as possible — without pressure, manipulation, or feature tours that substitute for real housing discovery.
+
+Where Chapters 13–22 define how users search, evaluate, save, contact, trust, receive notifications, and encounter personalized discovery, **this chapter defines how users enter Rento** — as guests or new accounts — and how the product earns the right to ask for registration, permissions, and continued attention.
+
+This chapter governs:
+
+- First impression and value communication  
+- Guest exploration and registration timing  
+- Permission and commitment philosophy  
+- First search, listing, contact, and success moments  
+- Learning through action rather than instruction  
+- Return, continuity, and cross-device first journeys  
+- Mobile-first, accessible, and performant onboarding experience  
+- Ethics, success evaluation, consistency, and evolution  
+
+This chapter does **not** specify sign-up forms, OAuth providers, email verification backends, push token registration, screen layouts, tooltip components, or analytics event schemas.
+
+
+## Design Principles Summary
+
+This chapter governs how users first encounter Rento and build confidence to begin a long-term rental search. The following principles summarize the full onboarding contract for designers, product managers, and reviewers:
+
+1. **Reduce uncertainty** — Every first interaction must answer where the user is, what they can do, and what happens next. Onboarding removes confusion; it does not add ceremony.
+
+2. **Build trust** — Credibility is earned through honest listings, calm tone, and consistent marketplace truth — not through claims, urgency, or registration walls.
+
+3. **Respect user autonomy** — Users choose pace, depth, and moment of commitment. Skippable paths, dignified guest exploration, and real control over permissions are non-negotiable.
+
+4. **Support Meaningful Progress** — Onboarding succeeds when users advance toward a real housing decision through actions that matter — not when activation metrics rise in isolation.
+
+5. **Teach through real product usage** — Users learn by searching, evaluating listings, saving, and contacting when ready. The product is the curriculum; overlays and tours are exceptions, not the system.
+
+6. **Avoid manipulation** — False urgency, guilt, dark patterns, surveillance framing, and growth-hacking tactics are forbidden in first-time experience.
+
+7. **Prioritize housing decisions over activation metrics** — Account creation, permission grants, and session length are subordinate to whether the user made genuine progress on their Housing Journey.
+
+These principles apply to every first-time surface, guest path, registration prompt, permission ask, and early return experience in the Rento ecosystem.
+
+---
+
+## What Onboarding Is NOT
+
+To prevent category errors during design and review, onboarding on Rento is explicitly **not** any of the following:
+
+- **A tutorial** — Instructional overlays and step-by-step tours are not the primary onboarding system.
+- **A feature presentation** — Users do not need to learn what the product can do before experiencing what it does for their search.
+- **An activation funnel** — Maximizing sign-ups, permissions, or session counts is not onboarding success.
+- **A registration funnel** — Account creation is a continuity tool at the right moment — not the purpose of first visit.
+- **An advertising surface** — First-time experience must not prioritize sponsored placement over honest discovery.
+- **A marketing campaign** — Slogans, brand theater, and promotional excitement do not substitute for useful housing discovery.
+- **A growth-hacking exercise** — Experiments that pressure, deceive, or overwhelm users violate this chapter regardless of short-term metric lift.
+
+Onboarding exists to **reduce uncertainty** and **support the user's Housing Journey** — the sequence of decisions from beginning apartment search to successfully renting a home. Anything that does not serve that purpose is out of scope for onboarding, even if it ships under an "onboarding" label in project plans.
+
+---
+
+## Meaningful Progress
+
+**Meaningful Progress** is an official product term in the RENTO PRODUCT DESIGN STANDARD.
+
+Meaningful Progress is any action that **genuinely moves the user closer to successfully renting a home** — through understanding, evaluation, and informed commitment — not through superficial engagement with the product shell.
+
+### Examples of Meaningful Progress
+
+| Action | Why it qualifies |
+|--------|------------------|
+| **Understanding the marketplace** | User grasps that Rento is a long-term rental marketplace with professional realtors and governed listing truth. |
+| **Completing a relevant search** | User finds results — or honest recovery — aligned with their housing criteria. |
+| **Evaluating a trustworthy listing** | User opens detail and can assess facts, location, price, and realtor identity with confidence. |
+| **Saving a property** | User captures serious shortlist intent for continued comparison and return. |
+| **Confidently contacting a realtor** | User initiates contact with understanding of outcome, identity, and next step. |
+
+### What Is Not Meaningful Progress
+
+**Account creation alone is not Meaningful Progress.** Registration may enable progress — saved homes, inquiry continuity, cross-device return — but creating an account without housing-relevant accomplishment is an infrastructure step, not onboarding success.
+
+Teams must evaluate first-time and onboarding changes against **Meaningful Progress**, not activation rate alone. This term is reusable across future chapters including Search, Favorites, Notifications, Personalization & Recommendations, Realtor Experience, and Product Development Methodology when formally established.
+
+---
+
+## Housing Journey
+
+**Housing Journey** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+The Housing Journey is the **complete sequence of decisions a person makes from beginning the apartment search until successfully renting a home** — including discovery, comparison, evaluation, contact, viewing preparation, negotiation, and lease commitment, across sessions, devices, and weeks of search.
+
+Onboarding addresses only the **opening phase** of the Housing Journey, but every onboarding decision must **support the full journey's integrity**:
+
+- Users must enter the journey with **trust**, not pressure.
+- Early actions must **connect** to later search, favorites, contact, and return — not trap users in isolated activation loops.
+- The product must respect that the Housing Journey **takes time** — long-term rental is deliberate; onboarding does not demand premature commitment.
+
+### Reuse Across the Standard
+
+Housing Journey is a cross-chapter concept. Future chapters and product work may reference it when governing Search, Favorites, Notifications, Personalization & Recommendations, Realtor Experience, and Product Development Methodology when formally established.
+
+No implementation, channel, or technical mechanism is implied by this term. Housing Journey is a **product philosophy anchor** — the human sequence onboarding exists to serve.
+
+---
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Trust, value, autonomy, calm first contact with product |
+| **Onboarding** | Entry, orientation, progression, optional commitment |
+| **First impressions** | Credibility, clarity, seriousness of rental context |
+| **Guest experience** | Exploration before account |
+| **Registration timing** | When and why account is requested |
+| **Permissions** | Notifications, location, and future sensitive asks |
+| **First milestones** | Search, listing open, save, contact confidence |
+| **Empty states** | New user without history |
+| **Learning** | Natural teaching without tutorial overlay |
+| **Return** | Second session and cross-device continuity |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics, evolution |
+
+### 2.2 Out of Scope
+
+- Account creation form fields and validation (Chapter 12 posture applies when implemented)  
+- Realtor workspace onboarding and professional verification flows (Chapters 18–20)  
+- In-app messaging thread onboarding (Chapter 16)  
+- Notification category preferences detail (Chapter 21)  
+- Personalization opt-in mechanics (Chapter 22)  
+- SEO landing pages and marketing acquisition creative  
+- Admin and internal staff onboarding  
+- Implementation of auth, session management, or device linking  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where a user **encounters Rento for the first time or before establishing habitual use**, including but not limited to:
+
+- First app open and web first visit  
+- Guest browse and search entry  
+- Registration and sign-in prompts  
+- Permission requests (notifications, location when offered)  
+- First search, results, card, and detail paths  
+- First save and first contact initiation  
+- Empty states with no history, favorites, or messages  
+- Return after first session — same or new device  
+- Re-onboarding after long absence  
+
+If a surface answers *“How does someone new learn to trust and use Rento?”* — this chapter applies.
+
+### 2.4 First-Time Experience Serves Housing Progress, Not Activation Metrics
+
+Account creation count is **not** success. Meaningful first progress toward a confident housing decision is success.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When onboarding decisions conflict with lower-level guidance:
+
+1. Immutable domain rules and privacy obligations  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 20 — Trust, Verification & Moderation Experience  
+4. **This chapter** — for first-time and onboarding behavior  
+5. Chapters 2–4, 9–10 — experience, structure, motion, navigation  
+6. Chapters 13–17 — discovery, preview, detail, saved intent  
+7. Chapters 21–22 — notifications and personalization entry points  
+8. Chapter 5 Exception Policy for experiments  
+
+Onboarding must never pressure registration before value is demonstrated. Onboarding must never request permissions without clear purpose. Marketplace integrity and calm tone precede growth optimization.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust before conversion; calm; respect time; exploration before pressure |
+| Chapter 2 — Experience Principles | Recovery, scannability, ethical conversion, no dead ends |
+| Chapter 4 — Layout & Information Architecture | Progressive disclosure; one purpose per screen; hierarchy on first open |
+| Chapter 5 — Product Design Decision Framework | Necessity tests; exception policy for onboarding experiments |
+| Chapter 10 — Navigation System | Orientation, back integrity, guest-to-auth continuity |
+| Chapter 13 — Search Experience System | First search is primary onboarding path — not feature carousel |
+| Chapter 14 — Listing Card & Preview System | First card scan teaches marketplace grammar |
+| Chapter 15 — Listing Detail Experience | First detail evaluation builds decision confidence |
+| Chapter 16 — Contact & Communication Experience | First contact moment — trust bridge |
+| Chapter 20 — Trust, Verification & Moderation Experience | First exposure to verification and availability truth |
+| Chapter 21 — Notifications & User Re-engagement Experience | First permission ask governed by purpose and timing |
+| Chapter 22 — Personalization & Recommendations Experience | Personalization introduced after intent signals — not day-zero surveillance |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Earlier chapters define **how the product works once users are oriented**. This chapter defines **how users become oriented** — the governed path from stranger to confident participant in a long-term rental marketplace.
+
+Without this chapter, onboarding becomes growth hacking. With it, first-time experience becomes **trust accumulation and meaningful progress**.
+
+---
+
+## 4. First-Time Experience Philosophy
+
+First-time experience on Rento is **credibility earned through usefulness** — not enthusiasm performed through animations.
+
+### 4.1 Value Before Features
+
+Users must feel **why Rento matters** before being taught what buttons exist.
+
+### 4.2 Trust Before Registration
+
+Account is a **tool for continuity** — not a tollbooth at the door.
+
+### 4.3 Exploration Before Commitment
+
+Users may **browse, search, and evaluate** without creating account — where product allows — without artificial walls.
+
+### 4.4 Onboarding Reduces Uncertainty
+
+Every first screen answers ** where am I, what can I do, what happens next** — not “welcome to our ecosystem.”
+
+### 4.5 Onboarding Respects User Autonomy
+
+User chooses pace, depth, and moment of commitment — ** no forced path**.
+
+### 4.6 Housing Context From First Second
+
+Tone and content signal ** long-term rental seriousness** — not travel impulse or classifieds chaos.
+
+### 4.7 Calm Over Excitement
+
+First open feels ** professional and reassuring** — not gamified launch event.
+
+### 4.8 Honest Marketplace From First Listing
+
+First listing shown obeys ** same truth rules** as all listings — no bait inventory for wow effect.
+
+### 4.9 First Experience Is the Product
+
+Onboarding is not separate layer — ** real search and real homes** teach the product.
+
+### 4.10 Respect for User Time
+
+Short path to ** meaningful action** — not maximum steps for “engagement.”
+
+### 4.11 No Dead Ends on First Visit
+
+Empty, error, and blocked states offer ** next step** — Chapter 2 recovery.
+
+### 4.12 First Experience Sets Long-Term Expectations
+
+What users learn first ** becomes mental contract** for years — must be honest.
+
+---
+
+## 5. Onboarding Philosophy
+
+Onboarding is **guided confidence building** — not instruction manual delivery.
+
+### 5.1 Onboarding Is Journey Shaping, Not Feature Listing
+
+Product steers toward ** search → evaluate → save or contact** — not settings tour.
+
+### 5.2 Onboarding Never Manipulates
+
+False urgency, guilt, or artificial scarcity on first visit ** forbidden** (Chapters 1, 20, 21).
+
+### 5.3 Onboarding Never Overwhelms
+
+Few choices, clear hierarchy — ** one primary action per moment**.
+
+### 5.4 Onboarding Remains Optional Where Appropriate
+
+Skippable prompts, dismissible tips, ** guest path preserved** — no hostage onboarding.
+
+### 5.5 Product Teaches Naturally
+
+Users learn by ** doing housing tasks** — not reading slides.
+
+### 5.6 Every Interruption Must Have Purpose
+
+Modal, coach mark, or overlay ** justifies itself** — or does not appear.
+
+### 5.7 Registration Happens at the Right Moment
+
+Account requested when ** user needs continuity** — save, contact, alert — not at front door by default.
+
+### 5.8 Permissions Always Have Clear Purpose
+
+Notification, location, or future asks ** explain benefit in housing terms** — not generic “stay updated.”
+
+### 5.9 Users Learn Through Meaningful Actions
+
+First search, first open listing, first save ** are the curriculum**.
+
+### 5.10 Every First Interaction Builds Confidence
+
+Each step leaves user ** more capable, not more confused**.
+
+### 5.11 First Success Should Happen Quickly
+
+User should reach ** at least one meaningful win** — found relevant listing, understood card, felt marketplace honesty — in first session when inventory allows.
+
+### 5.12 Onboarding Ends When User Is Productive
+
+No arbitrary step count — ** user in flow** ends onboarding.
+
+### 5.13 Re-Onboarding Respects Memory
+
+Returning users ** not treated as day-zero** unless they choose reset.
+
+### 5.14 Onboarding Inherits Trust Rules
+
+Verification badges, availability, realtor identity ** explained on first encounter** — not assumed knowledge.
+
+---
+
+## 6. First Impression Principles
+
+First seconds establish **whether Rento feels trustworthy for housing**.
+
+### 6.1 Clarity Over Brand Theater
+
+User knows ** this is rental search** — city, purpose, seriousness — immediately.
+
+### 6.2 Real Inventory Visible Early
+
+Homes or honest empty state ** soon** — not endless marketing before substance.
+
+### 6.3 Professional Visual Restraint
+
+Brand present but ** subordinate to task** — Chapter 3 calm.
+
+### 6.4 No Fake Social Proof
+
+“Thousands viewing now” or fabricated activity ** forbidden**.
+
+### 6.5 Locale and Market Honesty
+
+Romania-first context ** clear** — language and market expectations set without stereotype.
+
+### 6.6 Error-Free First Render Perception
+
+Broken first load ** catastrophic** — performance and honesty on first paint (§25).
+
+### 6.7 Consistent With Later Experience
+
+First screen grammar ** matches search and cards** — no bait-and-switch UI dialect.
+
+### 6.8 Accessible First Impression
+
+Readable text, labeled actions ** from first open** — not accessibility as later patch.
+
+---
+
+## 7. User Mental Model
+
+New users think: **“Can I find a real home here without being tricked or rushed?”**
+
+### 7.1 Marketplace, Not Social Network
+
+Users expect ** listings and realtors** — not feeds and likes.
+
+### 7.2 Search Is the Front Door
+
+Mental entry is ** find homes** — not account creation.
+
+### 7.3 Account Is for Remembering
+
+Registration means ** save progress, contact, return** — not paywall for browsing.
+
+### 7.4 Trust Is Observed, Not Claimed
+
+Badges and copy ** verified by consistent experience** — first listing either confirms or breaks promise.
+
+### 7.5 Mistakes Are Recoverable
+
+Wrong tap or filter ** fixable without shame** — Chapter 2.
+
+### 7.6 Help Is Contextual, Not Classroom
+
+User expects ** hints when stuck** — not mandatory course.
+
+### 7.7 Serious Decisions Take Time
+
+Product ** does not expect lease on day one** — respects long search arc.
+
+---
+
+## 8. Value Communication
+
+Value is communicated through **what users accomplish**, not slogan density.
+
+### 8.1 Core Value Proposition Plain
+
+Rento helps find ** current, trustworthy long-term rentals** with professional realtors — stated simply once, not repeated every screen.
+
+### 8.2 Differentiation Through Behavior
+
+“Only what is real” shown by ** honest empty states, status labels, moderation** — not marketing adjectives alone.
+
+### 8.3 Value Demonstrated Before Ask
+
+Before registration or permission, user has ** experienced search or listing quality**.
+
+### 8.4 No Feature Laundry Lists
+
+Bullet tours of features ** replaced by task completion**.
+
+### 8.5 Value Respects Intelligence
+
+Users are adults making ** housing decisions** — copy not patronizing.
+
+### 8.6 Realtor Role Explained on First Need
+
+When identity block appears, user understands ** who publishes and why it matters** — brief, factual.
+
+### 8.7 Value Communication Localized
+
+Romanian and future locales ** natural professional tone** — not translated growth slang.
+
+---
+
+## 9. Trust Before Registration
+
+Registration is earned **after credibility, not before access**.
+
+### 9.1 Guest Browse Where Feasible
+
+Public discovery ** available without account** — domain and product policy permitting.
+
+### 9.2 No Registration Wall on First Open
+
+Hard block before any listing ** avoided** — except legal necessity clearly explained.
+
+### 9.3 Registration Prompt Tied to User Intent
+
+“Create account to save this home” ** at save** — not “sign up to continue browsing.”
+
+### 9.4 Trust Signals Visible Pre-Auth
+
+Verification and availability semantics ** visible on cards and detail** — same as authenticated user.
+
+### 9.5 Privacy Expectation Set Early
+
+Brief honest statement ** what account enables and what is not sold** — proportionate, not legal wall.
+
+### 9.6 No Fake Guest Limitations
+
+Artificial “guest can only see 3 listings” ** forbidden** — dishonest scarcity.
+
+### 9.7 Auth Failure Recovery
+
+Sign-in error ** calm, actionable** — guest path remains.
+
+### 9.8 Registration Never Required for Public Truth
+
+Availability and price on public listings ** not hidden behind login** to inflate signups.
+
+---
+
+## 10. Progressive Disclosure
+
+First-time paths reveal **only what the moment requires**.
+
+### 10.1 Start With Search, Not Settings
+
+Primary affordance ** find homes** — advanced options later.
+
+### 10.2 Filters Unfold on Demand
+
+Full filter power ** available but not dumped** on first search — Chapter 13.
+
+### 10.3 Detail Depth Earned by Navigation
+
+User opens detail ** when ready** — detail does not auto-overwhelm browse.
+
+### 10.4 Account Benefits Shown When Relevant
+
+Saved searches, favorites sync ** introduced at save moment**.
+
+### 10.5 Personalization Introduced After Intent
+
+Chapter 22 modules ** not day-zero surveillance** — after explicit or strong implicit intent.
+
+### 10.6 Notifications After Value
+
+Push ask ** after user has reason** — saved home, inquiry — not first second.
+
+### 10.7 One New Concept per Screen
+
+First visit screens ** not compound tutorials**.
+
+### 10.8 Disclosure Matches Chapter 4
+
+Hierarchy rules ** apply from first open** — not “onboarding exception” clutter.
+
+---
+
+## 11. Cognitive Load Management
+
+First-time users have **high life stress and low product patience**.
+
+### 11.1 Minimize Decisions Early
+
+Default city or sensible browse entry ** reduces blank-page paralysis** — user can change immediately.
+
+### 11.2 Clear Primary Action
+
+One obvious ** next step** per view — not competing CTAs.
+
+### 11.3 Language Plain and Short
+
+Rental terms ** explained when jargon** — not assumed.
+
+### 11.4 Chunk Information
+
+Cards and first detail ** scannable chunks** — Chapter 14, 15.
+
+### 11.5 Avoid Terminology Overload
+
+“Workspace”, “moderation”, internal roles ** not surfaced to consumers on day one**.
+
+### 11.6 Forgiving Exploration
+
+Back, clear, reset ** always available** — Chapter 10.
+
+### 11.7 No Memory Tests
+
+User not asked to ** remember codes from prior screen** — context carried.
+
+### 11.8 Stress-Aware Tone
+
+Copy ** calm under uncertainty** — housing search is emotional.
+
+---
+
+## 12. Guest Experience
+
+Guest mode is **first-class exploration**, not degraded teaser.
+
+### 12.1 Guest Can Search and Evaluate
+
+Core discovery loop ** functional** — save and contact may prompt auth per product rules.
+
+### 12.2 Guest Session Honesty
+
+Product communicates ** what guest loses on leave** — unsaved favorites — honestly, not fear.
+
+### 12.3 Guest-to-Auth Continuity
+
+On sign-up, ** current context preserved** — listing open, criteria applied — not reset to home dump.
+
+### 12.4 Guest Data Minimization
+
+Guest tracking ** minimum necessary** — no creepy profiling before consent.
+
+### 12.5 Guest Exit Dignified
+
+Leaving without account ** no guilt modal** — Chapter 5 ethical conversion.
+
+### 12.6 Guest Sees Same Marketplace Truth
+
+No “login to see real price” ** deception**.
+
+### 12.7 Guest Path Documented for Teams
+
+Design knows ** which actions require auth** — consistent product-wide.
+
+---
+
+## 13. Registration Timing
+
+**When** account is requested shapes trust as much as **how**.
+
+### 13.1 Save Triggers Registration
+
+Natural moment: user wants ** shortlist continuity**.
+
+### 13.2 Contact May Trigger Registration
+
+When identity or anti-spam requires account ** explain before form** — Chapter 16 alignment.
+
+### 13.3 Alert Subscription Triggers Registration
+
+Saved search or price alert ** clear value exchange**.
+
+### 13.4 Deferred Registration Default
+
+If user declines, ** return to guest path** — not repeated nag every screen.
+
+### 13.5 No Registration for Browsing Completion
+
+Viewing N listings ** never auto-prompts** sign-up wall.
+
+### 13.6 Timing Respects Session Depth
+
+Early nag ** forbidden** — user needs orientation first.
+
+### 13.7 Re-Prompt Policy Restrained
+
+Declined registration ** not resurfaced aggressively** same session.
+
+### 13.8 Registration Success Returns to Task
+
+After sign-up, user lands ** where they intended** — not generic profile completion trap.
+
+---
+
+## 14. Permission Request Philosophy
+
+Permissions are **contracts for specific benefit** — not data grab on install.
+
+### 14.1 Purpose Before System Dialog
+
+In-product explanation ** precedes** OS permission — especially notifications and location.
+
+### 14.2 Housing-Specific Rationale
+
+“Notify when a saved listing changes price” ** not** “Don’t miss out!”
+
+### 14.3 Ask Only When Needed
+
+Location when ** map or nearby search used** — not at launch by default.
+
+### 14.4 Graceful Denial
+
+Denied permission ** no degraded core experience** — search still works.
+
+### 14.5 No Repeated Nag Loops
+
+Deny once ** respected** — re-ask only with new user-initiated context.
+
+### 14.6 Align With Chapter 21
+
+Notification permission ** same ethics** as notification content — calm, valuable.
+
+### 14.7 Future Permissions Preview
+
+New sensitive asks ** same philosophy** — explain, timing, denial respect.
+
+---
+
+## 15. First Search Experience
+
+First search is **primary onboarding ritual** — must succeed or recover honestly.
+
+### 15.1 Low Friction Entry
+
+Search or browse ** one tap from first meaningful screen**.
+
+### 15.2 Sensible Defaults
+
+City, rent context, or popular entry ** help blank state** — user overrides easily.
+
+### 15.3 First Results Teach Card Grammar
+
+Results explain ** how to scan** through structure — not overlay tour.
+
+### 15.4 First Filter Interaction Optional
+
+Refinement ** discoverable** — not mandatory maze.
+
+### 15.5 First No-Results Recovery
+
+Empty results ** helpful** — broaden, adjust, save — Chapter 13 recovery.
+
+### 15.6 First Search Preserves Criteria on Return
+
+User leaves and returns ** criteria remembered** — guest or auth per rules.
+
+### 15.7 First Search Mobile-Optimized
+
+Thumb reach, readable cards ** day one** — Chapter 13 mobile-first.
+
+---
+
+## 16. First Listing Experience
+
+First detail open is **first deep trust test**.
+
+### 16.1 Card-to-Detail Continuity
+
+Opened listing ** matches card promise** — price, area, photo — Chapter 14–15 parity.
+
+### 16.2 Orientation Immediate
+
+User knows ** which home, where, how much** — without scroll hunt.
+
+### 16.3 Trust Block Visible Early
+
+Realtor identity and verification ** not buried** — Chapter 15, 20.
+
+### 16.4 Contact Not Aggressive on First Open
+
+CTA present ** not pulsing manipulation** — user may only be exploring.
+
+### 16.5 Save Discoverable
+
+Favorite affordance ** visible, lightweight** — Chapter 17 preview.
+
+### 16.6 Back Returns to Results
+
+First back ** preserves list place** — confidence in product memory.
+
+### 16.7 First Detail Performance Honest
+
+Loading ** truthful** — user not fooled by fake shell — §25.
+
+---
+
+## 17. First Contact Confidence
+
+First contact is **high-anxiety moment** — onboarding must not rush it.
+
+### 17.1 Contact After Evaluation Encouraged, Not Forced
+
+Product ** supports informed contact** — does not push before reading.
+
+### 17.2 First Contact Explains Outcome
+
+User knows ** what happens after tap** — call, message, handoff — Chapter 16.
+
+### 17.3 Identity Visible Before Contact
+
+Who receives inquiry ** clear** — no anonymous black hole.
+
+### 17.4 Auth Requirement Explained If Needed
+
+If login required ** why** — spam prevention, accountability — brief.
+
+### 17.5 First Contact Recovery Path
+
+Failure ** retry, save, return** — no shame.
+
+### 17.6 No Contact Gamification
+
+“Be first to contact!” ** forbidden**.
+
+### 17.7 First Contact Sets Notification Expectation
+
+If alerts offered ** tied to this inquiry** — optional, clear.
+
+---
+
+## 18. Empty States for New Users
+
+Empty is **orientation opportunity**, not failure.
+
+### 18.1 No History Yet
+
+Favorites, messages empty ** suggest first search** — not guilt.
+
+### 18.2 No Results Yet
+
+Criteria too tight ** recovery paths** — Chapter 13, 22 recovery posture.
+
+### 18.3 New Market or Low Inventory
+
+Honest ** “few homes right now”** — not fake listings.
+
+### 18.4 Empty Never Blank
+
+Always ** action or explanation** — Chapter 2 no dead ends.
+
+### 18.5 Empty Copy Calm
+
+Not “You have nothing!” — ** neutral professional**.
+
+### 18.6 Empty Illustration Restraint
+
+Visual tone ** serious marketplace** — not cartoon failure.
+
+---
+
+## 19. First Success Moment
+
+First success is **proof the product works for this user**.
+
+### 19.1 Define Success by User Progress
+
+Examples: found relevant listing, saved first home, sent first inquiry, understood verification — ** not account created alone**.
+
+### 19.2 Success Acknowledged Subtly
+
+Quiet confirmation ** not confetti casino** — Chapter 9 calm.
+
+### 19.3 Success Within First Session Goal
+
+Design targets ** one meaningful win** when marketplace has inventory.
+
+### 19.4 Success Without Inventory Honesty
+
+If no matches, success is ** clear understanding of next step** — saved search, adjusted criteria.
+
+### 19.5 Success Builds Loop
+
+After first save, user sees ** where shortlist lives** — Chapter 17, 10 navigation.
+
+### 19.6 Success Not Monetized
+
+First win ** not upsell moment** — trust still forming.
+
+---
+
+## 20. Learning Without Tutorials
+
+Teaching is **embedded in the real product loop**.
+
+### 20.1 No Mandatory Carousel
+
+Skippable ** always** — if tips exist.
+
+### 20.2 Contextual Hints Only When Needed
+
+First filter open ** may explain** — not pre-empt every screen.
+
+### 20.3 Learn by Doing Search
+
+Muscle memory from ** real tasks** — not fake practice listings labeled tutorial.
+
+### 20.4 Progressive Feature Discovery
+
+Advanced tools appear ** when user depth warrants** — Chapter 10 task layers.
+
+### 20.5 Duolingo-Style Progression Without Manipulation
+
+Streaks, guilt, daily goals ** forbidden** — only ethical progression through housing tasks.
+
+### 20.6 Help Available, Not Blocking
+
+Help center or FAQ ** reachable** — not forced read.
+
+### 20.7 Coach Marks Rare and Dismissible
+
+Persistent overlays ** avoided** — professional product, not game tutorial.
+
+### 20.8 Learning Respects Returning Users
+
+Tips ** do not repeat** every login — memory honored.
+
+---
+
+## 21. Return After First Session
+
+Second visit **continues journey**, not restarts circus.
+
+### 21.1 Resume Last Meaningful Context
+
+Recent search, open listing, or shortlist ** surfaced calmly** — not “welcome back!” spam.
+
+### 21.2 No Re-Onboarding Theater
+
+Completed orientation ** not repeated** — unless user resets.
+
+### 21.3 Gentle Re-Engagement Only
+
+Chapter 21 rules ** apply** — no guilt pushes.
+
+### 21.4 Progress Visible
+
+Saved items and criteria ** where user expects** — navigation consistency.
+
+### 21.5 Long Absence Re-Orientation
+
+After weeks, ** brief resume** — “Continue search in Cluj?” — optional.
+
+### 21.6 Auth Merge on Return
+
+Guest progress ** merged or offered merge** on login — honest about loss if not possible.
+
+---
+
+## 22. Cross-Device Continuity
+
+Housing search happens **on phone, tablet, desktop, shared with partner**.
+
+### 22.1 Account Links Devices
+
+Authenticated user ** expects same saves and searches** — Chapter 17 sync philosophy.
+
+### 22.2 Guest Limitations Communicated
+
+Cross-device guest ** not promised sync** — account benefit clear.
+
+### 22.3 Handoff Without Loss
+
+Open listing on phone, continue on desktop ** same listing** — when logged in.
+
+### 22.4 No Surprise Re-Onboarding per Device
+
+Second device ** not day-zero** for auth user.
+
+### 22.5 Shared Device Caution
+
+Logout and privacy ** accessible** — sensitive housing search context.
+
+---
+
+## 23. Mobile-First First-Time Experience
+
+Primary first open is **phone in real life**.
+
+### 23.1 Thumb-Zone Primary Actions
+
+Search, back, save ** reachable** — Chapter 8.
+
+### 23.2 Readable Without Zoom
+
+First screens ** legible** — Chapter 6.
+
+### 23.3 One-Hand Flow
+
+Critical first path ** completable one-handed** where possible.
+
+### 23.4 Network Reality
+
+Slow connection ** honest loading** — not broken first impression.
+
+### 23.5 App and Web Parity of Truth
+
+Same listing facts ** mobile and desktop** — Chapter 15 cross-device.
+
+### 23.6 Install Not Required for Value
+
+Web first visit ** fully dignified** — app install optional later, not forced.
+
+---
+
+## 24. Accessibility
+
+Onboarding must be **inclusive from first second**.
+
+### 24.1 First Screen Screen-Reader Viable
+
+Landmarks, headings, labels ** present day one**.
+
+### 24.2 Tutorial Not Sole Visual
+
+Hints ** text-accessible** — not color-only arrows.
+
+### 24.3 Permission Explanations Readable
+
+Pre-dialog copy ** available to assistive tech**.
+
+### 24.4 Touch and Focus Order Logical
+
+Registration and search ** tab order sane**.
+
+### 24.5 Motion Restraint
+
+Onboarding animations ** respect reduced motion** — Chapter 9.
+
+### 24.6 Cognitive Accessibility
+
+Plain language, no timed onboarding steps ** forcing rush**.
+
+---
+
+## 25. Onboarding Performance Experience
+
+Onboarding performance is **felt reliability from first paint** — user trusts product is working immediately.
+
+### 25.1 Fast First Meaningful Content
+
+User sees ** real browse or search entry quickly** — not long branded splash.
+
+### 25.2 Honest Loading States
+
+First listing and results load ** truthfully** — skeleton acceptable, wrong empty not.
+
+### 25.3 Immediate Tap Response
+
+First interactions ** acknowledge instantly** — Chapter 9.
+
+### 25.4 Stable First List
+
+Cards ** do not jump** as images load — Chapter 14, 26 parallel.
+
+### 25.5 Registration Without Stall
+
+Sign-up completion ** returns promptly** to task — not spinning void.
+
+### 25.6 Permission Flow Lightweight
+
+Explanation and system dialog ** minimal steps** — no maze.
+
+### 25.7 First Session Crash Recovery
+
+Reload ** restores reasonable context** — search criteria, scroll where feasible.
+
+### 25.8 Perceived Speed Inherits Product Standards
+
+Search, card, detail performance philosophies ** apply from first use** — no “onboarding exception” for slowness.
+
+Perceived performance inherits motion (Chapter 9), search continuity (Chapter 13), and navigation return (Chapter 10).
+
+---
+
+## 26. Onboarding Ethics
+
+Onboarding ethics protect **users entering housing search from manipulation and pressure**.
+
+### Never Block Truth Behind Registration
+
+Public listing honesty ** not paywalled** for signups.
+
+### Never Manufacture Urgency on First Visit
+
+Countdowns, fake viewers, “only 1 left in city” ** forbidden**.
+
+### Never Shame Guest Users
+
+“Sign up to be serious” ** forbidden** — guest exploration valid.
+
+### Never Trick Into Permissions
+
+Notification pre-prompt ** must match actual value** — not bait.
+
+### Never Dark-Pattern Registration
+
+Pre-checked marketing lists, hidden decline, confusing continue ** forbidden**.
+
+### Never Exploit Housing Anxiety
+
+Fear-based copy on first open ** violates calm marketplace** (Chapter 1).
+
+### Never Surveillance Onboarding
+
+“We personalize your feed” before user action ** without consent** — Chapter 22 ethics.
+
+### Never Tutorial Hostage
+
+User ** cannot dismiss** required slides to reach search — forbidden.
+
+### Never Fake First Success
+
+Celebration for ** meaningless actions** — account only — misleads teams and users.
+
+### Never Discriminate in First Experience
+
+Onboarding ** not vary** by protected characteristics in harmful ways.
+
+### Trust Before Monetization in Onboarding
+
+Paid placement, featured upsell ** not day-zero** — exploration first.
+
+Teams evaluate onboarding changes against these principles in design critique and §33 checklist.
+
+---
+
+## 27. Onboarding Success Metrics
+
+Onboarding quality judged at **philosophy and outcome level** — not signup rate alone.
+
+### Time to First Meaningful Action
+
+User completes ** search or opens relevant listing** — timely first session.
+
+### Time to First Success Moment
+
+User saves, contacts with understanding, or ** achieves clear next step** — qualitative target.
+
+### Registration Appropriateness
+
+Signups ** correlate with intent moments** — not rage-quit walls.
+
+### Permission Grant Quality
+
+Users who enable notifications ** retain and find helpful** — not regret rate spike.
+
+### First Session Return Willingness
+
+Users return ** without guilt campaigns** — organic second session.
+
+### Comprehension of Marketplace
+
+Users articulate ** what Rento is for** — rental, realtors, trust — in research.
+
+### Card-to-Detail Truth on First Open
+
+First detail open ** no surprise vs card** — parity metric.
+
+### Support Contact on First Day
+
+Confusion tickets ** low** — clarity proxy.
+
+### Long-Term Trust Onboarding
+
+Week-one users rate ** marketplace honesty** — cumulative.
+
+### Ethical Conversion Rate
+
+Registration from ** value moments** — not deceptive prompts — internal classification.
+
+Teams evaluate onboarding changes against these principles in design critique and §33 checklist.
+
+---
+
+## 28. Onboarding Consistency
+
+**One first-time system** — not per-platform onboarding dialects.
+
+### 28.1 One Search Entry Grammar
+
+First search ** same as returning user search** — Chapter 13.
+
+### 28.2 One Card and Detail Contract
+
+First listings use ** standard card and detail** — no “onboarding lite” truth.
+
+### 28.3 One Registration Moment Grammar
+
+Auth prompts ** same copy patterns** — save, contact, alert — product-wide.
+
+### 28.4 One Permission Rationale Style
+
+Notification and location asks ** unified tone** — Chapter 21 alignment.
+
+### 28.5 One Empty State Family
+
+New user empties ** match global empty philosophy** — Chapter 2, 17.
+
+### 28.6 Future Surface Extension
+
+New entry points ** adopt this chapter** before custom onboarding.
+
+---
+
+## 29. Future Compatibility
+
+Onboarding architecture **extends without reinvention**.
+
+### 29.1 Partner and Household Onboarding
+
+Shared search ** explicit, consent-based** — both users understand data use.
+
+### 29.2 Realtor Consumer Role Switch
+
+User who is also realtor ** clear role separation** on first professional access — Chapter 19 — not consumer onboarding collision.
+
+### 29.3 New Markets
+
+New cities ** same onboarding ethics** — localized defaults only.
+
+### 29.4 AI-Assisted First Search (Future)
+
+Natural language entry ** shows resulting criteria** — user learns system — Chapter 22 posture.
+
+### 29.5 Identity Verification for Renters (Future)
+
+If added, ** purpose and timing** — housing need — not day-zero KYC wall.
+
+### 29.6 Referral and Invite Entry
+
+Invited users ** land in context** — specific listing or city — not generic reset.
+
+---
+
+## 30. Onboarding Evolution
+
+Onboarding experience **evolves as one governed system**.
+
+### Evolve Paths, Do Not Multiply Wizards
+
+New entry scenarios ** extend taxonomy** — guest, return, invite — not parallel tutorial products.
+
+### Resist Onboarding Feature Accumulation
+
+Every modal requires ** user uncertainty removed** justification — not metric chasing.
+
+### Retire Noisy Patterns
+
+Coach marks and prompts that ** annoy without lift** removed product-wide.
+
+### Preserve Mental Model
+
+First-time experience remains ** trust, exploration, meaningful progress** — invariant.
+
+### Backward Compatibility
+
+Users mid-onboarding on app update ** not reset arbitrarily** — migration respectful.
+
+### Measurement Serves Philosophy
+
+Signup funnels that ** reward pressure** disqualified as primary success.
+
+Onboarding evolution requires Design Council approval for **new mandatory steps, new permission classes, or material guest-access reduction**.
+
+---
+
+## Product Development Methodology Bridge
+
+The onboarding philosophy documented in this chapter is a **reusable decision framework** — not a collection of interface patterns, screen sequences, or platform-specific flows.
+
+Its principles — trust before registration, Meaningful Progress over activation, teaching through real product usage, calm first impressions, and respect for the Housing Journey — describe **how a serious marketplace earns user confidence at entry**. Those principles transcend any single surface or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed experience philosophy into a broader method for building products that honor such philosophy under real delivery constraints.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's onboarding surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — reduce uncertainty, build trust, respect autonomy, avoid manipulation, and measure success by genuine user progress — even when domain, audience, or commercial model differs from long-term residential rental.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
+## 31. Governance
+
+### 31.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy and hint clarification | Senior UX + Content Design |
+| New contextual tip or empty state | Head of Product Design |
+| Registration timing or guest access change | Design Council + Product |
+| New permission pre-prompt | Design Council |
+| Mandatory onboarding step addition | Design Council |
+| Re-onboarding after absence policy | Head of Product Design + Product |
+
+### 31.2 Exception Policy
+
+Onboarding experiments ** time-boxed, reversible, ethics-reviewed** — no permanent dark patterns via experiment.
+
+### 31.3 Documentation Requirement
+
+Shipped onboarding changes document ** user uncertainty addressed, skip path, auth impact, permission purpose**.
+
+### 31.4 Cross-Team Review
+
+Search, trust, contact, notifications ** review intersection** — not growth silo alone.
+
+---
+
+## 32. Product Review Checklist
+
+Before shipping any onboarding or first-time surface, reviewers confirm:
+
+1. **Value first** — Does user see real housing value before heavy asks?  
+2. **Trust** — Are listings and signals honest on first view?  
+3. **Guest path** — Can user explore meaningfully without account?  
+4. **Registration timing** — Is auth requested at intent moment only?  
+5. **Permission purpose** — Is housing-specific benefit clear before OS dialog?  
+6. **Cognitive load** — One primary action? Plain language?  
+7. **Progressive disclosure** — Only necessary concepts on first path?  
+8. **First search** — Low friction entry and honest results or recovery?  
+9. **First detail** — Card parity, trust visible, calm CTA?  
+10. **First contact** — Outcome explained, identity clear, recovery?  
+11. **Empty states** — Actionable, calm, honest inventory?  
+12. **First success** — Meaningful progress possible first session?  
+13. **No tutorial hostage** — Skippable, learn-by-doing?  
+14. **Return** — Second session resumes, not repeats circus?  
+15. **Mobile-first** — Thumb reach, readable, one-hand viable?  
+16. **Accessibility** — Labels, order, motion, cognitive?  
+17. **Performance** — Fast meaningful content, honest loading?  
+18. **Ethics** — No urgency, shame, surveillance, dark patterns?  
+19. **Consistency** — Same search, card, auth grammar as core product?  
+20. **Chapters 21–22** — Notification and personalization asks deferred appropriately?  
+21. **Rollback** — Can new step be removed without breaking core loop?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 33. Common Mistakes
+
+### 33.1 Registration Wall on Launch
+
+**Mistake:** Open app → must sign up to see homes.  
+**Correction:** Guest browse; auth at intent (§9, §13).
+
+### 33.2 Five-Screen Feature Tour
+
+**Mistake:** Slides about AI, maps, chat before any listing.  
+**Correction:** Learn by search (§20).
+
+### 33.3 Notification Permission on First Paint
+
+**Mistake:** OS dialog before user knows product.  
+**Correction:** Purpose after value (§14, Chapter 21).
+
+### 33.4 Fake Inventory First Results
+
+**Mistake:** Curated “wow” listings that misrepresent market.  
+**Correction:** Honest search results (§4).
+
+### 33.5 Confetti on Sign-Up
+
+**Mistake:** Account created — celebration; user still has no home context.  
+**Correction:** Subtle confirmation; return to task (§19).
+
+### 33.6 Guest Degradation
+
+**Mistake:** Blurry listings until login.  
+**Correction:** Same truth guest and auth (§12).
+
+### 33.7 Re-Onboarding Every Visit
+
+**Mistake:** Tips repeat for returning users.  
+**Correction:** Memory honored (§21).
+
+### 33.8 Empty Favorites Guilt
+
+**Mistake:** “Your list is empty — you’re missing out!”  
+**Correction:** Calm suggest search (§18).
+
+### 33.9 Contact Push Before Reading
+
+**Mistake:** Detail opens — full-screen “Call now!”  
+**Correction:** Informed contact (§17, Chapter 15).
+
+### 33.10 Personalization on Day Zero
+
+**Mistake:** “For you” feed before any signal.  
+**Correction:** Chapter 22 timing (§10).
+
+---
+
+## 34. Correct & Incorrect Examples
+
+### 34.1 First Open
+
+**Correct:** Browse rentals in Cluj — search bar, recent honest listings.  
+**Incorrect:** “Create account to explore 10,000+ homes!”
+
+### 34.2 Registration Prompt
+
+**Correct:** User taps save — “Create account to keep this home on all devices.”  
+**Incorrect:** Third listing viewed — hard registration wall.
+
+### 34.3 Notification Pre-Prompt
+
+**Correct:** After save — “Get notified if price changes on saved homes?”  
+**Incorrect:** First launch — “Enable notifications to not miss deals!”
+
+### 34.4 First No Results
+
+**Correct:** “No homes match yet. Try nearby sectors or adjust budget.”  
+**Incorrect:** Blank white screen.
+
+### 34.5 Guest Continuity
+
+**Correct:** Guest signs up from detail — returns to same listing.  
+**Incorrect:** Sign-up dumps user on empty home.
+
+### 34.6 First Contact
+
+**Correct:** “You’ll call Maria Popescu, listing realtor. Your number is not shown publicly.”  
+**Incorrect:** Tap call — no identity, no outcome text.
+
+### 34.7 Hint
+
+**Correct:** First time opening filters — one line: “Narrow by rooms and price.” Dismissible.  
+**Incorrect:** Five-step coach marks blocking list.
+
+### 34.8 Return Visit
+
+**Correct:** “Continue search: 2 rooms, Mărăști, under 650 €.”  
+**Incorrect:** Full onboarding replay.
+
+### 34.9 Cross-Device
+
+**Correct:** Login on tablet — saved home from phone visible.  
+**Incorrect:** Tablet acts as new guest with no explanation.
+
+### 34.10 Low Inventory Market
+
+**Correct:** “Few homes match today. Save search — we’ll help you watch.”  
+**Incorrect:** Import low-quality filler listings to avoid empty.
+
+---
+
+## 35. Design Director Review
+
+**Chapter:** 23 — Onboarding & First-Time Experience  
+**Section:** XX — Onboarding & First-Time Experience  
+**Review type:** Initial standard adoption
+
+### 35.1 Approval Statement
+
+This chapter is approved as the **onboarding and first-time experience contract** for Rento. All first-visit, guest, registration, permission, and early-journey behavior must comply. Auth implementations and onboarding UI patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 35.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust, calm, exploration, respect time |
+| Chapter 2 — Experience Principles | Recovery, ethical conversion, no dead ends |
+| Chapter 4 — Layout & Information Architecture | Progressive disclosure from first open |
+| Chapter 5 — Product Design Decision Framework | Experiment and exception governance |
+| Chapter 10 — Navigation System | Orientation and return from first paths |
+| Chapter 13 — Search Experience System | First search as primary onboarding |
+| Chapter 14 — Listing Card & Preview System | First card scan grammar |
+| Chapter 15 — Listing Detail Experience | First evaluation environment |
+| Chapter 16 — Contact & Communication Experience | First contact confidence |
+| Chapter 20 — Trust, Verification & Moderation Experience | First trust signal honesty |
+| Chapter 21 — Notifications & User Re-engagement Experience | Permission and re-engagement timing |
+| Chapter 22 — Personalization & Recommendations Experience | Deferred personalization entry |
+| Chapter 24+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 35.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What uncertainty does this onboarding step remove?  
+2. Does change preserve trust before registration?  
+3. Is guest exploration dignified and honest?  
+4. Are permissions and auth timed to user intent?  
+5. Does first session enable meaningful housing progress?  
+6. Does change avoid manipulation and overwhelm?
+
+New mandatory onboarding steps, guest access reduction, or new permission classes require Design Council approval.
+
+### 35.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on onboarding experience |
+| Head of Product Design | Cross-funnel consistency with search and detail |
+| Senior UX Designer | First path, empty states, and skip flows |
+| Product Management | Registration timing and guest policy |
+| Content Design Lead | Value, permission, and empty copy |
+| Trust & Safety / Legal | Privacy and honest marketplace alignment |
+| Accessibility Specialist | First-screen and tutorial accessibility |
+
+### 35.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new onboarding and first-time experience work immediately. Existing entry flows align during scheduled improvement cycles.
+
+### 35.6 Design Director Closing Note
+
+Users do not fall in love with Rento on the splash screen. They begin to trust it when ** the first listing looks real**, the first search respects their criteria, the first save feels remembered, and the first contact does not feel like a trap. Onboarding is not the art of asking for accounts — it is the art of ** earning the right to participate in someone’s housing life**. This chapter exists so first-time experience feels like a calm professional marketplace opening its door — not a growth funnel closing around a stressed renter. When Rento gets onboarding right, users leave the first session not dazzled, but ** oriented and hopeful** — which is exactly what long-term rental search requires.
+
+---
+
+**End of Chapter 23**
+
+
+---
+
+## Chapter 24 — Empty, Loading & Error States Experience
+
+**Section:** XXI — Empty, Loading & Error States  
+**Status:** APPROVED
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Realtor Operations, Reviewers  
+**Authority:** Subordinate to Chapters 1–23; operationalizes calm under uncertainty (Chapters 1–2), progressive disclosure and hierarchy (Chapter 4), motion and feedback (Chapter 9), navigation recovery (Chapter 10), and journey surfaces across search, detail, favorites, contact, trust, notifications, onboarding, and workspace (Chapters 13–23); defines principles only — not loading components, error codes, retry APIs, skeleton implementations, analytics events, or UI code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **empty, loading, and error states experience philosophy** for Rento.
+
+Users judge product quality not when everything works. Users judge quality **while waiting**, when something fails, when there is no content, and when the marketplace pauses between human and system action.
+
+This chapter defines how Rento behaves during **uncertainty** — the full spectrum of states where information is loading, unavailable, empty, delayed, partially available, temporarily failing, successfully completed, or waiting for user action, network response, moderation, or verification.
+
+Every state communicates. **Silence communicates. Delay communicates. Errors communicate. Empty screens communicate. Loading communicates.** The quality of these states defines perceived product quality as much as happy-path screens.
+
+The goal is to **reduce anxiety, preserve trust, and maintain orientation** regardless of application state — so users always know what happened, what is happening, what will happen next, and what they can do.
+
+States must never feel like **technical failures bolted onto a product**. They must feel like **one coherent professional marketplace** — calm, honest, and recoverable.
+
+This chapter governs philosophy and governance for all product states of incompleteness or outcome. It does **not** specify spinners, toast libraries, HTTP status handling, offline caches, or monitoring dashboards.
+
+
+## Design Principles Summary
+
+This chapter governs how Rento behaves whenever information is incomplete, delayed, absent, or failed. The following principles summarize the full state experience contract for designers, product managers, and reviewers:
+
+1. **Reduce uncertainty** — Users must understand what happened, what is happening, what will happen next, and what they can do. Silence and ambiguity are design failures.
+
+2. **Preserve trust** — States must never lie about listing availability, send success, moderation outcome, or inventory presence. State Integrity is non-negotiable.
+
+3. **Maintain orientation** — Loading, empty, and error experiences must preserve context, place, and navigation continuity — State Continuity across the Housing Journey.
+
+4. **Communicate honestly** — Skeletons, progress, waits, and errors use plain professional language. False precision, fake completeness, and technical jargon are forbidden.
+
+5. **Support recovery** — Every non-terminal state offers a clear path forward — retry, alternative, wait with clarity, or dignified exit. Recovery Confidence is a design requirement.
+
+6. **Preserve State Integrity** — Displayed state must align with marketplace and user reality. Fake success, pending-as-live, and filler empty inventory destroy trust faster than slow load.
+
+7. **Strengthen Perceived Reliability** — Users should feel the product is working correctly and will return to a usable state — even when the network is slow or an action fails.
+
+8. **Never manipulate users during uncertainty** — Empty, loading, and error surfaces must not manufacture urgency, shame, registration pressure, or sponsored distraction.
+
+These principles apply to every loading, empty, waiting, success, and error state across consumer discovery, favorites, contact, notifications, realtor workspace, and trust-related flows in the Rento ecosystem.
+
+---
+
+## What This Chapter Is NOT
+
+To prevent category errors during design, review, and engineering handoff, this chapter is explicitly **not** about:
+
+- **Backend exception handling** — How servers catch, classify, or propagate errors.
+- **HTTP status codes** — Protocol-level response taxonomy.
+- **API implementation** — Endpoints, contracts, or client retry logic.
+- **Retry algorithms** — Exponential backoff, circuit breakers, or idempotency design.
+- **Monitoring systems** — Dashboards, alerts, uptime measurement, or incident tooling.
+- **Infrastructure reliability** — Load balancing, failover, CDN, or database replication.
+- **Logging** — Structured logs, trace IDs, or observability pipelines.
+- **Engineering architecture** — How uncertainty is implemented in code or infrastructure.
+
+This chapter governs **how uncertainty is experienced by users** — what they see, understand, feel, and can do while information is loading, unavailable, empty, delayed, or failed.
+
+Engineering must implement states that honor these principles. Engineering choices are subordinate to user-facing honesty, orientation, recovery, and trust — not the reverse.
+
+---
+
+## State Resolution
+
+**State Resolution** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+State Resolution is the **moment when uncertainty ends because the user has received a clear and trustworthy outcome** — success, honest failure, or honest non-recoverable communication that closes the open question.
+
+State Resolution completes the lifecycle of every product state. Loading, waiting, and ambiguous interim screens exist to reach Resolution; unresolved ambiguity is a product defect.
+
+### Examples of State Resolution
+
+| Situation | State Resolution |
+|-----------|------------------|
+| **Loading completed** | Expected content appears truthfully; user can continue evaluation or action. |
+| **Moderation completed** | Realtor receives clear approved, rejected, or revision-required outcome — not indefinite pending. |
+| **Verification completed** | Applicant and public surfaces reflect honest verified or declined status. |
+| **Upload completed** | All intended media saved, or specific failure named with recovery path. |
+| **Retry succeeded** | Prior error cleared; user continues task with State Continuity preserved. |
+| **Honest non-recoverable outcome** | Listing gone, permission denied, or policy block explained with alternative path — user is not left in infinite wait. |
+
+### Design Requirement
+
+Every state design must define **what Resolution looks like** and **how user knows Resolution occurred**. Teams must not ship interim states without a governed path to Resolution.
+
+This concept is reusable across Search, Detail, Contact, Workspace, Trust, Notifications, and future chapters whenever a flow moves from uncertainty to outcome.
+
+---
+
+## Trust Under Uncertainty
+
+**Trust Under Uncertainty** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Trust Under Uncertainty is **the product's ability to preserve user confidence while the final outcome is still unknown**.
+
+Users rarely lose trust because they wait. Users lose trust because **uncertainty is unmanaged** — through silence, false promises, lost context, blame, or states that lie about reality.
+
+Trust Under Uncertainty is preserved through:
+
+- **Honesty** — The product says what it knows and does not know; no fake success or fake completeness.
+- **Transparency** — State Transparency: plain language about loading, waiting, and failure.
+- **Continuity** — State Continuity: context, input, and place preserved through interim states.
+- **Calm communication** — Professional tone without panic, guilt, or urgency manipulation.
+- **Recovery Confidence** — User believes retry or alternative path will work.
+- **State Integrity** — Displayed state matches marketplace and user reality throughout uncertainty.
+
+Trust Under Uncertainty connects this chapter to Product Philosophy (Chapter 1), Trust & Moderation (Chapter 20), and Onboarding (Chapter 23): **the marketplace earns trust precisely when things are not finished yet**.
+
+This concept is reusable throughout future chapters wherever users wait, fail, or face empty outcomes.
+
+---
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **State philosophy** | Communication, trust, orientation under uncertainty |
+| **Loading** | Skeleton, progressive load, partial content, prioritization |
+| **Empty** | Zero-data, zero-results, first-use, role-specific empties |
+| **Waiting** | Moderation, verification, upload, submission, review, background |
+| **Success** | Confirmation, completion, non-disruptive positive feedback |
+| **Error** | Taxonomy, recovery, retry, escalation, blameless tone |
+| **Perception** | Perceived reliability, continuity, transparency, integrity |
+| **Cross-cutting** | Mobile-first, accessibility, motion, ethics, consistency, evolution |
+
+### 2.2 Out of Scope
+
+- Visual token specification for spinners, colors, or icons (Chapters 6–8)  
+- Form field validation copy detail (Chapter 12)  
+- Moderation decision rationale content (Chapter 20 — this chapter governs waiting posture only)  
+- Notification delivery failure (Chapter 21 — intersection governed where states appear in-app)  
+- Implementation of error logging, retries, circuit breakers, or CDN behavior  
+- Internal admin operations consoles (separate standard when authored — consumer and realtor workspace empties in scope)  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where the product is **not showing final, complete, expected content**, including but not limited to:
+
+- Search and browse loading, empty, and error  
+- Listing card and detail loading, partial media, unavailable listing  
+- Favorites, saved search, messages, and notification center empties  
+- Contact send, waiting, success, and failure  
+- Realtor workspace portfolio, upload, submission, moderation, and verification waits  
+- Onboarding and first-use empty paths (Chapter 23)  
+- Authentication and permission blocks  
+- Network and server failure recovery  
+
+If a surface answers *“What does the user see and understand when the product is not ready or something went wrong?”* — this chapter applies.
+
+### 2.4 States Serve Orientation, Not Theater
+
+Animation density and clever copy **never substitute** for honest status and recovery.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When state experience decisions conflict with lower-level guidance:
+
+1. Immutable domain rules and availability truth  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 20 — Trust, Verification & Moderation Experience  
+4. **This chapter** — for empty, loading, error, waiting, and success state behavior  
+5. Chapters 2–4, 9–10 — experience, structure, motion, navigation  
+6. Chapters 12–23 — journey-specific surfaces where states appear  
+7. Chapter 5 Exception Policy for experiments  
+
+States must never display **pending listings as available**, **fake success**, or **blame users for system failure**. Calm honesty precedes engagement optimization.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm; trust; no dead ends; respect time |
+| Chapter 2 — Experience Principles | Recovery, blameless errors, orientation |
+| Chapter 4 — Layout & Information Architecture | Hierarchy during partial load; empty module placement |
+| Chapter 5 — Product Design Decision Framework | Exception policy; necessity of state variants |
+| Chapter 6 — Typography & Reading System | Readable status and error copy |
+| Chapter 7 — Color Meaning & Semantic Color System | Semantic use of status — not decorative panic |
+| Chapter 8 — Spatial System & Layout Rhythm | Stable layout during load; empty state spacing |
+| Chapter 9 — Motion & Interaction System | Calm motion in transitions; reduced motion |
+| Chapter 10 — Navigation System | Return integrity after error; no trap states |
+| Chapter 11 — Component Philosophy & Component System | States as governed behaviors, not one-offs |
+| Chapter 12 — Form System & Data Collection Experience | Validation errors; submit waiting |
+| Chapter 13 — Search Experience System | Search empty, loading, no-results recovery |
+| Chapter 14 — Listing Card & Preview System | Card skeleton stability; image pending |
+| Chapter 15 — Listing Detail Experience | Gallery load; unavailable listing honesty |
+| Chapter 16 — Contact & Communication Experience | Send states; contact failure recovery |
+| Chapter 17 — Favorites & Saved Properties Experience | Empty shortlist; sync honesty |
+| Chapter 18 — Realtor Profile Experience | Profile load; empty listings on profile |
+| Chapter 19 — Realtor Workspace Experience | Portfolio empty; submission waits |
+| Chapter 20 — Trust, Verification & Moderation Experience | Moderation and verification waiting truth |
+| Chapter 21 — Notifications & User Re-engagement Experience | Empty notification center; alert honesty |
+| Chapter 22 — Personalization & Recommendations Experience | Empty recommendations; low-confidence hide |
+| Chapter 23 — Onboarding & First-Time Experience | First-use empty; honest first load |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Earlier chapters define **what users do when content is present**. This chapter defines **how Rento behaves when content is not** — the governed system for uncertainty that protects trust across the entire marketplace.
+
+Without this chapter, loading and errors become engineering afterthoughts. With them, states become **first-class product experience**.
+
+---
+
+## 4. State Philosophy
+
+Every application state is **product communication**.
+
+### 4.1 States Are Never Neutral
+
+What the product shows while waiting or failing ** shapes trust** as much as success screens.
+
+### 4.2 One Coherent Product Voice
+
+Loading, empty, and error copy ** match calm professional marketplace tone** — not a different app personality.
+
+### 4.3 Orientation Is Mandatory
+
+User always knows ** where they are in the product** — state does not erase navigation context.
+
+### 4.4 Four Questions Every State Must Answer
+
+Where possible, states address:
+
+1. **What happened?** (or what is known)  
+2. **What is happening?** (if ongoing)  
+3. **What will happen next?** (honest expectation)  
+4. **What can I do?** (primary recovery or wait action)
+
+### 4.5 States Never Feel Like Technical Failures
+
+Avoid raw codes, developer jargon, and stack-trace energy — ** human professional clarity**.
+
+### 4.6 Honesty Over Performance Theater
+
+Fake instant content, fake success, or fake completeness ** forbidden**.
+
+### 4.7 States Preserve Marketplace Truth
+
+Empty because no honest inventory ** beats filler listings**.
+
+### 4.8 States Respect Housing Anxiety
+
+Users are stressed — ** calm, direct, non-dramatic** tone always.
+
+### 4.9 No Dead Ends
+
+Every state offers ** progress, wait with clarity, or exit** — Chapter 2.
+
+### 4.10 States Inherit Motion Discipline
+
+Movement ** informs** — does not entertain or alarm (Chapter 9).
+
+### 4.11 Success Is Quiet; Failure Is Clear
+
+Confirmations ** restrained** — errors ** understandable**.
+
+### 4.12 State Quality Is Mobile-First
+
+Phone context ** primary** — thumb reach, readability, one-hand recovery.
+
+---
+
+## 5. Perceived Reliability
+
+**Perceived Reliability** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Perceived Reliability is the **user’s felt confidence that the product is working correctly, telling the truth about status, and will return to a usable state** — regardless of actual network speed or server architecture.
+
+Perceived Reliability is built through:
+
+- **Honest loading** — user not fooled by shells that swap entirely  
+- **Stable layout** — content does not jump unpredictably  
+- **Prompt acknowledgement** — taps and submits register immediately  
+- **Truthful waits** — moderation and upload show real stages, not black holes  
+- **Recoverable failures** — user believes retry or alternative path will work  
+
+Perceived Reliability is **not** the same as technical uptime. A slow but honest product can feel more reliable than a fast but lying one.
+
+This concept is reusable across Search, Detail, Workspace, Notifications, and future chapters whenever teams evaluate loading, waiting, or error UX.
+
+---
+
+## 6. State Continuity
+
+**State Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+State Continuity is the **preservation of user context, place, and mental model** across transitions between loading, content, empty, error, and success — and across return from background, network loss, or session restore.
+
+State Continuity requires:
+
+- Scroll position meaningful after load ** where feasible** (Chapters 10, 13, 14)  
+- Form drafts ** preserved** through interruption (Chapters 12, 16)  
+- Criteria and filters ** retained** through error recovery  
+- Back navigation ** returns to expected prior state** — not random reset  
+
+Broken continuity feels like product failure even when data eventually loads.
+
+---
+
+## 7. State Transparency
+
+**State Transparency** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+State Transparency is the **degree to which the product openly communicates what it knows, does not know, and is doing** during incomplete or failed experiences.
+
+Transparent states:
+
+- Name the situation in **plain language** — “Updating results”, “Listing unavailable”, “Message not sent”  
+- Distinguish **user action required** from **system working** from **system failed**  
+- Avoid **false precision** — “Almost done” for unknown duration forbidden  
+- Disclose **material personalization or sync delay** when user would otherwise assume wrong state  
+
+Opacity breeds anxiety in housing search. Transparency reduces support burden and trust erosion.
+
+---
+
+## 8. Loading Experience
+
+Loading is **active communication**, not absence of design.
+
+### 8.1 Loading Must Appear Promptly
+
+User action or navigation ** acknowledged quickly** — not frozen silence.
+
+### 8.2 Loading Matches Content Type
+
+List load, detail load, image load, and submit load ** different honest patterns** — not one generic spinner for everything.
+
+### 8.3 Loading Does Not Block Orientation
+
+User retains ** sense of where they are** — header, title, or context preserved.
+
+### 8.4 Loading Duration Honesty
+
+Unknown duration → ** calm indeterminate pattern** — not fake progress bar.
+
+### 8.5 Long Load Requires Reassurance
+
+Extended wait → ** periodic honest status** — “Still loading photos” — not abandonment.
+
+### 8.6 Load Failure Distinct From Loading
+
+Stuck load ** becomes error state** — with recovery — not infinite spinner.
+
+### 8.7 Load Inherits Search and Card Stability
+
+Results and cards ** stable grammar during load** (Chapters 13, 14).
+
+---
+
+## 9. Skeleton Philosophy
+
+Skeletons are **honest placeholders**, not fake content.
+
+### 9.1 Skeleton Reflects Real Layout
+
+Placeholder blocks ** match eventual structure** — price zone, image zone, title zone.
+
+### 9.2 Skeleton Does Not Imply False Data
+
+No fake prices, neighborhoods, or verification badges in skeleton.
+
+### 9.3 Skeleton Calm and Neutral
+
+No pulsing urgency ** simulating activity for engagement**.
+
+### 9.4 Skeleton Transitions Smoothly
+
+Content replacement ** minimal violent jump** — layout stability.
+
+### 9.5 Skeleton Optional Where Instant Text Possible
+
+Critical facts ** may load text-first** — skeleton for media-heavy regions only.
+
+### 9.6 Skeleton Accessibility
+
+Loading region ** announced** — not silent blank for assistive tech.
+
+---
+
+## 10. Progressive Loading
+
+Progressive loading delivers **value before completeness**.
+
+### 10.1 Text Before Gallery
+
+Price, location, title ** may appear before all photos** — user can begin evaluation (Chapter 15).
+
+### 10.2 List Before Images
+
+Search results ** scannable** before every thumbnail completes.
+
+### 10.3 Priority by User Task
+
+What user needs first ** loads first** — hierarchy-driven (Chapter 4).
+
+### 10.4 Progressive Does Not Mean Deceptive Partial
+
+Partial screen ** labeled if material facts still loading** — when ambiguity would mislead.
+
+### 10.5 Below-the-Fold May Lag
+
+Secondary modules ** load after primary task content** — recommendations, secondary actions.
+
+### 10.6 Progressive Load Preserves Scroll
+
+User reading ** not sabotaged** by late-arriving blocks pushing content.
+
+---
+
+## 11. Partial Content
+
+Partial content is **honest incompleteness** — not broken product.
+
+### 11.1 Partial Listing Detail
+
+Some photos failed — ** show available photos, note gap honestly** — not repeat broken image icon without explanation.
+
+### 11.2 Partial Search Results
+
+Some cards unavailable mid-session — ** remove or mark with explanation** — not ghost taps.
+
+### 11.3 Partial Profile
+
+Realtor profile missing optional fields — ** empty professional state** — not fabricated defaults.
+
+### 11.4 Partial Sync
+
+Cross-device favorites ** explain if incomplete** — Chapter 17 sync honesty.
+
+### 11.5 Partial Never Hides Critical Absence
+
+Missing price or availability ** not treated as partial** — core facts required or state is error/unavailable.
+
+---
+
+## 12. Content Prioritization During Load
+
+When bandwidth or sequence is constrained, **prioritize decision-critical facts**.
+
+### 12.1 Consumer Detail Priority
+
+Identity, price, location, availability, primary media ** before** similar listings carousel.
+
+### 12.2 Search Results Priority
+
+Card primary facts ** before** secondary badges or promotions.
+
+### 12.3 Workspace Priority
+
+Listing status and rejection reason ** before** analytics flourishes.
+
+### 12.4 Contact Priority
+
+Send confirmation ** before** decorative success animation.
+
+### 12.5 Prioritization Consistent Across Devices
+
+Mobile priority order ** ethically aligned** with desktop — not mobile stripped of trust facts.
+
+---
+
+## 13. Network Delay
+
+Network delay is **normal mobile reality** — not user fault.
+
+### 13.1 Delay Acknowledged Calmly
+
+“Taking longer than usual” ** acceptable** — panic copy forbidden.
+
+### 13.2 Retry Offered After Meaningful Delay
+
+User ** not left infinite wait** — recovery path appears.
+
+### 13.3 Delay Does Not Clear User Input
+
+Forms and filters ** preserved** through slow response.
+
+### 13.4 Delay Messaging Housing-Appropriate
+
+Not “Oops!” or gaming language — ** professional neutral**.
+
+### 13.5 Background Refresh Distinct
+
+Passive refresh ** does not flash entire screen** — calm update (Chapters 13, 17).
+
+---
+
+## 14. Offline Philosophy
+
+Offline and connectivity loss are **future-compatible** and **honesty-first** today.
+
+### 14.1 Offline Is Not Hidden
+
+User knows ** when offline or unreachable** — not silent failure.
+
+### 14.2 Cached Content Labeled When Stale
+
+Previously viewed listing ** may show with stale indicator** — not presented as live availability.
+
+### 14.3 Offline Actions Queued Honestly
+
+If product queues action ** user told** — “Will send when connected” — not fake sent.
+
+### 14.4 Offline Does Not Fake Search Results
+
+No invented listings ** from cache without disclosure**.
+
+### 14.5 Offline Recovery Welcomes Return
+
+Connection restored → ** resume context** — State Continuity.
+
+### 14.6 Future Offline Features
+
+Full offline browse ** must comply with availability truth** — when implemented.
+
+---
+
+## 15. Optimistic Perception
+
+Optimistic UI **only when truth is guaranteed or instantly reversible**.
+
+### 15.1 Safe Optimistic Actions
+
+Favorite toggle, dismiss notification ** may optimistic** — if sync corrects honestly on failure.
+
+### 15.2 Unsafe Optimistic Forbidden
+
+Contact sent, listing published, payment initiated ** never fake success**.
+
+### 15.3 Optimistic Failure Rollback Clear
+
+If optimistic action fails ** state reverts with explanation** — not silent undo.
+
+### 15.4 Optimistic Does Not Imply Moderation Complete
+
+Submitted listing ** “received” not “live”** — Chapter 19, 20.
+
+### 15.5 User Trusts Optimism Only When Earned
+
+Repeated rollback ** reduces future optimism** — prefer honesty.
+
+---
+
+## 16. Progress Visibility
+
+**Progress Visibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Progress Visibility is the **appropriate communication of forward movement** during waits with known or partially known stages — uploads, multi-step submission, moderation review in progress.
+
+Progress Visibility requires:
+
+- **Stages named** when known — “Uploading photos”, “Submitting for review”  
+- **No fake percentages** for unknown workflows  
+- **Failure at stage** — user knows which step failed  
+- **Completion distinct from in-progress** — user not left guessing  
+
+Black-hole waits destroy Perceived Reliability in realtor workspace and consumer contact alike.
+
+---
+
+## 17. Empty State Philosophy
+
+Empty is **information**, not embarrassment.
+
+### 17.1 Empty Explains Why
+
+Zero items ** because none yet, none match, or none available** — distinguished.
+
+### 17.2 Empty Offers Next Step
+
+Action or guidance ** always** — Chapter 2, 23.
+
+### 17.3 Empty Never Guilt-Trips
+
+“You have nothing saved!” ** forbidden** — calm neutral tone.
+
+### 17.4 Empty Never Fakes Content
+
+Placeholder listings ** forbidden** in consumer discovery.
+
+### 17.5 Empty Illustration Restraint
+
+Professional marketplace ** not cartoon failure** — Chapter 3 calm.
+
+### 17.6 Empty Respects Role
+
+Consumer, realtor, and notification empties ** different honest messages**.
+
+### 17.7 Empty Is Accessible
+
+Empty message ** readable, announced** — not icon-only mystery.
+
+---
+
+## 18. Empty State Categories
+
+Empty states group into **governed categories** — each with shared rules.
+
+### 18.1 Zero Inventory
+
+Market or criteria ** no honest listings** — recovery, not filler.
+
+### 18.2 Zero User Data
+
+No favorites, messages, notifications yet ** orientation to first action**.
+
+### 18.3 Zero Results
+
+Search too narrow ** refinement guidance** — Chapter 13.
+
+### 18.4 Zero Permission
+
+Feature unavailable ** explain why and how to enable** — not blank.
+
+### 18.5 Zero After Filter
+
+Filters exclude all ** suggest adjust** — show active criteria.
+
+### 18.6 Zero Because Removed
+
+Content existed, now gone ** honest unavailable** — not empty tray pretending never there.
+
+---
+
+## 19. Educational Empty States
+
+Some empties **teach the product model** without tutorial overlay.
+
+### 19.1 First Favorites Empty
+
+Explains ** saving helps compare homes** — link to search (Chapters 17, 23).
+
+### 19.2 First Notification Empty
+
+Explains ** alerts come from saves and inquiries** — Chapter 21.
+
+### 19.3 First Workspace Listing Empty
+
+Realtor ** guided to create first listing** — professional tone.
+
+### 19.4 Education Brief
+
+One or two sentences ** not paragraph training**.
+
+### 19.5 Education Skippable
+
+User ** proceeds immediately** — not blocked by education modal.
+
+---
+
+## 20. Actionable Empty States
+
+Actionable empties **primary button or clear link**.
+
+### 20.1 Search Empty → Adjust or Broaden
+
+Concrete actions ** change criteria, nearby areas**.
+
+### 20.2 Favorites Empty → Search
+
+** Find homes to save** — not register wall.
+
+### 20.3 Messages Empty → Context
+
+** Messages appear after contact** — browse listings.
+
+### 20.4 Rejected Listing Empty Portfolio
+
+Realtor ** fix or create** — link to draft/rejection.
+
+### 20.5 One Primary Action
+
+Not ** five competing CTAs** on empty screen.
+
+---
+
+## 21. First-Use Empty States
+
+First-use empties follow **Chapter 23** — orientation without overwhelm.
+
+### 21.1 No History Yet
+
+Recent, favorites, messages ** neutral welcome to action**.
+
+### 21.2 Guest vs Auth
+
+Guest ** told what account adds** — not fear.
+
+### 21.3 First Session Empty Search
+
+Sensible entry ** city or popular browse** — not blank paralysis.
+
+### 21.4 First Empty Inherits Onboarding Ethics
+
+No manipulation ** on first empty** — Chapter 23.
+
+---
+
+## 22. Search Empty States
+
+Search empties are **high-frequency trust moments** (Chapter 13).
+
+### 22.1 No Results
+
+Honest ** no homes match** — broaden, adjust, save search.
+
+### 22.2 Low Inventory Region
+
+** Few homes in area** — truth — save alert optional.
+
+### 22.3 Criteria Conflict
+
+Impossible filter combo ** explain which to relax**.
+
+### 22.4 Error vs Empty Distinction
+
+Failed search ** not shown as zero results**.
+
+### 22.5 Map Empty
+
+Map with no pins ** same honesty as list**.
+
+---
+
+## 23. Favorites Empty States
+
+Favorites empties support **shortlist mental model** (Chapter 17).
+
+### 23.1 Empty Collection
+
+** No saved homes yet** — search CTA.
+
+### 23.2 All Removed
+
+User cleared list ** acknowledge** — optional search.
+
+### 23.3 Sync Empty
+
+Account has saves elsewhere ** honest sync wait or conflict** — not fake empty.
+
+### 23.4 Compare Empty
+
+Compare needs ** at least two saves** — explain.
+
+---
+
+## 24. Messages Empty States
+
+Messages empties respect **contact bridge** (Chapter 16).
+
+### 24.1 No Conversations Yet
+
+** Contact from listing detail** — identity context.
+
+### 24.2 Auth Required Empty
+
+Explain ** why login needed** — spam, continuity.
+
+### 24.3 Filtered Empty
+
+Archive or filter ** no matches** — clear filter path.
+
+---
+
+## 25. Notifications Empty States
+
+Notification empties follow **Chapter 21** calm.
+
+### 25.1 No Notifications Yet
+
+Explain ** what triggers alerts** — saves, replies, workspace.
+
+### 25.2 All Read
+
+Inbox zero ** fine** — not push to enable spam.
+
+### 25.3 Filtered Empty
+
+Category filter ** no items** — adjust filter.
+
+### 25.4 Disabled Notifications
+
+User muted ** respect** — no nag on empty screen.
+
+---
+
+## 26. Realtor Workspace Empty States
+
+Workspace empties are **professional operating states** (Chapter 19).
+
+### 26.1 No Listings Portfolio
+
+** Create first listing** — moderation path explained.
+
+### 26.2 No Inquiries Yet
+
+** Normal early state** — not failure shame.
+
+### 26.3 No Rejection Queue
+
+Positive empty ** optional guidance** — quality tips.
+
+### 26.4 Filtered Portfolio Empty
+
+Status filter ** no matches** — show filter, adjust.
+
+### 26.5 Empty Distinct From Loading
+
+Portfolio loading ** not flash empty wrong**.
+
+---
+
+## 27. Admin and Internal Empty States
+
+Internal surfaces **brief alignment** — full admin standard future.
+
+### 27.1 Moderation Queue Empty
+
+** No pending items** — professional neutral.
+
+### 27.2 Internal Search Empty
+
+Ops filters ** no matches** — adjust criteria.
+
+### 27.3 Consumer Never Sees Internal Empties
+
+Admin empty patterns ** not leaked** to renter UI dialect.
+
+---
+
+## 28. Waiting States
+
+Waiting is **known-duration or unknown-duration work in progress**.
+
+### 28.1 Waiting Distinct From Loading
+
+Loading fetches content ** waiting awaits process** — moderation, human review, virus scan if ever.
+
+### 28.2 Waiting Shows Status Vocabulary
+
+Pending, in review, processing ** unified terms** — Chapter 20.
+
+### 28.3 Waiting Never Implies Approval
+
+Pending ** not “almost live”** unless true.
+
+### 28.4 Waiting User Can Leave
+
+User ** navigates away** — state updates on return.
+
+### 28.5 Waiting Notification Optional
+
+Long wait ** may notify** — Chapter 21 — user control.
+
+---
+
+## 29. Moderation Waiting
+
+Moderation wait is **integrity gate** — not product failure (Chapter 20).
+
+### 29.1 Realtor Sees Honest Pending
+
+** Submitted for review** — expected timeline if known.
+
+### 29.2 Consumer Does Not See Pending
+
+Public discovery ** excludes pending** — not “coming soon” tease.
+
+### 29.3 Rejection Distinct From Waiting
+
+Rejected ** clear with reason category** — recovery path.
+
+### 29.4 Re-Submit Waiting
+
+After edit ** new pending state** — not hidden.
+
+---
+
+## 30. Verification Waiting
+
+Verification wait follows **trust ethics** (Chapter 20).
+
+### 30.1 Applicant Sees Stage
+
+Submitted, in review, approved, declined ** honest.
+
+### 30.2 No Fake Verified During Wait
+
+Badge ** absent until approved**.
+
+### 30.3 Declined Explains Category
+
+** What to fix** — not opaque rejection.
+
+### 30.4 Consumer Sees Verification Truth
+
+Badge meaning ** unchanged during realtor wait**.
+
+---
+
+## 31. Upload and Submission Waiting
+
+Media and form submission **high anxiety for realtors**.
+
+### 31.1 Upload Progress Visibility
+
+Per-file or aggregate ** honest progress** — Chapter 16.
+
+### 31.2 Upload Failure Preserves Form
+
+Lost photos ** worst failure** — recoverable.
+
+### 31.3 Submit Received vs Published
+
+** Distinction clear** — moderation wait follows.
+
+### 31.4 Background Upload
+
+User may leave ** status visible on return**.
+
+### 31.5 Submission Timeout
+
+** Retry with draft intact** — not silent loss.
+
+---
+
+## 32. Review and Background Processing
+
+Background work **must not surprise users**.
+
+### 32.1 Background Sync Indicator
+
+Subtle ** when material** — favorites sync — not alarm.
+
+### 32.2 Background Failure Surfaces Calmly
+
+Sync failed ** next visit or quiet banner** — actionable.
+
+### 32.3 No Background Success Spam
+
+Auto-save ** quiet** — unless user needs confirmation.
+
+### 32.4 Processing Does Not Block Unrelated Tasks
+
+User ** continues browse** while upload backgrounded — when safe.
+
+---
+
+## 33. Success States
+
+Success confirms **completed meaningful action**.
+
+### 33.1 Success Matches Action Weight
+
+Saved home ** quiet** — listing submitted ** clear professional**.
+
+### 33.2 Success Truthful
+
+Only ** actually succeeded** — not optimistic premature.
+
+### 33.3 Success Shows Outcome Class
+
+Sent, saved, submitted ** distinct copy**.
+
+### 33.4 Success Offers Next Step
+
+Return to list, view shortlist, continue edit ** contextual.
+
+### 33.5 Success Auto-Dismiss Restrained
+
+Toasts ** brief** — critical outcomes ** persistent until acknowledged**.
+
+---
+
+## 34. Confirmation Philosophy
+
+Confirmations **prevent error without nagging**.
+
+### 34.1 Destructive Actions Confirm
+
+Delete listing, remove all favorites ** confirm**.
+
+### 34.2 Low-Stakes No Modal
+
+Save favorite ** no confirmation dialog**.
+
+### 34.3 Confirm Copy Specific
+
+“Remove this home from saved list?” ** not generic “Are you sure?”**
+
+### 34.4 Confirm Accessible
+
+Dialogs ** focus managed, readable**.
+
+### 34.5 Confirm Default Safe
+
+Destructive ** not default button**.
+
+---
+
+## 35. Non-Disruptive Feedback
+
+Feedback **visible without hijacking task**.
+
+### 35.1 Inline Over Modal When Possible
+
+Field error ** inline** — not full-screen for one field.
+
+### 35.2 Banner Over Interrupt
+
+Sync issue ** banner** — not blocking detail read.
+
+### 35.3 Haptics and Sound Restrained
+
+Mobile feedback ** subtle** — housing app not game.
+
+### 35.4 Feedback Timing
+
+After action completes ** promptly** — Chapter 9.
+
+### 35.5 Feedback Does Not Obscure Primary Content
+
+Toast ** not covering price or CTA**.
+
+---
+
+## 36. Error Philosophy
+
+Errors are **product moments** — blameless, clear, recoverable.
+
+### 36.1 Errors Explain in Human Language
+
+What failed ** in user terms** — not Error 500.
+
+### 36.2 Errors Never Blame User for System Fault
+
+“Something went wrong on our side” ** when true**.
+
+### 36.3 Errors Preserve Input and Context
+
+** Recovery default** — State Continuity.
+
+### 36.4 Errors Offer Primary Recovery
+
+Retry, go back, save for later ** one obvious path.
+
+### 36.5 Errors Calm Not Dramatic
+
+No red panic theater ** unless true danger** — Chapter 7 semantics.
+
+### 36.6 Errors Log Internally; Human Copy Externally
+
+Support reference ** optional subtle** — not primary message.
+
+---
+
+## 37. Recoverable Errors
+
+Recoverable errors **user or retry can fix**.
+
+### 37.1 Transient Network
+
+** Try again** — preserved context.
+
+### 37.2 Timeout
+
+** Retry** — form intact.
+
+### 37.3 Rate Limit
+
+** Wait and retry** — honest explanation.
+
+### 37.4 Partial Upload Failure
+
+** Retry failed files only** — keep successful.
+
+### 37.5 Session Expired
+
+** Re-auth with return** — Chapter 10 — not data loss.
+
+---
+
+## 38. Non-Recoverable Errors
+
+Some failures **cannot be fixed by retry alone**.
+
+### 38.1 Listing Permanently Gone
+
+** Unavailable** — similar or search recovery — not infinite retry.
+
+### 38.2 Permission Denied Policy
+
+** Explain limitation** — not broken product tone.
+
+### 38.3 Account Restricted
+
+** Honest status** — support path if applicable.
+
+### 38.4 Non-Recoverable Still Offers Path
+
+** Always alternative** — browse, home, support — no wall.
+
+---
+
+## 39. Validation Errors
+
+Validation errors follow **Chapter 12** — inline, specific, blameless.
+
+### 39.1 Field-Level Specificity
+
+Which field, what rule ** plain language**.
+
+### 39.2 Summary for Long Forms
+
+Multiple errors ** listed accessibly**.
+
+### 39.3 Validation Not Confused With System Error
+
+Yellow inline ** not red disaster**.
+
+### 39.4 Fix Guidance Actionable
+
+“Enter monthly rent in lei” ** not “Invalid input”.
+
+---
+
+## 40. Permission Errors
+
+Permission denied **explained with purpose**.
+
+### 40.1 Notifications Denied
+
+** Feature still works** — how to enable later — Chapter 21.
+
+### 40.2 Location Denied
+
+Map/nearby ** degraded honestly** — manual search works.
+
+### 40.3 Camera or Photo Denied
+
+Upload ** alternative path** — file picker.
+
+### 40.4 No Shame for Denial
+
+** Neutral tone** — user choice respected.
+
+---
+
+## 41. Authentication Errors
+
+Auth errors **security-clear without hostility**.
+
+### 41.1 Wrong Credentials
+
+** Try again** — no account enumeration tone leak if policy requires.
+
+### 41.2 Session Expired
+
+** Continue where you were** after login.
+
+### 41.3 Auth Required for Action
+
+** Explain at action** — save, contact — Chapter 23.
+
+### 41.4 Lockout Calm
+
+** Wait or reset** — support path — professional.
+
+---
+
+## 42. Connectivity Errors
+
+Connectivity errors **distinct from server errors**.
+
+### 42.1 Offline or No Connection
+
+** Check connection** — cached content rules §14.
+
+### 42.2 Intermittent Connection
+
+** Retry when stable** — draft preserved.
+
+### 42.3 Do Not Conflate With “Listing Gone”
+
+Wrong error ** destroys trust**.
+
+---
+
+## 43. Server and Unknown Errors
+
+When cause is **system-side or unknown**.
+
+### 43.1 Server Error Honest
+
+** Trouble on our end** — retry later.
+
+### 43.2 Unknown Error Humble
+
+** Something unexpected** — retry, support optional.
+
+### 43.3 No False Specificity
+
+Do not guess ** database or API** to user.
+
+### 43.4 Incident Without User Panic
+
+Outage ** calm status** — not hourly apology theater.
+
+---
+
+## 44. Recovery Confidence
+
+**Recovery Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Recovery Confidence is the **user’s belief that after an error or empty dead-end, the product will help them succeed** — retry will work, alternative path exists, data is not lost.
+
+Recovery Confidence built through:
+
+- **Visible retry** that preserves context  
+- **Honest non-recoverable** messaging with alternatives  
+- **Consistent recovery patterns** across surfaces — State Consistency  
+- **No repeated identical failure** without changed approach or escalation  
+
+Low Recovery Confidence causes users to **abandon housing search** — not merely the current screen.
+
+---
+
+## 45. Error Recovery
+
+Error recovery is **designed path**, not accident.
+
+### 45.1 Primary Recovery Action
+
+One ** obvious next step** per error type.
+
+### 45.2 Secondary Escape
+
+Back, home, save draft ** always available.
+
+### 45.3 Recovery Inherits Navigation
+
+Chapter 10 ** no trap**.
+
+### 45.4 Recovery After Contact Failure
+
+Chapter 16 ** retry, save listing**.
+
+### 45.5 Recovery After Search Failure
+
+** Adjust criteria or retry** — Chapter 13.
+
+---
+
+## 46. Retry Philosophy
+
+Retry **honest, limited, contextual**.
+
+### 46.1 Retry When Transient
+
+Network blip ** retry makes sense**.
+
+### 46.2 No Infinite Retry Loop
+
+Failed twice ** change message or path**.
+
+### 46.3 Retry Preserves State
+
+** No clear form on retry**.
+
+### 46.4 Retry Feedback
+
+** Retrying…** — user knows action registered.
+
+### 46.5 Retry Not Default for Gone Listing
+
+** Recovery navigation** instead.
+
+---
+
+## 47. Escalation
+
+When recovery fails repeatedly **escalate help**.
+
+### 47.1 Support Path Optional
+
+** Contact support** — not mandatory maze.
+
+### 47.2 Escalation Copy Calm
+
+** We can help** — not accusatory.
+
+### 47.3 Realtor vs Consumer Escalation
+
+Workspace ** ops support** — consumer ** help center**.
+
+### 47.4 Escalation Does Not Replace Fix
+
+Product ** still fixes root cause** — not support as permanent UI.
+
+---
+
+## 48. Graceful Degradation
+
+**Graceful Degradation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Graceful Degradation is the **reduction of optional capability while preserving core housing tasks and truth** — when network, permission, or partial failure limits full experience.
+
+Examples:
+
+- Map unavailable → ** list search still full truth**  
+- Images slow → ** facts readable first**  
+- Notifications denied → ** in-app alerts on visit**  
+- Recommendations fail → ** search unaffected**  
+
+Degradation must **never** degrade availability truth or hide core facts.
+
+---
+
+## 49. State Integrity
+
+**State Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+State Integrity is the **alignment between displayed state and actual marketplace or user reality** — no state lies about listing status, send success, moderation outcome, or inventory presence.
+
+State Integrity violations — fake empty, fake success, pending shown as live, sent shown before confirmed — ** destroy trust faster than slow load**.
+
+State Integrity inherits domain rules and Chapter 20 trust posture ** in every loading, empty, and error surface**.
+
+---
+
+## 50. Mobile-First State Experience
+
+States designed **phone-first**.
+
+### 50.1 Full-Screen Errors Rare
+
+** Prefer inline or sheet** — preserve context.
+
+### 50.2 Thumb-Reach Recovery
+
+Retry and back ** reachable**.
+
+### 50.3 Readable Without Zoom
+
+Error and empty copy ** legible** — Chapter 6.
+
+### 50.4 One-Hand Recovery
+
+Critical path ** completable one-handed**.
+
+### 50.5 App Background and Resume
+
+Resume ** State Continuity** — not blank re-load without explanation.
+
+---
+
+## 51. Accessibility
+
+States must be **perceivable and operable** for all users.
+
+### 51.1 Loading Announced
+
+** Busy state** exposed to assistive tech — not silent wait.
+
+### 51.2 Errors Associated with Fields
+
+** aria semantics** — programmatic link — conceptually required.
+
+### 51.3 Empty Heading Structure
+
+** Meaningful headings** — not “No data” only.
+
+### 51.4 Focus on Error
+
+Focus moves to ** error summary** — recoverable path.
+
+### 51.5 Motion and Vestibular
+
+Loading animation ** respects reduced motion** — Chapter 9.
+
+### 51.6 Color Not Sole Error Signal
+
+Icon + text ** required** — Chapter 7.
+
+---
+
+## 52. Motion in States
+
+Motion **communicates transition** — calm discipline.
+
+### 52.1 Enter and Exit Restrained
+
+Empty to content ** subtle** — not bounce.
+
+### 52.2 Error Appearance Calm
+
+** No shake unless input correction** — even then restrained.
+
+### 52.3 Success Not Celebratory Excess
+
+** No confetti** for save — Chapter 9, 23.
+
+### 52.4 Skeleton Pulse Subtle
+
+** Not attention-grabbing shimmer**.
+
+### 52.5 Reduced Motion Path
+
+Static alternatives ** equivalent information**.
+
+---
+
+## 53. State Performance Experience
+
+State performance is **felt reliability during uncertainty** — Perceived Reliability in practice.
+
+### 53.1 Immediate Acknowledgement
+
+Tap → ** instant feedback** before network completes.
+
+### 53.2 Honest Skeleton and Progressive Load
+
+** Stable, truthful** — §§8–10.
+
+### 53.3 Fast Error Detection
+
+Hung requests ** become error** — not infinite wait.
+
+### 53.4 Recovery Without Penalty
+
+Retry ** fast path** — no full app restart required.
+
+### 53.5 Calm Background Update
+
+List refresh ** no chaotic jump** — Chapters 13, 14.
+
+### 53.6 Waiting With Visible Progress
+
+Upload and moderation ** Progress Visibility** — §16.
+
+### 53.7 Empty and Error Render Promptly
+
+** No second blank flash** after load fails.
+
+Perceived performance inherits motion (Chapter 9), search continuity (Chapter 13), card stability (Chapter 14), and onboarding first-load honesty (Chapter 23).
+
+---
+
+## 54. State Ethics
+
+State ethics protect **users under stress from manipulation and deception**.
+
+### Never Fake Empty to Hide Inventory
+
+Artificial scarcity ** forbidden**.
+
+### Never Fake Loading to Simulate Activity
+
+Spinner theater ** for engagement forbidden**.
+
+### Never Show Pending as Available
+
+Domain truth ** in all states** — Chapter 20.
+
+### Never Blame User for System Failure
+
+Copy ** blameless** — Chapter 2.
+
+### Never Trap User in Error
+
+Recovery ** always** — no hostage screen.
+
+### Never Use Error to Push Registration
+
+Auth error wall ** not growth tactic** — Chapter 23.
+
+### Never Dark-Pattern Empty
+
+“You’re missing out” ** forbidden** — Chapter 23 ethics.
+
+### Never Suppress Stale Status
+
+Listing gone ** shown gone** — not last cached version without warning.
+
+### Never Manufacture Urgency in Wait States
+
+“Hurry before gone” on load ** forbidden**.
+
+### Trust Before Monetization in Empty Surfaces
+
+Sponsored fill ** in empty consumer discovery forbidden** — Chapter 22.
+
+Teams evaluate state changes against these principles in design critique and §56 checklist.
+
+---
+
+## 55. State Success Metrics
+
+State quality judged at **philosophy and outcome level** — not spinner duration alone.
+
+### Perceived Reliability Score
+
+Users report ** product felt working** during load and wait — qualitative research.
+
+### Recovery Confidence
+
+Users ** complete task after error** — not abandon session.
+
+### Empty-to-Action Rate
+
+Empty states lead to ** meaningful next step** — not bounce.
+
+### False Success Incidents
+
+Reported cases of ** shown success without outcome** — target zero.
+
+### State Integrity Violations
+
+Pending-as-live, sent-not-sent ** audit trending down**.
+
+### Support Tickets on Confusion
+
+“Is it broken?” “Did it send?” ** downward trend.
+
+### Retry Success Rate
+
+Second attempt ** completes** — when transient.
+
+### Accessibility Comprehension
+
+Assistive tech users ** understand state** — research.
+
+### Long-Term Trust Under Failure
+
+Users continue search ** after encountering error** — cumulative trust.
+
+Teams evaluate state changes against these principles in design critique and §56 checklist.
+
+---
+
+## 56. State Consistency
+
+**One state system** — not per-surface dialects.
+
+### 56.1 One Error Tone
+
+Blameless professional ** everywhere**.
+
+### 56.2 One Retry Grammar
+
+Same retry label behavior ** search, detail, workspace**.
+
+### 56.3 One Empty Family
+
+Structure ** explain, action, calm** — all modules.
+
+### 56.4 One Waiting Vocabulary
+
+Pending, processing ** unified with Chapter 20**.
+
+### 56.5 One Success Restraint
+
+Quiet vs prominent ** by action weight** — consistent rules.
+
+### 56.6 Future Surfaces Adopt Chapter
+
+New modules ** use state taxonomy** before inventing variants.
+
+---
+
+## 57. Future Compatibility
+
+State architecture **extends without reinvention**.
+
+### 57.1 New Wait Types
+
+Future verification or payment waits ** inherit Progress Visibility and honesty**.
+
+### 57.2 Richer Offline
+
+Offline mode ** must preserve State Integrity**.
+
+### 57.3 AI-Assisted Recovery
+
+“Try searching…” suggestions ** labeled, dismissible** — Chapter 22.
+
+### 57.4 Multi-Device State
+
+Handoff ** State Continuity** across devices.
+
+### 57.5 New Roles
+
+Future roles ** inherit ethics and recovery**.
+
+---
+
+## 58. State Evolution
+
+State experience **evolves as one governed system**.
+
+### Evolve Patterns, Do Not Multiply Dialects
+
+New state types ** map to taxonomy** — empty, load, wait, error, success.
+
+### Resist State Feature Accumulation
+
+Every new banner ** necessity proof** — Chapter 5.
+
+### Retire Confusing Legacy States
+
+Obsolete error copy ** removed product-wide**.
+
+### Preserve Mental Model
+
+Four questions ** invariant** — §4.4.
+
+### Backward Compatibility
+
+Users learn recovery once ** applies everywhere**.
+
+State evolution requires Design Council approval for **new mandatory blocking states, new State Integrity exceptions, or material degradation of guest/core paths**.
+
+---
+
+## Product Development Methodology Bridge
+
+The state experience philosophy documented in this chapter is a **reusable decision framework** — not a catalog of spinners, error codes, toast patterns, or platform-specific failure screens.
+
+Its principles — reduce uncertainty, preserve Trust Under Uncertainty, maintain State Continuity, achieve honest State Resolution, and strengthen Perceived Reliability — describe **how a serious product behaves when reality is incomplete**. Those principles transcend any single surface, stack, or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed state philosophy into a broader method for building products that remain trustworthy under uncertainty.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's state surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — honest communication, recovery, State Integrity, and calm professionalism — even when technical failure modes or delivery constraints differ from Rento.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
+## 59. Governance
+
+### 59.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy clarification on existing state | Senior UX + Content Design |
+| New empty variant in existing category | Head of Product Design |
+| New error class or recovery pattern | Head of Product Design + Product |
+| New blocking full-screen state | Design Council |
+| Change to State Integrity rules | Design Council |
+| Optimistic behavior change | Design Council + Trust review |
+
+### 59.2 Exception Policy
+
+State experiments ** reversible, ethics-reviewed** — no permanent deceptive loading.
+
+### 59.3 Documentation Requirement
+
+Shipped states document ** four questions answered, recovery path, integrity check**.
+
+### 59.4 Cross-Team Review
+
+Search, trust, workspace, notifications ** review intersection**.
+
+---
+
+## 60. Product Review Checklist
+
+Before shipping any empty, loading, error, waiting, or success state, reviewers confirm:
+
+1. **Four questions** — What happened / happening / next / user action?  
+2. **State Integrity** — Display matches reality?  
+3. **Perceived Reliability** — Honest, stable, prompt acknowledgement?  
+4. **State Continuity** — Context and input preserved?  
+5. **State Transparency** — Plain language, no false precision?  
+6. **Recovery Confidence** — Clear retry or alternative?  
+7. **Empty** — Explains why, actionable, no guilt?  
+8. **Loading** — Skeleton honest, progressive priority correct?  
+9. **Waiting** — Distinct from live; moderation truth?  
+10. **Success** — Truthful, proportionate, next step?  
+11. **Error** — Blameless, typed correctly, recoverable path?  
+12. **Graceful Degradation** — Core task and truth preserved?  
+13. **Mobile-first** — Reachable recovery, readable copy?  
+14. **Accessibility** — Announced, focus, not color-only?  
+15. **Motion** — Calm, reduced-motion respected?  
+16. **Ethics** — No fake, urgency, or registration trap?  
+17. **Consistency** — Matches global state grammar?  
+18. **Chapter cross-check** — Search, detail, favorites, contact, workspace, trust aligned?  
+19. **Marketplace examples** — Rental context, not generic ecommerce?  
+20. **Rollback** — Can harmful state pattern be disabled?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 61. Common Mistakes
+
+### 61.1 Infinite Spinner
+
+**Mistake:** Load never resolves or errors.  
+**Correction:** Timeout to error with retry — §8.
+
+### 61.2 Empty Equals Error
+
+**Mistake:** No results shows red error page.  
+**Correction:** Empty category with recovery — §22.
+
+### 61.3 Fake Skeleton Content
+
+**Mistake:** Skeleton shows fake price bars.  
+**Correction:** Neutral layout blocks — §9.
+
+### 61.4 Success Before Confirm
+
+**Mistake:** “Message sent” before server ack.  
+**Correction:** State Integrity — §49.
+
+### 61.5 Full-Screen Error for Field Validation
+
+**Mistake:** One invalid field blocks screen.  
+**Correction:** Inline validation — §39.
+
+### 61.6 Pending Shown to Renters
+
+**Mistake:** “Coming soon” pending listing in search.  
+**Correction:** Moderation rules — §29.
+
+### 61.7 Blame User Copy
+
+**Mistake:** “You lost connection” when server 500.  
+**Correction:** Error philosophy — §36.
+
+### 61.8 Empty Favorites Shame
+
+**Mistake:** “Your list is lonely!”  
+**Correction:** Calm actionable empty — §23.
+
+### 61.9 Retry Clears Form
+
+**Mistake:** Network error wipes listing draft.  
+**Correction:** State Continuity — §6.
+
+### 61.10 Sponsored Empty Fill
+
+**Mistake:** No results → featured ads only.  
+**Correction:** State ethics — §54.
+
+---
+
+## 62. Correct & Incorrect Examples
+
+### 62.1 Search Loading
+
+**Correct:** Skeleton cards; criteria visible; results replace calmly.  
+**Incorrect:** Blank white screen 8 seconds; full jump reorder.
+
+### 62.2 No Search Results
+
+**Correct:** “No homes match these filters. Try expanding distance or removing parking filter.”  
+**Incorrect:** “Error loading results.”
+
+### 62.3 Listing Unavailable
+
+**Correct:** “This home is no longer available. View similar listings or return to search.”  
+**Incorrect:** Infinite retry on 404.
+
+### 62.4 Contact Send
+
+**Correct:** Sending… → Sent to Maria Popescu. / Not sent — Retry. Draft kept.  
+**Incorrect:** Tap send → instant “Sent!” → silent failure.
+
+### 62.5 Moderation Pending (Realtor)
+
+**Correct:** “Submitted for review. Most reviews complete within [honest range]. You can edit while pending.”  
+**Incorrect:** “Live on Rento!” immediately.
+
+### 62.6 Upload
+
+**Correct:** Photo 2 of 8 uploading… Failed: retry photo 2. Others saved.  
+**Incorrect:** Spinner; all photos lost on one failure.
+
+### 62.7 Offline
+
+**Correct:** “You’re offline. Showing last viewed version from [time]. Availability may have changed.”  
+**Incorrect:** Cached listing shown as current without notice.
+
+### 62.8 Favorites Empty
+
+**Correct:** “No saved homes yet. Save listings to compare and track changes.” [Search homes]  
+**Incorrect:** “Start saving now!” guilt modal.
+
+### 62.9 Notifications Empty
+
+**Correct:** “No notifications yet. You’ll see updates about saved homes and realtor replies here.”  
+**Incorrect:** “Turn on notifications!” blocking empty.
+
+### 62.10 Server Error
+
+**Correct:** “Something went wrong on our end. Try again. Your search filters are still applied.”  
+**Incorrect:** “Error 500 INTERNAL_SERVER_ERROR.”
+
+---
+
+## 63. Design Director Review
+
+**Chapter:** 24 — Empty, Loading & Error States Experience  
+**Section:** XXI — Empty, Loading & Error States  
+**Review type:** Initial standard adoption
+
+### 63.1 Approval Statement
+
+This chapter is approved as the **empty, loading, and error states experience contract** for Rento. All loading, empty, waiting, success, error, and recovery behavior must comply. Component implementations and infrastructure are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 63.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm, trust, no dead ends |
+| Chapter 2 — Experience Principles | Recovery, blameless errors |
+| Chapter 4 — Layout & Information Architecture | Hierarchy during partial content |
+| Chapter 9 — Motion & Interaction System | Calm state transitions |
+| Chapter 10 — Navigation System | Recovery without trap states |
+| Chapter 12 — Form System & Data Collection Experience | Validation and submit states |
+| Chapter 13 — Search Experience System | Search empty and load recovery |
+| Chapter 14–15 — Card & Detail | Skeleton stability; unavailable listing |
+| Chapter 16 — Contact & Communication Experience | Send and failure recovery |
+| Chapter 17 — Favorites & Saved Properties Experience | Empty shortlist; sync honesty |
+| Chapter 19 — Realtor Workspace Experience | Workspace empty and submission waits |
+| Chapter 20 — Trust, Verification & Moderation Experience | Moderation and verification waiting truth |
+| Chapter 21 — Notifications & User Re-engagement Experience | Notification empty; alert honesty |
+| Chapter 23 — Onboarding & First-Time Experience | First-use empty and first-load honesty |
+| Chapter 25+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 63.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What uncertainty or trust harm is not addressed?  
+2. Does change preserve State Integrity and Perceived Reliability?  
+3. Is recovery clear and context preserved?  
+4. Does empty or error copy remain calm and blameless?  
+5. Does change align with marketplace truth and role boundaries?  
+6. Are official state concepts used consistently?
+
+New blocking states, optimistic success patterns, or State Integrity exceptions require Design Council approval.
+
+### 63.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on state experience system |
+| Head of Product Design | Cross-surface consistency |
+| Senior UX Designer | Empty, load, error, and recovery flows |
+| Product Management | Integrity and marketplace truth alignment |
+| Content Design Lead | State copy and tone |
+| Trust & Safety | Moderation and verification waiting honesty |
+| Accessibility Specialist | Loading, error, and empty accessibility |
+| Engineering Leadership | Feasibility of honesty and continuity — advisory |
+
+### 63.5 Effective Date
+
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new state experience work immediately. Existing surfaces align during scheduled improvement cycles.
+
+### 63.6 Design Director Closing Note
+
+Users do not experience Rento only when listings render perfectly. They experience Rento ** in the pause before the photo loads, in the silence after tap send, in the hollow screen when no homes match, in the wait while moderation protects the marketplace**. Those moments are not edge cases — they are the majority of moments where trust is won or lost. This chapter exists so uncertainty never feels like abandonment, emptiness never feels like failure, and errors never feel like judgment. When states are honest, calm, and recoverable, users believe the platform will still be there when housing decisions get hard — which is exactly when they need it most.
+
+---
+
+**End of Chapter 24**
+
+
+---
+
+## Chapter 25 — Feedback, Status & System Communication Experience
+
+**Section:** XXII — Feedback, Status & System Communication  
+**Status:** Draft for Design Council review
+**Review note:** Product Architecture, UX Architecture, and Design Director review complete — pending final editorial pass before APPROVED.
+
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Realtor Operations, Reviewers  
+**Authority:** Subordinate to Chapters 1–24; operationalizes calm communication (Chapters 1–2), semantic meaning (Chapter 7), motion and feedback (Chapter 9), navigation context (Chapter 10), trust and moderation messaging (Chapter 20), notifications (Chapter 21), state experience (Chapter 24), and journey surfaces across Chapters 13–23; defines principles only — not toast libraries, push providers, WebSocket implementations, badge components, analytics pipelines, or UI code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **feedback, status, and system communication experience philosophy** for Rento.
+
+Products communicate continuously. Every confirmation, warning, success, reminder, badge, banner, inline message, toast, system notice, realtime update, and persistent status **changes user perception** — for better or worse.
+
+This chapter defines the **communication language of Rento** — how the product speaks to users after interaction, during interaction, and throughout the product lifecycle in a long-term residential rental marketplace.
+
+Communication exists to **support housing decisions**. It never exists to demand attention for its own sake. It reduces uncertainty, reinforces trust, respects attention, and must always feel **calm, professional, and truthful**.
+
+The objective is to ensure that every system message **increases clarity, confidence, trust, and decision quality** without overwhelming users — binding trust (Chapter 20), notifications (Chapter 21), personalization disclosure (Chapter 22), onboarding orientation (Chapter 23), and state experience (Chapter 24) into **one coherent product language**.
+
+This chapter governs philosophy and governance for all product-initiated and system-mediated messages that are not primary content. It does **not** specify component APIs, message queues, delivery channels, or analytics event schemas.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Decision support, calm, trust, attention respect |
+| **Hierarchy** | Priority among message types and channels |
+| **Feedback** | Timing, weight, inline, toast, banner, success, warning |
+| **Status** | Persistent, temporary, labels, badges, counters |
+| **Progress** | In-flow status communication during ongoing work |
+| **Realtime** | Live updates, background activity, synchronization |
+| **Domain-specific** | Search, favorites, contact, workspace, moderation, verification |
+| **Cross-cutting** | Mobile-first, accessibility, motion, ethics, consistency, evolution |
+
+### 2.2 Out of Scope
+
+- Push, email, and SMS channel policy detail (Chapter 21 — intersection governed where messages appear in-product)  
+- Empty, loading, and error *state screens* as primary surfaces (Chapter 24 — this chapter governs messages within and alongside those states)  
+- Listing description and marketing copy on listings (content design — truth rules apply)  
+- In-app messaging thread compose and conversation UX (Chapter 16)  
+- Implementation of toast stacks, notification centers, or realtime transport  
+- Internal admin ops alerting to staff (separate standard when authored)  
+
+### 2.3 Surfaces Governed
+
+All present and future **product and system messages** that inform users about outcomes, status, progress, or required action, including but not limited to:
+
+- Inline field and form feedback  
+- Toasts, banners, and non-blocking notices  
+- Persistent status bars, badges, and labels on listings and profiles  
+- Moderation and verification status communication  
+- Sync and background activity indicators  
+- Live updates to saved listings, search results, and workspace counts  
+- Success and warning confirmations after user action  
+
+If a surface answers *“What is the product telling the user right now, and why?”* — this chapter applies.
+
+### 2.4 Communication Serves Decisions, Not Sessions
+
+Message volume is **not** success. Decision clarity and maintained trust are success.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When communication decisions conflict with lower-level guidance:
+
+1. Immutable domain rules and State Integrity (Chapter 24)  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 20 — Trust, Verification & Moderation Experience  
+4. **This chapter** — for feedback, status, and system communication behavior  
+5. Chapter 21 — for interruption tier when message also notifies off-app  
+6. Chapters 2–4, 7, 9–10 — experience, hierarchy, semantics, motion, navigation  
+7. Chapters 12–19, 22–24 — journey surfaces where messages appear  
+8. Chapter 5 Exception Policy for experiments  
+
+Communication must never **contradict marketplace truth**, **manufacture urgency**, or **override State Integrity**. Calm clarity precedes engagement metrics.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm; trust before conversion; respect attention |
+| Chapter 2 — Experience Principles | Blameless tone; recovery; ethical conversion |
+| Chapter 4 — Layout & Information Architecture | Message hierarchy; non-disruptive placement |
+| Chapter 5 — Product Design Decision Framework | Necessity tests; exception policy |
+| Chapter 6 — Typography & Reading System | Readable status and message copy |
+| Chapter 7 — Color Meaning & Semantic Color System | Semantic success, warning, error — not decorative alarm |
+| Chapter 8 — Spatial System & Layout Rhythm | Banner and inline placement rhythm |
+| Chapter 9 — Motion & Interaction System | Calm arrival; restrained success motion |
+| Chapter 10 — Navigation System | Messages preserve navigation context |
+| Chapter 11 — Component Philosophy & Component System | Messages as governed behaviors |
+| Chapter 12 — Form System & Data Collection Experience | Inline validation communication |
+| Chapter 13 — Search Experience System | Criteria applied, results updated messages |
+| Chapter 14–15 — Card & Detail | Status on cards; detail update notices |
+| Chapter 16 — Contact & Communication Experience | Send status; inquiry context in messages |
+| Chapter 17 — Favorites & Saved Properties Experience | Save confirmation; listing change notices |
+| Chapter 18–19 — Profile & Workspace | Verification and portfolio status messages |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust labels; moderation outcome copy |
+| Chapter 21 — Notifications & User Re-engagement Experience | Interruption channel; preference alignment |
+| Chapter 22 — Personalization & Recommendations Experience | Disclosure when recommendations update |
+| Chapter 23 — Onboarding & First-Time Experience | First permission and value communication |
+| Chapter 24 — Empty, Loading & Error States Experience | States vs messages; error communication handoff |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Earlier chapters define **trust, interruption, states, and journeys**. **This chapter defines the shared communication layer** that makes those systems feel like one product speaking with one voice — the binding grammar for feedback, status, and system notices across Rento.
+
+Without this chapter, teams invent per-feature toast dialects. With it, communication becomes **governed decision support**.
+
+---
+
+## 4. Communication Philosophy
+
+Communication on Rento **supports housing decisions** — never competes with them.
+
+### 4.1 Communication Reduces Uncertainty
+
+Every message should leave the user **more oriented** than before — or it should not appear.
+
+### 4.2 Communication Reinforces Trust
+
+Messages must **align with marketplace truth** — especially availability, moderation, and verification.
+
+### 4.3 Communication Respects Attention
+
+Attention is finite and stressed in housing search — ** spend messages rarely and well**.
+
+### 4.4 Communication Never Demands Attention for Its Own Sake
+
+Growth, habit, or metric targets ** do not justify noise**.
+
+### 4.5 Communication Is Calm and Professional
+
+Tone ** direct, neutral, respectful** — not casino, not guilt, not hype.
+
+### 4.6 Communication Answers the Four Questions
+
+What happened? Why does it matter? What happens next? Does the user need to act? — ** If yes, what exactly?**
+
+### 4.7 Communication Avoids Unnecessary Anxiety
+
+If user need not act, message ** does not imply emergency**.
+
+### 4.8 Communication Inherits State Integrity
+
+Messages never claim outcomes ** that did not occur** (Chapter 24).
+
+### 4.9 Communication Supports Decision Quality
+
+Goal is ** better housing decisions** — not more taps.
+
+### 4.10 Communication Is Consistent Across Roles
+
+Consumer, realtor, and future roles ** share grammar** where concepts align.
+
+### 4.11 Communication Defers to Higher-Priority Trust Rules
+
+Trust chapter and domain rules ** override clever copy**.
+
+### 4.12 Silence Is Sometimes Correct
+
+** Not messaging** when nothing material changed is valid — high Signal-to-Noise Ratio.
+
+---
+
+## 5. Communication Clarity
+
+**Communication Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Communication Clarity is the **degree to which a user immediately understands what the product communicated** — content, severity, required action, and relevance to their current task — without re-reading or support contact.
+
+Communication Clarity requires:
+
+- **Plain language** — rental and marketplace terms, not internal jargon  
+- **Specific subject** — which listing, search, or inquiry — not “Update available”  
+- **Explicit action labels** — “View listing”, not “Tap here”  
+- **Proportional length** — one clear sentence often sufficient  
+
+Low Communication Clarity increases support tickets and erodes Trust Under Uncertainty (Chapter 24).
+
+This concept is reusable across all future chapters that surface messages to users.
+
+---
+
+## 6. Calm Communication
+
+**Calm Communication** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Calm Communication is the **disciplined restraint of tone, timing, frequency, and visual urgency** in all product messages — so housing search never feels like alarm, entertainment, or pressure campaign.
+
+Calm Communication forbids:
+
+- Exclamation-heavy copy for routine events  
+- False urgency and artificial scarcity in banners  
+- Stacked messages about the same event  
+- Celebratory motion for minor actions  
+
+Calm Communication does not mean silence on material change — ** honest important news delivered professionally** is calm.
+
+---
+
+## 7. Communication Hierarchy
+
+**Communication Hierarchy** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Communication Hierarchy is the **governed ordering of message types by severity, persistence, and interruptiveness** — so users receive the right message through the right channel at the right time.
+
+### 7.1 Hierarchy Levels (Conceptual)
+
+| Level | Nature | Examples |
+|-------|--------|----------|
+| **1 — Critical truth** | User must know to avoid harm or false decision | Listing no longer available; inquiry failed to send |
+| **2 — Material change** | Affects saved intent or active task | Price change on saved home; moderation rejected |
+| **3 — Progress** | Ongoing work status | Uploading photo 3 of 8; submitting for review |
+| **4 — Confirmation** | Completed low-stakes action | Saved to favorites; filter applied |
+| **5 — Ambient status** | Persistent non-urgent state | Pending moderation badge on owned listing |
+| **6 — Optional information** | Helpful context user may ignore | “3 new homes match saved search” in-app summary |
+
+Higher levels ** may not be delivered through lower-level channels** in ways that hide severity — e.g., critical truth not only as dismissible toast with no recovery.
+
+### 7.2 One Dominant Message per Moment
+
+Competing messages at same priority ** collapsed or sequenced** — not stacked chaos.
+
+### 7.3 Hierarchy Aligns With Chapter 21
+
+Off-app interruption ** even more restrained** than in-app — tier rules apply.
+
+---
+
+## 8. Attention Economy
+
+**Attention Economy** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Attention Economy is Rento’s **ethical budget for user attention** — recognizing that every message consumes cognitive resources during a stressful housing search.
+
+Principles:
+
+- **Spend sparingly** — each message must pass user value test  
+- **No attention debt** — repeated nagging trains ignore behavior  
+- **Recover attention** — dismiss, mute, and preference honored  
+- **Signal-to-Noise Ratio protected** — routine events not broadcast as news  
+
+Attention Economy connects this chapter to Chapter 21 (interruptions) and Chapter 22 (personalization noise).
+
+---
+
+## 9. Product Language
+
+Rento speaks as a **professional rental marketplace advisor** — not a consumer app chasing engagement.
+
+### 9.1 Vocabulary Consistent
+
+“Saved”, “Unavailable”, “Pending review”, “Contact realtor” — ** unified terms** across surfaces.
+
+### 9.2 Romanian and Future Locales Natural
+
+Professional ** local rental language** — not translated growth slang.
+
+### 9.3 Role-Appropriate Voice
+
+Consumer ** supported**; realtor ** operational** — same calm baseline.
+
+### 9.4 No Internal Language Leakage
+
+“Moderation queue”, “sync”, “payload” ** not user-facing**.
+
+### 9.5 Truth Over Marketing in System Messages
+
+System copy ** factual** — not promotional adjectives.
+
+### 9.6 Person and Accountability
+
+When actor exists ** name listing or realtor** — not “system”.
+
+---
+
+## 10. Attention Management
+
+Attention management **operationalizes Attention Economy**.
+
+### 10.1 Batch Related Updates
+
+Three price changes on saved homes ** one digest** — not three toasts.
+
+### 10.2 Respect Focus Context
+
+During detail evaluation ** no low-priority banners**.
+
+### 10.3 Cooldown After Dismiss
+
+User dismissed tip ** not immediate repeat**.
+
+### 10.4 Priority Overrides Politely
+
+Critical message ** may replace lower** — with clarity.
+
+### 10.5 User Control Visible
+
+Mute, dismiss, preferences ** reachable** — Chapter 21 alignment.
+
+### 10.6 No Attention Auction
+
+Monetized messages ** never displace critical truth**.
+
+---
+
+## 11. Feedback Philosophy
+
+Feedback is **immediate product response to user action**.
+
+### 11.1 Feedback Confirms Registration of Input
+
+User knows ** tap or submit registered** — Chapter 9.
+
+### 11.2 Feedback Proportional to Action Weight
+
+Save ** quiet**; submit listing for moderation ** clear**.
+
+### 11.3 Feedback Truthful
+
+Optimistic feedback ** only when safe** — Chapter 24.
+
+### 11.4 Feedback Non-Blocking When Possible
+
+Inline and toast ** over modal** for low stakes.
+
+### 11.5 Feedback Preserves Context
+
+User ** not displaced** from task unnecessarily.
+
+### 11.6 Feedback Teaches Once
+
+Repeated identical tips ** suppressed** after dismiss.
+
+---
+
+## 12. Feedback Timing
+
+When feedback appears **shapes trust**.
+
+### 12.1 Immediate Acknowledgement
+
+Action feedback ** within perceived instant** — before network completes where possible.
+
+### 12.2 Outcome Feedback When Known
+
+Success or failure ** when truth known** — not premature.
+
+### 12.3 Delayed Feedback Explained
+
+Long operation ** progress communication** — Chapter 24 Progress Visibility.
+
+### 12.4 No Feedback for Invisible System Work
+
+Background sync ** only surfaced when material**.
+
+### 12.5 Post-Action Feedback Brief
+
+Confirmation ** does not require second dismiss** for routine acts.
+
+### 12.6 Return Visit Feedback
+
+Status changed while away ** surfaced on return** — calm summary.
+
+---
+
+## 13. Feedback Weight
+
+**Feedback Weight** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Feedback Weight is the **appropriate interruptiveness, persistence, and visual prominence of a message** relative to action importance and user context.
+
+| Weight | Typical use |
+|--------|-------------|
+| **Feather** | Filter chip applied; minor toggle |
+| **Light** | Saved to favorites; copy copied |
+| **Medium** | Message sent; search saved |
+| **Heavy** | Listing rejected; contact failed; verification declined |
+| **Critical** | Security-relevant; material availability change during active evaluation |
+
+Mismatch — feather weight for critical truth, or heavy modal for feather action — ** violates Communication Hierarchy**.
+
+---
+
+## 14. Status Communication
+
+Status communication is **ongoing product speech about state of things**.
+
+### 14.1 Status Distinct From One-Shot Feedback
+
+Status ** persists until condition changes** — feedback is momentary.
+
+### 14.2 Status Visible Where Relevant
+
+Listing status on listing ** not only in email**.
+
+### 14.3 Status Vocabulary Governed
+
+Pending, available, unavailable, rejected — ** Chapter 20 alignment**.
+
+### 14.4 Status Never Decorative
+
+Badge ** means something** — or removed.
+
+### 14.5 Status Updates When Reality Changes
+
+Stale status ** worse than no status**.
+
+---
+
+## 15. Persistent Status
+
+Persistent status **remains visible across sessions or views until resolved**.
+
+### 15.1 Owned Listing Moderation State
+
+Realtor sees ** pending, rejected, live** on portfolio — Chapter 19.
+
+### 15.2 Verification State on Profile
+
+Applicant and public ** honest stage** — Chapter 20.
+
+### 15.3 Saved Listing Material Change
+
+Price or availability change ** indicated on card in collection** — Chapter 17.
+
+### 15.4 Persistent Not Alarmist
+
+Pending ** professional neutral** — not blinking red unless true danger.
+
+### 15.5 Persistent Accessible
+
+Status ** text-labeled** — not color-only.
+
+---
+
+## 16. Temporary Feedback
+
+Temporary feedback **appears and resolves** without long-term UI residue.
+
+### 16.1 Toast for Lightweight Confirmation
+
+Applied sort, saved search ** brief toast acceptable**.
+
+### 16.2 Auto-Dismiss Calibrated
+
+Duration ** readable** — not subliminal flash.
+
+### 16.3 User May Dismiss Early
+
+All temporary messages ** dismissible**.
+
+### 16.4 Temporary Does Not Replace Persistent
+
+Rejected listing ** persistent status** — not toast only.
+
+### 16.5 Stack Limit
+
+Toast queue ** bounded** — not ten deep.
+
+---
+
+## 17. Inline Feedback
+
+Inline feedback **adjacent to source of action**.
+
+### 17.1 Form Validation Inline
+
+Chapter 12 ** field-level clarity**.
+
+### 17.2 Search Criteria Feedback
+
+“3 filters active” ** near criteria** — Chapter 13.
+
+### 17.3 Save Toggle Inline State
+
+Heart filled ** on card** — toast optional duplicate only if needed.
+
+### 17.4 Inline Errors Specific
+
+Next to field or module ** not page footer only**.
+
+### 17.5 Inline Success Subtle
+
+Checkmark on field ** not full-screen win**.
+
+---
+
+## 18. Toast Philosophy
+
+Toasts are **brief non-blocking confirmations** — not a notification system.
+
+### 18.1 Toast for Feather and Light Weight
+
+Routine confirmations ** appropriate**.
+
+### 18.2 Toast Not for Critical Truth Alone
+
+Listing gone while viewing ** stronger pattern** — banner or inline module.
+
+### 18.3 Toast Copy One Line When Possible
+
+** “Saved to favorites”** — sufficient.
+
+### 18.4 Toast Action Optional
+
+Undo save ** when feasible** — brief window.
+
+### 18.5 Toast Position Consistent
+
+Mobile ** thumb-aware** — not hiding navigation.
+
+### 18.6 Toast Accessible
+
+Announced ** without stealing focus** from reading — policy per platform conceptually.
+
+---
+
+## 19. Banner Philosophy
+
+Banners are **persistent-until-dismissed or session-persistent notices** with more weight than toast.
+
+### 19.1 Banner for Material Context
+
+Sync delayed, policy update affecting search ** banner appropriate**.
+
+### 19.2 Banner Not for Every Save
+
+Overuse ** trains ignore**.
+
+### 19.3 Banner Primary Action Clear
+
+One CTA ** “View rejected listing”** — not five links.
+
+### 19.4 Banner Truthful
+
+No fake “complete profile for 50% more views” ** without evidence**.
+
+### 19.5 Banner Dismiss Remembered
+
+User dismissed ** not every visit** unless material re-trigger.
+
+---
+
+## 20. Information Messages
+
+Information messages **add context without requiring action**.
+
+### 20.1 Optional by Definition
+
+User ** may ignore** without penalty.
+
+### 20.2 Explains System Behavior
+
+“Results sorted by relevance” ** when sort not obvious**.
+
+### 20.3 Personalization Disclosure
+
+“Based on your saved search” ** Chapter 22**.
+
+### 20.4 Information Not Disguised Promotion
+
+Sponsored ** labeled** — not info tip.
+
+### 20.5 Information Freshness Stated When Stale
+
+Cached results ** labeled if material** — Information Confidence.
+
+---
+
+## 21. Success Messages
+
+Success confirms **completed truthful outcome**.
+
+### 21.1 Success Matches State Resolution
+
+Chapter 24 ** outcome achieved**.
+
+### 21.2 Success Copy Specific
+
+“Message sent to Maria Popescu” ** not “Success!”**
+
+### 21.3 Success Calm
+
+No confetti ** Chapter 9, 23**.
+
+### 21.4 Success Next Step Optional
+
+“View shortlist” ** secondary** — not forced.
+
+### 21.5 Success Not Shown for Partial
+
+Upload 7 of 8 ** not “Upload complete”**.
+
+---
+
+## 22. Warning Messages
+
+Warnings signal **risk or irreversible action** — not routine news.
+
+### 22.1 Warning Before Destructive Action
+
+Remove all favorites, delete listing ** confirm**.
+
+### 22.2 Warning Proportional
+
+Not warning styling ** for informational note**.
+
+### 22.3 Warning Explains Consequence
+
+What user loses ** plain language**.
+
+### 22.4 Warning Default Safe
+
+Destructive ** not primary button**.
+
+### 22.5 Warning Not for Housing Anxiety Exploitation
+
+“Warning: someone else may rent” ** forbidden unless factual governed alert.
+
+---
+
+## 23. Error Communication
+
+Error communication **hands off to Chapter 24** for state experience; this chapter governs **message layer**.
+
+### 23.1 Errors Blameless and Clear
+
+Chapter 24 error philosophy ** applies to copy**.
+
+### 23.2 Error Weight Heavy or Critical
+
+** Not feather toast alone** for send failure.
+
+### 23.3 Error Offers Recovery in Message
+
+“Retry” or “Save draft” ** in same communication unit**.
+
+### 23.4 Error Distinct From Validation
+
+System failure ** not yellow field hint**.
+
+### 23.5 Error Never Stack Identical
+
+Repeated same error ** escalate or change guidance**.
+
+### 23.6 Relationship Statement
+
+Chapter 24 owns ** empty, loading, error screens**; this chapter owns ** how errors are stated within flows and components** — one voice, two layers.
+
+---
+
+## 24. Progress Communication
+
+Progress communicates **forward movement during waits**.
+
+### 24.1 Named Stages
+
+“Uploading photos”, “Submitting for review” ** Chapter 24.
+
+### 24.2 No Fake Progress
+
+Unknown duration ** indeterminate** — honest.
+
+### 24.3 Progress Cancellable When Safe
+
+Upload cancel ** clear outcome**.
+
+### 24.4 Progress Failure at Stage
+
+Which step failed ** visible**.
+
+### 24.5 Progress Inherits Feedback Weight
+
+Medium weight ** typically** — not feather.
+
+---
+
+## 25. Realtime Communication
+
+Realtime updates **inform without startling**.
+
+### 25.1 Live Update Material Only
+
+New match on saved search ** worth saying** — not every index tick.
+
+### 25.2 Live Update Calm Entry
+
+New result in list ** restrained insert** — Chapter 9 — not flash.
+
+### 25.3 Live Update Preserves Scroll
+
+User reading ** not jumped** without explanation.
+
+### 25.4 Realtime Truth
+
+Live status ** State Integrity** — not stale badge.
+
+### 25.5 Realtime Throttled
+
+Burst events ** summarized**.
+
+---
+
+## 26. Live Updates During Evaluation
+
+When user **actively viewing listing or search**.
+
+### 26.1 Price Change While on Detail
+
+** Notice inline** — material — calm.
+
+### 26.2 Listing Becomes Unavailable While Viewing
+
+** Immediate honest banner** — recovery paths.
+
+### 26.3 New Message While Composing Contact
+
+** Non-destructive indicator** — not wipe draft.
+
+### 26.4 Live Update Not Distraction From Contact
+
+During send ** no unrelated carousel popup**.
+
+---
+
+## 27. Background Activity Communication
+
+Background work **surfaced only when user cares**.
+
+### 27.1 Sync Indicator Subtle
+
+Favorites syncing ** small status** — not modal.
+
+### 27.2 Background Failure on Next Relevant Visit
+
+“Couldn’t sync favorites” ** when opening collection**.
+
+### 27.3 Background Success Quiet
+
+Routine sync ** no toast**.
+
+### 27.4 Background Upload Continues
+
+Realtor leaves ** status in workspace** — Chapter 19.
+
+---
+
+## 28. Synchronization Status
+
+Cross-device and server sync **honest communication**.
+
+### 28.1 Sync Delay Disclosed
+
+“Updating saved homes” ** brief** — not silent wrong state.
+
+### 28.2 Conflict Explained
+
+Two devices edited ** user chooses** — not silent overwrite message hidden.
+
+### 28.3 Sync Not Confused With Error
+
+Slow sync ** not red error**.
+
+### 28.4 Sync Completes to State Resolution
+
+Clear end ** updated or failed** — Chapter 24 concept.
+
+---
+
+## 29. Moderation Communication
+
+Moderation messages **integrity-critical** (Chapter 20).
+
+### 29.1 Realtor Receives Outcome Clearly
+
+Approved, rejected, needs edit ** distinct copy**.
+
+### 29.2 Rejection Reason Category
+
+** Understandable category** — not opaque code.
+
+### 29.3 Consumer Never Told Pending as Available
+
+Public ** only available**.
+
+### 29.4 Moderation Message Actionable
+
+“Edit photos” ** links to workspace listing**.
+
+### 29.5 Moderation Tone Professional
+
+Rejection ** not shame** — recovery oriented.
+
+---
+
+## 30. Verification Communication
+
+Verification messages **trust-critical** (Chapter 20).
+
+### 30.1 Applicant Stage Visible
+
+Submitted, in review, approved, declined.
+
+### 30.2 Public Badge Only When True
+
+** No early verified messaging**.
+
+### 30.3 Declined Explains Next Step
+
+What to fix ** or appeal path**.
+
+### 30.4 Verification Not Marketing
+
+“Get verified for 10x views” ** forbidden tone**.
+
+### 30.5 Verification Communication Calm
+
+Professional ** not celebration before approval**.
+
+---
+
+## 31. Notification Relationship
+
+Chapter 21 governs **interruption**; this chapter governs **in-product communication grammar** that notifications must match.
+
+### 31.1 Same Vocabulary Off-App and In-App
+
+Price change wording ** consistent**.
+
+### 31.2 Notification Deep Link Promise Matches Banner
+
+Opened notification ** same subject** — Chapter 21.
+
+### 31.3 In-App May Show What Push Omits
+
+User disabled push ** still sees on visit** — not punishment.
+
+### 31.4 Notification Preview Honest
+
+Push text ** not clickbait** — Communication Clarity.
+
+### 31.5 Tier Respected in Copy Urgency
+
+Low tier ** calm in-app** too.
+
+---
+
+## 32. Communication During Search
+
+Search communication **supports refinement** (Chapter 13).
+
+### 32.1 Criteria Applied Confirmation
+
+Feather ** chip or inline** — optional toast.
+
+### 32.2 Results Updated Message
+
+“12 homes” ** honest count** — not rounded fake.
+
+### 32.3 Sort Changed Feedback
+
+Light confirmation ** or visible sort label only**.
+
+### 32.4 Saved Search Created
+
+Medium ** clear what was saved**.
+
+### 32.5 Search Error Uses Chapter 23–24 Handoff
+
+** Recovery in message**.
+
+---
+
+## 33. Communication During Favorites
+
+Favorites communication **supports shortlist** (Chapter 17).
+
+### 33.1 Save Feather Feedback
+
+Toggle state ** primary** — toast optional.
+
+### 33.2 Unsave Confirmed Light
+
+Undo available ** briefly**.
+
+### 33.3 Listing Change on Saved Home
+
+Material ** medium banner or card label**.
+
+### 33.4 Removed Listing Communication
+
+“No longer available” ** on card** — honest.
+
+### 33.5 Compare Limit Message
+
+Informational ** if compare max reached**.
+
+---
+
+## 34. Communication During Contact
+
+Contact communication **trust bridge** (Chapter 16).
+
+### 34.1 Send Progress Medium
+
+Sending… ** visible**.
+
+### 34.2 Send Success Specific
+
+Recipient and listing ** named**.
+
+### 34.3 Send Failure Heavy
+
+Retry preserved draft ** Chapter 16.
+
+### 34.4 Handoff to Phone Explained
+
+“Opening phone app” ** brief**.
+
+### 34.5 No Contact Success If Not Sent
+
+State Integrity ** paramount**.
+
+---
+
+## 35. Communication During Realtor Workspace
+
+Workspace communication **professional operations** (Chapter 19).
+
+### 35.1 Submit for Review Medium-Heavy
+
+Clear pending state ** follows**.
+
+### 35.2 Inquiry Notification Medium
+
+New inquiry ** context-rich** — listing, renter identifier policy.
+
+### 35.3 Portfolio Bulk Action Summary
+
+“3 listings withdrawn” ** specific count**.
+
+### 35.4 Workspace Errors Recoverable
+
+Draft preserved ** always emphasized**.
+
+### 35.5 Workspace Tone Operational
+
+Not consumer casual ** professional**.
+
+---
+
+## 36. Communication During Admin Review
+
+Internal admin communication **brief alignment** — consumer never sees ops dialect.
+
+### 36.1 Queue Assignment Informational
+
+For staff ** not renter**.
+
+### 36.2 Consumer-Facing Moderation Outcome Only Through Governed Surfaces
+
+** No internal reviewer notes leak**.
+
+---
+
+## 37. Badge Philosophy
+
+Badges **compress status** — must remain trustworthy.
+
+### 37.1 Badge Means One Thing
+
+“Verified”, “New”, “Pending” — ** definitions fixed**.
+
+### 37.2 Badge Not Overloaded
+
+Too many badges ** noise** — Signal-to-Noise Ratio.
+
+### 37.3 Badge Truthful
+
+New ** only within honest window** — not eternal.
+
+### 37.4 Badge Accessible
+
+Text or label ** not color dot alone**.
+
+### 37.5 Badge on Card Scannable
+
+Does not ** obscure price or location**.
+
+---
+
+## 38. Status Labels
+
+Status labels **explicit text on listings and entities**.
+
+### 38.1 Available, Unavailable, Pending
+
+** Unified vocabulary** — Chapters 14, 20.
+
+### 38.2 Price Updated Label
+
+When material ** visible on saved card**.
+
+### 38.3 Rejected on Owned Listing
+
+Realtor portfolio ** clear**.
+
+### 38.4 Labels Not Clickbait
+
+“Hot” “Trending” ** forbidden** — marketplace integrity.
+
+### 38.5 Labels Localized Consistently
+
+RO/EN ** same meaning**.
+
+---
+
+## 39. Counters and Indicators
+
+Counters **signal quantity without alarm**.
+
+### 39.1 Unread Messages Count
+
+** Accurate** — not inflated.
+
+### 39.2 Notification Badge
+
+Chapter 21 ** calm cap** — 9+ not 999 urgency.
+
+### 39.3 Filter Result Count
+
+Search ** honest** — includes availability rules.
+
+### 39.4 Zero Counter Honest
+
+Zero ** not hidden** if meaningful.
+
+### 39.5 Counter Updates Live
+
+** State Integrity** when realtime.
+
+---
+
+## 40. Information Confidence
+
+**Information Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Information Confidence is the **user’s belief that communicated information is current, complete enough for decision, and sourced from marketplace truth** — not stale cache, guess, or promotion.
+
+Built through:
+
+- **Freshness cues** when data may be stale  
+- **Consistent status labels** across surfaces  
+- **Material change notifications** on saved intent  
+- **No contradictory messages** in same view  
+
+Low Information Confidence parallels low Perceived Reliability (Chapter 24).
+
+---
+
+## 41. Status Confidence
+
+**Status Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Status Confidence is the **user’s trust that displayed status (availability, moderation, verification, send state) matches reality now** — not minutes ago, not hoped-for future.
+
+Status Confidence requires State Integrity (Chapter 24) and **timely status communication** when reality changes during active use.
+
+---
+
+## 42. Information Freshness
+
+Freshness communication **when staleness matters**.
+
+### 42.1 Results As Of Time
+
+Optional ** when delayed refresh** — not clutter by default.
+
+### 42.2 Listing Viewed While Updated
+
+** Prompt user** — Status Confidence.
+
+### 42.3 Offline Cached Labeled
+
+Chapter 24 ** alignment**.
+
+### 42.4 Freshness Not Weaponized
+
+“Updated 3 seconds ago” ** not FOMO engine**.
+
+---
+
+## 43. Signal-to-Noise Ratio
+
+**Signal-to-Noise Ratio** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Signal-to-Noise Ratio is the **proportion of communications that convey material decision-relevant information** versus routine, duplicate, promotional, or manipulative noise.
+
+High Signal-to-Noise Ratio is a design goal:
+
+- Batch and deduplicate  
+- Suppress redundant confirmations  
+- Never label promotion as insight  
+- Prefer silence when nothing changed  
+
+Low Signal-to-Noise Ratio causes users to **ignore all messages** — including critical ones.
+
+---
+
+## 44. Decision Support Communication
+
+**Decision Support Communication** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Decision Support Communication is any message **intentionally designed to help the user make a better housing decision** — not merely to record system state or drive engagement.
+
+Examples:
+
+- “This listing’s price changed since you saved it”  
+- “Your filters exclude all homes in Mărăști — expand area?”  
+- “Verification badge means identity checked — not listing accuracy”  
+
+Counter-examples (not Decision Support):
+
+- “You haven’t opened the app in 3 days”  
+- “Featured listings you may like” without disclosure  
+
+Every new message type should pass **Decision Support test**.
+
+---
+
+## 45. Empty Communication
+
+Empty communication **orients when nothing to show** — handoff to Chapter 24 empty states.
+
+### 45.1 Empty Inbox Message Calm
+
+** What will appear here** — Chapter 24 §24–25.
+
+### 45.2 Empty Not Used for Promotion
+
+No ads in ** notification empty**.
+
+### 45.3 Empty Communication Actionable
+
+** Search homes** — not register wall.
+
+---
+
+## 46. Mobile-First Communication
+
+Communication designed **phone-primary**.
+
+### 46.1 Messages Readable at Arm’s Length
+
+Font roles ** Chapter 6**.
+
+### 46.2 Toasts Not Covering CTA
+
+** Thumb zone clear**.
+
+### 46.3 Banners Full-Width Readable
+
+** Short lines** — not paragraph banner.
+
+### 46.4 Haptic Restraint
+
+Taptic ** rare** — success on send optional policy.
+
+### 46.5 One-Hand Dismiss
+
+Swipe or tap ** large target**.
+
+---
+
+## 47. Accessibility
+
+Communication **perceivable by all users**.
+
+### 47.1 Live Regions for Material Updates
+
+Price change ** announced** — not silent.
+
+### 47.2 Toast and Banner Focus Policy
+
+** Predictable** — not focus trap.
+
+### 47.3 Icon Plus Text
+
+Success check ** labeled**.
+
+### 47.4 Color Semantic Not Sole Channel
+
+Chapter 7 ** error not red-only dot**.
+
+### 47.5 Time-Limited Messages Readable
+
+Toast duration ** sufficient for reading speed**.
+
+---
+
+## 48. Motion Relationship
+
+Motion in communication **follows Chapter 9**.
+
+### 48.1 Toast Enter Calm
+
+** Slide or fade** — restrained.
+
+### 48.2 Banner Not Slamming
+
+** No aggressive drop**.
+
+### 48.3 Success No Confetti
+
+** Professional marketplace**.
+
+### 48.4 Reduced Motion
+
+Static equivalent ** same information**.
+
+### 48.5 Motion Never Only Signal
+
+** Text required**.
+
+---
+
+## 49. Communication Performance Experience
+
+Communication performance is **felt timeliness and non-disruption of messages** — user trusts product responds and does not hijack attention.
+
+### 49.1 Immediate Action Acknowledgement
+
+Tap feedback ** instant** — Chapter 9.
+
+### 49.2 Message Appears Without Layout Violation
+
+Banner ** pushes content predictably** — not jump.
+
+### 49.3 Toast Does Not Block Reading
+
+** Timing and position** disciplined.
+
+### 49.4 Live Update Smooth
+
+** Calm refresh** — Chapter 24 list stability.
+
+### 49.5 Dismiss Immediate
+
+User control ** registers instantly**.
+
+### 49.6 No Message Storm on Login
+
+Return batch ** summarized**.
+
+Perceived performance inherits state performance (Chapter 24) and motion (Chapter 9).
+
+---
+
+## 50. Communication Ethics
+
+Communication ethics protect **users from manipulation through product speech**.
+
+### Never Communicate False Urgency
+
+Artificial scarcity in banners ** forbidden**.
+
+### Never Communicate Misleading Success
+
+Sent when not sent ** forbidden** — State Integrity.
+
+### Never Communicate Pending as Live
+
+** Domain truth** — Chapter 20.
+
+### Never Use Shame or Guilt
+
+“You still haven’t saved any homes” ** forbidden**.
+
+### Never Hide Sponsored Nature
+
+** Labeled** — Chapter 22.
+
+### Never Spam to Recover Metrics
+
+Repeated nags ** forbidden** — Attention Economy.
+
+### Never Communicate Discriminatory Messages
+
+Protected characteristics ** not used** in copy targeting.
+
+### Never Block Core Task for Message
+
+Forced marketing modal ** forbidden**.
+
+### Trust Before Monetization in Communication
+
+Paid messages ** disclosed and subordinate**.
+
+### Never Contradict Chapter 21 Ethics
+
+Interruption and in-app ** same honesty**.
+
+Teams evaluate communication changes against these principles in design critique and §53 checklist.
+
+---
+
+## 51. Communication Success Metrics
+
+Communication quality judged at **philosophy and outcome level** — not message count or toast impressions.
+
+### Comprehension Rate
+
+Users understand ** message without support** — research.
+
+### Appropriate Weight Rate
+
+Critical events ** not missed** because of noise — qualitative audit.
+
+### Signal-to-Noise Satisfaction
+
+Users report messages ** helpful not spammy**.
+
+### State Integrity Incidents
+
+False success or wrong status in messages ** target zero**.
+
+### Recovery After Error Message
+
+Users ** complete task** after error communication.
+
+### Decision Support Value
+
+Messages correlate with ** informed next action** — not bounce.
+
+### Dismiss and Mute Health
+
+Low mute because ** low spam** — not hidden controls.
+
+### Cross-Surface Consistency Score
+
+Same event ** same vocabulary** — audit sample.
+
+### Long-Term Communication Trust
+
+Users trust ** Rento messages over weeks** — north star qualitative.
+
+Teams evaluate communication changes against these principles in design critique and §53 checklist.
+
+---
+
+## 52. Communication Consistency
+
+**One communication system** — one product voice.
+
+### 52.1 One Vocabulary Table
+
+Status, success, error terms ** documented**.
+
+### 52.2 One Weight Grammar
+
+Same action ** same weight** app-wide.
+
+### 52.3 One Hierarchy Rules
+
+Critical ** never toast-only**.
+
+### 52.4 One Tone Guide
+
+Calm professional ** all roles**.
+
+### 52.5 One Relationship to Notifications
+
+Chapter 21 ** aligned copy**.
+
+### 52.6 Future Surfaces Adopt Chapter
+
+New modules ** use taxonomy** before inventing dialect.
+
+---
+
+## 53. Future Compatibility
+
+Communication architecture **extends without forking**.
+
+### 53.1 New Channels
+
+Future in-app channels ** inherit ethics and hierarchy**.
+
+### 53.2 AI-Generated Messages
+
+Labeled, editable, ** never auto-sent** without user — Chapter 12 posture.
+
+### 53.3 Partner and Household Accounts
+
+Shared communication ** consent-clear**.
+
+### 53.4 New Marketplace Events
+
+New status types ** map to hierarchy** before ship.
+
+### 53.5 Cross-Market Expansion
+
+Localized ** same semantics**.
+
+---
+
+## 54. Communication Evolution
+
+Communication experience **evolves as one governed language**.
+
+### Evolve Messages, Do Not Multiply Dialects
+
+New message types ** extend taxonomy** — not per-squad toast style.
+
+### Resist Communication Feature Accumulation
+
+Every new banner ** Decision Support test**.
+
+### Retire Noisy Legacy Messages
+
+Deprecated nags ** removed product-wide**.
+
+### Preserve Mental Model
+
+Four questions ** invariant** — §4.6.
+
+### Backward Compatibility
+
+Dismiss and mute preferences ** honored across releases**.
+
+Communication evolution requires Design Council approval for **new critical message classes, new default interruption in-app, or material vocabulary changes to trust statuses**.
+
+---
+
+## 55. Governance
+
+### 55.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy tweak on existing message | Senior UX + Content Design |
+| New message in existing weight class | Head of Product Design |
+| New badge or status label | Head of Product Design + Product |
+| New hierarchy level or critical class | Design Council |
+| Cross-chapter vocabulary change | Design Council |
+| Sponsored communication format | Design Council |
+
+### 55.2 Exception Policy
+
+Communication experiments ** reversible, ethics-reviewed** — no permanent dark patterns.
+
+### 55.3 Documentation Requirement
+
+New messages document ** four questions, weight, hierarchy level, Decision Support rationale**.
+
+### 55.4 Cross-Team Review
+
+Trust, notifications, states, search ** review intersections**.
+
+---
+
+## 56. Product Review Checklist
+
+Before shipping any feedback, status, or system message, reviewers confirm:
+
+1. **Four questions** answered — happened, matters, next, action needed?  
+2. **Communication Clarity** — plain, specific, actionable?  
+3. **Feedback Weight** — appropriate to severity and context?  
+4. **Communication Hierarchy** — right level and channel?  
+5. **Decision Support** — helps housing decision?  
+6. **Calm Communication** — no drama, guilt, false urgency?  
+7. **State Integrity** — message matches reality?  
+8. **Information Confidence** — fresh enough, not contradictory?  
+9. **Signal-to-Noise** — necessary, not duplicate?  
+10. **Attention Economy** — respects user focus?  
+11. **Chapter 24 alignment** — error/empty handoff correct?  
+12. **Chapter 21 alignment** — if notifies, tier and copy honest?  
+13. **Mobile-first** — readable, not blocking CTA?  
+14. **Accessibility** — text, announcement, color not sole signal?  
+15. **Motion** — restrained, reduced-motion safe?  
+16. **Ethics** — no manipulation, sponsored disclosed?  
+17. **Consistency** — vocabulary matches global table?  
+18. **Role fit** — consumer vs realtor tone?  
+19. **Recovery** — error messages include path?  
+20. **Dismiss/control** — user can silence or act?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 57. Common Mistakes
+
+### 57.1 Toast for Everything
+
+**Mistake:** Every action triggers toast.  
+**Correction:** Feather inline; toast only when adds clarity.
+
+### 57.2 Critical Error as Toast Only
+
+**Mistake:** Send failed — 2-second toast.  
+**Correction:** Heavy inline or banner with retry — §23.
+
+### 57.3 Badge Inflation
+
+**Mistake:** New, Hot, Verified, Featured on one card.  
+**Correction:** Signal-to-Noise — §43.
+
+### 57.4 Success Before Truth
+
+**Mistake:** “Listing published!” before moderation.  
+**Correction:** “Submitted for review” — §29.
+
+### 57.5 Notification and In-App Mismatch
+
+**Mistake:** Push says price drop; in-app silent.  
+**Correction:** Chapter 31 consistency.
+
+### 57.6 Banner Every Login
+
+**Mistake:** Marketing banner each session.  
+**Correction:** Dismiss remembered — §19.
+
+### 57.7 Vague System Language
+
+**Mistake:** “An error occurred.”  
+**Correction:** Communication Clarity — §5.
+
+### 57.8 Engagement Guilt
+
+**Mistake:** “We miss you — view 20 homes!”  
+**Correction:** Communication ethics — §50.
+
+### 57.9 Stacked Toasts
+
+**Mistake:** Save + sync + tip toasts together.  
+**Correction:** Batch — §10.
+
+### 57.10 Wrong Weight
+
+**Mistake:** Modal for sort applied.  
+**Correction:** Feedback Weight — §13.
+
+---
+
+## 58. Correct & Incorrect Examples
+
+### 58.1 Save Favorite
+
+**Correct:** Heart fills; optional brief toast “Saved to favorites.”  
+**Incorrect:** Full-screen “Congratulations! You saved a home!”
+
+### 58.2 Price Change on Saved Home
+
+**Correct:** Card label “Price updated: 650 €/lună (was 600 €).”  
+**Incorrect:** No indicator; user discovers at contact.
+
+### 58.3 Message Send
+
+**Correct:** Sending… → “Message sent to Maria Popescu about Mărăști apartment.”  
+**Incorrect:** Instant “Sent!” → silent failure.
+
+### 58.4 Moderation Rejected
+
+**Correct:** Portfolio badge “Rejected — unclear photos” + banner “Edit and resubmit.”  
+**Incorrect:** Toast “Something went wrong.”
+
+### 58.5 Search Filters
+
+**Correct:** Chip shows “2 rooms · Mărăști”; result count “8 homes”.  
+**Incorrect:** Toast on every filter tap.
+
+### 58.6 Verification Approved
+
+**Correct:** Workspace: “Verification approved. See what your badge means.”  
+**Incorrect:** “You’re now TOP AGENT!”
+
+### 58.7 Sync Delay
+
+**Correct:** Favorites tab: “Updating saved homes…” then resolves.  
+**Incorrect:** Shows stale list as current.
+
+### 58.8 Sponsored Module
+
+**Correct:** “Sponsored — Featured in Cluj” on card.  
+**Incorrect:** “Recommended for you” on paid listing.
+
+### 58.9 Unavailable While Viewing
+
+**Correct:** Banner “This home is no longer available. View similar or return to search.”  
+**Incorrect:** Silent removal on back navigation only.
+
+### 58.10 Permission Pre-Prompt
+
+**Correct:** “Get notified when saved listings change price?” → system dialog.  
+**Incorrect:** System dialog on first app open with no context.
+
+---
+
+## 59. Design Director Review
+
+**Chapter:** 25 — Feedback, Status & System Communication Experience  
+**Section:** XXII — Feedback, Status & System Communication  
+**Review type:** Initial standard adoption — pending council review
+
+### 59.1 Approval Statement
+
+Upon Design Council approval, this chapter becomes the **feedback, status, and system communication contract** for Rento. All confirmations, warnings, statuses, badges, banners, toasts, inline messages, and live update communication must comply. Implementation components and delivery infrastructure are subordinate to the principles herein.
+
+**Current status:** Submitted for Product Architect and Design Director review — not yet APPROVED.
+
+### 59.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm, trust, respect attention |
+| Chapter 2 — Experience Principles | Blameless, ethical conversion |
+| Chapter 7 — Color Meaning & Semantic Color System | Semantic message meaning |
+| Chapter 9 — Motion & Interaction System | Calm message motion |
+| Chapter 16 — Contact & Communication Experience | Send and handoff messages |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust and moderation copy |
+| Chapter 21 — Notifications & User Re-engagement Experience | Interruption alignment |
+| Chapter 22 — Personalization & Recommendations Experience | Disclosure messages |
+| Chapter 23 — Onboarding & First-Time Experience | First permission and value copy |
+| Chapter 24 — Empty, Loading & Error States Experience | State layer handoff; integrity |
+| Chapter 26+ — Pattern chapters | Implementation when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 59.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What decision or orientation gap does this message fill?  
+2. Does weight and hierarchy match severity?  
+3. Does copy preserve State Integrity and calm tone?  
+4. Does change improve or harm Signal-to-Noise Ratio?  
+5. Is Decision Support Communication honest and specific?  
+6. Does change align with notification and trust chapters?
+
+New critical message classes, trust status vocabulary changes, or default in-app interruption policies require Design Council approval.
+
+### 59.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on communication system |
+| Head of Product Design | Cross-surface vocabulary and weight |
+| Senior UX Designer | Hierarchy, timing, and recovery copy |
+| Product Management | Marketplace integrity and sponsored policy |
+| Content Design Lead | Tone, clarity, and localization |
+| Trust & Safety | Moderation and verification messaging |
+| Accessibility Specialist | Announcements and non-color semantics |
+
+### 59.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new feedback and communication work immediately upon approval. Existing messages align during scheduled improvement cycles.
+
+### 59.6 Design Director Closing Note
+
+Users will not remember the exact wording of a toast. They will remember whether ** the product spoke honestly, at the right time, with the right weight, and never cried wolf**. When every banner, badge, and confirmation pulls in the same direction — calm truth in service of housing decisions — Rento feels like one mind across search, favorites, contact, workspace, and trust. This chapter exists so the product’s voice is governed, not accidental — and so silence, when chosen, is as deliberate as speech.
+
+---
+
+**End of Chapter 25**
 
