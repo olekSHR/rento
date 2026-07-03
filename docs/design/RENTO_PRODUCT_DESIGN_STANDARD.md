@@ -50,7 +50,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | 22 | [Personalization & Recommendations Experience](#chapter-22--personalization--recommendations-experience) | Personalization & Recommendations | APPROVED |
 | 23 | [Onboarding & First-Time Experience](#chapter-23--onboarding--first-time-experience) | Onboarding & First-Time | APPROVED |
 | 24 | [Empty, Loading & Error States Experience](#chapter-24--empty-loading--error-states-experience) | Empty, Loading & Error States | APPROVED |
-| 25 | [Feedback, Status & System Communication Experience](#chapter-25--feedback-status--system-communication-experience) | Feedback & System Communication | DRAFT — pending final editorial pass |
+| 25 | [Feedback, Status & System Communication Experience](#chapter-25--feedback-status--system-communication-experience) | Feedback & System Communication | APPROVED |
 
 ### Planned (not yet authored)
 
@@ -70,6 +70,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-03 | Chapters 17–21 approved and added |
 | 1.0 | 2026-07-04 | Chapters 22–24 approved and added |
 | 1.0 | 2026-07-04 | Chapter 25 — Feedback & System Communication draft added |
+| 1.0 | 2026-07-04 | Chapter 25 — Feedback, Status & System Communication approved |
 
 ---
 
@@ -21781,8 +21782,8 @@ Users do not experience Rento only when listings render perfectly. They experien
 ## Chapter 25 — Feedback, Status & System Communication Experience
 
 **Section:** XXII — Feedback, Status & System Communication  
-**Status:** Draft for Design Council review
-**Review note:** Product Architecture, UX Architecture, and Design Director review complete — pending final editorial pass before APPROVED.
+**Status:** APPROVED
+
 
 **Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Realtor Operations, Reviewers  
 **Authority:** Subordinate to Chapters 1–24; operationalizes calm communication (Chapters 1–2), semantic meaning (Chapter 7), motion and feedback (Chapter 9), navigation context (Chapter 10), trust and moderation messaging (Chapter 20), notifications (Chapter 21), state experience (Chapter 24), and journey surfaces across Chapters 13–23; defines principles only — not toast libraries, push providers, WebSocket implementations, badge components, analytics pipelines, or UI code.
@@ -21802,6 +21803,94 @@ Communication exists to **support housing decisions**. It never exists to demand
 The objective is to ensure that every system message **increases clarity, confidence, trust, and decision quality** without overwhelming users — binding trust (Chapter 20), notifications (Chapter 21), personalization disclosure (Chapter 22), onboarding orientation (Chapter 23), and state experience (Chapter 24) into **one coherent product language**.
 
 This chapter governs philosophy and governance for all product-initiated and system-mediated messages that are not primary content. It does **not** specify component APIs, message queues, delivery channels, or analytics event schemas.
+
+
+## Design Principles Summary
+
+This chapter governs how Rento speaks to users through feedback, status, and system messages across the product lifecycle. The following principles summarize the full communication contract for designers, product managers, and reviewers:
+
+1. **Support housing decisions** — Every message must help users evaluate, compare, save, contact, or recover in service of a long-term rental decision — not maximize engagement for its own sake.
+
+2. **Preserve trust** — Communication must align with marketplace truth — availability, moderation, verification, and send outcomes. Messages never claim what did not occur.
+
+3. **Respect user attention** — Attention is finite during housing search. Each message must earn its place; batching, deduplication, and Respectful Silence are design virtues.
+
+4. **Communicate honestly** — Plain professional language; proportional weight; no false urgency, fake success, or disguised promotion.
+
+5. **Reduce uncertainty** — Users must understand what happened, why it matters, what happens next, and whether action is required — Communication Resolution is the goal.
+
+6. **Maintain calm communication** — Tone is professional, direct, and restrained. Housing search is stressful; the product does not amplify anxiety through dramatic or manipulative copy.
+
+7. **Preserve communication clarity** — Specific subject, explicit action, unified vocabulary. Communication Clarity is non-negotiable across surfaces and roles.
+
+8. **Strengthen confidence without demanding attention** — Users should feel informed and capable — not interrupted, nagged, or pressured. Confidence grows when messages are rare, true, and useful.
+
+These principles apply to every toast, banner, badge, inline message, status label, success confirmation, warning, and live update across consumer discovery, favorites, contact, notifications, realtor workspace, and trust-related flows in the Rento ecosystem.
+
+---
+
+## What This Chapter Is NOT
+
+To prevent category errors during design, review, and engineering handoff, this chapter is explicitly **not** about:
+
+- **Push notification providers** — FCM, APNs, or third-party push infrastructure.
+- **Backend messaging systems** — Queues, workers, or message brokers.
+- **Email delivery** — SMTP, templates, or deliverability engineering.
+- **CRM campaigns** — Sales or lifecycle campaigns outside governed product communication.
+- **Marketing automation** — Drip sequences, growth newsletters, or promotional blast tooling.
+- **Analytics events** — Event schemas, tracking pipelines, or message impression metrics.
+- **Infrastructure** — WebSockets, polling, CDN, or realtime transport implementation.
+- **Copywriting guidelines** — Brand voice manuals unrelated to system message governance.
+
+This chapter governs **how communication is experienced by users** — what they see, understand, feel, and can do when the product speaks during or after interaction.
+
+Delivery channels and engineering implement messages that honor these principles. Technical capability to send a message does not justify sending it — user need for information does.
+
+---
+
+## Communication Resolution
+
+**Communication Resolution** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Communication Resolution is the **moment when communication has completely fulfilled its purpose** because the user clearly understands:
+
+- **What happened** — The event or state change, stated plainly.
+- **Why it matters** — Relevance to the user's housing search, shortlist, inquiry, or professional task.
+- **Whether action is required** — User knows if they must act, wait, or may ignore.
+- **What happens next** — Honest expectation of the following step or natural end of the matter.
+
+Communication should **disappear naturally once understanding has been achieved** — toasts auto-dismiss when read, banners dismiss when acknowledged, persistent status remains only while condition is true. Messages that linger without purpose violate Attention Economy and Signal-to-Noise Ratio.
+
+### Design Requirement
+
+Every message type must define **what Resolution looks like** for the user. Teams must not ship communication that leaves ambiguity after the user has read or dismissed it.
+
+Communication Resolution connects this chapter to State Resolution (Chapter 24): states communicate uncertainty; messages resolve understanding — together they complete the user's orientation loop.
+
+This concept is reusable across Notifications, Trust, Workspace, Search, Favorites, and future chapters wherever product speech must conclude clearly.
+
+---
+
+## Respectful Silence
+
+**Respectful Silence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Respectful Silence is **the deliberate product decision not to interrupt users when no meaningful information needs to be communicated**.
+
+Silence is sometimes the **highest-quality form of communication**. When nothing material has changed, when the user is mid-evaluation, when pause is healthy, or when a message would repeat known information — **not communicating** preserves:
+
+- **Attention** — User focus remains on housing decisions, not product noise.
+- **Calm interaction** — The marketplace feels professional, not chatty.
+- **Trust** — Users learn that when Rento speaks, it means something — Signal-to-Noise Ratio rises.
+- **Cognitive simplicity** — Fewer decisions about dismissing, muting, or parsing messages.
+
+Products should communicate **because users need information** — not because systems are capable of generating notifications, badges, or banners.
+
+Respectful Silence does not mean hiding material change. Price updates on saved homes, failed sends, moderation outcomes, and availability changes **must be communicated** when they matter. Silence applies when **communication would add no decision-relevant value**.
+
+This concept is reusable throughout Notifications (Chapter 21), Personalization (Chapter 22), Onboarding (Chapter 23), States (Chapter 24), and future chapters wherever teams evaluate whether to speak or remain silent.
+
+---
 
 ---
 
@@ -23226,6 +23315,22 @@ Communication evolution requires Design Council approval for **new critical mess
 
 ---
 
+## Product Development Methodology Bridge
+
+The communication philosophy documented in this chapter is a **reusable decision framework** — not a catalog of toasts, banners, push templates, or platform-specific notification patterns.
+
+Its principles — support housing decisions, preserve trust, respect attention, achieve Communication Resolution, and practice Respectful Silence — describe **how a serious product speaks without betraying user confidence**. Those principles transcend any single channel, surface, or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these communication principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed communication philosophy into a broader method for building products that remain clear, calm, and trustworthy when they speak to users.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's message surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — honest communication, proportional weight, respect for attention, Decision Support over engagement, and calm professionalism — even when channels, audiences, or commercial models differ from long-term residential rental.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
 ## 55. Governance
 
 ### 55.1 Change Authority
@@ -23394,13 +23499,15 @@ Failure on any item requires redesign or explicit Design Council exception.
 
 **Chapter:** 25 — Feedback, Status & System Communication Experience  
 **Section:** XXII — Feedback, Status & System Communication  
-**Review type:** Initial standard adoption — pending council review
+**Review type:** Initial standard adoption
 
 ### 59.1 Approval Statement
 
-Upon Design Council approval, this chapter becomes the **feedback, status, and system communication contract** for Rento. All confirmations, warnings, statuses, badges, banners, toasts, inline messages, and live update communication must comply. Implementation components and delivery infrastructure are subordinate to the principles herein.
+This chapter is approved as the **feedback, status, and system communication contract** for Rento. All confirmations, warnings, statuses, badges, banners, toasts, inline messages, and live update communication must comply. Implementation components and delivery infrastructure are subordinate to the principles herein.
 
-**Current status:** Submitted for Product Architect and Design Director review — not yet APPROVED.
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
 
 ### 59.2 Relationship to Other Chapters
 
@@ -23446,7 +23553,7 @@ New critical message classes, trust status vocabulary changes, or default in-app
 
 ### 59.5 Effective Date
 
-Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new feedback and communication work immediately upon approval. Existing messages align during scheduled improvement cycles.
+Effective upon publication of RENTO PRODUCT DESIGN STANDARD v1.0. Applies to all new feedback and communication work immediately. Existing messages align during scheduled improvement cycles.
 
 ### 59.6 Design Director Closing Note
 
