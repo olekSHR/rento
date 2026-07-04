@@ -53,12 +53,13 @@ This standard is **not** implementation documentation. It does not specify code,
 | 25 | [Feedback, Status & System Communication Experience](#chapter-25--feedback-status--system-communication-experience) | Feedback & System Communication | APPROVED |
 | 26 | [Search Filters & Refinement Experience](#chapter-26--search-filters--refinement-experience) | Search Filters & Refinement | APPROVED |
 | 27 | [Sorting & Ranking Experience](#chapter-27--sorting--ranking-experience) | Sorting & Ranking | APPROVED |
+| 28 | [Search Results Experience](#chapter-28--search-results-experience) | Search Results | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 28+ | Future chapters per design standard roadmap |
+| 29+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -75,6 +76,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-04 | Chapter 25 — Feedback, Status & System Communication approved |
 | 1.0 | 2026-07-04 | Chapter 26 — Search Filters & Refinement approved and added |
 | 1.0 | 2026-07-04 | Chapter 27 — Sorting & Ranking Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 28 — Search Results Experience approved and added |
 
 ---
 
@@ -26738,3 +26740,1772 @@ Users do not come to Rento to decipher algorithms. They come to **find a home th
 ---
 
 **End of Chapter 27**
+
+
+---
+
+## Chapter 28 — Search Results Experience
+
+**Section:** XXV — Search Results  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Search & Discovery, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–27; operationalizes Search Experience (Chapter 13), Listing Card & Preview (Chapter 14), Filters & Refinement (Chapter 26), Sorting & Ranking (Chapter 27), Trust (Chapter 20), state experience (Chapter 24), and system communication (Chapter 25); defines principles only — not list components, virtual scroll implementations, APIs, ranking engines, database schemas, analytics pipelines, or UI code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **search results experience philosophy** for Rento.
+
+After users define **which homes are eligible** (Chapter 26) and **in what order they appear** (Chapter 27), search results are **how the housing market becomes visible** — the primary decision-support surface where users scan, compare, trust, and choose which listings deserve deeper evaluation.
+
+Search results are not merely a collection of listings. They are the **presentation layer of the Search System** — the calm, scannable interface through which users understand what is available, what differs, and what deserves attention in a long-term residential rental marketplace.
+
+Search results exist to help users understand the available housing market **quickly, calmly, and confidently**. They must reduce cognitive effort while increasing housing confidence — never maximize clicks, scroll depth, or session duration.
+
+Where Chapter 13 defines search holistically, Chapter 26 refinement, and Chapter 27 prioritization, **this chapter defines how results are presented, interpreted, compared, and trusted** throughout the Housing Journey.
+
+This chapter governs results philosophy, visual and information hierarchy, comparison support, preview integrity, continuity, states, ethics, and evolution. It does **not** specify React list components, image CDN pipelines, query pagination APIs, or ranking algorithms.
+
+
+## Why Search Results Matter
+
+**Search results are the primary decision-support surface of the Rento marketplace.** Most housing decisions begin here — not on listing detail, not in filters alone, and not in sort controls. Users form their first impression of the available market, decide what deserves attention, and begin comparison **while still on the results list**.
+
+Search results determine:
+
+- **First impression** — whether the marketplace feels calm, professional, and trustworthy  
+- **Comparison quality** — whether users can distinguish homes without opening every listing  
+- **Trust** — whether previews feel honest before depth  
+- **Evaluation efficiency** — whether scan leads to purposeful opens, not random tapping  
+- **Confidence to continue** — whether users believe the search is worth pursuing  
+
+Search results should help users **understand the housing market** — scope, differences, and viable options under current criteria — not simply browse listings as an endless feed. When results succeed, users move toward **Decision Readiness** with clarity. When they fail, users either open everything skeptically or abandon search despite good filters and sort.
+
+This section states *why the presentation layer matters*. **Why Search Results Exist** (following) states *why the surface is necessary in the discovery progression*. Together they frame the governed contract of this chapter.
+
+---
+
+## Why Search Results Exist
+
+Users cannot absorb an entire rental market at once. After search, filters, and sort define **which homes appear and in what sequence**, users still need a **governed surface** to process that information — to scan efficiently, compare differences, and decide what to open.
+
+**Search results exist because the brain needs structure before depth.** A well-designed results experience answers six questions in seconds:
+
+- **What is available?** — honest count and scope  
+- **What deserves attention?** — hierarchy guides the eye  
+- **What differs between listings?** — comparison-ready information  
+- **What should be compared?** — parallel attributes at consistent positions  
+- **What should be ignored?** — calm density; no noise competing with housing facts  
+- **What deserves opening?** — Listing Readiness visible at preview level  
+
+Search results are **decision support at scale**. They sit between ordering (Chapter 27) and listing detail (Chapter 15):
+
+```
+Discovery
+        ↓
+Refinement (Filters)
+        ↓
+Ordering (Sort & Rank)
+        ↓
+Search Results (this chapter)
+        ↓
+Listing Detail
+        ↓
+Comparison · Save · Contact
+```
+
+When search results succeed, users move from scan to shortlist without overwhelm. When they fail — through clutter, inconsistency, misleading previews, or unstable lists — users distrust **every listing on screen**, regardless of filter and sort quality.
+
+Search results must never become entertainment, advertising galleries, or engagement feeds. They exist to help users **evaluate homes**, not interface chrome.
+
+---
+
+## Design Principles Summary
+
+This chapter governs how search results are presented and experienced throughout the Rento marketplace. The following principles summarize the full search results contract for designers, product managers, and reviewers:
+
+1. **Support housing decisions** — Results help users scan, compare, and choose listings worth opening — not maximize impressions or decorative engagement.
+
+2. **Reduce uncertainty** — Users rapidly understand availability, differences, and trust signals — active filters, sort, and count visible alongside results.
+
+3. **Preserve trust** — Every preview honors marketplace truth — availability, price, location, verification meaning — Preview Integrity and Result Credibility are non-negotiable.
+
+4. **Encourage comparison** — Parallel information architecture enables side-by-side mental comparison — Comparison Confidence without cognitive overload.
+
+5. **Remain visually calm** — Visual Trust through restrained density, rhythm, and hierarchy — quality before quantity.
+
+6. **Emphasize clarity over decoration** — Users evaluate homes, not interface ornament — Decision Visibility for housing facts.
+
+7. **Preserve continuity** — Result Continuity and Search Continuity across scroll, detail return, and session restore — Result Stability.
+
+8. **Discover the right home — not manipulate behavior** — No dark patterns, false scarcity, or promotional distraction in organic results.
+
+These principles apply to every search results list, saved search return, partial and empty result states, and mobile scan flows across consumer discovery in the Rento ecosystem.
+
+---
+
+## What This Chapter Is NOT
+
+To prevent category errors during design, review, and engineering handoff, this chapter is explicitly **not** about:
+
+- **Ranking algorithms** — Scoring, relevance models, or ML rank implementation (Chapter 27 governs ordering philosophy).
+- **Filter logic** — Criteria eligibility or query construction (Chapter 26).
+- **SQL or Elasticsearch** — Database queries, indexes, or search cluster configuration.
+- **API endpoints** — Pagination contracts, result payloads, or backend routing.
+- **Listing detail content** — Full evaluation environment (Chapter 15).
+- **Listing card component APIs** — Framework components, props, or styling tokens (Chapter 14 defines preview philosophy; this chapter governs results list experience).
+- **Analytics instrumentation** — Impression tracking, CTR optimization, or funnel event schemas.
+- **Map rendering** — Geographic visualization implementation (future chapter — results truth rules apply when shipped).
+- **Frontend implementation** — React virtual lists, image lazy-load code, or Tailwind layouts.
+
+This chapter governs **the human experience of search results** — how users scan, compare, trust, and navigate lists of apartment listings during housing search.
+
+Engineering implements results surfaces that honor these principles. Technical capability to render lists does not define product behavior — user comprehension, comparison quality, and housing confidence do.
+
+
+## Cognitive Continuity
+
+**Cognitive Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Cognitive Continuity is **the user's ability to continue evaluating and comparing listings without rebuilding their mental model of the search results** — remembering what they have seen, how listings differ, and where they were in their scan.
+
+Cognitive Continuity is distinct from but dependent on system preservation:
+
+| Concept | Scope |
+|---------|--------|
+| **Result Continuity** (§7) | The system preserves the results — scroll position, loaded pages, list state |
+| **Search Continuity** (Chapter 26) | The system preserves search context — filters, sort, criteria |
+| **Cognitive Continuity** | The user preserves understanding — mental compare set, scan progress, evaluation thread |
+
+**Preserving cognition is as important as preserving data.** A list that restores scroll position but reshuffles order, changes card layout mid-scan, or injects unexplained rows forces users to **rebuild comparison from zero** — wasting attention and eroding Comparison Confidence (§5).
+
+Cognitive Continuity is supported through:
+
+- **Stable Ordering** and **Result Stability** (§12) — predictable list behavior  
+- **Consistent card grammar** — same attributes in same places — Chapter 14  
+- **Calm updates** — material changes communicated — Chapter 25  
+- **Evaluation Flow** (§14) — uninterrupted scan → compare → open rhythm  
+
+This concept connects Result Continuity, Search Continuity, and Evaluation Flow. It is reusable across Listing Detail return paths (§38), Favorites (Chapter 17), Maps, and future chapters wherever users must resume housing evaluation without mental reset.
+
+---
+
+
+## First Impression Integrity
+
+**First Impression Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+First Impression Integrity is **the consistency between what a listing preview communicates and what users actually experience after opening the listing** — preview sets expectations; detail must honor them.
+
+| Concept | Scope |
+|---------|--------|
+| **Preview Integrity** (§13) | Factual consistency — price, photo, location, and availability on the card align with authoritative listing truth |
+| **First Impression Integrity** | Expectation consistency — the user who opens feels the listing is *the same home they chose to evaluate*, not a bait-and-switch |
+
+Search results should **never promise more than the listing can honestly deliver**. A preview that implies larger space, lower price, premium neighborhood, or availability that detail cannot support destroys **Result Credibility** (§6) and **Visual Trust** (§8) — not only for one listing but for subsequent results on the same screen.
+
+First Impression Integrity requires:
+
+- **Representative thumbnails** — Thumbnail Strategy (§24)  
+- **Accurate primary facts** — Price, Location, Availability Visibility (§31–33)  
+- **Restrained titles and hooks** — no hype that detail contradicts  
+- **Verification labels honest** — Chapter 20 semantics; no overclaim  
+
+This concept extends Preview Integrity and supports Evaluation Flow: users open **deliberately** because the first impression was trustworthy.
+
+---
+
+
+## Decision Readiness
+
+**Decision Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Decision Readiness is **the moment when users have gathered sufficient information from search results to confidently open a specific listing for deeper evaluation** — not every listing, but the right ones.
+
+Decision Readiness represents the **successful completion of the Search Results phase**. Once achieved, attention shifts from *“Which rows deserve my time?”* to *“Is this home right for me?”* on listing detail — the natural handoff to Chapter 15.
+
+Search results should **prepare users for listing detail** rather than encourage random exploration. Decision Readiness grows when:
+
+- **Listing Readiness** (§10) is visible on worthy previews  
+- **Decision Visibility** (§9) surfaces housing facts without opening  
+- **Comparison Confidence** (§5) enables shortlist formation on the list  
+- **Evaluation Flow** (§14) completes scan → compare → open without friction  
+
+Decision Readiness connects to **Decision Confidence** (Chapter 26) and **Ranking Resolution** (Chapter 27): filters refine the set, sort orders it, results help users **choose where to go deep**. It is reusable across Contact (Chapter 16), Favorites (Chapter 17), and future Maps and AI Search chapters wherever the product must recognize that **results have fulfilled their presentation role**.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Decision support, calm scan, trust, comparison |
+| **Hierarchy** | Visual and information priority on results |
+| **Preview** | Thumbnail, primary, secondary, metadata, trust signals |
+| **Comparison** | Scan and compare experience; Comparison Confidence |
+| **Continuity** | Scroll, return, state preservation |
+| **States** | Loading, updating, empty, partial, mixed results |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics |
+
+### 2.2 Out of Scope
+
+- Sort and rank policy (Chapter 27)  
+- Filter application and chips (Chapter 26)  
+- Full listing card component specification detail (Chapter 14 — intersection governed)  
+- Listing detail evaluation (Chapter 15)  
+- Recommendation carousels as primary modules (Chapter 22 — intersection at results)  
+- Map UI (future chapter)  
+- Implementation of pagination, caches, or image pipelines  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **eligible listings are presented as a scannable list or equivalent discovery collection**, including but not limited to:
+
+- Main search results after query and filters  
+- Browse results by city or neighborhood  
+- Saved search result returns  
+- Partial and recovering result states  
+- Map-accompanied list views (when product ships)  
+
+If a surface answers *“How does the user see and process multiple listings together to form a shortlist?”* — this chapter applies.
+
+### 2.4 Quality Before Quantity
+
+More results on screen are success **only when** each preview earns attention through clarity and truth — not through density that obscures comparison.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When search results decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (availability, moderation, public inventory truth)  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 13 — Search Experience System  
+4. Chapters 26–27 — refinement and ordering layers  
+5. **This chapter** — for results presentation and scan experience  
+6. Chapter 14 — listing preview truth on cards  
+7. Chapters 20, 22, 24–25 — trust, personalization, states, communication  
+
+Results must never **misrepresent listing truth in preview**, **break continuity on return from detail**, or **overload users with non-housing noise**.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm, trust, only what is real |
+| Chapter 4 — Layout & Information Architecture | Hierarchy; primary vs secondary zones |
+| Chapter 8 — Spatial System & Layout Rhythm | Vertical rhythm; scan spacing |
+| Chapter 9 — Motion & Interaction System | Calm list updates |
+| Chapter 10 — Navigation System | Detail return; context preservation |
+| Chapter 13 — Search Experience System | Parent search system; §16 extended here |
+| Chapter 14 — Listing Card & Preview System | Card anatomy and preview truth |
+| Chapter 17 — Favorites & Saved Properties Experience | Save from results; saved search returns |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust indicators honest |
+| Chapter 22 — Personalization & Recommendations Experience | Modules at results boundary |
+| Chapter 23 — Onboarding & First-Time Experience | First results calm |
+| Chapter 24 — Empty, Loading & Error States Experience | Result state honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Update communication |
+| Chapter 26 — Search Filters & Refinement Experience | Filters and summary visible with results |
+| Chapter 27 — Sorting & Ranking Experience | Sort visible; order stable |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 13 introduced result architecture. Chapters 26–27 govern **eligibility and order**. **This chapter governs how ordered eligible listings are experienced as a decision-support surface** — scan, compare, trust, and shortlist formation.
+
+Without this chapter, results become engineering list dumps. With it, results become **the calm heart of housing discovery**.
+
+### 3.4 Position in Search System Evolution
+
+```
+Search Experience (Chapter 13)
+        ↓
+Search Filters & Refinement (Chapter 26)
+        ↓
+Sorting & Ranking (Chapter 27)
+        ↓
+Search Results (this chapter)
+        ↓
+Maps & Location → Saved Searches → AI Search
+        (future standard chapters when authored)
+```
+
+This chapter is the **official presentation layer** of the Search System.
+
+---
+
+## 4. Results Philosophy
+
+Search results on Rento **support housing decisions** — never overwhelm, mislead, or entertain.
+
+### 4.1 Results Reduce Uncertainty
+
+Users leave results knowing **what the market offers** under current criteria — not guessing.
+
+### 4.2 Results Preserve Trust
+
+Every preview **honest** — Preview Integrity; no bait thumbnails or false availability.
+
+### 4.3 Results Encourage Comparison
+
+Parallel facts ** same positions** on every card — Comparison Confidence.
+
+### 4.4 Results Remain Visually Calm
+
+Restrained density — Visual Trust; housing facts dominate.
+
+### 4.5 Results Never Overload
+
+Progressive disclosure ** for secondary detail** — not everything at once.
+
+### 4.6 Quality Before Quantity
+
+Fewer clear previews ** beat** crowded ambiguous rows.
+
+### 4.7 Users Evaluate Homes
+
+Not decorative UI, not promotional chrome, not engagement widgets.
+
+### 4.8 Six Results Questions
+
+Users must rapidly answer:
+
+1. **What is available?**  
+2. **What deserves attention?**  
+3. **What differs?**  
+4. **What should I compare?**  
+5. **What can I ignore?**  
+6. **What deserves opening?**
+
+### 4.9 Results Communicate Before Detail
+
+Preview must carry ** enough truth** for informed open decision — Listing Readiness.
+
+### 4.10 Results Inherit Filter and Sort Truth
+
+Header shows ** criteria and sort** — Chapters 26–27 visible at results layer.
+
+---
+
+## 5. Comparison Confidence
+
+**Comparison Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Comparison Confidence is the **user's ability to compare multiple apartment listings mentally or visually** because previews present **consistent, parallel, trustworthy information** at predictable positions.
+
+Comparison Confidence requires:
+
+- **Same attributes in same places** — price always scannable same zone; rooms comparable row to row  
+- **Honest differentiation** — differences reflect real listing facts, not layout tricks  
+- **Calm density** — enough to compare; not so much that cards become unreadable  
+- **Stable list** — Result Stability so compared listings do not vanish or reorder arbitrarily  
+
+Without Comparison Confidence, users open listings randomly or abandon search. With it, users form a **shortlist from results alone** before detail depth.
+
+This concept connects Information Hierarchy (§17), Evaluation Flow (§14), and Listing Card philosophy (Chapter 14).
+
+---
+
+## 6. Result Credibility
+
+**Result Credibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Result Credibility is the **user's belief that each listing preview in the results list accurately represents the home behind it** — photo, price, location, and availability on the card align with listing truth.
+
+Result Credibility is distinct from but related to **Result Credibility** at rank position (Chapter 27): a top result must be credible **both in order and in preview content**.
+
+Credibility violations include:
+
+- Misleading lead photo crop  
+- Price on card inconsistent with detail  
+- “Available” preview for unavailable inventory  
+- Verification badge implying listing accuracy  
+
+Low Result Credibility forces users to **open every listing skeptically** — multiplying cognitive load.
+
+---
+
+## 7. Result Continuity
+
+**Result Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Result Continuity is the **preservation of results list context** — scroll position, loaded pages, expanded sections, and mental scan place — when users navigate away and return.
+
+Result Continuity extends Search Continuity (Chapter 26) and Context Preservation specifically for **the results surface**:
+
+- Detail → back ** returns to same listing in list place**  
+- Filter/sort apply ** predictable scroll behavior**  
+- Session restore ** honest** — not fake scroll on wrong data  
+
+Broken Result Continuity wastes comparison work and erodes Scanning Confidence.
+
+---
+
+## 8. Visual Trust
+
+**Visual Trust** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Visual Trust is the **calm, professional visual quality of search results** that signals a serious marketplace — restrained color, consistent spacing, no aggressive promotion, no visual anxiety.
+
+Visual Trust is earned through:
+
+- **Consistent card grammar** — Chapter 14 alignment  
+- **Predictable rhythm** — Visual Rhythm (§22)  
+- **No clutter** — decorative elements subordinate  
+- **Honest imagery** — Thumbnail Strategy (§24)  
+
+Visual chaos reads as untrustworthy marketplace. Visual calm reads as **premium long-term rental**.
+
+---
+
+## 9. Decision Visibility
+
+**Decision Visibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Decision Visibility is the **degree to which housing decision facts are immediately visible on results previews** without opening detail — price, location, rooms, availability, and trust minimum.
+
+Decision Visibility prioritizes:
+
+- **Housing facts over chrome** — metadata serves decision  
+- **Primary before secondary** — §25–26 hierarchy  
+- **Trust indicators when material** — verification, freshness — not badge noise  
+
+Users with high Decision Visibility ** open fewer irrelevant listings** — efficient Evaluation Flow.
+
+---
+
+## 10. Listing Readiness
+
+**Listing Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Listing Readiness is the **preview-level signal that a listing has sufficient honest information for the user to justify opening it** — representative image, clear price and location, key attributes, and availability truth.
+
+Listing Readiness does not require complete detail on the card. It requires **enough truth to earn the tap**.
+
+Listings below readiness threshold ** should not dominate results** through rank alone — incomplete previews harm Result Credibility and platform trust (Chapters 13, 20).
+
+---
+
+## 11. Scanning Confidence
+
+**Scanning Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Scanning Confidence is the **user's felt ease of moving through a results list** — eyes find price, location, and differences quickly without re-learning layout per row.
+
+Scanning Confidence requires:
+
+- **Visual Hierarchy** — §16  
+- **Information Hierarchy** — §17  
+- **One-handed mobile scan** — §46  
+- **Accessible text and contrast** — §47  
+
+Scanning Confidence is the list-level counterpart to Reading System clarity (Chapter 6).
+
+---
+
+## 12. Result Stability
+
+**Result Stability** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Result Stability is the **predictable behavior of the results list** when data updates, user returns, or sort/filter changes — listings do not jump, duplicate, or disappear without explanation.
+
+Result Stability requires:
+
+- **Stable Ordering** (Chapter 27) honored at list layer  
+- **Calm updates** when new listings match saved search — Chapter 25  
+- **No duplicate rows** — Chapter 13  
+- **Honest pagination or infinite load** — end states clear  
+
+Instability destroys Comparison Confidence — users cannot compare what keeps moving.
+
+---
+
+## 13. Preview Integrity
+
+**Preview Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Preview Integrity is the **alignment between listing preview on results and authoritative listing truth** — one source of truth (Chapter 1) visible at scan layer.
+
+Preview Integrity governs:
+
+- Photo ** representative** — not misleading  
+- Price ** matches** detail authority  
+- Location ** accurate** to listing  
+- Status ** available only when available** — Chapter 20  
+- Badges ** mean what they say**  
+
+Preview Integrity violation is among the fastest paths to marketplace distrust.
+
+---
+
+## 14. Evaluation Flow
+
+**Evaluation Flow** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Evaluation Flow is the **natural rhythm of scan → compare → open → save or skip** through which users move along results toward shortlist — without friction, overload, or dead ends.
+
+Healthy Evaluation Flow:
+
+- **Scan** — Scanning Confidence high  
+- **Compare** — Comparison Confidence enabled  
+- **Open** — Listing Readiness justifies depth  
+- **Save or skip** — favorites subordinate, non-destructive — Chapter 17  
+- **Return** — Result Continuity preserves place  
+
+Evaluation Flow connects Ranking Resolution (Chapter 27) to detail evaluation (Chapter 15): results succeed when users ** enter detail deliberately**, not through mis-tap or confusion.
+
+---
+
+## 15. Visual Hierarchy
+
+Visual hierarchy on results **guides attention to housing decisions**.
+
+### 15.1 Primary Zone Dominant
+
+Photo, price, location ** win first glance** — Chapter 4 primary tier.
+
+### 15.2 Secondary Subordinate
+
+Rooms, area, badges ** below primary** — never compete.
+
+### 15.3 Actions Subordinate
+
+Save, share ** visually quiet** — open is primary.
+
+### 15.4 Filters and Sort Visible
+
+Results header ** criteria + sort** — not buried.
+
+### 15.5 Sponsored Distinct
+
+If present ** structurally separate** — Chapter 22.
+
+### 15.6 One Card Grammar
+
+All rows ** same anatomy** — Chapter 14.
+
+---
+
+## 16. Information Hierarchy
+
+Information hierarchy defines **what facts appear and in what priority**.
+
+### 16.1 Decision Facts First
+
+Price, location, rooms ** before** decorative metadata.
+
+### 16.2 Trust Facts When Material
+
+Verification ** when governed** — not noise.
+
+### 16.3 Freshness When Meaningful
+
+“New” or date ** when sort or user benefit**.
+
+### 16.4 Omit Over Obscure
+
+Missing data ** honest absence** — not placeholder lie.
+
+### 16.5 Parallel Across Cards
+
+Same field ** same position** — comparison enabled.
+
+### 16.6 Metadata Tertiary
+
+Technical ids, internal labels ** never on consumer card**.
+
+---
+
+## 17. Comparison Experience
+
+Comparison is **core results job** — not detail-only activity.
+
+### 17.1 Compare at Scan Layer
+
+Users compare ** price and neighborhood** without opening every home.
+
+### 17.2 Attribute Alignment
+
+2 rooms ** same line across cards** — not random layout.
+
+### 17.3 Visual Differentiation Subtle
+
+Cards ** distinct by content** — not rainbow chrome.
+
+### 17.4 Compare Favorites Later
+
+Save ** supports** compare across sessions — Chapter 17.
+
+### 17.5 No False Compare Tools
+
+Fake “compare checkbox” ** without value** forbidden — earn feature or omit.
+
+### 17.6 Comparison Without Overload
+
+Compare ** enabled by clarity** — not by data dump.
+
+---
+
+## 18. Result Readability
+
+Readability **governs scan speed**.
+
+### 18.1 Type Hierarchy Clear
+
+Chapter 6 ** price and location legible** on mobile.
+
+### 18.2 Line Length Controlled
+
+Titles ** truncate gracefully** — full on detail.
+
+### 18.3 Contrast Sufficient
+
+Chapter 7 semantic colors ** calm** — not alarm red for normal cards.
+
+### 18.4 Language Plain
+
+Romania rental terms ** consistent** — studio, rooms, €/lună.
+
+### 18.5 Numbers Scannable
+
+Price ** tabular alignment** where layout allows.
+
+---
+
+## 19. Information Density
+
+Density **balances information and calm**.
+
+### 19.1 Mobile Density Conservative
+
+One card ** one screen fraction** — not six tiny rows.
+
+### 19.2 Desktop May Breathe
+
+Space ** adds clarity** — not new logic.
+
+### 19.3 Density Earned
+
+Each added field ** necessity test** — Chapter 5.
+
+### 19.4 White Space Functional
+
+Rhythm ** separates** cards for scan.
+
+### 19.5 Density Never Hides Primary
+
+More metadata ** never pushes price below fold** on mobile.
+
+---
+
+## 20. Scanning Behavior
+
+Results design **respects how users scan**.
+
+### 20.1 F-Pattern and Vertical Scan
+
+Mobile ** vertical list primary** — thumb scroll.
+
+### 20.2 Anchor Points Consistent
+
+Price top-right or ** consistent product-wide**.
+
+### 20.3 Image Left or Top Consistent
+
+Thumbnail ** same position** every card.
+
+### 20.4 Scan Interrupts Minimized
+
+Inline ads ** break scan** — separate modules.
+
+### 20.5 One Decision per Card
+
+Open ** dominant** — not five equal buttons.
+
+### 20.6 Scan While Mobile Context
+
+Standing, walking ** large touch, clear type**.
+
+---
+
+## 21. Visual Rhythm
+
+Rhythm **supports calm scan** — Chapter 8.
+
+### 21.1 Consistent Card Height Class
+
+Rows ** rhythmically stable** — not chaotic jump per item.
+
+### 21.2 Spacing Between Cards
+
+Separation ** scannable** — not cramped.
+
+### 21.3 Section Breaks Meaningful
+
+“12 homes in Mărăști” ** not decorative dividers**.
+
+### 21.4 Loading Skeleton Rhythm
+
+Skeleton ** matches final card** — Chapter 24.
+
+### 21.5 End of List Clear
+
+Pagination end ** honest** — not infinite ghost scroll.
+
+---
+
+## 22. Progressive Disclosure on Results
+
+Disclosure **on results is minimal** — detail owns depth.
+
+### 22.1 Preview Shows Decision Minimum
+
+Open when ** Listing Readiness met**.
+
+### 22.2 Expand Rare on Card
+
+Accordion on card ** avoided** — opens detail instead.
+
+### 22.3 Secondary on Long Press Only
+
+If ever ** non-primary** — not hidden critical facts.
+
+### 22.4 Filter/Sort Disclosure Separate
+
+Advanced criteria ** Chapter 26** — not on every card.
+
+---
+
+## 23. Listing Preview Philosophy
+
+Results previews **extend Chapter 14** at list scale.
+
+### 23.1 Preview Is Promise
+
+Card ** promises what detail delivers**.
+
+### 23.2 Preview Is Not Detail
+
+Do not ** replicate detail** on card.
+
+### 23.3 Preview Supports Open Decision
+
+Enough ** to justify tap**.
+
+### 23.4 Preview Same Family Everywhere
+
+Search, favorites, saved search ** same grammar**.
+
+### 23.5 Preview Truth Invariant of Position
+
+Row 1 and row 20 ** same integrity rules**.
+
+---
+
+## 24. Thumbnail Strategy
+
+Thumbnails **set visual trust instantly**.
+
+### 24.1 Representative Photo
+
+Lead image ** actual property** — not stock.
+
+### 24.2 Honest Crop
+
+Show ** meaningful space** — not deceptive wide angle only.
+
+### 24.3 Placeholder Honest
+
+No photo ** calm empty** — not fake image.
+
+### 24.4 Multiple Photo Hint
+
+Gallery count ** if product supports** — subordinate.
+
+### 24.5 Load Progressive Honest
+
+Blur-up ** not fake sharp stock**.
+
+### 24.6 Thumbnail Size Consistent
+
+Touch target ** meets accessibility** — Chapter 42.
+
+---
+
+## 25. Primary Information
+
+Primary information **answers “what and where and how much?”**
+
+### 25.1 Price Primary
+
+Monthly rent ** prominent** — €/lună clear.
+
+### 25.2 Location Primary
+
+Neighborhood or area ** human-readable** — Mărăști, Cluj-Napoca.
+
+### 25.3 Identity Hook Primary
+
+Title or type + rooms ** distinguishes row**.
+
+### 25.4 Primary Never Buried
+
+Below fold on mobile ** failure**.
+
+### 25.5 Primary One Glance
+
+** Three-second comprehension** target.
+
+---
+
+## 26. Secondary Information
+
+Secondary **supports compare and filter confirmation**.
+
+### 26.1 Rooms and Area
+
+When available ** consistent label**.
+
+### 26.2 Property Type
+
+Apartment, house ** when material**.
+
+### 26.3 Furnished, Parking
+
+** When product supports** — subordinate line.
+
+### 26.4 Secondary Never Competes Price
+
+Visual weight ** lower** than primary.
+
+### 26.5 Secondary Omitted If Unknown
+
+** No fabricated** secondary.
+
+---
+
+## 27. Metadata
+
+Metadata **tertiary — serves scan, not clutter**.
+
+### 27.1 Posted or Updated Date
+
+When freshness sort ** or meaningful**.
+
+### 27.2 Distance When Location Sort
+
+** Labeled anchor** — Chapter 27.
+
+### 27.3 Internal IDs Forbidden
+
+Listing id ** not on consumer card**.
+
+### 27.4 Metadata Grouped
+
+Small text ** one zone** — not scattered.
+
+---
+
+## 28. Trust Indicators
+
+Trust indicators **support confidence without overclaim**.
+
+### 28.1 Minimum Trust on Card
+
+Availability honest ** always**.
+
+### 28.2 Indicators Proportional
+
+Badge ** only when meaningful**.
+
+### 28.3 Trust Not Decoration
+
+Icons ** semantic** — Chapter 7.
+
+### 28.4 Trust Consistent with Detail
+
+Same badge ** same meaning** on detail.
+
+---
+
+## 29. Verification Indicators
+
+Verification on results **follows Chapter 20 exactly**.
+
+### 29.1 Verified Realtor ≠ Verified Listing
+
+Copy ** never conflates**.
+
+### 29.2 Badge Tap Explains
+
+Optional ** what verification means**.
+
+### 29.3 No Fake Tiers
+
+“Trusted” ** undefined forbidden**.
+
+### 29.4 Verification Visible Not Noisy
+
+One ** clear indicator** — not badge stack.
+
+---
+
+## 30. Realtor Signals
+
+Realtor identity on results **humanizes professionally**.
+
+### 30.1 Name or Agency When Product Places
+
+** Consistent position** on card.
+
+### 30.2 Photo Optional Subordinate
+
+Realtor avatar ** smaller than property**.
+
+### 30.3 Link to Profile
+
+** Without hijacking** open listing primary.
+
+### 30.4 One Source of Truth
+
+Contact ** from profile** — Chapter 18 — not on card override.
+
+---
+
+## 31. Price Visibility
+
+Price **highest-stakes primary fact**.
+
+### 31.1 Currency and Period Explicit
+
+Lei or € ** per month** — consistent.
+
+### 31.2 Price Matches Detail
+
+Preview Integrity ** on price**.
+
+### 31.3 No “From” Deception
+
+“From 400 €” ** only if true range on detail.
+
+### 31.4 Price Sort Alignment
+
+When price sort ** sequence matches display**.
+
+---
+
+## 32. Location Visibility
+
+Location **anchors geographic decision**.
+
+### 32.1 City and Area Human
+
+User mental map ** Romania-first**.
+
+### 32.2 Street Optional Subordinate
+
+Full address ** detail** — privacy and clarity.
+
+### 32.3 Map Preview Future
+
+When map ** sync with list** — future chapter.
+
+### 32.4 Location Matches Filters
+
+Mărăști filter ** Mărăști on card**.
+
+---
+
+## 33. Availability Visibility
+
+Availability **truth on preview**.
+
+### 33.1 Available When Publicly Available
+
+Domain rules ** invariant**.
+
+### 33.2 No Pending in Consumer Results
+
+** Excluded before results** — not shown unavailable styling on pending.
+
+### 33.3 Move-In Date Future
+
+When shown ** honest**.
+
+### 33.4 Unavailable Never in Results
+
+If shown ** error state** — not normal card.
+
+---
+
+## 34. Result Prioritization Within the List
+
+Within-list emphasis **follows Chapter 27** at presentation layer.
+
+### 34.1 Order Reflects Sort
+
+Visual ** does not fight** sort.
+
+### 34.2 No Extra Visual Boost for Pay
+
+Sponsored ** separate module**.
+
+### 34.3 Freshness Badge When Newest Sort
+
+** Coherent** with sort label.
+
+### 34.4 Do Not Re-Rank Visually
+
+Bigger card for position 1 ** forbidden** in organic list.
+
+---
+
+## 35. Result Trust and Transparency
+
+Transparency **at results header and row**.
+
+### 35.1 Count Honest
+
+“14 homes” ** matches eligible set**.
+
+### 35.2 Criteria Visible
+
+Filters ** summary** — Chapter 26.
+
+### 35.3 Sort Visible
+
+Active sort ** labeled** — Chapter 27.
+
+### 35.4 Update Explained
+
+“3 new since yesterday” ** when saved search**.
+
+### 35.5 Partial Results Explained
+
+** §42** — not silent truncation.
+
+---
+
+## 36. Result Consistency
+
+**Same results grammar everywhere**.
+
+### 36.1 Search = Saved Search Cards
+
+Same preview ** same positions**.
+
+### 36.2 Favorites List Alignment
+
+Saved homes ** recognizable** — Chapter 17.
+
+### 36.3 Recommendation Cards
+
+Chapter 22 ** same truth** — not different dialect.
+
+### 36.4 Cross-Device
+
+Phone and tablet ** same hierarchy** — space adapts.
+
+---
+
+## 37. Search Continuity and State Preservation
+
+Continuity **spans filter, sort, and results**.
+
+### 37.1 Single Search Context
+
+Filters + sort + scroll ** one context**.
+
+### 37.2 Auth Merge Preserves Results
+
+Guest → login ** keeps list state** — Chapter 23.
+
+### 37.3 Deep Link Restores
+
+Shared search URL ** shows criteria**.
+
+### 37.4 State Preservation on Rotate
+
+Orientation change ** preserves scroll**.
+
+---
+
+## 38. Returning From Listing Detail
+
+Return path **sacred for comparison workflows**.
+
+### 38.1 Back Preserves Scroll
+
+Same listing ** visible where left**.
+
+### 38.2 Back Preserves Sort and Filters
+
+** Unchanged** unless user changed.
+
+### 38.3 Favorite Toggle on Detail Reflects on Return
+
+Heart state ** synced** on card.
+
+### 38.4 No Full List Remount
+
+** Result Continuity** — §7.
+
+### 38.5 Contact Return Same
+
+Chapter 16 ** return integrity**.
+
+---
+
+## 39. Loading Results
+
+Loading **honest and calm** — Chapter 24.
+
+### 39.1 Skeleton Matches Cards
+
+** Same anatomy** — not generic blocks.
+
+### 39.2 First Paint Orienting
+
+Criteria ** visible during load**.
+
+### 39.3 Slow Load Truthful
+
+Not ** fake instant** empty list.
+
+### 39.4 Error Recovery Clear
+
+Retry ** without losing criteria**.
+
+---
+
+## 40. Updating Results
+
+Live updates **communicate respectfully**.
+
+### 40.1 New Match Insertion Calm
+
+Saved search new home ** Chapter 25** — not jump scare.
+
+### 40.2 Count Update Visible
+
+“15 homes” → “16 homes” ** when material.
+
+### 40.3 Removed Listing Honest
+
+Was in favorites ** state on return** — Chapter 24.
+
+### 40.4 Pull Refresh Optional
+
+** Not required** for anxiety.
+
+### 40.5 Respectful Silence
+
+No toast ** every poll** — Chapter 25.
+
+---
+
+## 41. No Results
+
+Empty results **recovery surface** — Chapters 13, 24, 26.
+
+### 41.1 Explain Why Empty
+
+Criteria ** specific**.
+
+### 41.2 Recovery Actions
+
+Adjust filters ** primary**.
+
+### 41.3 Save Search Offer
+
+** Opt-in** — not guilt.
+
+### 41.4 Calm Not Error Red
+
+** Empty state** — Chapter 24.
+
+### 41.5 No Fake Fillers
+
+Placeholder listings ** forbidden**.
+
+---
+
+## 42. Partial Results
+
+Partial **honest when inventory thin or load incomplete**.
+
+### 42.1 Count Accurate
+
+“4 homes” ** not “4 of many”** if only 4 exist.
+
+### 42.2 Load More Honest
+
+Pagination ** clear**.
+
+### 42.3 Network Partial Error
+
+Some loaded ** retry for rest** — Chapter 24.
+
+### 42.4 Do Not Imply Abundance
+
+Few results ** dignified** — not shame.
+
+---
+
+## 43. Mixed Results
+
+Mixed states **handled without confusion**.
+
+### 43.1 Sponsored + Organic Clear
+
+** Modules separated**.
+
+### 43.2 Recommendation Strip Labeled
+
+“Similar homes” ** not search results**.
+
+### 43.3 Map + List Same Set
+
+When shipped ** synchronized**.
+
+### 43.4 Alert Banner Subordinate
+
+Criteria stale ** banner** — not blocking cards.
+
+---
+
+## 44. Saved Results
+
+Saved search returns **contract with user**.
+
+### 44.1 Criteria Snapshot Visible
+
+** Full summary** on open.
+
+### 44.2 Sort State Restored
+
+Chapter 27 ** honored**.
+
+### 44.3 New Since Last Visit
+
+** Optional highlight** — calm.
+
+### 44.4 Deleted Listings Removed
+
+** Honest** — not ghost cards.
+
+---
+
+## 45. Mobile-First Results Experience
+
+Mobile **primary evaluation context**.
+
+### 45.1 One-Handed Scroll
+
+Thumb ** natural reach**.
+
+### 45.2 Tap Targets Generous
+
+Card open ** easy** — save secondary.
+
+### 45.3 Header Sticky Disciplined
+
+Criteria ** visible** — not huge sticky chrome.
+
+### 45.4 Bottom Safe Area
+
+Actions ** not under home indicator**.
+
+### 45.5 Performance on 4G
+
+Perceived speed ** §48**.
+
+---
+
+## 46. Accessibility
+
+Results **perceivable and operable** for all users.
+
+### 46.1 Card Semantics
+
+Each result ** meaningful label** — “2 rooms, Mărăști, 650 euros per month”.
+
+### 46.2 Save Action Named
+
+“Save to favorites” ** not icon alone**.
+
+### 46.3 List Structure Headings
+
+“Search results” ** announced**.
+
+### 46.4 Focus Order Logical
+
+** Top to bottom**.
+
+### 46.5 Images Alt Text
+
+Property ** described** — not “image”.
+
+---
+
+## 47. Motion in Results
+
+Motion **calm** — Chapter 9.
+
+### 47.1 Insert New Card Restrained
+
+** No flash**.
+
+### 47.2 Sort Resort Stable
+
+** Reduced motion** equivalent.
+
+### 47.3 Skeleton to Content Smooth
+
+** Not jarring swap**.
+
+---
+
+## 48. Results Performance Experience
+
+Performance is **felt scan readiness**.
+
+### 48.1 First Cards Fast
+
+** Perceived Reliability** — Chapter 24.
+
+### 48.2 Images Progressive
+
+** Not block list**.
+
+### 48.3 Scroll Smooth
+
+Jank ** erodes trust**.
+
+### 48.4 Hung Load Error
+
+** Recovery** — not infinite skeleton.
+
+---
+
+## 49. Results Ethics
+
+Results ethics **protect renters from manipulation**.
+
+### Never Bait-and-Switch Thumbnails
+
+Preview Integrity ** sacred**.
+
+### Never Fake Scarcity on Cards
+
+“Only 1 left” ** forbidden** for rentals.
+
+### Never Hide Criteria
+
+** Transparency** — §35.
+
+### Never Interleave Undisclosed Ads
+
+** Advertising Separation**.
+
+### Never Degrade Guest Results
+
+** For registration** — Chapter 23.
+
+### Never Optimize Layout for CTR Alone
+
+** Housing decisions first**.
+
+Teams evaluate results changes in critique and §56 checklist.
+
+---
+
+## 50. Dark Pattern Prevention
+
+Dark patterns **explicitly forbidden** on results.
+
+### 50.1 No Misleading Urgency
+
+Countdown ** on listing card forbidden**.
+
+### 50.2 No Dismiss Hard to Find Filters
+
+** Trapped narrow** — Chapter 26.
+
+### 50.3 No Confirm Shaming on Skip
+
+** Neutral**.
+
+### 50.4 No Fake Social Proof
+
+“12 people viewing” ** unless true and governed**.
+
+### 50.5 No Obfuscated Sponsored
+
+** Chapter 22 rules**.
+
+---
+
+## 51. Results Success Metrics
+
+Quality judged at **philosophy level** — not impressions alone.
+
+### Scanning Confidence
+
+Users ** find price and location quickly** — qualitative.
+
+### Comparison Confidence
+
+Users ** compare without opening all** — behavioral.
+
+### Result Credibility
+
+Opens ** match preview expectation** — low bounce mis-match.
+
+### Evaluation Flow Health
+
+** Shortlist forms** from results — saves and opens purposeful.
+
+### Result Continuity
+
+Return from detail ** successful** — behavioral.
+
+### Visual Trust
+
+Results feel ** calm and professional** — qualitative north star.
+
+Teams evaluate against §56 checklist — not scroll depth alone.
+
+---
+
+## 52. System-Wide Results Consistency
+
+**One results experience** across product.
+
+### 52.1 One Card Anatomy
+
+Chapter 14 ** extended here** — not parallel card types.
+
+### 52.2 One Primary Hierarchy
+
+Price, location, rooms ** invariant positions**.
+
+### 52.3 One Trust Vocabulary
+
+Badges ** unified** — Chapter 20.
+
+### 52.4 One Continuity Standard
+
+Detail return ** same everywhere**.
+
+### 52.5 Future Surfaces Adopt Chapter
+
+Maps, AI ** inherit preview rules**.
+
+---
+
+## 53. Future Compatibility
+
+Results architecture **extends without reinvention**.
+
+### 53.1 Map List Split
+
+** Same preview grammar** on list pane.
+
+### 53.2 AI Search Results
+
+Natural language ** shows criteria + cards**.
+
+### 53.3 Compare Mode Future
+
+If added ** earns necessity** — Chapter 5.
+
+### 53.4 Multi-City Browse
+
+** Same calm density rules**.
+
+---
+
+## 54. Results Evolution
+
+Results experience **evolves as one governed presentation layer**.
+
+### Evolve Clarity, Do Not Fragment
+
+New card fields ** fit hierarchy**.
+
+### Resist Card Feature Creep
+
+Each preview addition ** necessity proof**.
+
+### Retire Noisy Legacy Cards
+
+Obsolete badges ** removed product-wide**.
+
+### Preserve Six Questions
+
+§4.8 ** invariant**.
+
+### Backward Compatibility
+
+Saved search ** same card contract**.
+
+Results evolution requires Design Council approval for **new mandatory card fields, material density changes, or preview integrity exceptions**.
+
+---
+
+## Product Development Methodology Bridge
+
+The search results philosophy documented in this chapter is a **reusable decision framework** — not a catalog of list components, card layouts, or platform-specific scroll implementations.
+
+Its principles — support housing decisions, preserve Preview Integrity and First Impression Integrity, enable Comparison Confidence and Cognitive Continuity, achieve Decision Readiness, maintain Visual Trust and Result Continuity, and strengthen Scanning Confidence — describe **how a serious marketplace presents multiple housing options for calm scan, comparison, and purposeful opening**. Those principles transcend any single surface, framework, or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these search results principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed results presentation philosophy into a broader method for building products that help users process complex choice sets without overwhelm, broken mental models, or manipulation.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's result surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — Preview Integrity, First Impression Integrity, calm visual hierarchy, Cognitive Continuity, honest empty and partial states, and housing-first Decision Visibility — even when catalog size, media types, or discovery constraints differ from long-term residential rental.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
+## 55. Governance
+
+### 55.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy on results header | Senior UX + Content Design |
+| Secondary field on card | Head of Product Design |
+| New primary hierarchy field | Head of Product Design + Product |
+| Material density or layout change | Design Council |
+| Preview integrity rule change | Design Council + Trust review |
+| Sponsored module in results | Design Council |
+
+### 55.2 Exception Policy
+
+Results experiments ** reversible, ethics-reviewed** — no deceptive preview tests.
+
+### 55.3 Documentation Requirement
+
+Shipped results changes document ** six questions answered, preview integrity check, continuity path**.
+
+### 55.4 Cross-Team Review
+
+Search, trust, listing card, communication ** review intersections**.
+
+---
+
+## 56. Product Review Checklist
+
+Before shipping any search results change, reviewers confirm:
+
+1. **Housing decision** — Does preview help scan, compare, or open wisely?  
+2. **Six questions** — Available, attention, differs, compare, ignore, open?  
+3. **Preview Integrity** — Card matches listing truth?  
+4. **Visual Hierarchy** — Primary facts dominate?  
+5. **Comparison Confidence** — Parallel attributes aligned?  
+6. **Decision Visibility** — Price, location, rooms visible?  
+7. **Result Continuity** — Detail return preserves scroll and state?  
+8. **Filter/sort visible** — Chapters 26–27 reflected in header?  
+9. **Trust indicators** — Honest semantics — Chapter 20?  
+10. **Loading/empty/partial** — Chapter 24 honesty?  
+11. **Mobile-first** — One-handed scan viable?  
+12. **Accessibility** — Card labels and actions?  
+13. **Performance** — Prompt first cards, smooth scroll?  
+14. **Ethics** — No bait thumbnails, fake scarcity, hidden ads?  
+15. **Chapter 14 alignment** — Card grammar consistent?  
+16. **Sponsored separation** — Chapter 22 if applicable?  
+17. **Visual Trust** — Calm, not cluttered?  
+18. **Evaluation Flow** — Scan to open path clear?  
+19. **Future fit** — Presentation layer, not new rank logic?  
+20. **Rollback** — Can change disable without breaking search?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 57. Common Mistakes
+
+### 57.1 Cluttered Cards
+
+**Mistake:** Twelve badges and metadata lines per row.  
+**Correction:** Information density — §19.
+
+### 57.2 Price Buried
+
+**Mistake:** Price below fold on mobile.  
+**Correction:** Primary information — §25.
+
+### 57.3 Misleading Thumbnail
+
+**Mistake:** Luxury lobby photo for small apartment.  
+**Correction:** Thumbnail Strategy — §24.
+
+### 57.4 Lost Scroll on Back
+
+**Mistake:** Detail return jumps to top.  
+**Correction:** Result Continuity — §7, §38.
+
+### 57.5 Inconsistent Card Layout
+
+**Mistake:** Price left on one row, right on next.  
+**Correction:** Comparison Confidence — §5.
+
+### 57.6 Mystery Results Count
+
+**Mistake:** “Results” with no criteria or sort.  
+**Correction:** Result Trust and Transparency — §35.
+
+### 57.7 Fake Empty Fill
+
+**Mistake:** Placeholder cards when zero results.  
+**Correction:** No Results — §41.
+
+### 57.8 Verification Overclaim
+
+**Mistake:** “Verified home” on card.  
+**Correction:** Verification Indicators — §29.
+
+### 57.9 Engagement Badges
+
+**Mistake:** “Hot listing” for CTR.  
+**Correction:** Results Ethics — §49.
+
+### 57.10 Different Card on Saved Search
+
+**Mistake:** Saved search uses compact untrusted layout.  
+**Correction:** Result Consistency — §36.
+
+---
+
+## 58. Correct & Incorrect Examples
+
+### 58.1 Results Header
+
+**Correct:** “14 homes · Cluj-Napoca · Mărăști · 2 rooms · Sort: Price low to high”  
+**Incorrect:** “14 results” only.
+
+### 58.2 Card Primary
+
+**Correct:** Photo, “650 €/lună”, “Mărăști, Cluj-Napoca”, “2 rooms · 54 m²”  
+**Incorrect:** Title only; price on detail.
+
+### 58.3 Comparison
+
+**Correct:** Every card shows price top-right, rooms on second line — user compares 580 vs 650 quickly.  
+**Incorrect:** Each card different layout.
+
+### 58.4 Return from Detail
+
+**Correct:** User opens listing 8, backs out — listing 8 still centered, sort and filters unchanged.  
+**Incorrect:** List resets to top with new order.
+
+### 58.5 Loading
+
+**Correct:** Skeleton cards match final layout; criteria visible above.  
+**Incorrect:** Blank white screen 5 seconds.
+
+### 58.6 No Results
+
+**Correct:** “No homes match 2 rooms in Mărăști under 500 €. [Adjust filters] [Save search]”  
+**Incorrect:** Empty grid with no explanation.
+
+### 58.7 Partial Results
+
+**Correct:** “3 homes match your search in Gheorgheni.”  
+**Incorrect:** “Showing results” implying hundreds when 3 exist.
+
+### 58.8 Verification
+
+**Correct:** Small “Verified realtor” on card — tooltip explains identity check.  
+**Incorrect:** “Verified listing” undefined.
+
+### 58.9 Sponsored
+
+**Correct:** “Sponsored listings” section below organic results with labeled cards.  
+**Incorrect:** Sponsored card identical to organic in main list.
+
+### 58.10 Saved Search Return
+
+**Correct:** Opens with full criteria, sort, and same card grammar as live search.  
+**Incorrect:** Different card design and missing sort label.
+
+---
+
+## 59. Design Director Review
+
+**Chapter:** 28 — Search Results Experience  
+**Section:** XXV — Search Results  
+**Review type:** Initial standard adoption
+
+### 59.1 Approval Statement
+
+This chapter is approved as the **search results experience contract** for Rento. All results list presentation, preview hierarchy, comparison support, continuity behavior, and result state communication must comply. Implementation components and list infrastructure are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 59.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm, trust, quality before quantity |
+| Chapter 4 — Layout & Information Architecture | Visual and information hierarchy |
+| Chapter 8 — Spatial System & Layout Rhythm | List rhythm and spacing |
+| Chapter 13 — Search Experience System | Parent search system; presentation layer |
+| Chapter 14 — Listing Card & Preview System | Card anatomy and preview truth |
+| Chapter 15 — Listing Detail Experience | Open from results; return integrity |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust indicators on previews |
+| Chapter 22 — Personalization & Recommendations Experience | Modules at results boundary |
+| Chapter 24 — Empty, Loading & Error States Experience | Result state honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Update communication |
+| Chapter 26 — Search Filters & Refinement Experience | Criteria visible with results |
+| Chapter 27 — Sorting & Ranking Experience | Sort visible; stable order |
+| Chapter 29+ — Maps, AI search | Future layers when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 59.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. Does this change help users scan and compare homes with less effort?  
+2. Does it preserve Preview Integrity and Result Credibility?  
+3. Does visual hierarchy still prioritize housing decisions?  
+4. Does Result Continuity survive detail return and updates?  
+5. Are filter, sort, and results layers still clearly coordinated?  
+6. Does change align with Listing Card (Chapter 14) and Search System (Chapter 13)?
+
+New mandatory preview fields, material card density changes, or preview integrity exceptions require Design Council approval.
+
+### 59.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on results experience |
+| Head of Product Design | Cross-surface card and list consistency |
+| Senior UX Designer | Hierarchy, scan flows, continuity |
+| Product Management | Marketplace truth and sponsored policy |
+| Content Design Lead | Labels, headers, empty copy |
+| Trust & Safety | Verification and preview honesty |
+| Accessibility Specialist | Card semantics and list structure |
+
+### 59.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new search results work immediately upon approval. Existing results surfaces align during scheduled improvement cycles.
+
+### 59.6 Design Director Closing Note
+
+Users do not come to Rento to admire list interfaces. They come to **see the housing market clearly enough to choose what deserves their time**. Search results succeed when every row answers the comparison question before the tap — when calm rhythm replaces noise, when previews tell the truth, and when returning from a listing feels like resuming a conversation, not starting over. This chapter exists so the presentation layer becomes the trustworthy bridge between ordering and evaluation — scan, compare, open, save, and move forward in the Housing Journey with confidence.
+
+---
+
+**End of Chapter 28**
