@@ -51,12 +51,13 @@ This standard is **not** implementation documentation. It does not specify code,
 | 23 | [Onboarding & First-Time Experience](#chapter-23--onboarding--first-time-experience) | Onboarding & First-Time | APPROVED |
 | 24 | [Empty, Loading & Error States Experience](#chapter-24--empty-loading--error-states-experience) | Empty, Loading & Error States | APPROVED |
 | 25 | [Feedback, Status & System Communication Experience](#chapter-25--feedback-status--system-communication-experience) | Feedback & System Communication | APPROVED |
+| 26 | [Search Filters & Refinement Experience](#chapter-26--search-filters--refinement-experience) | Search Filters & Refinement | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 26+ | Future chapters per design standard roadmap |
+| 27+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -71,6 +72,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-04 | Chapters 22–24 approved and added |
 | 1.0 | 2026-07-04 | Chapter 25 — Feedback & System Communication draft added |
 | 1.0 | 2026-07-04 | Chapter 25 — Feedback, Status & System Communication approved |
+| 1.0 | 2026-07-04 | Chapter 26 — Search Filters & Refinement approved and added |
 
 ---
 
@@ -23563,3 +23565,1577 @@ Users will not remember the exact wording of a toast. They will remember whether
 
 **End of Chapter 25**
 
+
+---
+
+## Chapter 26 — Search Filters & Refinement Experience
+
+**Section:** XXIII — Search Filters & Refinement  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Search & Discovery, Reviewers  
+**Authority:** Subordinate to Chapters 1–25; operationalizes Search Experience (Chapter 13), Forms (Chapter 12), Navigation context (Chapter 10), state recovery (Chapter 24), and system communication (Chapter 25); defines principles only — not filter UI components, query engines, ranking algorithms, geocoding APIs, database schemas, or analytics pipelines.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **search filters and refinement experience philosophy** for Rento.
+
+Apartment search is a process of **progressive decision-making**. Users rarely know every requirement before beginning. Filters exist to help users gradually move from **uncertainty toward confidence** in a long-term residential rental marketplace.
+
+Filters are not technical controls. Filters are **decision-support tools**.
+
+The objective of filtering is **not** reducing result count for its own sake. The objective is helping users discover **the most relevant homes** with the least cognitive effort — while preserving marketplace truth, trust, and orientation.
+
+Where Chapter 13 defines the search and discovery system holistically, **this chapter defines the official refinement layer** — how users narrow, broaden, adjust, understand, and recover criteria throughout the Housing Journey.
+
+This chapter governs filter philosophy, hierarchy, transparency, persistence, recovery, ethics, and evolution. It does **not** specify Elasticsearch queries, SQL, filter APIs, chip components, or sort/rank algorithms.
+
+
+## Design Principles Summary
+
+This chapter governs how users progressively refine apartment search results throughout the Rento marketplace. The following principles summarize the full filter and refinement contract for designers, product managers, and reviewers:
+
+1. **Support housing decisions** — Filters are decision-support tools, not technical controls. Every criterion must help users evaluate suitability for a long-term rental — not maximize filter engagement or session duration.
+
+2. **Reduce uncertainty** — Users move from broad exploration toward confident shortlist through Progressive Refinement. Filters must clarify what is included, excluded, and why — never leave users guessing about current results.
+
+3. **Preserve Search Confidence** — Users must trust that the current result set honestly represents the marketplace slice they asked for — correct geography, price band, availability, and criteria application.
+
+4. **Preserve Filter Integrity** — Stated criteria, applied logic, and displayed results must align. No silent broadening, ghost criteria, or results that violate active constraints without explicit user consent.
+
+5. **Encourage Progressive Refinement** — Search begins broadly; complexity grows only when needed. Users are never punished for exploring, changing mind, or removing criteria.
+
+6. **Remain transparent** — Filter Transparency is non-negotiable: active filters visible, effects understandable, smart defaults labeled, and tradeoffs named when broadening is suggested.
+
+7. **Remain reversible** — Removing, resetting, and replacing filters must feel safe and predictable. Refinement work is preserved through Search Continuity and Context Preservation.
+
+8. **Discover the right home — not manipulate behavior** — The objective is relevant homes with least cognitive effort. Filters must never trap users, manufacture scarcity, or serve engagement over housing decisions.
+
+These principles apply to every filter surface, applied summary, chip, saved search, zero-result recovery, and mobile refinement flow across consumer discovery and realtor workspace filtering in the Rento ecosystem.
+
+---
+
+
+## What This Chapter Is NOT
+
+To prevent category errors during design, review, and engineering handoff, this chapter is explicitly **not** about:
+
+- **Search engines** — Index design, query execution, or search infrastructure.
+- **SQL queries** — Database query construction or relational filter logic.
+- **Elasticsearch** — Index mappings, aggregations, or search cluster configuration.
+- **Database schemas** — Table design, column definitions, or persistence models for criteria.
+- **API endpoints** — Filter request contracts, query parameters, or backend routing.
+- **Ranking algorithms** — Sort order, relevance scoring, or result prioritization logic.
+- **Recommendation engines** — Personalized suggestion models or inference pipelines.
+- **Frontend implementation** — React components, filter sheets, chip UI, or styling systems.
+- **Analytics instrumentation** — Event schemas, funnel tracking, or filter engagement metrics.
+
+This chapter governs **the human experience of refinement** — how users understand, apply, adjust, remove, persist, and recover search criteria while moving through the Housing Journey.
+
+Engineering implements filtering that honors these principles. Technical capability to filter or rank does not define product behavior — user comprehension, confidence, and housing decision quality do.
+
+---
+
+
+## Refinement Resolution
+
+**Refinement Resolution** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Refinement Resolution is the **moment when a user reaches sufficient confidence that further filter adjustments are unlikely to improve the current housing search** — and attention naturally shifts from refining criteria to evaluating listings.
+
+Refinement Resolution represents the **transition from refining criteria to evaluating listings**. It emphasizes:
+
+- **Confidence over perfection** — Users need a trustworthy shortlist, not exhaustive criteria optimization.
+- **Decision readiness** — The result set feels worth opening, saving, comparing, or contacting from.
+- **Reduction of unnecessary filter changes** — Further tinkering would add cognitive cost without meaningful gain.
+- **Support for the Housing Journey** — Refinement serves evaluation and decision — not endless adjustment for its own sake.
+
+Refinement naturally ends once users **trust the current search results**. The product supports Refinement Resolution by making active criteria visible, results honest, removal safe, and Discovery Flow continuous into listing evaluation — not by pushing users to refine further.
+
+This concept connects Progressive Refinement (§9), Decision Confidence (§10), Discovery Flow (§14), and Search Flexibility. It is reusable across Sorting, Ranking, Recommendations, Maps, AI Search, and future chapters wherever the product must recognize when refinement has fulfilled its purpose.
+
+---
+
+
+## Search Flexibility
+
+**Search Flexibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Search Flexibility is **the product's ability to let users broaden, narrow, replace, or rethink search criteria without creating frustration or forcing them to restart their Housing Journey**.
+
+Users should feel safe changing:
+
+- **City** — switching market context without losing orientation.
+- **Neighborhood** — expanding, contracting, or replacing area focus.
+- **Budget** — raising or lowering price band without penalty framing.
+- **Rooms** — adjusting room count as requirements clarify.
+- **Property preferences** — adding or removing features as lifestyle fit emerges.
+
+Search Flexibility preserves:
+
+- **Search Continuity** — context survives navigation, return, and session restore.
+- **Context Preservation** — applied and draft criteria handled honestly across surfaces.
+- **Search Confidence** — each change produces predictable, trustworthy results.
+
+Changing filters should **never feel like losing previous work**. Remove, reset, replace, and save paths must remain dignified, transparent, and reversible — so users iterate criteria freely rather than abandoning search.
+
+This concept extends Filter Trust (§13) and opposes dark patterns that trap users in over-narrow states or punish exploration. It is reusable across Onboarding (Chapter 23), Saved Searches (Chapters 13, 17), zero-result recovery (§39), and future discovery chapters.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Decision support, exploration before precision, confidence |
+| **Hierarchy** | Primary, secondary, advanced filters; priority and defaults |
+| **Criteria** | Location, price, rooms, area, features, availability, trust |
+| **Applied state** | Visibility, chips, summary, active filter comprehension |
+| **Persistence** | Session continuity, saved searches, return context |
+| **Recovery** | Zero results, empty prevention, alternatives |
+| **Cross-cutting** | Mobile-first, accessibility, motion, performance perception, ethics |
+
+### 2.2 Out of Scope
+
+- Sort order and ranking philosophy beyond filter interaction (future dedicated chapters)  
+- Map-based discovery UI (future chapter — filter truth rules apply when shipped)  
+- Personalization and recommendation modules (Chapter 22 — intersection at saved search)  
+- Listing card and detail content (Chapters 14–15)  
+- Implementation of search indexes, autocomplete backends, or filter APIs  
+- Admin inventory search and moderation queues  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where users **refine which listings appear** in discovery, including but not limited to:
+
+- Filter sheets and panels on search results  
+- Quick filters and chips on browse  
+- Advanced filter entry  
+- Applied filter summary bars  
+- Saved search criteria editing  
+- Map-assisted refinement (when product ships)  
+- Realtor workspace portfolio filtering (owned listings scope)  
+
+If a surface answers *“Which homes should be included or excluded from this view based on user criteria?”* — this chapter applies.
+
+### 2.4 Refinement Serves Relevance, Not Volume
+
+Fewer results are success **only when** remaining results better match user intent and marketplace truth.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When filter decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (availability, moderation status, public inventory truth)  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 13 — Search Experience System  
+4. **This chapter** — for filter and refinement behavior  
+5. Chapters 2–5, 10–12 — experience, structure, forms, governance  
+6. Chapters 20, 24–25 — trust, states, communication  
+7. Chapters 21–23 — notifications, personalization entry, onboarding first search  
+
+Filters must never **hide unavailable inventory as available**, **silently broaden criteria against user intent**, or **trap users in zero-result dead ends**.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Only what is real; respect time; calm exploration |
+| Chapter 2 — Experience Principles | Scannability, recovery, no punishment for exploration |
+| Chapter 4 — Layout & Information Architecture | Filter hierarchy; progressive disclosure |
+| Chapter 5 — Product Design Decision Framework | Filter necessity tests; exception policy |
+| Chapter 12 — Form System & Data Collection Experience | Criteria as governed form family |
+| Chapter 13 — Search Experience System | Parent search system; refinement extends discovery |
+| Chapter 17 — Favorites & Saved Properties Experience | Saved search as persisted intent |
+| Chapter 20 — Trust, Verification & Moderation Experience | Verification filters honest; availability truth |
+| Chapter 21 — Notifications & User Re-engagement Experience | Saved search alerts on criteria |
+| Chapter 22 — Personalization & Recommendations Experience | Refinement overrides inferred taste |
+| Chapter 23 — Onboarding & First-Time Experience | First filter interaction calm |
+| Chapter 24 — Empty, Loading & Error States Experience | Zero-result and load honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Filter applied communication |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 13 defines **search as a system**. **This chapter defines refinement as its governed decision layer** — the progressive path from broad exploration to confident shortlist.
+
+Without this chapter, filters become engineering controls. With it, filters become **housing decision support**.
+
+### 3.4 Position in Search System Evolution
+
+```
+Search Experience (Chapter 13)
+        ↓
+Search Filters & Refinement (this chapter)
+        ↓
+Sorting → Ranking → Recommendations → Maps → AI Search
+        (future standard chapters when authored)
+```
+
+This chapter is the **official refinement layer**. Later chapters must not reinvent filter philosophy.
+
+---
+
+## 4. Filter Philosophy
+
+Filtering on Rento **supports housing decisions** — never creates confusion or distrust.
+
+### 4.1 Filters Are Decision Support
+
+Every filter answers a **user question about suitability** — not a database field exercise.
+
+### 4.2 Exploration Before Precision
+
+Search should **begin broadly**. Refinement happens **progressively** — users are not forced to complete a form before seeing homes.
+
+### 4.3 Complexity Grows When Needed
+
+Advanced criteria ** hidden until requested** — progressive disclosure (Chapters 4, 13).
+
+### 4.4 Users Never Punished for Exploring
+
+Changing mind, removing filters, resetting ** welcomed** — not loss shaming.
+
+### 4.5 Filtering Never Hides Important Information
+
+Active criteria and result rationale ** visible** — Filter Transparency.
+
+### 4.6 Filtering Always Explains Itself
+
+User understands ** why these homes appear** — at least at category level.
+
+### 4.7 Filtering Preserves User Confidence
+
+Predictable cause-effect: ** adjust filter → results change as expected**.
+
+### 4.8 Filtering Feels Predictable
+
+Same action ** same outcome class** — behavioral contract.
+
+### 4.9 Four Filter Questions
+
+Users must always be able to answer:
+
+1. **What filters are active?**  
+2. **Why are current results shown?**  
+3. **How does removing a filter change results?**  
+4. **What happens next?**
+
+### 4.10 Filtering Inherits Marketplace Truth
+
+Only **publicly available** listings in consumer refinement — domain rules.
+
+### 4.11 Filtering Respects Attention
+
+Fewer controls visible ** until needed** — cognitive load discipline.
+
+### 4.12 Filtering Serves Shortlist, Not Session Time
+
+Goal is ** relevant homes found** — not infinite refinement engagement.
+
+---
+
+## 5. Search Confidence
+
+**Search Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Search Confidence is the **user’s felt assurance that the current result set honestly represents the marketplace slice they asked for** — correct geography, price band, availability, and criteria application.
+
+Search Confidence is built when:
+
+- Active filters are **visible and understandable**  
+- Result count and criteria ** align with user expectation**  
+- Removing a filter ** produces predictable broader results**  
+- Empty results ** explained honestly** — not hidden failure  
+
+Low Search Confidence causes users to **distrust all results** — not merely current filters.
+
+This concept extends Chapter 13 and connects to Filter Integrity and Refinement Confidence.
+
+---
+
+## 6. Refinement Confidence
+
+**Refinement Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Refinement Confidence is the **user’s belief that each adjustment to criteria moves them closer to—or honestly informs—a better housing decision** without breaking orientation or hiding tradeoffs.
+
+Refinement Confidence requires:
+
+- **Immediate feedback** when criteria change — Chapter 25  
+- **Visible tradeoffs** when broadening or narrowing — “Expand 2 km to see 8 more homes”  
+- **No silent override** of explicit choices — Chapter 22 boundaries  
+- **Recovery paths** when refinement overshoots — zero-result recovery  
+
+Users with high Refinement Confidence ** iterate criteria freely**. Users with low confidence ** abandon search or distrust filters**.
+
+---
+
+## 7. Filter Transparency
+
+**Filter Transparency** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Filter Transparency is the **degree to which users can see and understand active criteria, their effect on results, and any system-assisted broadening or narrowing**.
+
+Transparent filtering:
+
+- Shows **all material active filters** in summary or chips  
+- Labels criteria in **user language** — “2 rooms”, “Mărăști”, not internal codes  
+- Explains **when smart defaults apply** — “Showing rentals in Cluj based on your location”  
+- Discloses **when personalization influences order but not hidden criteria** — Chapter 22  
+
+Opacity breeds suspicion in housing search. Transparency preserves Filter Trust.
+
+---
+
+## 8. Filter Integrity
+
+**Filter Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Filter Integrity is the **alignment between stated criteria, applied query logic, and displayed results** — no filter lies, no ghost criteria, no results that violate active constraints without explicit user consent.
+
+Filter Integrity violations include:
+
+- Showing unavailable listings when “available only” active  
+- Price filter exceeded without labeled broadening  
+- Location boundary violated silently  
+- Pending listings in consumer results  
+
+Filter Integrity inherits State Integrity (Chapter 24) and marketplace truth (Chapter 20).
+
+---
+
+## 9. Progressive Refinement
+
+**Progressive Refinement** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Progressive Refinement is the **governed pattern of moving from broad discovery to precise shortlist** through incremental, reversible criteria changes — complexity introduced only when the user needs it.
+
+Stages conceptually:
+
+1. **Orient** — city, rent intent, browse or light criteria  
+2. **Narrow** — rooms, price band, neighborhood  
+3. **Tune** — features, building type, verification preferences  
+4. **Persist** — save search, alert, compare favorites  
+
+Progressive Refinement opposes **front-loaded filter walls** and **endless refinement loops** without decision progress.
+
+---
+
+## 10. Decision Confidence
+
+**Decision Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Decision Confidence is the **user’s readiness to open, save, or contact listings from the current result set** because filters helped clarify—not confuse—their housing requirements.
+
+Decision Confidence grows when:
+
+- Results feel **worth opening** — quality over artificial scarcity  
+- User can ** articulate their criteria** after refining — “2 rooms, under 650 €, Mărăști”  
+- Comparison across filter states ** mentally possible** — Context Preservation  
+
+Filters succeed when Decision Confidence rises, not when scroll depth rises.
+
+---
+
+## 11. Search Continuity
+
+**Search Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Search Continuity is the **preservation of search context** — criteria, scroll position, applied chips, and mental model — across navigation, return, session restore, and device handoff.
+
+Search Continuity requires:
+
+- Detail → back ** returns to same filtered list place** — Chapter 10, 13  
+- Auth merge ** preserves guest criteria** — Chapter 23  
+- Saved search ** restores full criteria honestly** — Chapter 17  
+
+Broken continuity feels like **starting over** — refinement work wasted.
+
+---
+
+## 12. Context Preservation
+
+**Context Preservation** extends Search Continuity for **filter-specific state**.
+
+When user leaves refinement surface:
+
+- Active filters ** remain applied on return** unless user clears  
+- Edited-but-not-applied draft criteria ** handled honestly** — apply or discard clear  
+- Deep link to search ** encodes criteria visibly** — shareable search state where product allows  
+
+Context Preservation is mandatory for housing search spanning days and devices.
+
+---
+
+## 13. Filter Trust
+
+**Filter Trust** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Filter Trust is the **user’s belief that filters serve their stated intent and never manipulate them** toward inventory the platform wants to move.
+
+Filter Trust requires:
+
+- No **dark defaults** that broaden for engagement  
+- No **hidden sponsored injection** as filter outcome — Chapter 22  
+- Verification filters ** mean what labels say** — Chapter 20  
+- Reset and remove ** never penalized**  
+
+Filter Trust is fragile — one silent betrayal damages entire search system credibility.
+
+---
+
+## 14. Discovery Flow
+
+**Discovery Flow** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Discovery Flow is the **natural rhythm of browse → refine → evaluate → save or adjust** through which users move along Progressive Refinement without friction or dead ends.
+
+Healthy Discovery Flow:
+
+- Encourages ** opening listings** from results — not filter tinkering alone  
+- Offers ** recovery** at zero results — not trap  
+- Connects to ** favorites and saved search** — intent persistence  
+- Respects ** Respectful Silence** — no nag to refine when user is evaluating — Chapter 25  
+
+Filters are steps in Discovery Flow — not the destination.
+
+---
+
+## 15. Filter Hierarchy
+
+Filters organize by **decision importance and frequency** — not engineering schema.
+
+### 15.1 Primary Tier
+
+Location, price, rooms — ** highest housing decision weight** for most users.
+
+### 15.2 Secondary Tier
+
+Area features, property type, availability cues — ** common refinement**.
+
+### 15.3 Advanced Tier
+
+Rare or expert criteria — ** progressive disclosure**.
+
+### 15.4 Trust Tier
+
+Verification, professional identity signals — ** honest, optional** — not default walls.
+
+### 15.5 Hierarchy Stable Across Surfaces
+
+Same tier logic ** mobile, tablet, desktop** — layout adapts, priority invariant.
+
+### 15.6 New Filter Tier Review
+
+New criteria ** assigned tier** before ship — Chapter 5 necessity test.
+
+---
+
+## 16. Primary Filters
+
+Primary filters address **non-negotiable or first-order housing constraints**.
+
+### 16.1 Location Primary
+
+City, sector, neighborhood, or map area — ** honest geography** — no fake “nearby”.
+
+### 16.2 Price Primary
+
+Monthly rent band — ** transparent currency and period** — lei, per month.
+
+### 16.3 Rooms Primary
+
+Room count or bedroom semantics ** clear and localized** — studio vs 1-room defined.
+
+### 16.4 Primary Visible Early
+
+User can apply ** without opening advanced panel** — mobile thumb reach.
+
+### 16.5 Primary Never Overloaded
+
+Resist adding ** every attribute** to primary row — hierarchy discipline.
+
+---
+
+## 17. Secondary Filters
+
+Secondary filters **refine lifestyle and fit** after primary bounds set.
+
+### 17.1 Examples
+
+Furnished, parking, pets policy, floor, building type — ** when product supports**.
+
+### 17.2 Secondary Behind Clear Entry
+
+“More filters” ** not hidden mystery** — labeled affordance.
+
+### 17.3 Secondary Count Visible
+
+“4 more filters active” ** in summary** — Filter Transparency.
+
+### 17.4 Secondary Optional
+
+User may ** never open** and still succeed in search.
+
+---
+
+## 18. Advanced Filters
+
+Advanced filters serve **power users and edge precision** — not day-one barriers.
+
+### 18.1 Advanced Progressive Disclosure
+
+Full panel or sheet ** user-initiated**.
+
+### 18.2 Advanced Grouped Logically
+
+Property, building, policies, dates — ** scannable sections**.
+
+### 18.3 Advanced Defaults Empty
+
+No pre-checked ** niche criteria**.
+
+### 18.4 Advanced Apply Explicit
+
+User knows ** when criteria take effect** — apply vs live preview policy consistent.
+
+### 18.5 Advanced Exit Preserves Context
+
+Close panel ** without losing results** unless user applies destructive reset.
+
+---
+
+## 19. Filter Priority
+
+When UI space conflicts, **higher-priority filters win visibility**.
+
+### 19.1 Priority Follows Housing Decision Order
+
+Location and budget ** before** decorative amenities.
+
+### 19.2 Priority Role-Aware
+
+Consumer ** discovery priority**; realtor workspace ** portfolio status priority** — Chapter 19.
+
+### 19.3 Priority Documented
+
+Product maintains ** filter priority table** for reviewers.
+
+### 19.4 Priority Not Monetized
+
+Paid placement ** not in filter hierarchy** — sponsored separate — Chapter 22.
+
+---
+
+## 20. Default Values and Smart Defaults
+
+Defaults shape **first impression of search** — must be honest.
+
+### 20.1 Defaults Conservative
+
+Start ** broad enough** to show honest inventory — not empty, not fake full.
+
+### 20.2 Smart Defaults Labeled
+
+“Near you”, “Popular in Cluj” ** explained** — user can change immediately.
+
+### 20.3 Smart Defaults Overrideable
+
+One tap ** clear or expand** — no hunt in settings.
+
+### 20.4 Smart Defaults Never Narrow Silently
+
+Budget or location ** not tightened** without user action.
+
+### 20.5 Defaults Respect Guest and Auth
+
+Guest defaults ** session-clear**; account ** may remember last city** — disclosed.
+
+### 20.6 Defaults Inherit Onboarding
+
+First search ** low paralysis** — Chapter 23.
+
+---
+
+## 21. Location Refinement
+
+Location is **the strongest rental criterion** — govern carefully.
+
+### 21.1 Geography Honest
+
+City, sector, neighborhood names ** match user mental map** — Romania-first.
+
+### 21.2 Boundary Clear
+
+Map draw or area select ** shows what is included** — Filter Transparency.
+
+### 21.3 Location Not Over-Precision
+
+Street-level false precision ** avoided** when data does not support.
+
+### 21.4 Multi-Area Policy
+
+Multiple neighborhoods ** shown clearly** — not OR logic hidden.
+
+### 21.5 Location Change Predictable
+
+Expand area ** shows count change before apply** when feasible.
+
+### 21.6 Location Inherits Search Continuity
+
+Switch city ** resets dependent criteria** — explained.
+
+---
+
+## 22. Price Refinement
+
+Price filters communicate **economic reality** — housing stress point.
+
+### 22.1 Monthly Rent Explicit
+
+Per month, currency shown ** consistently** with cards and detail.
+
+### 22.2 Range Inclusive Semantics Clear
+
+Min/max meaning ** user-understandable** — inclusive boundaries labeled if needed.
+
+### 22.3 Price Filter Integrity
+
+Results ** respect band** unless user opts into broadening.
+
+### 22.4 No Bait Below Filter
+
+Listings primarily above max ** not mixed in** without label.
+
+### 22.5 Price Change Communication
+
+When saved search price band affected by market ** alerts honest** — Chapter 21.
+
+---
+
+## 23. Rooms Refinement
+
+Room criteria **match local rental language**.
+
+### 23.1 Studio and Room Count Defined
+
+Terms ** consistent** across filter, card, detail.
+
+### 23.2 Partial Match Policy Honest
+
+“2+ rooms” ** means what label says**.
+
+### 23.3 Rooms Not Proxy for Size
+
+Square meters ** separate** when available — not room guess alone.
+
+---
+
+## 24. Area and Property Features
+
+Feature filters describe **living fit** — not checkbox explosion.
+
+### 24.1 Features Earn Inclusion
+
+Each feature ** necessity-tested** — Chapter 5.
+
+### 24.2 Features Grouped
+
+Outdoor, parking, appliances ** scannable groups**.
+
+### 24.3 Features Honest on Cards
+
+Filtered feature ** visible on card** when filter active — parity.
+
+### 24.4 Rare Features Advanced
+
+Low-frequency amenities ** advanced tier**.
+
+---
+
+## 25. Availability Refinement
+
+Availability filters reflect **domain truth only**.
+
+### 25.1 Consumer Sees Available
+
+“Available now” ** means publicly available** — Chapter 20.
+
+### 25.2 No Consumer Filter for Pending
+
+Pending moderation ** not consumer filter option** — integrity.
+
+### 25.3 Move-In Date Future-Compatible
+
+Date filters ** honest about listing truth** when implemented.
+
+---
+
+## 26. Realtor Filters
+
+Realtor-specific refinement **workspace scope only** for owned inventory.
+
+### 26.1 Status Filters Professional
+
+Pending, live, rejected ** clear vocabulary** — Chapter 19.
+
+### 26.2 Not Consumer Surfaces
+
+Portfolio moderation filters ** not renter discovery**.
+
+### 26.3 Realtor Identity Filter Consumer
+
+Renter may filter ** by verified realtor or agency** — trust tier — honest labels.
+
+---
+
+## 27. Verification and Trust Filters
+
+Trust filters **clarify what is guaranteed**.
+
+### 27.1 Verification Means What Badge Says
+
+“Verified realtor” ** Chapter 20 semantics** — not fake tiers.
+
+### 27.2 Trust Filters Optional
+
+Never ** default wall** blocking all results.
+
+### 27.3 Trust Filters Transparent
+
+User knows ** what verification does not guarantee** — listing accuracy separate.
+
+### 27.4 No Pay-to-Filter-Trust
+
+Paid visibility ** not verification filter** — sponsored labeled elsewhere.
+
+---
+
+## 28. Applied Filters
+
+Applied state is **first-class UI** — not hidden memory.
+
+### 28.1 All Material Filters Visible
+
+User scans ** active criteria** without reopening panel.
+
+### 28.2 Applied Survives Scroll
+
+Summary bar or chips ** persist on results scroll**.
+
+### 28.3 Applied Editable Inline
+
+Tap chip ** edit that criterion** — not clear all only.
+
+### 28.4 Applied Matches Integrity
+
+Displayed applied ** equals actual query** — Filter Integrity.
+
+---
+
+## 29. Filter Visibility
+
+Visibility rules **when and where** criteria appear.
+
+### 29.1 Results Header Shows Criteria
+
+“12 homes · 2 rooms · Mărăști · max 650 €” ** scannable**.
+
+### 29.2 Empty Applied State Valid
+
+No filters ** labeled** — “All rentals in Cluj” not blank confusion.
+
+### 29.3 Visibility on Share and Save
+
+Saved or shared search ** shows criteria snapshot**.
+
+### 29.4 Visibility Reduced Motion Safe
+
+Criteria ** text-available** — not animation-only.
+
+---
+
+## 30. Filter Chips
+
+Chips **compress applied criteria** into removable units.
+
+### 30.1 One Chip One Concept
+
+“2 rooms” and “Mărăști” ** separate** — not merged opaque chip.
+
+### 30.2 Remove Affordance Clear
+
+X or tap ** removes one criterion** — predictable.
+
+### 30.3 Chip Accessible
+
+Chip ** named** for assistive tech — “Remove 2 rooms filter”.
+
+### 30.4 Chip Overflow Handled
+
+Many chips ** collapse to summary** — “+3 filters” expandable.
+
+### 30.5 Chips Not Primary Input
+
+Chips ** reflect applied** — primary editing in filter panel.
+
+---
+
+## 31. Filter Summary
+
+Summary **orients faster than chip scan alone** for complex state.
+
+### 31.1 Summary Plain Language
+
+Full sentence or line ** human-readable**.
+
+### 31.2 Summary Updates Live
+
+On apply ** immediate** — Chapter 25 feedback.
+
+### 31.3 Summary Links to Edit
+
+“Edit filters” ** one tap**.
+
+### 31.4 Summary on Zero Results
+
+Shows ** what blocked results** — recovery hint.
+
+---
+
+## 32. Filter Persistence
+
+Persistence **honors refinement work**.
+
+### 32.1 Session Persistence Default
+
+Navigate away and back ** criteria remain** — Search Continuity.
+
+### 32.2 Account Persistence Optional
+
+Logged-in user ** may restore last search** — disclosed.
+
+### 32.3 Persistence Integrity
+
+Stored criteria ** match displayed** after restore.
+
+### 32.4 Clear Persistence Path
+
+“Clear all filters” ** available** — not buried.
+
+---
+
+## 33. Search Context Preservation
+
+Filter state **part of search context** — not isolated module.
+
+### 33.1 Detail Return Preserves Filters and Scroll
+
+Chapter 13 ** invariant**.
+
+### 33.2 Auth During Refine Preserves Criteria
+
+Login prompt ** not wipe** — Chapter 23.
+
+### 33.3 Notification Deep Link Preserves Criteria
+
+Alert opens ** matching saved search state** — Chapter 21.
+
+### 33.4 Broken Context Recovery
+
+If restore fails ** honest empty with retry** — Chapter 24.
+
+---
+
+## 34. Saved Filters and Saved Searches
+
+Saved search **contracts with user intent** — Chapter 13, 17, 21.
+
+### 34.1 Save Captures All Material Criteria
+
+User knows ** exactly what was saved**.
+
+### 34.2 Save Named or Auto-Labeled
+
+“2 rooms, Mărăști, under 650 €” ** default label**.
+
+### 34.3 Edit Saved Search Transparent
+
+Changes ** apply to future alerts** — disclosed.
+
+### 34.4 Delete Saved Search Clean
+
+Removal ** stops related alerts** — Chapter 21.
+
+### 34.5 Saved Search Not Secret Filter
+
+Saved criteria ** visible when reopened**.
+
+---
+
+## 35. Removing Filters
+
+Removal **broadens discovery** — must be predictable.
+
+### 35.1 Single Remove Immediate
+
+Chip remove ** updates results** — calm feedback.
+
+### 35.2 Remove Order Independent
+
+Removing price then rooms ** same integrity** as reverse.
+
+### 35.3 Remove Explains Change
+
+“Showing 24 homes” ** count update** — Filter Transparency.
+
+### 35.4 Undo Remove When Feasible
+
+Brief undo ** restores chip** — optional feather feedback.
+
+---
+
+## 36. Reset Filters
+
+Reset is **deliberate broadening** — not punishment.
+
+### 36.1 Reset Labeled Clearly
+
+“Reset all filters” ** not ambiguous “Clear”**.
+
+### 36.2 Reset Confirms If Destructive
+
+Many active criteria ** confirm** — proportional.
+
+### 36.3 Reset Returns Sensible Base
+
+City context ** may remain** — user chooses reset scope if complex.
+
+### 36.4 Reset Never Hidden
+
+User ** not trapped** in over-narrow state.
+
+### 36.5 Reset Communication Calm
+
+No guilt copy ** “Starting over?”** — neutral.
+
+---
+
+## 37. Progressive Disclosure in Filters
+
+Disclosure **matches Progressive Refinement**.
+
+### 37.1 Show Essentials First
+
+Primary tier ** immediate**.
+
+### 37.2 Reveal on Intent
+
+“More filters” ** expands** — not accordion maze.
+
+### 37.3 Remember Disclosure Preference
+
+Power user ** advanced entry remembered** — optional.
+
+### 37.4 Disclosure Accessible
+
+Expand sections ** keyboard and screen-reader viable**.
+
+---
+
+## 38. Empty Result Prevention
+
+Prevent zero results **before they happen** when helpful.
+
+### 38.1 Live Count Preview
+
+Applying filter ** shows resulting count** when feasible — “3 homes”.
+
+### 38.2 Warn Before Zero
+
+Last criterion causing zero ** suggest before apply** — optional.
+
+### 38.3 Prevent Not Coerce
+
+User ** may still apply** narrow criteria — autonomy.
+
+### 38.4 Prevention Honest
+
+Count preview ** Filter Integrity** — not fake.
+
+---
+
+## 39. Zero Result Recovery
+
+Zero results **recovery, not failure** — Chapter 13, 24.
+
+### 39.1 Explain Why Zero
+
+“No homes match 2 rooms in Mărăști under 500 €” ** specific**.
+
+### 39.2 Suggest One Change
+
+“Try 550 € or nearby Gheorgheni” ** single primary recovery**.
+
+### 39.3 Save Search on Zero
+
+“Save search — notify when available” ** opt-in**.
+
+### 39.4 Zero Not Error Styling
+
+Empty ** calm** — not red disaster.
+
+### 39.5 Alternative Listings Only Labeled
+
+Suggestions ** “Expand area”** — not fake same filters.
+
+---
+
+## 40. Alternative Suggestions
+
+Alternatives **user-consented broadening** — Chapter 22 recovery posture.
+
+### 40.1 Tradeoff Named
+
+“+8 homes if you add Mănăștur” ** explicit**.
+
+### 40.2 User Applies Alternative
+
+Tap ** applies named change** — not silent.
+
+### 40.3 Alternatives After Zero Primarily
+
+Mid-results ** less intrusive** — Respectful Silence.
+
+### 40.4 Alternatives Filter Integrity
+
+Suggested homes ** meet stated alternative** — truth.
+
+---
+
+## 41. Mobile Filter Experience
+
+Mobile is **primary refinement context**.
+
+### 41.1 Filter Sheet Thumb-Reach
+
+Primary actions ** bottom-aligned** where platform pattern allows.
+
+### 41.2 One-Hand Apply and Clear
+
+Apply, reset ** reachable**.
+
+### 41.3 Results Visible Behind Sheet
+
+Peek or partial ** context** — not full amnesia.
+
+### 41.4 Mobile Chip Scroll Horizontal
+
+Chips ** scroll without hiding remove**.
+
+### 41.5 Mobile Keyboard Discipline
+
+Numeric price entry ** appropriate keyboard** — form grammar Chapter 12.
+
+### 41.6 Mobile Performance
+
+Sheet open ** prompt** — Filter Performance Experience.
+
+---
+
+## 42. Accessibility
+
+Filters **operable and understandable** for all users.
+
+### 42.1 Labels on All Controls
+
+Switches, sliders, checkboxes ** named**.
+
+### 42.2 Group Semantics
+
+Filter sections ** headings announced**.
+
+### 42.3 Chip Remove Accessible
+
+Remove action ** not icon-only mystery**.
+
+### 42.4 Count Changes Announced
+
+Result count update ** live region** when material.
+
+### 42.5 Focus Management on Apply
+
+Return focus ** sensible** — not lost on sheet close.
+
+### 42.6 Color Not Sole Active State
+
+Selected filter ** not color-only**.
+
+---
+
+## 43. Motion in Filters
+
+Motion **supports comprehension** — Chapter 9.
+
+### 43.1 Sheet Enter Calm
+
+Filter panel ** restrained transition**.
+
+### 43.2 Results Update Stable
+
+List ** no chaotic reorder** on single chip remove.
+
+### 43.3 Reduced Motion
+
+Static update ** equivalent information**.
+
+### 43.4 Motion Not Delay
+
+Animation ** not block** apply feedback.
+
+---
+
+## 44. Filter Performance Experience
+
+Filter performance is **felt responsiveness of refinement** — user trusts criteria applied correctly and quickly.
+
+### 44.1 Immediate Apply Acknowledgement
+
+Tap apply ** instant feedback** — loading honest if needed.
+
+### 44.2 Stable Results During Load
+
+Skeleton ** same card grammar** — Chapter 14.
+
+### 44.3 Scroll Preserved on Refine
+
+When possible ** maintain place** — Search Continuity.
+
+### 44.4 Fast Chip Remove
+
+Remove ** prompt result update**.
+
+### 44.5 Hung Filter Honest Error
+
+Timeout ** recovery** — Chapter 24 — not infinite wait.
+
+### 44.6 Preview Count Prompt
+
+Live count ** keeps pace** with user adjustments.
+
+Perceived performance inherits search performance (Chapter 13) and state honesty (Chapter 24).
+
+---
+
+## 45. Filter Ethics
+
+Filter ethics protect **users from manipulation through criteria**.
+
+### Never Hide Broadening
+
+Silent expansion of radius or budget ** forbidden**.
+
+### Never Default to Paying Inventory
+
+Sponsored ** not filter outcome**.
+
+### Never Punish Reset
+
+Reset ** not guilt or loss framing**.
+
+### Never Trap in Zero
+
+Always ** recovery path**.
+
+### Never Mislabel Verification
+
+Trust filters ** accurate** — Chapter 20.
+
+### Never Use Filters for Engagement Loops
+
+Arbitrary ** “try removing filters”** nag forbidden — Chapter 25.
+
+### Never Override Explicit Criteria for Personalization
+
+Chapter 22 ** boundaries sacred**.
+
+### Filter Trust Before Monetization
+
+Revenue ** not hidden in criteria**.
+
+Teams evaluate filter changes against these principles in design critique and §48 checklist.
+
+---
+
+## 46. Filter Success Metrics
+
+Filter quality judged at **philosophy and outcome level** — not filter engagement alone.
+
+### Refinement Confidence
+
+Users ** adjust criteria without fear** — qualitative research.
+
+### Search Confidence
+
+Users believe ** results match stated filters** — integrity audits.
+
+### Time to Relevant Open
+
+Filtered results lead to ** worthy detail opens** — not mis-tap.
+
+### Zero-Result Recovery Success
+
+Users ** recover without abandoning** — behavioral.
+
+### Saved Search Utility
+
+Saved criteria ** produce valued alerts** — Chapter 21 alignment.
+
+### Decision Confidence
+
+Users ** save or contact** from filtered sets — informed intent.
+
+### Filter Transparency Comprehension
+
+Users ** articulate active filters** in studies.
+
+### Long-Term Filter Trust
+
+Filters ** trusted weeks into search** — north star qualitative.
+
+Teams evaluate filter changes against these principles in design critique and §48 checklist.
+
+---
+
+## 47. Filter Consistency
+
+**One filter system** — one refinement grammar.
+
+### 47.1 One Vocabulary
+
+Rooms, price, availability ** same labels** everywhere.
+
+### 47.2 One Chip Grammar
+
+Remove, edit ** same behavior** — Chapter 25 alignment.
+
+### 47.3 One Hierarchy Table
+
+Primary/secondary/advanced ** product-wide**.
+
+### 47.4 One Integrity Standard
+
+Consumer and future map search ** same truth rules**.
+
+### 47.5 Future Surfaces Adopt Chapter
+
+New discovery modules ** extend this taxonomy**.
+
+---
+
+## 48. Future Compatibility
+
+Filter architecture **extends without reinvention**.
+
+### 48.1 Map Filters
+
+Geographic refinement ** inherits location honesty**.
+
+### 48.2 AI-Assisted Criteria
+
+Natural language ** shows resulting filters** — editable — Chapter 22 posture.
+
+### 48.3 Sort and Rank Chapters
+
+Future chapters ** subordinate to filter truth** — not redefine.
+
+### 48.4 Collaborative Search
+
+Partner filters ** consent-visible**.
+
+### 48.5 New Markets
+
+Localized labels ** same integrity rules**.
+
+---
+
+## 49. Filter Evolution
+
+Filter experience **evolves as one governed refinement layer**.
+
+### Evolve Criteria, Do Not Fragment
+
+New filters ** fit hierarchy** — not parallel search dialects.
+
+### Resist Filter Proliferation
+
+Each new checkbox ** Chapter 5 necessity proof**.
+
+### Retire Unused Filters
+
+Low-value criteria ** removed product-wide**.
+
+### Preserve Mental Model
+
+Four filter questions ** invariant** — §4.9.
+
+### Backward Compatibility
+
+Saved searches ** migrate honestly** — criteria mapping communicated.
+
+Filter evolution requires Design Council approval for **new primary-tier filters, material default policy changes, or integrity exceptions**.
+
+
+## Product Development Methodology Bridge
+
+The filter and refinement philosophy documented in this chapter is a **reusable decision framework** — not a catalog of filter controls, query syntax, chip components, or platform-specific refinement panels.
+
+Its principles — support housing decisions, preserve Search Confidence and Filter Integrity, enable Progressive Refinement and Search Flexibility, achieve Refinement Resolution, and maintain Filter Transparency — describe **how a serious marketplace helps users move from uncertainty to a confident shortlist**. Those principles transcend any single surface, search stack, or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these refinement principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed filter and refinement philosophy into a broader method for building products that help users refine decisions without confusion or manipulation.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's filter surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — Filter Integrity, Filter Transparency, reversible refinement, honest zero-result recovery, and calm decision support — even when inventory models, geography, or discovery constraints differ from long-term residential rental.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
+## 50. Governance
+
+### 50.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy and chip label clarification | Senior UX + Content Design |
+| New secondary/advanced filter | Head of Product Design + Product |
+| New primary-tier filter | Design Council |
+| Default or smart-default policy change | Design Council |
+| Integrity or availability filter rule change | Design Council + Trust review |
+
+### 50.2 Exception Policy
+
+Filter experiments ** reversible, ethics-reviewed** — no silent broadening tests.
+
+### 50.3 Documentation Requirement
+
+Shipped filters document ** tier, user question answered, integrity rules, recovery path**.
+
+### 50.4 Cross-Team Review
+
+Search, trust, forms, communication ** review intersections**.
+
+---
+
+## 51. Product Review Checklist
+
+Before shipping any filter or refinement change, reviewers confirm:
+
+1. **User question** — What housing decision does this criterion support?  
+2. **Tier** — Primary, secondary, or advanced — justified?  
+3. **Filter Transparency** — Active state visible and plain?  
+4. **Filter Integrity** — Results honor criteria without silent override?  
+5. **Four questions** — Active, why shown, remove effect, next step?  
+6. **Progressive Refinement** — Complexity earned, not front-loaded?  
+7. **Search Continuity** — Context preserved on navigate and return?  
+8. **Zero recovery** — Path if zero results?  
+9. **Empty prevention** — Count preview honest where offered?  
+10. **Mobile-first** — Thumb reach, one-hand viable?  
+11. **Accessibility** — Labels, chips, announcements?  
+12. **Performance** — Prompt apply, stable list, honest load?  
+13. **Ethics** — No silent broadening, guilt, or pay-to-filter?  
+14. **Chapter 13 alignment** — Extends search, does not contradict?  
+15. **Chapter 20–25 alignment** — Truth, states, communication?  
+16. **Reset/remove** — Dignified, predictable?  
+17. **Saved search** — Criteria snapshot honest?  
+18. **Realtor vs consumer** — Correct scope?  
+19. **Future chapter fit** — Refinement layer, not sort/rank sneak?  
+20. **Rollback** — Can criterion be disabled without breaking search?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 52. Common Mistakes
+
+### 52.1 Filter Wall Before Results
+
+**Mistake:** User must complete form before seeing homes.  
+**Correction:** Exploration before precision — §4.2.
+
+### 52.2 Silent Radius Expansion
+
+**Mistake:** No results → system widens area without notice.  
+**Correction:** Filter Integrity — user-consented alternatives.
+
+### 52.3 Mystery Meat Chips
+
+**Mistake:** Chip “Filter 1” opaque.  
+**Correction:** Plain language chips — §30.
+
+### 52.4 Zero Results as Error Page
+
+**Mistake:** Red “Error: no listings.”  
+**Correction:** Calm recovery — §39.
+
+### 52.5 Too Many Primary Filters
+
+**Mistake:** Twelve icons on results header.  
+**Correction:** Hierarchy — §15–16.
+
+### 52.6 Apply Invisible
+
+**Mistake:** User unsure if filters applied.  
+**Correction:** Feedback — Chapter 25.
+
+### 52.7 Reset Hidden
+
+**Mistake:** No way to clear over-narrow search.  
+**Correction:** Reset visible — §36.
+
+### 52.8 Verification Overpromise
+
+**Mistake:** “Verified homes” filter implies listing accuracy.  
+**Correction:** Trust filter honesty — §27.
+
+### 52.9 Lose Scroll on Refine
+
+**Mistake:** Apply jumps to top always without reason.  
+**Correction:** Search Continuity — §33.
+
+### 52.10 Engagement Filter Nag
+
+**Mistake:** “Try more filters!” modal mid-browse.  
+**Correction:** Respectful Silence — Chapter 25.
+
+---
+
+## 53. Correct & Incorrect Examples
+
+### 53.1 Applied Summary
+
+**Correct:** “14 homes · Cluj-Napoca · Mărăști · 2 rooms · max 650 €/lună”  
+**Incorrect:** “14 results” with no active criteria shown.
+
+### 53.2 Chip Remove
+
+**Correct:** Remove “max 650 €” → count updates to 28 homes; other chips unchanged.  
+**Incorrect:** Remove one chip clears all filters.
+
+### 53.3 Zero Results
+
+**Correct:** “No homes match these filters. Try max 700 € or include Mănăștur.” [Adjust price] [Expand area]  
+**Incorrect:** Blank screen “0 results”.
+
+### 53.4 Smart Default
+
+**Correct:** “Showing rentals in Cluj-Napoca. [Change city]”  
+**Incorrect:** Silent default to city user did not intend.
+
+### 53.5 Save Search
+
+**Correct:** “Save search: 2 rooms, Mărăști, under 650 € — notify when new homes match.”  
+**Incorrect:** “Save” with no criteria summary.
+
+### 53.6 Verification Filter
+
+**Correct:** “Verified realtor — identity checked (see what this means).”  
+**Incorrect:** “Trusted listings” undefined.
+
+### 53.7 Mobile Sheet
+
+**Correct:** Apply at bottom; results count visible; back preserves draft or applies clearly.  
+**Incorrect:** Apply only at top unreachable by thumb.
+
+### 53.8 Broadening Suggestion
+
+**Correct:** “+6 homes if you expand to 2 km — includes Mănăștur.” [Show homes]  
+**Incorrect:** Results silently include distant listings.
+
+### 53.9 Guest Persistence
+
+**Correct:** Guest refines; on login offered “Keep your current search filters.”  
+**Incorrect:** Login wipes criteria without warning.
+
+### 53.10 Realtor Workspace
+
+**Correct:** Realtor filters portfolio by “Rejected — needs edit.”  
+**Incorrect:** Same filter copy on consumer search implying rejected listings visible.
+
+---
+
+## 54. Design Director Review
+
+**Chapter:** 26 — Search Filters & Refinement Experience  
+**Section:** XXIII — Search Filters & Refinement  
+**Review type:** Initial standard adoption
+
+### 54.1 Approval Statement
+
+This chapter is approved as the **search filters and refinement experience contract** for Rento. All criteria collection, application, visibility, persistence, removal, reset, and zero-result recovery behavior must comply. Implementation and ranking systems are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Official chapter of the RENTO PRODUCT DESIGN STANDARD.
+
+### 54.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm exploration; respect time; truth |
+| Chapter 4 — Layout & Information Architecture | Filter hierarchy and disclosure |
+| Chapter 12 — Form System & Data Collection Experience | Criteria controls grammar |
+| Chapter 13 — Search Experience System | Parent search system; refinement layer |
+| Chapter 17 — Favorites & Saved Properties Experience | Saved search persistence |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust filter truth |
+| Chapter 22 — Personalization & Recommendations Experience | Criteria override personalization |
+| Chapter 24 — Empty, Loading & Error States Experience | Zero-result and load honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Apply and change communication |
+| Chapter 27+ — Sort, rank, map, AI search | Future layers when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 54.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. What housing decision does this filter support?  
+2. Does change preserve Filter Integrity and Transparency?  
+3. Is tier placement correct — not primary overload?  
+4. Does change improve Refinement Confidence without trapping users?  
+5. Are zero-result and recovery paths still honest?  
+6. Does change align with Search Experience (Chapter 13)?
+
+New primary-tier filters, smart-default policy changes, or integrity exceptions require Design Council approval.
+
+### 54.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on filter system |
+| Head of Product Design | Cross-surface filter consistency |
+| Senior UX Designer | Hierarchy, recovery, mobile flows |
+| Product Management | Inventory and marketplace truth alignment |
+| Content Design Lead | Labels, summaries, zero-result copy |
+| Trust & Safety | Verification and availability filter honesty |
+| Accessibility Specialist | Chips, sheets, and announcements |
+
+### 54.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new filter and refinement work immediately upon approval. Existing filter surfaces align during scheduled improvement cycles.
+
+### 54.6 Design Director Closing Note
+
+Users do not come to Rento to play with filters. They come to ** find a home they can trust**. Filters succeed when each adjustment feels like clarity — not control panel labor — when broadening feels safe, narrowing feels purposeful, and zero results feel like guidance rather than rejection. This chapter exists so refinement becomes the disciplined heart of search: progressive, transparent, reversible, and always in service of the Housing Journey — from first open city browse to the confident shortlist that leads to contact and lease.
+
+---
+
+**End of Chapter 26**
