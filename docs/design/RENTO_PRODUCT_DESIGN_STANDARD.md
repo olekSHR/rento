@@ -55,12 +55,13 @@ This standard is **not** implementation documentation. It does not specify code,
 | 27 | [Sorting & Ranking Experience](#chapter-27--sorting--ranking-experience) | Sorting & Ranking | APPROVED |
 | 28 | [Search Results Experience](#chapter-28--search-results-experience) | Search Results | APPROVED |
 | 29 | [Maps & Location Experience](#chapter-29--maps--location-experience) | Maps & Location | APPROVED |
+| 30 | [Saved Searches & Search Continuity](#chapter-30--saved-searches--search-continuity) | Saved Searches & Continuity | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 30+ | Future chapters per design standard roadmap |
+| 31+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -79,6 +80,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-04 | Chapter 27 — Sorting & Ranking Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 28 — Search Results Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 29 — Maps & Location Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 30 — Saved Searches & Search Continuity approved and added |
 
 ---
 
@@ -30111,3 +30113,1368 @@ Users do not come to Rento to play with maps. They come to **understand where th
 ---
 
 **End of Chapter 29**
+
+
+---
+
+## Chapter 30 — Saved Searches & Search Continuity
+
+**Section:** XXVII — Saved Searches & Search Continuity  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Search & Discovery, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–29; operationalizes Search Experience (Chapter 13), Favorites & Saved Properties (Chapter 17), Notifications (Chapter 21), Filters & Refinement (Chapter 26), Sorting & Ranking (Chapter 27), Search Results (Chapter 28), Maps & Location (Chapter 29), state experience (Chapter 24), and system communication (Chapter 25); defines principles only — not storage systems, sync APIs, push providers, background jobs, databases, analytics pipelines, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **saved searches and search continuity experience philosophy** for Rento.
+
+Housing search is **rarely completed in one session**. Users pause, return days or weeks later, change requirements, switch devices, and mature decisions gradually. They should **never feel they must restart their Housing Journey** because the product forgot their context.
+
+**Search continuity** preserves confidence, context, and decision progress across time. **Saved searches** preserve **search intent** — named criteria users choose to keep — so the product remembers the search and the user can focus on deciding.
+
+Where Chapters 26–29 govern refinement, order, results, and place within a session, **this chapter defines how search persists, resumes, and evolves across sessions** — the official **memory and continuity layer** that completes the Search Architecture of the RENTO PRODUCT DESIGN STANDARD.
+
+Saved searches are not bookmarks. They are **contracts of intent**. Search continuity is not retention engineering. It is **respect for long-term housing decisions**.
+
+This chapter governs continuity philosophy, saved search integrity, return experience, cross-session and cross-device behavior, notification intersection, ethics, and evolution. It does **not** specify databases, sync protocols, push notification SDKs, or cron implementations.
+
+
+## Why Returning Matters
+
+Users are not returning to an application. **They are returning to an unfinished housing decision** — an active hunt for a long-term home that life interrupted, not a session that expired.
+
+Housing search **naturally spans days and weeks**. Users view apartments, discuss with partners, adjust budget, reconsider neighborhoods, and return when they have energy or new information. **Interruption is expected** — not a failure of engagement. Continuity exists to **protect progress** through that reality: criteria applied, areas explored, listings saved, and confidence built should survive the pause.
+
+Returning should **reduce uncertainty** rather than require reconstruction. Users should not reopen Rento wondering whether filters vanished, saved intent changed, or the market moved without explanation. They should recognize **where the Housing Journey paused** and continue with calm orientation.
+
+**Users return to their Housing Journey. The product simply remembers where the journey paused.**
+
+This section states *why return is a housing moment*. **Why Search Continuity Matters** (following) states *why continuity is a system requirement across the Search Architecture*. Together they frame the governed contract of this chapter.
+
+---
+
+## Why Search Continuity Matters
+
+**Long-term rental search spans life, not sessions.** Users search between work shifts, after viewing a disappointing apartment, when a partner weighs in, or when budget changes. Each return should feel like **resuming a serious process** — not discovering the product erased their work.
+
+Search continuity matters because:
+
+- **Decisions mature gradually** — criteria tighten, neighborhoods clarify, confidence builds over weeks  
+- **Repeated effort erodes trust** — re-entering filters daily signals disrespect for user time  
+- **Context loss creates anxiety** — “Where was I?” is a product failure in housing search  
+- **Returning confidence** determines whether users continue with Rento or abandon the platform  
+- **Saved intent** separates casual browsing from active housing hunts  
+
+The product should **remember the search** — filters, sort, geographic intent, and place in the journey — so the user does not have to remember it. Search memory supports **Decision Persistence**: progress toward a home is honored, not reset.
+
+When continuity succeeds, users recognize **immediately where they left off**. When it fails — silent wipe on login, mystery restored state, or saved search that no longer matches its label — **Continuity Trust** collapses and the entire Search System feels unreliable.
+
+---
+
+## Design Principles Summary
+
+This chapter governs how users pause, resume, continue, and evolve housing search across sessions, devices, and time. The following principles summarize the full saved search and continuity contract for designers, product managers, and reviewers:
+
+1. **Respect long-term search** — Housing hunts span weeks; continuity is a core requirement, not a convenience feature.
+
+2. **Preserve decision progress** — Decision Persistence and Search Memory honor criteria, shortlist context, and journey stage — not only last URL.
+
+3. **Restore context faithfully** — Context Restoration must be honest, visible, and complete at category level — Search Integrity and Saved Search Integrity.
+
+4. **Make return effortless** — Returning Confidence through immediate orientation — “your search”, “your criteria”, “your place in results”.
+
+5. **Separate search memory from favorites** — Saved searches are criteria; saved listings are homes — Chapter 17 invariant.
+
+6. **Communicate change calmly** — Search Change Awareness when market or criteria shift — Chapter 25; no alarmist retention copy.
+
+7. **Preserve trust across devices** — Cross-device continuity honest about what syncs; no surprise loss on intentional save.
+
+8. **Support evolution — not manipulation** — Search Evolution and Preference Evolution user-led; continuity serves housing, not engagement metrics.
+
+These principles apply to every saved search, recent search, session restore, notification return, and auth merge across consumer discovery in the Rento ecosystem.
+
+---
+
+## What This Chapter Is NOT
+
+To prevent category errors during design, review, and engineering handoff, this chapter is explicitly **not** about:
+
+- **Database schemas** — Tables, indexes, or persistence models for saved criteria.
+- **API endpoints** — Save, restore, sync, or delete search contracts.
+- **Synchronization implementation** — Conflict resolution, CRDTs, or merge algorithms.
+- **Push notification implementation** — FCM, APNs, or delivery infrastructure — Chapter 21 governs notification philosophy; intersection only here.
+- **Background jobs** — Schedulers, workers, or match-detection pipelines.
+- **Analytics instrumentation** — Retention funnels, save-rate optimization, or re-engagement metrics.
+- **AI implementation** — Predictive search memory or inferred criteria without user consent.
+- **Frontend implementation** — React state, localStorage code, or styling systems.
+
+This chapter governs **the human experience of pausing and resuming housing search** — how users trust that intent persists, recognize where they left off, and evolve criteria without losing orientation.
+
+Engineering implements continuity that honors these principles. Technical capability to persist data does not justify dark patterns that manufacture return anxiety or hidden criteria changes.
+
+
+## Search Ownership
+
+**Search Ownership** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Search Ownership is **the user's confidence that their housing search belongs to them rather than to the platform** — intent is user-authored, user-controlled, and user-respected at every stage of save, restore, edit, and delete.
+
+Search Ownership means:
+
+- **Users own their search intent** — criteria are theirs, not inferred replacements — Chapter 22 boundaries  
+- **Users control saved searches** — explicit save, explicit edit, explicit delete  
+- **Users decide when searches evolve** — Search Evolution (§11) is user-led, not platform-optimized for retention  
+- **Users may edit, rename, or delete saved searches at any time** — without penalty, guilt, or dark patterns  
+
+The platform **preserves intent but never takes ownership of it**. Rento remembers searches to serve housing decisions — not to claim the hunt, manipulate criteria, or treat saved intent as a marketing asset.
+
+Search Ownership connects **Search Memory** (§5), **Search Integrity** (§9), **Decision Persistence** (§6), and **Housing Continuity** (§14). It is reusable across Notifications (Chapter 21), Personalization (Chapter 22), AI Search, and future chapters wherever the product must affirm that **memory serves the user — not the platform**.
+
+---
+
+
+## Continuity Without Pressure
+
+**Continuity Without Pressure** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Continuity Without Pressure is **the principle that continuity should help users resume housing search without creating psychological pressure to return** — memory and notifications support; they never nag, guilt, or manufacture anxiety.
+
+| Role | Behavior |
+|------|----------|
+| **Continuity** | Preserves context so return is effortless when user chooses |
+| **Notifications** | Inform when material new matches exist — opt-in, calm — Chapter 21 |
+| **The product** | **Never pressures** — absence is respected |
+
+Continuity Without Pressure requires:
+
+- **Reminders remain calm** — specific criteria, no false urgency  
+- **Absence is respected** — users may pause weeks without "we miss you" framing  
+- **Users never feel guilty** for pausing search — housing decisions take time  
+- **Continuity exists for confidence** — Returning Confidence, Resume Confidence — **not retention metrics**  
+
+This concept connects **Respectful Silence** (Chapter 25), **Continuity Trust** (§10), **Returning Confidence** (§7), and **Notifications & User Re-engagement** (Chapter 21). Saved search alerts **inform**; they do not **pressure**. Continuity Without Pressure is reusable wherever the product evaluates whether to speak, notify, or remain silent during a paused Housing Journey.
+
+---
+
+
+## Memory Transparency
+
+**Memory Transparency** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Memory Transparency is **the user's ability to clearly understand what has been saved, what has been restored, what has changed, and what is no longer available** — so search memory never feels like a black box.
+
+Users should **never wonder: "Did the system remember correctly?"** Transparency requires:
+
+- **What has been saved** — full criteria snapshot visible in saved search library and on open — Saved Search Integrity (§31)  
+- **What has been restored** — Context Restoration (§8) visible on resume — criteria header, not mystery results  
+- **What has changed** — Search Change Awareness (§23) when market or inventory shifts — calm communication, Chapter 25  
+- **What is no longer available** — honest empty or removed listing states — Chapter 24; no silent substitution  
+
+Memory Transparency extends **Product Communication** (Chapter 25) into search memory: the product speaks plainly when memory is written, read, updated, or fails. It connects **Context Restoration**, **Search Integrity** (§9), and **Saved Search Integrity** (§31).
+
+This concept is reusable across Favorites (Chapter 17), Notifications (Chapter 21), auth merge (Chapter 23), and future AI Search chapters wherever persisted user intent must remain **visible, verifiable, and trustworthy**.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Continuity, memory, return, evolution |
+| **Saved searches** | Intent, fidelity, management, integrity |
+| **Session continuity** | Recent search, restore, interrupt resume |
+| **Cross-session / device** | Expectations, honesty, auth merge |
+| **Relationships** | Favorites, filters, sort, results, maps, notifications |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics |
+
+### 2.2 Out of Scope
+
+- Favorite listing storage and shortlist UX detail (Chapter 17 — intersection governed)  
+- Notification channel policy detail (Chapter 21 — saved-search alert intersection)  
+- Filter, sort, results, map behavior within single session (Chapters 26–29)  
+- Onboarding first-search entry (Chapter 23 — merge rules intersect)  
+- Implementation of storage, sync, or push  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **search intent persists or resumes across time**, including but not limited to:
+
+- Save search action and saved search library  
+- Restore saved or recent search  
+- Session return and auth merge  
+- Notification deep link to saved search results  
+- Edit, rename, delete saved search  
+- Cross-device return to active hunt  
+
+If a surface answers *“How does the product remember and restore housing search across time?”* — this chapter applies.
+
+### 2.4 Memory Serves Judgment
+
+Search memory supports user judgment — **never replaces** it with opaque automation.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When continuity decisions conflict with lower-level guidance:
+
+1. Immutable domain rules and user privacy  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 13 — Search Experience System  
+4. Chapters 26–29 — search layer behaviors within session  
+5. **This chapter** — for persistence, resume, and saved search across time  
+6. Chapter 17 — favorites vs saved search distinction  
+7. Chapters 21, 23–25 — notifications, onboarding merge, communication  
+
+Continuity must never **silently change saved criteria**, **conflate saved search with favorites**, or **create false urgency to return**.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Respect time; calm; trust |
+| Chapter 10 — Navigation System | Return paths; saved search entry |
+| Chapter 13 — Search Experience System | §18–19 parent; this chapter completes architecture |
+| Chapter 17 — Favorites & Saved Properties Experience | Saved listings vs saved searches |
+| Chapter 20 — Trust, Verification & Moderation Experience | Honest inventory on restore |
+| Chapter 21 — Notifications & User Re-engagement Experience | Saved search alerts |
+| Chapter 22 — Personalization & Recommendations Experience | Memory vs inferred taste |
+| Chapter 23 — Onboarding & First-Time Experience | Guest → auth merge |
+| Chapter 24 — Empty, Loading & Error States Experience | Restore failure honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Change communication |
+| Chapter 26 — Search Filters & Refinement Experience | Search Continuity; criteria persistence |
+| Chapter 27 — Sorting & Ranking Experience | Sort state on restore |
+| Chapter 28 — Search Results Experience | Result Continuity; Cognitive Continuity |
+| Chapter 29 — Maps & Location Experience | Geographic Continuity |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 13 introduced persistence and saved searches at system level. Chapters 26–29 govern **in-session search layers**. **This chapter completes the Search Architecture** — how intent, context, and decision progress survive time, interruption, and device change.
+
+Without this chapter, saved search is a feature. With it, **Housing Continuity** becomes a governed product promise.
+
+### 3.4 Position in Search System — Architecture Complete
+
+```
+Search Experience (Chapter 13)
+        ↓
+Search Filters & Refinement (Chapter 26)
+        ↓
+Sorting & Ranking (Chapter 27)
+        ↓
+Search Results (Chapter 28)
+        ↓
+Maps & Location (Chapter 29)
+        ↓
+Saved Searches & Search Continuity (this chapter)
+```
+
+**This chapter completes the official Search Architecture** of the RENTO PRODUCT DESIGN STANDARD. Future AI Search and related chapters **extend** this foundation — they do not replace continuity philosophy.
+
+---
+
+## 4. Search Continuity Philosophy
+
+Search on Rento **continues across time** — not reset by default.
+
+### 4.1 Search Continues Across Time
+
+Sessions are **chapters in one hunt** — not isolated visits.
+
+### 4.2 Decisions Mature Gradually
+
+Criteria evolve ** user-led** — product supports evolution.
+
+### 4.3 Context Should Persist
+
+Filters, sort, scroll class, geographic intent ** restorable**.
+
+### 4.4 Progress Should Be Respected
+
+Shortlist work ** not discarded** on benign navigation.
+
+### 4.5 Returning Should Feel Effortless
+
+** Minimal re-orientation** — Returning Confidence.
+
+### 4.6 Search Memory Supports Confidence
+
+Remembering ** reduces repeated labor** — increases trust.
+
+### 4.7 The Product Remembers
+
+** User decides** — memory does not decide for user.
+
+### 4.8 Saved Searches Preserve Intent
+
+Named criteria ** contract** — not vague bookmark.
+
+### 4.9 Search History Supports Judgment
+
+Recent search ** shortcut** — not autopilot replacement.
+
+### 4.10 Five Continuity Questions
+
+Users returning must answer:
+
+1. **What was I searching for?**  
+2. **Where did I leave off?**  
+3. **Has anything material changed?**  
+4. **Is my saved intent still accurate?**  
+5. **Can I continue without starting over?**
+
+---
+
+## 5. Search Memory
+
+**Search Memory** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Search Memory is **the product's governed ability to retain and surface user-authored search intent and recent search context** — criteria, sort, geographic focus, and journey place — so users do not reconstruct housing search from scratch.
+
+Search Memory includes:
+
+- **Saved searches** — explicit named intent  
+- **Recent searches** — ephemeral rerun shortcuts — Chapter 13  
+- **Session restore** — benign return within session  
+- **Account-linked memory** — when user chooses save — honest scope  
+
+Search Memory **excludes** opaque inferred criteria that override user intent — Chapter 22 boundaries. Memory serves **Decision Persistence**, not engagement optimization.
+
+---
+
+## 6. Decision Persistence
+
+**Decision Persistence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Decision Persistence is **the preservation of housing decision progress across interruption** — applied criteria, formed shortlist, evaluated neighborhoods, and confidence built — without forcing users to rebuild mental and operational context.
+
+Decision Persistence spans:
+
+- **Criteria persistence** — Chapter 26 Search Continuity  
+- **Results place** — Chapter 28 Result Continuity  
+- **Geographic understanding** — Chapter 29 Geographic Continuity  
+- **Saved listings** — Chapter 17 favorites continuity  
+
+Broken Decision Persistence feels like **starting over** — one of the strongest churn drivers in long-term rental search.
+
+---
+
+## 7. Returning Confidence
+
+**Returning Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Returning Confidence is **the user's immediate assurance on return that they recognize their housing search context** — what they were looking for, where they were in results, and that progress was preserved honestly.
+
+Returning Confidence requires:
+
+- **Visible criteria snapshot** on restore  
+- **Calm orientation** — not tutorial, not guilt — Chapter 23  
+- **Resume Confidence** (§13) — continue without fear of loss  
+- **No mystery state** — Context Restoration (§8) explicit  
+
+Low Returning Confidence produces **anxiety and re-filtering** even when data persisted correctly but invisibly.
+
+---
+
+## 8. Context Restoration
+
+**Context Restoration** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Context Restoration is **the faithful re-establishment of search context when user resumes** — criteria, sort, results layer state, and geographic intent — as a coherent whole the user can trust.
+
+Context Restoration must be:
+
+- **Complete at category level** — filters, sort, area, query if applicable  
+- **Honest** — if something cannot restore, say so — Chapter 24  
+- **Visible** — user sees what was restored — Search Integrity  
+- **Coordinated** — Chapters 26–29 layers align — Housing Continuity  
+
+Partial restoration without disclosure violates **Saved Search Integrity**.
+
+---
+
+## 9. Search Integrity
+
+**Search Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Search Integrity is **the alignment between stored search memory, displayed restored state, and actual results returned** — saved search runs what it claims; restore does not silently broaden, narrow, or drift from labeled intent.
+
+Search Integrity violations include:
+
+- Saved “2 rooms, Mărăști, max 650 €” restoring different criteria  
+- Notification opening search with altered filters  
+- Guest criteria lost on login without merge offer — Chapter 23  
+
+Search Integrity extends Filter Integrity (Chapter 26) across **time and storage**.
+
+---
+
+## 10. Continuity Trust
+
+**Continuity Trust** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Continuity Trust is **the user's belief that the product will preserve and restore housing search honestly** — not erase work, not manipulate return, not change saved intent for platform benefit.
+
+Continuity Trust grows when:
+
+- **Save and restore work predictably**  
+- **Edits to saved search are transparent** — Search Change Awareness  
+- **Notifications link truthfully** — Chapter 21  
+- **No retention dark patterns** — ethics §39  
+
+One betrayal — e.g., saved search criteria changed silently — damages **entire Search Architecture** credibility.
+
+---
+
+## 11. Search Evolution
+
+**Search Evolution** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Search Evolution is **the governed process by which users intentionally change search criteria over weeks** — budget updates, new neighborhoods, room count shifts — while continuity preserves what should persist and clearly marks what changed.
+
+Search Evolution supports:
+
+- **Edit saved search** — explicit user action  
+- **Market change communication** — “3 new homes match” — calm  
+- **No forced reset** — Search Flexibility (Chapter 26) across time  
+- **Version honesty** — user knows current vs past criteria if product shows history  
+
+Search Evolution opposes **silent drift** — criteria changing without user knowledge.
+
+---
+
+## 12. Preference Evolution
+
+**Preference Evolution** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Preference Evolution is **how user housing preferences mature during a long search** — clearer neighborhood preference, refined budget, lifestyle priorities — distinct from platform personalization inference.
+
+| Concept | Scope |
+|---------|--------|
+| **Preference Evolution** | User-owned maturation of requirements — explicit in saved search edits |
+| **Personalization** (Chapter 22) | Platform-inferred suggestions — bounded; never replaces saved intent |
+
+Preference Evolution belongs in **user-authored memory** — saved search renames, criteria edits, expanded areas. Personalization may **suggest** refinement; it must not **overwrite** saved search without consent.
+
+---
+
+## 13. Resume Confidence
+
+**Resume Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Resume Confidence is **the user's belief that tapping a saved or recent search, or returning to the app, will continue the housing hunt safely** — correct criteria, correct results class, no trap or loss.
+
+Resume Confidence is the **action moment** counterpart to Returning Confidence (orientation on arrival). Users with Resume Confidence ** save searches early** in active hunts. Users without it ** hesitate to save** — fearing false contract.
+
+---
+
+## 14. Housing Continuity
+
+**Housing Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Housing Continuity is **the end-to-end preservation of the Housing Journey through search layers across time** — from first query through saved search, results, maps, favorites, and return — as one coherent long-term process.
+
+Housing Continuity unifies:
+
+- **Search Continuity** (Chapter 26)  
+- **Result Continuity** (Chapter 28)  
+- **Geographic Continuity** (Chapter 29)  
+- **Decision Persistence** (§6)  
+- **Favorites continuity** (Chapter 17)  
+
+**This chapter is the capstone concept** for the completed Search Architecture — continuity is not a single feature but **a system property** of Rento as a long-term rental marketplace.
+
+---
+
+## 15. Saved Search Philosophy
+
+Saved searches are **named contracts of intent**.
+
+### 15.1 User-Initiated Save
+
+Save ** explicit** — not forced modal after every filter — Chapter 13.
+
+### 15.2 Meaningful Criteria Threshold
+
+Save offered when ** criteria worth repeating** — not empty city alone unless product defines.
+
+### 15.3 Named Intent
+
+Default label ** human-readable** — “2 rooms, Mărăști, max 650 €”.
+
+### 15.4 Editable Contract
+
+User ** edits criteria** — Search Evolution transparent.
+
+### 15.5 Deletable Without Penalty
+
+Delete ** calm** — no guilt — Chapter 26 reset dignity.
+
+### 15.6 Not a Bookmark
+
+Saved search ** reruns logic** — not single listing URL.
+
+---
+
+## 16. Return Experience
+
+Return is **first-class UX**.
+
+### 16.1 Immediate Recognition
+
+Within seconds user knows ** which hunt** — Returning Confidence.
+
+### 16.2 Criteria Visible First
+
+Banner or header ** snapshot** before results load.
+
+### 16.3 Load Honest
+
+Skeleton ** while restoring** — Chapter 24.
+
+### 16.4 No Interstitial Nag
+
+** Respectful Silence** — Chapter 25 — no “welcome back!” modal blocking.
+
+### 16.5 Return From Notification
+
+Deep link ** same integrity** as in-app restore.
+
+---
+
+## 17. Context Restoration in Practice
+
+Operational rules for **Context Restoration** (§8).
+
+### 17.1 Restore Order
+
+Criteria → sort → results → map viewport ** coordinated**.
+
+### 17.2 Scroll Class
+
+Scroll position ** restore when feasible** — Chapter 28.
+
+### 17.3 Failed Restore Path
+
+Retry or ** honest empty** — not wrong results.
+
+### 17.4 Guest vs Account
+
+Guest session ** clear scope** — save prompts account when appropriate — Chapter 23.
+
+### 17.5 Restore Disclosure
+
+“Restored your search from Tuesday” ** optional subtle** — when helpful.
+
+---
+
+## 18. Long-Term Search
+
+Active hunts **span weeks**.
+
+### 18.1 Saved Search Primary Tool
+
+Long hunts ** should save** — product encourages calmly, not nagging.
+
+### 18.2 Market Drift Expected
+
+Result count ** may change** — communicated — Search Change Awareness.
+
+### 18.3 Criteria Drift User-Led
+
+User ** edits** when life changes — Preference Evolution.
+
+### 18.4 Stale Hunt Dignity
+
+Old saved search ** still opens honestly** — may show zero — recovery Chapter 26.
+
+### 18.5 No Expiry Surprise
+
+Saved searches ** not deleted silently** without policy disclosure.
+
+---
+
+## 19. Interrupted Search
+
+Interruption is **normal**.
+
+### 19.1 Phone Call, App Switch
+
+Session ** preserves** benign interrupt.
+
+### 19.2 Days Away
+
+Account saved search ** or** recent — scope honest.
+
+### 19.3 Auth Interrupt
+
+Login ** merge offer** — Chapter 23.
+
+### 19.4 No Punish Interrupt
+
+** Never** clear criteria because user left.
+
+---
+
+## 20. Cross-Session Continuity
+
+Sessions link **across days**.
+
+### 20.1 Recent Search Bridge
+
+Between save and casual ** recent list** — Chapter 13.
+
+### 20.2 Session Boundaries Clear
+
+What persists ** session only** vs ** account** — labeled.
+
+### 20.3 Clear Recent
+
+User ** clears history** — privacy.
+
+### 20.4 Consistent Restore Grammar
+
+Recent tap ** same as** saved restore behavior class.
+
+---
+
+## 21. Cross-Device Continuity
+
+Devices **may differ**.
+
+### 21.1 Account Saved Search Syncs
+
+Logged-in save ** available on new device** — expectation set.
+
+### 21.2 Session May Not Sync
+
+** Honest** — no fake cross-device session scroll promise.
+
+### 21.3 Merge on Login
+
+Device B login ** sees saved searches** — not mystery empty.
+
+### 21.4 Conflict Honest
+
+If edit on two devices ** product policy** — user informed; no silent last-write-lie.
+
+---
+
+## 22. Resuming Search
+
+Resume actions **predictable**.
+
+### 22.1 Tap Saved Search
+
+Opens ** results with criteria visible**.
+
+### 22.2 Tap Recent
+
+** Same integrity** — recent = committed run memory.
+
+### 22.3 Resume From Zero Results
+
+** Recovery** — not dead end — Chapter 26.
+
+### 22.4 Resume Editing
+
+Edit saved ** before or after** open — clear apply.
+
+---
+
+## 23. Search Change Awareness
+
+Users **informed when material change occurs**.
+
+### 23.1 New Listings Match
+
+“2 new homes match your saved search” ** specific** — Chapter 21.
+
+### 23.2 Criteria No Longer Fit Market
+
+Gentle ** suggest edit** — not alarm.
+
+### 23.3 Listing Removed From Favorites
+
+** Separate channel** — Chapter 17 — not conflated with search alert.
+
+### 23.4 Price Shift on Saved Results
+
+** Honest** when product surfaces — no fake urgency.
+
+### 23.5 User Dismisses Awareness
+
+** Respected** — not infinite repeat.
+
+---
+
+## 24. Context Awareness
+
+User **always knows current context**.
+
+### 24.1 Active Hunt Indicator
+
+Subtle ** “Searching: Mărăști, 2 rooms”** persistent where appropriate.
+
+### 24.2 Saved vs Live Edit
+
+Draft criteria ** vs applied** — Chapter 26 honesty.
+
+### 24.3 Notification Context
+
+Alert shows ** which saved search** triggered.
+
+### 24.4 Map Area Matches Saved
+
+Geographic Continuity ** on restore** — Chapter 29.
+
+---
+
+## 25. Returning Notifications
+
+Intersection with **Chapter 21** — saved search alerts only at philosophy level.
+
+### 25.1 Opt-In
+
+Alerts ** user chooses** — not default spam.
+
+### 25.2 Criteria in Notification
+
+“New in: 2 rooms, Mărăști, under 650 €” ** plain**.
+
+### 25.3 Deep Link Integrity
+
+Opens ** Search Integrity** restore.
+
+### 25.4 Frequency Calm
+
+** Not hourly** — respect attention.
+
+### 25.5 No Engagement Bait
+
+“You're missing out!” ** forbidden**.
+
+---
+
+## 26. Favorites Relationship
+
+Saved searches and favorites **complement** — Chapter 17.
+
+### 26.1 Criteria vs Homes
+
+Search memory ** ≠** shortlist memory.
+
+### 26.2 Save Listings From Saved Search Results
+
+Favorites ** same rules** — Chapter 17.
+
+### 26.3 Copy Never Conflates
+
+UI vocabulary ** distinct**.
+
+### 26.4 Combined Journey Supported
+
+User holds ** both** — navigation clear.
+
+### 26.5 Favorite Changes Do Not Alter Saved Search
+
+Independent ** integrity**.
+
+---
+
+## 27. Filters Relationship
+
+Restore **honors Chapter 26**.
+
+### 27.1 All Material Filters Restored
+
+Chips ** match** saved snapshot.
+
+### 27.2 Edit Saved Updates Contract
+
+Future alerts ** use new criteria** — disclosed.
+
+### 27.3 Filter Integrity Across Time
+
+No ** ghost filters** on restore.
+
+### 27.4 Geographic Filters
+
+Area draw ** restored visibly** — Chapter 29.
+
+---
+
+## 28. Sorting Relationship
+
+Sort state **part of saved intent when product saves it**.
+
+### 28.1 Sort Visible on Restore
+
+“Sort: Newest” ** in header** — Chapter 27.
+
+### 28.2 Default Sort Documented
+
+If sort ** not saved** — behavior consistent and labeled.
+
+### 28.3 Sort Change on Restore
+
+User changes sort ** does not alter** saved criteria unless user saves edit.
+
+---
+
+## 29. Search Results Relationship
+
+Results layer **on restore**.
+
+### 29.1 Same Card Grammar
+
+Chapter 28 ** invariant**.
+
+### 29.2 Result Continuity
+
+Scroll ** when feasible**.
+
+### 29.3 Cognitive Continuity
+
+No ** shuffle** on restore — Chapter 28.
+
+### 29.4 Count Honest
+
+“14 homes” ** matches** restored criteria.
+
+---
+
+## 30. Maps Relationship
+
+Map state **part of geographic restore**.
+
+### 30.1 Viewport Restored When Saved
+
+** Map Continuity** — Chapter 29.
+
+### 30.2 List-Map Mode Remembered
+
+Map toggle ** session preference** optional.
+
+### 30.3 Area Filter on Map Visible
+
+** Geographic Continuity**.
+
+---
+
+## 31. Saved Search Integrity
+
+Saved search **must keep its promise**.
+
+### 31.1 Label Matches Criteria
+
+Name ** reflects** filters.
+
+### 31.2 Run Matches Save
+
+Results ** honor** stored intent — Search Integrity.
+
+### 31.3 Edit Propagates Honestly
+
+Alerts ** follow** edit — disclosed.
+
+### 31.4 Delete Stops Alerts
+
+** Chapter 21** alignment.
+
+### 31.5 No Hidden Criteria
+
+Saved search ** fully visible** when opened.
+
+---
+
+## 32. Interrupted Auth and Guest Paths
+
+Guest continuity **Chapter 23 intersection**.
+
+### 32.1 Guest Criteria Session-Persistent
+
+** Until clear or expire** — policy documented.
+
+### 32.2 Login Merge Prompt
+
+“Keep your current search?” ** default preserve**.
+
+### 32.3 Register Same
+
+** No wipe** on account create.
+
+### 32.4 Decline Merge Explicit
+
+User ** chooses** discard — not accidental.
+
+---
+
+## 33. Mobile-First Continuity
+
+Mobile **primary interrupt and return context**.
+
+### 33.1 Save Reachable
+
+Save search ** thumb zone** on results.
+
+### 33.2 Saved Library Reachable
+
+** Profile or search entry** — Chapter 10.
+
+### 33.3 Return One Tap
+
+Recent ** on search entry** — scannable.
+
+### 33.4 Notification Opens Mobile Results
+
+** Full continuity** on phone.
+
+---
+
+## 34. Accessibility
+
+Continuity **perceivable for all users**.
+
+### 34.1 Saved Search Named
+
+Screen reader ** full criteria label**.
+
+### 34.2 Restore Announced
+
+“Restored search: …” ** live region** when material.
+
+### 34.3 List Alternative to Memory
+
+** Non-visual** path to saved searches.
+
+### 34.4 Delete Confirm Accessible
+
+** Named** saved search in confirm.
+
+---
+
+## 35. Continuity Performance Experience
+
+Felt speed **on resume**.
+
+### 35.1 Saved Open Prompt
+
+Criteria ** instant**; results load honest.
+
+### 35.2 No False Empty
+
+** Loading** not zero — Chapter 24.
+
+### 35.3 Stale Cache Labeled
+
+If showing ** cached count** briefly — honest.
+
+---
+
+## 36. Continuity Ethics
+
+Continuity **never manipulates**.
+
+### Never Hold Search Hostage
+
+** Export/clear** available.
+
+### Never Fake New Matches
+
+** Integrity** — Chapter 20.
+
+### Never Guilt Non-Return
+
+“We miss you” ** forbidden** in housing tone.
+
+### Never Auto-Save Without Disclosure
+
+** Explicit** save.
+
+### Never Change Criteria for Retention
+
+** Search Evolution** user-led only.
+
+Teams evaluate against §46 checklist.
+
+---
+
+## 37. Dark Pattern Prevention
+
+Forbidden **continuity patterns**.
+
+### 37.1 Forced Registration to Save
+
+** Proportional** — guest paths honest.
+
+### 37.2 Fake Urgency on Return
+
+“Expires tonight!” ** on saved search**.
+
+### 37.3 Bait Save
+
+Save ** then different results** — integrity violation.
+
+### 37.4 Unsubscribe Trap
+
+Stop alerts ** easy** — Chapter 21.
+
+---
+
+## 38. Continuity Success Metrics
+
+Judged at **philosophy level**.
+
+### Returning Confidence
+
+Users ** recognize context** on return — qualitative.
+
+### Resume Confidence
+
+Users ** save searches** in active hunts — behavioral.
+
+### Search Integrity Audits
+
+Restore ** matches** label — internal.
+
+### Continuity Trust
+
+Long hunts ** complete on platform** — north star qualitative.
+
+### Decision Persistence
+
+** Less re-filtering** on return — behavioral.
+
+Not ** notification CTR alone**.
+
+---
+
+## 39. System-Wide Continuity Consistency
+
+**One continuity grammar**.
+
+### 39.1 One Save Vocabulary
+
+“Save search” ** unified**.
+
+### 39.2 One Restore Behavior
+
+Saved and recent ** predictable**.
+
+### 39.3 One Notification Deep Link Pattern
+
+** Criteria visible** always.
+
+### 39.4 One Merge Grammar
+
+Auth ** same** across entry points.
+
+---
+
+## 40. Future Compatibility
+
+Continuity **extends to AI Search**.
+
+### 40.1 Natural Language Save
+
+“Save this search” ** shows resulting criteria**.
+
+### 40.2 AI Must Not Override Saved
+
+Chapter 22 ** + saved intent** sacred.
+
+### 40.3 Partner Search Future
+
+Shared criteria ** consent-visible**.
+
+### 40.4 Multi-City Hunts
+
+** Separate** saved searches per city — clear.
+
+---
+
+## 41. Search Continuity Evolution
+
+Evolution as **one memory layer**.
+
+### Evolve Restore, Do Not Fragment
+
+New surfaces ** adopt Housing Continuity**.
+
+### Resist Memory Proliferation
+
+Each memory type ** necessity test** — Chapter 5.
+
+### Retire Misleading Save UX
+
+** Product-wide**.
+
+### Preserve Five Questions
+
+§4.10 ** invariant**.
+
+### Backward Compatibility
+
+Old saves ** migrate honestly**.
+
+Evolution requires Design Council approval for **material save contract change, silent criteria policy, or notification default change**.
+
+---
+
+## Product Development Methodology Bridge
+
+The saved searches and search continuity philosophy documented in this chapter is a **reusable decision framework** — not a catalog of storage schemas, sync protocols, or re-engagement notification templates.
+
+Its principles — respect long-term housing search, preserve Decision Persistence and Search Memory, honor Search Ownership, achieve Memory Transparency and Context Restoration, practice Continuity Without Pressure, and complete Housing Continuity across the Search Architecture — describe **how a serious marketplace honors housing decisions that span weeks and devices without manipulation**. Those principles transcend any single persistence stack, platform, or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these continuity principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed search memory and continuity philosophy into a broader method for building products that respect long-running user intent without pressure or hidden drift.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's saved search surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — Search Ownership, Memory Transparency, Saved Search Integrity, Continuity Without Pressure, calm notifications, and continuity that serves judgment — even when session models, auth, or notification channels differ from long-term residential rental.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
+## 42. Governance
+
+### 42.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy on save/search library | Senior UX + Content Design |
+| Restore behavior clarification | Head of Product Design |
+| New memory type (recent, session) | Head of Product Design + Product |
+| Material save contract or merge policy | Design Council |
+| Saved search notification default | Design Council + Chapter 21 alignment |
+| Search Integrity exception | Design Council |
+
+### 42.2 Exception Policy
+
+Continuity experiments ** reversible, ethics-reviewed** — no silent criteria drift tests.
+
+### 42.3 Documentation Requirement
+
+Shipped continuity features document ** five questions answered, integrity check, favorites distinction**.
+
+### 42.4 Cross-Team Review
+
+Search, favorites, notifications, onboarding ** review intersections**.
+
+---
+
+## 43. Product Review Checklist
+
+Before shipping any saved search or continuity change, reviewers confirm:
+
+1. **Long-term housing** — Does this respect multi-week hunts?  
+2. **Five questions** — What searching, where left off, what changed, intent accurate, continue without restart?  
+3. **Search Integrity** — Restore matches saved label?  
+4. **Saved Search Integrity** — Contract visible and editable?  
+5. **Favorites distinction** — Not conflated with saved listings — Chapter 17?  
+6. **Context Restoration** — Criteria, sort, results coordinated?  
+7. **Returning Confidence** — Immediate orientation on return?  
+8. **Auth merge** — Guest criteria preserved honestly — Chapter 23?  
+9. **Notifications** — Opt-in, criteria in copy, deep link integrity — Chapter 21?  
+10. **Chapters 26–29** — Filters, sort, results, maps on restore?  
+11. **Search Evolution** — User-led edits transparent?  
+12. **Mobile-first** — Save and resume reachable?  
+13. **Accessibility** — Labels and restore announcements?  
+14. **Performance** — Prompt criteria; honest load?  
+15. **Ethics** — No guilt, fake urgency, hostage search?  
+16. **Personalization** — Does not override saved intent — Chapter 22?  
+17. **Housing Continuity** — Capstone coherence across layers?  
+18. **Architecture** — Completes search system without fragmenting?  
+19. **Privacy** — Clear recent; sensitive context?  
+20. **Rollback** — Can change disable without breaking search?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 44. Common Mistakes
+
+### 44.1 Saved Search = Favorite
+
+**Mistake:** One “saved” bucket for homes and criteria.  
+**Correction:** Chapter 17 + §26.
+
+### 44.2 Login Wipes Criteria
+
+**Mistake:** Auth clears active filters.  
+**Correction:** §32 merge.
+
+### 44.3 Mystery Restore
+
+**Mistake:** Results appear with no criteria shown.  
+**Correction:** Context Awareness — §24.
+
+### 44.4 Notification Wrong Search
+
+**Mistake:** Alert opens different filters.  
+**Correction:** Search Integrity — §9.
+
+### 44.5 Forced Save Modal
+
+**Mistake:** After every filter apply.  
+**Correction:** §15.1.
+
+### 44.6 Silent Criteria Drift
+
+**Mistake:** Platform “optimizes” saved search.  
+**Correction:** Search Evolution — §11.
+
+### 44.7 No Delete Saved Search
+
+**Mistake:** User trapped with old alerts.  
+**Correction:** §15.5, §31.4.
+
+### 44.8 Recent Confusion
+
+**Mistake:** Recent looks like saved search — different persistence.  
+**Correction:** §20 session vs account.
+
+### 44.9 Map Not Restored
+
+**Mistake:** Saved area search opens list only, wrong city map.  
+**Correction:** §30 Geographic Continuity.
+
+### 44.10 Retention Guilt Copy
+
+**Mistake:** “You haven't finished your search!”  
+**Correction:** Continuity Ethics — §36.
+
+---
+
+## 45. Correct & Incorrect Examples
+
+### 45.1 Save Search
+
+**Correct:** “Save search: 2 rooms, Mărăști, Cluj-Napoca, max 650 €/lună, sort newest — notify me when new homes match.”  
+**Incorrect:** “Save” with no criteria summary.
+
+### 45.2 Restore
+
+**Correct:** User opens saved search → header shows full criteria → same 14-home set class as when saved (count may update labeled).  
+**Incorrect:** Opens Cluj browse with no filters.
+
+### 45.3 Guest Login
+
+**Correct:** “Keep your current search: 2 rooms, Mărăști?” [Keep] [Start fresh]  
+**Incorrect:** Login → empty search.
+
+### 45.4 Notification
+
+**Correct:** “1 new home matches: 2 rooms, Mărăști, under 650 €” → opens that exact saved search.  
+**Incorrect:** Generic “New listings!” → homepage.
+
+### 45.5 Edit Saved Search
+
+**Correct:** User changes max to 700 € → “Alerts will use updated criteria.”  
+**Incorrect:** Silent change; old alerts still say 650 € while showing 700 € results.
+
+### 45.6 Favorites Distinction
+
+**Correct:** Saved Searches library separate from Saved Homes / Favorites.  
+**Incorrect:** “Saved (3)” mixing criteria and listings.
+
+### 45.7 Recent Search
+
+**Correct:** Recent row: “Cluj · Mărăști · 2 rooms · tap to run again.”  
+**Incorrect:** Recent shows only “Cluj”.
+
+### 45.8 Cross-Device
+
+**Correct:** User saves on phone; laptop login shows same saved search with same label.  
+**Incorrect:** Laptop shows empty library.
+
+### 45.9 Zero Results on Return
+
+**Correct:** “No homes currently match your saved search. [Edit search] [Keep alert]”  
+**Incorrect:** Error page.
+
+### 45.10 Delete Saved Search
+
+**Correct:** Delete → confirms name → alerts stop → removed from library.  
+**Incorrect:** Delete but notifications continue.
+
+---
+
+## 46. Design Director Review
+
+**Chapter:** 30 — Saved Searches & Search Continuity  
+**Section:** XXVII — Saved Searches & Search Continuity  
+**Review type:** Initial standard adoption
+
+### 46.1 Approval Statement
+
+This chapter is approved as the **saved searches and search continuity experience contract** for Rento. All save, restore, resume, evolution, and notification-return behavior for housing search must comply. Storage, sync, and notification infrastructure are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 46.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Respect time; calm; trust |
+| Chapter 10 — Navigation System | Saved search entry; return |
+| Chapter 13 — Search Experience System | Parent; architecture completed here |
+| Chapter 17 — Favorites & Saved Properties Experience | Distinct memory types |
+| Chapter 21 — Notifications & User Re-engagement Experience | Saved search alerts |
+| Chapter 23 — Onboarding & First-Time Experience | Auth merge |
+| Chapter 24 — Empty, Loading & Error States Experience | Restore load honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Change communication |
+| Chapter 26 — Search Filters & Refinement Experience | Criteria continuity |
+| Chapter 27 — Sorting & Ranking Experience | Sort on restore |
+| Chapter 28 — Search Results Experience | Result continuity |
+| Chapter 29 — Maps & Location Experience | Geographic continuity |
+| Chapter 31+ — AI Search | Extends architecture when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 46.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. Does this respect long-term housing search across time?  
+2. Does it preserve Search Integrity and Saved Search Integrity?  
+3. Is restore honest, visible, and coordinated across layers 26–29?  
+4. Are favorites and saved searches still distinct?  
+5. Are notifications calm and criteria-true?  
+6. Does change complete or strengthen Housing Continuity without fragmenting architecture?
+
+Material save contract changes, default notification policy for saved searches, or silent restore behavior require Design Council approval.
+
+### 46.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on continuity system |
+| Head of Product Design | Cross-surface memory consistency |
+| Senior UX Designer | Save, restore, return flows |
+| Product Management | Saved search and notification policy |
+| Content Design Lead | Labels, save copy, alert copy |
+| Trust & Safety | Integrity and anti-manipulation |
+| Accessibility Specialist | Saved library and restore announcements |
+
+### 46.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new saved search and continuity work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 46.6 Design Director Closing Note
+
+Housing search is a **life process**, not a session metric. Users who save “2 rooms in Mărăști under 650 €” are telling Rento they are serious — and the product must answer that seriousness with memory, honesty, and calm return. This chapter completes the Search Architecture: filters define the hunt, sort and results present it, maps explain place, and continuity ensures **the journey survives Tuesday’s interruption and next month’s return**. When the product remembers so users can decide, Rento earns the right to stay beside them until they find home — not through nagging, but through trust.
+
+---
+
+**End of Chapter 30**
