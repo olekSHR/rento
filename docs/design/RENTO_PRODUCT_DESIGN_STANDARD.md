@@ -77,12 +77,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 33 | [Property Comparison Experience](#chapter-33--property-comparison-experience) | Property Comparison | APPROVED |
 | 34 | [Property Verification Experience](#chapter-34--property-verification-experience) | Property Verification | APPROVED |
 | 35 | [Viewing Experience](#chapter-35--viewing-experience) | Viewing Experience | APPROVED |
+| 36 | [Application Experience](#chapter-36--application-experience) | Application Experience | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 36+ | Future Decision Experience chapters per design standard roadmap |
+| 37+ | Future Decision Experience chapters per design standard roadmap |
 
 ---
 
@@ -107,6 +108,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 1.0 | 2026-07-04 | Chapter 33 — Property Comparison Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 34 — Property Verification Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 35 — Viewing Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 36 — Application Experience approved and added — Completed Decision Experience progression from Viewing to Application and established the architectural standard for formal interest expression before Commitment Experience |
 
 ---
 
@@ -34946,4 +34948,772 @@ Users do not rent calendar slots. They rent homes — and they deserve to arrive
 ---
 
 **End of Chapter 35**
+
+---
+
+## Chapter 36 — Application Experience
+
+**Section:** XXXIII — Application Experience  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–35; extends the Decision Experience block after Viewing Experience (Chapter 35); operationalizes Viewing Confidence (Chapter 35), Viewing Boundaries (Chapter 35), Proceeding Readiness (Chapter 34), and contact ethics (Chapter 16); defines principles only — not application forms, document upload systems, screening workflows, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **application experience philosophy** for Rento — how users **express formal housing interest** after evaluation and viewing while preserving trust, informed consent, and decision quality.
+
+Property application is not viewing. Viewing asks *what does this home reveal in person — and does that support my housing decision* (Chapter 35). Application asks *am I ready to express formal interest in pursuing this home — with eyes open about what that means and what it does not*.
+
+Property application is not verification. Verification asks *can I trust this home enough to invest the next step* (Chapter 34). Application assumes verification and often viewing occurred — and governs **commitment escalation beyond judgment** into **formal interest expression** with honest scope limits.
+
+Property application is not commitment. Commitment governs **housing obligation intensification** — lease acceptance, deposit, move-in planning (forward Decision Experience chapter). Application governs **formal interest declaration** — the user's responsible signal that they wish to pursue rental seriously, without pretending that signal equals lease outcome.
+
+Where Chapter 31 helps users evaluate one home, Chapter 32 helps them trust visual evidence, Chapter 33 helps them narrow candidates, Chapter 34 helps them confirm proceeding trust, and Chapter 35 helps them reconcile physical truth, this chapter helps users **cross from physical assessment to formal housing interest** — prepared, consenting, and able to proceed, defer, or release with clarity about what application can and cannot establish.
+
+The product must help users answer five application questions:
+
+1. **Am I prepared to express formal interest — do I understand what application means on Rento?**  
+2. **Does my viewing and evaluation judgment support this escalation — or am I acting on impulse?**  
+3. **What am I consenting to express — and what remains outside my control or Rento's scope?**  
+4. **Is listing truth still current — and is the property still honestly available?**  
+5. **Can I proceed, defer, or withdraw application intent without trap or shame?**
+
+This chapter governs application as a Decision Experience stage — environment quality, preparation, readiness, confidence, informed consent, boundaries, outcomes, and calm mobile-first formal interest expression. It does **not** specify form fields, document portals, screening logic, or engineering architecture.
+
+**Relationship to prior chapters:** **Viewing Confidence** (Chapter 35) and **Viewing Boundaries** (Chapter 35) govern whether physical assessment supports escalation. **Proceeding Readiness** (Chapter 34) governs whether commitment escalation is appropriate in principle. This chapter defines **Application Environment**, **Application Readiness**, **Application Preparation**, **Application Confidence**, and **Application Boundaries** — how users and the product honor the formal-interest boundary with integrity.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Intent over conversion** | Application expresses housing pursuit — not funnel completion or realtor quota |
+| **Consent over submission theater** | User understands what formal interest means before expressing it |
+| **Prepared over impulse** | Application follows evaluation, verification, and viewing judgment — not urgency |
+| **Boundaries over overclaim** | Rento and users know what application can and cannot establish |
+| **Reconciliation over denial** | Post-viewing truth informs application — discrepancy visible, not buried |
+| **Reversible over trapped** | Defer, withdraw, and release application intent remain dignified |
+| **Continuity over reset** | Evaluation, verification, viewing, and application context preserved |
+| **Calm over pressure** | No artificial urgency to apply before Application Readiness |
+| **Mobile expression first** | Design for considered mobile intent — then tablet, then desktop |
+| **Application Confidence goal** | Every application outcome serves honest proceed, defer, or release toward commitment |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, form component guide, or document upload pattern library  
+- An implementation plan, API contract, screening engine, or tenant verification architecture  
+- A replacement for Chapter 16 — Contact & Communication Experience  
+- A replacement for Chapter 35 — Viewing Experience  
+- A moderation, fraud detection, or identity verification operations chapter (Chapter 20)  
+- A legal due diligence, lease review, tenant rights, or contract enforcement guide  
+- A legal tenancy application, lease contract, or jurisdiction-specific rental procedure guide  
+- A deposit, lease signing, or move-in commitment chapter (forward Decision Experience chapter)  
+- A comparison, shortlist, verification, or viewing depth chapter (Chapters 33–35)  
+- A realtor application review console or tenant screening operations spec  
+
+This chapter defines the **experience of expressing formal housing interest** on Rento. It does **not** define legal tenancy applications, lease contracts, jurisdiction-specific rental procedures, or implementation workflows.
+
+If the question is *how to build* an application form or *which API* stores documents — this chapter does not answer it. If the question is *what application must accomplish for housing decision confidence and informed consent* — this chapter does.
+
+---
+
+## Application Environment
+
+**Application Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Application Environment is the **cognitive and informational conditions under which a user prepares for, expresses, and reflects on formal housing interest in a specific property** — not the screen layout, but the **quality of the formal-interest decision space** Rento provides.
+
+A sound Application Environment is:
+
+- **Prepared** — user knows property identity, viewing outcome context, and what formal interest expression means  
+- **Oriented** — application sits legibly in the Housing Journey — not isolated paperwork  
+- **Grounded** — evaluation, verification, and viewing truth available during preparation — not amnesia at escalation  
+- **Consenting** — user understands scope of expression before acting — not blind submission  
+- **Bounded** — application scope legible; product does not overclaim what expression establishes  
+- **Reversible** — defer, withdraw, or return to viewing without penalty  
+- **Calm** — no countdown theater, no pressure to apply before ready  
+
+Chapter 31 established **Decision Environment** for evaluation. Chapter 34 established **Verification Environment** for pre-commitment trust assessment. Chapter 35 established **Viewing Environment** for physical-decision coordination. Application Environment is the **formal-interest counterpart** — the governed space where users move from *"I viewed — or consciously chose to proceed — with clarity"* to *"I expressed formal interest — or chose not to — with informed consent about what happens next."*
+
+Application Environment is reusable across application preparation, formal interest expression, application outcome interpretation, and forward commitment chapters.
+
+---
+
+## Application Readiness
+
+**Application Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Application Readiness is the user's and product's shared state where **expressing formal housing interest in a specific property is appropriate** — because Viewing Confidence (Chapter 35) or equivalent informed judgment supports escalation, Application Preparation is sufficient, and listing truth remains current.
+
+Application Readiness is distinct from **Viewing Readiness** (Chapter 35): Viewing Readiness governs whether **physical presence at the property** is responsible; Application Readiness governs whether **formal interest expression** is responsible given viewing outcome, preparation sufficiency, and listing state.
+
+Application Readiness is distinct from **Proceeding Readiness** (Chapter 34): Proceeding Readiness governs whether **commitment escalation in principle** — contact deepening, viewing request, application start — is responsible after verification; Application Readiness governs whether **formal housing interest expression** is responsible given the full evaluation-to-viewing arc and Application Boundaries understood.
+
+Application Readiness is distinct from **Contact Readiness** (Chapter 31): Contact Readiness governs whether **initial contact** is responsible after evaluation; Application Readiness assumes evaluation, often verification, and typically viewing occurred — and that **formal interest expression** is the appropriate next boundary crossing, not merely messaging.
+
+Application Readiness requires:
+
+- **Listing Integrity** intact — property still honestly available (Chapter 31)  
+- **Viewing Confidence** sufficient for application escalation — or user explicitly chooses application despite acknowledged physical gaps with eyes open  
+- **Application Preparation** adequate — user knows what formal interest means and what product could not establish through viewing  
+- **Identity and property clarity** — user knows which home, which realtor, which process scope applies (Chapter 16)  
+- Product does not **manufacture readiness** through urgency, false acceptance implication, or application pressure  
+
+Application Readiness is not a funnel stage to maximize. It is a **formal-interest trust gate** — consistent with Viewing Readiness, Proceeding Readiness, and Contact Readiness ethics.
+
+Application Readiness connects Application Confidence to formal interest expression and application outcomes.
+
+---
+
+## Application Preparation
+
+**Application Preparation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Application Preparation is the user's **informed readiness to express formal housing interest in a specific property** — synthesizing evaluation, verification, viewing, and contact context into **conscious formal-interest intent** before expression.
+
+Application Preparation includes:
+
+- **Post-viewing reconciliation** — user carries forward what viewing confirmed, contradicted, or left unknown (Chapter 35)  
+- **Application scope understanding** — what formal interest expression means on Rento versus what lease acceptance, deposit, and legal review require separately  
+- **Remaining uncertainty acknowledgment** — gaps viewing could not resolve remain visible — not hidden by application momentum  
+- **Partner alignment** — shared decision participants carry **identical property truth and application intent** (Chapter 33 §14.1, Chapter 34 §8.3, Chapter 35 §8.3)  
+- **Process expectations** — application expresses pursuit intent; it does not guarantee availability, acceptance, or lease terms  
+
+Application Preparation is distinct from **Application Readiness**: Application Preparation governs **what the user knows before expressing formal interest**; Application Readiness governs whether **expression is appropriate** given that knowledge and listing state.
+
+Application Preparation extends **Viewing Boundaries** (Chapter 35) and **Verification Boundaries** (Chapter 34) into actionable formal-interest intent — physical and digital unknowns become acknowledged limits, not suppressed by paperwork theater.
+
+Application Preparation does not prescribe document checklists, income verification procedures, or screening requirements. It governs **product-supported judgment and consent posture** — user expresses interest as an informed pursuer, not a passive form submitter.
+
+---
+
+## Application Confidence
+
+**Application Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Application Confidence is the user's **justified belief that expressing formal housing interest — preparing for, submitting, or interpreting application outcome — supports sound housing judgment** — before, during, and after formal interest expression.
+
+Application Confidence rises when:
+
+- **Application Preparation** aligns with listing and viewing truth — user knows what they are expressing and why  
+- **Post-viewing judgment** and application intent **reconcile honestly** — surprise at application stage indicates prior stage failure, not user error  
+- **Application Boundaries** understood — user knows what expression can and cannot establish  
+- Formal interest expression is **voluntary and informed** — not pressure-driven submission  
+- Post-application **proceed toward commitment, defer, or release** remains dignified based on outcome clarity  
+
+Application Confidence falls when product simulates acceptance before it exists, hides preparation gaps, pressures application before Application Readiness, or treats formal interest as automatic lease prerequisite.
+
+Application Confidence is distinct from **Viewing Confidence** (Chapter 35): Viewing Confidence governs **physical visit judgment**; Application Confidence governs **formal interest expression judgment** — whether escalation toward pursuit was worth conducting and what it revealed for next steps.
+
+Application Confidence is distinct from **Verification Confidence** (Chapter 34): Verification Confidence governs **digital proceeding judgment**; Application Confidence governs **formal-interest escalation judgment** after the evaluation-to-viewing arc.
+
+Application Confidence is distinct from **Property Confidence** (Chapter 31): Property Confidence governs whether a listing merits evaluation attention; Application Confidence governs whether **formal interest expression** supports escalation toward commitment or justified release.
+
+---
+
+## Application Boundaries
+
+**Application Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Application Boundaries define **what expressing formal housing interest through Rento can and cannot establish** — the scope beyond which realtor decision, lease negotiation, legal review, deposit handling, or housing commitment must carry responsibility.
+
+Application Boundaries **extend** Viewing Boundaries (Chapter 35) and Verification Boundaries (Chapter 34) — physical and digital limits become formal-interest limits honestly stated.
+
+Rento application experience **can** support:
+
+- **Formal interest expression** — user signals serious pursuit intent to realtor through governed product path  
+- **Informed consent** — user understands what expression means before acting  
+- **Continuity of judgment** — evaluation, verification, and viewing context preserved at escalation  
+- **Outcome clarity** — user understands application submitted, deferred, withdrawn, or acknowledged — without false certainty  
+- **Post-application judgment** — proceed toward commitment, defer for partner or comparison, or release with clarity  
+
+Rento application experience **cannot** substitute for:
+
+- **Lease acceptance** — application does not guarantee approval  
+- **Availability guarantee** — property may rent to another party before or after application  
+- **Legal lease review** — contract terms, deposit rules, tenant rights remain user's responsibility  
+- **Realtor screening decision** — acceptance, rejection, or counter-offer belongs to realtor and applicable process  
+- **Financial qualification proof beyond product scope** — income, references, and guarantor requirements when applicable remain governed process, not product guarantee  
+- **Platform attestation of tenant suitability** — Rento does not certify applicant fitness beyond defined marketplace scope (Chapter 20)  
+
+Application Boundaries protect users and the platform: Rento must **never imply formal interest equals acceptance**, and must **never hide that commitment and legal steps remain separate responsibilities**.
+
+Application Boundaries are reusable across commitment, negotiation, and lease chapters — each stage inherits honest scope limits from application.
+
+---
+
+## 2. Role in the Housing Journey
+
+Property application sits at the **formal-interest boundary** of the Housing Journey — after viewing establishes physical reconciliation judgment, before commitment and lease obligation intensify.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| Narrowing (Chapter 33) | Compare | Which candidates survive scrutiny? |
+| Verification (Chapter 34) | Verify | Can I trust this home enough to proceed? |
+| Viewing (Chapter 35) | Visit | What does this home reveal in person? |
+| **Property application (this chapter)** | **Express interest** | **Am I ready to pursue this home formally — with informed consent?** |
+| Decision Experience (following chapters) | Commit | What happens next toward housing obligation? |
+
+Application succeeds when it produces **Meaningful Progress** — user expresses formal interest prepared and consenting, understands what expression establishes, and proceeds, defers, or releases with clarity — not when user maximizes application count or rushes to lease.
+
+Application fails when it optimizes for **submission theater** — fake progress states, pressure to apply, or applications treated as conversion events rather than housing judgment escalation.
+
+---
+
+## 3. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract** — attestation scope, moderation meaning, verification label honesty, and marketplace integrity.
+
+This chapter **consumes** platform trust signals during application escalation — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|--------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm about listing and realtor? |
+| **Property verification** | Chapter 34 | Can the user proceed digitally with justified trust? |
+| **Property viewing** | Chapter 35 | Does in-person visit support next housing judgment? |
+| **Property application** | **This chapter** | Does formal interest expression support sound pursuit with informed consent? |
+
+Division of responsibility:
+
+| Concern | Governing chapter |
+|---------|-------------------|
+| Verification label meaning, moderation status, appeals | Chapter 20 |
+| Fraud prevention philosophy, trust lifecycle | Chapter 20 |
+| Digital proceeding judgment, uncertainty, verification boundaries | Chapter 34 |
+| Viewing preparation, physical reconciliation, viewing boundaries | Chapter 35 |
+| Application preparation, informed consent, formal interest boundaries | **This chapter** |
+| Post-application proceed, defer, release toward commitment | **This chapter** |
+
+Platform verification badges **inform** application preparation — they do **not** guarantee acceptance. A verified listing does not promise application approval. Application must **honor** platform attestation scope honestly — attestation does not substitute for viewing reconciliation or application outcome certainty.
+
+Application must never **inflate** Chapter 20 attestation into acceptance guarantees.
+
+---
+
+## 4. Transition from Viewing Experience
+
+Users enter application **after** Viewing Confidence supports escalation — typically following viewing, sometimes with conscious proceed despite acknowledged physical unknowns (Chapter 35 §12.1).
+
+### 4.1 Entry Preconditions
+
+Property application escalation is responsible when:
+
+- User has **Viewing Confidence** or equivalent informed judgment — viewing or evaluation yielded sufficient trust to justify formal interest  
+- Candidate is **still honestly available** — Listing Integrity intact (Chapter 31)  
+- User understands **Viewing Boundaries** and **Application Boundaries** — knows what application must still settle because viewing could not  
+- **Contact path** and realtor identity remain clear (Chapter 16)  
+
+### 4.2 Handoff from Viewing
+
+Chapter 35 supplies **Viewing Confidence**, **Viewing Preparation**, **Viewing Boundaries**, and post-viewing proceed, defer, or release outcomes. Application must **preserve** viewing outcomes — not reset physical judgment or hide acknowledged unknowns.
+
+The handoff contract:
+
+- Application candidate is **the property user viewed or consciously prioritizes** — not algorithmically substituted  
+- **Application Preparation** inherits viewing questions — physical unknowns and discrepancies remain visible  
+- Defer or release at viewing **does not erase** application preparation work if user returns with renewed confidence  
+- Proceed from viewing to application **does not imply** lease acceptance or legal readiness — Application Boundaries apply  
+
+### 4.3 Handoff from Property Detail, Media, Verification, and Comparison
+
+Chapters 31–34 supply **Property Confidence, Expected Property, Verification Confidence, Narrowing Confidence**, and evaluation continuity. Application **extends** these — formal interest expression carries forward the full decision arc truth.
+
+Facts, evidence, verification, and viewing judgment at application depth **match** prior stage truth — no application-only summary layer that contradicts evaluation, verification, or viewing.
+
+### 4.4 Proceed Without Viewing — Exception Posture
+
+When user expresses formal interest without viewing — product must **not** treat absence of viewing as equivalent to Viewing Confidence. Application Readiness requires **explicit acknowledgment** of physical unknowns Viewing Boundaries would have addressed. Proceed-without-viewing is valid user choice when informed — not default product posture.
+
+---
+
+## 5. Application vs Viewing vs Verification vs Contact
+
+Each Decision Experience stage has distinct obligation:
+
+| Stage | Primary question | Must not substitute for |
+|-------|------------------|-------------------------|
+| **Verification (Ch 34)** | Can I proceed with digital trust? | Viewing, application, or commitment |
+| **Contact (Ch 16)** | Can I reach the realtor responsibly? | Application preparation or commitment |
+| **Viewing (Ch 35)** | What does in-person visit reveal? | Application acceptance or legal due diligence |
+| **Application (this chapter)** | Am I ready to express formal interest? | Lease acceptance, deposit, or legal commitment |
+
+Application **assumes** evaluation occurred and typically viewing — it crosses the formal-interest boundary viewing and verification identified, not first-pass discovery.
+
+Application **may follow** contact and viewing — user applies after inquiry and visit — or **follow direct escalation** when product supports application path from post-viewing judgment. Product must support escalation without forcing contact theater or viewing theater before application when user judgment supports informed proceed.
+
+Application **never replaces** commitment readiness or legal review — Application Boundaries require this explicitly.
+
+---
+
+## 6. Information Layer in Application Preparation
+
+Application treats the **information layer** (Chapter 31) as input to Application Preparation and Application Confidence.
+
+### 6.1 Currency at Application Time
+
+Price, availability, rooms, area, and specifications must be **current at application moment** — stale truth invalidates Application Readiness. User must not express formal interest in a property listing no longer honestly offers.
+
+### 6.2 Expected Property Carry-Forward
+
+User carries **governed facts** into application preparation — what the listing claims remains what user expects pursuit to honor. Inconsistency between claim and viewing reconciliation destroys Application Confidence and triggers defer or release — not silent proceed.
+
+### 6.3 Material Gap Awareness
+
+Missing governed fields or ambiguous fees identified at verification or viewing **remain visible** at application preparation — Application Preparation does not pretend gaps were resolved by formal interest expression alone.
+
+### 6.4 Fee and Cost Honesty
+
+Application preparation inherits **price and fee transparency** from evaluation — undisclosed costs discovered at viewing remain visible; application does not bury financial surprise under paperwork momentum.
+
+---
+
+## 7. Evidence Layer in Application Preparation
+
+Application treats **evidence** (Chapter 32) and **physical reconciliation** (Chapter 35) as input to formal-interest judgment.
+
+### 7.1 Post-Viewing Reconciliation Carry-Forward
+
+User carries **what viewing confirmed, contradicted, or left unknown** into application intent. Gap between Expected Property and physical truth must remain **interpretable at application** — not erased by form submission.
+
+### 7.2 Evidence Sufficiency Context
+
+Thin media or partial verification (Chapters 32–34) **increases** application preparation importance — user knows more uncertainty remains. Rich media and strong verification **do not decrease** application boundary obligation — formal interest still does not guarantee acceptance.
+
+### 7.3 Discrepancy Visibility
+
+Material listing-viewing discrepancy discovered at visit **must inform** application posture — product does not encourage application on known disqualifying gap without explicit user acknowledgment.
+
+### 7.4 Evidence Currency
+
+Stale photos or outdated facts **must remain acknowledged** at application — temporal risk understood before formal interest expression.
+
+---
+
+## 8. Trustworthy Application Intent
+
+**Trustworthy application intent** is the user's **honest purpose for expressing formal housing interest** — supported by the product, not manufactured by conversion pressure.
+
+### 8.1 Product Role
+
+Rento supports application intent by:
+
+- Enabling **Application Preparation** — scope, boundaries, viewing outcome context visible  
+- Supporting **informed consent** before expression — not submission surprise  
+- Preserving **evaluation continuity** — return to viewing, verification, detail, or comparison without reset  
+- Enabling **post-application judgment** — proceed toward commitment, defer, or release based on outcome clarity  
+
+Rento does not **score** application success as lease conversion — housing fit and risk tolerance are personal.
+
+### 8.2 Application Integrity
+
+Application Integrity is the **honesty of the application experience itself** — product does not simulate acceptance, does not hide Application Boundaries, does not pressure expression when Application Readiness is insufficient, does not treat withdrawal or defer as user failure by default.
+
+Application Integrity parallels **Viewing Integrity** (Chapter 35), **Assessment Integrity** (Chapter 34), and **Comparison Integrity** (Chapter 33) — another integrity concept scoped to formal interest expression and outcome interpretation.
+
+### 8.3 Partner and Shared Application
+
+Long-term rental decisions often involve partners. Shared application intent requires **identical preparation truth** for all participants — same property facts, same viewing outcomes, same Application Boundaries — and **respectful coordination** when readiness timing differs.
+
+---
+
+## 9. Informed Consent Principles
+
+Formal interest expression requires **informed consent** — the user's understanding of what they are doing, what they are not doing, and what remains uncertain.
+
+### 9.1 Consent Before Expression
+
+User must understand **before** expressing formal interest:
+
+- Which **property** and **realtor** the expression concerns  
+- What **formal interest means** on Rento — signal of pursuit, not lease guarantee  
+- What **viewing established and did not establish** — Viewing Boundaries honored  
+- What **application can and cannot establish** — Application Boundaries honored  
+- That **withdrawal and defer remain valid** — no trap implied  
+
+### 9.2 Consent Over Checkbox Theater
+
+Consent is **comprehension**, not rote checkbox completion. Product must not substitute legalistic checkbox stacks for plain-language scope understanding at product design level.
+
+### 9.3 No Implied Lease Consent
+
+Expressing formal interest **does not** imply user accepts lease terms, deposit rules, or move-in obligations — those belong to commitment chapter scope.
+
+### 9.4 Consent Preservation on Change
+
+Material listing change after application preparation **resets consent context** honestly — user must re-understand before proceeding expression on stale truth.
+
+### 9.5 Consent and Platform Limits
+
+User understands Rento **facilitates** formal interest expression — it does not adjudicate tenant suitability, guarantee realtor response, or substitute for legal review.
+
+---
+
+## 10. Formal Interest Expression Principles
+
+This section answers the chapter's architectural question: *How should users express formal interest in a property after completing evaluation and viewing while preserving trust, informed consent, and decision quality?*
+
+### 10.1 Expression as Escalation — Not Bookmark
+
+Formal interest expression is **commitment escalation in intent** — distinct from save, favorite, contact, or viewing request. Product language and posture must preserve this distinction — users must not confuse expression with casual curiosity.
+
+### 10.2 Deliberate Over Impulsive
+
+Expression belongs **after** Application Readiness — not as default next click after viewing. Product supports pause, reflection, partner discussion, and comparison return before expression.
+
+### 10.3 Single Property Clarity
+
+Every formal interest expression ties unambiguously to **one listing identity** — user knows which home pursuit concerns before acting.
+
+### 10.4 Voluntary Expression
+
+Formal interest must be **user-initiated** — not auto-submitted, not dark-pattern pre-checked, not manufactured by countdown or scarcity framing (Chapters 1, 21).
+
+### 10.5 Honest State Language
+
+Product language reflects **actual application state** — preparing, expressed, acknowledged, deferred, withdrawn — not false progress or implied acceptance (Chapter 16 communication ethics alignment).
+
+### 10.6 Expression Without Humiliation
+
+Users who express interest and are not selected deserve **dignified outcome communication** — housing search pacing varies; rejection is marketplace outcome, not moral judgment by default.
+
+### 10.7 Quality Over Volume
+
+Product optimizes for **sound application decisions** — not maximum application submissions per user or listing.
+
+---
+
+## 11. Application Outcomes
+
+Application outcomes are **express**, **defer expression**, **withdraw intent**, and **post-expression proceed, defer, or release** — all valid. Users may **defer or withdraw after expressing formal interest** — this is intentional product posture, consistent with **Reversible over trapped**.
+
+### 11.1 Express Formal Interest
+
+Express means user **voluntarily signals formal pursuit intent** with Application Preparation and informed consent sufficient. Product supports clarity afterward — what was expressed, what remains pending, what boundaries still apply.
+
+### 11.2 Defer Expression
+
+Defer expression preserves application intent while acknowledging **insufficient Application Readiness** — partner unavailable, preparation incomplete, listing truth uncertain, comparison return needed, or timing not right. Defer is **not failure** — honest pacing. Housing Journey respects weeks of search.
+
+Defer must preserve **Decision Persistence** — preparation work not lost on return.
+
+### 11.3 Withdraw Intent
+
+Withdraw removes or pauses formal interest expression **without shame** — trust shifts, listing changes, better candidate emerges, or user reconsiders. Product treats withdrawal as **normal decision outcome**, not user moral failure by default.
+
+### 11.4 Post-Expression Proceed
+
+Proceed after expression escalates toward **commitment** when outcome clarity supports next step — Application Confidence sufficient, Application Boundaries understood, commitment scope not pretended satisfied.
+
+### 11.5 Post-Expression Defer
+
+Defer after expression preserves pursuit while acknowledging **insufficient outcome clarity** — awaiting realtor response, partner discussion, financial timing, or comparison reconsideration. Formal interest was expressed; commitment does not necessarily follow immediately.
+
+### 11.6 Post-Expression Release
+
+Release after expression removes candidate when outcome, listing change, or reconsideration reveals disqualifying gap. Release is **dignified** — no shame copy, no dark retention. Connects to Narrowing Confidence and viewing release ethics (Chapters 33–35).
+
+### 11.7 No Forced Commitment
+
+Product must not **block exit** or **manufacture urgency** to force commitment immediately after expression — Application Boundaries and Abandon confidence (Chapter 31) extend here.
+
+---
+
+## 12. Contact and Application Relationship
+
+Application coordinates with contact — it does not replace contact governance.
+
+### 12.1 Contact as Application Context
+
+Contact often **precedes** application — inquiry and viewing establish realtor relationship (Chapter 16). This chapter **consumes** contact ethics; it does not redefine identity visibility or communication tone.
+
+### 12.2 Application Without Extended Thread
+
+When product supports application path with minimal prior messaging, **Contact Readiness**, Chapter 16 ethics, and identity visibility still apply — no anonymous formal interest escalation.
+
+### 12.3 Communication During Application
+
+Application-related communication inherits **calm, professional, housing-serious tone** (Chapter 16) — not engagement bait, not pressure to commit before outcome clarity.
+
+### 12.4 Post-Expression Contact
+
+Contact after expression may deepen — negotiation, clarification, commitment questions — governed by forward chapters. Application supplies **formal interest context** contact can reference honestly.
+
+---
+
+## 13. Transition to Commitment Experience
+
+Application bridges formal interest expression and **housing commitment escalation** without owning commitment.
+
+### 13.1 Handoff Preconditions
+
+Transition toward commitment is responsible when:
+
+- User **expressed formal interest** or consciously proceeds with acknowledged outcome unknowns  
+- **Application Confidence** supports escalation — expression did not rest on hidden disqualifying discrepancy  
+- **Application Boundaries** understood — user knows commitment and legal review remain separate  
+- **Listing Integrity** intact — property still honestly available where relevant  
+
+### 13.2 What Application Supplies
+
+Application supplies **formal interest judgment** — what expression established, what remains pending, what viewing and verification could not resolve. Commitment chapter (forward) will define **commitment readiness** — this chapter does not redefine it.
+
+The handoff contract:
+
+- Commitment candidate is **the property user applied to or consciously prioritizes** — continuity preserved  
+- **Application Preparation context** informs commitment attention — fees, condition gaps, or discrepancies remain visible  
+- Proceed to commitment **does not imply** lease signed or legal readiness complete  
+- Release after application **does not erase** commitment path for other candidates — comparison and narrowing context restorable  
+
+### 13.3 Defer Across Boundary
+
+User may **defer commitment** after successful application expression — partner alignment, financial timing, or awaiting realtor decision. Defer is valid; Application Confidence and Decision Persistence preserved.
+
+### 13.4 Forward Reference
+
+Lease acceptance, deposit handling, move-in planning, and housing obligation chapters follow — Application Readiness and Application Confidence must not pretend to satisfy commitment or legal readiness. Forward reference only.
+
+---
+
+## 14. Mobile Application Experience
+
+Mobile is the **primary application preparation and expression surface**. Tablet and desktop extend — never reverse.
+
+### 14.1 Mobile Principles
+
+| Principle | Intent |
+|-----------|--------|
+| **Pre-expression review** | Property identity, viewing outcome, boundaries reachable before acting |
+| **One-handed deliberation** | Defer, withdraw, and expression actions reachable during life interruption |
+| **Partner handoff** | Share preparation and listing truth — not viral engagement |
+| **Glance legibility** | Application state and property identity visible without hunt |
+| **Interrupt tolerance** | Application preparation state stable across interruption |
+| **Post-expression reflection** | Calm capture of proceed, defer, release intent — not forced commitment |
+
+### 14.2 Mobile vs Desktop
+
+Desktop may show more simultaneous context — detail beside preparation — but **Application Boundaries**, **Application Preparation**, and **Application Confidence** standards remain identical to mobile.
+
+### 14.3 Application in Life Context
+
+Application preparation and expression happen after work, with partner, before sleep — moments of reflection and household planning. Surfaces support **calm deliberation**, not anxiety amplification.
+
+---
+
+## 15. Accessibility Principles
+
+Application experience must be **inclusive** — formal housing pursuit belongs to all users.
+
+### 15.1 Non-Visual Application Access
+
+Application state, preparation context, and boundaries require **textual and semantic equivalents** — not color-only status, not icon-only progress.
+
+### 15.2 Cognitive Accessibility
+
+Application Environment supports cognitive accessibility: plain language for boundaries and consent scope, predictable structure, calm density — users must express interest without decoding manipulation.
+
+### 15.3 Financial and Document Anxiety Sensitivity
+
+Application stage amplifies housing anxiety for many users. Product must not **weaponize** this anxiety — calm tone, honest boundaries, no alarmist scarcity unless genuinely governed harm signal (Chapter 7).
+
+### 15.4 Anxiety Sensitivity
+
+Application uncertainty is **calm**, not alarmist. Critical status color reserved for genuine harm signals — not every pending outcome.
+
+Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 16. Context Preservation and Continuity
+
+Application participates in **Housing Continuity**, **Decision Persistence**, and **Cognitive Continuity**.
+
+### 16.1 Application State Persistence
+
+User expects application preparation and expression intent to **survive session interruption** when product supports — honest when local-only. Prior defer or proceed intent remembered as continuity aid, never manipulation.
+
+### 16.2 Navigation Continuity
+
+- Viewing → application → viewing **preserves listing identity and physical judgment**  
+- Detail → application → detail **preserves evaluation context**  
+- Application → commitment → application **preserves formal interest judgment where appropriate**  
+- Compare → application → compare **preserves narrowing context**  
+
+### 16.3 Search and Favorites Context
+
+Application launched from favorites or saved search **preserves Search Memory and shortlist context** on exit — not amnesia.
+
+---
+
+## 17. Returning to Application
+
+Returning users resume **application preparation or post-expression judgment** — not cold start.
+
+### 17.1 Honest Reunion
+
+Return shows **current listing truth** — price, availability, media, attestation may have changed. User understands before re-expressing interest or proceeding judgment.
+
+### 17.2 Changed Truth Recovery
+
+Material listing change **resets Application Readiness** honestly — user must re-prepare and re-consent, not proceed on stale confidence.
+
+### 17.3 Abandon Application Confidence
+
+Leaving application without express/defer/withdraw decision is **valid** — no blocking modals, no shame. Respectful Silence applies.
+
+---
+
+## 18. Anti-Patterns
+
+The following are **explicitly forbidden** in Rento application experience philosophy:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| "Application approved!" before realtor or process decision | Violates confirmation honesty; destroys Application Integrity |
+| Application pressure or artificial scarcity after viewing | Violates calm Application Environment; amplifies anxiety |
+| Application as mandatory funnel stage before commitment discussion | Violates Application Boundaries; traps users |
+| Hidden listing change before expression | Invalidates Application Readiness; violates Listing Integrity |
+| Thinner preparation context at application than viewing | Breaks Application Integrity; amnesia at formal-interest boundary |
+| Expression outcome implied as lease guarantee | Violates Application Boundaries |
+| Bait application for unavailable or misrepresented property | Marketplace integrity failure |
+| Shame copy for defer, withdraw, or non-selection | Violates dignified outcome ethics |
+| Partner share with divergent property or viewing truth | Destroys shared application preparation |
+| Application replaces legal or lease review claim | Platform overclaim |
+| Urgency to commit immediately after expression | Violates post-expression defer ethics |
+| Conflating moderation approval with application acceptance | Moderation ≠ tenant selection |
+| Auto-submit or pre-checked formal interest | Violates voluntary expression and informed consent |
+| Application count as engagement metric over housing judgment | Anti-engagement posture violation |
+| Checkbox consent theater without scope comprehension | Violates informed consent principles |
+| Forced application before Application Readiness | Violates calm Application Environment |
+
+---
+
+## 19. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, application initiatives must trace to this chapter and upstream contracts:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New application surfaces | Application Environment and Application Confidence impact |
+| Formal interest expression features | Informed Consent and Formal Interest Expression principles |
+| Application preparation features | Application Preparation and Viewing Boundaries honored |
+| Post-expression flows | Application Outcomes and Transition to Commitment integrity |
+| Notifications about application state | Calm tone; no false acceptance implication |
+| Personalization in application | Does not simulate certainty; Memory Transparency |
+| Performance optimization | Does not degrade currency of listing truth at application time |
+
+**Review gate:** No application experience surface ships without checklist against Application Environment, Application Readiness, Application Preparation, Application Confidence, Application Boundaries, Informed Consent principles, Formal Interest Expression principles, and Application Outcomes.
+
+**Forward chapters:** Commitment and housing obligation extend post-expression outcomes — this chapter supplies the formal-interest boundary foundation.
+
+---
+
+## 20. Chapter Summary
+
+Property application is where Rento converts **physical reconciliation judgment** into **formal housing interest with informed consent**.
+
+This chapter defines:
+
+- **Position** — Decision Experience stage after property viewing, before commitment escalation  
+- **Environment** — Application Environment as formal-interest decision space  
+- **Readiness** — Application Readiness for responsible interest expression  
+- **Preparation** — Application Preparation for conscious formal-interest intent  
+- **Confidence** — Application Confidence for expression worth and outcome judgment  
+- **Boundaries** — Application Boundaries for formal-interest scope limits  
+- **Consent** — Informed Consent principles before expression  
+- **Expression** — Formal Interest Expression principles for trustworthy escalation  
+- **Outcomes** — express, defer expression, withdraw, post-expression proceed, defer, release — all valid  
+- **Integrity** — Application Integrity for expression honesty  
+- **Integration** — extends Chapters 31–35; consumes Chapters 16 and 20 without redefining them  
+- **Transition** — handoff toward Commitment Experience without owning commitment readiness  
+- **Mobile** — primary preparation and expression surface; calm, reversible, partner-ready  
+
+Application succeeds when users express formal interest prepared and consenting, understand what expression establishes and what it cannot, and proceed, defer, or release with clarity — achieving **Application Confidence** as this chapter's desired outcome — knowing what viewing and verification settled, what application expressed, and what commitment and legal review must still settle.
+
+**Decision Experience flow:**
+
+Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → Property Comparison Experience (Chapter 33) → Property Verification Experience (Chapter 34) → Viewing Experience (Chapter 35) → **Application Experience (Chapter 36)** → following Decision Experience chapters
+
+---
+
+## 21. Design Director Review
+
+**Chapter:** 36 — Application Experience  
+**Section:** XXXIII — Application Experience  
+**Review type:** Initial standard adoption
+
+### 21.1 Approval Statement
+
+- **Architecture Review** — APPROVED  
+- **Editorial Pass** — APPROVED  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **application experience contract** for Rento. All formal interest expression, application preparation, and application outcome surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 21.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; application context; identity at escalation |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 29 — Maps & Location Experience | Location policy honesty for application context |
+| Chapter 31 — Property Detail Experience | Property Confidence, Contact Readiness, Listing Integrity, information layer |
+| Chapter 32 — Media Experience | Expected Property, evidence layer, reconciliation input |
+| Chapter 33 — Property Comparison Experience | Narrowing context; partner shared application |
+| Chapter 34 — Property Verification Experience | Proceeding Readiness, Verification Boundaries, verification handoff |
+| Chapter 35 — Viewing Experience | Viewing Confidence, Viewing Boundaries, viewing handoff |
+| Chapter 37+ — Decision Experience | Commitment, housing obligation — forward |
+
+### 21.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Application positioned as formal-interest boundary — not viewing, verification, contact, commitment, or legal due diligence  
+2. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+3. New concepts (Application Environment, Application Readiness, Application Preparation, Application Confidence, Application Boundaries, Application Integrity) are reusable in later Decision Experience chapters  
+4. Application Readiness and Application Confidence clearly scoped — no overlap with Viewing Readiness, Proceeding Readiness, or Viewing Confidence  
+5. Informed Consent and Formal Interest Expression principles defined without implementation leakage  
+6. Transition to Commitment Experience honest — application does not pretend commitment readiness  
+7. Anti-manipulation and boundary honesty preserved  
+8. Mobile-first order explicit  
+9. No implementation leakage  
+
+### 21.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on application experience philosophy |
+| Head of Product Design | Parity with Decision Experience block |
+| Senior UX Designer | Consent communication, preparation depth, mobile rhythm |
+| Product Management | Application boundary honesty and marketplace integrity |
+| Content Design Lead | Scope language and boundary honesty |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual application access and anxiety-sensitive design |
+
+### 21.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new application experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 21.6 Design Director Closing Note
+
+Users do not rent application forms. They rent homes — and they deserve to express formal interest only when prepared, only with understanding, and never confuse a signal of pursuit with a signed lease. This chapter exists so Rento helps people cross the formal-interest boundary with honest preparation, informed consent, and dignity whether they proceed, defer, or release.
+
+---
+
+**End of Chapter 36**
 
