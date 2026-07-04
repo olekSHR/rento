@@ -52,12 +52,13 @@ This standard is **not** implementation documentation. It does not specify code,
 | 24 | [Empty, Loading & Error States Experience](#chapter-24--empty-loading--error-states-experience) | Empty, Loading & Error States | APPROVED |
 | 25 | [Feedback, Status & System Communication Experience](#chapter-25--feedback-status--system-communication-experience) | Feedback & System Communication | APPROVED |
 | 26 | [Search Filters & Refinement Experience](#chapter-26--search-filters--refinement-experience) | Search Filters & Refinement | APPROVED |
+| 27 | [Sorting & Ranking Experience](#chapter-27--sorting--ranking-experience) | Sorting & Ranking | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 27+ | Future chapters per design standard roadmap |
+| 28+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -73,6 +74,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-04 | Chapter 25 — Feedback & System Communication draft added |
 | 1.0 | 2026-07-04 | Chapter 25 — Feedback, Status & System Communication approved |
 | 1.0 | 2026-07-04 | Chapter 26 — Search Filters & Refinement approved and added |
+| 1.0 | 2026-07-04 | Chapter 27 — Sorting & Ranking Experience approved and added |
 
 ---
 
@@ -25139,3 +25141,1600 @@ Users do not come to Rento to play with filters. They come to ** find a home the
 ---
 
 **End of Chapter 26**
+
+
+---
+
+## Chapter 27 — Sorting & Ranking Experience
+
+**Section:** XXIV — Sorting & Ranking  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Search & Discovery, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–26; operationalizes Search Experience (Chapter 13), Filters & Refinement (Chapter 26), Personalization (Chapter 22), Trust (Chapter 20), state experience (Chapter 24), and system communication (Chapter 25); defines principles only — not sort APIs, ranking algorithms, machine learning models, Elasticsearch queries, database schemas, analytics pipelines, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **sorting and ranking experience philosophy** for Rento.
+
+After users define **which homes are eligible** through search and filters, sorting and ranking govern **how those homes are ordered and prioritized** in discovery — the sequence in which users encounter listings during a long-term residential rental search.
+
+Sorting and ranking exist to help users discover **the most relevant homes with confidence**. They are not mechanisms for maximizing engagement, clicks, or session duration. They are not advertising dressed as discovery.
+
+Ranking supports **trustworthy housing decisions**. Users must always believe that results are ordered **fairly, predictably, and transparently** — and that they remain in control when order changes.
+
+Where Chapter 13 defines search holistically and Chapter 26 defines refinement, **this chapter defines the official prioritization layer** — how presentation order serves evaluation, comparison, and shortlist formation throughout the Housing Journey.
+
+This chapter governs sorting philosophy, ranking ethics, transparency, user control, trust signals in order, sponsored separation, and evolution. It does **not** specify relevance scoring formulas, ML training pipelines, sort query parameters, or listing card components.
+
+
+## Why Sorting Exists
+
+Users cannot evaluate every apartment listing with equal attention. In a long-term residential rental marketplace, result sets may contain dozens of eligible homes across neighborhoods, price bands, and property types. **Sorting exists because users need help deciding where to begin evaluation** — not because the platform needs to maximize scroll depth or clicks.
+
+Ordering is a form of **decision support**. A governed sort sequence reduces cognitive effort by presenting homes in an order that matches user intent — newest, best match to criteria, lowest monthly rent, or verified professional first. Sorting should **accelerate thoughtful housing decisions**, not influence choices unfairly or manufacture false urgency through position alone.
+
+The housing discovery progression on Rento:
+
+```
+Discovery
+        ↓
+Ordering
+        ↓
+Evaluation
+        ↓
+Comparison
+        ↓
+Decision
+        ↓
+Contact Realtor
+```
+
+**Ordering sits between discovery and evaluation.** After users know which homes are eligible (Chapter 26) and before they open individual listings (Chapters 14–15), sort and rank determine the sequence of attention. When ordering succeeds, users move efficiently from scan to shortlist. When ordering fails — through opacity, manipulation, or unpredictability — users distrust the entire result set regardless of filter quality.
+
+Sorting must never become an engagement mechanism. It exists to help users **find the right home faster with confidence**, not to keep them scrolling or clicking listings they would not have chosen with full information.
+
+---
+
+
+## Order Is Meaning
+
+**Order Is Meaning** is a governing philosophy in the RENTO PRODUCT DESIGN STANDARD.
+
+Presentation order is not neutral. Users naturally interpret **earlier results as more important, more relevant, or more recommended** — even when they have not consciously chosen a sort mode. Position communicates priority whether the product intends it or not.
+
+Therefore ordering is also a **communication system**. Changing the sequence of apartment listings changes what the marketplace appears to value. Top positions signal: *start here*. Lower positions signal: *evaluate later, if at all*. This communicative power makes ranking part of the broader **Product Communication** philosophy defined in Chapter 25 — not only a discovery mechanic.
+
+Because order carries meaning, ordering must remain:
+
+- **Transparent** — users understand why results appear in current sequence — Ranking Transparency (§5)  
+- **Honest** — position does not imply guarantees, sponsorship, or quality the listing does not possess — Ranking Integrity (§6)  
+- **Predictable** — changing sort or returning to results does not arbitrarily reshuffle meaning — Stable Ordering (§8)  
+
+Teams must treat every reorder — default rank change, new sort mode, sponsored module placement, personalization shift — as **a communication decision**, not merely an engineering output. Order that users cannot interpret is order that erodes Discovery Trust (§11).
+
+This philosophy connects Sorting Intent (§13), Ranking Confidence (§14), and Feedback, Status & System Communication (Chapter 25): **how results are arranged is part of how the product speaks**.
+
+---
+
+## Design Principles Summary
+
+This chapter governs how search results are ordered and prioritized throughout the Rento marketplace. The following principles summarize the full sorting and ranking contract for designers, product managers, and reviewers:
+
+1. **Support housing decisions** — Order exists to help users find worthy homes faster — not to maximize scroll depth, ad impressions, or platform revenue through disguised placement.
+
+2. **Preserve trust** — Ranking must align with marketplace truth — available inventory, honest verification, and eligibility rules. Order never implies availability or quality that listing truth does not support.
+
+3. **Remain understandable** — Users must grasp what sort is active, why results appear in current sequence, and whether personalization influences order — Ranking Transparency is non-negotiable.
+
+4. **Remain predictable** — Same criteria and sort choice produce consistent order class — Stable Ordering and Ranking Predictability preserve Search Confidence.
+
+5. **Separate mechanisms clearly** — Filtering changes eligibility; sorting changes presentation; implicit ranking changes priority within defaults — users must never confuse the three.
+
+6. **Keep users in control** — Explicit sort is always available, reversible, and visible. Default ranking serves user benefit — not hidden commercial optimization.
+
+7. **Preserve fairness and neutrality** — Marketplace Neutrality and Ranking Fairness require honest exposure rules — no pay-to-win disguised as relevance.
+
+8. **Discover the right home — not manipulate behavior** — Ranking Confidence grows when order helps evaluation; it collapses when users suspect hidden promotion or engagement tuning.
+
+These principles apply to every search results list, saved search return, map-list synchronization, recommendation module intersection, and realtor portfolio ordering surface in the Rento ecosystem.
+
+---
+
+## What This Chapter Is NOT
+
+To prevent category errors during design, review, and engineering handoff, this chapter is explicitly **not** about:
+
+- **Ranking algorithms** — Scoring formulas, weight tuning, or ML model architecture.
+- **Machine learning implementation** — Training pipelines, feature stores, or inference services.
+- **SQL queries** — Database sort clauses or index optimization.
+- **Elasticsearch** — Relevance scoring, function scores, or cluster configuration.
+- **API endpoints** — Sort parameters, rank contracts, or backend routing.
+- **Database schemas** — Columns used for ordering or rank metadata storage.
+- **Analytics instrumentation** — Click-through optimization, engagement funnels, or rank A/B event schemas.
+- **AI search implementation** — Natural language query parsing or generative retrieval systems.
+- **Frontend implementation** — React sort dropdowns, list virtualization, or styling systems.
+
+This chapter governs **the human experience of result ordering** — how users understand, control, trust, and evaluate the sequence in which apartment listings appear.
+
+Engineering implements ordering that honors these principles. Technical capability to rank does not justify order that users cannot understand or trust.
+
+
+## Perceived Neutrality
+
+**Perceived Neutrality** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Perceived Neutrality is **the user's belief that search results are ordered for their benefit** — to help them find a suitable long-term rental — **rather than for hidden commercial interests** of the platform, paying realtors, or engagement optimization.
+
+Perceived Neutrality is distinct from but dependent on **Marketplace Neutrality** (§10):
+
+| Concept | Scope |
+|---------|--------|
+| **Marketplace Neutrality** | Actual governance — organic order free of undisclosed paid boost; rules documented and enforced |
+| **Perceived Neutrality** | User perception — the felt sense that ordering serves the renter's housing decision |
+
+Even objectively fair ranking **loses value if users believe results are manipulated**. One undisclosed sponsored position in an organic list, one “Recommended” label that users learn to distrust, or one inexplicable reorder on return from listing detail can collapse Perceived Neutrality — and with it, trust in every listing on screen.
+
+Perceived Neutrality strengthens:
+
+- **Discovery Trust** (§11) — users believe discovery helps them find honest, eligible homes  
+- **Ranking Confidence** (§14) — users trust current sequence is fair and understandable  
+- **Decision Confidence** (Chapter 26) — users open, save, and contact from ordered lists without second-guessing position  
+
+Product, design, and trust teams evaluate ordering changes not only against governance rules but against **whether renters would still believe the marketplace is on their side**. Perceived Neutrality is reusable across Sponsored modules (§37–38), Personalization boundaries (§36), Maps, AI Search, and future discovery chapters wherever order could be read as manipulation.
+
+---
+
+
+## Ranking Resolution
+
+**Ranking Resolution** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Ranking Resolution is **the moment when users stop questioning the order of results and begin evaluating the listings themselves** — opening cards, comparing rent and neighborhoods, saving favorites, and moving toward contact.
+
+Ranking Resolution represents the **successful completion of the ordering phase**. Once achieved, ranking becomes almost invisible. User attention shifts naturally from *“Why is this home first?”* to *“Is this home right for me?”* — the transition from ordering to housing evaluation.
+
+Ranking Resolution connects the search system layers:
+
+- **Search Confidence** (Chapter 26) — users trust the eligible set  
+- **Refinement Resolution** (Chapter 26) — users trust their criteria; attention shifts from filters to listings  
+- **Ranking Resolution** (this chapter) — users trust the sequence; attention shifts from order to evaluation  
+- **Decision Confidence** (Chapter 26) — users act on listings with readiness to save or contact  
+
+The product supports Ranking Resolution by making sort mode visible, honoring Sorting Intent (§13), preserving Stable Ordering (§8), and practicing Ranking Transparency (§5) — not by pushing users to change sort repeatedly or question every top result.
+
+This concept is reusable across Listing Detail (Chapter 15), Favorites (Chapter 17), Contact (Chapter 16), and future Maps and AI Search chapters wherever the product must recognize that **ordering has fulfilled its purpose** and evaluation should begin.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Sorting, ranking, prioritization, user control, trust |
+| **Separation** | Filter vs sort vs rank — distinct user mental models |
+| **Transparency** | Active sort, default rank disclosure, personalization boundaries |
+| **Sort options** | Governed meanings — price, newest, relevance, verified |
+| **Trust in order** | Verification, freshness, availability, fair exposure |
+| **Ethics** | Sponsored separation, marketplace neutrality, no hidden promotion |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, consistency |
+
+### 2.2 Out of Scope
+
+- Filter eligibility and criteria application (Chapter 26)  
+- Recommendation modules and personalized feeds as primary surfaces (Chapter 22 — intersection governed)  
+- Listing card content and preview hierarchy (Chapter 14)  
+- Map discovery UI detail (future chapter — sort truth rules apply when shipped)  
+- Implementation of rank engines, indexes, or sort APIs  
+- Admin moderation queue ordering  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **order of listings affects user discovery**, including but not limited to:
+
+- Search results lists after filters apply  
+- Default browse ordering before explicit sort  
+- Saved search result returns  
+- Map-list synchronized views (when product ships)  
+- Sort controls on mobile and desktop results  
+- Realtor workspace portfolio lists (owned inventory scope)  
+
+If a surface answers *“In what sequence should eligible homes appear to support evaluation?”* — this chapter applies.
+
+### 2.4 Order Serves Evaluation, Not Engagement
+
+Higher position is success **only when** it helps users find relevant homes faster — not when it maximizes clicks on listings users would not have chosen with full information.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When sorting or ranking decisions conflict with lower-level guidance:
+
+1. Immutable domain rules (public availability, moderation status, inventory truth)  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 13 — Search Experience System  
+4. Chapter 26 — Search Filters & Refinement Experience  
+5. **This chapter** — for sort and rank behavior  
+6. Chapters 20, 22 — trust and personalization boundaries  
+7. Chapters 24–25 — states and communication during reorder  
+
+Ranking must never **surface unavailable inventory higher through deception**, **override explicit user sort without disclosure**, or **disguise sponsored placement as organic relevance**.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust before conversion; only what is real |
+| Chapter 2 — Experience Principles | Scannability; calm; no manipulation |
+| Chapter 4 — Layout & Information Architecture | Result list hierarchy; sort control placement |
+| Chapter 5 — Product Design Decision Framework | New sort modes necessity test |
+| Chapter 9 — Motion & Interaction System | Calm reorder; stable list behavior |
+| Chapter 10 — Navigation System | Return from detail preserves sort context |
+| Chapter 13 — Search Experience System | Parent search system; §15–17 extended here |
+| Chapter 14 — Listing Card & Preview System | Card truth independent of position |
+| Chapter 17 — Favorites & Saved Properties Experience | Saved search returns honor sort state |
+| Chapter 20 — Trust, Verification & Moderation Experience | Verification meaning in order |
+| Chapter 22 — Personalization & Recommendations Experience | Personalization boundaries in rank |
+| Chapter 24 — Empty, Loading & Error States Experience | Reorder load honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Sort change communication |
+| Chapter 26 — Search Filters & Refinement Experience | Filters define set; this chapter orders it |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 13 introduced sort and prioritization at system level. Chapter 26 governs **which listings qualify**. **This chapter governs how qualified listings are ordered and prioritized** — the official prioritization layer of the Search System.
+
+Without this chapter, sort controls become engineering dropdowns and default rank becomes opaque optimization. With it, ordering becomes **governed decision support**.
+
+### 3.4 Position in Search System Evolution
+
+```
+Search Experience (Chapter 13)
+        ↓
+Search Filters & Refinement (Chapter 26)
+        ↓
+Sorting & Ranking (this chapter)
+        ↓
+Search Results → Maps & Location → Saved Searches → AI Search
+        (future standard chapters when authored)
+```
+
+This chapter is the **official prioritization layer**. Later chapters must not reinvent sort or rank philosophy.
+
+---
+
+## 4. Sorting & Ranking Philosophy
+
+Sorting and ranking on Rento **support housing decisions** — never manipulate, confuse, or erode trust.
+
+### 4.1 Ranking Supports Decisions
+
+Order helps users **evaluate faster** — not scroll longer. First positions should earn attention through relevance and honesty, not artificial urgency.
+
+### 4.2 Ranking Preserves Trust
+
+Order must not contradict listing truth, verification meaning, or availability rules (Chapter 20).
+
+### 4.3 Ranking Remains Understandable
+
+Users grasp **why this home appears here** — at least at category level: price sort, newest, relevance, verified preference.
+
+### 4.4 Ranking Never Manipulates
+
+Engagement tuning, hidden commercial boost, and anxiety-driven reordering are forbidden.
+
+### 4.5 Ranking Never Deceives
+
+Position must not imply sponsorship is organic, verification guarantees listing accuracy, or stale inventory is fresh.
+
+### 4.6 Ranking Feels Predictable
+
+Changing sort produces **expected order class**. Default rank behaves consistently across sessions unless criteria or inventory materially change.
+
+### 4.7 Five Ranking Questions
+
+Users must always be able to answer:
+
+1. **Why do results appear in this order?**  
+2. **Why did order change?**  
+3. **Is personalization influencing ordering?**  
+4. **How does sorting differ from filtering?**  
+5. **What happens if I change sort order?**
+
+### 4.8 Three Mechanisms — Never Conflated
+
+| Mechanism | Changes | User control |
+|-----------|---------|--------------|
+| **Filtering** | Which listings are eligible | Criteria apply/remove — Chapter 26 |
+| **Sorting** | Presentation sequence by explicit rule | User-selected sort mode |
+| **Ranking** | Priority within default or relevance order | Transparent defaults; disclosed personalization |
+
+The product **minimizes confusion** between these three throughout all surfaces.
+
+### 4.9 Sorting Changes Presentation
+
+Explicit sort reorders **the same eligible set** — filters unchanged unless user changes them.
+
+### 4.10 Filtering Changes Eligibility
+
+Filters shrink or grow the set. Sort operates **within** eligible results — never silently replaces filter logic.
+
+### 4.11 Ranking Changes Priority
+
+Default relevance, freshness weighting, and trust signals **prioritize within rules** — must remain governed and explainable.
+
+### 4.12 Order Inherits Eligibility Truth
+
+Only **domain-eligible** listings enter ordered sets. Pending, unavailable, or non-public inventory excluded before sort — not hidden by rank tricks.
+
+---
+
+## 5. Ranking Transparency
+
+**Ranking Transparency** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Ranking Transparency is the **degree to which users can see and understand how results are ordered** — active sort mode, default ranking behavior, and any material personalization or commercial influence on sequence.
+
+Transparent ordering:
+
+- Shows **active sort label** — “Price: low to high”, “Newest”, “Recommended”  
+- Explains **recommended or default order** when not obvious — “Best match for your filters”  
+- Discloses **personalization influence** when material — Chapter 22 boundaries  
+- Labels **sponsored placement** distinctly — never organic styling  
+
+Opacity in housing search breeds suspicion. Users who cannot explain order **distrust every listing** — not only top results.
+
+This concept connects Search Confidence (Chapter 26), Discovery Trust, and Ranking Integrity.
+
+---
+
+## 6. Ranking Integrity
+
+**Ranking Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Ranking Integrity is the **alignment between stated sort or rank rules, applied ordering logic, and displayed sequence** — no order lies, no sort mode that does not do what its label claims, no results violating active filters appearing due to rank override.
+
+Ranking Integrity violations include:
+
+- “Price: low to high” with incorrect price sequence  
+- “Verified first” surfacing unverified listings above without label  
+- Sponsored listings in organic relevance positions without disclosure  
+- Personalization reordering while UI shows neutral “Relevance”  
+
+Ranking Integrity inherits Filter Integrity (Chapter 26) and State Integrity (Chapter 24).
+
+---
+
+## 7. Ranking Fairness
+
+**Ranking Fairness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Ranking Fairness is the **principle that eligible listings receive exposure according to governed, user-understandable rules** — not undisclosed payment, relationship, or engagement optimization.
+
+Fair ranking:
+
+- Does not **bury eligible homes** to force paid visibility  
+- Does not **favor paying realtors** in organic sort modes  
+- Applies **same card and truth rules** at every position — Chapter 14  
+- Respects **Fair Exposure** — healthy diversity without unhealthy repetition  
+
+Fairness does not mean equal position for all listings. It means **order earns trust** because rules serve renters, not hidden marketplace incentives.
+
+---
+
+## 8. Stable Ordering
+
+**Stable Ordering** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Stable Ordering is the **predictable relationship between user intent, sort selection, and result sequence** — users are not surprised by chaotic reorder on minor actions or return navigation.
+
+Stable Ordering requires:
+
+- **Explicit sort persists** across scroll, detail return, and session restore — Context Preservation  
+- **Reorder feedback calm** — Chapter 25; list does not jump unpredictably  
+- **Tie-break rules consistent** — same inputs yield same order class  
+- **Load states honest** — skeleton order not fake final rank  
+
+Instability reads as manipulation or broken product. Stability supports Ranking Confidence.
+
+---
+
+## 9. Decision Priority
+
+**Decision Priority** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Decision Priority is the **governed hierarchy of what ordering should optimize for in a housing marketplace** — relevance and trustworthiness before engagement metrics.
+
+Priority order conceptually:
+
+1. **Eligibility truth** — only available, public, moderated listings  
+2. **Hard filter fidelity** — criteria honored before soft rank  
+3. **User explicit sort** — when selected, overrides default rank  
+4. **User-understandable relevance** — match to stated criteria  
+5. **Trust signals** — verification where meaningful, not decorative  
+6. **Freshness** — aligns with actual availability promise  
+7. **Fair exposure** — scan efficiency without unhealthy repetition  
+
+Engagement, revenue, and realtor payment **do not appear** in consumer organic Decision Priority.
+
+---
+
+## 10. Marketplace Neutrality
+
+**Marketplace Neutrality** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Marketplace Neutrality is **the product's commitment that organic discovery order serves renter housing decisions** — not undisclosed marketplace self-interest.
+
+Neutral marketplace ordering:
+
+- Organic sort modes ** free of paid boost**  
+- Default rank ** articulable to renters** — not “whatever maximizes GMV”  
+- Commercial modules ** separated** from organic results — Advertising Separation  
+- Trust badges ** mean what they say** — Chapter 20  
+
+Neutrality is fragile. One undisclosed paid position in “Relevance” damages Discovery Trust for the entire platform.
+
+---
+
+## 11. Discovery Trust
+
+**Discovery Trust** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Discovery Trust is the **user's belief that search and browse ordering helps them find honest, eligible homes** — not that the platform is steering them toward inventory it needs to move.
+
+Discovery Trust grows when:
+
+- Order is **transparent and reversible**  
+- Top results ** worth opening** — Result Credibility  
+- Sponsored content ** labeled and separable**  
+- Personalization ** bounded and disclosed** — Chapter 22  
+
+Discovery Trust connects Filter Trust (Chapter 26), Ranking Fairness, and Product Philosophy (Chapter 1).
+
+---
+
+## 12. Result Credibility
+
+**Result Credibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Result Credibility is the **user's confidence that listings appearing higher in the sequence deserve attention** — price, photo, location, and availability on the card align with why the listing was ranked highly.
+
+Credibility requires:
+
+- **Card truth at every position** — top result not bait-and-switch  
+- **Sort labels match card facts** — price sort shows price clearly  
+- **Verification labels accurate** — verified realtor ≠ verified listing accuracy  
+- **Freshness honest** — “Newest” reflects meaningful update, not gaming  
+
+Low Result Credibility causes users to **ignore rank entirely** and scroll randomly — defeating the purpose of ordering.
+
+---
+
+## 13. Sorting Intent
+
+**Sorting Intent** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Sorting Intent is the **user's expressed preference for how eligible listings should be sequenced** — captured through explicit sort selection and reflected faithfully in results.
+
+Sorting Intent requires:
+
+- **Visible active sort** — user always knows current mode  
+- **Faithful execution** — Ranking Integrity for explicit sorts  
+- **Persistence** — intent survives navigation — Context Preservation  
+- **Easy reversal** — return to default or change mode without penalty  
+
+When Sorting Intent is clear and honored, users **trust the list** and move to Refinement Resolution (Chapter 26) or listing evaluation.
+
+---
+
+## 14. Ranking Confidence
+
+**Ranking Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Ranking Confidence is the **user's belief that current result order is fair, understandable, and helpful for their housing search** — not optimized against them.
+
+Ranking Confidence grows when:
+
+- Five Ranking Questions (§4.7) are answerable  
+- Sort change produces **predictable outcome**  
+- Default “Recommended” or relevance order ** explainable at category level**  
+- No suspicion of **hidden promotion**  
+
+Ranking Confidence is the ordering counterpart to Search Confidence (Chapter 26) and Decision Confidence — together they support the shortlist.
+
+---
+
+## 15. User Control
+
+Users **always remain in control** of explicit sort.
+
+### 15.1 Sort Always Accessible
+
+Sort control ** reachable on mobile** — not buried in desktop-only chrome.
+
+### 15.2 Sort Change Immediate
+
+Selecting sort ** updates order with clear feedback** — Chapter 25.
+
+### 15.3 Sort Independent of Filters
+
+Changing sort ** does not alter filters** unless product explicitly couples — rare and disclosed.
+
+### 15.4 Default Recoverable
+
+User can ** return to default order** — Returning to Default (§34).
+
+### 15.5 No Forced Sort Lock
+
+Product never ** traps user** in sort mode that obscures better options.
+
+### 15.6 Control Extends to Sponsored
+
+Where sponsored modules exist, user can ** recognize and reduce** — Chapter 22.
+
+---
+
+## 16. Sorting, Filtering, and Ranking Separation
+
+The three mechanisms must remain **visually and conceptually distinct**.
+
+### 16.1 Filter UI ≠ Sort UI
+
+Controls ** grouped and labeled separately** — not one “Search options” soup.
+
+### 16.2 Active Filter Summary ≠ Sort Label
+
+Results header shows ** both** — “14 homes · Mărăști · Sort: Newest”.
+
+### 16.3 Recommended ≠ Filter
+
+“Recommended” sort or module ** not imply** hidden criteria applied.
+
+### 16.4 Rank Disclosure for Defaults
+
+When default rank is relevance-based, ** plain-language explanation** available — not algorithmic jargon.
+
+### 16.5 Education Light
+
+First-time users ** not tutorialized** — separation clear from labels and layout — Chapter 23.
+
+### 16.6 Cross-Chapter Consistency
+
+Chapter 26 chips ** never duplicate** sort control. Chapter 22 modules ** never mimic** organic sort bar.
+
+---
+
+## 17. Default Ranking
+
+Default order is the **first impression of marketplace quality**.
+
+### 17.1 Default Serves Renter Benefit
+
+Typically ** relevance to criteria** or ** newest available** — governed product choice, documented.
+
+### 17.2 Default Labeled
+
+Results show ** “Recommended” or “Best match”** — not invisible algorithm.
+
+### 17.3 Default Overridable
+
+Explicit sort ** one or two taps** away.
+
+### 17.4 Default Never Paid
+
+Organic default rank ** excludes undisclosed sponsored boost**.
+
+### 17.5 Default Respects Filters
+
+Ranking within ** filtered eligible set only**.
+
+### 17.6 Default Stable Session
+
+Returning to results ** restores default or last explicit sort** — disclosed behavior.
+
+---
+
+## 18. Explicit Sorting
+
+Explicit sort is **user-authored Sorting Intent**.
+
+### 18.1 Sort Modes Few and Meaningful
+
+Not every database field — governed catalog only.
+
+### 18.2 Sort Meaning Documented
+
+Each mode has ** user expectation table** — product maintains.
+
+### 18.3 Sort Applies to Full Eligible Set
+
+Not subset manipulation.
+
+### 18.4 Sort Visible in Saved Search
+
+Reopening saved search ** shows sort state** if persisted.
+
+### 18.5 Sort Change Announced
+
+Material reorder ** count stable**; load honest if delay — Chapter 24.
+
+---
+
+## 19. Implicit Ranking
+
+Implicit ranking operates **within default or relevance order** when user has not selected explicit sort.
+
+### 19.1 Implicit Not Secret
+
+Users informed that ** default order uses match quality** — high level only.
+
+### 19.2 Implicit Bounded by Ethics
+
+No engagement-maximizing ** churn loops** in rank.
+
+### 19.3 Implicit Yields to Explicit Sort
+
+User sort ** always wins** over implicit rank.
+
+### 19.4 Implicit Respects Hard Filters
+
+Never relaxes criteria to ** fill top slots**.
+
+### 19.5 Implicit Auditable Internally
+
+Teams articulate ** why default helps renter** — Decision Priority.
+
+---
+
+## 20. Sorting Options
+
+Governed sort modes for consumer discovery — exact catalog may evolve; meanings invariant.
+
+### 20.1 Recently Added / Newest
+
+**Fresh inventory first** — aligns with actual availability promise. “Newest” means meaningfully new or updated — not gaming timestamps.
+
+### 20.2 Price Low to High
+
+Cheapest **monthly rent first** — currency and period visible on cards. Ranking Integrity on price sequence.
+
+### 20.3 Price High to Low
+
+Premium end first — ** same honesty rules**.
+
+### 20.4 Relevance / Best Match
+
+Best fit to ** active filters and query** — explainable category, not opaque pay rank.
+
+### 20.5 Recommended
+
+Default relevance-oriented order — ** disclosed** when personalization contributes — Chapter 22.
+
+### 20.6 Verified First
+
+Verified **realtor or agency** first where product supports — label matches Chapter 20 semantics; does not imply listing verification.
+
+### 20.7 New Sort Modes
+
+Require ** Design Council review** if affecting trust perception — Chapter 5.
+
+### 20.8 Realtor Portfolio Sort
+
+Operational modes — status, updated date, price — ** workspace scope** — Chapter 19.
+
+---
+
+## 21. Relevance in Ordering
+
+Relevance ranks by **fit to user-stated intent**.
+
+### 21.1 Relevance From Criteria
+
+Active filters and location ** primary inputs** — not inferred taste alone.
+
+### 21.2 Relevance Explainable
+
+“Closer to Mărăști center” ** not “Algorithm score 0.87”**.
+
+### 21.3 Relevance Not Pay-to-Win
+
+Payment ** does not define** organic relevance.
+
+### 21.4 Relevance Degrades Honestly
+
+Sparse inventory ** not padded** with irrelevant top results.
+
+---
+
+## 22. Distance in Ordering
+
+Distance ordering supports **geographic housing decisions**.
+
+### 22.1 Distance Anchor Clear
+
+From ** map center, neighborhood, or user location** — labeled.
+
+### 22.2 Distance Honest
+
+No false precision — street-level rank when data unsupported.
+
+### 22.3 Distance Sort Explicit
+
+“Nearest first” ** user-selected** — not silent default without label.
+
+### 22.4 Distance Respects Filters
+
+Only homes ** within filtered geography** ordered.
+
+---
+
+## 23. Price in Ordering
+
+Price sort is **high-stakes** for renters.
+
+### 23.1 Monthly Rent Consistent
+
+Same period and currency as cards and detail.
+
+### 23.2 Total Cost Clarity
+
+If fees excluded from sort, ** disclosed** — no surprise on detail.
+
+### 23.3 Price Sort Integrity
+
+Sequence ** matches displayed price** on cards.
+
+### 23.4 Price Not Bait
+
+Low sort must not surface ** misleading teaser prices**.
+
+---
+
+## 24. Freshness in Ordering
+
+Freshness aligns with **only what is real**.
+
+### 24.1 Newest Reflects Truth
+
+Recently updated ** when materially available** — not relist gaming.
+
+### 24.2 Stale Not Dominant
+
+Old available listings ** not buried unfairly** nor stale ones ** falsely fresh**.
+
+### 24.3 Freshness Signal on Card
+
+When freshness matters to sort, ** card shows why** — date or “New”.
+
+---
+
+## 25. Availability in Ordering
+
+Availability governs **eligibility before order**.
+
+### 25.1 Available Only in Consumer Discovery
+
+Pending moderation ** never ranked** in public results.
+
+### 25.2 Availability Not Sort Shortcut
+
+“Available now” is ** filter truth** — Chapter 26 — not rank trick.
+
+### 25.3 Move-In Date Future-Compatible
+
+Date-aware order ** honest** when implemented.
+
+---
+
+## 26. Verified Listings in Ordering
+
+Verification influences **trust in evaluation order** — not false guarantees.
+
+### 26.1 Verified Realtor Sort Honest
+
+“Verified first” ** means identity checked** — Chapter 20.
+
+### 26.2 Verification ≠ Listing Accuracy
+
+Copy ** never implies** platform guarantees photos or price.
+
+### 26.3 Verification Badge Consistent
+
+Same meaning ** at position 1 and position 20**.
+
+### 26.4 No Pay-to-Verify Rank
+
+Verification ** not purchased rank boost**.
+
+---
+
+## 27. Realtor Trust Signals
+
+Realtor identity affects **confidence to open** — governed in order context.
+
+### 27.1 Identity Visible at List Level
+
+When product places identity on cards, ** all positions equal rules**.
+
+### 27.2 Agency vs Individual Clear
+
+No ambiguous ** trust hierarchy** in rank.
+
+### 27.3 Moderation Status Invisible to Consumers
+
+Rejected or pending ** not in consumer ordered sets**.
+
+### 27.4 Professional Listings Same Card Grammar
+
+Realtor listings ** same preview contract** — Chapter 14.
+
+---
+
+## 28. Quality Indicators
+
+Quality signals help **scan efficiency** — not fake precision.
+
+### 28.1 Completeness Favors Scan
+
+More complete honest listings ** may rank higher in relevance** — disclosed policy.
+
+### 28.2 Quality Never Overrides Truth
+
+Incomplete honest listing ** not below** misleading complete one through rank alone.
+
+### 28.3 Photo Quality Not Manipulated
+
+Blurry lead image ** not boosted** for engagement.
+
+### 28.4 Quality Indicators Secondary
+
+Price and location ** remain primary** on cards.
+
+---
+
+## 29. Trustworthy Ranking
+
+Trustworthy ranking is the **system outcome** of integrity, fairness, and transparency.
+
+### 29.1 Top Results Earn Trust
+
+First screen ** representative** of filtered market — not skewed sample.
+
+### 29.2 Order Matches Promises
+
+Marketing ** never claims** “best homes” if order is pay-weighted.
+
+### 29.3 Trust Recovery
+
+If rank error discovered, ** correct and communicate** — Chapter 25.
+
+### 29.4 Trust Across Sessions
+
+Saved search return ** same trust rules**.
+
+---
+
+## 30. Fair Exposure
+
+Fair exposure prevents **unhealthy result set distortion**.
+
+### 30.1 Saturation Limits
+
+Same building ** not repeated** beyond user benefit unless intent clear — Chapter 13.
+
+### 30.2 New Listings Visible
+
+New eligible homes ** reach exposure** — not permanently buried by incumbents.
+
+### 30.3 Small Inventory Honest
+
+Few results ** not padded** with irrelevant order.
+
+### 30.4 Exposure Not Paywall
+
+Organic visibility ** not held hostage** for sponsored upgrade.
+
+---
+
+## 31. Ranking Predictability
+
+Predictability supports **Ranking Confidence**.
+
+### 31.1 Sort Change Predictable
+
+Price low → ascending; newest → recency — ** no surprises**.
+
+### 31.2 Return Predictable
+
+Back from detail ** same order and scroll** — Stable Ordering.
+
+### 31.3 Notification Deep Link Predictable
+
+Saved search alert opens ** expected sort state** — Chapter 21.
+
+### 31.4 Personalization Shift Disclosed
+
+Material order change from personalization ** user-visible** when required — Chapter 22.
+
+---
+
+## 32. Context Preservation
+
+Sort state is **part of search context** — Chapter 26 Search Continuity extended.
+
+### 32.1 Detail Return Preserves Sort
+
+Filter + sort + scroll ** restored**.
+
+### 32.2 Auth Preserves Sort
+
+Login merge ** keeps sort intent** — Chapter 23.
+
+### 32.3 Map-List Sync
+
+Map and list ** same order logic** when product ships.
+
+### 32.4 Broken Restore Honest
+
+Failure ** calm recovery** — Chapter 24.
+
+---
+
+## 33. Changing Sort Order
+
+Sort change **must feel lightweight and reversible**.
+
+### 33.1 One Tap Select
+
+Mobile sheet or menu ** thumb-friendly**.
+
+### 33.2 Current Sort Highlighted
+
+Active mode ** checked or labeled**.
+
+### 33.3 Change Feedback
+
+“Sorted by price: low to high” ** brief confirmation** — optional toast.
+
+### 33.4 Filters Unchanged
+
+Chip bar ** stable** on sort change.
+
+### 33.5 Scroll Policy
+
+Scroll to top ** when needed for comprehension** — motion calm; not punitive jump.
+
+---
+
+## 34. Returning to Default
+
+Default recovery **without guilt**.
+
+### 34.1 Default Option Visible
+
+“Recommended” or “Best match” ** in sort list**.
+
+### 34.2 Clear Label
+
+Not ambiguous “Reset”.
+
+### 34.3 Persists Session
+
+Default choice ** remembered** per search context.
+
+### 34.4 No Loss Framing
+
+Neutral copy — not “Give up custom sort?”.
+
+---
+
+## 35. Search Confidence and Decision Confidence
+
+Ordering **extends confidence from Chapter 26**.
+
+### 35.1 Search Confidence
+
+Users trust ** eligible set** — filters honest.
+
+### 35.2 Ranking Confidence
+
+Users trust ** sequence** — this chapter.
+
+### 35.3 Decision Confidence
+
+Users ** open and save** from ordered list — Refinement Resolution leads to evaluation.
+
+### 35.4 Broken Ranking Breaks All
+
+One deceptive top result ** damages entire discovery**.
+
+---
+
+## 36. Personalization Boundaries
+
+Chapter 22 boundaries **sacred in ordering**.
+
+### 36.1 Explicit Criteria Win
+
+Saved filters ** override** inferred taste in relevance.
+
+### 36.2 Personalization Disclosed
+
+Material influence on “Recommended” ** labeled**.
+
+### 36.3 No Hidden Demotion
+
+Eligible homes ** not removed** by personalization without filter.
+
+### 36.4 User Control to Reduce
+
+Preference surfaces ** reduce personalized modules** — not organic sort integrity.
+
+### 36.5 Cold Start Honest
+
+New users ** neutral default** — not fake personalization.
+
+---
+
+## 37. Sponsored Listing Principles
+
+Sponsored placement **governed and optional** — Chapter 22 extended for result lists.
+
+### 37.1 Sponsored Labeled Always
+
+“Sponsored” ** on card and module**.
+
+### 37.2 Sponsored Not Organic Sort
+
+Never appears as ** “Relevance” position** without label.
+
+### 37.3 Sponsored Quality Bar
+
+Same listing truth rules — Chapter 14, 20.
+
+### 37.4 Sponsored Frequency Capped
+
+No ** flood** of ads in results.
+
+### 37.5 Sponsored Separable
+
+Distinct ** visual and structural** treatment.
+
+---
+
+## 38. Advertising Separation
+
+Commercial discovery **separated from organic ordering**.
+
+### 38.1 Structural Separation
+
+Sponsored blocks ** bounded modules** — not interleaved invisibly.
+
+### 38.2 Semantic Separation
+
+Vocabulary ** never overlaps** “Recommended for you” and “Sponsored”.
+
+### 38.3 Navigation Separation
+
+Tap sponsored ** disclosure persists** on detail path.
+
+### 38.4 Policy Separation
+
+Sales ** cannot override** organic Ranking Integrity.
+
+---
+
+## 39. No Hidden Promotion
+
+Hidden promotion is **a trust violation**.
+
+### 39.1 No Pay-to-Rank in Organic Modes
+
+Ever.
+
+### 39.2 No Realtor Favoritism Undisclosed
+
+Relationship deals ** not in consumer rank**.
+
+### 39.3 No Engagement Boost Undisclosed
+
+High click listings ** not secretly promoted**.
+
+### 39.4 Audit Trail Internal
+
+Teams prove ** compliance** — not public algorithm.
+
+---
+
+## 40. Ethical Ranking
+
+Ethical ranking protects **renters from manipulation through order**.
+
+### Never Disguise Commercial Order
+
+Sponsored ** always labeled**.
+
+### Never Punish Sort Exploration
+
+Changing sort ** free and reversible**.
+
+### Never Optimize for Dwell Time
+
+Order ** for decision quality** — not scroll addiction.
+
+### Never Imply False Scarcity Through Rank
+
+Top slots ** not manufactured urgency**.
+
+### Never Override User Sort Silently
+
+Sorting Intent ** sacred**.
+
+### Never Use Rank for Registration Pressure
+
+Order ** not degraded** for guests to force signup.
+
+Teams evaluate ranking changes against these principles in design critique and §50 checklist.
+
+---
+
+## 41. Mobile Sort Experience
+
+Mobile is **primary sort context**.
+
+### 41.1 Sort Control Thumb-Reach
+
+Bottom sheet or header ** reachable one-handed**.
+
+### 41.2 Few Options Scannable
+
+Sort list ** short** — not scroll maze.
+
+### 41.3 Active Sort on Results
+
+Always visible ** without opening sheet**.
+
+### 41.4 Reorder Performance
+
+List update ** prompt** — §44.
+
+### 41.5 Sort During Scroll
+
+Changing sort ** preserves comprehension** — Stable Ordering.
+
+---
+
+## 42. Accessibility
+
+Sort and order **perceivable and operable** for all users.
+
+### 42.1 Sort Control Labeled
+
+Not icon-only mystery.
+
+### 42.2 Active Sort Announced
+
+Screen reader ** hears current mode**.
+
+### 42.3 Reorder Announcement
+
+Material resort ** live region** when helpful.
+
+### 42.4 Focus on Sheet Close
+
+Return focus ** sensible**.
+
+### 42.5 Sponsored Distinction Non-Color-Only
+
+Sponsored ** not color alone**.
+
+---
+
+## 43. Motion in Sort Changes
+
+Motion **supports comprehension** — Chapter 9.
+
+### 43.1 Resort Calm
+
+No chaotic shuffle animation.
+
+### 43.2 Reduced Motion
+
+Static reorder ** equivalent information**.
+
+### 43.3 Motion Not Delay
+
+Feedback ** not blocked** by animation.
+
+---
+
+## 44. Ranking Performance Experience
+
+Ranking performance is **felt responsiveness of reorder** — user trusts sort applied correctly and quickly.
+
+### 44.1 Immediate Sort Acknowledgement
+
+Selection ** instant feedback**.
+
+### 44.2 Load Honest
+
+Skeleton ** same card grammar** — Chapter 14.
+
+### 44.3 Stable During Load
+
+No ** flash of wrong order**.
+
+### 44.4 Hung Sort Error Recovery
+
+Timeout ** Chapter 24** — not infinite wait.
+
+### 44.5 Large Set Scannable
+
+Performance ** not excuse** for deceptive order.
+
+---
+
+## 45. Ranking Success Metrics
+
+Ranking quality judged at **philosophy and outcome level** — not click-through on top slot alone.
+
+### Ranking Confidence
+
+Users ** trust order** — qualitative research.
+
+### Result Credibility
+
+Top opens ** lead to worthy detail** — not bait.
+
+### Sorting Intent Honor
+
+Explicit sorts ** match labels** — integrity audits.
+
+### Discovery Trust
+
+Users ** do not suspect hidden ads** — north star qualitative.
+
+### Decision Confidence
+
+Ordered lists ** produce saves and contacts** — informed intent.
+
+### Fair Exposure Health
+
+Eligible inventory ** receives reasonable visibility** — internal review.
+
+Teams evaluate ranking changes against these principles in design critique and §50 checklist.
+
+---
+
+## 46. Ranking Consistency
+
+**One ordering grammar** across surfaces.
+
+### 46.1 One Sort Vocabulary
+
+“Newest”, “Price”, “Recommended” ** same meanings** everywhere.
+
+### 46.2 One Sponsored Grammar
+
+Chapter 22 ** extended** — not parallel dialects.
+
+### 46.3 One Integrity Standard
+
+Consumer, map, saved search ** same rules**.
+
+### 46.4 One Default Policy
+
+Documented ** product-wide**.
+
+### 46.5 Future Surfaces Adopt Chapter
+
+New discovery modules ** extend taxonomy**.
+
+---
+
+## 47. Future Compatibility
+
+Ordering architecture **extends without reinvention**.
+
+### 47.1 Map Ordering
+
+Geographic sort ** inherits distance honesty**.
+
+### 47.2 AI Search Ordering
+
+AI-assisted results ** show sort and filter state** — editable.
+
+### 47.3 Recommendations Chapter Overlap
+
+Modules ** subordinate** to organic list rules.
+
+### 47.4 Multi-City Expansion
+
+Localized labels ** same integrity**.
+
+### 47.5 Collaborative Search
+
+Partner sort preferences ** consent-visible**.
+
+---
+
+## 48. Ranking Evolution
+
+Ranking experience **evolves as one governed prioritization layer**.
+
+### Evolve Modes, Do Not Fragment
+
+New sorts ** fit governed catalog**.
+
+### Resist Sort Proliferation
+
+Each mode ** Chapter 5 necessity proof**.
+
+### Retire Misleading Modes
+
+Modes that confuse ** removed product-wide**.
+
+### Preserve Mental Model
+
+Five Ranking Questions ** invariant** — §4.7.
+
+### Backward Compatibility
+
+Saved search sort ** migrates honestly**.
+
+Ranking evolution requires Design Council approval for **new default rank policy, new trust-affecting sort modes, or sponsored placement in organic lists**.
+
+---
+
+## Product Development Methodology Bridge
+
+The sorting and ranking philosophy documented in this chapter is a **reusable decision framework** — not a catalog of sort dropdowns, relevance formulas, or platform-specific list implementations.
+
+Its principles — support housing decisions, preserve Ranking Integrity and Transparency, maintain Marketplace Neutrality and Perceived Neutrality, honor Sorting Intent, achieve Ranking Resolution, and strengthen Ranking Confidence — describe **how a serious marketplace orders discovery without betraying user trust**. Those principles transcend any single surface, rank stack, or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these prioritization principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed sorting and ranking philosophy into a broader method for building products that present ordered choices fairly, transparently, and in service of user decisions.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's sort surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — Ranking Integrity, filter-sort-rank separation, honest sponsored disclosure, Perceived Neutrality, and calm user control — even when inventory models, commercial policies, or discovery constraints differ from long-term residential rental.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
+## 49. Governance
+
+### 49.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy clarification on sort labels | Senior UX + Content Design |
+| New sort mode in existing trust class | Head of Product Design + Product |
+| New default rank policy | Design Council |
+| Sponsored placement in results | Design Council + Trust review |
+| Material personalization in default order | Design Council |
+| Ranking Integrity exception | Design Council |
+
+### 49.2 Exception Policy
+
+Ranking experiments ** reversible, ethics-reviewed** — no silent pay-to-rank tests.
+
+### 49.3 Documentation Requirement
+
+Shipped sort modes document ** user expectation, integrity rules, personalization disclosure**.
+
+### 49.4 Cross-Team Review
+
+Search, trust, personalization, communication ** review intersections**.
+
+---
+
+## 50. Product Review Checklist
+
+Before shipping any sort or ranking change, reviewers confirm:
+
+1. **User benefit** — Does this order help housing decisions?  
+2. **Separation** — Filter, sort, rank clearly distinct?  
+3. **Ranking Transparency** — Active sort and default behavior visible?  
+4. **Ranking Integrity** — Sequence matches stated mode?  
+5. **Five questions** — Why order, why change, personalization, sort vs filter, change effect?  
+6. **Sorting Intent** — Explicit choice honored and persistent?  
+7. **Marketplace Neutrality** — No hidden commercial boost in organic modes?  
+8. **Sponsored** — Labeled, separated, capped — if applicable?  
+9. **Personalization** — Chapter 22 boundaries respected?  
+10. **Trust signals** — Verification and freshness honest?  
+11. **Stable Ordering** — Predictable on return and resort?  
+12. **Mobile-first** — Sort reachable, reversible?  
+13. **Accessibility** — Labels, announcements?  
+14. **Performance** — Prompt resort, honest load?  
+15. **Ethics** — No manipulation, false scarcity, guest degradation?  
+16. **Chapter 13 & 26 alignment** — Extends search and filters?  
+17. **Fair exposure** — No unhealthy saturation?  
+18. **Realtor vs consumer** — Correct scope?  
+19. **Future chapter fit** — Prioritization layer, not recommendation sneak?  
+20. **Rollback** — Can mode or policy disable without breaking discovery?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 51. Common Mistakes
+
+### 51.1 Sort Hidden on Mobile
+
+**Mistake:** Sort only on desktop filter drawer.  
+**Correction:** User control — §15, §41.
+
+### 51.2 Recommended Means Paid
+
+**Mistake:** “Recommended” top results are sponsored without label.  
+**Correction:** No Hidden Promotion — §39.
+
+### 51.3 Sort Resets Filters
+
+**Mistake:** Price sort clears neighborhood filter.  
+**Correction:** Separation — §16.
+
+### 51.4 Verified First Overpromises
+
+**Mistake:** Implies listing accuracy guaranteed.  
+**Correction:** §26 — verification semantics.
+
+### 51.5 Chaotic Reorder on Return
+
+**Mistake:** Back from detail reshuffles list.  
+**Correction:** Stable Ordering — §8.
+
+### 51.6 Mystery Default Rank
+
+**Mistake:** No label for default order.  
+**Correction:** Default Ranking — §17.
+
+### 51.7 Too Many Sort Options
+
+**Mistake:** Twelve obscure sort modes.  
+**Correction:** Few and meaningful — §20.
+
+### 51.8 Personalization Invisible
+
+**Mistake:** Order changes with no disclosure.  
+**Correction:** Chapter 22 + §36.
+
+### 51.9 Price Sort Mismatch
+
+**Mistake:** Card price does not match sort sequence.  
+**Correction:** Ranking Integrity — §6.
+
+### 51.10 Engagement-Optimized Rank
+
+**Mistake:** Listings with high CTR always on top in “Relevance”.  
+**Correction:** Ethical Ranking — §40.
+
+---
+
+## 52. Correct & Incorrect Examples
+
+### 52.1 Active Sort Visibility
+
+**Correct:** “24 homes · Mărăști · Sort: Price low to high”  
+**Incorrect:** “24 homes” with no sort indicator while custom sort active.
+
+### 52.2 Sort Change
+
+**Correct:** User selects “Newest” → list resorts → brief “Sorted by newest” → filters unchanged.  
+**Incorrect:** Selecting sort clears filter chips.
+
+### 52.3 Default Order
+
+**Correct:** “Best match for your search” with link “How sorting works”.  
+**Incorrect:** Unlabeled order users cannot describe.
+
+### 52.4 Verified First
+
+**Correct:** “Verified realtor first — identity checked (see what this means).”  
+**Incorrect:** “Trusted homes” at top with undefined meaning.
+
+### 52.5 Sponsored in Results
+
+**Correct:** Separate “Sponsored listings” module with labeled cards below organic results.  
+**Incorrect:** Paid listing at position 1 in organic “Recommended” list.
+
+### 52.6 Price Sort Integrity
+
+**Correct:** 450 €, 520 €, 580 € cards in ascending order.  
+**Incorrect:** 580 € appears above 520 € without explanation.
+
+### 52.7 Return from Detail
+
+**Correct:** User returns to same scroll position and sort — listing they opened still visible nearby.  
+**Incorrect:** List resets to top with different order.
+
+### 52.8 Saved Search
+
+**Correct:** “Saved search: 2 rooms, Mărăști — Sort: Newest — notify when new matches.”  
+**Incorrect:** Saved search loses sort state silently.
+
+### 52.9 Personalization
+
+**Correct:** “Recommended based on your saved search in Cluj.”  
+**Incorrect:** Order shifts with no user-visible reason.
+
+### 52.10 Realtor Workspace
+
+**Correct:** Realtor sorts portfolio by “Pending review” then “Last updated”.  
+**Incorrect:** Consumer “Relevance” copy on moderation queue.
+
+---
+
+## 53. Design Director Review
+
+**Chapter:** 27 — Sorting & Ranking Experience  
+**Section:** XXIV — Sorting & Ranking  
+**Review type:** Initial standard adoption
+
+### 53.1 Approval Statement
+
+This chapter is approved as the **sorting and ranking experience contract** for Rento. All result ordering, default rank policy, explicit sort behavior, sponsored separation, and personalization disclosure in discovery lists must comply. Implementation systems and algorithms are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 53.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Trust before conversion; calm discovery |
+| Chapter 4 — Layout & Information Architecture | Result list and sort control hierarchy |
+| Chapter 9 — Motion & Interaction System | Calm reorder behavior |
+| Chapter 13 — Search Experience System | Parent search system; prioritization layer |
+| Chapter 14 — Listing Card & Preview System | Card truth at every rank position |
+| Chapter 20 — Trust, Verification & Moderation Experience | Verification in order |
+| Chapter 22 — Personalization & Recommendations Experience | Personalization and sponsored boundaries |
+| Chapter 25 — Feedback, Status & System Communication Experience | Sort change communication |
+| Chapter 26 — Search Filters & Refinement Experience | Filters define set; this chapter orders |
+| Chapter 28+ — Maps, AI search | Future layers when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 53.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. Does this change help users find relevant homes faster with confidence?  
+2. Does it preserve Ranking Integrity and Transparency?  
+3. Are filter, sort, and rank still clearly separated?  
+4. Does default or recommended order remain explainable and neutral?  
+5. Are sponsored and personalization rules still honest?  
+6. Does change align with Search Experience (Chapter 13) and Filters (Chapter 26)?
+
+New default rank policies, trust-affecting sort modes, or sponsored placement in organic lists require Design Council approval.
+
+### 53.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on ordering system |
+| Head of Product Design | Cross-surface sort consistency |
+| Senior UX Designer | Sort controls, mobile flows, stability |
+| Product Management | Marketplace neutrality and sponsored policy |
+| Content Design Lead | Sort labels, disclosure copy |
+| Trust & Safety | Verification and sponsored honesty |
+| Accessibility Specialist | Sort controls and announcements |
+
+### 53.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new sort and ranking work immediately upon approval. Existing result ordering surfaces align during scheduled improvement cycles.
+
+### 53.6 Design Director Closing Note
+
+Users do not come to Rento to decipher algorithms. They come to **find a home they can trust among homes they can see**. Sorting succeeds when changing order feels intentional, honest, and reversible — when “Recommended” means help, not hustle, and when the first listings on screen earn attention through relevance and truth rather than payment or panic. This chapter exists so prioritization becomes the disciplined next step after refinement: transparent, fair, user-controlled, and always in service of the Housing Journey — from filtered results to the confident shortlist that leads to open, save, and contact.
+
+---
+
+**End of Chapter 27**
