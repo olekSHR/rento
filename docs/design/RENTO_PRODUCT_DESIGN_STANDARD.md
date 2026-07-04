@@ -78,12 +78,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 34 | [Property Verification Experience](#chapter-34--property-verification-experience) | Property Verification | APPROVED |
 | 35 | [Viewing Experience](#chapter-35--viewing-experience) | Viewing Experience | APPROVED |
 | 36 | [Application Experience](#chapter-36--application-experience) | Application Experience | APPROVED |
+| 37 | [Commitment Experience](#chapter-37--commitment-experience) | Commitment Experience | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 37+ | Future Decision Experience chapters per design standard roadmap |
+| 38+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -109,6 +110,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 1.0 | 2026-07-04 | Chapter 34 — Property Verification Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 35 — Viewing Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 36 — Application Experience approved and added — Completed Decision Experience progression from Viewing to Application and established the architectural standard for formal interest expression before Commitment Experience |
+| 1.0 | 2026-07-04 | Chapter 37 — Commitment Experience approved and added — Completed Decision Experience judgment progression from Application to Commitment and established the architectural standard for housing obligation intensification before forward housing obligation chapters |
 
 ---
 
@@ -35716,4 +35718,949 @@ Users do not rent application forms. They rent homes — and they deserve to exp
 ---
 
 **End of Chapter 36**
+
+---
+
+## Chapter 37 — Commitment Experience
+
+**Section:** XXXIV — Commitment Experience  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–36; extends the Decision Experience block after Application Experience (Chapter 36); operationalizes Application Confidence (Chapter 36), Application Boundaries (Chapter 36), Proceeding Readiness (Chapter 34), and contact ethics (Chapter 16); defines principles only — not lease contracts, deposit systems, payment flows, legal procedure guides, negotiation workflows, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **commitment experience philosophy** for Rento — how users **transition from formal housing interest to meaningful commitment** while preserving informed decision making, trust, mutual expectations, and long-term platform integrity.
+
+Property commitment is not application. Application asks *am I ready to express formal interest in pursuing this home — with eyes open about what that means and what it does not* (Chapter 36). Commitment asks *am I ready to meaningfully intensify my housing obligation toward this home — with mutual expectation clarity, full decision arc truth, and understanding of what Rento can and cannot establish*.
+
+Property commitment is not viewing. Viewing asks *what does this home reveal in person — and does that support my housing decision* (Chapter 35). Commitment assumes evaluation, often verification, typically viewing, and formal interest expression occurred — and governs **housing obligation intensification** beyond formal interest, with honest scope limits.
+
+Property commitment is not verification. Verification asks *can I trust this home enough to invest the next step* (Chapter 34). Commitment assumes the user crossed prior Decision Experience gates — and governs whether **escalation toward housing obligation** supports sound judgment given application outcome, preparation sufficiency, and mutual expectation clarity.
+
+**The platform never creates commitment.** Rento does not manufacture lease outcomes, bilateral agreement, or housing obligation. The platform **supports informed, voluntary, and mutually understandable commitment** — helping users and realtors honor the commitment boundary with integrity, dignity, and honest scope limits.
+
+Where Chapter 31 helps users evaluate one home, Chapter 32 helps them trust visual evidence, Chapter 33 helps them narrow candidates, Chapter 34 helps them confirm proceeding trust, Chapter 35 helps them reconcile physical truth, and Chapter 36 helps them express formal interest with informed consent, this chapter helps users **cross from formal interest to meaningful housing obligation intensification** — prepared, mutually oriented, and able to proceed, defer, or release with clarity about what commitment can and cannot establish.
+
+The product must help users answer five commitment questions:
+
+1. **Am I prepared to intensify housing obligation — do I understand what commitment means on Rento?**  
+2. **Does my application outcome and full decision arc support this escalation — or am I acting on impulse or pressure?**  
+3. **Are mutual expectations clear — what does each party reasonably believe happens next?**  
+4. **Is listing truth still current — and does the property still honestly merit this escalation?**  
+5. **Can I proceed, defer, or release commitment intent without trap, shame, or conversion theater?**
+
+This chapter governs commitment as a Decision Experience stage — environment quality, preparation, readiness, confidence, mutual expectation clarity, boundaries, outcomes, and calm mobile-first obligation intensification judgment. It does **not** specify lease contracts, deposit collection, payment flows, e-signature systems, or engineering architecture.
+
+**Relationship to prior chapters:** **Application Confidence** (Chapter 36) and **Application Boundaries** (Chapter 36) govern whether formal interest expression supports escalation. **Proceeding Readiness** (Chapter 34) governs whether commitment escalation is appropriate in principle. This chapter defines **Commitment Environment**, **Commitment Readiness**, **Commitment Preparation**, **Commitment Confidence**, **Commitment Boundaries**, and **Mutual Expectation Clarity** — how users and the product honor the housing obligation boundary with integrity.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Obligation awareness over conversion** | Commitment intensifies housing seriousness — not funnel completion or platform conversion metrics |
+| **Alignment over urgency** | Mutual expectation clarity before escalation pressure — not countdown-driven obligation |
+| **Prepared over impulse** | Commitment follows evaluation, verification, viewing, and application judgment — not manufactured momentum |
+| **Boundaries over overclaim** | Rento and users know what commitment escalation can and cannot establish |
+| **Mutual over unilateral** | Commitment involves user and realtor — product honest about asymmetry and pending decisions |
+| **Voluntary over manufactured** | The platform supports commitment; it never creates it |
+| **Reconciliation over denial** | Application outcome and decision arc truth inform commitment — discrepancy visible, not buried |
+| **Reversible over trapped** | Defer and release commitment intent remain dignified — equal to proceed |
+| **Continuity over reset** | Evaluation, verification, viewing, application, and commitment context preserved |
+| **Calm over pressure** | No artificial urgency, false exclusivity, or psychological pressure after formal interest |
+| **Mobile deliberation first** | Design for considered mobile obligation judgment — then tablet, then desktop |
+| **Commitment Confidence goal** | Every commitment outcome serves honest proceed, defer, or release toward housing obligation |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, lease signing component guide, or deposit collection pattern library  
+- An implementation plan, API contract, payment gateway, or e-signature architecture  
+- A replacement for Chapter 16 — Contact & Communication Experience  
+- A replacement for Chapter 36 — Application Experience  
+- A moderation, fraud detection, or identity verification operations chapter (Chapter 20)  
+- A legal due diligence, lease review, tenant rights, or contract enforcement guide  
+- A legal lease agreement, deposit procedure, or jurisdiction-specific rental law guide  
+- A payment processing, financial qualification, or guarantor verification operations chapter  
+- A comparison, shortlist, verification, viewing, or application depth chapter (Chapters 33–36)  
+- A realtor lease management console or tenant selection operations spec  
+- A negotiation workflow, offer-counteroffer system, or contract lifecycle specification  
+
+This chapter defines the **product experience of meaningful housing obligation intensification** on Rento. It does **not** define legal contracts, lease agreements, deposits, payments, jurisdiction-specific procedures, or implementation workflows.
+
+If the question is *how to build* a lease signing flow or *which API* processes deposits — this chapter does not answer it. If the question is *what commitment escalation must accomplish for housing decision confidence, mutual expectation clarity, and platform integrity* — this chapter does.
+
+Commitment is **not** conversion, funnel completion, lease execution, legal agreement, or payment. Commitment **is** meaningful housing obligation intensification supported by informed decision making, mutual expectation clarity, trust preservation, and long-term platform integrity.
+
+---
+
+## Commitment Environment
+
+**Commitment Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Commitment Environment is the **cognitive and informational conditions under which a user prepares for, reflects on, and escalates toward meaningful housing obligation intensification for a specific property** — not the screen layout, but the **quality of the housing obligation decision space** Rento provides.
+
+A sound Commitment Environment is:
+
+- **Prepared** — user knows property identity, application outcome context, decision arc truth, and what commitment escalation means  
+- **Oriented** — commitment sits legibly in the Housing Journey — not isolated urgency or conversion theater  
+- **Grounded** — evaluation, verification, viewing, and application truth available during preparation — not amnesia at obligation boundary  
+- **Mutually legible** — user understands what each party reasonably expects — not unilateral assumption  
+- **Bounded** — commitment scope legible; product does not overclaim what escalation establishes  
+- **Voluntary** — user initiates escalation; platform never manufactures commitment  
+- **Reversible** — defer, release, or return to application without penalty  
+- **Calm** — no countdown theater, no false exclusivity, no pressure to commit before ready  
+
+Chapter 31 established **Decision Environment** for evaluation. Chapter 34 established **Verification Environment** for pre-commitment trust assessment. Chapter 35 established **Viewing Environment** for physical-decision coordination. Chapter 36 established **Application Environment** for formal-interest expression. Commitment Environment is the **housing obligation counterpart** — the governed space where users move from *"I expressed formal interest — with informed consent"* to *"I escalated toward meaningful housing obligation — or chose not to — with mutual expectation clarity about what happens next."*
+
+Commitment Environment is reusable across commitment preparation, obligation intensification judgment, commitment outcome interpretation, and forward housing obligation chapters.
+
+---
+
+## Commitment Readiness
+
+**Commitment Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Commitment Readiness is the user's and product's shared state where **escalating toward meaningful housing obligation intensification for a specific property is appropriate** — because Application Confidence (Chapter 36) or equivalent informed judgment supports escalation, Commitment Preparation is sufficient, Mutual Expectation Clarity is adequate, and listing truth remains current.
+
+Commitment Readiness is distinct from **Application Readiness** (Chapter 36): Application Readiness governs whether **formal housing interest expression** is responsible; Commitment Readiness governs whether **housing obligation intensification** is responsible given application outcome, preparation sufficiency, mutual expectation clarity, and listing state.
+
+Commitment Readiness is distinct from **Viewing Readiness** (Chapter 35): Viewing Readiness governs whether **physical presence at the property** is responsible; Commitment Readiness governs whether **obligation intensification** is responsible given the full evaluation-to-application arc.
+
+Commitment Readiness is distinct from **Proceeding Readiness** (Chapter 34): Proceeding Readiness governs whether **commitment escalation in principle** — contact deepening, viewing request, application start — is responsible after verification; Commitment Readiness governs whether **meaningful housing obligation intensification for a specific property** is responsible after formal interest expression and application outcome clarity.
+
+Commitment Readiness is distinct from **Contact Readiness** (Chapter 31): Contact Readiness governs whether **initial contact** is responsible after evaluation; Commitment Readiness assumes evaluation, often verification, typically viewing, and formal interest expression occurred — and that **housing obligation intensification** is the appropriate next boundary crossing, not merely deeper messaging.
+
+Commitment Readiness requires:
+
+- **Listing Integrity** intact — property still honestly available (Chapter 31)  
+- **Application Confidence** sufficient for commitment escalation — or user explicitly chooses commitment despite acknowledged application gaps with eyes open  
+- **Commitment Preparation** adequate — user knows what obligation intensification means and what product could not establish through application  
+- **Mutual Expectation Clarity** adequate — user understands what each party reasonably believes about next steps — without simulated bilateral agreement  
+- **Identity and property clarity** — user knows which home, which realtor, which process scope applies (Chapter 16)  
+- Product does not **manufacture readiness** through urgency, false exclusivity, simulated agreement, or commitment pressure  
+
+Commitment Readiness is not a funnel stage to maximize. It is a **housing obligation trust gate** — consistent with Application Readiness, Viewing Readiness, Proceeding Readiness, and Contact Readiness ethics.
+
+Commitment Readiness connects Commitment Confidence to obligation intensification judgment and commitment outcomes.
+
+---
+
+## Commitment Preparation
+
+**Commitment Preparation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Commitment Preparation is the user's **informed readiness to escalate toward meaningful housing obligation intensification for a specific property** — synthesizing evaluation, verification, viewing, application, and outcome context into **conscious commitment intent** before escalation.
+
+Commitment Preparation includes:
+
+- **Post-application reconciliation** — user carries forward what application established, what remains pending, and what viewing and verification could not resolve (Chapter 36)  
+- **Commitment scope understanding** — what obligation intensification means on Rento versus what legal review, financial settlement, and move-in planning require separately (forward chapters)  
+- **Mutual expectation acknowledgment** — user understands realtor decision, timing, and counter-outcome possibilities remain outside Rento's establishment  
+- **Remaining uncertainty acknowledgment** — gaps application could not resolve remain visible — not hidden by commitment momentum  
+- **Partner alignment** — shared decision participants carry **identical property truth, application outcome context, and commitment intent** (Chapter 33 §14.1, Chapter 34 §8.3, Chapter 35 §8.3, Chapter 36 §8.3)  
+- **Process expectations** — commitment escalation expresses obligation intensification intent; it does not guarantee selection, lease terms, or housing outcome  
+
+Commitment Preparation is distinct from **Commitment Readiness**: Commitment Preparation governs **what the user knows before escalating toward obligation**; Commitment Readiness governs whether **escalation is appropriate** given that knowledge, mutual expectation clarity, and listing state.
+
+Commitment Preparation extends **Application Boundaries** (Chapter 36) and **Viewing Boundaries** (Chapter 35) into actionable obligation intensification intent — formal-interest and physical unknowns become acknowledged limits, not suppressed by commitment theater.
+
+Commitment Preparation does not prescribe lease terms, deposit amounts, or payment schedules. It governs **product-supported judgment and mutual clarity posture** — user escalates as an informed pursuer, not a passive conversion target.
+
+---
+
+## Commitment Confidence
+
+**Commitment Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Commitment Confidence is the user's **justified belief that escalating toward meaningful housing obligation intensification — preparing for, proceeding with, deferring, or releasing commitment intent — supports sound housing judgment** — before, during, and after commitment escalation.
+
+Commitment Confidence rises when:
+
+- **Commitment Preparation** aligns with listing, viewing, and application truth — user knows what they are escalating toward and why  
+- **Application outcome** and commitment intent **reconcile honestly** — surprise at commitment stage indicates prior stage failure, not user error  
+- **Commitment Boundaries** and **Mutual Expectation Clarity** understood — user knows what escalation can and cannot establish  
+- Obligation intensification is **voluntary and informed** — not pressure-driven conversion  
+- Post-escalation **proceed, defer, or release** remains dignified based on outcome and mutual clarity  
+
+Commitment Confidence falls when product simulates bilateral agreement before it exists, hides preparation gaps, pressures commitment before Commitment Readiness, treats obligation intensification as automatic lease prerequisite, or gamifies commitment progression.
+
+Commitment Confidence is distinct from **Application Confidence** (Chapter 36): Application Confidence governs **formal interest expression judgment**; Commitment Confidence governs **housing obligation intensification judgment** — whether escalation toward meaningful commitment was worth conducting and what it revealed for next steps.
+
+Commitment Confidence is distinct from **Viewing Confidence** (Chapter 35): Viewing Confidence governs **physical visit judgment**; Commitment Confidence governs **obligation intensification judgment** after the evaluation-to-application arc.
+
+Commitment Confidence is distinct from **Verification Confidence** (Chapter 34): Verification Confidence governs **digital proceeding judgment**; Commitment Confidence governs **commitment escalation judgment** after formal interest expression.
+
+Commitment Confidence is distinct from **Property Confidence** (Chapter 31): Property Confidence governs whether a listing merits evaluation attention; Commitment Confidence governs whether **housing obligation intensification** supports justified proceed or dignified release.
+
+---
+
+## Commitment Boundaries
+
+**Commitment Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Commitment Boundaries define **what escalating toward meaningful housing obligation intensification through Rento can and cannot establish** — the scope beyond which realtor decision, legal review, financial settlement, move-in planning, or housing obligation execution must carry responsibility.
+
+Commitment Boundaries **extend** Application Boundaries (Chapter 36), Viewing Boundaries (Chapter 35), and Verification Boundaries (Chapter 34) — formal-interest, physical, and digital limits become housing obligation limits honestly stated.
+
+Rento commitment experience **can** support:
+
+- **Obligation intensification judgment** — user signals serious housing obligation intent toward a specific property through governed product posture  
+- **Mutual expectation clarity** — user understands what each party reasonably believes about next steps  
+- **Continuity of judgment** — evaluation, verification, viewing, and application context preserved at escalation  
+- **Outcome clarity** — user understands commitment proceeded, deferred, or released — without false certainty  
+- **Post-escalation judgment** — proceed toward housing obligation execution, defer for partner or comparison, or release with clarity  
+
+Rento commitment experience **cannot** substitute for:
+
+- **Bilateral housing agreement** — commitment escalation does not create lease outcome  
+- **Realtor selection decision** — acceptance, rejection, or counter-offer belongs to realtor and applicable process  
+- **Availability guarantee** — property may rent to another party before or after commitment escalation  
+- **Legal lease review** — contract terms, tenant rights, and jurisdiction-specific obligations remain user's responsibility  
+- **Financial settlement** — deposits, rent payment, and guarantor requirements when applicable remain governed process, not product guarantee  
+- **Move-in execution** — keys, inventory, and occupancy handover remain outside product establishment  
+- **Platform attestation of housing outcome** — Rento does not certify commitment success beyond defined marketplace scope (Chapter 20)  
+
+Commitment Boundaries protect users and the platform: Rento must **never imply obligation intensification equals lease execution**, and must **never hide that legal, financial, and move-in steps remain separate responsibilities**.
+
+The platform never creates commitment. The platform only supports informed, voluntary, and mutually understandable commitment within these boundaries.
+
+Commitment Boundaries are reusable across forward housing obligation, negotiation posture, and move-in chapters — each stage inherits honest scope limits from commitment.
+
+---
+
+## Mutual Expectation Clarity
+
+**Mutual Expectation Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Mutual Expectation Clarity is the **shared legibility of what user and realtor each reasonably believe about next steps after formal interest expression** — without the product simulating bilateral agreement, false exclusivity, or manufactured mutual consent.
+
+Mutual Expectation Clarity requires:
+
+- **User expectation honesty** — user understands what their escalation signals and what it does not obligate the other party to provide  
+- **Realtor role honesty** — product does not imply realtor has accepted, reserved, or committed when decision remains pending  
+- **Asymmetry acknowledgment** — timing, selection criteria, and counter-outcomes may differ between parties; product does not flatten asymmetry into false symmetry  
+- **Pending state legibility** — when outcome remains undecided, product reflects pending honestly — not simulated agreement  
+- **No false exclusivity** — obligation intensification does not imply exclusive hold on property unless genuinely governed and honestly stated  
+
+Mutual Expectation Clarity is distinct from **Commitment Confidence**: Mutual Expectation Clarity governs **what each party reasonably believes**; Commitment Confidence governs **whether the user's obligation intensification judgment supports sound housing decision**.
+
+Mutual Expectation Clarity is distinct from **Application Boundaries** (Chapter 36): Application Boundaries govern **what formal interest expression can establish**; Mutual Expectation Clarity governs **what each party reasonably expects after expression** as commitment escalation becomes relevant.
+
+Mutual Expectation Clarity protects long-term platform integrity: misaligned expectations produce disputes, reputational harm, and marketplace distrust. Rento must **support clarity without manufacturing agreement**.
+
+---
+
+## 2. Role in the Housing Journey
+
+Property commitment sits at the **housing obligation boundary** of the Housing Journey — after application establishes formal interest judgment, before legal, financial, and move-in obligation execution intensify in forward chapters.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| Narrowing (Chapter 33) | Compare | Which candidates survive scrutiny? |
+| Verification (Chapter 34) | Verify | Can I trust this home enough to proceed? |
+| Viewing (Chapter 35) | Visit | What does this home reveal in person? |
+| Application (Chapter 36) | Express interest | Am I ready to pursue this home formally — with informed consent? |
+| **Property commitment (this chapter)** | **Intensify obligation** | **Am I ready to meaningfully intensify housing obligation — with mutual expectation clarity?** |
+| Housing obligation (forward chapters) | Execute | What happens next toward settled tenancy? |
+
+Commitment succeeds when it produces **Meaningful Progress** — user escalates toward housing obligation prepared and mutually oriented, understands what escalation establishes, and proceeds, defers, or releases with clarity — not when user maximizes commitment events or rushes past judgment gates.
+
+Commitment fails when it optimizes for **conversion theater** — fake progress states, pressure to commit, gamified obligation progression, or commitment treated as platform conversion rather than housing judgment escalation.
+
+---
+
+## 3. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract** — attestation scope, moderation meaning, verification label honesty, and marketplace integrity.
+
+This chapter **consumes** platform trust signals during commitment escalation — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|--------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm about listing and realtor? |
+| **Property verification** | Chapter 34 | Can the user proceed digitally with justified trust? |
+| **Property viewing** | Chapter 35 | Does in-person visit support next housing judgment? |
+| **Property application** | Chapter 36 | Does formal interest expression support sound pursuit with informed consent? |
+| **Property commitment** | **This chapter** | Does housing obligation intensification support sound judgment with mutual expectation clarity? |
+
+Division of responsibility:
+
+| Concern | Governing chapter |
+|---------|-------------------|
+| Verification label meaning, moderation status, appeals | Chapter 20 |
+| Fraud prevention philosophy, trust lifecycle | Chapter 20 |
+| Digital proceeding judgment, uncertainty, verification boundaries | Chapter 34 |
+| Viewing preparation, physical reconciliation, viewing boundaries | Chapter 35 |
+| Application preparation, informed consent, formal interest boundaries | Chapter 36 |
+| Commitment preparation, mutual expectation clarity, obligation boundaries | **This chapter** |
+| Post-escalation proceed, defer, release toward housing obligation execution | **This chapter** |
+
+Platform verification badges **inform** commitment preparation — they do **not** guarantee selection or lease outcome. A verified listing does not promise commitment success. Commitment must **honor** platform attestation scope honestly — attestation does not substitute for application outcome clarity or mutual expectation alignment.
+
+Commitment must never **inflate** Chapter 20 attestation into lease guarantees or simulated bilateral agreement.
+
+---
+
+## 4. Transition from Application Experience
+
+Users enter commitment **after** Application Confidence supports escalation — typically following formal interest expression and application outcome clarity, sometimes with conscious proceed despite acknowledged outcome unknowns (Chapter 36 §13.1).
+
+### 4.1 Entry Preconditions
+
+Property commitment escalation is responsible when:
+
+- User has **Application Confidence** or equivalent informed judgment — formal interest expression or evaluation arc yielded sufficient trust to justify obligation intensification  
+- Candidate is **still honestly available** — Listing Integrity intact (Chapter 31)  
+- User understands **Application Boundaries** and **Commitment Boundaries** — knows what commitment must still settle because application could not  
+- **Mutual Expectation Clarity** adequate — user understands what each party reasonably believes about next steps  
+- **Contact path** and realtor identity remain clear (Chapter 16)  
+
+### 4.2 Handoff from Application
+
+Chapter 36 supplies **Application Confidence**, **Application Preparation**, **Application Boundaries**, and post-expression proceed, defer, or release outcomes. Commitment must **preserve** application outcomes — not reset formal interest judgment or hide acknowledged unknowns.
+
+The handoff contract (Chapter 36 §13.2):
+
+- Commitment candidate is **the property user applied to or consciously prioritizes** — not algorithmically substituted  
+- **Commitment Preparation** inherits application questions — outcome unknowns and discrepancies remain visible  
+- Defer or release at application **does not erase** commitment preparation work if user returns with renewed confidence  
+- Proceed from application to commitment **does not imply** lease execution, legal readiness, or bilateral agreement — Commitment Boundaries apply  
+- Application outcome **pending** does not default to commitment readiness — Mutual Expectation Clarity requires honest pending posture  
+
+### 4.3 Handoff from Property Detail, Media, Verification, Comparison, and Viewing
+
+Chapters 31–35 supply **Property Confidence, Expected Property, Verification Confidence, Narrowing Confidence, Viewing Confidence**, and evaluation continuity. Commitment **extends** these — obligation intensification carries forward the full decision arc truth.
+
+Facts, evidence, verification, viewing, and application judgment at commitment depth **match** prior stage truth — no commitment-only summary layer that contradicts evaluation, verification, viewing, or application.
+
+### 4.4 Proceed Without Formal Application Outcome — Exception Posture
+
+When user escalates toward commitment before application outcome clarity — product must **not** treat absence of outcome as equivalent to Application Confidence. Commitment Readiness requires **explicit acknowledgment** of formal-interest unknowns Application Boundaries would have addressed. Proceed-without-outcome is valid user choice when informed — not default product posture.
+
+---
+
+## 5. Relationship with Previous Decision Experience Chapters
+
+Each Decision Experience stage has distinct obligation. Commitment **completes the core Decision Experience judgment progression** — from evaluation through housing obligation intensification judgment. Housing obligation **execution** — legal, financial, and move-in — belongs to forward chapters; this chapter does not own it.
+
+| Stage | Primary question | Must not substitute for |
+|-------|------------------|-------------------------|
+| **Evaluation (Ch 31)** | Is this home worth my attention? | Verification, viewing, application, or commitment |
+| **Media (Ch 32)** | Can I trust visual evidence? | Verification judgment or commitment |
+| **Comparison (Ch 33)** | Which candidates survive scrutiny? | Final commitment for one home |
+| **Verification (Ch 34)** | Can I proceed with digital trust? | Viewing, application, or commitment |
+| **Viewing (Ch 35)** | What does in-person visit reveal? | Application acceptance or commitment execution |
+| **Application (Ch 36)** | Am I ready to express formal interest? | Lease execution, deposit, or legal commitment |
+| **Commitment (this chapter)** | Am I ready to intensify housing obligation meaningfully? | Legal agreement, payment, or move-in execution |
+
+### 5.1 Readiness Distinction Matrix
+
+| Concept | Governs |
+|---------|---------|
+| **Contact Readiness** (Ch 31) | Initial contact after evaluation |
+| **Proceeding Readiness** (Ch 34) | Commitment escalation **in principle** after verification |
+| **Viewing Readiness** (Ch 35) | Physical visit |
+| **Application Readiness** (Ch 36) | Formal interest expression |
+| **Commitment Readiness** (Ch 37) | Meaningful housing obligation intensification |
+
+### 5.2 Confidence Distinction Matrix
+
+| Concept | Governs |
+|---------|---------|
+| **Property Confidence** (Ch 31) | Evaluation attention worthiness |
+| **Verification Confidence** (Ch 34) | Digital proceeding judgment |
+| **Viewing Confidence** (Ch 35) | Physical visit judgment |
+| **Application Confidence** (Ch 36) | Formal interest expression judgment |
+| **Commitment Confidence** (Ch 37) | Housing obligation intensification judgment |
+
+### 5.3 Integrity Lineage
+
+Commitment Integrity (this chapter) parallels **Application Integrity** (Chapter 36), **Viewing Integrity** (Chapter 35), **Assessment Integrity** (Chapter 34), and **Comparison Integrity** (Chapter 33) — another integrity concept scoped to obligation intensification and outcome interpretation.
+
+### 5.4 Commitment vs Save, Favorite, and Contact
+
+Save and favorite are **memory** — not commitment (Chapters 17, 36). Contact is **reach** — not commitment (Chapter 16). Application is **formal interest** — not commitment (Chapter 36). Commitment is **obligation intensification** — distinct from all prior gestures. Product language and posture must preserve this ladder — users must not confuse casual curiosity, formal interest, or platform conversion theater with meaningful housing obligation judgment.
+
+---
+
+## 6. Information Layer in Commitment Preparation
+
+Commitment treats the **information layer** (Chapter 31) as input to Commitment Preparation and Commitment Confidence.
+
+### 6.1 Currency at Commitment Time
+
+Price, availability, rooms, area, and specifications must be **current at commitment moment** — stale truth invalidates Commitment Readiness. User must not intensify obligation toward a property listing no longer honestly offers.
+
+### 6.2 Expected Property Carry-Forward
+
+User carries **governed facts** into commitment preparation — what the listing claims remains what user expects obligation intensification to honor. Inconsistency between claim and viewing or application reconciliation destroys Commitment Confidence and triggers defer or release — not silent proceed.
+
+### 6.3 Material Gap Awareness
+
+Missing governed fields or ambiguous fees identified at verification, viewing, or application **remain visible** at commitment preparation — Commitment Preparation does not pretend gaps were resolved by obligation intensification alone.
+
+### 6.4 Fee and Cost Honesty
+
+Commitment preparation inherits **price and fee transparency** from evaluation — undisclosed costs discovered at viewing or application remain visible; commitment does not bury financial surprise under obligation momentum.
+
+### 6.5 Listing Change After Application
+
+Material listing change after application **resets commitment context** honestly — user must re-prepare and re-assess Mutual Expectation Clarity, not proceed on stale confidence.
+
+---
+
+## 7. Evidence Layer in Commitment Preparation
+
+Commitment treats **evidence** (Chapter 32) and **physical reconciliation** (Chapter 35) as input to obligation intensification judgment.
+
+### 7.1 Post-Viewing and Post-Application Reconciliation Carry-Forward
+
+User carries **what viewing confirmed, what application established, and what remains unknown** into commitment intent. Gap between Expected Property and reconciled truth must remain **interpretable at commitment** — not erased by escalation momentum.
+
+### 7.2 Evidence Sufficiency Context
+
+Thin media or partial verification (Chapters 32–34) **increases** commitment preparation importance — user knows more uncertainty remains. Rich media and strong verification **do not decrease** commitment boundary obligation — obligation intensification still does not guarantee housing outcome.
+
+### 7.3 Discrepancy Visibility
+
+Material listing-viewing or listing-application discrepancy **must inform** commitment posture — product does not encourage commitment on known disqualifying gap without explicit user acknowledgment.
+
+### 7.4 Evidence Currency
+
+Stale photos or outdated facts **must remain acknowledged** at commitment — temporal risk understood before obligation intensification.
+
+---
+
+## 8. Trustworthy Commitment Intent
+
+**Trustworthy commitment intent** is the user's **honest purpose for escalating toward meaningful housing obligation** — supported by the product, not manufactured by conversion pressure.
+
+### 8.1 Product Role
+
+Rento supports commitment intent by:
+
+- Enabling **Commitment Preparation** — scope, boundaries, application outcome context, mutual expectation posture visible  
+- Supporting **voluntary escalation** — user initiates; platform never manufactures commitment  
+- Preserving **evaluation continuity** — return to application, viewing, verification, detail, or comparison without reset  
+- Enabling **post-escalation judgment** — proceed, defer, or release based on outcome and mutual clarity  
+
+Rento does not **score** commitment success as lease conversion — housing fit, timing, and mutual selection are personal and bilateral beyond product scope.
+
+### 8.2 The Platform Never Creates Commitment
+
+Rento **supports** informed, voluntary, and mutually understandable commitment. Rento **does not**:
+
+- Create lease outcomes  
+- Simulate bilateral agreement  
+- Manufacture mutual consent  
+- Imply exclusive hold without honest governed basis  
+- Treat obligation intensification as platform-owned conversion event  
+
+Commitment remains **user-initiated judgment** within Commitment Boundaries — the product provides clarity, not obligation manufacture.
+
+---
+
+## 9. Commitment Preparation Dimensions
+
+This section extends the **Commitment Preparation** official concept with preparation dimensions governing product posture.
+
+### 9.1 Full Decision Arc Synthesis
+
+Commitment Preparation requires user to carry **the complete Decision Experience arc** — not application outcome alone:
+
+- What evaluation established (Chapter 31)  
+- What evidence supported or challenged (Chapter 32)  
+- How comparison positioned this home (Chapter 33)  
+- What verification could and could not prove (Chapter 34)  
+- What viewing confirmed, contradicted, or left unknown (Chapter 35)  
+- What application expressed and what outcome clarity exists (Chapter 36)  
+
+Obligation intensification without arc synthesis is **impulse** — not Commitment Preparation.
+
+### 9.2 Application Outcome Integration
+
+Application outcome — acknowledged, pending, not selected, or consciously unknown — **informs** commitment posture:
+
+- **Acknowledged pursuit** may support Commitment Readiness when other gates align  
+- **Pending outcome** requires honest pending posture — not simulated selection  
+- **Not selected** typically triggers release — not commitment pressure  
+- **Consciously unknown** requires explicit acknowledgment — not default proceed  
+
+### 9.3 Partner and Shared Household Preparation
+
+Long-term rental decisions often involve partners. Shared commitment intent requires **identical preparation truth** for all participants — same property facts, same application outcome context, same Commitment Boundaries, same Mutual Expectation Clarity — and **respectful coordination** when readiness timing differs.
+
+### 9.4 Timing and Life Context
+
+Commitment preparation happens amid employment decisions, school calendars, current lease endings, and household planning. Product supports **honest timing acknowledgment** — defer for life context is valid, not failure.
+
+### 9.5 Comparison Return Before Commitment
+
+User may **return to comparison** before obligation intensification — narrowing context restorable (Chapter 33). Commitment does not trap user in single-candidate tunnel when Comparison Confidence supports reconsideration.
+
+### 9.6 Preparation Without Legal or Financial Specification
+
+Commitment Preparation governs **judgment and clarity posture** — user knows obligation intensification is serious, bounded, and voluntary. It does **not** prescribe lease clauses, deposit amounts, payment methods, or jurisdiction-specific procedures.
+
+---
+
+## 10. Commitment Integrity
+
+**Commitment Integrity** is the **honesty of the commitment experience itself** — product does not simulate agreement, does not hide Commitment Boundaries, does not pressure escalation when Commitment Readiness is insufficient, does not treat defer or release as user failure by default, and does not gamify obligation progression.
+
+Commitment Integrity requires:
+
+- **No simulated agreement** — pending remains pending; selected remains honestly communicated when known  
+- **No false exclusivity** — property not implied reserved unless genuinely governed  
+- **No conversion theater** — obligation intensification not framed as platform success metric  
+- **No commitment gamification** — progress badges, streaks, or completion percentages for housing obligation  
+- **No psychological pressure** — urgency, scarcity framing, or countdown-driven obligation prohibited  
+- **No artificial commitment** — platform does not auto-escalate or pre-commit on user's behalf  
+- **No forced commitment** — exit, defer, and release always dignified  
+- **Boundary visibility** — Commitment Boundaries legible at escalation moment  
+- **Arc honesty** — prior stage unknowns not erased at obligation boundary  
+
+Commitment Integrity parallels **Application Integrity** (Chapter 36), **Viewing Integrity** (Chapter 35), **Assessment Integrity** (Chapter 34), and **Comparison Integrity** (Chapter 33).
+
+Commitment Integrity protects **long-term platform integrity** — short-term conversion gains that erode trust destroy marketplace value in local rental markets.
+
+---
+
+## 11. Mutual Expectations
+
+This section operationalizes **Mutual Expectation Clarity** as governing principles for bilateral housing posture at the commitment boundary.
+
+### 11.1 User Expectations
+
+User escalating toward commitment reasonably expects:
+
+- **Identity clarity** — which property, which realtor (Chapter 16)  
+- **Process honesty** — escalation signals serious obligation intent; it does not execute lease  
+- **Outcome legibility** — pending, proceed, defer, and release states honestly reflected  
+- **No trap** — defer and release remain available  
+- **Arc continuity** — prior judgment not erased  
+
+User must **not** reasonably expect from Rento alone:
+
+- Guaranteed selection  
+- Exclusive property hold unless honestly governed  
+- Legal advice or contract enforcement  
+- Deposit or payment processing through product scope defined here  
+
+### 11.2 Realtor Expectations
+
+Realtor engaging at commitment boundary reasonably expects:
+
+- **Serious intent signal** — user escalation reflects prepared pursuit, not casual browsing  
+- **Identity visibility** — user identity governed by Chapter 16 ethics  
+- **Honest user posture** — user not misled about what realtor decision remains pending  
+
+Product must **not** imply realtor obligations beyond marketplace scope — Rento facilitates connection and judgment support; it does not adjudicate lease terms.
+
+### 11.3 Asymmetry Honesty
+
+User and realtor **may hold different timelines, criteria, and outcomes**. Product must:
+
+- Reflect **asymmetry** without flattening into false symmetry  
+- Avoid language implying mutual agreement when only user escalated  
+- Support **clarity** without **simulating consensus**  
+
+### 11.4 Pending State Ethics
+
+When realtor decision remains pending:
+
+- Product reflects **pending** — not accepted, not rejected, not implied exclusive  
+- User may **defer commitment** while awaiting outcome — valid pacing  
+- Product must not **manufacture urgency** to force commitment before outcome clarity  
+
+### 11.5 Mutual Expectation Clarity and Contact
+
+Contact during commitment boundary (Chapter 16) may deepen — clarification, timing discussion, obligation questions. This chapter governs **experience philosophy** — calm, professional, housing-serious tone; no pressure to commit before Mutual Expectation Clarity; contact does not replace Commitment Boundaries.
+
+### 11.6 Mutual Expectation Clarity and Platform Limits
+
+Rento **facilitates** mutual understanding — it does **not** guarantee alignment. When expectations diverge, product supports **honest defer or release** — not dispute manufacture or retention dark patterns.
+
+---
+
+## 12. Commitment Principles
+
+This section answers the chapter's architectural question: *How should users transition from formal interest to meaningful commitment while preserving informed decision making, trust, mutual expectations, and long-term platform integrity?*
+
+### 12.1 Voluntary Escalation — Not Platform Creation
+
+Commitment escalation is **user-initiated housing judgment** — distinct from save, contact, application, or platform conversion events. The platform supports; it never creates commitment.
+
+### 12.2 Deliberate Over Impulsive
+
+Escalation belongs **after** Commitment Readiness — not as default next click after application expression. Product supports pause, reflection, partner discussion, comparison return, and application outcome waiting before escalation.
+
+### 12.3 Single Property Clarity
+
+Every commitment escalation ties unambiguously to **one listing identity** — user knows which home obligation intensification concerns before acting.
+
+### 12.4 Informed Decision Making Preservation
+
+Full Decision Experience arc remains **interpretable at escalation** — user acts on synthesized judgment, not isolated momentum. Information and evidence cooperation (Chapters 31–32) extends through commitment preparation.
+
+### 12.5 Mutual Expectation Clarity Before Intensification
+
+User should understand **what each party reasonably believes** before escalating — not discover scope mismatch after obligation intensification.
+
+### 12.6 Honest State Language
+
+Product language reflects **actual commitment posture** — preparing, escalated, deferred, released, pending outcome — not false progress, simulated agreement, or implied lease execution (Chapter 16 communication ethics alignment).
+
+### 12.7 Obligation Awareness
+
+User understands escalation **intensifies housing seriousness** — without legal or financial specification in this chapter. Obligation awareness is product-ethical posture, not contract drafting.
+
+### 12.8 Escalation Without Humiliation
+
+Users who escalate and are not selected deserve **dignified outcome communication** — housing search pacing varies; non-selection is marketplace outcome, not moral judgment by default.
+
+### 12.9 Quality Over Volume
+
+Product optimizes for **sound commitment decisions** — not maximum commitment events per user or listing.
+
+### 12.10 Trust Preservation
+
+Commitment principles serve **long-term platform integrity** — honest boundaries today preserve marketplace trust tomorrow. Short-term conversion pressure violates this principle.
+
+### 12.11 Proceed, Defer, and Release Equality
+
+Proceed, defer, and release are **equally valid** commitment outcomes. Product must not privilege proceed through shame, dark retention, or blocked exit for defer or release.
+
+---
+
+## 13. Commitment Outcomes
+
+Commitment outcomes are **proceed**, **defer**, and **release** — all valid and equally dignified. Users may **defer or release after escalating** — this is intentional product posture, consistent with **Reversible over trapped**.
+
+### 13.1 Proceed
+
+Proceed means user **voluntarily intensifies housing obligation judgment** toward a specific property with Commitment Preparation, Mutual Expectation Clarity, and Commitment Boundaries sufficient. Product supports clarity afterward — what was escalated, what remains pending, what legal, financial, and move-in steps remain separate responsibilities (forward chapters).
+
+Proceed does **not** mean lease executed, deposit paid, or legal agreement complete.
+
+### 13.2 Defer
+
+Defer preserves commitment intent while acknowledging **insufficient Commitment Readiness or Mutual Expectation Clarity** — partner unavailable, application outcome pending, preparation incomplete, listing truth uncertain, comparison return needed, life timing not right, or mutual expectations not yet legible. Defer is **not failure** — honest pacing. Housing Journey respects weeks of search.
+
+Defer must preserve **Decision Persistence** — preparation work not lost on return.
+
+### 13.3 Release
+
+Release removes candidate from active commitment consideration **without shame** — trust shifts, listing changes, better candidate emerges, application not selected, mutual expectations irreconcilable, or user reconsiders. Product treats release as **normal decision outcome**, not user moral failure by default.
+
+Release connects to Narrowing Confidence, application release, and viewing release ethics (Chapters 33–36).
+
+### 13.4 Post-Escalation Reconsideration
+
+User may **reconsider after escalation** — defer or release remain valid. Escalation is not irreversible trap. Commitment Boundaries and Abandon confidence (Chapter 31) extend here.
+
+### 13.5 Outcome Pending Honesty
+
+When housing outcome remains undecided between parties, product maintains **pending honesty** — not simulated agreement, not false exclusivity, not countdown-driven obligation.
+
+### 13.6 No Forced Proceed
+
+Product must not **block exit** or **manufacture urgency** to force proceed — Commitment Integrity and Mutual Expectation Clarity require dignified defer and release paths.
+
+---
+
+## 14. Continuity
+
+Commitment participates in **Housing Continuity**, **Decision Persistence**, and **Cognitive Continuity**.
+
+### 14.1 Commitment State Persistence
+
+User expects commitment preparation and escalation intent to **survive session interruption** when product supports — honest when local-only. Prior defer or proceed intent remembered as continuity aid, never manipulation.
+
+### 14.2 Navigation Continuity
+
+- Application → commitment → application **preserves listing identity and formal interest judgment**  
+- Viewing → commitment → viewing **preserves physical judgment where relevant**  
+- Detail → commitment → detail **preserves evaluation context**  
+- Commitment → forward housing obligation → commitment **preserves obligation judgment where appropriate**  
+- Compare → commitment → compare **preserves narrowing context**  
+
+### 14.3 Search and Favorites Context
+
+Commitment launched from favorites or saved search **preserves Search Memory and shortlist context** on exit — not amnesia.
+
+### 14.4 Context Restoration
+
+Returning to prior Decision Experience stages **restores governed context** — Context Restoration ethics (Chapter 30) extend through commitment boundary.
+
+### 14.5 Returning to Commitment
+
+Returning users resume **commitment preparation or post-escalation judgment** — not cold start.
+
+#### 14.5.1 Honest Reunion
+
+Return shows **current listing truth** — price, availability, media, attestation, application outcome may have changed. User understands before re-escalating or proceeding judgment.
+
+#### 14.5.2 Changed Truth Recovery
+
+Material listing or outcome change **resets Commitment Readiness** honestly — user must re-prepare and re-assess Mutual Expectation Clarity, not proceed on stale confidence.
+
+#### 14.5.3 Abandon Commitment Confidence
+
+Leaving commitment without proceed/defer/release decision is **valid** — no blocking modals, no shame. Respectful Silence applies.
+
+---
+
+## 15. Transition to Forward Housing Obligation Chapters
+
+Commitment bridges obligation intensification judgment and **housing obligation execution** without owning legal, financial, or move-in specification.
+
+### 15.1 Handoff Preconditions
+
+Transition toward forward housing obligation chapters is responsible when:
+
+- User **escalated commitment judgment** or consciously proceeds with acknowledged execution unknowns  
+- **Commitment Confidence** supports forward attention — escalation did not rest on hidden disqualifying discrepancy  
+- **Commitment Boundaries** understood — user knows legal, financial, and move-in steps remain separate  
+- **Mutual Expectation Clarity** adequate where bilateral outcome affects execution readiness  
+- **Listing Integrity** intact — property still honestly available where relevant  
+
+### 15.2 What Commitment Supplies
+
+Commitment supplies **obligation intensification judgment** — what escalation established, what remains pending, what application and viewing could not resolve. Forward housing obligation chapters will define **execution readiness** — this chapter does not redefine it.
+
+The handoff contract:
+
+- Housing obligation candidate is **the property user committed toward or consciously prioritizes** — continuity preserved  
+- **Commitment Preparation context** informs forward attention — fees, condition gaps, discrepancies, and mutual expectation posture remain visible  
+- Proceed to execution **does not imply** legal agreement signed, deposit settled, or move-in complete  
+- Release after commitment **does not erase** execution path for other candidates — comparison and narrowing context restorable  
+
+### 15.3 Defer Across Boundary
+
+User may **defer housing obligation execution** after commitment escalation — partner alignment, outcome pending, financial timing, legal review scheduling, or comparison reconsideration. Defer is valid; Commitment Confidence and Decision Persistence preserved.
+
+### 15.4 Forward Reference
+
+Legal lease review, deposit handling, rent payment, move-in planning, and settled tenancy chapters follow — Commitment Readiness and Commitment Confidence must not pretend to satisfy legal, financial, or occupancy readiness. Forward reference only.
+
+---
+
+## 16. Mobile & Accessibility Considerations
+
+### 16.1 Mobile Commitment Experience
+
+Mobile is the **primary commitment preparation and escalation judgment surface**. Tablet and desktop extend — never reverse.
+
+#### 16.1.1 Mobile Principles
+
+| Principle | Intent |
+|-----------|--------|
+| **Pre-escalation review** | Property identity, application outcome, boundaries, mutual expectation posture reachable before acting |
+| **One-handed deliberation** | Defer, release, and escalation judgment reachable during life interruption |
+| **Partner handoff** | Share preparation and listing truth — not viral engagement |
+| **Glance legibility** | Commitment posture and property identity visible without hunt |
+| **Interrupt tolerance** | Commitment preparation state stable across interruption |
+| **Post-escalation reflection** | Calm capture of proceed, defer, release intent — not forced execution |
+
+#### 16.1.2 Mobile vs Desktop
+
+Desktop may show more simultaneous context — detail beside preparation — but **Commitment Boundaries**, **Commitment Preparation**, **Mutual Expectation Clarity**, and **Commitment Confidence** standards remain identical to mobile.
+
+#### 16.1.3 Commitment in Life Context
+
+Commitment preparation and escalation judgment happen after work, with partner, before sleep — moments of reflection and household planning. Surfaces support **calm deliberation**, not anxiety amplification.
+
+### 16.2 Accessibility Principles
+
+Commitment experience must be **inclusive** — serious housing obligation judgment belongs to all users.
+
+#### 16.2.1 Non-Visual Commitment Access
+
+Commitment posture, preparation context, boundaries, and mutual expectation state require **textual and semantic equivalents** — not color-only status, not icon-only progress.
+
+#### 16.2.2 Cognitive Accessibility
+
+Commitment Environment supports cognitive accessibility: plain language for boundaries and mutual expectation scope, predictable structure, calm density — users must judge obligation intensification without decoding manipulation.
+
+#### 16.2.3 Financial and Obligation Anxiety Sensitivity
+
+Commitment stage amplifies housing anxiety for many users. Product must not **weaponize** this anxiety — calm tone, honest boundaries, no alarmist scarcity unless genuinely governed harm signal (Chapter 7).
+
+#### 16.2.4 Anxiety Sensitivity
+
+Commitment uncertainty is **calm**, not alarmist. Critical status color reserved for genuine harm signals — not every pending outcome.
+
+Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 17. Anti-Patterns
+
+The following are **explicitly forbidden** in Rento commitment experience philosophy:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Artificial Commitment** | Platform auto-escalates or implies commitment user did not initiate — violates voluntary escalation; destroys Commitment Integrity |
+| **Forced Commitment** | Blocks exit, defer, or release — traps users; violates Reversible over trapped |
+| **Psychological Pressure** | Urgency framing, anxiety amplification, obligation shame — violates calm Commitment Environment |
+| **Countdown-driven obligation** | Timer theater forcing escalation — violates Alignment over urgency |
+| **False Exclusivity** | Property implied reserved or held without honest governed basis — violates Mutual Expectation Clarity |
+| **Simulated Agreement** | Pending presented as accepted; bilateral outcome implied before it exists — violates Commitment Integrity |
+| **Commitment Gamification** | Badges, streaks, completion meters for housing obligation — trivializes seriousness; violates Obligation awareness over conversion |
+| **Conversion Theater** | Commitment framed as platform success — violates housing judgment posture |
+| "Lease secured!" before legal execution | Violates Commitment Boundaries; destroys Commitment Integrity |
+| Commitment pressure after application expression | Violates calm Commitment Environment; amplifies anxiety |
+| Commitment as mandatory funnel stage | Violates Commitment Boundaries; traps users |
+| Hidden listing or outcome change before escalation | Invalidates Commitment Readiness; violates Listing Integrity |
+| Thinner preparation context at commitment than application | Breaks Commitment Integrity; amnesia at obligation boundary |
+| Escalation implied as lease guarantee | Violates Commitment Boundaries |
+| Bait commitment for unavailable or misrepresented property | Marketplace integrity failure |
+| Shame copy for defer, release, or non-selection | Violates dignified outcome ethics |
+| Partner share with divergent property or application truth | Destroys shared commitment preparation |
+| Commitment replaces legal or financial review claim | Platform overclaim |
+| Urgency to execute immediately after escalation | Violates post-escalation defer ethics |
+| Conflating application acceptance with commitment readiness | Application ≠ commitment |
+| Auto-escalate or pre-checked commitment | Violates voluntary escalation |
+| Commitment event count as engagement metric | Anti-engagement posture violation |
+| Dark retention blocking defer or release | Violates Proceed, Defer, and Release Equality |
+| Manufactured mutual consent | Violates Mutual Expectation Clarity; destroys long-term platform integrity |
+
+---
+
+## 18. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, commitment initiatives must trace to this chapter and upstream contracts:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New commitment surfaces | Commitment Environment and Commitment Confidence impact |
+| Obligation intensification features | Commitment Principles and Mutual Expectation Clarity honored |
+| Commitment preparation features | Commitment Preparation and Application Boundaries honored |
+| Post-escalation flows | Commitment Outcomes and Transition to Forward Housing Obligation integrity |
+| Notifications about commitment posture | Calm tone; no simulated agreement; no false exclusivity |
+| Personalization in commitment | Does not simulate certainty; Memory Transparency |
+| Performance optimization | Does not degrade currency of listing truth at commitment time |
+| Conversion or funnel optimization touching commitment | Does not violate Commitment Integrity or platform-neutrality posture |
+
+**Review gate:** No commitment experience surface ships without checklist against Commitment Environment, Commitment Readiness, Commitment Preparation, Commitment Confidence, Commitment Boundaries, Mutual Expectation Clarity, Commitment Principles, Commitment Outcomes, and Commitment Integrity.
+
+**Forward chapters:** Housing obligation execution extends post-escalation outcomes — this chapter supplies the obligation intensification judgment foundation.
+
+---
+
+## 19. Chapter Summary
+
+Property commitment is where Rento converts **formal interest judgment** into **meaningful housing obligation intensification with mutual expectation clarity**.
+
+This chapter defines:
+
+- **Position** — Final Decision Experience judgment stage after property application; completes core judgment progression before housing obligation execution  
+- **Environment** — Commitment Environment as housing obligation decision space  
+- **Readiness** — Commitment Readiness for responsible obligation intensification  
+- **Preparation** — Commitment Preparation for conscious commitment intent  
+- **Confidence** — Commitment Confidence for escalation worth and outcome judgment  
+- **Boundaries** — Commitment Boundaries for obligation scope limits  
+- **Mutual clarity** — Mutual Expectation Clarity for bilateral expectation honesty  
+- **Integrity** — Commitment Integrity for escalation honesty  
+- **Principles** — voluntary, informed, mutually legible obligation intensification  
+- **Outcomes** — proceed, defer, release — all valid and equally dignified  
+- **Platform posture** — the platform never creates commitment; it supports informed, voluntary, mutually understandable commitment  
+- **Integration** — extends Chapters 31–36; consumes Chapters 16 and 20 without redefining them  
+- **Transition** — handoff toward forward housing obligation chapters without owning execution readiness  
+- **Mobile** — primary preparation and judgment surface; calm, reversible, partner-ready  
+
+Commitment succeeds when users escalate toward housing obligation prepared and mutually oriented, understand what escalation establishes and what it cannot, and proceed, defer, or release with clarity — achieving **Commitment Confidence** as this chapter's desired outcome — knowing what application and viewing settled, what commitment expressed, and what legal, financial, and move-in steps must still settle in forward chapters.
+
+**Decision Experience flow:**
+
+Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → Property Comparison Experience (Chapter 33) → Property Verification Experience (Chapter 34) → Viewing Experience (Chapter 35) → Application Experience (Chapter 36) → **Commitment Experience (Chapter 37)** → forward housing obligation chapters
+
+---
+
+## 20. Design Director Review
+
+**Chapter:** 37 — Commitment Experience  
+**Section:** XXXIV — Commitment Experience  
+**Review type:** Initial standard adoption
+
+### 20.1 Approval Statement
+
+- **Architecture Review** — APPROVED  
+- **Editorial Pass** — APPROVED  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **commitment experience contract** for Rento. All housing obligation intensification surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 20.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; commitment context; identity at escalation |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 29 — Maps & Location Experience | Location policy honesty for commitment context |
+| Chapter 31 — Property Detail Experience | Property Confidence, Contact Readiness, Listing Integrity, information layer |
+| Chapter 32 — Media Experience | Expected Property, evidence layer, reconciliation input |
+| Chapter 33 — Property Comparison Experience | Narrowing context; partner shared commitment |
+| Chapter 34 — Property Verification Experience | Proceeding Readiness, Verification Boundaries, verification handoff |
+| Chapter 35 — Viewing Experience | Viewing Confidence, Viewing Boundaries, viewing handoff |
+| Chapter 36 — Application Experience | Application Confidence, Application Boundaries, application handoff |
+| Forward chapters — Housing obligation | Legal, financial, move-in execution — forward |
+
+### 20.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Commitment positioned as housing obligation intensification boundary — not application, viewing, verification, contact, legal execution, or payment  
+2. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+3. New concepts (Commitment Environment, Commitment Readiness, Commitment Preparation, Commitment Confidence, Commitment Boundaries, Mutual Expectation Clarity, Commitment Integrity) are reusable in forward housing obligation chapters  
+4. Commitment Readiness and Commitment Confidence clearly scoped — no overlap with Application Readiness, Proceeding Readiness, or Application Confidence  
+5. Mutual Expectation Clarity defined without simulating bilateral agreement  
+6. Platform-never-creates-commitment principle explicit  
+7. Transition to forward housing obligation chapters honest — commitment does not pretend execution readiness  
+8. Anti-manipulation, anti-gamification, and boundary honesty preserved  
+9. Proceed, defer, and release equally valid  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+
+### 20.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on commitment experience philosophy |
+| Head of Product Design | Parity with Decision Experience block |
+| Senior UX Designer | Mutual expectation communication, preparation depth, mobile rhythm |
+| Product Management | Commitment boundary honesty and marketplace integrity |
+| Content Design Lead | Scope language, boundary honesty, and mutual expectation copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual commitment access and anxiety-sensitive design |
+
+### 20.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new commitment experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 20.6 Design Director Closing Note
+
+Users do not rent commitment buttons. They rent homes — and they deserve to intensify housing obligation only when prepared, only with mutual expectation clarity, and never confuse platform-supported escalation with a signed lease or manufactured agreement. This chapter exists so Rento helps people cross the housing obligation boundary with honest preparation, voluntary judgment, and dignity whether they proceed, defer, or release.
+
+---
+
+**End of Chapter 37**
 

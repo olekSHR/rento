@@ -34,15 +34,17 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–35 |
-| **Latest approved** | Chapter 35 — Viewing Experience |
+| **Approved chapters** | 1–37 |
+| **Latest approved** | Chapter 37 — Commitment Experience |
+| **Current chapter** | Chapter 38 — not yet started |
+| **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Remaining work
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Decision Experience** — comparison, shortlist, commitment, and related evaluation surfaces
+- **Housing Obligation** — forward execution chapters (legal, financial, move-in) extending Commitment Experience (Chapter 37)
 - **Realtor Platform** — realtor-facing product experience beyond existing foundation chapters
 - **Admin Platform** — moderation, governance, and administrative experience
 - **Design System Governance** — standards enforcement, evolution, and exception policy
