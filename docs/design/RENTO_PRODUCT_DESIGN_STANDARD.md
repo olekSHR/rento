@@ -18,6 +18,22 @@ This standard is **not** implementation documentation. It does not specify code,
 
 **Authority order:** Immutable domain rules (documented in product architecture) → this standard → pattern specifications → screen-level exceptions (Chapter 5 Exception Policy).
 
+### AI Session Initialization
+
+Before continuing work, always read the official project documentation in the following order:
+
+1. `docs/design/MASTER_ROADMAP.md`
+2. `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md`
+3. `docs/design/CURSOR_HANDOFF.md`
+
+Do not rely on previous chat memory.
+
+Project documentation is the single source of truth.
+
+If documentation conflicts with previous conversation context, documentation always takes precedence.
+
+Do not begin authoring, reviewing, or modifying architecture until all three documents have been read and understood.
+
 ---
 
 ## Table of Contents
@@ -58,12 +74,14 @@ This standard is **not** implementation documentation. It does not specify code,
 | 30 | [Saved Searches & Search Continuity](#chapter-30--saved-searches--search-continuity) | Saved Searches & Continuity | APPROVED |
 | 31 | [Property Detail Experience](#chapter-31--property-detail-experience) | Property Detail | APPROVED |
 | 32 | [Media Experience](#chapter-32--media-experience) | Media Experience | APPROVED |
+| 33 | [Property Comparison Experience](#chapter-33--property-comparison-experience) | Property Comparison | APPROVED |
+| 34 | [Property Verification Experience](#chapter-34--property-verification-experience) | Property Verification | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 33+ | Future Decision Experience chapters per design standard roadmap |
+| 35+ | Future Decision Experience chapters per design standard roadmap |
 
 ---
 
@@ -85,6 +103,8 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-04 | Chapter 30 — Saved Searches & Search Continuity approved and added |
 | 1.0 | 2026-07-04 | Chapter 31 — Property Detail Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 32 — Media Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 33 — Property Comparison Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 34 — Property Verification Experience approved and added |
 
 ---
 
@@ -32874,4 +32894,1340 @@ Users do not rent photographs. They rent homes. Media earns its place only when 
 ---
 
 **End of Chapter 32**
+
+---
+
+## Chapter 33 — Property Comparison Experience
+
+**Section:** XXX — Property Comparison  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–32; extends the Decision Experience block opened by Chapter 31 — Property Detail Experience and Chapter 32 — Media Experience; operationalizes Comparison Confidence (Chapter 28), Property Comparison Principles (Chapter 17), and listing card comparability (Chapter 14); defines principles only — not comparison UI layouts, state management, APIs, databases, or implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **property comparison experience philosophy** for Rento — how users evaluate **multiple housing candidates together** to narrow a shortlist, reject with confidence, or prioritize deeper attention.
+
+Comparison is not a feature showcase. Comparison is **structured housing judgment** — the moment discovery outputs and single-property evaluation converge into **decision narrowing**.
+
+Where Chapter 31 helps users judge one home and Chapter 32 helps them trust visual evidence for that home, this chapter helps users **understand how candidates differ, what trade-offs exist, and which homes survive scrutiny** — without confusion, manipulation, or false certainty.
+
+The product must help users answer five comparison questions:
+
+1. **Are these the homes I intended to compare?**  
+2. **Can I see differences honestly and at a glance?**  
+3. **Do compared facts come from the same truth layer?**  
+4. **Can I narrow my shortlist without regret?**  
+5. **Can I return to detail or contact when ready?**
+
+This chapter governs comparison as a Decision Experience surface — environment quality, evaluation parity, differentiation clarity, integrity across compared listings, continuity from search and detail, and calm mobile-first narrowing. It does **not** specify side-by-side layouts, comparison tables, sync mechanisms, or engineering architecture.
+
+**Relationship to prior chapters:** **Comparison Confidence** (Chapter 28) governs mental comparison during search scan. **Property Comparison Principles** (Chapter 17) govern comparison within saved collections. This chapter defines the **full comparison experience contract** — how multi-listing evaluation extends preview-level confidence into **deep, fair, decision-ready comparison** after users have opened, saved, or otherwise committed attention to candidates.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Narrowing over browsing** | Comparison exists to reduce candidates — not to extend scroll |
+| **Parity over persuasion** | Same facts, same positions, same honesty — no asymmetric advantage |
+| **Differentiation over decoration** | Surfaces real trade-offs — not visual competition |
+| **Integrity over completeness theater** | Missing data shown as missing — not hidden or faked |
+| **Detail depth preserved** | Comparison supports triage — never replaces property detail |
+| **Continuity over reset** | Search memory, save context, and detail evaluation survive comparison |
+| **Calm over competition** | No gamified ranking, urgency, or winner framing among homes |
+| **Mobile narrowing first** | Design for thumb, glance, and partner discussion — then tablet, then desktop |
+| **Narrowing Confidence goal** | Every comparison decision serves confident keep, release, or defer |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, comparison table component guide, or layout pattern library  
+- An implementation plan, API contract, data model, or sync architecture  
+- A replacement for Chapter 17 — Favorites & Saved Properties Experience  
+- A replacement for Chapter 28 — Search Results Experience or Comparison Confidence at scan layer  
+- A shortlist management, folder, or collection organization chapter (Chapter 17)  
+- A contact, application, or housing commitment chapter (later Decision Experience chapters)  
+- A verification or viewing preparation chapter (forward)  
+- A personalization or recommendation comparison engine spec  
+
+If the question is *how to build* a comparison grid or *which fields* to query — this chapter does not answer it. If the question is *what comparison must accomplish for housing decisions* — this chapter does.
+
+---
+
+## Comparison Environment
+
+**Comparison Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Comparison Environment is the **cognitive and informational conditions under which a user evaluates multiple properties together** — not the screen layout, but the **quality of the multi-listing decision space** Rento provides.
+
+A sound Comparison Environment is:
+
+- **Bounded** — user knows which listings are in scope and why  
+- **Parallel** — candidates presented for judgment on comparable terms  
+- **Grounded** — facts and evidence before narrative or visual persuasion  
+- **Differentiated** — genuine differences visible without hunting  
+- **Reversible** — user can add, remove, or return to detail without penalty  
+- **Calm** — no artificial winners, losers, or urgency among homes  
+
+Chapter 31 established **Decision Environment** for single-property evaluation. Comparison Environment is its **multi-listing counterpart** — the governed space where users move from *“Is this home worth attention?”* to *“Among these homes, which deserve to survive?”*
+
+Comparison Environment is reusable across favorites-driven comparison, search-initiated comparison, partner-shared shortlists, and future commitment chapters.
+
+---
+
+## Evaluation Parity
+
+**Evaluation Parity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Evaluation Parity is the **structural fairness of comparison** — each listing in a comparison set presents **the same categories of decision-relevant facts at equivalent depth**, in **predictable parallel positions**, so differences reflect real housing trade-offs rather than layout tricks or missing columns.
+
+Evaluation Parity requires:
+
+- **Same attribute families compared** — price, location, rooms, area, availability, and governed specifications align across listings  
+- **Same hierarchy** — primary facts precede secondary; no listing hides price behind narrative while another leads with it  
+- **Same honesty about absence** — missing fields visible as missing for all listings — not selectively omitted  
+- **Same evidence classes where compared** — media, map context, and trust signals compared at equivalent depth — not incomparable richness as persuasion  
+- **Same status visibility** — availability, moderation, and change signals equally legible  
+
+Evaluation Parity extends **Comparison Confidence** (Chapter 28) from card scan into **structured evaluation**. Without Evaluation Parity, comparison becomes a beauty contest — users compare presentation quality, not homes.
+
+Evaluation Parity is distinct from **Information Confidence** (Chapter 31): Information Confidence governs trust in one listing's facts; Evaluation Parity governs **fair alignment across listings** so comparison is meaningful.
+
+---
+
+## Evidence Parity
+
+**Evidence Parity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Evidence Parity is the **structural fairness of evidence presentation across compared listings** — each candidate exposes **equivalent classes of visual and contextual evidence at comparable depth**, with **limitations visible per listing**, so users judge housing trade-offs rather than presentation richness.
+
+Evidence Parity requires:
+
+- **Equivalent evidence types compared** — media coverage, spatial signals, map context, and trust evidence aligned by class — not one full gallery beside one thumbnail without explicit limitation  
+- **Per-listing Media Integrity preserved** — no compare-only hero or alternate evidence that misrepresents the listing  
+- **Visual Confidence and Spatial Understanding judged fairly** — incomparable media depth must not imply superior housing  
+- **Media Transparency visible per listing** — few photos, old photos, and missing rooms acknowledged honestly  
+
+Evidence Parity extends **Evaluation Parity** to the evidence layer (Chapter 32). Without Evidence Parity, comparison rewards visual production over housing truth.
+
+Evidence Parity is distinct from **Evaluation Parity**: Evaluation Parity governs structural fairness of **information** presentation across listings; Evidence Parity governs structural fairness of **evidence** presentation across listings.
+
+Evidence Parity is distinct from **Media Integrity** (Chapter 32): Media Integrity governs whether one listing's visual evidence is **truthful**; Evidence Parity governs whether **evidence is fairly comparable across listings** in a comparison set. A listing may have high Media Integrity yet participate in a comparison that fails Evidence Parity when paired against incomparably richer media without transparent limitation.
+
+Evidence Parity is reusable across collaborative comparison, mobile and desktop comparison surfaces, and future verification chapters.
+
+---
+
+## Differentiation Clarity
+
+**Differentiation Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Differentiation Clarity is the user's ability to **identify what genuinely differs between compared listings** — price, place, size, condition signals, availability, evidence quality, and trust posture — without cognitive reconstruction or false equivalence.
+
+Differentiation Clarity rises when:
+
+- Differences are **scannable** — not buried in prose or visual noise  
+- Similarities are **honest** — not forced alignment that hides material gaps  
+- Trade-offs are **legible** — user understands what they gain and lose between candidates  
+- Noise is **suppressed** — decorative variation does not masquerade as housing difference  
+
+Differentiation Clarity falls when listings use incomparable media depth, inconsistent units, hidden fees, or asymmetric attribute presence to **simulate superiority** without factual difference.
+
+Differentiation Clarity connects Evaluation Parity to **Narrowing Confidence** — users cannot narrow well when they cannot see what differs.
+
+---
+
+## Comparison Integrity
+
+**Comparison Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Comparison Integrity is the **alignment between compared listings and marketplace truth** — no listing gains unfair advantage in comparison through stale data, hidden status, promotional placement, asymmetric omission, or card-detail mismatch.
+
+Comparison Integrity requires:
+
+- Compared listings reflect **current authoritative facts** — not stale cache pretending availability  
+- **Card-detail-preview parity** (Chapters 14, 31) holds in comparison context — not a third summary layer  
+- **Listing Integrity** (Chapter 31) and **Media Integrity** (Chapter 32) preserved for every candidate  
+- **Promotion and featured status** labeled when material — never disguised as organic superiority (Chapter 17, Chapter 14)  
+- **Removed or unavailable listings** flagged honestly — not retained to preserve false hope  
+
+Comparison Integrity is distinct from Evaluation Parity: Evaluation Parity governs structural fairness of presentation; Comparison Integrity governs **truthfulness of what is presented**. A comparison can have parity in layout yet fail integrity if one listing shows outdated price.
+
+Comparison Integrity protects the marketplace: comparison must not become a channel where manipulation wins over honest listings.
+
+---
+
+## Narrowing Confidence
+
+**Narrowing Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Narrowing Confidence is the user's **confidence that comparison helped them keep, release, or defer candidates correctly** — without fear of hidden truth, missed difference, or irreversible mistake.
+
+Narrowing Confidence rises when:
+
+- User can **release** a listing knowing gaps and trade-offs were visible  
+- User can **retain** a listing knowing it survived fair scrutiny  
+- User can **defer** contact or viewing knowing comparison did not pretend to replace detail  
+- User can **return** to detail, favorites, or search without losing comparison context  
+
+Narrowing Confidence extends **Decision Confidence** (Chapter 31) from single-property action readiness to **multi-property judgment outcomes**. It connects to **Abandon confidence** and **Save confidence** within Decision Confidence — comparison must strengthen both.
+
+Without Narrowing Confidence, users either avoid comparison (cognitive overload) or over-trust comparison (false certainty) — both harm the Housing Journey.
+
+---
+
+## 2. Role in the Housing Journey
+
+Property comparison sits at the **evaluation-to-narrowing boundary** of the Housing Journey — after discovery has produced candidates and detail has validated individual homes, before contact, viewing, and commitment intensify.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Single-property evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| **Property comparison (this chapter)** | **Narrow** | **Among these homes, which differences matter and which candidates survive?** |
+| Decision Experience (following chapters) | Commit, verify | What happens next toward housing commitment? |
+
+Comparison succeeds when it produces **Meaningful Progress** — user exits with a smaller, clearer shortlist or a confident single priority — not when user spends maximum time in compare mode.
+
+Comparison fails when it optimizes for **engagement within compare** — endless toggling, visual competition, or artificial ranking that postpones real decisions.
+
+---
+
+## 3. Relationship to Comparison Confidence
+
+**Comparison Confidence** (Chapter 28) is the architectural parent concept for all comparison behavior on Rento. This chapter **extends** it — it does not replace or redefine it.
+
+| Layer | Scope | Primary surface |
+|-------|-------|-----------------|
+| **Comparison Confidence** (Chapter 28) | Mental and visual comparison during scan | Search results, cards, maps |
+| **Property Comparison Principles** (Chapter 17) | Comparison within saved collection | Favorites, shortlist |
+| **Property Comparison Experience** (this chapter) | Structured multi-listing evaluation | Comparison Environment surfaces |
+
+The progression is intentional:
+
+1. **Scan** — Comparison Confidence enables shortlist formation from results  
+2. **Save** — Chapter 17 preserves candidates for return comparison  
+3. **Evaluate** — Chapters 31–32 establish per-listing Property Confidence  
+4. **Compare** — this chapter enables fair narrowing among evaluated candidates  
+5. **Act** — contact, viewing, deferral — forward chapters  
+
+If Comparison Confidence fails at scan, comparison at depth cannot repair it — garbage-in persists as confused judgment. If detail evaluation fails, comparison amplifies mistrust across listings. This chapter assumes upstream integrity and **raises the bar for cross-listing fairness**.
+
+---
+
+## 4. Transition from Single-Property Evaluation
+
+Users enter comparison **after** or **alongside** single-property evaluation — not as a bypass of detail depth.
+
+### 4.1 Entry Preconditions
+
+Comparison among listings is responsible when:
+
+- User has **identified a bounded set** — saved favorites, explicit selection, or session-scoped candidates — not the entire results feed by default  
+- Compared listings are **housing candidates the user chose** — not algorithmically injected substitutes without consent  
+- User mental model includes **why these homes are together** — partner discussion, budget bracket, neighborhood choice, or saved shortlist  
+
+### 4.2 Handoff from Property Detail
+
+Detail evaluation (Chapters 31–32) supplies **per-listing Property Confidence, Information Confidence, Visual Confidence, and Spatial Understanding**. Comparison must **preserve** that evaluation work — not reset facts to a thinner summary that contradicts detail.
+
+The handoff contract:
+
+- Facts compared at depth **match** detail and card truth — Comparison Integrity  
+- Evidence compared **respects** Media Integrity and Evidence Continuity — not alternate hero selection  
+- User can **return to detail** for any compared listing without losing comparison set context  
+
+### 4.3 Handoff from Search and Favorites
+
+From search results or favorites collection, comparison inherits:
+
+- **Comparison Confidence** from parallel card grammar (Chapters 14, 28)  
+- **Save intent** from favorites mental model (Chapter 17)  
+- **Search Memory** and **Housing Continuity** when comparison launched from saved search context (Chapter 30)  
+
+Comparison must not behave as if favorites or search never happened — **Context Restoration** applies on exit.
+
+---
+
+## 5. Comparison Set Mental Model
+
+Users hold a **comparison set** — a bounded group of listings under simultaneous evaluation.
+
+### 5.1 Set Boundaries
+
+The comparison set must be **legible**:
+
+- User knows **which listings are in** and **which are out**  
+- Add and remove are **explicit** — not silent drift as user navigates  
+- Set size remains **cognitively manageable** — comparison is not infinite scroll of candidates  
+
+### 5.2 Set Membership Meaning
+
+Membership in a comparison set implies **serious parallel evaluation** — stronger than casual scan, lighter than final commitment. It inherits favorites meaning (Chapter 17) when launched from saved listings: these homes remain worth considering together.
+
+### 5.3 Set vs Shortlist
+
+The **shortlist** is the user's evolving set of candidates worth continued attention. Comparison is **an activity on** the shortlist — not the shortlist itself. Chapter 17 governs collection persistence; this chapter governs **evaluation quality when comparing collection members**.
+
+### 5.4 Empty and Minimal Sets
+
+Comparison with zero or one listing is **valid** — product guides toward meaningful sets without shame. Forcing comparison before user readiness violates calm Decision Experience posture.
+
+---
+
+## 6. Information Layer in Comparison
+
+Comparison must treat the **information layer** (Chapter 31) with Evaluation Parity and Comparison Integrity.
+
+### 6.1 Comparable Fact Vocabulary
+
+Compared listings use **the same governed vocabulary** for price, rooms, area, fees, location precision, and specifications — inherited from Chapters 5, 15, and 31. Mixed units or ambiguous labels destroy Differentiation Clarity.
+
+### 6.2 Primary Facts First
+
+Comparison surfaces **decision-order facts** before narrative depth:
+
+- Economic anchor — price and material cost signals  
+- Place anchor — location as user understands it from discovery  
+- Housing type and scale — rooms, area, layout signals where governed  
+- Availability and status — honest current state  
+
+Narrative description is **subordinate** in comparison — it supports differentiation, not replaces structured facts.
+
+### 6.3 Missing Data Honesty
+
+When one listing lacks a governed field others show:
+
+- Absence is **visible** — not imputed, not blank column pretending parity  
+- User understands **comparison is partial** — Narrowing Confidence adjusts accordingly  
+- Missing data is **not treated as neutral advantage** — unknown is not better  
+
+This extends **Property Transparency** (Chapter 31) to cross-listing evaluation.
+
+### 6.4 Detail Bridge
+
+Chapter 31 required facts **comparable across listings** for Comparison Confidence Bridge. This chapter **operationalizes** that requirement: comparison is where incomparable detail architecture fails visibly — and must be corrected upstream, not patched with compare-only summaries.
+
+---
+
+## 7. Evidence Layer in Comparison
+
+Comparison must treat **evidence** (Chapter 32) with **Evidence Parity** — visual and contextual truth aligned fairly across candidates.
+
+### 7.1 Applying Evidence Parity
+
+When media or spatial evidence appears in comparison, **Evidence Parity** governs practice:
+
+- **Equivalent evidence types** compared — not one listing with full gallery beside one with single thumbnail unless limitation is explicit  
+- **Media Integrity** preserved — no compare-only hero that misrepresents listing  
+- **Visual Confidence** and **Spatial Understanding** judged fairly — incomparable richness must not imply superior housing  
+- **Media Transparency** visible — few photos, old photos, missing rooms acknowledged per listing  
+
+Chapter 32 established that comparison context requires **parallel evaluation** — this chapter makes that obligation explicit for structured comparison surfaces.
+
+### 7.2 Evidence vs Information in Comparison
+
+Comparison must not collapse evidence and information into a single undifferentiated score. Users need to know whether difference is **factual** (price, rooms), **evidential** (photo coverage, condition visibility), or **trust** (verification, realtor identity) — Differentiation Clarity requires separation.
+
+### 7.3 Expected Property Alignment
+
+Comparison helps users anticipate **Expected Property** per candidate (Chapter 32) — what each home would likely feel like at viewing. When evidence quality differs materially, comparison must surface that **evaluation depth differs** — not flatten into false equivalence.
+
+---
+
+## 8. Property Confidence across Compared Listings
+
+**Property Confidence** (Chapter 31) applies per listing — comparison does not create a blended confidence score.
+
+### 8.1 Per-Listing Confidence Preserved
+
+Each candidate retains independent Property Confidence. Comparison **reveals relative standing** — it does not manufacture composite trust. A listing with high Visual Confidence and low Information Confidence must remain visibly so in comparison.
+
+### 8.2 Confidence Asymmetry Visible
+
+When one listing is thin and another rich:
+
+- Asymmetry is **transparent** — user understands uneven evidence  
+- Product does not **penalize visually** honest thin listings with layout disadvantage beyond truth  
+- Product does not **reward** manipulative rich media with compare prominence  
+
+### 8.3 Contact Readiness in Comparison
+
+**Contact Readiness** (Chapter 31) remains per listing. Comparison may help user **prioritize** who to contact first — it must not bulk-contact or pressure contact across all candidates. Contact ethics remain Chapter 16.
+
+---
+
+## 9. Shortlist Integration
+
+This chapter **extends** Chapter 17 — it does not duplicate collection management.
+
+### 9.1 Division of Responsibility
+
+| Concern | Governing chapter |
+|---------|-------------------|
+| Save behavior, collection persistence, status on saved rows | Chapter 17 |
+| Property Comparison Principles at collection level | Chapter 17 §11 |
+| Comparison Environment, Evaluation Parity, structured narrowing | **This chapter** |
+
+### 9.2 Comparison from Favorites
+
+Favorites comparison inherits:
+
+- **Same primary facts** on card and in compare — Chapter 17 §11.1  
+- **Status visible in compare** — Chapter 17 §11.4  
+- **Fair comparison** for promoted listings — Chapter 17 §11.5  
+- **Comparison never replaces detail** — Chapter 17 §11.3  
+
+This chapter adds Decision Experience **depth in comparison**, after those collection-level principles — supporting Narrowing Confidence and Differentiation Clarity at evaluation level.
+
+### 9.3 Release and Retain Actions
+
+Narrowing implies **release** — removing a listing from active consideration — and **retain** — keeping it on the shortlist. Release must be **dignified** — not shame copy, not dark retention. Retain must **honor save meaning** — not inflate collection with unconsidered toggles.
+
+---
+
+## 10. Entry Paths to Comparison
+
+Comparison may be entered from multiple Housing Journey contexts — each with continuity expectations.
+
+| Entry path | Continuity expectation |
+|------------|------------------------|
+| Favorites / saved collection | Shortlist membership clear; status current |
+| Search results multi-select | Comparison Confidence from scan preserved |
+| Property detail “compare with saved” | Detail evaluation preserved; set bounded |
+| Map selection | Geographic context mentally available (Chapter 29) |
+| Partner-shared shortlist | Identical listing truth for all participants (Chapter 14, 17) |
+| Saved search results | Search Memory honored; criteria distinct from shortlist |
+
+Every entry path must answer: **why these listings are compared together** — implicit or explicit user intent.
+
+---
+
+## 11. Comparison vs Detail Depth
+
+Comparison **reduces load** among candidates (Chapter 17 §11.2) — it **never replaces** detail depth (Chapter 17 §11.3).
+
+### 11.1 Triage Role
+
+Comparison is for **triage among known candidates** — eliminating clear mismatches, surfacing trade-offs, prioritizing viewing order. It is not a substitute for reading full detail, consuming evidence sequence, or verifying realtor identity.
+
+### 11.2 Depth on Demand
+
+Every compared listing must offer **unobstructed path to full detail** — Comparison Environment remains reversible. User who discovers complexity in comparison returns to detail without penalty.
+
+### 11.3 Comparison Saturation
+
+When differences cannot be resolved at comparison depth — subtle condition, ambiguous location, incomplete evidence — product must support **defer to detail or viewing** — not false resolution in compare mode.
+
+---
+
+## 12. Status and Market Change in Comparison
+
+Saved and compared listings **live in a changing marketplace** (Chapter 17 §13).
+
+### 12.1 Live Status in Compare
+
+Price changes, availability changes, verification changes, and removal ** propagate to comparison context** — not only to favorites list. Comparison Integrity requires compared truth to be current.
+
+### 12.2 Removed Listings in Set
+
+When a compared listing becomes unavailable:
+
+- **Clear status** within comparison — not silent drop  
+- User understands **set changed** — Narrowing Confidence adjusts  
+- Contact and detail paths **disabled honestly** — Chapter 17 §14  
+
+### 12.3 Stale Set Recovery
+
+User returning after absence sees comparison set **honest about market movement** — calm summary if many changes; no pretense that week-old compare state remains fully valid without refresh.
+
+---
+
+## 13. Fair Comparison and Promotion
+
+Marketplace fairness extends into comparison (Chapters 14, 17, 20).
+
+### 13.1 Featured and Promoted Listings
+
+If promoted listings appear in comparison:
+
+- **Labeled** when promotion is material to evaluation  
+- **No hidden ranking advantage** in compare presentation  
+- **Same Evaluation Parity** — promotion does not unlock extra fact rows others lack  
+
+### 13.2 Algorithmic Ordering in Compare
+
+Default ordering in comparison must be **user-meaningful or neutral** — recently added, user-defined, price, or distance — not opaque engagement optimization. **Result Stability** spirit applies: compared listings do not reorder without explanation.
+
+### 13.3 No Winner Framing
+
+Rento does not declare a **“best home”** in comparison. Housing fit is personal — comparison surfaces trade-offs; user decides. Gamified badges, scores, or match percentages that simulate objective superiority are out of scope unless explicitly governed elsewhere with transparency — and never as default comparison posture.
+
+---
+
+## 14. Collaborative Comparison
+
+Long-term rental decisions often involve **partners, roommates, or family** (Chapter 17 §5.4, Chapter 14 §33.3).
+
+### 14.1 Shared Truth Requirement
+
+Collaborative comparison requires **identical listing truth** for all participants — same facts, same status, same evidence classes. One participant must not see stale price while another sees current.
+
+### 14.2 Cooperative Not Competitive
+
+Shared comparison supports **cooperative narrowing** — discussion, defer, prioritize — not social ranking, voting theater, or comment feeds that distract from housing judgment.
+
+### 14.3 Criteria vs Shortlist Clarity
+
+Shared **search criteria** (Chapter 30) and shared **listing shortlist** (Chapter 17) remain distinct. Comparison operates on listings; criteria sharing operates on hunt definition — confusion between the two erodes Search Ownership.
+
+---
+
+## 15. Mobile Comparison Experience
+
+Mobile is the **primary comparison surface**. Tablet and desktop extend — never reverse.
+
+### 15.1 Mobile Principles
+
+| Principle | Intent |
+|-----------|--------|
+| **Glance differentiation** | Key differences visible without horizontal maze |
+| **One-handed narrowing** | Release and retain actions reachable without strain |
+| **Interrupt tolerance** | Comparison set stable if user switches apps mid-eval |
+| **Partner sharing** | Easy handoff for in-person discussion — calm, not viral |
+| **Calm density** | Enough to compare; never wallpaper overload |
+
+### 15.2 Mobile vs Desktop
+
+Desktop may show more simultaneous columns — but **Evaluation Parity**, **Comparison Integrity**, and **Evidence Parity** remain identical to mobile. Desktop must not introduce richer manipulation affordances or hidden columns that mobile users cannot see.
+
+### 15.3 Comparison in Life Context
+
+Comparison happens between tasks, on sofa with partner, on transit after viewings. Surfaces must support **decisive narrowing** — not immersive compare sessions that mimic entertainment products.
+
+---
+
+## 16. Accessibility Principles
+
+Comparison must be **inclusive** — housing decisions belong to all users.
+
+### 16.1 Non-Visual Comparison Access
+
+Structured comparison requires **textual and semantic equivalents** for differentiated facts — not color-only diff, not icon-only advantage, not visual-only evidence contrast.
+
+### 16.2 Cognitive Accessibility
+
+Differentiation Clarity serves cognitive accessibility: predictable structure, plain language, consistent attribute labels, calm density — users with attention or memory constraints must narrow without reconstructing layout per listing.
+
+### 16.3 Motion and Comparison
+
+Comparison must not rely on animation to reveal differences. Motion, if present, serves orientation — not gamified reveal. **Respectful Silence** applies — no nagging within compare to compensate for weak differentiation.
+
+Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 17. Context Preservation and Continuity
+
+Comparison participates in **Housing Continuity**, **Decision Persistence**, and **Cognitive Continuity** (Chapters 28, 30, 31).
+
+### 17.1 Comparison Set Persistence
+
+User expects comparison set to **survive session interruption** when product supports persistence — honest when local-only or guest-bound. Sync expectations follow Chapter 17 cross-device rules.
+
+### 17.2 Navigation Continuity
+
+- Detail → compare → detail ** preserves listing identity and scroll context** where feasible  
+- Compare → favorites → compare ** preserves set membership**  
+- Compare → search → compare ** preserves set when user returns** — not amnesia  
+
+### 17.3 Filter and Search Context
+
+Comparison launched from filtered search must not **erase filter memory** on exit — Search Memory (Chapter 30) remains intact.
+
+---
+
+## 18. Returning to Comparison
+
+Returning users resume **narrowing work** — not a cold start.
+
+### 18.1 Honest Reunion
+
+Return shows **current listing truth** — refresh honest. If listings changed materially since last compare, user understands before re-investing attention.
+
+### 18.2 Decision Persistence
+
+User's prior retain/release choices may be remembered when product supports — but **never as manipulation** — only as continuity aid user can override.
+
+### 18.3 Abandon Comparison Confidence
+
+Leaving comparison without finishing narrowing is **valid** — Abandon confidence (Chapter 31) applies. No blocking modals, no shame copy, no artificial urgency to complete compare.
+
+---
+
+## 19. Anti-Patterns
+
+The following are **explicitly forbidden** in Rento property comparison philosophy:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| Compare-only summary layer contradicting detail | Breaks Comparison Integrity |
+| Hidden missing columns | False Evaluation Parity |
+| Incomparable media richness as persuasion | Violates Evidence Parity; destroys fairness |
+| Winner framing or match scores as objective truth | Manipulates Narrowing Confidence |
+| Infinite comparison set | Cognitive overload; not narrowing |
+| Forced comparison before save intent | Violates calm Comparison Environment |
+| Stale availability in compare | Wastes contact and viewing preparation |
+| Promoted advantage without label | Marketplace integrity failure |
+| Comparison replacing detail depth | False certainty before evaluation |
+| Cherry-picked attributes per listing | Differentiation Clarity collapse |
+| Algorithmic injection into compare set without consent | Violates set boundaries |
+| Gamified ranking among homes | Anxiety and false housing hierarchy |
+| Bulk contact from compare | Violates Contact Readiness per listing |
+| Compare mode as engagement trap | Violates anti-engagement posture |
+| Resetting Property Confidence to single score | Hides per-listing truth |
+| Partner share with divergent listing truth | Destroys collaborative trust |
+
+---
+
+## 20. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, comparison initiatives must trace to this chapter and upstream comparison contracts:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New comparison surfaces | Comparison Environment and Evaluation Parity impact |
+| Attribute selection in compare | Differentiation Clarity; no cherry-picking |
+| Media in compare | Evidence Parity; Media Integrity alignment |
+| Collaborative compare | Shared truth; cooperative narrowing |
+| Personalization in compare | Does not inject listings without consent; Memory Transparency |
+| Performance optimization | Does not degrade Comparison Integrity via stale cache |
+
+**Review gate:** No property comparison surface ships without checklist against Comparison Integrity, Evaluation Parity, Differentiation Clarity, and Narrowing Confidence.
+
+**Forward chapters:** Verification, viewing preparation, application, and housing commitment extend narrowing outcomes — this chapter supplies the multi-listing evaluation foundation.
+
+---
+
+## 21. Chapter Summary
+
+Property comparison is where Rento converts **multiple evaluated candidates** into **a clearer housing path forward**.
+
+This chapter defines:
+
+- **Position** — Decision Experience continuation after single-property evaluation and media evidence  
+- **Environment** — Comparison Environment as multi-listing counterpart to Decision Environment  
+- **Parity** — Evaluation Parity and Evidence Parity for fair structural comparison  
+- **Clarity** — Differentiation Clarity for honest trade-off visibility  
+- **Integrity** — Comparison Integrity as cross-listing truth alignment  
+- **Confidence** — extends Comparison Confidence; introduces Narrowing Confidence  
+- **Layers** — information and evidence cooperation under comparison discipline  
+- **Integration** — extends Chapter 17 shortlist without duplicating collection management  
+- **Mobile** — primary narrowing surface; calm, reversible, partner-ready  
+- **Continuity** — Housing Continuity and Decision Persistence through compare entry and exit  
+
+Comparison succeeds when users can see real differences, trust compared facts, release or retain candidates without regret, and return to detail or contact when ready — without comparison becoming browsing theater or false verdict.
+
+**Decision Experience flow:**
+
+Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → **Property Comparison Experience (Chapter 33)** → following Decision Experience chapters
+
+---
+
+## 22. Design Director Review
+
+**Chapter:** 33 — Property Comparison Experience  
+**Section:** XXX — Property Comparison  
+**Review type:** Initial standard adoption
+
+### 22.1 Approval Statement
+
+This chapter is approved as the **property comparison experience contract** for Rento. All multi-listing comparison surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 22.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 14 — Listing Card & Preview System | Card comparability; comparison mode same-facts principle |
+| Chapter 16 — Contact & Communication Experience | Contact Readiness ethics; no bulk contact from compare |
+| Chapter 17 — Favorites & Saved Properties | Shortlist persistence; Property Comparison Principles extended |
+| Chapter 20 — Trust, Verification & Moderation Experience | Promotion fairness and marketplace integrity in compare |
+| Chapter 28 — Search Results Experience | Comparison Confidence parent; scan-layer comparison |
+| Chapter 29 — Maps & Location Experience | Map entry path; geographic context in comparison |
+| Chapter 30 — Saved Searches & Search Continuity | Search Memory into comparison entry |
+| Chapter 31 — Property Detail Experience | Decision Environment; Property Confidence; comparable facts bridge |
+| Chapter 32 — Media Experience | Evidence layer; Media Integrity in comparison |
+| Chapter 34+ — Decision Experience | Verification, commitment — forward |
+
+### 22.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Comparison positioned as narrowing — not browsing or engagement  
+2. No contradiction with Comparison Confidence (Chapter 28) or Chapter 17 comparison principles  
+3. New concepts (Comparison Environment, Evaluation Parity, Evidence Parity, Differentiation Clarity, Comparison Integrity, Narrowing Confidence) are reusable in later Decision Experience chapters  
+4. Evaluation Parity and Evidence Parity clearly scoped — no overlap with Media Integrity or Information Confidence  
+5. Anti-manipulation and fair comparison posture preserved  
+6. Mobile-first order explicit  
+7. No implementation leakage  
+
+### 22.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on comparison experience philosophy |
+| Head of Product Design | Parity with Decision Experience block and Search Architecture |
+| Senior UX Designer | Differentiation clarity, narrowing flow, mobile rhythm |
+| Product Management | Marketplace integrity and promotion fairness |
+| Content Design Lead | Missing-data honesty and status copy |
+| Accessibility Specialist | Non-visual differentiation and cognitive accessibility |
+
+### 22.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new property comparison work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 22.6 Design Director Closing Note
+
+Users do not choose a layout — they choose a home. Comparison earns its place only when it helps someone see trade-offs honestly, release what does not fit, and keep what might — without the product pretending to decide for them. This chapter exists so Rento treats comparison as housing judgment, not competition among listings.
+
+---
+
+**End of Chapter 33**
+
+---
+
+## Chapter 34 — Property Verification Experience
+
+**Section:** XXXI — Property Verification  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–33; extends the Decision Experience block after Property Comparison Experience (Chapter 33); operationalizes Property Confidence (Chapter 31), Evidence Credibility from media and information layers (Chapters 31–32), and platform trust presentation (Chapter 20); defines principles only — not verification workflows, document upload systems, identity checks, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **property verification experience philosophy** for Rento — how users establish **whether a narrowed housing candidate deserves enough trust to proceed** toward viewing, deeper contact, and housing commitment.
+
+Property verification is not comparison. Comparison asks *which homes deserve to survive scrutiny together*. Verification asks *can I trust this specific home enough to invest the next step*.
+
+Property verification is not moderation. Moderation governs **platform integrity** — what inventory is eligible, what Rento attests, how rejection and appeals work (Chapter 20). Verification governs **user decision confidence** — how a renter judges remaining uncertainty before escalating commitment.
+
+Property verification is not legal due diligence. Rento does not substitute for lease review, title search, building inspection, or professional counsel. Verification establishes **product-appropriate decision confidence** — honest assessment of what can and cannot be known before the user proceeds.
+
+Where Chapter 31 helps users evaluate one home, Chapter 32 helps them trust visual evidence, and Chapter 33 helps them narrow candidates, this chapter helps users **confirm trust sufficiency** — or defer, investigate further, or release with clarity — before commitment intensifies.
+
+The product must help users answer five verification questions:
+
+1. **What do I still not know about this home — and is that acceptable?**  
+2. **Can I rely on the evidence and facts available to me?**  
+3. **What did Rento attest versus what remains self-reported or unverified?**  
+4. **Am I ready to proceed — contact, viewing, application — without false certainty?**  
+5. **Can I defer or abandon without losing evaluation work?**
+
+This chapter governs verification as a Decision Experience stage — environment quality, evidence credibility, uncertainty transparency, verification boundaries, proceeding readiness, and calm mobile-first trust assessment. It does **not** specify verification checklists, document portals, viewing schedulers, or engineering architecture.
+
+**Relationship to prior chapters:** **Property Confidence** (Chapter 31) governs whether a listing merits attention. **Narrowing Confidence** (Chapter 33) governs whether comparison helped retain or release candidates correctly. This chapter defines **Verification Confidence** — whether the user can **proceed** with justified trust after evaluation and narrowing.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Proceeding over pretending** | Verification surfaces what remains unknown — not simulated certainty |
+| **Credibility over completeness theater** | Honest partial evidence beats false verification posture |
+| **Boundaries over overclaim** | Rento and users know what digital verification cannot prove |
+| **Assessment over attestation confusion** | User judgment distinct from platform verification labels |
+| **Calm over urgency** | No pressure to proceed before trust is sufficient |
+| **Reversible over trapped** | Defer, return to detail, or release remain dignified |
+| **Continuity over reset** | Evaluation and narrowing work preserved into verification |
+| **Mobile assessment first** | Design for glance, reflection, and partner discussion — then tablet, then desktop |
+| **Verification Confidence goal** | Every verification outcome serves honest proceed, defer, or release |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, verification checklist component guide, or workflow pattern library  
+- An implementation plan, API contract, identity verification system, or document storage architecture  
+- A replacement for Chapter 20 — Trust, Verification & Moderation Experience  
+- A moderation, appeals, or fraud detection operations chapter  
+- A legal due diligence, lease review, or professional inspection guide  
+- A comparison or shortlist chapter (Chapter 33)  
+- A contact, messaging, or application workflow chapter (later Decision Experience chapters)  
+- A viewing scheduling or calendar implementation spec  
+
+If the question is *how to build* a document upload flow or *which API* validates identity — this chapter does not answer it. If the question is *what verification must accomplish for housing decision confidence* — this chapter does.
+
+---
+
+## Verification Environment
+
+**Verification Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Verification Environment is the **cognitive and informational conditions under which a user assesses whether a property deserves enough trust to proceed** — not the screen layout, but the **quality of the pre-commitment trust assessment space** Rento provides.
+
+A sound Verification Environment is:
+
+- **Focused** — one property or one prioritized candidate at a time — not comparative clutter  
+- **Honest** — known gaps and limits visible without shame or alarm  
+- **Grounded** — facts and evidence before narrative persuasion  
+- **Bounded** — verification scope legible; platform attestation distinct from user judgment  
+- **Reversible** — user can defer, return to detail or comparison, or release without penalty  
+- **Calm** — no artificial urgency to proceed before trust is sufficient  
+
+Chapter 31 established **Decision Environment** for evaluation. Chapter 33 established **Comparison Environment** for narrowing. Verification Environment is the **pre-commitment counterpart** — the governed space where users move from *“This home survived narrowing”* to *“I can proceed — or I know why I cannot yet.”*
+
+Verification Environment is reusable across contact escalation, viewing preparation, application readiness, and future commitment chapters.
+
+---
+
+## Verification Confidence
+
+**Verification Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Verification Confidence is the user's **justified belief that proceeding with a specific property** — toward contact, viewing, application, or equivalent next commitment step — **is appropriate given available facts, evidence, platform attestation, and acknowledged uncertainty**.
+
+Verification Confidence rises when:
+
+- User understands **what is verified, self-reported, and unknown**  
+- **Evidence Credibility** supports proceeding judgment — not false completeness  
+- **Verification Boundaries** are clear — user knows what digital assessment cannot prove  
+- **Proceeding Readiness** aligns with actual trust sufficiency — not pressure  
+- Deferral or release remains **dignified** when confidence is insufficient  
+
+Verification Confidence falls when product simulates certainty, conflates platform badges with property truth, hides remaining uncertainty, or pushes proceeding before assessment is complete.
+
+Verification Confidence is distinct from **Property Confidence** (Chapter 31): Property Confidence governs whether a listing merits evaluation attention; Verification Confidence governs whether evaluation yields **sufficient trust to escalate commitment**.
+
+Verification Confidence is distinct from **Narrowing Confidence** (Chapter 33): Narrowing Confidence governs multi-listing keep/release judgment; Verification Confidence governs **single-candidate proceeding judgment** after narrowing.
+
+Verification Confidence is distinct from **platform verification** (Chapter 20): Platform verification governs **what Rento attests**; Verification Confidence governs **whether the user can proceed** given all available truth — including limits of attestation.
+
+---
+
+## Evidence Credibility
+
+**Evidence Credibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Evidence Credibility is the user's **ability to rely on available information and evidence** — facts, media, map context, realtor identity, and platform attestation — **as a sufficient basis for proceeding judgment**, with limitations honestly visible.
+
+Evidence Credibility requires:
+
+- **Information layer reliability** — governed facts understandable, internally consistent, current where status matters (Chapter 31)  
+- **Evidence layer reliability** — media and visual evidence trustworthy, representative, and transparent about gaps (Chapter 32)  
+- **Attestation clarity** — platform verification labels scoped honestly — not conflated with property condition proof (Chapter 20)  
+- **Currency honesty** — stale photos, old listings, or changed conditions visible before proceeding  
+- **No credibility inflation** — rich presentation does not imply verified condition; thin evidence does not hide behind badges  
+
+Evidence Credibility is distinct from **Media Integrity** (Chapter 32): Media Integrity governs whether visual evidence is **truthful**; Evidence Credibility governs whether available evidence is **reliable enough to support proceeding judgment** — including when evidence is truthful but partial.
+
+Evidence Credibility is distinct from **Visual Confidence** (Chapter 32): Visual Confidence governs trust in visual representation; Evidence Credibility governs **holistic reliance** on all evidence classes for verification-stage decisions.
+
+Evidence Credibility extends the information and evidence cooperation model (Chapters 31–32) into the **pre-commitment trust assessment** stage.
+
+---
+
+## Uncertainty Transparency
+
+**Uncertainty Transparency** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Uncertainty Transparency is Rento's obligation to make **what remains unknown, unverified, or unknowable through the product** visible during verification — not only strengths and attested facts.
+
+Uncertainty Transparency includes:
+
+- **Unseen spaces** — rooms or areas not shown in media  
+- **Unverified claims** — description or attributes not independently attested  
+- **Temporal risk** — photos or facts that may be outdated  
+- **Physical unknowns** — condition, noise, neighbors, building systems — not provable digitally  
+- **Process unknowns** — viewing may reveal disqualifiers; application may fail — product does not guarantee outcome  
+
+Uncertainty Transparency extends **Property Transparency** (Chapter 31) and **Media Transparency** (Chapter 32) into verification. It connects to **Verification Boundaries** — transparency about limits is how boundaries become user-legible.
+
+Without Uncertainty Transparency, Verification Confidence becomes false certainty — users proceed under hidden gaps and discover truth too late.
+
+---
+
+## Verification Boundaries
+
+**Verification Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Verification Boundaries define **what property verification through Rento can and cannot establish** — the scope beyond which user judgment, physical viewing, professional inspection, or legal review must carry responsibility.
+
+Rento property verification **can** support:
+
+- Assessment of **listing consistency** — information, evidence, and preview alignment  
+- Understanding of **platform attestation scope** — what Rento checked and when  
+- Identification of **material gaps** — missing facts, thin media, ambiguous location  
+- **Proceeding Readiness** judgment — sufficient for next step, or not yet  
+
+Rento property verification **cannot** substitute for:
+
+- **Physical inspection** — layout feel, condition, smell, noise, natural light at visit time  
+- **Legal lease review** — contract terms, deposit rules, tenant rights  
+- **Building or title verification** — ownership disputes, encumbrances, regulatory compliance  
+- **Guarantee of availability or acceptance** — listing may rent; application may fail  
+- **Realtor character beyond governed identity** — platform verifies scope defined in Chapter 20, not personal trustworthiness in full  
+
+Verification Boundaries protect users and the platform: Rento must **never imply it verified what it did not**, and must **never hide that viewing and legal steps remain the user's responsibility**.
+
+Verification Boundaries are reusable across viewing preparation, application, and commitment chapters — each stage inherits honest scope limits.
+
+---
+
+## Proceeding Readiness
+
+**Proceeding Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Proceeding Readiness is the user's and product's shared state where **escalating to the next housing commitment step is appropriate** — contact deepening, viewing request, application start, or equivalent — because Verification Confidence is sufficient and Verification Boundaries are understood.
+
+Proceeding Readiness is distinct from **Contact Readiness** (Chapter 31): Contact Readiness governs whether **initial contact** is responsible after evaluation; Proceeding Readiness governs whether **commitment escalation** is responsible after verification — a higher bar that assumes evaluation and often narrowing have occurred.
+
+Proceeding Readiness requires:
+
+- User understands **who they will reach** and **what they still cannot know** (Chapter 16 identity ethics)  
+- **Listing Integrity** and **Comparison Integrity** (if applicable) remain intact — candidate still honestly offered  
+- **Uncertainty Transparency** visible — proceeding is informed, not blind  
+- Product does not **manufacture readiness** through urgency, false badges, or countdown theater  
+
+Proceeding Readiness is not a funnel stage to maximize. It is a **trust gate** Rento refuses to lower — consistent with Contact Readiness ethics.
+
+Proceeding Readiness connects Verification Confidence to forward Decision Experience chapters — viewing, application, housing commitment.
+
+---
+
+## 2. Role in the Housing Journey
+
+Property verification sits at the **narrowing-to-commitment boundary** of the Housing Journey — after candidates survive comparison and evaluation, before viewing, application, and lease commitment intensify.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| Narrowing (Chapter 33) | Compare | Which candidates survive scrutiny? |
+| **Property verification (this chapter)** | **Verify** | **Can I trust this home enough to proceed?** |
+| Decision Experience (following chapters) | Commit | What happens next toward housing commitment? |
+
+Verification succeeds when it produces **Meaningful Progress** — user proceeds with justified confidence, defers with clear reasons, or releases without regret — not when user rushes past uncertainty to satisfy conversion metrics.
+
+Verification fails when it optimizes for **proceeding theater** — badges that simulate proof, hidden gaps, or urgency that bypasses honest assessment.
+
+---
+
+## 3. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract** — attestation scope, moderation meaning, verification label honesty, appeals, and marketplace integrity across all journeys.
+
+This chapter **consumes** platform trust signals during property verification — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|----------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm? |
+| **Property verification** | **This chapter** | Can the user proceed given all available truth? |
+
+Division of responsibility:
+
+| Concern | Governing chapter |
+|---------|-------------------|
+| Verification label meaning, scope, freshness presentation | Chapter 20 |
+| Moderation status, appeals, rejection communication | Chapter 20 |
+| Fraud prevention philosophy, trust lifecycle | Chapter 20 |
+| User proceeding judgment, uncertainty, verification boundaries | **This chapter** |
+| Proceeding Readiness after narrowing | **This chapter** |
+
+Platform verification badges **inform** Evidence Credibility — they do not **replace** property-level assessment. A verified realtor or refreshed listing does not prove property condition. Absence of verification does not prove dishonesty — Uncertainty Transparency applies.
+
+Property verification must never **inflate** Chapter 20 attestation into property condition guarantees.
+
+---
+
+## 4. Transition from Comparison and Evaluation
+
+Users enter verification **after** or **alongside** narrowed candidacy — typically for one prioritized property, sometimes sequentially for shortlist survivors.
+
+### 4.1 Entry Preconditions
+
+Property verification is responsible when:
+
+- User has **committed evaluation attention** — opened detail, consumed evidence, or survived comparison narrowing  
+- Candidate is **still honestly available** — Listing Integrity intact (Chapter 31)  
+- User intent includes **possible escalation** — contact, viewing, application — not casual re-browse  
+
+### 4.2 Handoff from Comparison
+
+Chapter 33 supplies **Narrowing Confidence** and a reduced candidate set. Verification must **preserve** narrowing outcomes — not reset to full results feed or re-open comparison without user intent.
+
+The handoff contract:
+
+- Verified property is **the candidate user chose to prioritize** — not algorithmically substituted  
+- Comparison trade-offs remain **mentally available** — Context Restoration on return  
+- Release of other compared listings **does not erase** verification work on the prioritized candidate  
+
+### 4.3 Handoff from Property Detail and Media
+
+Chapters 31–32 supply **Property Confidence, Information Confidence, Visual Confidence, Spatial Understanding, Media Integrity, and Evidence Continuity**. Verification **extends** these — it does not re-evaluate from thinner summary.
+
+Facts and evidence assessed at verification depth **match** detail truth — no verification-only fact layer that contradicts detail or card.
+
+---
+
+## 5. Verification vs Comparison vs Detail
+
+Each Decision Experience stage has distinct obligation:
+
+| Stage | Primary question | Must not substitute for |
+|-------|------------------|-------------------------|
+| **Detail (Ch 31–32)** | Is this home worth attention? | Verification or comparison |
+| **Comparison (Ch 33)** | Which candidates survive? | Verification depth or detail replacement |
+| **Verification (this chapter)** | Can I proceed with trust? | Physical viewing or legal review |
+
+Verification **assumes** detail evaluation occurred — it synthesizes remaining uncertainty for proceeding judgment, not first-pass discovery.
+
+Verification **may follow** comparison — user verifies prioritized survivor — or ** precede** formal comparison when user focuses on one strong candidate early. Product must support both paths without forcing comparison before verification.
+
+Verification **never replaces** physical viewing for condition, layout feel, or neighborhood judgment — Verification Boundaries require this explicitly.
+
+---
+
+## 6. Information Layer in Verification
+
+Verification treats the **information layer** (Chapter 31) as input to Evidence Credibility and Verification Confidence.
+
+### 6.1 Consistency Assessment
+
+User verifies **internal consistency** — price, rooms, area, location, availability, and specifications align across card, detail, and current state. Inconsistency destroys Verification Confidence and triggers defer or release — not silent proceed.
+
+### 6.2 Attestation vs Self-Report
+
+Verification surfaces **what Rento attests** versus **what realtor or listing self-reports** — inherited from Chapter 20 presentation rules. User proceeds understanding the difference.
+
+### 6.3 Material Gap Identification
+
+Missing governed fields, ambiguous fees, or vague location precision **block false Proceeding Readiness** — not hidden behind verification posture. Property Transparency (Chapter 31) applies at verification depth.
+
+### 6.4 Status Currency
+
+Availability, price changes, and moderation status must be **current at verification moment** — stale truth invalidates Verification Confidence. Comparison Integrity spirit applies to single-candidate focus.
+
+---
+
+## 7. Evidence Layer in Verification
+
+Verification treats **evidence** (Chapter 32) as input to Evidence Credibility.
+
+### 7.1 Evidence Sufficiency
+
+Verification assesses whether evidence is **sufficient for proceeding judgment** — not whether gallery is longest. Few honest photos with transparent limits may support Proceeding Readiness; many manipulative photos must not.
+
+### 7.2 Expected Property Reconciliation
+
+User reconciles **Expected Property** (Chapter 32) — what media and information suggest — with **Verification Boundaries** — what remains unknowable until viewing. Gap between expectation and verifiable truth must be visible.
+
+### 7.3 Evidence Currency and Integrity
+
+**Media Integrity**, **Evidence Continuity**, and **Media Transparency** (Chapter 32) are prerequisites for Evidence Credibility at verification. Stale, misleading, or bait media **blocks** Proceeding Readiness until user understands limitation or releases.
+
+### 7.4 Evidence vs Platform Badge
+
+Visual or listing badges **do not substitute** for property evidence. Evidence Credibility requires evidence — not badge theater.
+
+---
+
+## 8. Trustworthy Property Assessment
+
+**Trustworthy property assessment** is the user's **honest synthesis** of information, evidence, platform attestation, and acknowledged uncertainty — supported by the product, not manufactured by it.
+
+### 8.1 Product Role
+
+Rento supports assessment by:
+
+- Presenting **complete honest picture** — strengths, gaps, attestation scope, boundaries  
+- Enabling **defer** without penalty — viewing may be required before proceed  
+- Enabling **release** without shame — insufficient trust is valid outcome  
+- Preserving **evaluation continuity** — return to detail or comparison without reset  
+
+Rento does not **score** trustworthiness as objective truth — housing fit and risk tolerance are personal.
+
+### 8.2 Assessment Integrity
+
+Assessment Integrity is the **honesty of the verification process itself** — product does not nudge user toward proceed when Evidence Credibility is low, does not hide Verification Boundaries, does not use urgency to bypass Uncertainty Transparency.
+
+Assessment Integrity parallels **Comparison Integrity** (Chapter 33) — another integrity concept scoped to proceeding judgment rather than cross-listing truth.
+
+### 8.3 Partner and Shared Assessment
+
+Long-term rental decisions often involve partners (Chapter 33 §14). Shared verification requires **identical property truth** for all participants — same facts, evidence, attestation, and gap visibility.
+
+---
+
+## 9. Proceeding Paths and Deferral
+
+Verification outcomes are **proceed**, **defer**, or **release** — all valid.
+
+### 9.1 Proceed
+
+Proceed escalates commitment — contact, viewing request, application — when Proceeding Readiness and Verification Confidence align. Product confirms **what user is accepting** they still do not know.
+
+### 9.2 Defer
+
+Defer preserves candidate while acknowledging **insufficient Verification Confidence** — user may need viewing, more evidence, partner discussion, or time. Defer is **not failure** — it is honest pacing. Housing Journey respects weeks of search.
+
+Defer must preserve **Decision Persistence** — evaluation work not lost on return.
+
+### 9.3 Release
+
+Release removes candidate from active consideration when verification reveals disqualifying gap, inconsistency, or insufficient trust. Release is **dignified** — no shame copy, no dark retention. Connects to Narrowing Confidence release ethics (Chapter 33).
+
+### 9.4 No Forced Proceed
+
+Product must not **block exit** or **manufacture urgency** to force proceed before Verification Confidence exists — Abandon confidence (Chapter 31) extends here.
+
+---
+
+## 10. Contact and Viewing Relationship
+
+Verification bridges evaluation and **forward commitment steps** without owning them.
+
+### 10.1 Contact Escalation
+
+Deeper contact after verification inherits **Contact Readiness** and Chapter 16 ethics — identity visible, availability honest, no anonymous escalation. Verification may **precede** contact; it does not **replace** contact governance.
+
+### 10.2 Viewing Preparation
+
+Physical viewing is often the **next verification boundary crossing** — where digital assessment ends and sensory judgment begins. This chapter **prepares** viewing intent — user knows what to confirm in person — without specifying viewing scheduling (forward chapter).
+
+Verification should help user form **viewing questions** — what to check because product could not verify.
+
+### 10.3 Application and Commitment
+
+Lease application and commitment chapters follow — Proceeding Readiness at verification must not pretend to satisfy application or legal readiness. Forward reference only.
+
+---
+
+## 11. Mobile Verification Experience
+
+Mobile is the **primary verification surface**. Tablet and desktop extend — never reverse.
+
+### 11.1 Mobile Principles
+
+| Principle | Intent |
+|-----------|--------|
+| **Focused assessment** | One property truth visible without distraction |
+| **Glance legibility of gaps** | Uncertainty visible — not buried |
+| **One-handed defer/proceed** | Calm decision actions reachable |
+| **Partner handoff** | Easy sharing for joint verification — not viral |
+| **Interrupt tolerance** | Verification state stable across interruption |
+
+### 11.2 Mobile vs Desktop
+
+Desktop may show more simultaneous context — detail beside assessment — but **Verification Boundaries**, **Uncertainty Transparency**, and **Evidence Credibility** standards remain identical to mobile.
+
+### 11.3 Verification in Life Context
+
+Verification happens after work, with partner, before sleep — moments of reflection. Surfaces support **calm decision**, not anxiety amplification.
+
+---
+
+## 12. Accessibility Principles
+
+Verification must be **inclusive** — housing commitment decisions belong to all users.
+
+### 12.1 Non-Visual Verification Access
+
+Uncertainty, attestation scope, and evidence gaps require **textual and semantic equivalents** — not color-only trust, not icon-only verification.
+
+### 12.2 Cognitive Accessibility
+
+Verification Environment supports cognitive accessibility: plain language for boundaries, predictable structure, calm density — users must assess proceeding without decoding manipulation.
+
+### 12.3 Anxiety Sensitivity
+
+Verification must not **amplify housing anxiety** — honest uncertainty is calm, not alarmist. Critical status color reserved for genuine harm signals (Chapter 7) — not every unknown.
+
+Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 13. Context Preservation and Continuity
+
+Verification participates in **Housing Continuity**, **Decision Persistence**, and **Cognitive Continuity**.
+
+### 13.1 Verification State Persistence
+
+User expects verification assessment to **survive session interruption** when product supports — honest when local-only. Prior defer/proceed intent remembered as continuity aid, never manipulation.
+
+### 13.2 Navigation Continuity
+
+- Detail → verify → detail ** preserves listing identity**  
+- Compare → verify → compare ** preserves narrowing context**  
+- Verify → contact → verify ** preserves assessment where appropriate**  
+
+### 13.3 Search and Favorites Context
+
+Verification launched from favorites or saved search ** preserves Search Memory and shortlist context** on exit — not amnesia.
+
+---
+
+## 14. Returning to Verification
+
+Returning users resume **trust assessment** — not cold start.
+
+### 14.1 Honest Reunion
+
+Return shows **current listing truth** — price, availability, media, attestation may have changed. User understands before re-investing proceeding judgment.
+
+### 14.2 Changed Truth Recovery
+
+Material listing change ** resets Proceeding Readiness** honestly — user must re-verify, not proceed on stale confidence.
+
+### 14.3 Abandon Verification Confidence
+
+Leaving verification without proceed/defer/release decision is **valid** — no blocking modals, no shame. Respectful Silence applies.
+
+---
+
+## 15. Anti-Patterns
+
+The following are **explicitly forbidden** in Rento property verification philosophy:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| Badge implying property condition verified when only realtor identity attested | Violates Verification Boundaries; inflates Chapter 20 |
+| Hidden uncertainty before proceed | Destroys Uncertainty Transparency |
+| Verification score as objective housing truth | Manufactures false Verification Confidence |
+| Urgency to proceed before assessment complete | Violates Proceeding Readiness ethics |
+| Verification replacing physical viewing claim | Violates Verification Boundaries |
+| Compare-mode verification confusion | Blurs comparison and verification stages |
+| Stale listing proceed path | Invalidates Verification Confidence |
+| Legal guarantee language | Platform overclaim — Chapter 20 violation |
+| Thinner fact layer at verification than detail | Breaks Assessment Integrity |
+| Proceed blocking without explanation | Violates calm Verification Environment |
+| Verification as engagement trap | Anti-engagement posture violation |
+| Conflating moderation approval with property truth | Moderation ≠ condition verification |
+| Partner share with divergent property truth | Destroys shared assessment |
+| Evidence Credibility from promotion alone | Marketplace integrity failure |
+| Forced verification before user readiness | Violates calm pacing |
+
+---
+
+## 16. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, verification initiatives must trace to this chapter and upstream contracts:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New verification surfaces | Verification Environment and Verification Confidence impact |
+| Trust badges in verification flow | Chapter 20 scope preserved; no inflation |
+| Proceed/defer/release actions | Proceeding Readiness and Uncertainty Transparency |
+| Viewing preparation features | Verification Boundaries honored |
+| Personalization in verification | Does not simulate certainty; Memory Transparency |
+| Performance optimization | Does not degrade currency of listing truth |
+
+**Review gate:** No property verification surface ships without checklist against Verification Confidence, Evidence Credibility, Uncertainty Transparency, Verification Boundaries, and Proceeding Readiness.
+
+**Forward chapters:** Viewing preparation, application, and housing commitment extend proceeding outcomes — this chapter supplies the pre-commitment trust assessment foundation.
+
+---
+
+## 17. Chapter Summary
+
+Property verification is where Rento converts **narrowed candidates** into **honest proceeding judgment**.
+
+This chapter defines:
+
+- **Position** — Decision Experience stage after comparison narrowing, before commitment escalation  
+- **Environment** — Verification Environment as pre-commitment trust assessment space  
+- **Confidence** — Verification Confidence for proceeding judgment  
+- **Credibility** — Evidence Credibility across information, evidence, and attestation  
+- **Transparency** — Uncertainty Transparency for honest unknowns  
+- **Boundaries** — Verification Boundaries for digital scope limits  
+- **Readiness** — Proceeding Readiness as escalation trust gate  
+- **Integration** — extends Chapters 31–33; consumes Chapter 20 attestation without redefining it  
+- **Outcomes** — proceed, defer, release — all valid  
+- **Mobile** — primary assessment surface; calm, reversible, partner-ready  
+
+Verification succeeds when users proceed with eyes open, defer without penalty, or release without regret — knowing what Rento verified, what remains unknown, and what only viewing or legal review can settle.
+
+**Decision Experience flow:**
+
+Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → Property Comparison Experience (Chapter 33) → **Property Verification Experience (Chapter 34)** → following Decision Experience chapters
+
+---
+
+## 18. Design Director Review
+
+**Chapter:** 34 — Property Verification Experience  
+**Section:** XXXI — Property Verification  
+**Review type:** Initial standard adoption
+
+### 18.1 Approval Statement
+
+This chapter is approved as the **property verification experience contract** for Rento. All pre-commitment property verification surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 18.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; identity at escalation |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; moderation distinct from property verification |
+| Chapter 31 — Property Detail Experience | Property Confidence, Contact Readiness, information layer |
+| Chapter 32 — Media Experience | Evidence layer; Media Integrity, Visual Confidence |
+| Chapter 33 — Property Comparison Experience | Narrowing Confidence handoff; comparison distinct from verification |
+| Chapter 35+ — Decision Experience | Viewing, application, commitment — forward |
+
+### 18.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Verification positioned as proceeding judgment — not comparison, moderation, or legal due diligence  
+2. No contradiction with Chapter 20 platform trust contract  
+3. New concepts (Verification Environment, Verification Confidence, Evidence Credibility, Uncertainty Transparency, Verification Boundaries, Proceeding Readiness) are reusable in later Decision Experience chapters  
+4. Evidence Credibility and Verification Confidence clearly scoped — no overlap with Media Integrity or Property Confidence  
+5. Anti-manipulation and boundary honesty preserved  
+6. Mobile-first order explicit  
+7. No implementation leakage  
+
+### 18.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on property verification philosophy |
+| Head of Product Design | Parity with Decision Experience block |
+| Senior UX Designer | Uncertainty communication, proceed/defer flow, mobile rhythm |
+| Product Management | Verification boundary honesty and marketplace integrity |
+| Content Design Lead | Attestation scope copy and uncertainty language |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual verification and anxiety-sensitive design |
+
+### 18.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new property verification work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 18.6 Design Director Closing Note
+
+Users do not rent badges. They rent homes — and they deserve to know what the product can prove, what it cannot, and what still requires their own eyes and judgment. This chapter exists so Rento helps people proceed with honest confidence, defer without shame, and never confuse platform attestation with the truth only a visit can confirm.
+
+---
+
+**End of Chapter 34**
 
