@@ -54,12 +54,13 @@ This standard is **not** implementation documentation. It does not specify code,
 | 26 | [Search Filters & Refinement Experience](#chapter-26--search-filters--refinement-experience) | Search Filters & Refinement | APPROVED |
 | 27 | [Sorting & Ranking Experience](#chapter-27--sorting--ranking-experience) | Sorting & Ranking | APPROVED |
 | 28 | [Search Results Experience](#chapter-28--search-results-experience) | Search Results | APPROVED |
+| 29 | [Maps & Location Experience](#chapter-29--maps--location-experience) | Maps & Location | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 29+ | Future chapters per design standard roadmap |
+| 30+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -77,6 +78,7 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-04 | Chapter 26 — Search Filters & Refinement approved and added |
 | 1.0 | 2026-07-04 | Chapter 27 — Sorting & Ranking Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 28 — Search Results Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 29 — Maps & Location Experience approved and added |
 
 ---
 
@@ -28509,3 +28511,1603 @@ Users do not come to Rento to admire list interfaces. They come to **see the hou
 ---
 
 **End of Chapter 28**
+
+
+---
+
+## Chapter 29 — Maps & Location Experience
+
+**Section:** XXVI — Maps & Location  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Search & Discovery, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–28; operationalizes Search Experience (Chapter 13), Filters & Refinement (Chapter 26), Sorting & Ranking (Chapter 27), Search Results (Chapter 28), Listing Detail (Chapter 15), Trust (Chapter 20), state experience (Chapter 24), and system communication (Chapter 25); defines principles only — not map SDKs, GIS backends, geocoding APIs, routing engines, tile servers, database schemas, analytics pipelines, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the complete **maps and location experience philosophy** for Rento.
+
+Location is one of the **strongest housing signals** in long-term residential rental. People choose neighborhoods before they choose buildings. Maps exist to help users **understand place** — orientation, context, proximity, and confidence about where they might live — not to impress with technology or maximize map interaction time.
+
+Maps and location on Rento **support housing decisions**. They reduce uncertainty about geography, preserve trust through honest precision, and explain surroundings without becoming navigation software. Maps support **understanding — not driving**.
+
+Where Chapters 26–28 govern eligibility, order, and results presentation, **this chapter defines the official spatial layer** of the Search System — how geographic information, neighborhoods, and map-based discovery integrate throughout the Housing Journey.
+
+This chapter governs location philosophy, spatial decision support, neighborhood understanding, privacy, continuity between list and map, ethics, and evolution. It does **not** specify Google Maps, Mapbox, OpenStreetMap integrations, geocoding services, routing algorithms, or map component code.
+
+
+## Why Location Matters
+
+**Users choose places before they choose homes.** In long-term residential rental, the neighborhood — its rhythm, commute, green space, schools, and daily atmosphere — often matters as much as square meters or floor level. Location is not a secondary attribute on a listing card. **Location is the decision.** Maps are one tool for explaining that decision — not the decision itself.
+
+Housing decisions are **fundamentally geographic**. Renters ask whether they could live in Mărăști, Centru, or Mănăștur before they ask whether apartment 4B is the right fit. Neighborhoods influence **long-term quality of life** — work commute, children's schools, evening walks, grocery runs, and sense of belonging. Good location understanding **reduces uncertainty** about whether an area fits their life. It **increases confidence before contact** — users reach out when place feels plausible, not when pin aesthetics impressed them.
+
+**Location is the decision. Maps are the explanation.**
+
+Maps on Rento exist to support place understanding — orientation, context, proximity, and honest precision — not to substitute for neighborhood judgment or become navigation software. When location understanding succeeds, users build **Place Confidence** and move forward in the Housing Journey with clarity. When it fails — through false precision, map-list contradiction, or tourist-style clutter — users hesitate at contact even when price and rooms fit.
+
+This section states *why location matters as a housing decision*. **Why Maps Matter** (following) states *why map surfaces are a governed tool within that decision*. Together they frame the contract of this chapter.
+
+---
+
+## Why Maps Matter
+
+**Maps matter because housing is inherently spatial.** Renters do not lease coordinates — they lease a life in a neighborhood: commute patterns, parks, schools, transit, safety perception, and daily rhythm. Text labels alone cannot convey **relative position** and **local context** the way a calm, honest map can.
+
+Maps on Rento help users better understand:
+
+- **Neighborhoods** — Mărăști vs Gheorgheni; sector and district identity  
+- **Relative position** — where homes sit within the area they are searching  
+- **Distance perception** — walking and transit context without false precision  
+- **Local context** — parks, transport, landmarks that shape living quality  
+- **Orientation** — which direction, which cluster, which part of the city  
+- **Confidence before contact** — enough place understanding to justify inquiry  
+
+Maps exist to **improve housing understanding** — not to increase session duration through endless pan and zoom. When maps succeed, users reach **Spatial Confidence** and move toward listing evaluation or contact with place clarity. When maps fail — through false precision, privacy violations, or map-list divergence — users distrust **both the location and the listing**.
+
+---
+
+## Design Principles Summary
+
+This chapter governs how geographic information and map-based discovery support housing decisions throughout the Rento marketplace. The following principles summarize the full maps and location contract for designers, product managers, and reviewers:
+
+1. **Support housing decisions** — Maps help users understand where they might live — not maximize map engagement or showcase technology.
+
+2. **Reduce uncertainty** — Users grasp neighborhood, relative position, and context without false precision or privacy harm.
+
+3. **Preserve trust** — Location Integrity and Geographic Credibility require honest representation of place — approximate when appropriate, precise only when truthful.
+
+4. **Communicate context** — Context Visibility for environment, transit, and landmarks serves long-term living — not tourist discovery.
+
+5. **Remain calm and simple** — Map Simplicity and visual calm; maps are supporting surfaces, not spectacle.
+
+6. **Preserve continuity** — Map Continuity with search results, filters, and listing detail — one spatial truth across surfaces.
+
+7. **Protect privacy** — Approximate location when precision would endanger safety or mislead — Privacy Protection invariant.
+
+8. **Understand place — not manipulate** — No dark patterns, fake proximity, or engagement-driven map loops.
+
+These principles apply to every search map, listing location preview, neighborhood context panel, and mobile spatial interaction across consumer discovery in the Rento ecosystem.
+
+---
+
+## What This Chapter Is NOT
+
+To prevent category errors during design, review, and engineering handoff, this chapter is explicitly **not** about:
+
+- **Google Maps, Mapbox, or OpenStreetMap** — SDK choice, API keys, or tile providers.
+- **GIS implementation** — Spatial databases, shapefiles, or geometry engines.
+- **Geocoding implementation** — Address parsing, reverse geocoding pipelines, or coordinate resolution services.
+- **Routing algorithms** — Turn-by-turn directions, ETA calculation, or path optimization.
+- **Navigation software** — Driving, walking navigation, or ride-share patterns.
+- **SQL or backend APIs** — Location query endpoints or spatial indexes.
+- **Analytics instrumentation** — Map pan/zoom funnels or heatmap tracking schemas.
+- **Frontend implementation** — React map components, marker clustering code, or styling systems.
+
+This chapter governs **the human experience of place and map-based discovery** — how users understand neighborhoods, trust location representation, and move between map, results, and listing without losing orientation.
+
+Engineering implements maps that honor these principles. Technical capability to render maps does not justify precision, density, or interaction that users cannot trust.
+
+
+## Place Confidence
+
+**Place Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Place Confidence is **the user's confidence that they understand what it would feel like to live in a particular place before contacting a realtor** — not merely where a pin sits on a map, but whether the area fits everyday life.
+
+Place Confidence is distinct from but builds upon **Spatial Confidence** (§5):
+
+| Concept | Scope |
+|---------|--------|
+| **Spatial Confidence** (§5) | Understanding **where** a place is — neighborhood, relative position, honest precision |
+| **Place Confidence** | Understanding **whether this place fits everyday life** — commute class, green space, residential atmosphere, daily practicality |
+
+Successful map and location experiences should build **Place Confidence**, not merely geographic awareness. A user who knows coordinates but cannot imagine morning coffee, school drop-off, or tram access has spatial data without housing confidence.
+
+Place Confidence grows through:
+
+- **Place Understanding** (§12) — mental model of area within city  
+- **Environmental Awareness** (§10) and **Everyday Context** — ordinary life signals, not tourism  
+- **Context Visibility** (§9) — decision-relevant surroundings without clutter  
+- **Location Integrity** (§14) — trust that place representation is honest  
+
+Place Confidence connects to **Decision Confidence** (Chapter 26) and the **Housing Journey**: users contact realtors when **home and place** both feel worth pursuing. It is reusable across Listing Detail (Chapter 15), Contact (Chapter 16), Favorites (Chapter 17), and future Saved Searches chapters wherever the product must recognize that **place — not only property — is ready for human conversation**.
+
+---
+
+
+## Geographic Continuity
+
+**Geographic Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Geographic Continuity is **the preservation of a coherent geographic understanding while users move between Search, Search Results, Maps, Listing Detail, Favorites, and future Saved Searches** — the same neighborhood names, the same area intent, the same precision class, and the same mental map of where housing search is happening.
+
+Geographic Continuity sits at the top of a continuity hierarchy:
+
+```
+Search Continuity (Chapter 26)
+        ↓
+Result Continuity (Chapter 28)
+        ↓
+Map Continuity (§7)
+        ↓
+Geographic Continuity
+```
+
+| Layer | Preserves |
+|-------|-----------|
+| **Search Continuity** | Criteria, sort, search context |
+| **Result Continuity** | List state, scroll, scan place |
+| **Map Continuity** | Viewport, pin selection, map-list sync |
+| **Geographic Continuity** | **Understanding of place** across all surfaces |
+
+Users should **never need to reconstruct their understanding of location** when navigating between product surfaces. If filters say Mărăști, results cards say Mărăști, the map centers on Mărăști, detail deepens Mărăști honestly, and favorites return to the same area context — Geographic Continuity holds. If each surface uses different labels, precision, or area logic, **Cognitive Continuity** (Chapter 28) breaks even when data technically persists.
+
+Geographic Continuity connects Search Continuity (Chapter 26), Map Continuity (§7), Result Continuity (Chapter 28), and the Housing Journey. It is reusable across Saved Searches (future chapters), notifications (Chapter 21), and AI-assisted location discovery wherever spatial context must **survive navigation without mental reset**.
+
+---
+
+
+## Everyday Context
+
+**Everyday Context** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Everyday Context is **information that helps users understand how everyday life may feel in a particular neighborhood** — the ordinary rhythm of long-term residential living, not exceptional or promotional experiences.
+
+Everyday Context **includes**, when product and data policy support honest display:
+
+- **Parks** — green space for daily life  
+- **Schools** — family and commute planning  
+- **Grocery stores** — daily errands  
+- **Public transport** — tram, metro, bus reachability  
+- **Walking environment** — pavements, quiet streets, walkability class  
+- **Residential atmosphere** — calm factual cues about urban vs quiet character  
+
+Everyday Context **does not include**:
+
+- **Tourist attractions** — museums, monuments as discovery entertainment  
+- **Entertainment rankings** — "nightlife score", "fun district"  
+- **Promotional content** — partner businesses dressed as context  
+- **Marketing narratives** — "the coolest neighborhood", undefined superlatives  
+
+The purpose is to help renters **imagine ordinary daily life** — picking up bread, catching a tram, walking a child to school — rather than exceptional weekend experiences. Maps support **living**, not tourism.
+
+Everyday Context connects **Environmental Awareness** (§10), **Context Visibility** (§9), and **Place Confidence**. It is reusable across Listing Detail environment sections, future commute-preference features, and any chapter where surroundings must serve **housing imagination** — not engagement or lifestyle marketing.
+
+---
+
+## 2. Scope
+
+### 2.1 In Scope
+
+| Domain | Coverage |
+|--------|----------|
+| **Philosophy** | Place understanding, spatial decision support, calm maps |
+| **Hierarchy** | Geographic and information priority on map surfaces |
+| **Neighborhood** | Identity, context, comparison across areas |
+| **Precision** | Approximate vs precise; privacy protection |
+| **Continuity** | List ↔ map ↔ detail spatial consistency |
+| **Context** | Landmarks, transit, walking, environment — decision-relevant |
+| **Cross-cutting** | Mobile-first, accessibility, performance perception, ethics |
+
+### 2.2 Out of Scope
+
+- Filter geography logic (Chapter 26)  
+- Sort by distance policy detail (Chapter 27)  
+- Results card location text (Chapter 28 — intersection governed)  
+- Full listing detail map embed specification (Chapter 15 — intersection governed)  
+- Turn-by-turn navigation or routing UX  
+- Implementation of map providers or geocoders  
+
+### 2.3 Surfaces Governed
+
+All present and future surfaces where **geographic information or map visualization supports housing discovery**, including but not limited to:
+
+- Search results map view  
+- Neighborhood and area browse maps  
+- Listing location preview on detail  
+- Map-assisted filter refinement (area draw, radius)  
+- Spatial context on listing cards when product places map snippets  
+
+If a surface answers *“Where is this home, and what does the surrounding area mean for living here?”* — this chapter applies.
+
+### 2.4 Understanding Before Precision
+
+More map detail is success **only when** it increases honest place understanding — not when it implies false exactness or surveillance.
+
+---
+
+## 3. Authority & Relationship to Previous Chapters
+
+### 3.1 Authority Order
+
+When maps and location decisions conflict with lower-level guidance:
+
+1. Immutable domain rules and privacy policy  
+2. Chapter 1 — Product Philosophy  
+3. Chapter 13 — Search Experience System  
+4. Chapters 26–28 — refinement, order, results layers  
+5. **This chapter** — for spatial and map experience  
+6. Chapters 15, 20 — detail location and trust  
+7. Chapters 24–25 — states and communication on map surfaces  
+
+Maps must never **expose exact addresses when policy requires approximation**, **show divergent inventories on map vs list**, or **imply amenities or distances that are false**.
+
+### 3.2 Relationship to Previous Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm, trust, only what is real |
+| Chapter 4 — Layout & Information Architecture | Map and list hierarchy |
+| Chapter 8 — Spatial System & Layout Rhythm | Map chrome and rhythm |
+| Chapter 10 — Navigation System | Map ↔ detail ↔ results return |
+| Chapter 13 — Search Experience System | §16.6 map-list sync; parent search system |
+| Chapter 14 — Listing Card & Preview System | Location on card; preview truth |
+| Chapter 15 — Listing Detail Experience | Full location context on detail |
+| Chapter 20 — Trust, Verification & Moderation Experience | Location honesty; no deception |
+| Chapter 22 — Personalization & Recommendations Experience | Map modules bounded |
+| Chapter 24 — Empty, Loading & Error States Experience | Map load and error honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Area change communication |
+| Chapter 26 — Search Filters & Refinement Experience | Geographic filters; area truth |
+| Chapter 27 — Sorting & Ranking Experience | Distance sort semantics |
+| Chapter 28 — Search Results Experience | Result-to-map continuity |
+| Chapter 60 — Product Review Checklist | Ship gate when authored |
+
+### 3.3 What This Chapter Adds
+
+Chapter 13 introduced map-list architecture at system level. **This chapter defines the governed spatial layer** — how users understand place, trust location representation, and move through map-assisted housing discovery.
+
+Without this chapter, maps become engineering widgets. With them, maps become **spatial decision support**.
+
+### 3.4 Position in Search System Evolution
+
+```
+Search Experience (Chapter 13)
+        ↓
+Search Filters & Refinement (Chapter 26)
+        ↓
+Sorting & Ranking (Chapter 27)
+        ↓
+Search Results (Chapter 28)
+        ↓
+Maps & Location (this chapter)
+        ↓
+Saved Searches → AI Search
+        (future standard chapters when authored)
+```
+
+This chapter is the **official spatial layer** of the Search System.
+
+---
+
+## 4. Location Philosophy
+
+Location on Rento **supports housing decisions** — never confuses, deceives, or overwhelms.
+
+### 4.1 Location Supports Decisions
+
+Geography answers *“Could I live here?”* — not *“How fast can I drive?”*
+
+### 4.2 Maps Communicate Context
+
+Surroundings, clusters, and neighborhood character ** shape evaluation**.
+
+### 4.3 Maps Reduce Uncertainty
+
+Users know **where they are in the search** and **where listings sit relative to intent**.
+
+### 4.4 Maps Preserve Trust
+
+Location Integrity ** invariant** — no false pins, no bait neighborhoods.
+
+### 4.5 Maps Explain Surroundings
+
+Context Visibility ** for living** — parks, transit, schools when product supports.
+
+### 4.6 Maps Remain Calm
+
+Visual calm ** no chaotic markers, no gamified map**.
+
+### 4.7 Maps Never Manipulate
+
+No ** fake “near you”**, no hidden sponsored pin areas.
+
+### 4.8 Maps Never Exaggerate Precision
+
+Street-level pin ** only when honest and policy-allowed**.
+
+### 4.9 Neighborhoods Before Buildings
+
+**Place Understanding** precedes unit-level obsession.
+
+### 4.10 Maps Not Navigation
+
+No turn-by-turn ** primary UX** — understanding, not routing.
+
+### 4.11 Six Location Questions
+
+Users must be able to answer:
+
+1. **What area am I looking at?**  
+2. **Where does this listing sit relative to my search?**  
+3. **How precise is this location — and why?**  
+4. **What context matters for living here?**  
+5. **Does the map match the list and detail?**  
+6. **Do I trust this enough to open or contact?**
+
+---
+
+## 5. Spatial Confidence
+
+**Spatial Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Spatial Confidence is the **user's felt assurance that they understand where listings are located relative to their housing intent** — neighborhood, city, distance class, and local context — without false precision or confusion.
+
+Spatial Confidence grows when:
+
+- **Neighborhood Identity** is clear — user recognizes area names and boundaries  
+- **Map and list agree** — Map Continuity (§7)  
+- **Precision is honest** — approximate vs exact disclosed — §23  
+- **Context supports living decisions** — Environmental Awareness (§10)  
+
+Low Spatial Confidence causes users to **reject listings on location doubt alone** — even when home and price fit.
+
+This concept connects Orientation Confidence (§13), Place Understanding (§12), and Search Confidence (Chapter 26).
+
+---
+
+## 6. Location Trust
+
+**Location Trust** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Location Trust is the **user's belief that geographic information on Rento is shown for their housing benefit** — not to mislead, obscure, or manipulate toward specific inventory.
+
+Location Trust requires:
+
+- **Location Integrity** (§14) — pin and label match truth  
+- **Privacy Protection** (§24) — precision not weaponized  
+- **No false proximity** — distance claims honest  
+- **Map Trust** (§18) — map feels professional, not gimmick  
+
+Location Trust is fragile — one deceptive pin damages **all map surfaces**.
+
+---
+
+## 7. Map Continuity
+
+**Map Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Map Continuity is the **preservation of spatial context** — viewport, selected listing, applied geographic filters, and map-list selection state — across view switches, navigation, and return from detail.
+
+Map Continuity requires:
+
+- **Same eligible set** on map and list — Chapter 13 §16.6  
+- **Selected pin ↔ highlighted card** synchronized  
+- **Return from detail** restores map place — §37  
+- **Filter area visible** on map when geographic criteria active — Chapter 26  
+
+Broken Map Continuity forces users to **re-orient from zero** — eroding Cognitive Continuity (Chapter 28).
+
+---
+
+## 8. Neighborhood Identity
+
+**Neighborhood Identity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Neighborhood Identity is the **clear, human-readable expression of area character and name** — how users understand *which neighborhood* they are exploring and how it differs from adjacent areas.
+
+Neighborhood Identity requires:
+
+- **Names users recognize** — Mărăști, Centru, Mănăștur — Romania-first  
+- **Boundaries honest** when area filters apply — Filter Integrity (Chapter 26)  
+- **No fake micro-neighborhoods** invented for marketing  
+- **Consistent labels** across map, results, and detail  
+
+Strong Neighborhood Identity supports **Location Comparison** (§39) and long-term rental decisions tied to daily life.
+
+---
+
+## 9. Context Visibility
+
+**Context Visibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Context Visibility is the **degree to which decision-relevant surroundings are visible** — transit, parks, schools, major landmarks — without cluttering the map with tourist noise.
+
+Context Visibility:
+
+- Surfaces ** living-relevant POI** — §30–31  
+- ** Subordinate to listings** — homes remain primary  
+- ** Labeled honestly** — no implied endorsement  
+- ** Progressive** — detail may deepen context — Chapter 15  
+
+Context Visibility supports Environmental Awareness and Place Understanding without turning the map into a general lifestyle app.
+
+---
+
+## 10. Environmental Awareness
+
+**Environmental Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Environmental Awareness is the **user's comprehension of how surroundings may affect daily residential life** — green space access, major roads, transit reachability, and notable local features relevant to long-term renting.
+
+Environmental Awareness is **not** environmental scoring or opaque indexes. It is **understandable context** — “near Parcul Central”, “tram line 101”, when data and policy support honest display.
+
+Environmental Awareness must remain **calm and factual** — no fear-based neighborhood ranking, no stigmatizing areas through map styling.
+
+---
+
+## 11. Geographic Credibility
+
+**Geographic Credibility** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Geographic Credibility is the **alignment between map display, listing location claims, and geographic reality** — users believe the map represents place truthfully at the precision shown.
+
+Geographic Credibility violations include:
+
+- Pin in wrong neighborhood  
+- “5 min to center” false  
+- Area filter boundary that does not match drawn shape  
+- List says Mărăști; map shows Mănăștur  
+
+Geographic Credibility extends Preview Integrity (Chapter 28) into **spatial dimension**.
+
+---
+
+## 12. Place Understanding
+
+**Place Understanding** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Place Understanding is the **user's mental model of where a listing lives within the city, sector, and neighborhood** — sufficient to evaluate fit before deep detail or viewing.
+
+Place Understanding grows through:
+
+- **Geographic Hierarchy** (§21) — city → sector → neighborhood  
+- **Area Understanding** (§26)  
+- **Walking and transit context** — §28–29  
+- **Calm map defaults** — oriented to search area, not random world view  
+
+Place Understanding is the spatial outcome of successful map experience — prerequisite to **confidence before contact**.
+
+---
+
+## 13. Orientation Confidence
+
+**Orientation Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Orientation Confidence is the **user's sense of knowing where they are on the map and where listings sit relative to landmarks, search center, and each other** — never lost, never disoriented by chaotic zoom or unexplained jumps.
+
+Orientation Confidence requires:
+
+- **Map Orientation** (§34) — sensible default viewport  
+- **Map Stability** (§33) — no erratic recenter  
+- **Clear area labels** — Location Readability (§22)  
+- **Honest scale** — distance perception not distorted — §32  
+
+Users with Orientation Confidence ** compare locations efficiently**. Users without it ** abandon map view**.
+
+---
+
+## 14. Location Integrity
+
+**Location Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Location Integrity is the **alignment between stated location, map pin, filter geography, and listing truth** — one governed spatial truth across surfaces.
+
+Location Integrity governs:
+
+- Card location text ** matches** map pin neighborhood class  
+- Detail address policy ** matches** preview precision — §23–25  
+- Geographic filters ** match** visible map boundary  
+- No ** deliberate displacement** for competitive advantage  
+
+Location Integrity inherits marketplace truth (Chapter 20) and Filter Integrity (Chapter 26) in geographic form.
+
+---
+
+## 15. Spatial Decision Support
+
+Maps are **decision-support tools for place** — not technical demos.
+
+### 15.1 Support Compare Areas
+
+Users compare ** neighborhoods**, not only pins.
+
+### 15.2 Support Shortlist by Place
+
+Map helps ** eliminate wrong-area homes** early.
+
+### 15.3 Support Viewing Planning
+
+Enough context for ** “worth visiting?”** — not full logistics.
+
+### 15.4 Decision Support Not Engagement
+
+Pan/zoom loops ** not success metric**.
+
+### 15.5 Integrate With Results
+
+Map ** extends** Chapter 28 — not parallel product.
+
+---
+
+## 16. Neighborhood Understanding
+
+Neighborhoods are **primary rental units of meaning**.
+
+### 16.1 Name Everywhere Consistent
+
+Filter, card, map, detail ** same neighborhood vocabulary**.
+
+### 16.2 Character Without Hype
+
+Description ** factual** — not “best area” undefined.
+
+### 16.3 Compare Adjacent Areas
+
+User sees ** boundary between** Gheorgheni and Mărăști when relevant.
+
+### 16.4 Respect Local Knowledge
+
+Romanian users ** bring mental maps** — product aligns.
+
+### 16.5 No Neighborhood Pay-to-Win
+
+Sponsored ** not disguised** as organic area prominence — Chapter 22.
+
+---
+
+## 17. Spatial Context
+
+Spatial context **frames the listing pin**.
+
+### 17.1 Context Radius Honest
+
+“Nearby” ** defined** — not infinite.
+
+### 17.2 Context Relevant to Renters
+
+Schools, parks, transit ** over nightlife hype**.
+
+### 17.3 Context Optional Layer
+
+User ** toggles** depth — progressive disclosure.
+
+### 17.4 Context Same on List and Detail
+
+** No contradiction** between surfaces.
+
+---
+
+## 18. Map Trust
+
+Map Trust is the **felt reliability of the map surface itself**.
+
+### 18.1 Professional Visual Tone
+
+Calm palette ** Chapter 7** — not satellite carnival default.
+
+### 18.2 Predictable Behavior
+
+Pin tap ** does expected action**.
+
+### 18.3 No Surprise Recenters
+
+Viewport ** stable** unless user moves.
+
+### 18.4 Errors Honest
+
+Tile fail ** Chapter 24** — not blank lie.
+
+### 18.5 Trust Inherits Location Trust
+
+** Map Trust ⊂ Location Trust** (§6).
+
+---
+
+## 19. Map Simplicity
+
+Simplicity **reduces cognitive load**.
+
+### 19.1 Minimum Viable Chrome
+
+Attribution required ** subordinate**.
+
+### 19.2 Marker Discipline
+
+Cluster ** when dense** — not pin explosion.
+
+### 19.3 Layer Toggles Few
+
+** One context layer** at a time when possible.
+
+### 19.4 No 3D Extravaganza
+
+3D buildings ** not default** — distraction.
+
+### 19.5 Simplicity Mobile-First
+
+** Thumb-reachable** controls only.
+
+---
+
+## 20. Visual Calm on Maps
+
+Maps inherit **calm marketplace tone**.
+
+### 20.1 Restrained Color
+
+Listing pins ** semantic** — not neon chaos.
+
+### 20.2 Quiet Background
+
+Map ** supports pins** — not competes.
+
+### 20.3 Motion Restrained
+
+Pan ** smooth** — Chapter 9; reduced motion respected.
+
+### 20.4 No Pulsing Urgency
+
+Pins ** not alarm** — housing not flash sale.
+
+---
+
+## 21. Geographic Hierarchy
+
+Geographic information **layers from broad to specific**.
+
+### 21.1 City First
+
+Cluj-Napoca, București ** always orienting**.
+
+### 21.2 Sector or District
+
+When applicable ** user mental model**.
+
+### 21.3 Neighborhood
+
+** Primary compare unit** for urban rental.
+
+### 21.4 Street or Address Last
+
+** Only when policy allows** — §23.
+
+### 21.5 Hierarchy on Card and Map
+
+** Same order** — city / area / fine detail.
+
+---
+
+## 22. Location Readability
+
+Location text and labels **must scan fast**.
+
+### 22.1 Plain Language
+
+** Mărăști, Cluj-Napoca** — not coordinates on consumer UI.
+
+### 22.2 Typographic Hierarchy
+
+Chapter 6 ** area readable**.
+
+### 22.3 Label Collision Avoided
+
+Map labels ** legible** — not stacked mess.
+
+### 22.4 Abbreviations Governed
+
+** Consistent** sector abbreviations if used.
+
+---
+
+## 23. Approximate vs Precise Location
+
+Precision policy **protects truth and safety**.
+
+### 23.1 Default Approximate When Required
+
+Circle or neighborhood center ** when exact address withheld until contact**.
+
+### 23.2 Precise When Published
+
+Exact pin ** only if listing truth and policy allow**.
+
+### 23.3 Precision Labeled
+
+“Approximate location” ** visible** — not hidden.
+
+### 23.4 No False Street Precision
+
+Pin on street ** only with address truth**.
+
+### 23.5 Precision Consistent Cross-Surface
+
+Preview, map, detail ** same class**.
+
+### 23.6 User Not Surprised at Viewing
+
+Detail reveal ** expected** from preview class.
+
+---
+
+## 24. Privacy Protection
+
+Location **must protect people and property**.
+
+### 24.1 Renter and Owner Safety
+
+Exact home ** not public** when policy forbids.
+
+### 24.2 Approximation Not Deception
+
+Approximate ** still honest neighborhood class**.
+
+### 24.3 No Stalking Enablement
+
+** No precision** that enables harassment.
+
+### 24.4 Privacy Over Engagement
+
+** Never** exact pin for click bait.
+
+### 24.5 Privacy Policy Visible
+
+User understands ** why approximate**.
+
+---
+
+## 25. Listing Location
+
+Listing location **one governed object**.
+
+### 25.1 One Pin Per Listing
+
+** No duplicate** pins same home.
+
+### 25.2 Pin Matches Listing Authority
+
+** Realtor-provided** truth moderated — Chapter 20.
+
+### 25.3 Location Not User-Editable by Renter
+
+** Owner/realtor** source — domain rules.
+
+### 25.4 Wrong Location Reportable
+
+** Trust path** — like other misrepresentation.
+
+### 25.5 Location Change Communicated
+
+Material move ** Chapter 25** on saved homes.
+
+---
+
+## 26. Area Understanding
+
+Users must grasp **the shape of their search geography**.
+
+### 26.1 Filter Area Visible on Map
+
+Drawn polygon or radius ** shown** — Chapter 26.
+
+### 26.2 Area Matches Results
+
+Homes ** inside** visible boundary.
+
+### 26.3 Multi-Area Honest
+
+OR areas ** labeled** — not hidden logic.
+
+### 26.4 City Switch Resets Map
+
+** Explained** — new market context.
+
+---
+
+## 27. Nearby Landmarks
+
+Landmarks **anchor orientation**.
+
+### 27.1 Major Landmarks Only
+
+Universities, large parks, stations ** when useful**.
+
+### 27.2 Landmarks Labeled
+
+** Not mysterious icons**.
+
+### 27.3 Distance to Landmark Honest
+
+** Not crow-flight lie** with foot icon.
+
+### 27.4 Landmarks Subordinate
+
+** Listing pins primary**.
+
+---
+
+## 28. Walking Context
+
+Walking **matters for daily rental life**.
+
+### 28.1 Walking Time Labeled
+
+“~10 min walk” ** method disclosed** if shown.
+
+### 28.2 Walking Not Routing App
+
+** Context line** — not turn-by-turn.
+
+### 28.3 Walking Estimates Conservative
+
+** Overpromise forbidden**.
+
+### 28.4 Walking Optional
+
+** Omit** if data unsupported.
+
+---
+
+## 29. Transportation Context
+
+Transit **supports commute decisions**.
+
+### 29.1 Transit Stops When Relevant
+
+Tram, metro, bus ** honest proximity**.
+
+### 29.2 No Schedule Promises
+
+Timetables ** out of scope** unless governed product.
+
+### 29.3 Transit Context Calm
+
+** One or two lines** — not transit app clone.
+
+### 29.4 Car-Centric Secondary
+
+Long-term urban rental ** transit and walk first**.
+
+---
+
+## 30. Points of Interest
+
+POI **only when serving housing context**.
+
+### 30.1 POI Categories Governed
+
+Schools, parks, groceries ** renter-relevant**.
+
+### 30.2 POI Not Ads
+
+Businesses ** not paid pins** without Sponsored label — Chapter 22.
+
+### 30.3 POI Density Limited
+
+** Clutter forbidden**.
+
+### 30.4 POI Accuracy
+
+** Geographic Credibility** applies.
+
+---
+
+## 31. Environmental Context
+
+Environment **shapes living quality**.
+
+### 31.1 Green Space Visible
+
+Parks ** when material to area story.
+
+### 31.2 Major Roads Honest
+
+Noise context ** factual** — not fear mongering.
+
+### 31.3 No Environmental Score Without Science
+
+Opaque ** “livability 7.2”** forbidden.
+
+### 31.4 Environmental Humility
+
+Show ** what is known** — silence what is not.
+
+---
+
+## 32. Distance Perception
+
+Distance **must feel honest**.
+
+### 32.1 Scale Bar or Equivalent
+
+User ** judges distance** without fake precision.
+
+### 32.2 Distance Sort Aligns Map
+
+Chapter 27 ** distance sort** matches visual.
+
+### 32.3 “Near Center” Defined
+
+City center ** which center** — labeled.
+
+### 32.4 Straight-Line vs Path
+
+If shown ** disclose** straight-line vs walk.
+
+---
+
+## 33. Map Stability
+
+Stable maps **preserve Orientation Confidence**.
+
+### 33.1 No Auto-Recenter on Every Tap
+
+** User control** over viewport.
+
+### 33.2 Filter Apply Predictable Zoom
+
+Area filter ** fits bounds** — explained.
+
+### 33.3 Return Restores Viewport
+
+** Map Continuity**.
+
+### 33.4 Resize Stable
+
+Rotation ** preserves** when possible.
+
+---
+
+## 34. Map Orientation
+
+Default orientation **matches user intent**.
+
+### 34.1 Open on Search Area
+
+** Not Atlantic Ocean**.
+
+### 34.2 North Up Default
+
+** Unless user rotates** — predictable.
+
+### 34.3 Selected Listing Centered
+
+Tap card ** highlights pin** — gentle pan.
+
+### 34.4 First-Time User Oriented
+
+Chapter 23 ** no tutorial** — map self-evident.
+
+---
+
+## 35. Map Interaction Philosophy
+
+Interactions **minimal and purposeful**.
+
+### 35.1 Pan to Explore
+
+** Expected** — not penalized.
+
+### 35.2 Tap Pin Open Preview
+
+** Card or sheet** — consistent.
+
+### 35.3 Tap Card Highlight Pin
+
+** Bidirectional** sync.
+
+### 35.4 Long Press Rare
+
+** No hidden power tools** on consumer map.
+
+### 35.5 Gestures Do Not Trap
+
+** Back** always exits map mode clearly.
+
+### 35.6 Interaction Not Goal
+
+** Understanding** is goal.
+
+---
+
+## 36. Result-to-Map Continuity
+
+Switching list → map **preserves truth**.
+
+### 36.1 Same Count
+
+Map pins ** match result count** — eligible set.
+
+### 36.2 Same Filters
+
+** Active criteria** visible on map chrome.
+
+### 36.3 Same Sort Class
+
+Order ** may differ visually** — set identical.
+
+### 36.4 Switch Labeled
+
+“Map” / “List” ** clear mode**.
+
+### 36.5 No Inventory Surprise
+
+Map-only listings ** forbidden**.
+
+---
+
+## 37. Map-to-Listing Continuity
+
+Opening listing from map **preserves spatial thread**.
+
+### 37.1 Detail Map Same Truth
+
+** Location Integrity**.
+
+### 37.2 Back to Map Same View
+
+** Viewport and selection**.
+
+### 37.3 Detail Deepens Context
+
+** More precision** only if policy allows upgrade.
+
+### 37.4 Contact From Map
+
+** Same rules** — Chapter 16.
+
+---
+
+## 38. Search Continuity on Maps
+
+Search context **includes map state**.
+
+### 38.1 Saved Search Restores Area
+
+Geography ** in saved snapshot** — Chapter 17.
+
+### 38.2 Auth Merge Preserves Map
+
+Guest map ** through login** — Chapter 23.
+
+### 38.3 Notification Deep Link
+
+Alert opens ** correct map area**.
+
+### 38.4 Broken State Recovery
+
+Chapter 24 ** honest**.
+
+---
+
+## 39. Location Comparison
+
+Users compare **places, not only prices**.
+
+### 39.1 Side-by-Side Mental Model
+
+Map supports ** seeing cluster spread**.
+
+### 39.2 Compare Neighborhoods
+
+** Identity** helps choose area first.
+
+### 39.3 Compare Listings Within Area
+
+Pin density ** shows options**.
+
+### 39.4 No Fake Compare UI
+
+** Map clarity** over gimmick sliders.
+
+---
+
+## 40. Mobile-First Map Experience
+
+Mobile **primary map context**.
+
+### 40.1 Full-Screen Map Optional
+
+** List + map split** or toggle — product choice.
+
+### 40.2 Thumb Reach Controls
+
+Zoom ** bottom reachable**.
+
+### 40.3 Sheet for Pin Preview
+
+** Half sheet** listing preview — calm.
+
+### 40.4 One-Handed List-Map Toggle
+
+** Easy switch**.
+
+### 40.5 Minimal Zoom Required
+
+Default viewport ** answers question**.
+
+---
+
+## 41. Accessibility
+
+Maps **perceivable and operable**.
+
+### 41.1 List Alternative Always
+
+** Map never only** path to listings.
+
+### 41.2 Pin Selection Announced
+
+** Listing title** on focus.
+
+### 41.3 Text Location on Card
+
+** Non-visual** location path — Chapter 28.
+
+### 41.4 Contrast on Controls
+
+** Zoom buttons** accessible.
+
+### 41.5 Reduced Motion
+
+** Pan reduced** when requested.
+
+---
+
+## 42. Map Performance Experience
+
+Felt performance **supports trust**.
+
+### 42.1 Tiles Load Honest
+
+Skeleton or ** calm wait** — Chapter 24.
+
+### 42.2 Pins Appear With List
+
+** Not minutes late**.
+
+### 42.3 Interaction Responsive
+
+Pan ** not laggy** — trust erosion.
+
+### 42.4 Low Bandwidth Degrade
+
+** List still works** — map optional enrich.
+
+---
+
+## 43. Map Ethics
+
+Map ethics **protect housing seekers**.
+
+### Never Fake Proximity
+
+** Distance lies** forbidden.
+
+### Never Precision for Engagement
+
+** Exact pin** not for clicks against policy.
+
+### Never Stigmatize Areas
+
+** Map styling** not redlining.
+
+### Never Hide Sponsored Geography
+
+Paid area prominence ** labeled**.
+
+### Never Trap in Map
+
+** List exit** always clear.
+
+### Never Contradict Filters
+
+** Map-list integrity** sacred.
+
+Teams evaluate in critique and §50 checklist.
+
+---
+
+## 44. Dark Pattern Prevention
+
+Explicit **forbidden patterns**.
+
+### 44.1 Bait Pin Location
+
+Pin ** wrong neighborhood** for views.
+
+### 44.2 Forced Map Before List
+
+** User choice** of mode.
+
+### 44.3 Endless Recenter Loop
+
+** Stability** required.
+
+### 44.4 False “Near You”
+
+GPS ** labeled** — Chapter 26 smart defaults.
+
+### 44.5 Scarcity by Map Zoom
+
+“Only 1 in this view” ** manipulation**.
+
+---
+
+## 45. Map Success Metrics
+
+Judged at **philosophy level** — not pan count.
+
+### Spatial Confidence
+
+Users ** articulate area** — qualitative.
+
+### Orientation Confidence
+
+Users ** not lost** on map — behavioral.
+
+### Map Continuity Success
+
+List ↔ map ↔ detail ** seamless** — return tests.
+
+### Location Trust
+
+Users ** believe pins** — integrity audits.
+
+### Place Understanding
+
+Users ** contact with place clarity** — informed intent.
+
+### Time-to-Understanding
+
+** Quick** neighborhood grasp — not time-on-map maximized.
+
+Teams evaluate against §50 checklist.
+
+---
+
+## 46. System-Wide Map Consistency
+
+**One spatial grammar**.
+
+### 46.1 One Precision Policy
+
+** Product-wide** — §23.
+
+### 46.2 One Neighborhood Vocabulary
+
+** Glossary maintained**.
+
+### 46.3 One Pin Behavior
+
+Tap ** same outcome class**.
+
+### 46.4 One Context Layer Rules
+
+POI ** unified**.
+
+### 46.5 Future AI Search
+
+** Inherits** this chapter.
+
+---
+
+## 47. Future Compatibility
+
+Spatial layer **extends without reinvention**.
+
+### 47.1 AI Location Queries
+
+“Near park in Mărăști” ** shows map + filters**.
+
+### 47.2 Commute Preferences Future
+
+** Labeled** if ever added — not black box.
+
+### 47.3 Multi-City Expansion
+
+** Same integrity rules**.
+
+### 47.4 AR or Street View
+
+** Optional depth** — not required path; truth rules apply.
+
+---
+
+## 48. Map Evolution
+
+Maps evolve as **one governed spatial layer**.
+
+### Evolve Context, Not Fragment
+
+New layers ** fit philosophy**.
+
+### Resist Map Feature Creep
+
+Each layer ** Chapter 5 necessity**.
+
+### Retire Misleading Precision
+
+** Product-wide** correction.
+
+### Preserve Six Questions
+
+§4.11 ** invariant**.
+
+### Backward Compatibility
+
+Saved search geography ** migrates honestly**.
+
+Map evolution requires Design Council approval for **material precision policy change, new sponsored map formats, or map-list integrity exceptions**.
+
+---
+
+## Product Development Methodology Bridge
+
+The maps and location philosophy documented in this chapter is a **reusable decision framework** — not a catalog of map SDKs, tile layers, geocoding pipelines, or platform-specific marker implementations.
+
+Its principles — support housing decisions, preserve Location Integrity and Geographic Credibility, enable Spatial Confidence and Place Confidence, maintain Map Continuity and Geographic Continuity, surface honest Everyday Context, and strengthen Location Trust — describe **how a serious marketplace helps users understand where they might live without false precision, tourism noise, or manipulation**. Those principles transcend any single map provider, surface, or release.
+
+**Rento Product Design Standard v1.0** is being completed first. **Rento remains the first production implementation and validation** of these spatial design principles in a long-term residential rental marketplace. Only after this standard is formally complete will the **forthcoming Product Development Methodology v1.0** be extracted from it — generalizing governed maps and location philosophy into a broader method for building products that communicate place honestly and support spatial housing decisions.
+
+The bridge described here is therefore **forward-looking**, not present-state. Once Product Development Methodology v1.0 is formally established, future products may adopt principles later formalized within that methodology — adapting them to different industries and domains without treating Rento's map surfaces as universal templates.
+
+Adaptation must preserve the **ethical core** — Location Integrity, privacy-aware precision, map-list truth, Everyday Context over tourism, calm visual design, and housing-first Place Confidence — even when geography, regulation, or map technology differ from long-term residential rental.
+
+This section establishes conceptual alignment only. It does not define the contents, tools, or process steps of the future Product Development Methodology v1.0 — those will be governed by that standard when authored, after extraction from the completed Rento Product Design Standard.
+
+---
+
+## 49. Governance
+
+### 49.1 Change Authority
+
+| Change type | Authority |
+|-------------|-----------|
+| Copy on neighborhood labels | Senior UX + Content Design |
+| New POI category on map | Head of Product Design + Product |
+| Precision policy change | Design Council + Trust review |
+| Map-list sync rule change | Design Council |
+| Sponsored geographic module | Design Council |
+| New default map layer | Head of Product Design |
+
+### 49.2 Exception Policy
+
+Map experiments ** reversible, ethics-reviewed** — no deceptive pin tests.
+
+### 49.3 Documentation Requirement
+
+Shipped map features document ** precision class, privacy impact, continuity path, six questions answered**.
+
+### 49.4 Cross-Team Review
+
+Search, trust, results, detail, communication ** review intersections**.
+
+---
+
+## 50. Product Review Checklist
+
+Before shipping any maps or location change, reviewers confirm:
+
+1. **Housing decision** — Does this help users understand place for renting?  
+2. **Six questions** — Area, relative position, precision, context, map-list match, trust?  
+3. **Location Integrity** — Pin, label, filter, detail aligned?  
+4. **Privacy** — Precision policy honored?  
+5. **Approximate labeled** — When not exact?  
+6. **Map Continuity** — List ↔ map ↔ detail preserved?  
+7. **Neighborhood Identity** — Names consistent and honest?  
+8. **Context Visibility** — Living-relevant, not cluttered?  
+9. **Map Simplicity** — Calm, not navigation app?  
+10. **Mobile-first** — Minimal zoom to understand?  
+11. **Accessibility** — List alternative; announcements?  
+12. **Performance** — Honest load; list fallback?  
+13. **Ethics** — No fake proximity, stigmatizing styling, trap?  
+14. **Chapters 26–28 alignment** — Filters, sort, results coherent?  
+15. **Chapter 13 alignment** — Same eligible set on map and list?  
+16. **Sponsored** — Labeled if applicable — Chapter 22?  
+17. **Geographic Credibility** — Distances and landmarks honest?  
+18. **Orientation Confidence** — Stable, oriented default?  
+19. **Future fit** — Spatial layer, not routing sneak?  
+20. **Rollback** — Can feature disable without breaking search?
+
+Failure on any item requires redesign or explicit Design Council exception.
+
+---
+
+## 51. Common Mistakes
+
+### 51.1 Map-Only Listings
+
+**Mistake:** Homes on map not in filtered list.  
+**Correction:** Map-list sync — §36, Chapter 13.
+
+### 51.2 False Exact Pin
+
+**Mistake:** Street pin without address authority.  
+**Correction:** Approximate vs Precise — §23.
+
+### 51.3 Navigation UX
+
+**Mistake:** Turn-by-turn to listing.  
+**Correction:** Maps not navigation — §4.10.
+
+### 51.4 Pin Explosion
+
+**Mistake:** 200 overlapping markers.  
+**Correction:** Clustering — §19.
+
+### 51.5 Lost Viewport on Back
+
+**Mistake:** Detail return resets map to city center.  
+**Correction:** Map Continuity — §7.
+
+### 51.6 Tourist POI Clutter
+
+**Mistake:** Restaurants and bars dominate.  
+**Correction:** POI governance — §30.
+
+### 51.7 Neighborhood Name Drift
+
+**Mistake:** Card says Centru; map says Old Town unofficial.  
+**Correction:** Neighborhood Identity — §8.
+
+### 51.8 Scary Map Styling
+
+**Mistake:** Red zones stigmatizing areas.  
+**Correction:** Map Ethics — §43.
+
+### 51.9 Hidden Approximation
+
+**Mistake:** Circle pin with no “approximate” label.  
+**Correction:** Privacy — §24.
+
+### 51.10 Map Required to Browse
+
+**Mistake:** No list-only path.  
+**Correction:** Accessibility — §41.
+
+---
+
+## 52. Correct & Incorrect Examples
+
+### 52.1 Map-List Sync
+
+**Correct:** 14 homes in list; 14 pins in Mărăști filter area; tap pin highlights matching card.  
+**Incorrect:** Map shows 20 pins; list shows 14 homes.
+
+### 52.2 Approximate Location
+
+**Correct:** Circle overlay in Mărăști with label “Approximate location — exact address shared after contact.”  
+**Incorrect:** Street-level pin with no address on file.
+
+### 52.3 Neighborhood Context
+
+**Correct:** “Near Parcul Central · tram M line ~8 min walk” on detail; calm map context.  
+**Incorrect:** “Best area!!!” with no factual context.
+
+### 52.4 Mobile Toggle
+
+**Correct:** List view default; “Map” toggles full map with same filters visible.  
+**Incorrect:** Force map on every search.
+
+### 52.5 Return from Detail
+
+**Correct:** User opens listing from pin; back returns to same map viewport and selected pin.  
+**Incorrect:** Map zooms out to entire Romania.
+
+### 52.6 Distance Honesty
+
+**Correct:** “~1.2 km to Universitate (straight line)”  
+**Incorrect:** “5 min to center” undefined center.
+
+### 52.7 Filter Area
+
+**Correct:** Drawn polygon visible; only homes inside appear.  
+**Incorrect:** Polygon decorative; results ignore boundary.
+
+### 52.8 Saved Search
+
+**Correct:** Saved “Mărăști, 2 rooms” opens list and map centered on Mărăști with criteria banner.  
+**Incorrect:** Map opens on last GPS location.
+
+### 52.9 Sponsored
+
+**Correct:** “Sponsored listings in this area” module with labeled pins.  
+**Incorrect:** Paid pins identical to organic.
+
+### 52.10 Loading
+
+**Correct:** Map tiles loading — list still usable; calm “Loading map” on map pane.  
+**Incorrect:** Blank map pretending loaded.
+
+---
+
+## 53. Design Director Review
+
+**Chapter:** 29 — Maps & Location Experience  
+**Section:** XXVI — Maps & Location  
+**Review type:** Initial standard adoption
+
+### 53.1 Approval Statement
+
+This chapter is approved as the **maps and location experience contract** for Rento. All map surfaces, location representation, precision policy, map-list continuity, spatial context, and geographic ethics must comply. Map providers and geospatial implementation are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 53.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Calm, trust, only what is real |
+| Chapter 4 — Layout & Information Architecture | Map and panel hierarchy |
+| Chapter 13 — Search Experience System | Parent search system; spatial layer |
+| Chapter 14 — Listing Card & Preview System | Location on preview |
+| Chapter 15 — Listing Detail Experience | Deep location context |
+| Chapter 20 — Trust, Verification & Moderation Experience | Location truth |
+| Chapter 24 — Empty, Loading & Error States Experience | Map load honesty |
+| Chapter 25 — Feedback, Status & System Communication Experience | Area change messages |
+| Chapter 26 — Search Filters & Refinement Experience | Geographic filters |
+| Chapter 27 — Sorting & Ranking Experience | Distance sort semantics |
+| Chapter 28 — Search Results Experience | Result-to-map continuity |
+| Chapter 30+ — Saved Searches, AI search | Future layers when authored |
+| Chapter 60 — Product Review Checklist | Ship gate |
+
+### 53.3 Review Criteria for Future Amendments
+
+Amendments must answer:
+
+1. Does this help users understand place for long-term rental decisions?  
+2. Does it preserve Location Integrity and Geographic Credibility?  
+3. Is precision honest and privacy-safe?  
+4. Does map-list-detail remain continuous?  
+5. Is map calm and simple — not navigation software?  
+6. Does change align with Search System (Chapters 13, 26–28)?
+
+Material precision policy changes, sponsored map formats, or map-list integrity exceptions require Design Council approval.
+
+### 53.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on maps and location system |
+| Head of Product Design | Cross-surface spatial consistency |
+| Senior UX Designer | Map interaction, continuity, mobile flows |
+| Product Management | Precision policy and marketplace truth |
+| Content Design Lead | Neighborhood labels and context copy |
+| Trust & Safety | Privacy, location honesty, anti-deception |
+| Accessibility Specialist | List alternative and map operability |
+
+### 53.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new maps and location work immediately upon approval. Existing map surfaces align during scheduled improvement cycles.
+
+### 53.6 Design Director Closing Note
+
+Users do not come to Rento to play with maps. They come to **understand where they might build a life**. Maps succeed when a renter can glance at Mărăști or Centru and feel orientation — when approximate location is honest, when list and pin agree, and when context serves commuting and parks rather than pixels and panning. This chapter exists so the spatial layer becomes a disciplined part of the Housing Journey: calm, truthful, continuous, and always in service of understanding place before contact — never in service of map engagement for its own sake.
+
+---
+
+**End of Chapter 29**
