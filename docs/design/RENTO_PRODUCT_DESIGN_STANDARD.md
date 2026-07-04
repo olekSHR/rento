@@ -76,12 +76,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 32 | [Media Experience](#chapter-32--media-experience) | Media Experience | APPROVED |
 | 33 | [Property Comparison Experience](#chapter-33--property-comparison-experience) | Property Comparison | APPROVED |
 | 34 | [Property Verification Experience](#chapter-34--property-verification-experience) | Property Verification | APPROVED |
+| 35 | [Viewing Experience](#chapter-35--viewing-experience) | Viewing Experience | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 35+ | Future Decision Experience chapters per design standard roadmap |
+| 36+ | Future Decision Experience chapters per design standard roadmap |
 
 ---
 
@@ -105,6 +106,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 1.0 | 2026-07-04 | Chapter 32 — Media Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 33 — Property Comparison Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 34 — Property Verification Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 35 — Viewing Experience approved and added |
 
 ---
 
@@ -34230,4 +34232,718 @@ Users do not rent badges. They rent homes — and they deserve to know what the 
 ---
 
 **End of Chapter 34**
+
+---
+
+## Chapter 35 — Viewing Experience
+
+**Section:** XXXII — Viewing Experience  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–34; extends the Decision Experience block after Property Verification Experience (Chapter 34); operationalizes Proceeding Readiness (Chapter 34), Verification Boundaries (Chapter 34), Contact Readiness (Chapter 31), and contact ethics (Chapter 16); defines principles only — not scheduling systems, calendar integrations, messaging workflows, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **viewing experience philosophy** for Rento — how users **prepare for, coordinate, conduct, and interpret in-person property visits** as the first major crossing from digital evaluation to physical housing judgment.
+
+Property viewing is not verification. Verification asks *can I trust this home enough to invest the next step* (Chapter 34). Viewing asks *what does this home reveal in person — and does that support my housing decision*.
+
+Property viewing is not contact. Contact governs **how users reach realtors responsibly** (Chapters 15–16). Viewing governs **how users move from digital intent to physical presence** — with preparation, scheduling respect, and honest outcome interpretation.
+
+Property viewing is not application. Application governs **formal housing commitment escalation** (forward Decision Experience chapter). Viewing establishes **physical truth** that informs — but does not substitute for — application readiness.
+
+Where Chapter 31 helps users evaluate one home, Chapter 32 helps them trust visual evidence, Chapter 33 helps them narrow candidates, and Chapter 34 helps them confirm proceeding trust, this chapter helps users **cross the digital-to-physical boundary** — prepared, respected, and able to proceed, defer, or release based on what only a visit can reveal.
+
+The product must help users answer five viewing questions:
+
+1. **Am I prepared to visit — do I know what to confirm in person?**  
+2. **Is scheduling this viewing respectful of my time and the realtor's?**  
+3. **Does the visit match what evaluation and verification prepared me for?**  
+4. **What did I learn that digital assessment could not — and what remains unknown?**  
+5. **Can I proceed toward application, defer, or release with clarity after the visit?**
+
+This chapter governs viewing as a Decision Experience stage — environment quality, preparation, readiness, confidence, scheduling respect, boundaries, outcomes, and calm mobile-first coordination. It does **not** specify calendar widgets, booking APIs, reminder systems, or engineering architecture.
+
+**Relationship to prior chapters:** **Proceeding Readiness** (Chapter 34) governs whether commitment escalation — including viewing request — is appropriate. **Verification Boundaries** (Chapter 34) govern what digital assessment cannot prove. This chapter defines **Viewing Environment**, **Viewing Readiness**, **Viewing Preparation**, **Viewing Confidence**, and **Viewing Boundaries** — how users and the product honor the physical decision boundary with integrity.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Preparation over surprise** | Users arrive knowing what to confirm — not discovering bait at the door |
+| **Physical truth over digital completion** | Viewing completes what verification could not — not a checkbox before application |
+| **Respect over urgency** | Scheduling honors both parties' time — no pressure slots or scarcity theater |
+| **Questions over checklist theater** | Preparation supports judgment — not rote compliance |
+| **Reconciliation over denial** | In-person truth compared honestly to Expected Property — discrepancy visible |
+| **Reversible over trapped** | Defer, reschedule, cancel, and release remain dignified |
+| **Continuity over reset** | Evaluation, verification, and viewing intent preserved across coordination |
+| **Calm over pressure** | No artificial urgency to attend, apply, or commit before viewing suffices |
+| **Mobile coordination first** | Design for on-the-go scheduling, partner handoff, and day-of orientation — then tablet, then desktop |
+| **Viewing Confidence goal** | Every viewing outcome serves honest proceed, defer, or release toward application |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, calendar component guide, or scheduling workflow pattern library  
+- An implementation plan, API contract, booking engine, or notification architecture  
+- A replacement for Chapter 16 — Contact & Communication Experience  
+- A replacement for Chapter 34 — Property Verification Experience  
+- A moderation, fraud detection, or identity verification operations chapter (Chapter 20)  
+- A legal due diligence, lease review, tenant rights, or safety enforcement guide  
+- An application, deposit, or lease commitment chapter (forward Decision Experience chapter)  
+- A comparison, shortlist, or verification depth chapter (Chapters 33–34)  
+- A realtor calendar management or availability configuration spec  
+
+If the question is *how to build* a booking flow or *which API* confirms attendance — this chapter does not answer it. If the question is *what viewing must accomplish for housing decision confidence* — this chapter does.
+
+---
+
+## Viewing Environment
+
+**Viewing Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Viewing Environment is the **cognitive and informational conditions under which a user prepares for, coordinates, and reflects on an in-person property visit** — not the screen layout, but the **quality of the physical-decision coordination space** Rento provides.
+
+A sound Viewing Environment is:
+
+- **Prepared** — user knows property identity, location policy, and what to confirm in person  
+- **Oriented** — viewing sits legibly in the Housing Journey — not isolated logistics  
+- **Grounded** — digital evaluation truth available during preparation — not amnesia at scheduling  
+- **Respectful** — coordination tone honors user and realtor time  
+- **Bounded** — viewing scope legible; product does not overclaim what a visit proves  
+- **Reversible** — defer, reschedule, cancel, or return to verification without penalty  
+- **Calm** — no countdown theater, no pressure to attend before ready  
+
+Chapter 31 established **Decision Environment** for evaluation. Chapter 34 established **Verification Environment** for pre-commitment trust assessment. Viewing Environment is the **physical-decision counterpart** — the governed space where users move from *"I can proceed toward a visit"* to *"I attended — or chose not to — with clarity about what I learned."*
+
+Viewing Environment is reusable across scheduling coordination, day-of preparation, post-viewing reflection, and forward application chapters.
+
+---
+
+## Viewing Readiness
+
+**Viewing Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Viewing Readiness is the user's and product's shared state where **requesting, confirming, or attending a physical property visit is appropriate** — because Proceeding Readiness (Chapter 34) supports escalation, preparation is sufficient, and scheduling respect is possible.
+
+Viewing Readiness is distinct from **Proceeding Readiness** (Chapter 34): Proceeding Readiness governs whether **commitment escalation** — contact deepening, viewing request, application start — is responsible after verification; Viewing Readiness governs whether **physical presence at the property** is responsible given coordination context, preparation sufficiency, and listing truth currency.
+
+Viewing Readiness is distinct from **Contact Readiness** (Chapter 31): Contact Readiness governs whether **initial contact** is responsible after evaluation; Viewing Readiness assumes evaluation and often verification occurred — and that **in-person visit** is the appropriate next boundary crossing, not merely messaging.
+
+Viewing Readiness requires:
+
+- **Listing Integrity** intact — property still honestly available (Chapter 31)  
+- **Proceeding Readiness** sufficient for viewing escalation — or user explicitly chooses viewing despite acknowledged gaps with eyes open  
+- **Viewing Preparation** adequate — user knows what to confirm and what product could not verify  
+- **Identity and property clarity** — user knows which home, which realtor, which location policy applies (Chapter 16)  
+- Product does not **manufacture readiness** through urgency, false confirmation, or scheduling pressure  
+
+Viewing Readiness is not a funnel stage to maximize. It is a **physical trust gate** — consistent with Proceeding Readiness and Contact Readiness ethics.
+
+Viewing Readiness connects Viewing Confidence to scheduling coordination and post-viewing outcomes.
+
+---
+
+## Viewing Preparation
+
+**Viewing Preparation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Viewing Preparation is the user's **informed readiness to visit a specific property** — synthesizing evaluation, verification, and contact context into **conscious in-person confirmation intent** before and during the visit.
+
+Viewing Preparation includes:
+
+- **Expected Property reconciliation** — user carries forward what media and information suggest (Chapter 32) and what Verification Boundaries marked unknowable until visit  
+- **Confirmation questions** — what to verify because digital assessment could not — layout feel, condition, noise, light, neighborhood sense, undisclosed spaces  
+- **Location understanding** — approximate location policy honored; user can find property without contact replacing map truth (Chapter 16, Chapter 29)  
+- **Partner alignment** — shared decision participants carry **identical property truth** and preparation intent (Chapter 33 §14.1, Chapter 34 §8.3)  
+- **Process expectations** — viewing reveals physical truth; it does not guarantee availability, acceptance, or lease terms  
+
+Viewing Preparation is distinct from **Viewing Readiness**: Viewing Preparation governs **what the user knows before attending**; Viewing Readiness governs whether **attending is appropriate** given that knowledge and listing state.
+
+Viewing Preparation extends **Uncertainty Transparency** (Chapter 34) into actionable in-person intent — unknowns become questions, not hidden surprises.
+
+Viewing Preparation does not prescribe checklists, document requirements, or safety enforcement procedures. It governs **product-supported judgment posture** — user arrives as an informed evaluator, not a passive spectator.
+
+---
+
+## Viewing Confidence
+
+**Viewing Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Viewing Confidence is the user's **justified belief that viewing — requesting, attending, or interpreting its outcome — supports sound housing judgment** — before, during, and after the in-person visit.
+
+Viewing Confidence rises when:
+
+- **Viewing Preparation** aligns with listing truth — user knows what to expect and what to confirm  
+- **Expected Property** and in-person experience **reconcile honestly** — surprise indicates Listing Integrity or Media Integrity failure, not user error  
+- **Viewing Boundaries** understood — user knows what visit can and cannot establish  
+- Scheduling coordination is **respectful and confirmed** — not vague intent theater  
+- Post-viewing **proceed, defer, or release** remains dignified based on what was learned  
+
+Viewing Confidence falls when product simulates confirmed visits before they exist, hides preparation gaps, pressures attendance before Viewing Readiness, or treats viewing as automatic application prerequisite.
+
+Viewing Confidence is distinct from **Verification Confidence** (Chapter 34): Verification Confidence governs **digital proceeding judgment**; Viewing Confidence governs **physical visit judgment** — whether the visit was worth conducting and what it revealed for next steps.
+
+Viewing Confidence is distinct from **Property Confidence** (Chapter 31): Property Confidence governs whether a listing merits evaluation attention; Viewing Confidence governs whether **in-person assessment** supports escalation toward application or justified release.
+
+Viewing Confidence is distinct from **Visual Confidence** (Chapter 32): Visual Confidence governs trust in media representation; Viewing Confidence governs trust in **physical reconciliation** — what the visit proved, disproved, or left unknown.
+
+---
+
+## Viewing Boundaries
+
+**Viewing Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Viewing Boundaries define **what an in-person property visit can and cannot establish** — the scope beyond which application, negotiation, legal review, or professional inspection must carry responsibility.
+
+Viewing Boundaries **extend** Verification Boundaries (Chapter 34) — digital limits become physical limits honestly stated.
+
+Rento viewing experience **can** support:
+
+- **Physical reconciliation** — does in-person property align with Expected Property from evaluation?  
+- **Sensory judgment** — layout feel, natural light, noise, smell, condition signals not provable digitally  
+- **Neighborhood context** — street-level sense within location policy limits (Chapter 29)  
+- **Discrepancy identification** — material gaps between listing and reality visible during visit  
+- **Post-viewing judgment** — proceed toward application, defer for partner or comparison, or release with clarity  
+
+Rento viewing experience **cannot** substitute for:
+
+- **Lease application outcome** — viewing does not guarantee acceptance  
+- **Availability guarantee** — property may rent to another party before or after visit  
+- **Legal lease review** — contract terms, deposit rules, tenant rights remain user's responsibility  
+- **Building systems certification** — heating, plumbing, structural integrity beyond visible inspection  
+- **Professional inspection** — engineer, legal, or specialist assessment when user requires it  
+- **Realtor character proof beyond governed identity** — platform attestation scope from Chapter 20 applies  
+
+Viewing Boundaries protect users and the platform: Rento must **never imply a visit verified what it did not**, and must **never hide that application and legal steps remain the user's responsibility**.
+
+Viewing Boundaries are reusable across application preparation, negotiation, and commitment chapters — each stage inherits honest scope limits from viewing.
+
+---
+
+## 2. Role in the Housing Journey
+
+Property viewing sits at the **digital-to-physical boundary** of the Housing Journey — after verification establishes proceeding trust, before application and lease commitment intensify.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| Narrowing (Chapter 33) | Compare | Which candidates survive scrutiny? |
+| Verification (Chapter 34) | Verify | Can I trust this home enough to proceed? |
+| **Property viewing (this chapter)** | **Visit** | **What does this home reveal in person — and what happens next?** |
+| Decision Experience (following chapters) | Apply, commit | What happens next toward housing commitment? |
+
+Viewing succeeds when it produces **Meaningful Progress** — user attends prepared, learns what digital assessment could not, and proceeds, defers, or releases with clarity — not when user maximizes visit count or rushes to application.
+
+Viewing fails when it optimizes for **scheduling theater** — fake confirmations, pressure slots, or visits treated as conversion events rather than housing judgment.
+
+---
+
+## 3. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract** — attestation scope, moderation meaning, verification label honesty, and marketplace integrity.
+
+This chapter **consumes** platform trust signals during viewing coordination — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|----------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm about listing and realtor? |
+| **Property verification** | Chapter 34 | Can the user proceed digitally with justified trust? |
+| **Property viewing** | **This chapter** | Does in-person visit support next housing judgment? |
+
+Division of responsibility:
+
+| Concern | Governing chapter |
+|---------|-------------------|
+| Verification label meaning, moderation status, appeals | Chapter 20 |
+| Fraud prevention philosophy, trust lifecycle | Chapter 20 |
+| Digital proceeding judgment, uncertainty, verification boundaries | Chapter 34 |
+| Viewing preparation, scheduling respect, physical reconciliation | **This chapter** |
+| Post-viewing proceed, defer, release toward application | **This chapter** |
+
+Platform verification badges **inform** preparation — they do **not** guarantee in-person condition. A verified listing does not promise visit will match media. Viewing must **reconcile** physical truth honestly — discrepancy is product and marketplace signal, not user fault.
+
+Viewing must never **inflate** Chapter 20 attestation into visit outcome guarantees.
+
+---
+
+## 4. Transition from Property Verification
+
+Users enter viewing **after** Proceeding Readiness supports escalation — typically following verification, sometimes alongside ongoing contact (Chapter 16).
+
+### 4.1 Entry Preconditions
+
+Property viewing coordination is responsible when:
+
+- User has **Proceeding Readiness** or equivalent informed intent — verification or evaluation yielded sufficient trust to justify physical visit  
+- Candidate is **still honestly available** — Listing Integrity intact (Chapter 31)  
+- User understands **Verification Boundaries** — knows what visit must confirm because digital assessment could not  
+- **Contact path** exists or viewing request is product-supported — identity visible (Chapter 16)  
+
+### 4.2 Handoff from Verification
+
+Chapter 34 supplies **Verification Confidence**, **Uncertainty Transparency**, **Verification Boundaries**, and **Proceeding Readiness**. Viewing must **preserve** verification outcomes — not reset evaluation or hide acknowledged unknowns.
+
+The handoff contract:
+
+- Viewing candidate is **the property user chose to prioritize** — not algorithmically substituted  
+- **Viewing Preparation** inherits verification questions — unknowns become in-person confirmation intent  
+- Defer or release at verification **does not erase** viewing preparation work if user returns  
+- Proceeding from verification to viewing **does not imply** application readiness — Viewing Boundaries apply  
+
+### 4.3 Handoff from Property Detail, Media, and Comparison
+
+Chapters 31–33 supply **Property Confidence, Expected Property, Spatial Understanding, Narrowing Confidence**, and evaluation continuity. Viewing **extends** these — physical visit reconciles Expected Property with in-person truth.
+
+Facts and evidence at viewing preparation depth **match** detail and verification truth — no viewing-only summary layer that contradicts prior stages.
+
+---
+
+## 5. Viewing vs Verification vs Contact
+
+Each Decision Experience stage has distinct obligation:
+
+| Stage | Primary question | Must not substitute for |
+|-------|------------------|-------------------------|
+| **Verification (Ch 34)** | Can I proceed with digital trust? | Physical viewing or application |
+| **Contact (Ch 16)** | Can I reach the realtor responsibly? | Viewing preparation or application |
+| **Viewing (this chapter)** | What does in-person visit reveal? | Application, lease review, or legal due diligence |
+
+Viewing **assumes** evaluation and often verification occurred — it crosses the physical boundary verification identified, not first-pass discovery.
+
+Viewing **may follow** contact — user schedules after inquiry — or **precede** deep contact when product supports direct viewing request. Product must support both paths without forcing contact theater before viewing intent.
+
+Viewing **never replaces** application readiness or legal review — Viewing Boundaries require this explicitly.
+
+---
+
+## 6. Information Layer in Viewing Preparation
+
+Viewing treats the **information layer** (Chapter 31) as input to Viewing Preparation and Viewing Confidence.
+
+### 6.1 Currency at Visit Time
+
+Price, availability, rooms, area, and specifications must be **current at viewing coordination moment** — stale truth invalidates Viewing Readiness. User must not travel to a property that listing no longer honestly offers.
+
+### 6.2 Expected Property Carry-Forward
+
+User carries **governed facts** into preparation — what the listing claims becomes what user expects to reconcile in person. Inconsistency between claim and visit destroys Viewing Confidence and triggers defer or release — not silent proceed.
+
+### 6.3 Location Policy Honesty
+
+Location precision and map context (Chapter 29) must be **understood before visit** — contact or scheduling does not replace location truth. User arrives oriented, not misled.
+
+### 6.4 Material Gap Awareness
+
+Missing governed fields or ambiguous fees identified at verification **remain visible** at viewing preparation — Viewing Preparation does not pretend gaps were resolved by scheduling alone.
+
+---
+
+## 7. Evidence Layer in Viewing Preparation
+
+Viewing treats **evidence** (Chapter 32) as input to physical reconciliation.
+
+### 7.1 Expected Property Reconciliation
+
+User reconciles **Expected Property** — what media and information suggest — with **in-person experience**. Gap between expectation and physical truth must be **interpretable** — surprise without explanation indicates Media Integrity or Listing Integrity failure.
+
+### 7.2 Evidence Sufficiency Context
+
+Thin or partial media (Chapter 32) **increases** viewing preparation importance — user knows more must be confirmed in person. Rich media **does not decrease** reconciliation obligation — honest visit still required for layout feel and condition.
+
+### 7.3 Undisclosed Space Risk
+
+Rooms or areas not shown in media (Chapter 34 Uncertainty Transparency) become **priority confirmation questions** at viewing — not afterthought.
+
+### 7.4 Evidence Currency
+
+Stale photos or outdated visual evidence **must be reconciled** at visit — user understands temporal risk before and after attending.
+
+---
+
+## 8. Trustworthy Viewing Intent
+
+**Trustworthy viewing intent** is the user's **honest purpose for attending** — supported by the product, not manufactured by conversion pressure.
+
+### 8.1 Product Role
+
+Rento supports viewing intent by:
+
+- Enabling **Viewing Preparation** — questions, expectations, boundaries visible  
+- Supporting **respectful scheduling coordination** — not urgency theater  
+- Preserving **evaluation continuity** — return to verification, detail, or comparison without reset  
+- Enabling **post-viewing judgment** — proceed, defer, or release based on what visit revealed  
+
+Rento does not **score** visit success as application conversion — housing fit and risk tolerance are personal.
+
+### 8.2 Viewing Integrity
+
+Viewing Integrity is the **honesty of the viewing experience itself** — product does not simulate confirmed visits, does not hide Viewing Boundaries, does not pressure attendance when Viewing Readiness is insufficient, does not treat no-show or cancellation as user failure by default.
+
+Viewing Integrity parallels **Assessment Integrity** (Chapter 34) and **Comparison Integrity** (Chapter 33) — another integrity concept scoped to physical visit coordination and outcome interpretation.
+
+### 8.3 Partner and Shared Viewing
+
+Long-term rental decisions often involve partners. Shared viewing requires **identical preparation truth** for all participants — same property facts, same verification unknowns, same Viewing Boundaries — and **respectful coordination** when schedules differ.
+
+---
+
+## 9. Respectful Scheduling Principles
+
+Scheduling coordination is governed by **respect principles** — not implementation. This section defines product posture; it does not specify calendar systems, notification channels, or booking logic.
+
+### 9.1 Mutual Time Respect
+
+Scheduling honors **user time** and **realtor time** equally — neither party is a conversion target. Long commutes, work schedules, and partner availability are legitimate constraints — not obstacles to overcome with pressure.
+
+### 9.2 Confirmation Honesty
+
+Product language reflects **actual scheduling state** — intent expressed, time proposed, time confirmed, visit completed, visit cancelled. Rento does not claim confirmation before both parties agree (Chapter 16 §31.10 viewing language ethics).
+
+### 9.3 No Scarcity Theater
+
+Artificial slot scarcity, countdown pressure, or "others viewing now" framing **forbidden** unless factual, rare, and governed (Chapters 1, 21) — viewing is housing judgment, not auction anxiety.
+
+### 9.4 Cancellation Dignity
+
+Cancel and reschedule are **valid outcomes** — no shame copy, no dark retention, no penalty theater. Housing search pacing varies; respectful scheduling allows change without trap.
+
+### 9.5 Clear Property Identity
+
+Every scheduling coordination ties unambiguously to **one listing identity** — user knows which home, which address policy, which realtor before committing time to travel.
+
+### 9.6 No Bait Viewing
+
+Viewing coordination must not **lure users to unavailable, misrepresented, or bait properties** — Listing Integrity and Comparison Integrity ethics extend to physical visits.
+
+### 9.7 Interruption and Life Context
+
+Scheduling happens between work, transit, and family — coordination supports **calm logistics**, not anxiety amplification. Day-of orientation preserves property identity and preparation context.
+
+---
+
+## 10. Viewing Outcomes
+
+Viewing outcomes are **attend**, **defer scheduling**, **cancel or reschedule**, and **post-viewing proceed, defer, or release** — all valid.
+
+### 10.1 Attend
+
+Attend means user **physically visits** with Viewing Preparation sufficient to reconcile Expected Property with in-person truth. Product supports reflection afterward — what was confirmed, what surprised, what remains unknown.
+
+### 10.2 Defer Scheduling
+
+Defer scheduling preserves viewing intent while acknowledging **insufficient Viewing Readiness** — partner unavailable, preparation incomplete, listing truth uncertain, or timing not right. Defer is **not failure** — honest pacing. Housing Journey respects weeks of search.
+
+Defer must preserve **Decision Persistence** — preparation work not lost on return.
+
+### 10.3 Cancel and Reschedule
+
+Cancel and reschedule remove or move a coordinated visit **without shame** — life changes, listing changes, or trust shifts. Product treats these as **normal coordination outcomes**, not user or realtor moral failure by default.
+
+### 10.4 Post-Viewing Proceed
+
+Proceed after viewing escalates toward **application or deeper commitment** when in-person truth supports next step — Viewing Confidence sufficient, Viewing Boundaries understood, application scope not pretended satisfied.
+
+### 10.5 Post-Viewing Defer
+
+Defer after viewing preserves candidate while acknowledging **insufficient clarity** — partner discussion, comparison return, second visit needed, or time to reflect. Physical visit informed judgment; it did not necessarily complete it.
+
+### 10.6 Post-Viewing Release
+
+Release after viewing removes candidate when in-person truth reveals disqualifying discrepancy, condition gap, or neighborhood mismatch. Release is **dignified** — no shame copy, no dark retention. Connects to Narrowing Confidence and verification release ethics (Chapters 33–34).
+
+### 10.7 No Forced Application
+
+Product must not **block exit** or **manufacture urgency** to force application immediately after viewing — Viewing Boundaries and Abandon confidence (Chapter 31) extend here.
+
+---
+
+## 11. Contact and Viewing Relationship
+
+Viewing coordinates with contact — it does not replace contact governance.
+
+### 11.1 Contact as Viewing Prelude
+
+Contact often **precedes** viewing coordination — inquiry establishes realtor reachability and viewing availability (Chapter 16 §20). This chapter **consumes** contact ethics; it does not redefine identity visibility or communication tone.
+
+### 11.2 Direct Viewing Intent
+
+When product supports viewing request without prior message thread, **Contact Readiness** and Chapter 16 ethics still apply — identity visible, listing clear, no anonymous escalation.
+
+### 11.3 Communication During Coordination
+
+Scheduling messages inherit **calm, professional, housing-serious tone** (Chapter 16) — not engagement bait, not pressure to commit before visit.
+
+### 11.4 Post-Viewing Contact
+
+Contact after viewing may deepen — questions about application, availability, negotiation — governed by forward chapters. Viewing supplies **physical truth context** contact can reference honestly.
+
+---
+
+## 12. Transition to Application Experience
+
+Viewing bridges physical assessment and **application escalation** without owning application.
+
+### 12.1 Handoff Preconditions
+
+Transition toward application is responsible when:
+
+- User **attended viewing** or consciously proceeds with acknowledged physical unknowns  
+- **Viewing Confidence** supports escalation — in-person truth did not reveal disqualifying discrepancy  
+- **Viewing Boundaries** understood — user knows application and legal review remain separate  
+- **Listing Integrity** intact — property still honestly available  
+
+### 12.2 What Viewing Supplies
+
+Viewing supplies **physical reconciliation judgment** — what visit confirmed, contradicted, or left unknown. Application chapter (forward) will define **application readiness** — this chapter does not redefine it.
+
+The handoff contract:
+
+- Application candidate is **the property user viewed or consciously prioritizes** — continuity preserved  
+- **Viewing Preparation questions** inform application attention — undisclosed fees or condition gaps discovered at visit remain visible  
+- Proceed to application **does not imply** lease acceptance or legal readiness  
+- Release after viewing **does not erase** application path for other candidates — comparison and narrowing context restorable  
+
+### 12.3 Defer Across Boundary
+
+User may **defer application** after successful viewing — partner alignment, comparison return, or financial timing. Defer is valid; Viewing Confidence and Decision Persistence preserved.
+
+### 12.4 Forward Reference
+
+Lease application, deposit disclosure, and housing commitment chapters follow — Viewing Readiness and post-viewing Viewing Confidence must not pretend to satisfy application or legal readiness. Forward reference only.
+
+---
+
+## 13. Mobile Viewing Experience
+
+Mobile is the **primary viewing coordination surface**. Tablet and desktop extend — never reverse.
+
+### 13.1 Mobile Principles
+
+| Principle | Intent |
+|-----------|--------|
+| **Day-of orientation** | Property identity, location policy, preparation questions reachable before travel |
+| **One-handed coordination** | Scheduling actions reachable during commute and life interruption |
+| **Partner handoff** | Share preparation and listing truth — not viral engagement |
+| **Glance legibility** | Confirmation state, time, and property identity visible without hunt |
+| **Interrupt tolerance** | Viewing coordination state stable across interruption |
+| **Post-visit reflection** | Calm capture of proceed, defer, release intent — not forced application |
+
+### 13.2 Mobile vs Desktop
+
+Desktop may show more simultaneous context — detail beside preparation — but **Viewing Boundaries**, **Viewing Preparation**, and **Viewing Confidence** standards remain identical to mobile.
+
+### 13.3 Viewing in Life Context
+
+Viewing coordination happens after work, en route, with partner, before sleep — moments of logistics and reflection. Surfaces support **calm coordination**, not anxiety amplification.
+
+---
+
+## 14. Accessibility Principles
+
+Viewing coordination must be **inclusive** — physical housing visits belong to all users.
+
+### 14.1 Non-Visual Coordination Access
+
+Scheduling state, preparation questions, and viewing boundaries require **textual and semantic equivalents** — not color-only confirmation, not icon-only status.
+
+### 14.2 Cognitive Accessibility
+
+Viewing Environment supports cognitive accessibility: plain language for boundaries, predictable structure, calm density — users must coordinate visits without decoding manipulation.
+
+### 14.3 Mobility and Planning Accessibility
+
+Preparation respects that users reach properties by varied means — transit, walking, driving — without assuming universal mobility. Location policy honesty (Chapter 29) supports planning; product does not substitute accessibility judgment for user.
+
+### 14.4 Anxiety Sensitivity
+
+Viewing coordination must not **amplify housing anxiety** — scheduling uncertainty is calm, not alarmist. Critical status color reserved for genuine harm signals (Chapter 7) — not every reschedule.
+
+Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 15. Context Preservation and Continuity
+
+Viewing participates in **Housing Continuity**, **Decision Persistence**, and **Cognitive Continuity**.
+
+### 15.1 Viewing State Persistence
+
+User expects viewing preparation and coordination intent to **survive session interruption** when product supports — honest when local-only. Prior defer or proceed intent remembered as continuity aid, never manipulation.
+
+### 15.2 Navigation Continuity
+
+- Verification → viewing → verification ** preserves listing identity**  
+- Detail → viewing → detail ** preserves evaluation context**  
+- Viewing → application → viewing ** preserves physical judgment where appropriate**  
+- Compare → viewing → compare ** preserves narrowing context**  
+
+### 15.3 Search and Favorites Context
+
+Viewing launched from favorites or saved search ** preserves Search Memory and shortlist context** on exit — not amnesia.
+
+---
+
+## 16. Returning to Viewing
+
+Returning users resume **viewing coordination or post-visit judgment** — not cold start.
+
+### 16.1 Honest Reunion
+
+Return shows **current listing truth** — price, availability, media, attestation may have changed. User understands before re-investing travel time or proceeding judgment.
+
+### 16.2 Changed Truth Recovery
+
+Material listing change ** resets Viewing Readiness** honestly — user must re-prepare, not attend on stale confidence.
+
+### 16.3 Abandon Viewing Confidence
+
+Leaving viewing coordination without attend/defer/release decision is **valid** — no blocking modals, no shame. Respectful Silence applies.
+
+---
+
+## 17. Anti-Patterns
+
+The following are **explicitly forbidden** in Rento viewing experience philosophy:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| "Viewing confirmed!" before both parties agree | Violates confirmation honesty; destroys Viewing Integrity |
+| Scheduling pressure or artificial slot scarcity | Violates Respectful Scheduling; amplifies anxiety |
+| Viewing as mandatory funnel stage before application | Violates Viewing Boundaries; traps users |
+| Hidden listing change before visit | Invalidates Viewing Readiness; violates Listing Integrity |
+| Thinner preparation context at scheduling than verification | Breaks Viewing Integrity; amnesia at physical boundary |
+| Visit outcome implied as application guarantee | Violates Viewing Boundaries |
+| Bait viewing for unavailable or misrepresented property | Marketplace integrity failure |
+| Shame copy for cancel, reschedule, or no-attend | Violates cancellation dignity |
+| Partner share with divergent property truth | Destroys shared viewing preparation |
+| Viewing replaces legal or lease review claim | Platform overclaim |
+| Urgency to apply immediately after visit | Violates post-viewing defer ethics |
+| Conflating moderation approval with in-person condition proof | Moderation ≠ visit outcome |
+| Location policy hidden until day-of | Violates location honesty; wastes user time |
+| Viewing count as engagement metric over housing judgment | Anti-engagement posture violation |
+| Forced viewing before user readiness | Violates calm Viewing Environment |
+
+---
+
+## 18. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, viewing initiatives must trace to this chapter and upstream contracts:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New viewing coordination surfaces | Viewing Environment and Viewing Confidence impact |
+| Scheduling features | Respectful Scheduling principles; confirmation honesty |
+| Viewing preparation features | Viewing Preparation and Verification Boundaries honored |
+| Post-viewing flows | Viewing Outcomes and Transition to Application integrity |
+| Reminders and notifications | Calm tone; no scarcity theater |
+| Personalization in viewing | Does not simulate certainty; Memory Transparency |
+| Performance optimization | Does not degrade currency of listing truth at visit time |
+
+**Review gate:** No viewing experience surface ships without checklist against Viewing Environment, Viewing Readiness, Viewing Preparation, Viewing Confidence, Viewing Boundaries, Respectful Scheduling principles, and Viewing Outcomes.
+
+**Forward chapters:** Application and housing commitment extend post-viewing outcomes — this chapter supplies the physical decision boundary foundation.
+
+---
+
+## 19. Chapter Summary
+
+Property viewing is where Rento converts **digital proceeding judgment** into **physical housing truth**.
+
+This chapter defines:
+
+- **Position** — Decision Experience stage after property verification, before application escalation  
+- **Environment** — Viewing Environment as physical-decision coordination space  
+- **Readiness** — Viewing Readiness for responsible visit coordination  
+- **Preparation** — Viewing Preparation for in-person confirmation intent  
+- **Confidence** — Viewing Confidence for visit worth and outcome judgment  
+- **Boundaries** — Viewing Boundaries for in-person scope limits  
+- **Scheduling** — Respectful Scheduling principles for mutual time dignity  
+- **Outcomes** — attend, defer scheduling, cancel, post-viewing proceed, defer, release — all valid  
+- **Integrity** — Viewing Integrity for coordination honesty  
+- **Integration** — extends Chapters 31–34; consumes Chapters 16 and 20 without redefining them  
+- **Transition** — handoff toward Application Experience without owning application readiness  
+- **Mobile** — primary coordination surface; calm, reversible, partner-ready  
+
+Viewing succeeds when users attend prepared, reconcile physical truth honestly, and proceed, defer, or release with clarity — knowing what the visit proved, what it could not, and what application and legal review must still settle.
+
+**Decision Experience flow:**
+
+Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → Property Comparison Experience (Chapter 33) → Property Verification Experience (Chapter 34) → **Viewing Experience (Chapter 35)** → following Decision Experience chapters
+
+---
+
+## 20. Design Director Review
+
+**Chapter:** 35 — Viewing Experience  
+**Section:** XXXII — Viewing Experience  
+**Review type:** Initial standard adoption
+
+### 20.1 Approval Statement
+
+This chapter is approved as the **viewing experience contract** for Rento. All property viewing coordination, preparation, and outcome surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 20.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; viewing prelude; identity at escalation |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 29 — Maps & Location Experience | Location policy honesty for visit orientation |
+| Chapter 31 — Property Detail Experience | Property Confidence, Contact Readiness, Listing Integrity, information layer |
+| Chapter 32 — Media Experience | Expected Property, evidence layer, physical reconciliation input |
+| Chapter 33 — Property Comparison Experience | Narrowing context; partner shared viewing |
+| Chapter 34 — Property Verification Experience | Proceeding Readiness, Verification Boundaries, verification handoff |
+| Chapter 36+ — Decision Experience | Application, commitment — forward |
+
+### 20.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Viewing positioned as physical decision boundary — not verification, contact, application, or legal due diligence  
+2. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+3. New concepts (Viewing Environment, Viewing Readiness, Viewing Preparation, Viewing Confidence, Viewing Boundaries, Viewing Integrity) are reusable in later Decision Experience chapters  
+4. Viewing Readiness and Viewing Confidence clearly scoped — no overlap with Proceeding Readiness or Verification Confidence  
+5. Respectful Scheduling principles defined without implementation leakage  
+6. Transition to Application Experience honest — viewing does not pretend application readiness  
+7. Anti-manipulation and boundary honesty preserved  
+8. Mobile-first order explicit  
+9. No implementation leakage  
+
+### 20.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on viewing experience philosophy |
+| Head of Product Design | Parity with Decision Experience block |
+| Senior UX Designer | Preparation communication, scheduling respect, mobile rhythm |
+| Product Management | Viewing boundary honesty and marketplace integrity |
+| Content Design Lead | Confirmation honesty and boundary language |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual coordination and anxiety-sensitive design |
+
+### 20.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new viewing experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 20.6 Design Director Closing Note
+
+Users do not rent calendar slots. They rent homes — and they deserve to arrive prepared, be treated with respect, and leave knowing what their own eyes confirmed that no screen could. This chapter exists so Rento helps people cross the physical boundary with honest preparation, dignified coordination, and never confuse a visit with a lease.
+
+---
+
+**End of Chapter 35**
 

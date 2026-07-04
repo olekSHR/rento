@@ -34,8 +34,8 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–34 |
-| **Latest approved** | Chapter 34 — Property Verification Experience |
+| **Approved chapters** | 1–35 |
+| **Latest approved** | Chapter 35 — Viewing Experience |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Remaining work

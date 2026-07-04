@@ -34,8 +34,20 @@ Scope: Product Design Standard only — no implementation unless explicitly requ
 
 ## CURRENT STATUS
 
-Approved chapters: **1–34** (34 chapters total)  
-Latest approved chapter: **Chapter 34 — Property Verification Experience**
+Approved chapters: **1–35** (35 chapters total)  
+Latest approved chapter: **Chapter 35 — Viewing Experience**
+
+Chapter 35 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
+- ✓ Phase 1 — Authoring
+- ✓ Phase 2 — Architecture Review (APPROVED)
+- ✓ Phase 3 — Editorial Pass (APPROVED WITH MINOR EDITORIAL CORRECTIONS)
+- ✓ Phase 4 — Final Design Council Review (APPROVED)
+- ✓ Phase 5 — Approval Integration
+- ⏳ Phase 6 — Git Checkpoint Preparation (prepared, NOT executed)
+
+Chapter 35 location: after Chapter 34 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
+Section: **XXXII — Viewing Experience**  
+Status: **APPROVED**
 
 Chapter 34 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
 - ✓ Phase 1 — Authoring
@@ -45,72 +57,62 @@ Chapter 34 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
 - ✓ Phase 5 — Approval Integration
 - ⏳ Phase 6 — Git Checkpoint Preparation (prepared, NOT executed)
 
-Chapter 34 location: after Chapter 33 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
-Section: **XXXI — Property Verification**  
-Status: **APPROVED**
-
-Chapter 33 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
-- ✓ Phase 1 — Authoring
-- ✓ Phase 2 — Architecture Review (APPROVED WITH MINOR EDITORIAL CHANGES)
-- ✓ Phase 3 — Editorial Pass
-- ✓ Phase 4 — Final Design Council Review (APPROVED WITH MINOR EDITORIAL CHANGES)
-- ✓ Phase 5 — Approval Integration
-- ⏳ Phase 6 — Git Checkpoint (prepared, NOT executed)
-
 Pending user action: Git commit(s). Suggested messages:
 
 ```
-approve chapter 34 property verification experience
+approve chapter 35 viewing experience
 ```
 
-User may commit chapters separately or together (Chapters 32–34 approval integrations remain uncommitted).
+User may commit chapters separately or together (Chapters 32–35 approval integrations remain uncommitted).
 
 --------------------------------------------------
 
 ## LATEST APPROVED CHAPTER
 
-**Chapter 34 — Property Verification Experience** (Section XXXI)
+**Chapter 35 — Viewing Experience** (Section XXXII)
 
 Architectural role:
-- Decision Experience continuation after Property Comparison (Ch 33)
-- Pre-commitment trust assessment — proceeding judgment before viewing and commitment escalation
-- Extends Property Confidence (Ch 31), evidence layers (Ch 32), Narrowing Confidence (Ch 33), platform attestation (Ch 20)
+- Decision Experience continuation after Property Verification (Ch 34)
+- Physical decision boundary — digital-to-physical crossing before application escalation
+- Extends Proceeding Readiness and Verification Boundaries (Ch 34), Expected Property (Ch 32), Contact Readiness (Ch 31)
 
-Key concepts introduced in Chapter 34:
-- Verification Environment
-- Verification Confidence
-- Evidence Credibility
-- Uncertainty Transparency
-- Verification Boundaries
-- Proceeding Readiness
+Key concepts introduced in Chapter 35:
+- Viewing Environment
+- Viewing Readiness
+- Viewing Preparation
+- Viewing Confidence
+- Viewing Boundaries
 
 Secondary concept:
-- Assessment Integrity (§8.2 — parallel to Comparison Integrity)
+- Viewing Integrity (§8.2 — parallel to Assessment Integrity, Comparison Integrity)
 
 Editorial themes (approved):
-- Proceeding over pretending — honest unknowns, not simulated certainty
-- Boundaries over overclaim — digital verification scope legible
-- Proceeding Readiness distinct from Contact Readiness — escalation trust gate
-- Verification ≠ moderation ≠ legal due diligence
-- proceed / defer / release — all valid outcomes
+- Preparation over surprise — informed in-person confirmation intent
+- Respect over urgency — mutual time dignity in scheduling
+- Viewing Readiness distinct from Proceeding Readiness — physical trust gate
+- Viewing ≠ verification ≠ contact ≠ application
+- attend / defer scheduling / cancel / post-viewing proceed, defer, release — all valid outcomes
 
 Decision Experience flow:
 
-Search Architecture (Ch 26–30) → Property Detail (Ch 31) → Media (Ch 32) → Comparison (Ch 33) → **Property Verification (Ch 34)** → **Viewing Experience (Ch 35 — not yet authored)** → following Decision Experience chapters
+Search Architecture (Ch 26–30) → Property Detail (Ch 31) → Media (Ch 32) → Comparison (Ch 33) → Property Verification (Ch 34) → **Viewing Experience (Ch 35)** → **Application Experience (Ch 36 — not yet authored)** → following Decision Experience chapters
 
 Extends (does not replace):
-- Property Confidence, Contact Readiness (Chapter 31)
-- Media Integrity, Visual Confidence (Chapter 32)
-- Narrowing Confidence (Chapter 33)
+- Proceeding Readiness, Verification Boundaries, Uncertainty Transparency (Chapter 34)
+- Expected Property, Media Integrity (Chapter 32)
+- Property Confidence, Contact Readiness, Listing Integrity (Chapter 31)
+- Contact ethics (Chapter 16)
 - Platform trust attestation (Chapter 20)
 
 --------------------------------------------------
 
 ## CURRENT WORKFLOW
 
-Next step: **Phase 6 — Git Checkpoint Preparation** for Chapter 34 (user-executed commit).
+Current phase: **Phase 1 — Authoring** (next chapter)
 
-Next chapter (not yet started): **Chapter 35 — Viewing Experience**
+Next step: **Phase 6 — Git Checkpoint Preparation** for Chapter 35 (user-executed commit).
+
+Next chapter (not yet started): **Chapter 36 — Application Experience**
 
 Standard chapter workflow:
 1. Phase 1 — Authoring
@@ -122,6 +124,8 @@ Standard chapter workflow:
 
 Do NOT skip phases. Do NOT approve without explicit Design Council decision.  
 Do NOT commit without explicit user request.
+
+Repository status: **Ready for next authoring session**
 
 --------------------------------------------------
 
@@ -159,6 +163,13 @@ From Chapter 34:
 - Verification Boundaries
 - Proceeding Readiness
 
+From Chapter 35:
+- Viewing Environment
+- Viewing Readiness
+- Viewing Preparation
+- Viewing Confidence
+- Viewing Boundaries
+
 Established vocabulary (reuse across chapters):
 - Housing Journey
 - Preview Integrity
@@ -183,11 +194,13 @@ Decision Experience block (in progress):
 - Ch 32: Media as evidence — not decoration, not engagement bait
 - Ch 33: Property comparison — narrowing, Evaluation Parity, Comparison Integrity
 - Ch 34: Property verification — Verification Confidence, Verification Boundaries, Proceeding Readiness
-- Ch 35+: Viewing, application, commitment — forward
+- Ch 35: Property viewing — Viewing Readiness, Viewing Preparation, Viewing Boundaries, physical reconciliation
+- Ch 36+: Application, commitment — forward
 
 Verification vs platform trust (Ch 20):
 - Ch 20: what Rento attests — platform trust contract
-- Ch 34: whether user can proceed — property verification experience
+- Ch 34: whether user can proceed digitally — property verification experience
+- Ch 35: what in-person visit reveals — viewing experience
 - Verification ≠ moderation ≠ legal due diligence
 
 Information ↔ Evidence cooperation:
@@ -209,6 +222,12 @@ Verification principles (Chapter 34):
 - Credibility over completeness theater
 - Boundaries over overclaim
 - Proceeding Readiness as trust gate — not funnel stage
+
+Viewing principles (Chapter 35):
+- Preparation over surprise
+- Physical truth over digital completion
+- Respect over urgency
+- Viewing Readiness as physical trust gate — not funnel stage
 
 Design standard scope:
 - Principles only — no implementation leakage in chapter content
@@ -237,13 +256,14 @@ M docs/design/MASTER_ROADMAP.md
 Includes Chapter 32 Phase 5 approval integration (TOC, Version History) — uncommitted.
 Includes Chapter 33 Phase 5 approval integration — uncommitted.
 Includes Chapter 34 Phases 1–5 (authoring + approval integration) — uncommitted.
+Includes Chapter 35 Phases 1–5 (authoring + approval integration) — uncommitted.
 
 No commit yet — awaiting user command.
 
-Suggested commit message for Chapter 34:
+Suggested commit message for Chapter 35:
 
 ```
-approve chapter 34 property verification experience
+approve chapter 35 viewing experience
 ```
 
 --------------------------------------------------
@@ -252,26 +272,26 @@ approve chapter 34 property verification experience
 
 Primary:
 
-- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~34,200+ lines)
+- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~35,000+ lines)
 
-Chapter 34 location in document:
-- After Chapter 33 — `## Chapter 34 — Property Verification Experience`
-- End of document — End of Chapter 34
+Chapter 35 location in document:
+- After Chapter 34 — `## Chapter 35 — Viewing Experience`
+- End of document — End of Chapter 35
 
 --------------------------------------------------
 
 ## NEXT CHAPTER
 
-**Chapter 35 — Viewing Experience** — NOT YET STARTED
+**Chapter 36 — Application Experience** — NOT YET STARTED
 
 Expected domain:
-- Physical viewing preparation and in-person decision boundary crossing
-- Extends Verification Boundaries and Proceeding Readiness from Chapter 34
-- Decision Experience continuation after property verification
+- Formal housing commitment escalation after viewing
+- Extends Viewing Boundaries and post-viewing Viewing Confidence from Chapter 35
+- Decision Experience continuation after property viewing
 
-Section numbering: Section XXXII — Viewing Experience (reserved for Ch 35)
+Section numbering: Section XXXIII — Application Experience (reserved for Ch 36)
 
-Do NOT begin Chapter 35 until explicitly authorized in a new session.
+Do NOT begin Chapter 36 until explicitly authorized in a new session.
 
 --------------------------------------------------
 
@@ -281,14 +301,14 @@ Do NOT begin Chapter 35 until explicitly authorized in a new session.
 - Follow 6-phase chapter workflow
 - Preserve approved vocabulary
 - Keep chapters principles-only (no implementation leakage)
-- Match approval block format of Chapters 30–34 for future chapters
+- Match approval block format of Chapters 30–35 for future chapters
 - Update TOC and Version History on approval integration
 - Commit only when user explicitly requests
 - Explain in Russian; code/identifiers/commits in English
 
 **DO NOT:**
 - Implement product features in code during design standard work
-- Modify approved chapters 1–34 without explicit approval
+- Modify approved chapters 1–35 without explicit approval
 - Mark chapters APPROVED without Design Council decision
 - Create git commits without user request
 - Rename or redefine established product concepts
@@ -296,7 +316,7 @@ Do NOT begin Chapter 35 until explicitly authorized in a new session.
 
 Release strategy (design standard document):
 - Per-chapter git checkpoints: YES (continue pattern)
-- Milestone release for Decision Experience block: WAIT until core viewing/commitment chapters progress
+- Milestone release for Decision Experience block: WAIT until core application/commitment chapters progress
 
 --------------------------------------------------
 
@@ -320,7 +340,7 @@ See **AI Session Initialization** at the top of this document.
 
 Current active phase: **Rento Product Design Standard** (Phase 1). Future phases must not begin until this phase is completed and formally approved.
 
-Approved chapters per roadmap: **1–34**
+Approved chapters per roadmap: **1–35**
 
 --------------------------------------------------
 
