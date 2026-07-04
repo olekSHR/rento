@@ -56,12 +56,14 @@ This standard is **not** implementation documentation. It does not specify code,
 | 28 | [Search Results Experience](#chapter-28--search-results-experience) | Search Results | APPROVED |
 | 29 | [Maps & Location Experience](#chapter-29--maps--location-experience) | Maps & Location | APPROVED |
 | 30 | [Saved Searches & Search Continuity](#chapter-30--saved-searches--search-continuity) | Saved Searches & Continuity | APPROVED |
+| 31 | [Property Detail Experience](#chapter-31--property-detail-experience) | Property Detail | APPROVED |
+| 32 | [Media Experience](#chapter-32--media-experience) | Media Experience | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 31+ | Future chapters per design standard roadmap |
+| 33+ | Future Decision Experience chapters per design standard roadmap |
 
 ---
 
@@ -81,6 +83,8 @@ This standard is **not** implementation documentation. It does not specify code,
 | 1.0 | 2026-07-04 | Chapter 28 — Search Results Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 29 — Maps & Location Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 30 — Saved Searches & Search Continuity approved and added |
+| 1.0 | 2026-07-04 | Chapter 31 — Property Detail Experience approved and added |
+| 1.0 | 2026-07-04 | Chapter 32 — Media Experience approved and added |
 
 ---
 
@@ -32227,4 +32231,647 @@ Search teaches users what might fit. Property detail teaches them whether **this
 ---
 
 **End of Chapter 31**
+
+---
+
+## Chapter 32 — Media Experience
+
+**Section:** XXIX — Media Experience
+**Status:** APPROVED
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers
+**Authority:** Subordinate to Chapters 1–31; operationalizes the evidence layer defined in Chapter 31 — Property Detail Experience; extends Listing Card & Preview System (Chapter 14), Listing Detail Experience (Chapter 15), Search Results Experience (Chapter 28), and Maps & Location Experience (Chapter 29); defines principles only — not image pipelines, storage systems, CDN configuration, APIs, codecs, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **media experience philosophy** for Rento — how every form of property photography, visual sequence, and spatial evidence supports housing decisions.
+
+Chapter 31 established property detail as two complementary layers: **information** (governed facts) and **evidence** (what validates those facts). **Media Experience is the primary architectural definition of the evidence layer.**
+
+Media on Rento is not decoration. Media is not engagement bait. Media exists to **strengthen Property Confidence** — to help users trust, understand, and imagine a property honestly enough to continue or abandon their Housing Journey with clarity.
+
+The product must help users answer four media questions:
+
+1. **Can I trust this property?**  
+2. **Can I understand this property?**  
+3. **Can I imagine living here?**  
+4. **Can I confidently continue my housing journey?**
+
+This chapter governs media as evidence, visual trust, authenticity, transparency, continuity from preview to depth, and calm mobile-first consumption. It does **not** specify galleries, carousels, upload widgets, compression settings, or storage architecture.
+
+**Relationship to Chapter 31:** Chapter 31 defines how information and evidence cooperate within property detail. This chapter defines **what media must accomplish** as evidence — integrity, sequence, transparency, and decision support — across card preview, detail depth, and return paths.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Evidence over aesthetics** | Media proves; it does not perform |
+| **Trust over polish** | Authentic representation beats perfected illusion |
+| **Clarity over volume** | Enough visual evidence to decide; never overload to impress |
+| **Continuity over surprise** | Preview, card, and detail media must cohere — Evidence Continuity |
+| **Transparency over concealment** | Partial, dated, or limited media acknowledged honestly |
+| **Calm over excitement** | No visual manipulation, no browsing theater |
+| **Mobile evidence first** | Design for glance, scroll, and interruption — then tablet, then desktop |
+| **Property Confidence goal** | Every media decision serves informed housing judgment |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, gallery component guide, or interaction pattern library  
+- An image upload, processing, or hosting implementation plan  
+- A photography style guide for realtors (operational guidance may live elsewhere)  
+- A replacement for Chapter 31 — Property Detail Experience  
+- A video platform, virtual tour product spec, or 3D engine chapter  
+- An SEO, social sharing, or viral media growth playbook  
+
+If the question is *how to build* an image carousel or *which CDN* to use — this chapter does not answer it. If the question is *what media must communicate for trust* — this chapter does.
+
+---
+
+## Media Integrity
+
+**Media Integrity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Media Integrity is the **alignment between visual evidence and listing truth** — what media shows must honestly represent the property offered, without manipulation, misleading sequence, or contradiction of governed information.
+
+Media Integrity requires:
+
+- Card thumbnail, preview set, and detail gallery represent the **same property**  
+- Media does not exaggerate space, light, condition, or furnishings beyond reality  
+- Image order does not conceal flaws or mislead about room identity  
+- Media changes when listing changes — stale galleries violate Listing Integrity (Chapter 31)  
+
+Media Integrity is distinct from Listing Integrity: Listing Integrity governs facts, status, and availability; Media Integrity governs **visual truthfulness** as evidence. Both are required for Property Confidence.
+
+Media Integrity is reusable across realtor listing creation (Chapter 12), moderation, comparison experiences, and future visual verification chapters.
+
+---
+
+## Visual Confidence
+
+**Visual Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Visual Confidence is the user's confidence that the visual representation is **authentic, representative, and trustworthy** — not staged deception, not bait imagery, not a different home than the one described.
+
+Visual Confidence rises when:
+
+- Media is authentic and representative without fantasy substitution  
+- First visual impression confirms Preview Integrity and First Impression Integrity (Chapter 28)  
+- Limitations of media are transparent — few photos, old photos, partial rooms acknowledged  
+- Visual evidence aligns with information layer facts — or honestly exposes where it does not  
+
+Visual Confidence falls when wide-angle distortion, selective staging, or misleading order makes the property feel larger, newer, or different than reality.
+
+Visual Confidence contributes to Property Confidence (Chapter 31) but is scoped to **trust in visual representation** — a user may have Visual Confidence yet lack Property Confidence if non-visual facts fail.
+
+**Distinct from Spatial Understanding:** Visual Confidence addresses whether media can be **trusted**; Spatial Understanding addresses whether the user can **comprehend layout and space**. The two concepts complement each other without overlapping — honest but limited coverage may yield Visual Confidence without full Spatial Understanding; manipulative imagery may suggest layout while destroying Visual Confidence. Property Confidence requires both, each in its distinct role.
+
+---
+
+## Evidence Continuity
+
+**Evidence Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Evidence Continuity is the **preservation of visual expectation** across discovery surfaces — search results card, map preview, saved listing return, and property detail depth — without bait-and-switch, reorder shock, or unrecognizable hero substitution.
+
+Evidence Continuity extends:
+
+- **Preview Integrity** (Chapter 28) — factual alignment at preview  
+- **First Impression Integrity** (Chapter 28) — expectation confirmation at open  
+- **Cognitive Continuity** (Chapter 28) — mental model of the listing survives navigation  
+
+Broken Evidence Continuity forces users to **re-validate trust** at every surface — wasting attention and eroding Property Confidence before evaluation begins.
+
+Evidence Continuity is reusable across Favorites return, comparison views, notifications with thumbnails, and future shortlist experiences.
+
+---
+
+## 2. Role of Media in the Housing Journey
+
+Media serves the Housing Journey at the moment users move from **candidate recognition** to **candidate belief**.
+
+| Journey moment | Media role |
+|----------------|------------|
+| Search results / card | First visual evidence — is this home worth opening? |
+| Property detail entry | Expectation confirmation — is this the home I previewed? |
+| Detail evaluation | Understanding and imagination — could I live here? |
+| Save / compare / contact | Evidence remembered — does visual memory support decision? |
+| Return visit | Continuity — does media still represent the same honest offer? |
+
+Media succeeds when it produces **Meaningful Progress** — user advances toward an informed housing decision, not toward endless browsing.
+
+Media fails when it optimizes for **visual consumption** — swipe depth, gallery time, or emotional excitement disconnected from judgment.
+
+Property media must not maximize attractiveness. Its product obligation is to **reduce surprises after the physical visit** — narrowing the gap between **Expected Property** (what the user reasonably anticipates from media and information) and **Visited Property** (what they encounter at a physical viewing). Narrowing this gap supports Property Confidence, Decision Readiness, Trust, and the Housing Journey; widening it damages all four — even when individual images remain technically accurate.
+
+---
+
+## 3. Media as Evidence
+
+On Rento, media is **evidence** in the Decision Environment (Chapter 31) — material that validates, challenges, or contextualizes the information layer.
+
+### 3.1 Evidence Functions
+
+| Function | User question |
+|----------|---------------|
+| **Existence** | Is this listing real? |
+| **Condition** | What state is the property in? |
+| **Scale** | How large are rooms and layout honestly? |
+| **Character** | What does living here look and feel like? |
+| **Disqualification** | Are deal-breakers visible early? |
+
+### 3.2 Evidence vs Decoration
+
+Decoration impresses without informing. Evidence **reduces uncertainty**. Rento chooses evidence.
+
+### 3.3 Evidence vs Narrative
+
+Realtor description is narrative. Media is **verifiable sight**. Evidence serves truth — not marketing. When narrative and media align, Information Confidence and Visual Confidence reinforce each other. When they conflict, trustworthy media must be allowed to **expose the inconsistency** — written claims challenged or contradicted by what is visibly true. User trust in Property Confidence collapses when evidence is suppressed to protect marketing narrative; Media Integrity requires honest representation of alignment and gap alike.
+
+---
+
+## 4. Relationship between Information and Evidence
+
+Chapter 31 defined two layers. This chapter operationalizes their cooperation.
+
+| Layer | Role | Examples |
+|-------|------|----------|
+| **Information** | States governed facts | Price, rooms, area, location, availability, specifications |
+| **Evidence** | Validates or challenges facts | Photography, visual sequence, map context, verified identity context |
+
+**Evidence serves truth — not marketing.** Information states what is claimed. Evidence helps the user believe, challenge, or **contradict** those claims based on what is visibly true.
+
+Trustworthy media must be permitted to expose inconsistencies between written property claims and the actual visible condition of the property. Suppressing or avoiding evidence that challenges information is a trust failure — even when shown media remains technically accurate.
+
+Neither layer substitutes for the other:
+
+- Rich media does not excuse missing price or rooms  
+- Complete facts do not excuse misleading photography  
+- High Information Confidence with low Visual Confidence still undermines Property Confidence  
+
+Media experience must present evidence **in service of truth** — confirming room count when accurate, **revealing mismatch** when media and information disagree, illustrating area honestly, showing neighborhood context without replacing governed location facts.
+
+---
+
+## 5. Property Confidence through Media
+
+Property Confidence (Chapter 31) depends heavily on evidence quality. Media is often the **first deep trust test** after preview.
+
+### 5.1 Media Strengthens Property Confidence When
+
+- Visual evidence confirms information layer facts  
+- User recognizes the property across card and detail — Evidence Continuity  
+- Spatial Understanding emerges without manipulation  
+- Absence or limitation is transparent — Property Transparency (Chapter 31)  
+- User can imagine ordinary daily living, not only a styled moment  
+
+### 5.2 Media Weakens Property Confidence When
+
+- Hero image contradicts card preview  
+- Stated three rooms appear as two in media  
+- Condition in photos disagrees with description  
+- Media feels stock, borrowed, or unrelated  
+- Gallery length simulates completeness where coverage is thin  
+
+### 5.3 Contact Readiness Connection
+
+Contact Readiness (Chapter 31) does not require perfect media — but it **does require honest media**. User may contact with partial photos if limitation is clear; user must not contact under false visual impression.
+
+---
+
+## 6. Media Integrity Principles
+
+Media Integrity (defined above) governs practice. The following principles apply across all property media surfaces.
+
+### 6.1 One Property, One Visual Truth
+
+Media for a listing depicts **that listing** — not a model unit, not a renovated neighbor, not a generic interior.
+
+### 6.2 Card-Detail-Gallery Alignment
+
+Thumbnail, preview set, and expanded media must represent the **same home** — Evidence Continuity is non-negotiable.
+
+### 6.3 Order Honesty
+
+Media sequence must not **hide** — worst room last, flaw omitted, exterior after misleading interior. Order may guide understanding; it must not deceive.
+
+### 6.4 Currency
+
+When listing changes materially, media must reflect change or limitation must be visible. Stale media is an integrity failure.
+
+### 6.5 Moderation Alignment
+
+Media Integrity supports Listing Integrity and marketplace moderation — visual deception is a trust violation, not a marketing style.
+
+---
+
+## 7. Authenticity over Perfection
+
+Rento prefers **authentic representation** over perfected illusion.
+
+### 7.1 Authentic Representation
+
+Authentic representation means media shows the property **as it is offered for rent** — normal light, real proportions, honest clutter or wear when present, actual furnishings included or explicitly absent.
+
+Perfection is not the product goal. **Truthful imperfection** builds long-term rental trust; polished deception destroys it.
+
+### 7.2 When Staging Appears
+
+Staging within photos is acceptable when **not misleading** — users understand they are evaluating layout and condition, not inheriting shown furniture unless stated in information layer.
+
+### 7.3 Editing Boundaries
+
+Product philosophy discourages media that **changes housing reality**: fake spaciousness, removed defects, composite rooms, or filters that alter structural truth. Exact enforcement belongs to moderation and realtor guidance — this chapter establishes the **principle**.
+
+---
+
+## 8. Visual Trust
+
+Visual trust is the user's willingness to **base housing judgment on what they see**.
+
+### 8.1 Foundations of Visual Trust
+
+| Foundation | Meaning |
+|------------|---------|
+| **Representativeness** | Images reflect typical views of real spaces |
+| **Consistency** | Media coheres internally and with information |
+| **Proportionality** | Number and type of images match listing seriousness |
+| **Accountability** | Identified realtor stands behind presented media |
+
+### 8.2 Visual Trust and Visual Confidence
+
+Visual Confidence is the **user state**; visual trust is the **product obligation** to earn it. Rento designs media experience to earn visual trust through Media Integrity and transparency — not through production value alone.
+
+### 8.3 Visual Trust Without Overload
+
+Trust does not require maximum images. **Calm evidence** — enough honest coverage — beats exhaustive galleries designed to trap attention.
+
+---
+
+## 9. First Visual Impression
+
+The first visual moment is **expectation confirmation**, not entertainment — consistent with Chapter 31's first-five-seconds principle.
+
+### 9.1 Confirmation Not Surprise
+
+First media on detail must confirm what search, results, map, saved search, and card preview established. **First Impression Integrity** applies to the hero evidence layer.
+
+### 9.2 Disqualification Early
+
+If media reveals fundamental mismatch — wrong property type, surprising condition, misleading scale — that truth must appear **early in visual sequence**, not after user investment.
+
+### 9.3 Calm Entry
+
+First visual impression must feel **stable and recognizable** — not cinematic transition, not unrelated stock, not aggressive auto-play.
+
+---
+
+## 10. Media Sequence
+
+Media sequence is the **order in which evidence unfolds** — a product decision with trust consequences.
+
+### 10.1 Sequence Purpose
+
+Sequence should support **progressive property understanding**:
+
+1. Confirm identity — this is the home previewed  
+2. Establish layout and scale honestly  
+3. Reveal rooms and condition systematically  
+4. Show context — exterior, building, surroundings when available  
+5. Surface limitations without concealment  
+
+### 10.2 Sequence Anti-Manipulation
+
+Sequence must not:
+
+- Open with most flattering angle that misrepresents overall condition  
+- Bury kitchens, bathrooms, or flaws users need for rental decisions  
+- Repeat similar angles to simulate abundance  
+- Mix unrelated spaces without clarity  
+
+### 10.3 Sequence and Mobile
+
+On mobile, sequence is **scroll rhythm** — each step should earn the next without demanding endless swiping for basic comprehension.
+
+---
+
+## 11. Progressive Property Understanding
+
+Progressive property understanding is the user's **deepening comprehension** of the home through evidence — distinct from progressive disclosure of information facts (Chapter 31).
+
+### 11.1 Spatial Understanding
+
+**Spatial Understanding** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Spatial Understanding is the user's ability to **mentally understand the property's layout, proportions, relationships between spaces, and physical organization** — built from honest media evidence.
+
+**Distinct from Visual Confidence:** Spatial Understanding addresses **comprehension of space**, not trust in representation authenticity. A user may trust that shown rooms are real yet still lack layout comprehension when coverage is partial; conversely, distortion may suggest spatial comprehension while destroying Visual Confidence.
+
+Spatial Understanding does not require floor plans or 3D — it requires **media that does not lie about space**. Wide-angle deception destroys Spatial Understanding and Visual Confidence together.
+
+Spatial Understanding is reusable across comparison experiences, map-to-detail handoff, and future layout or tour chapters.
+
+### 11.2 From Glance to Comprehension
+
+| Stage | User achieves |
+|-------|---------------|
+| **Glance** | Recognizes property; confirms preview |
+| **Scan** | Grasps layout and major rooms |
+| **Evaluate** | Judges condition and deal-breakers |
+| **Imagine** | Pictures ordinary living — not fantasy staging |
+
+### 11.3 Stop Points
+
+User must be able to **stop viewing** with sufficient understanding — media must not require complete gallery consumption for basic judgment.
+
+---
+
+## 12. Context Preservation
+
+Media must preserve **discovery and evaluation context** — users do not view images in isolation.
+
+### 12.1 Information Context
+
+Media is always viewed alongside information layer facts. Evidence without economic and place anchors risks **decorative drift** — user admires photos while forgetting price, area, or location.
+
+### 12.2 Navigation Context
+
+When user leaves detail and returns, **Context Restoration** (Chapter 31) includes visual place — same gallery position where appropriate, same hero, no unexplained media swap.
+
+### 12.3 Comparison Context
+
+When user compares listings mentally or in future comparison surfaces, media must support **parallel evaluation** — similar evidence types at similar depth, not incomparable visual richness as persuasion.
+
+---
+
+## 13. Media Transparency
+
+Media Transparency extends **Property Transparency** (Chapter 31) to the evidence layer.
+
+### 13.1 Transparency Obligations
+
+Rento and realtors must make visible:
+
+- **Few photos** — coverage is partial; user understands limits  
+- **Old photos** — condition may have changed; user understands currency risk  
+- **Missing rooms** — absence is not implied presence  
+- **Exterior or common areas** — shown only when they are part of offer context  
+- **Renovation in progress** — incomplete state not disguised as finished  
+
+### 13.2 Transparency Builds Trust
+
+Honest limitation **increases** long-term trust. Simulated completeness destroys it.
+
+### 13.3 Transparency and Information Confidence
+
+When media is thin, information layer must not overclaim. Media Transparency and Information Confidence rise or fall together.
+
+---
+
+## 14. Missing Media Principles
+
+Absence of media is a **product fact**, not a failure to hide.
+
+### 14.1 No Media
+
+When listing has no photography:
+
+- User understands evaluation is information-only  
+- Property Confidence and Visual Confidence expectations adjust honestly  
+- Contact Readiness may still exist — but with explicit limitation  
+- Rento does not substitute stock imagery or generic interiors  
+
+### 14.2 Partial Media
+
+Partial media is acceptable when **transparent** — user knows which spaces are unseen and can decide whether to proceed or request viewing.
+
+### 14.3 Temporary Gaps
+
+Pending upload states must not present as complete gallery. **Respectful honesty** beats placeholder theater.
+
+---
+
+## 15. Misleading Media Prevention
+
+Rento treats misleading media as a **marketplace integrity** problem, not a conversion opportunity.
+
+### 15.1 Categories of Misleading Media
+
+| Category | Example harm |
+|----------|--------------|
+| **Perspective manipulation** | Ultra-wide angles implying larger rooms |
+| **Selective staging** | Luxury furnishings not included in rental |
+| **Order deception** | Best angle only; flaws omitted |
+| **Wrong property** | Different unit or stock photo |
+| **False abundance** | Repeated shots mimicking variety |
+| **Condition concealment** | Damage hidden by crop or filter |
+| **Selective omission** | Meaningful spaces or conditions intentionally absent from coverage while shown media remains technically accurate |
+
+**Selective omission** deserves explicit attention: media may avoid direct deception while intentionally hiding meaningful parts of the property — bathrooms never shown, rear rooms omitted, building context excluded. Incomplete visual disclosure can reduce trust even when every displayed image is accurate. Users infer completeness from what is shown; strategic absence is a Property Confidence failure, not a marketing technique.
+
+### 15.2 Prevention Philosophy
+
+Prevention combines:
+
+- **Media Integrity** standards for realtors  
+- **Moderation** when deception is reported or detected  
+- **Product presentation** that does not reward manipulative galleries with prominence  
+
+### 15.3 User Recovery
+
+When user discovers misleading media after investment, **Context Restoration** on return to search must be intact — but trust damage is real. Prevention outweighs recovery.
+
+---
+
+## 16. Mobile Media Experience
+
+Mobile is the **primary media surface**. Tablet and desktop extend — never reverse.
+
+### 16.1 Mobile Principles
+
+| Principle | Intent |
+|-----------|--------|
+| **Thumb-safe exploration** | User controls pace — no trapped auto-advance |
+| **Glance legibility** | Key spatial truth visible without pinch gymnastics |
+| **Interrupt tolerance** | User can leave mid-gallery and resume coherently |
+| **Bandwidth respect** | Perceived performance supports trust — not detailed here |
+| **Calm motion** | Transitions serve orientation — not excitement |
+
+### 16.2 Mobile vs Desktop
+
+Desktop may show more simultaneous context — information beside media — but **evidence truth** and **sequence honesty** remain identical to mobile. Desktop must not introduce richer manipulation affordances.
+
+### 16.3 One-Handed Evaluation
+
+Rental search happens in life — on transit, between tasks. Mobile media must support **decisive evaluation**, not immersive entertainment.
+
+---
+
+## 17. Accessibility Principles
+
+Media experience must be **inclusive** — housing decisions belong to all users.
+
+### 17.1 Alternative Access to Evidence
+
+Visual evidence requires **textual and structural alternatives** where product supports them — descriptive summaries, room labels, logical sequence that does not depend solely on color or fine visual detail.
+
+### 17.2 Motion and Sensitivity
+
+Auto-play, parallax, and aggressive motion **harm calm and accessibility**. Media defaults to user-controlled progression.
+
+### 17.3 Non-Visual Decision Support
+
+Users who cannot fully consume imagery must still reach **Information Confidence** and informed Contact Readiness through information layer — media enhancement must not become mandatory gate.
+
+Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 18. Returning User Continuity
+
+Returning users bring **Housing Continuity** and **Decision Persistence** (Chapter 31).
+
+### 18.1 Visual Memory
+
+User may return remembering **one hero image** or **one flaw seen**. Evidence Continuity requires media set to remain stable unless listing legitimately changed — with transparency if it did.
+
+### 18.2 Saved and Favorited Listings
+
+Thumbnail on return must still represent listing — **Preview Integrity** across sessions.
+
+### 18.3 Search Return
+
+After detail exit, search results card media must match detail memory — no unexplained thumbnail rotation that breaks Cognitive Continuity.
+
+---
+
+## 19. Anti-Patterns
+
+The following are **explicitly forbidden** in Rento media philosophy:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| Misleading photography | Destroys Visual Confidence and Media Integrity |
+| Excessive editing altering housing reality | False Spatial Understanding |
+| Visual manipulation for engagement | Violates calm Decision Environment |
+| Misleading image order | Conceals disqualifying truth |
+| Fake spaciousness via lens or crop | Property Confidence collapse |
+| Deceptive perspectives | User invests under false scale |
+| Card-detail media mismatch | Breaks Evidence Continuity and Preview Integrity |
+| Evidence overload | Attention theft; obscures disqualifiers |
+| Stock or unrelated imagery | Listing Integrity failure |
+| Auto-play galleries | Accessibility and calm violation |
+| Cinematic transitions over clarity | Entertainment over evidence |
+| Hiding few-photo limitation | Violates Media Transparency |
+| Selective omission | Incomplete disclosure reduces trust even when shown media is accurate; hides disqualifying reality without direct deception |
+| Rewarding manipulative galleries in discovery | Marketplace integrity harm |
+
+---
+
+## 20. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, media initiatives must trace to this chapter and Chapter 31:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New media formats | Evidence function — not engagement metric |
+| Gallery or sequence changes | Media Integrity and Evidence Continuity impact |
+| Upload or realtor tools | Authentic representation alignment |
+| Performance optimization | Does not degrade perceived visual truth |
+| AI enhancement features | Property Transparency — no synthetic deception |
+
+**Review gate:** No property media surface ships without checklist against Media Integrity, Visual Confidence, and Evidence Continuity.
+
+**Forward chapters:** Comparison, verification, and realtor media guidance extend this evidence foundation.
+
+---
+
+## 21. Chapter Summary
+
+Media on Rento is **evidence for housing decisions** — the primary architectural expression of the evidence layer introduced in Chapter 31.
+
+This chapter defines:
+
+- **Role** — media strengthens Property Confidence; reduces uncertainty; supports Housing Journey  
+- **Layers** — evidence validates information; neither substitutes for the other  
+- **Integrity** — Media Integrity, Visual Confidence, Evidence Continuity as governing concepts  
+- **Authenticity** — truth over perfected illusion  
+- **Sequence** — honest order supporting Progressive property understanding and Spatial Understanding  
+- **Transparency** — Media Transparency for absence, age, and limitation  
+- **Mobile** — primary surface; calm, user-controlled, decisive  
+- **Continuity** — preview through detail through return without visual bait-and-switch  
+
+Media succeeds when users can trust what they see, understand the home, imagine living honestly, and continue their journey — contact, save, compare, or leave — without visual regret.
+
+**Decision Experience flow:**
+
+Property Detail Experience (Chapter 31) → **Media Experience (Chapter 32)** → following Decision Experience chapters
+
+---
+
+## 22. Design Director Review
+
+**Chapter:** 32 — Media Experience  
+**Section:** XXIX — Media Experience  
+**Review type:** Initial standard adoption
+
+### 22.1 Approval Statement
+
+This chapter is approved as the **media experience contract** for Rento — the primary architectural definition of the evidence layer within property detail. All property media surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 22.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, truth |
+| Chapter 14 — Listing Card & Preview System | Card media as first evidence |
+| Chapter 15 — Listing Detail Experience | Gallery and hero parent contract |
+| Chapter 28 — Search Results Experience | Preview Integrity, First Impression Integrity |
+| Chapter 29 — Maps & Location Experience | Geographic evidence context |
+| Chapter 31 — Property Detail Experience | Information and evidence layers; Property Confidence |
+| Chapter 33+ — Decision Experience | Comparison, verification — forward |
+
+### 22.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Media positioned as evidence — not decoration or engagement  
+2. No contradiction with Chapter 31 information and evidence architecture  
+3. New concepts (Media Integrity, Visual Confidence, Evidence Continuity, Spatial Understanding) are reusable in later Decision Experience chapters  
+4. Anti-manipulation and transparency posture preserved  
+5. Mobile-first order explicit  
+6. No implementation leakage  
+
+### 22.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on media experience philosophy |
+| Head of Product Design | Parity with property detail and card preview |
+| Senior UX Designer | Sequence, continuity, mobile rhythm |
+| Product Management | Marketplace integrity and realtor accountability |
+| Content Design Lead | Transparency copy and limitation communication |
+| Accessibility Specialist | Non-visual access and motion principles |
+
+### 22.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new property media work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 22.6 Design Director Closing Note
+
+Users do not rent photographs. They rent homes. Media earns its place only when it helps someone answer, honestly and calmly, whether they could live inside what they see. This chapter exists so Rento treats every image as evidence — not ornament — and never trades visual excitement for the trust that long-term housing decisions require.
+
+---
+
+**End of Chapter 32**
 
