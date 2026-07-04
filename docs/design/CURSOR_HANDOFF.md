@@ -34,29 +34,29 @@ Scope: Product Design Standard only — no implementation unless explicitly requ
 
 ## CURRENT STATUS
 
-Approved chapters: **1–39** (39 chapters total)  
-Latest approved chapter: **Chapter 39 — Financial Readiness Experience**
+Approved chapters: **1–40** (40 chapters total)  
+Latest approved chapter: **Chapter 40 — Occupancy Readiness Experience**
 
 **Decision Experience judgment progression: COMPLETE** (Chapters 31–37)
 
-**Housing Obligation block: IN PROGRESS** (Chapters 38–39 — Legal Readiness and Financial Readiness approved)
+**Housing Obligation execution trilogy: COMPLETE** (Chapters 38–40 — Legal, Financial, and Occupancy Readiness approved)
 
-Chapter 39 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
+Chapter 40 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
 - ✓ Phase 1 — Authoring
-- ✓ Phase 2 — Architecture Review (APPROVED WITH MINOR CHANGES — integrated)
-- ✓ Phase 3 — Editorial Pass (APPROVED)
+- ✓ Phase 2 — Architecture Review (APPROVED WITH REQUIRED CHANGES — integrated)
+- ✓ Phase 3 — Required Architectural Amendments (F-01, F-02)
 - ✓ Phase 4 — Final Design Council Review (APPROVED)
 - ✓ Phase 5 — Approval Integration
 - ⏳ Phase 6 — Git Checkpoint Preparation (prepared, NOT executed)
 
-Chapter 39 location: after Chapter 38 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
-Section: **XXXVI — Financial Readiness**  
+Chapter 40 location: after Chapter 39 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
+Section: **XXXVII — Occupancy Readiness**  
 Status: **APPROVED**
 
 Pending user action: Git commit(s). Suggested message:
 
 ```
-approve chapter 39 financial readiness experience
+approve chapter 40 occupancy readiness experience
 ```
 
 User may commit chapters separately or together.
@@ -65,67 +65,56 @@ User may commit chapters separately or together.
 
 ## LATEST APPROVED CHAPTER
 
-**Chapter 39 — Financial Readiness Experience** (Section XXXVI)
+**Chapter 40 — Occupancy Readiness Experience** (Section XXXVII)
 
 Architectural role:
-- Housing Obligation block progression — financial execution readiness gate after Legal Readiness Experience (Ch 38)
-- Financial readiness boundary — after Legal Readiness (Ch 38), before Occupancy Readiness (Ch 40+, forward)
-- Extends Legal Readiness Confidence and Legal Readiness Boundaries (Ch 38), Commitment Boundaries (Ch 37), Contact Readiness (Ch 31)
+- Housing Obligation execution trilogy completion — occupancy execution readiness gate after Financial Readiness Experience (Ch 39)
+- Occupancy readiness boundary — after Financial Readiness (Ch 39), before Settled Tenancy (Ch 41+, forward)
+- Extends Financial Readiness Confidence and Financial Readiness Boundaries (Ch 39), Legal Readiness Boundaries (Ch 38), Commitment Boundaries (Ch 37), Contact Readiness (Ch 31)
 
-Key concepts introduced in Chapter 39:
-- Financial Readiness Environment
-- Financial Readiness
-- Financial Readiness Preparation
-- Financial Readiness Confidence
-- Financial Readiness Boundaries
-- Financial Boundary Clarity
+Key concepts introduced in Chapter 40:
+- Occupancy Readiness Environment
+- Occupancy Readiness
+- Occupancy Readiness Preparation
+- Occupancy Readiness Confidence
+- Occupancy Readiness Boundaries
+- Occupancy Boundary Clarity
 
 Secondary concepts:
-- Financial Readiness Integrity (parallel to Legal Readiness Integrity, Commitment Integrity, Application Integrity, Viewing Integrity, Assessment Integrity, Comparison Integrity)
-- Financial Obligation Understanding Clarity
+- Occupancy Readiness Integrity (parallel to Financial Readiness Integrity, Legal Readiness Integrity, Commitment Integrity, Application Integrity, Viewing Integrity, Assessment Integrity, Comparison Integrity)
 
 Terminology bridge (approved):
-- Informal forward references to **payment readiness** (Chapters 37–38) subsumed under official **Financial Readiness** — not a separate architectural layer
+- Informal forward references to **move-in readiness** (Chapters 37–39) subsumed under official **Occupancy Readiness** — not a separate architectural layer
 
 Editorial themes (approved):
-- Understanding over payment pressure — financial seriousness, not checkout completion
-- Boundary clarity over settlement simulation — honest scope limits before financial engagement
-- The platform never creates financial settlement — supports informed, voluntary financial readiness judgment
-- Financial Readiness distinct from Legal Readiness — financial execution trust gate
-- Financial readiness ≠ affordability judgment ≠ legal readiness ≠ commitment ≠ payment completion ≠ move-in
+- Preparation over move-in pressure — commencement judgment, not completion conversion
+- Boundary clarity over occupancy theater — honest scope limits before occupancy engagement
+- The platform never creates occupancy — supports informed, voluntary occupancy readiness judgment
+- Occupancy Readiness distinct from Financial Readiness, Viewing, and settled tenancy
+- Viewing informs Occupancy Readiness; Viewing never substitutes Occupancy Readiness
 - proceed / defer / release — all valid and equally dignified outcomes
 
-Housing Obligation flow (IN PROGRESS — Ch 38–39 approved):
+Housing Obligation flow (execution trilogy COMPLETE — Ch 38–40):
 
-Search Architecture (Ch 26–30) → Property Detail (Ch 31) → Media (Ch 32) → Comparison (Ch 33) → Property Verification (Ch 34) → Viewing Experience (Ch 35) → Application Experience (Ch 36) → Commitment Experience (Ch 37) → Legal Readiness Experience (Ch 38) → **Financial Readiness Experience (Ch 39)** → occupancy readiness and settled tenancy chapters (forward)
+Search Architecture (Ch 26–30) → Property Detail (Ch 31) → Media (Ch 32) → Comparison (Ch 33) → Property Verification (Ch 34) → Viewing Experience (Ch 35) → Application Experience (Ch 36) → Commitment Experience (Ch 37) → Legal Readiness Experience (Ch 38) → Financial Readiness Experience (Ch 39) → **Occupancy Readiness Experience (Ch 40)** → settled tenancy chapters (forward)
 
 ```
-Search
+Foundation
 ↓
-Results
+Search Experience
 ↓
-Property Detail
+Decision Experience ✓ COMPLETE
 ↓
-Media
+Housing Obligation ✓ COMPLETE
+  Legal Readiness ✓
+  Financial Readiness ✓
+  Occupancy Readiness ✓
 ↓
-Comparison
-↓
-Verification
-↓
-Viewing
-↓
-Application
-↓
-Commitment ✓ COMPLETE (Decision Experience)
-↓
-Legal Readiness ✓ APPROVED
-↓
-Financial Readiness ✓ APPROVED (Housing Obligation — in progress)
-↓
-Occupancy readiness / settled tenancy (forward)
+Settled Tenancy (forward)
 ```
 
 Extends (does not replace):
+- Financial Readiness Confidence, Financial Readiness Boundaries, Financial Boundary Clarity (Chapter 39)
 - Legal Readiness Confidence, Legal Readiness Boundaries, Legal Boundary Clarity (Chapter 38)
 - Commitment Confidence, Commitment Boundaries, Mutual Expectation Clarity (Chapter 37)
 - Application Confidence, Application Boundaries, Application Preparation (Chapter 36)
@@ -140,13 +129,13 @@ Extends (does not replace):
 
 ## CURRENT WORKFLOW
 
-Current phase: **Pre-Authoring Analysis** (Chapter 40 — not yet started)
+Current phase: **Pre-Authoring Analysis** (Chapter 41 — not yet started)
 
-Next step: **Pre-Authoring Analysis** for Chapter 40 before Phase 1 Authoring.
+Next step: **Pre-Authoring Analysis** for Chapter 41 before Phase 1 Authoring.
 
-Next chapter (not yet started): **Chapter 40**
+Next chapter (not yet started): **Chapter 41**
 
-Do NOT assume Chapter 40 theme. Determine architectural position from documentation authority.
+Do NOT assume Chapter 41 theme. Determine architectural position from documentation authority.
 
 Standard chapter workflow:
 1. Pre-Authoring Analysis (Design Council approval required before authoring)
@@ -160,7 +149,7 @@ Standard chapter workflow:
 Do NOT skip phases. Do NOT approve without explicit Design Council decision.  
 Do NOT commit without explicit user request.
 
-Repository status: **Ready for Chapter 40 pre-authoring session** (after Chapter 39 git checkpoint)
+Repository status: **Ready for Chapter 41 pre-authoring session** (after Chapter 40 git checkpoint)
 
 --------------------------------------------------
 
@@ -236,6 +225,14 @@ From Chapter 39:
 - Financial Readiness Boundaries
 - Financial Boundary Clarity
 
+From Chapter 40:
+- Occupancy Readiness Environment
+- Occupancy Readiness
+- Occupancy Readiness Preparation
+- Occupancy Readiness Confidence
+- Occupancy Readiness Boundaries
+- Occupancy Boundary Clarity
+
 Established vocabulary (reuse across chapters):
 - Housing Journey
 - Preview Integrity
@@ -264,10 +261,11 @@ Decision Experience block (**COMPLETE — judgment progression**, Ch 31–37):
 - Ch 36: Property application — Application Readiness, Application Preparation, Application Boundaries, formal interest expression
 - Ch 37: Property commitment — Commitment Readiness, Commitment Preparation, Commitment Boundaries, Mutual Expectation Clarity, housing obligation intensification judgment
 
-Housing Obligation block (**IN PROGRESS**, Ch 38–39 approved):
+Housing Obligation block (**COMPLETE — execution trilogy**, Ch 38–40 approved):
 - Ch 38: Legal readiness — Legal Readiness, Legal Readiness Preparation, Legal Readiness Boundaries, Legal Boundary Clarity, legal execution readiness gate
 - Ch 39: Financial readiness — Financial Readiness, Financial Readiness Preparation, Financial Readiness Boundaries, Financial Boundary Clarity, financial execution readiness gate
-- Ch 40+ (forward): Occupancy readiness, settled tenancy — principles only
+- Ch 40: Occupancy readiness — Occupancy Readiness, Occupancy Readiness Preparation, Occupancy Readiness Boundaries, Occupancy Boundary Clarity, occupancy execution readiness gate
+- Ch 41+ (forward): Settled Tenancy — principles only
 
 Verification vs platform trust (Ch 20):
 - Ch 20: what Rento attests — platform trust contract
@@ -277,7 +275,8 @@ Verification vs platform trust (Ch 20):
 - Ch 37: how housing obligation intensification is judged — commitment experience
 - Ch 38: how legal execution readiness is judged — legal readiness experience
 - Ch 39: how financial execution readiness is judged — financial readiness experience
-- Verification ≠ moderation ≠ legal due diligence ≠ financial qualification
+- Ch 40: how occupancy execution readiness is judged — occupancy readiness experience
+- Verification ≠ moderation ≠ legal due diligence ≠ financial qualification ≠ move-in completion
 
 Information ↔ Evidence cooperation:
 - Information states governed facts
@@ -334,6 +333,15 @@ Financial readiness principles (Chapter 39):
 - The platform never creates financial settlement
 - Payment readiness (informal) subsumed under Financial Readiness (official)
 
+Occupancy readiness principles (Chapter 40):
+- Preparation over move-in pressure
+- Boundary clarity over occupancy theater
+- Physical truth over digital completion
+- Occupancy Readiness as occupancy execution trust gate — not funnel stage
+- The platform never creates occupancy
+- Move-in readiness (informal) subsumed under Occupancy Readiness (official)
+- Viewing informs Occupancy Readiness; Viewing never substitutes Occupancy Readiness
+
 Design standard scope:
 - Principles only — no implementation leakage in chapter content
 - No frontend/backend/API/database/CDN/upload pipeline specs in chapters
@@ -347,7 +355,7 @@ Branch: main (assumed)
 Latest commit:
 
 ```
-86da46b approve chapter 38 legal readiness experience
+66b34d4 approve chapter 39 financial readiness experience
 ```
 
 Uncommitted changes:
@@ -358,14 +366,14 @@ M docs/design/CURSOR_HANDOFF.md
 M docs/design/MASTER_ROADMAP.md
 ```
 
-Includes Chapter 39 Phases 1–5 (authoring + approval integration) — uncommitted.
+Includes Chapter 40 Phase 5 approval integration — uncommitted.
 
 No commit yet — awaiting user command.
 
-Suggested commit message for Chapter 39:
+Suggested commit message for Chapter 40:
 
 ```
-approve chapter 39 financial readiness experience
+approve chapter 40 occupancy readiness experience
 ```
 
 --------------------------------------------------
@@ -374,53 +382,54 @@ approve chapter 39 financial readiness experience
 
 Primary:
 
-- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~38,400+ lines)
+- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~39,900+ lines)
 
-Chapter 39 location in document:
-- After Chapter 38 — `## Chapter 39 — Financial Readiness Experience`
-- End of document — End of Chapter 39
+Chapter 40 location in document:
+- After Chapter 39 — `## Chapter 40 — Occupancy Readiness Experience`
+- End of document — End of Chapter 40
 
 --------------------------------------------------
 
 ## NEXT CHAPTER
 
-**Chapter 40** — NOT YET STARTED
+**Chapter 41** — NOT YET STARTED
 
-Do NOT assume Chapter 40 theme.
+Do NOT assume Chapter 41 theme.
 
 Begin with **Pre-Authoring Analysis** — determine architectural position from documentation authority before Phase 1 Authoring.
 
-Forward domain (per Housing Obligation arc and Chapter 39 §11 handoff):
-- Occupancy readiness / move-in execution gate after Financial Readiness Experience (Ch 39)
+Forward domain (per Chapter 40 §11 handoff):
+- Settled Tenancy — ongoing landlord-tenant relationship experience after Occupancy Readiness Experience (Ch 40)
 - Principles only — no implementation
 
-Do NOT begin Chapter 40 until explicitly authorized in a new session.
+Do NOT begin Chapter 41 until explicitly authorized in a new session.
 
 --------------------------------------------------
 
 ## IMPORTANT RULES
 
 **DO:**
-- Follow chapter workflow including Pre-Authoring Analysis for Ch 40+
+- Follow chapter workflow including Pre-Authoring Analysis for Ch 41+
 - Preserve approved vocabulary
 - Keep chapters principles-only (no implementation leakage)
-- Match approval block format of Chapters 30–39 for future chapters
+- Match approval block format of Chapters 30–40 for future chapters
 - Update TOC and Version History on approval integration
 - Commit only when user explicitly requests
 - Explain in Russian; code/identifiers/commits in English
 
 **DO NOT:**
 - Implement product features in code during design standard work
-- Modify approved chapters 1–39 without explicit approval
+- Modify approved chapters 1–40 without explicit approval
 - Mark chapters APPROVED without Design Council decision
 - Create git commits without user request
 - Rename or redefine established product concepts
 - Add API/UI/CDN/database specifications to design standard chapters
-- Assume Chapter 40 theme without documentation authority
+- Assume Chapter 41 theme without documentation authority
 
 Release strategy (design standard document):
 - Per-chapter git checkpoints: YES (continue pattern)
 - Decision Experience judgment progression milestone: **COMPLETE** (Ch 31–37)
+- Housing Obligation execution trilogy milestone: **COMPLETE** (Ch 38–40)
 
 --------------------------------------------------
 
@@ -444,10 +453,10 @@ See **AI Session Initialization** at the top of this document.
 
 Current active phase: **Rento Product Design Standard** (Phase 1). Future phases must not begin until this phase is completed and formally approved.
 
-Approved chapters per roadmap: **1–39**  
+Approved chapters per roadmap: **1–40**  
 Decision Experience: **COMPLETE** (judgment progression, Ch 31–37)  
-Housing Obligation: **IN PROGRESS** (Ch 38–39 approved)  
-Current chapter: **40 — not yet started (Pre-Authoring Analysis next)**
+Housing Obligation: **COMPLETE** (execution trilogy, Ch 38–40)  
+Current chapter: **41 — not yet started (Pre-Authoring Analysis next)**
 
 --------------------------------------------------
 

@@ -34,18 +34,18 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–39 |
-| **Latest approved** | Chapter 39 — Financial Readiness Experience |
-| **Current chapter** | Chapter 40 — not yet started |
+| **Approved chapters** | 1–40 |
+| **Latest approved** | Chapter 40 — Occupancy Readiness Experience |
+| **Current chapter** | Chapter 41 — not yet started |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
-| **Housing Obligation** | **IN PROGRESS** (Chapters 38–39 — legal and financial execution readiness approved) |
+| **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness approved) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Remaining work
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Housing Obligation** — forward execution chapters (legal, financial, move-in) extending Commitment Experience (Chapter 37)
+- **Settled Tenancy** — ongoing landlord-tenant relationship experience beyond occupancy execution readiness (Chapter 40)
 - **Realtor Platform** — realtor-facing product experience beyond existing foundation chapters
 - **Admin Platform** — moderation, governance, and administrative experience
 - **Design System Governance** — standards enforcement, evolution, and exception policy

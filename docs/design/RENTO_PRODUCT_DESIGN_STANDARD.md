@@ -81,12 +81,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 37 | [Commitment Experience](#chapter-37--commitment-experience) | Commitment Experience | APPROVED |
 | 38 | [Legal Readiness Experience](#chapter-38--legal-readiness-experience) | Legal Readiness | APPROVED |
 | 39 | [Financial Readiness Experience](#chapter-39--financial-readiness-experience) | Financial Readiness | APPROVED |
+| 40 | [Occupancy Readiness Experience](#chapter-40--occupancy-readiness-experience) | Occupancy Readiness | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 40+ | Future chapters per design standard roadmap |
+| 41+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -115,6 +116,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 1.0 | 2026-07-04 | Chapter 37 — Commitment Experience approved and added — Completed Decision Experience judgment progression from Application to Commitment and established the architectural standard for housing obligation intensification before forward housing obligation chapters |
 | 1.0 | 2026-07-04 | Chapter 38 — Legal Readiness Experience approved and added — Opened Housing Obligation block with legal readiness execution gate after Decision Experience completion and established the architectural standard for responsible legal execution readiness before Financial Readiness |
 | 1.0 | 2026-07-04 | Chapter 39 — Financial Readiness Experience approved and added — Established financial execution readiness gate in Housing Obligation block after Legal Readiness and architectural standard for responsible financial readiness judgment before Occupancy Readiness |
+| 1.0 | 2026-07-04 | Chapter 40 — Occupancy Readiness Experience approved and added — Completed Housing Obligation execution trilogy with occupancy execution readiness gate after Financial Readiness and architectural standard for responsible occupancy readiness judgment before Settled Tenancy |
 
 ---
 
@@ -38164,15 +38166,18 @@ The handoff contract:
 
 ### 11.3 Explicitly Out of Scope — Forward to Occupancy Readiness
 
-The following belong to **Occupancy Readiness** forward chapters — **outside Chapter 39 scope**:
+The following belong to **Occupancy Readiness Experience (Chapter 40)** — **outside Chapter 39 scope**:
 
 - **Move-in planning** — timing coordination, logistics preparation, and household transition judgment  
 - **Keys handover** — physical access transfer posture and occupancy commencement  
 - **Inventory and condition check** — move-in inspection, damage documentation, and handover reconciliation  
 - **Occupancy execution** — any product posture governing physical tenancy commencement  
+
+The following belong to **Settled Tenancy** forward chapters — **outside Chapter 39 and Chapter 40 occupancy execution readiness scope**:
+
 - **Settled tenancy** — ongoing landlord-tenant relationship experience beyond move-in boundary  
 
-Chapter 39 may **reference** that these steps follow financial readiness — it does **not** define occupancy readiness, move-in experience, or settled tenancy.
+Chapter 39 may **reference** that Occupancy Readiness (Chapter 40) and settled tenancy follow financial readiness — it does **not** define occupancy readiness, move-in experience, or settled tenancy.
 
 ### 11.4 Defer Across Boundary
 
@@ -38180,7 +38185,7 @@ User may **defer occupancy readiness** after financial readiness engagement — 
 
 ### 11.5 Forward Reference
 
-Move-in planning, keys handover, inventory check, and settled tenancy chapters follow per Chapter 37 §15.4 and Chapter 38 §11.5 — Financial Readiness and Financial Readiness Confidence must not pretend to satisfy **occupancy readiness** or **settled tenancy**. Forward reference only.
+Occupancy Readiness Experience (Chapter 40) and settled tenancy chapters follow per Chapter 37 §15.4 and Chapter 38 §11.5 — Financial Readiness and Financial Readiness Confidence must not pretend to satisfy **occupancy readiness** or **settled tenancy**. Forward reference only.
 
 ---
 
@@ -38317,7 +38322,7 @@ Financial readiness succeeds when users engage financial settlement responsibili
 
 **Housing Obligation flow:**
 
-Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → Property Comparison Experience (Chapter 33) → Property Verification Experience (Chapter 34) → Viewing Experience (Chapter 35) → Application Experience (Chapter 36) → Commitment Experience (Chapter 37) → Legal Readiness Experience (Chapter 38) → **Financial Readiness Experience (Chapter 39)** → occupancy readiness and settled tenancy chapters (forward)
+Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → Property Comparison Experience (Chapter 33) → Property Verification Experience (Chapter 34) → Viewing Experience (Chapter 35) → Application Experience (Chapter 36) → Commitment Experience (Chapter 37) → Legal Readiness Experience (Chapter 38) → **Financial Readiness Experience (Chapter 39)** → Occupancy Readiness Experience (Chapter 40) → settled tenancy chapters (forward)
 
 ---
 
@@ -38356,7 +38361,8 @@ Officially approved by the Rento Design Council.
 | Chapter 36 — Application Experience | Application Confidence, Application Boundaries, application handoff |
 | Chapter 37 — Commitment Experience | Commitment Confidence, Commitment Boundaries, commitment handoff |
 | Chapter 38 — Legal Readiness Experience | Legal Readiness Confidence, Legal Readiness Boundaries, legal readiness handoff |
-| Forward chapters — Occupancy readiness and settled tenancy | Move-in execution, occupancy handover — forward |
+| Chapter 40 — Occupancy Readiness Experience | Occupancy execution readiness; completes Housing Obligation trilogy |
+| Forward chapters — Settled Tenancy | Ongoing tenancy experience — forward |
 
 ### 16.3 Review Criteria for Future Amendments
 
@@ -38398,4 +38404,577 @@ Users do not rent checkout buttons. They rent homes — and they deserve to enga
 ---
 
 **End of Chapter 39**
+
+
+## Chapter 40 — Occupancy Readiness Experience
+
+**Section:** XXXVII — Occupancy Readiness  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–39; completes the Housing Obligation execution trilogy after Financial Readiness Experience (Chapter 39); operationalizes Financial Readiness Confidence (Chapter 39), Financial Readiness Boundaries (Chapter 39), Financial Boundary Clarity (Chapter 39), Legal Readiness Boundaries (Chapter 38), Commitment Boundaries (Chapter 37), and contact ethics (Chapter 16); defines principles only — not move-in operations, property management, settled tenancy experience, logistics coordination, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **occupancy readiness experience philosophy** for Rento — how users **transition from financial execution readiness judgment toward responsible occupancy readiness** while preserving informed decision making, trust, boundary clarity, and long-term platform integrity.
+
+Occupancy readiness is not financial readiness. Financial readiness asks *am I prepared to engage with financial settlement responsibility responsibly — with honest understanding of deposit, rent, guarantor, and payment schedule obligations* (Chapter 39). Occupancy readiness asks *am I prepared to engage with occupancy commencement responsibility responsibly — with honest understanding of what physical tenancy commencement means, and what Rento can and cannot establish about move-in and occupancy execution*.
+
+Occupancy readiness is not viewing. Viewing governs **pre-commitment physical reconciliation** (Chapter 35). Occupancy readiness governs **post-financial-readiness occupancy commencement judgment** — a separate boundary crossing after the Housing Obligation execution arc intensifies through legal and financial readiness.
+
+Occupancy readiness is not settled tenancy. Settled tenancy governs **ongoing landlord-tenant relationship experience beyond the move-in boundary** — forward chapters.
+
+**The platform never creates occupancy.** Rento does not manufacture move-in executed, physical access transferred, or tenancy commenced. The platform **supports informed occupancy readiness** — helping users and realtors honor the occupancy execution boundary with integrity, dignity, and honest scope limits about physical tenancy commencement.
+
+Where prior chapters carry users from evaluation through financial readiness with increasing obligation seriousness, this chapter helps users **cross from financial execution readiness toward responsible occupancy readiness** — prepared, boundary-aware, and able to proceed, defer, or release with clarity about what occupancy readiness can and cannot establish.
+
+The product must help users answer five occupancy readiness questions:
+
+1. **Am I prepared for occupancy commencement responsibility — do I understand what occupancy readiness means on Rento?**  
+2. **Does my financial readiness judgment and full decision arc support occupancy attention — or am I acting on move-in pressure or completion momentum?**  
+3. **Are occupancy boundaries clear — what does Rento support versus what landlord, realtor, and bilateral process must settle?**  
+4. **Do I sufficiently understand the occupancy obligations accompanying this housing commitment — and is listing context still current?**  
+5. **Can I proceed, defer, or release occupancy readiness intent without trap, shame, or move-in theater?**
+
+This chapter governs occupancy readiness as the **third and final Housing Obligation execution stage**. It does **not** specify move-in operations, handover systems, property management, or engineering architecture.
+
+**Relationship to prior chapters:** **Financial Readiness Confidence** (Chapter 39) and **Financial Readiness Boundaries** (Chapter 39) govern whether financial execution supports forward occupancy attention. **Financial Boundary Clarity** (Chapter 39) governs settlement posture honesty that occupancy readiness must not simulate into move-in completion. This chapter defines **Occupancy Readiness Environment**, **Occupancy Readiness**, **Occupancy Readiness Preparation**, **Occupancy Readiness Confidence**, **Occupancy Readiness Boundaries**, **Occupancy Readiness Integrity**, and **Occupancy Boundary Clarity**.
+
+Earlier forward references to **move-in readiness** (Chapters 37–39) are treated as informal references to this chapter's official architectural concept: **Occupancy Readiness**. Move-in readiness is not a separate Product Design Standard layer.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Preparation over move-in pressure** | Occupancy readiness supports commencement judgment — not completion conversion or funnel finish line |
+| **Boundaries over occupancy theater** | Rento and users know what occupancy readiness can and cannot establish — no simulated move-in completion |
+| **Prepared over rushed move-in** | Occupancy readiness follows financial readiness and Decision Experience judgment — not manufactured urgency |
+| **Clarity over simulated occupancy** | Pending and unconfirmed commencement states remain honest — product never implies tenancy commenced |
+| **Responsibility over platform overclaim** | Physical tenancy commencement and bilateral handover remain outside Rento establishment |
+| **Continuity over reset** | Full decision arc through financial readiness preserved at occupancy boundary |
+| **Reversible over trapped** | Defer and release remain dignified — equal to proceed |
+| **Calm over pressure** | No countdown-driven move-in or false exclusivity at occupancy boundary |
+| **Physical truth over digital completion** | Occupancy readiness honors what commencement can establish — not what product wishes were true |
+| **Mobile deliberation first** | Design for considered mobile occupancy readiness judgment — then tablet, then desktop |
+| **Occupancy Readiness Confidence goal** | Every outcome serves honest proceed, defer, or release toward settled tenancy |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, move-in checklist guide, handover pattern library, or property management design  
+- An implementation plan, API contract, logistics system, or engineering architecture  
+- A replacement for Chapters 16, 35, or 39  
+- A moderation or identity verification operations chapter (Chapter 20)  
+- A settled tenancy, ongoing landlord-tenant relationship, or property management chapter (forward)  
+- A comparison, verification, viewing, application, commitment, legal readiness, or financial readiness depth chapter (Chapters 33–39)  
+- A **Move-In Planning Guide Experience** chapter identity — move-in preparation understanding is **in-scope content**, not chapter title or architectural identity  
+
+If the question is *how to build* move-in tooling — this chapter does not answer it. If the question is *what occupancy readiness must accomplish for housing decision confidence and platform integrity* — this chapter does.
+
+Occupancy readiness is **not** move-in completion, property management, or settled tenancy. Occupancy readiness **is** responsible product-supported judgment about engaging with occupancy commencement responsibility — with honest boundaries and dignity whether users proceed, defer, or release.
+
+---
+
+## Occupancy Readiness Environment
+
+**Occupancy Readiness Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Occupancy Readiness Environment is the **cognitive and informational conditions under which a user prepares for, reflects on, and engages with occupancy commencement responsibility for a specific property** — not the screen layout, but the **quality of the occupancy readiness decision space** Rento provides.
+
+A sound Occupancy Readiness Environment is **prepared, oriented, grounded, boundary-legible, bounded, voluntary, reversible, and calm** — consistent with Legal Readiness Environment (Chapter 38) and Financial Readiness Environment (Chapter 39).
+
+Occupancy Readiness Environment is the **occupancy execution counterpart** — the governed space where users move from *"I engaged financial readiness responsibly — with financial boundary clarity"* to *"I engaged occupancy readiness responsibly — or chose not to — with occupancy boundary clarity about what happens next."*
+
+Occupancy Readiness Environment is reusable across occupancy readiness preparation, engagement posture, outcome interpretation, and forward settled tenancy chapters.
+
+---
+
+## Occupancy Readiness
+
+**Occupancy Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Occupancy Readiness is the user's and product's shared state where **engaging with occupancy commencement responsibility for a specific property is appropriate** — because Financial Readiness Confidence (Chapter 39) or equivalent informed judgment supports forward occupancy attention, Occupancy Readiness Preparation is sufficient, Occupancy Boundary Clarity is adequate, and listing truth remains current.
+
+**Scope boundary:** Occupancy Readiness governs the **occupancy execution readiness dimension** (Chapter 37 §15.4, Chapters 38–39 forward references). It does not govern financial settlement (Chapter 39), legal execution (Chapter 38), pre-commitment physical visit (Chapter 35), platform attestation (Chapter 20), logistics coordination, move-in completion, or settled tenancy — each belongs to its governing chapter or forward domain.
+
+Occupancy Readiness requires **Listing Integrity** (Chapter 31), sufficient **Financial Readiness Confidence** or explicit acknowledged gaps, adequate **Occupancy Readiness Preparation** and **Occupancy Boundary Clarity**, and product posture that does not manufacture readiness through move-in pressure or completion theater.
+
+Occupancy Readiness is not a funnel stage to maximize. It is an **occupancy execution trust gate** — the third and final Housing Obligation readiness gate.
+
+---
+
+## Occupancy Readiness Preparation
+
+**Occupancy Readiness Preparation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Occupancy Readiness Preparation is the user's **informed readiness to engage with occupancy commencement responsibility for a specific property** — synthesizing the full decision arc through financial readiness into **conscious occupancy attention intent** before engagement intensifies.
+
+Occupancy Readiness Preparation includes **post-financial-readiness reconciliation**, **occupancy scope understanding**, **handover expectation acknowledgment**, **remaining uncertainty visibility**, **partner alignment** (Chapters 33, 37–39), and **honest process expectations** — occupancy readiness expresses responsible engagement posture; it does not guarantee commencement outcome.
+
+Occupancy Readiness Preparation extends **Financial Readiness Boundaries** (Chapter 39) into actionable occupancy attention intent. It inherits **price, fee, and condition transparency** from prior stages — surprises discovered earlier remain visible; occupancy readiness does not bury them under move-in momentum.
+
+---
+
+## Occupancy Readiness Confidence
+
+**Occupancy Readiness Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Occupancy Readiness Confidence is the user's **justified belief that engaging with occupancy readiness — preparing for, proceeding with, deferring, or releasing occupancy attention — supports sound housing judgment** — before, during, and after engagement.
+
+Occupancy Readiness Confidence rises when preparation aligns with decision arc truth, financial readiness outcome reconciles honestly, boundaries are understood, attention is voluntary, and proceed/defer/release remain dignified. It falls when product simulates move-in completion, hides preparation gaps, pressures occupancy before readiness, gamifies progression, or implies handover fitness Rento cannot establish.
+
+Occupancy Readiness Confidence governs **occupancy execution engagement judgment** — distinct from Financial Readiness Confidence (Chapter 39), Viewing Confidence (Chapter 35), and prior Decision Experience confidence concepts, which govern their respective boundaries only.
+
+---
+
+## Occupancy Readiness Boundaries
+
+**Occupancy Readiness Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Occupancy Readiness Boundaries define **what engaging with occupancy readiness through Rento can and cannot establish** — the scope beyond which landlord, realtor, bilateral handover process, household judgment, or settled tenancy must carry responsibility.
+
+Occupancy Readiness Boundaries **extend** Financial Readiness Boundaries (Chapter 39) and prior Decision Experience and Housing Obligation boundaries — each prior limit becomes an occupancy execution limit honestly stated.
+
+Rento occupancy readiness experience **can** support occupancy readiness judgment, occupancy boundary clarity, continuity of judgment, outcome clarity, and post-engagement proceed, defer, or release toward settled tenancy.
+
+Rento occupancy readiness experience **cannot** substitute for **occupancy commencement completion**, **physical access transfer**, **bilateral handover operations**, **property management**, **financial settlement completion** (Chapter 39 scope), or **platform attestation of occupancy outcome** (Chapter 20).
+
+**The platform never creates occupancy.** Occupancy Readiness Boundaries are reusable across forward settled tenancy chapters.
+
+---
+
+## Occupancy Readiness Integrity
+
+**Occupancy Readiness Integrity** is the **honesty of the occupancy readiness experience itself** — no simulated move-in completion, no hidden boundaries, no pressure when readiness is insufficient, no logistics theater, no gamification, no forced proceed.
+
+Occupancy Readiness Integrity parallels **Financial Readiness Integrity** (Chapter 39), **Legal Readiness Integrity** (Chapter 38), and the integrity lineage from Chapters 33–37.
+
+---
+
+## 2. Role in the Housing Journey
+
+Occupancy readiness sits at the **occupancy execution boundary of Housing Obligation** — after financial readiness, before settled tenancy in forward chapters.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| Narrowing (Chapter 33) | Compare | Which candidates survive scrutiny? |
+| Verification (Chapter 34) | Verify | Can I trust this home enough to proceed digitally? |
+| Viewing (Chapter 35) | Visit | What does this home reveal in person? |
+| Application (Chapter 36) | Express interest | Am I ready to pursue this home formally — with informed consent? |
+| Commitment (Chapter 37) | Intensify obligation | Am I ready to meaningfully intensify housing obligation — with mutual expectation clarity? |
+| Legal readiness (Chapter 38) | Engage legal responsibility | Am I prepared to engage lease-related legal responsibility responsibly? |
+| Financial readiness (Chapter 39) | Engage financial responsibility | Am I prepared to engage financial settlement responsibility responsibly? |
+| **Occupancy readiness (this chapter)** | **Engage occupancy responsibility** | **Am I prepared to engage occupancy commencement responsibility responsibly — with occupancy boundary clarity?** |
+| Forward chapters | Live tenancy | What happens next toward settled tenancy? |
+
+Occupancy readiness **completes the Housing Obligation execution trilogy** — legal (Chapter 38), financial (Chapter 39), occupancy (this chapter) — per Chapter 37 §15.4.
+
+Occupancy readiness succeeds through **Meaningful Progress** and honest judgment — not move-in event maximization or completion theater.
+
+---
+
+## 3. Relationship to Financial Readiness Experience
+
+Users enter occupancy readiness **after** Financial Readiness Confidence supports forward occupancy attention (Chapter 39 §11.1–11.2).
+
+### 3.1 Entry Preconditions
+
+Occupancy readiness engagement is responsible when user has **Financial Readiness Confidence** or equivalent informed judgment, **Listing Integrity** intact, understood **Financial Readiness Boundaries** and **Occupancy Readiness Boundaries**, adequate **Financial Boundary Clarity** and **Occupancy Boundary Clarity**, and clear **contact path** (Chapter 16).
+
+### 3.2 Handoff from Financial Readiness
+
+Chapter 39 supplies **Financial Readiness Confidence**, **Financial Readiness Preparation**, **Financial Readiness Boundaries**, **Financial Boundary Clarity**, and post-engagement outcomes. Occupancy readiness must **preserve** financial readiness outcomes — not reset judgment or hide unknowns.
+
+The handoff contract (Chapter 39 §11.2):
+
+- Occupancy candidate is **the property user engaged financially toward or consciously prioritizes** — continuity preserved  
+- **Occupancy Readiness Preparation** inherits financial readiness context — settlement posture and pending states remain visible  
+- Proceed to occupancy readiness **does not imply** move-in executed or settled tenancy achieved  
+- Defer or release at financial readiness **does not erase** occupancy preparation work on return  
+- Financial readiness outcome **pending** does not default to Occupancy Readiness  
+
+### 3.3 Handoff from Decision Experience Arc
+
+Chapters 31–39 supply the full confidence and continuity lineage. Occupancy readiness **extends** these — no occupancy-only summary layer that contradicts evaluation through financial readiness.
+
+### 3.4 Proceed Without Financial Readiness Engagement — Exception Posture
+
+Proceed-without-financial-readiness requires **explicit acknowledgment** of financial execution unknowns — valid when informed, not default product posture.
+
+### 3.5 Readiness and Confidence Distinction
+
+| Concept | Governs |
+|---------|---------|
+| **Contact Readiness** (Ch 31) | Initial contact after evaluation |
+| **Proceeding Readiness** (Ch 34) | Commitment escalation in principle after verification |
+| **Viewing Readiness** (Ch 35) | Pre-commitment physical visit |
+| **Application Readiness** (Ch 36) | Formal interest expression |
+| **Commitment Readiness** (Ch 37) | Housing obligation intensification |
+| **Legal Readiness** (Ch 38) | Lease-related legal engagement |
+| **Financial Readiness** (Ch 39) | Financial settlement engagement |
+| **Occupancy Readiness** (this chapter) | Occupancy commencement engagement |
+| **Occupancy Readiness Confidence** (this chapter) | Occupancy execution engagement judgment |
+
+Viewing Confidence and physical reconciliation **inform** preparation — they do **not** substitute for Occupancy Readiness or simulate move-in completion.
+
+### 3.6 Relationship to Contact & Communication Experience (Chapter 16)
+
+Chapter 16 remains the **authoritative contract for communication ethics** during occupancy readiness. This chapter **consumes** Chapter 16 — it does **not** redefine contact rules. Occupancy readiness must not use contact channels to pressure move-in or simulate occupancy completion.
+
+---
+
+## 4. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract**. This chapter **consumes** platform trust signals — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|--------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm? |
+| **Property verification** | Chapter 34 | Can the user proceed digitally with justified trust? |
+| **Financial readiness** | Chapter 39 | Does financial execution engagement support sound judgment? |
+| **Occupancy readiness** | **This chapter** | Does occupancy execution engagement support sound judgment with occupancy boundary clarity? |
+
+Platform verification badges **inform** preparation — they do **not** guarantee move-in success or handover fitness. Occupancy readiness must never **inflate** Chapter 20 attestation into occupancy certification or simulated commencement.
+
+---
+
+## 5. Relationship to Move-In Preparation Understanding
+
+**Move-in preparation understanding** — comprehension of occupancy commencement expectations, handover posture, and physical tenancy obligations accompanying the housing commitment — is **in-scope content** of this chapter. It is **not** the chapter identity.
+
+| Dimension | Move-in preparation understanding (in-scope) | Occupancy Readiness Experience (chapter identity) |
+|-----------|-----------------------------------------------|-----------------------------------------------------|
+| **Architectural role** | Content domain within occupancy readiness | Third and final Housing Obligation execution chapter |
+| **Primary question** | What must user understand about occupancy obligations? | Is occupancy attention responsible now — with boundary clarity? |
+| **Platform limit** | Does not execute handover or coordinate logistics | Does not create occupancy or certify move-in completion |
+
+This chapter **accepts the forward contract** from Chapter 39 §11.3. The following are **in-scope content domains** within Occupancy Readiness — not chapter identity, not separate architectural layers:
+
+- **move-in planning understanding**
+- **handover posture**
+- **condition reconciliation posture**
+- **occupancy execution judgment**
+
+Settled tenancy belongs to forward chapters (§11.3) — outside Chapter 40 scope.
+
+Chapter 39 defers **move-in planning, occupancy execution, and settled tenancy** to this chapter and forward domains. This chapter defines the **product experience** of that deferred responsibility — without conflating financial readiness with move-in completion.
+
+Rento **can** support awareness, continuity, honest scope language, and defer ethics. Rento **cannot** substitute for physical access transfer, bilateral handover operations, logistics coordination, or certification of commencement fitness.
+
+User comprehension of occupancy obligations must remain **honest** — gaps visible, no simulated comprehension, no implication that understanding equals tenancy commenced. This posture extends **Financial Obligation Understanding Clarity** (Chapter 39) and **Contract Understanding Clarity** (Chapter 38) into the occupancy execution dimension without creating a separate architectural clarity layer.
+
+---
+
+## 6. Information Layer in Occupancy Readiness
+
+Occupancy readiness treats the **information layer** (Chapter 31) as input to preparation and confidence.
+
+- **Currency** — price, availability, specifications, and handover-relevant facts must be current; stale truth invalidates Occupancy Readiness  
+- **Expected Property carry-forward** — governed facts honored; inconsistency triggers defer or release  
+- **Material gap awareness** — gaps from prior stages remain visible  
+- **Transparency inheritance** — price, fee, and condition honesty from evaluation through financial readiness preserved  
+- **Listing change after financial readiness** — material change resets context honestly  
+
+---
+
+## 7. Evidence and Continuity Layer
+
+Occupancy readiness treats **evidence** (Chapter 32), **physical reconciliation** (Chapter 35), and **Housing Continuity** (Chapter 30) as input to judgment.
+
+**Viewing informs Occupancy Readiness; Viewing never substitutes Occupancy Readiness.** Physical reconciliation from Chapter 35 **informs** Occupancy Readiness Preparation — it does **not** substitute for occupancy execution judgment, and viewing reconciliation **does not replace** move-in condition reconciliation posture deferred from Chapter 39 §11.3.
+
+- **Decision arc carry-forward** — full arc interpretable at occupancy engagement; not erased by move-in momentum  
+- **Evidence sufficiency** — thin evidence increases preparation importance; rich evidence does not reduce boundary obligation  
+- **Discrepancy visibility** — known gaps must inform posture without silent proceed  
+- **Housing Continuity and Context Restoration** — financial readiness ↔ occupancy readiness ↔ settled tenancy preserve judgment where appropriate  
+- **Partner alignment** — shared participants carry identical preparation truth  
+- **Abandon without shame** — leaving without proceed/defer/release decision is valid; Respectful Silence applies  
+
+---
+
+## 8. Occupancy Boundary Clarity
+
+**Occupancy Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Occupancy Boundary Clarity is the **shared legibility of what Rento, user, realtor, landlord, and external process each reasonably own at the occupancy execution boundary** — without simulated move-in completion or occupancy certification.
+
+Occupancy Boundary Clarity requires **Rento scope honesty**, **user responsibility honesty**, **bilateral process honesty**, **pending state legibility**, and **no false occupancy certainty**.
+
+Occupancy Boundary Clarity is distinct from **Occupancy Readiness Confidence**: clarity governs **what each party owns**; confidence governs **whether engagement judgment supports sound housing decision**. It extends **Financial Boundary Clarity** (Chapter 39) and **Legal Boundary Clarity** (Chapter 38) into the occupancy execution dimension.
+
+---
+
+## 9. Occupancy Readiness Principles
+
+*How should users engage occupancy commencement responsibility while preserving informed decision making, boundary clarity, trust, and long-term platform integrity?*
+
+### 9.1 Voluntary Engagement — Not Platform Creation of Occupancy
+
+Occupancy readiness is **user-initiated housing judgment**. The platform supports; it never creates occupancy.
+
+### 9.2 Deliberate Over Rushed Move-In
+
+Occupancy attention belongs **after** Occupancy Readiness — not as default next action after financial readiness. Product supports pause, reflection, partner discussion, and comparison return.
+
+### 9.3 Single Property Clarity
+
+Every engagement ties unambiguously to **one listing identity**.
+
+### 9.4 Informed Decision Making Preservation
+
+Full arc through financial readiness remains **interpretable at occupancy engagement** — not isolated move-in momentum.
+
+### 9.5 Occupancy Boundary Clarity Before Engagement
+
+User understands **what each party owns** before attention intensifies.
+
+### 9.6 Honest State Language
+
+Product language reflects **actual posture** — preparing, engaged, deferred, released, commencement pending — not simulated completion (Chapter 16 alignment).
+
+### 9.7 Handover Understanding Over Completion Theater
+
+User understands occupancy engagement requires **sufficient comprehension of commencement obligations** — without logistics coordination, property management, or settled tenancy in this chapter.
+
+### 9.8 Physical Truth Over Digital Completion
+
+Product does not substitute digital posture for physical tenancy commencement.
+
+### 9.9 Financial Settlement Boundary Respect
+
+Occupancy readiness does not re-adjudicate financial settlement; pending financial states remain visible.
+
+### 9.10 Engagement Without Humiliation
+
+Defer, release, and unconfirmed commencement deserve **dignified communication** — normal outcomes, not moral failure by default.
+
+### 9.11 Proceed, Defer, and Release Equality
+
+All three outcomes are **equally valid**. No shame, dark retention, or blocked exit.
+
+---
+
+## 10. Occupancy Readiness Outcomes
+
+Outcomes are **proceed**, **defer**, and **release** — all valid and equally dignified.
+
+### 10.1 Proceed
+
+User **voluntarily engages occupancy readiness judgment** with preparation, boundary clarity, and boundaries sufficient. Proceed does **not** mean move-in executed, tenancy commenced, or settled tenancy achieved.
+
+### 10.2 Defer
+
+Defer preserves intent while acknowledging insufficient readiness, clarity, or preparation — honest pacing with **Decision Persistence** preserved.
+
+### 10.3 Release
+
+Release removes candidate from active consideration **without shame** — consistent with release ethics from Chapters 33–39.
+
+### 10.4 Post-Engagement Reconsideration
+
+Defer and release remain valid after engagement — not an irreversible trap.
+
+### 10.5 Pending Commencement Honesty
+
+Unconfirmed commencement states remain **honestly communicated** — no simulated occupancy or countdown pressure.
+
+### 10.6 No Forced Proceed
+
+Exit, defer, and release paths always dignified — Occupancy Readiness Integrity and Occupancy Boundary Clarity require it.
+
+---
+
+## 11. Transition to Settled Tenancy
+
+Occupancy readiness bridges **occupancy execution readiness judgment** and **settled tenancy experience** without owning ongoing landlord-tenant relationship, rent lifecycle management, or property management.
+
+### 11.1 Handoff Preconditions
+
+Transition toward forward Settled Tenancy chapters is responsible when user engaged occupancy readiness judgment, **Occupancy Readiness Confidence** supports forward attention, **Occupancy Readiness Boundaries** are understood, **Occupancy Boundary Clarity** is adequate, and **Listing Integrity** remains intact where applicable.
+
+### 11.2 What Occupancy Readiness Supplies
+
+Occupancy readiness supplies **occupancy execution readiness judgment** — what engagement established, what remains pending, what prior stages could not resolve. Forward settled tenancy chapters define **ongoing tenancy experience** — this chapter does not redefine it.
+
+The handoff contract:
+
+- Settled tenancy candidate preserves **continuity** from occupancy engagement  
+- Preparation context informs forward attention — boundary limits remain visible  
+- Proceed toward settled tenancy **does not imply** property management or ongoing tenancy operated through Rento  
+- Release does not erase forward path for other candidates  
+
+### 11.3 Explicitly Out of Scope — Forward to Settled Tenancy
+
+The following belong to **Settled Tenancy** forward chapters:
+
+- **Ongoing landlord-tenant relationship experience**  
+- **Rent lifecycle management** beyond occupancy commencement  
+- **Maintenance and repair experience** during tenancy  
+- **Tenancy dispute and escalation experience**  
+- **Property management operations**  
+
+### 11.4 Defer Across Boundary
+
+User may defer settled tenancy attention after occupancy engagement — defer is valid; confidence and persistence preserved.
+
+### 11.5 Forward Reference
+
+Settled tenancy chapters follow per Chapter 37 §15.4 and Chapter 39 §11.5 — Occupancy Readiness must not pretend to satisfy **settled tenancy** or **property management**.
+
+### 11.6 Housing Obligation Trilogy Completion
+
+| Stage | Chapter | Execution dimension |
+|-------|---------|---------------------|
+| Legal execution readiness | Chapter 38 | Legal Readiness Experience |
+| Financial execution readiness | Chapter 39 | Financial Readiness Experience |
+| Occupancy execution readiness | **Chapter 40** | **Occupancy Readiness Experience** |
+
+Housing Obligation **execution readiness** is architecturally complete upon approval of this chapter. Settled tenancy and platform role blocks remain separate forward domains per MASTER_ROADMAP.
+
+---
+
+## 12. Mobile & Accessibility Considerations
+
+Mobile is the **primary occupancy readiness preparation and judgment surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Pre-engagement review** | Property identity, financial context, boundaries reachable before acting |
+| **One-handed deliberation** | Defer, release, and judgment reachable during interruption |
+| **Partner handoff** | Share preparation truth — not viral engagement |
+| **Glance legibility** | Posture and property identity visible without hunt |
+| **Interrupt tolerance** | Preparation state stable across interruption |
+| **Post-engagement reflection** | Calm proceed/defer/release capture — not forced move-in |
+
+Occupancy readiness must be **inclusive** — textual and semantic equivalents for posture and boundaries; plain language; calm tone without weaponized anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 13. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Logistics Theater** | Impersonates coordinator or handover authority — scope violation |
+| **Simulated Occupancy** | Unconfirmed commencement presented as complete — integrity violation |
+| **Forced Move-In** | Blocks exit, defer, or release — traps users |
+| **Move-In Pressure** | Urgency, countdown, anxiety amplification — violates calm environment |
+| **False Occupancy Certainty** | Implies favorable or certified handover — boundary violation |
+| **Occupancy Gamification** | Badges, streaks, funnel finish-line — trivializes seriousness |
+| **Conversion Theater** | Occupancy readiness as platform success metric — judgment violation |
+| Conflating financial readiness, viewing, or platform attestation with occupancy readiness | Scope conflation across chapters |
+| Thinner preparation than financial readiness | Amnesia at occupancy boundary |
+| Property management or settled tenancy masquerading as occupancy readiness | Forward chapter scope violation |
+| Shame copy for defer, release, or pending commencement | Dignified outcome violation |
+
+---
+
+## 14. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, occupancy readiness initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Occupancy Readiness Environment**, **Occupancy Readiness Confidence**, **Occupancy Boundary Clarity**, **Occupancy Readiness Boundaries**, and **Transition to Settled Tenancy** integrity.
+
+**Review gate:** No occupancy readiness surface ships without checklist against all official concepts, principles, outcomes, and integrity requirements defined herein.
+
+**Forward chapters:** Settled tenancy extends post-occupancy-readiness outcomes — this chapter completes the Housing Obligation execution trilogy.
+
+---
+
+## 15. Chapter Summary
+
+Occupancy readiness converts **financial execution readiness judgment** into **responsible occupancy execution readiness with occupancy boundary clarity** — the third and final Housing Obligation execution gate.
+
+This chapter defines Environment, Readiness, Preparation, Confidence, Boundaries, Boundary Clarity, and Integrity; principles of preparation over pressure and boundaries over theater; proceed/defer/release outcomes; platform-never-creates-occupancy posture; integration with Chapters 16, 20, 31–39; and honest transition toward Settled Tenancy without owning ongoing tenancy or property management.
+
+**Housing Obligation flow:**
+
+Property Detail (Ch 31) → Media (Ch 32) → Comparison (Ch 33) → Verification (Ch 34) → Viewing (Ch 35) → Application (Ch 36) → Commitment (Ch 37) → Legal Readiness (Ch 38) → Financial Readiness (Ch 39) → **Occupancy Readiness (Ch 40)** → settled tenancy (forward)
+
+---
+
+## 16. Design Director Review
+
+**Chapter:** 40 — Occupancy Readiness Experience  
+**Section:** XXXVII — Occupancy Readiness  
+**Review type:** Initial standard adoption
+
+### 16.1 Approval Statement
+
+- **Architecture Review** — APPROVED  
+- **Required Architectural Amendments** — INTEGRATED (F-01, F-02)  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **occupancy readiness experience contract** for Rento. All occupancy readiness product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 16.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; occupancy readiness context; identity at occupancy boundary |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 31 — Property Detail Experience | Property Confidence, Listing Integrity, information layer |
+| Chapter 32 — Media Experience | Expected Property, evidence layer |
+| Chapter 33 — Property Comparison Experience | Narrowing context; partner shared occupancy readiness |
+| Chapter 34 — Property Verification Experience | Proceeding Readiness, Verification Boundaries |
+| Chapter 35 — Viewing Experience | Viewing Confidence, Viewing Boundaries; informs but does not substitute occupancy readiness |
+| Chapter 36 — Application Experience | Application Confidence, Application Boundaries |
+| Chapter 37 — Commitment Experience | Commitment Confidence, Commitment Boundaries; Housing Obligation trilogy anchor |
+| Chapter 38 — Legal Readiness Experience | Legal Readiness Confidence, Legal Readiness Boundaries |
+| Chapter 39 — Financial Readiness Experience | Financial Readiness Confidence, Financial Readiness Boundaries; financial readiness handoff |
+| Forward chapters — Settled Tenancy | Ongoing tenancy experience — forward |
+
+### 16.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Occupancy readiness positioned as occupancy execution readiness boundary — not financial readiness, legal readiness, viewing, verification, contact, move-in completion, property management, or settled tenancy  
+2. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+3. Official concepts reusable in forward settled tenancy chapters  
+4. Occupancy Readiness and Occupancy Readiness Confidence clearly scoped — no overlap with Financial Readiness, Financial Readiness Confidence, Viewing Readiness, or Viewing Confidence  
+5. Occupancy Boundary Clarity defined without simulating move-in completion  
+6. Platform-never-creates-occupancy principle explicit  
+7. Move-in readiness informal references subsumed under Occupancy Readiness — no separate architectural layer  
+8. Viewing informs but never substitutes Occupancy Readiness — Ch 35 ↔ Ch 40 boundary preserved  
+9. Transition to Settled Tenancy honest — occupancy readiness does not pretend settled tenancy or property management  
+10. Housing Obligation execution trilogy completion preserved  
+11. Proceed, defer, and release equally valid  
+12. Mobile-first order explicit  
+13. No implementation leakage  
+
+### 16.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on occupancy readiness experience philosophy |
+| Head of Product Design | Housing Obligation trilogy completion parity |
+| Senior UX Designer | Occupancy boundary communication, mobile rhythm |
+| Product Management | Occupancy boundary honesty and marketplace integrity |
+| Content Design Lead | Scope language, boundary honesty, pending commencement copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual occupancy readiness access and anxiety-sensitive design |
+
+### 16.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new occupancy readiness experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 16.6 Design Director Closing Note
+
+Users do not rent move-in completion screens. They rent homes — and they deserve to engage occupancy commencement responsibility only when prepared, only with occupancy boundary clarity, and never confuse platform-supported readiness with move-in executed, tenancy commenced, or manufactured handover. This chapter exists so Rento helps people cross the occupancy execution boundary with honest commencement understanding, voluntary judgment, and dignity whether they proceed, defer, or release — completing the Housing Obligation execution trilogy with integrity.
+
+---
+
+**End of Chapter 40**
 
