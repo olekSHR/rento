@@ -34,10 +34,11 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–37 |
-| **Latest approved** | Chapter 37 — Commitment Experience |
-| **Current chapter** | Chapter 38 — not yet started |
+| **Approved chapters** | 1–39 |
+| **Latest approved** | Chapter 39 — Financial Readiness Experience |
+| **Current chapter** | Chapter 40 — not yet started |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
+| **Housing Obligation** | **IN PROGRESS** (Chapters 38–39 — legal and financial execution readiness approved) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Remaining work
