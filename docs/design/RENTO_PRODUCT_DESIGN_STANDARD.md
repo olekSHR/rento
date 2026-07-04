@@ -79,12 +79,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 35 | [Viewing Experience](#chapter-35--viewing-experience) | Viewing Experience | APPROVED |
 | 36 | [Application Experience](#chapter-36--application-experience) | Application Experience | APPROVED |
 | 37 | [Commitment Experience](#chapter-37--commitment-experience) | Commitment Experience | APPROVED |
+| 38 | [Legal Readiness Experience](#chapter-38--legal-readiness-experience) | Legal Readiness | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title |
 |-----|-------|
-| 38+ | Future chapters per design standard roadmap |
+| 39+ | Future chapters per design standard roadmap |
 
 ---
 
@@ -111,6 +112,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 1.0 | 2026-07-04 | Chapter 35 — Viewing Experience approved and added |
 | 1.0 | 2026-07-04 | Chapter 36 — Application Experience approved and added — Completed Decision Experience progression from Viewing to Application and established the architectural standard for formal interest expression before Commitment Experience |
 | 1.0 | 2026-07-04 | Chapter 37 — Commitment Experience approved and added — Completed Decision Experience judgment progression from Application to Commitment and established the architectural standard for housing obligation intensification before forward housing obligation chapters |
+| 1.0 | 2026-07-04 | Chapter 38 — Legal Readiness Experience approved and added — Opened Housing Obligation block with legal readiness execution gate after Decision Experience completion and established the architectural standard for responsible legal execution readiness before Financial Readiness |
 
 ---
 
@@ -36663,4 +36665,861 @@ Users do not rent commitment buttons. They rent homes — and they deserve to in
 ---
 
 **End of Chapter 37**
+
+---
+
+## Chapter 38 — Legal Readiness Experience
+
+**Section:** XXXV — Legal Readiness  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–37; opens the Housing Obligation block after Commitment Experience (Chapter 37); operationalizes Commitment Confidence (Chapter 37), Commitment Boundaries (Chapter 37), Mutual Expectation Clarity (Chapter 37), and contact ethics (Chapter 16); defines principles only — not lease contracts, legal advice, e-signature systems, deposit collection, payment flows, jurisdiction-specific rental law, negotiation workflows, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **legal readiness experience philosophy** for Rento — how users **transition from housing obligation intensification judgment toward responsible legal readiness** while preserving informed decision making, trust, boundary clarity, and long-term platform integrity.
+
+Legal readiness is not commitment. Commitment asks *am I ready to meaningfully intensify my housing obligation toward this home — with mutual expectation clarity and full decision arc truth* (Chapter 37). Legal readiness asks *am I prepared to engage with lease-related legal responsibility responsibly — with honest understanding of what Rento can and cannot establish about contracts, terms, and legal outcomes*.
+
+Legal readiness is not application. Application asks *am I ready to express formal housing interest* (Chapter 36). Legal readiness assumes the Decision Experience arc — evaluation, verification, viewing, application, and typically commitment judgment — occurred or was consciously bypassed with acknowledged gaps — and governs **legal execution readiness** beyond obligation intensification, with honest scope limits.
+
+Legal readiness is not property verification. Verification asks *can I trust this home enough to invest the next digital step* (Chapter 34). Verification establishes product-appropriate proceeding confidence — not legal contract review, tenant rights analysis, or jurisdiction-specific lease interpretation.
+
+**The platform never creates legal agreement.** Rento does not manufacture signed leases, bilateral contract outcomes, legal certification, or enforceable housing agreements. The platform **supports informed legal readiness** — helping users and realtors honor the legal boundary with integrity, dignity, and honest scope limits about contract engagement.
+
+Where Chapter 31 helps users evaluate one home, Chapter 32 helps them trust visual evidence, Chapter 33 helps them narrow candidates, Chapter 34 helps them confirm proceeding trust, Chapter 35 helps them reconcile physical truth, Chapter 36 helps them express formal interest, and Chapter 37 helps them intensify housing obligation with mutual expectation clarity, this chapter helps users **cross from obligation intensification toward responsible legal readiness** — prepared, boundary-aware, and able to proceed, defer, or release with clarity about what legal readiness can and cannot establish.
+
+The product must help users answer five legal readiness questions:
+
+1. **Am I prepared for lease-related legal responsibility — do I understand what legal readiness means on Rento?**  
+2. **Does my commitment judgment and full decision arc support legal attention — or am I acting on pressure to sign?**  
+3. **Are legal boundaries clear — what does Rento support versus what counsel, realtor process, and jurisdiction law must settle?**  
+4. **Is listing and commitment context still current — and does the property still honestly merit legal attention?**  
+5. **Can I proceed, defer, or release legal readiness intent without trap, shame, or legal theater?**
+
+This chapter governs legal readiness as the **first Housing Obligation execution stage** — environment quality, preparation, readiness, confidence, boundary clarity, outcomes, and calm mobile-first legal readiness judgment. It does **not** specify contract templates, e-signature flows, deposit systems, payment schedules, or engineering architecture.
+
+**Relationship to prior chapters:** **Commitment Confidence** (Chapter 37) and **Commitment Boundaries** (Chapter 37) govern whether obligation intensification supports forward legal attention. **Mutual Expectation Clarity** (Chapter 37) governs bilateral expectation honesty that legal readiness must not simulate into agreement. This chapter defines **Legal Readiness Environment**, **Legal Readiness**, **Legal Readiness Preparation**, **Legal Readiness Confidence**, **Legal Readiness Boundaries**, **Legal Readiness Integrity**, and **Legal Boundary Clarity** — how users and the product honor the legal execution boundary with integrity.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Understanding over signing pressure** | Legal readiness supports contract engagement judgment — not signature conversion or funnel completion |
+| **Boundaries over legal theater** | Rento and users know what legal readiness can and cannot establish — no simulated agreement |
+| **Prepared over rushed** | Legal readiness follows commitment and Decision Experience judgment — not manufactured urgency to sign |
+| **Clarity over simulated agreement** | Pending, draft, and unsigned states remain honest — product never implies lease executed |
+| **Responsibility over platform overclaim** | Legal counsel, jurisdiction law, and bilateral contract outcome remain outside Rento establishment |
+| **Continuity over reset** | Evaluation, verification, viewing, application, commitment, and legal readiness context preserved |
+| **Reversible over trapped** | Defer and release legal readiness intent remain dignified — equal to proceed |
+| **Calm over pressure** | No countdown-driven signing, no legal anxiety amplification, no false exclusivity at contract boundary |
+| **Mobile deliberation first** | Design for considered mobile legal readiness judgment — then tablet, then desktop |
+| **Legal Readiness Confidence goal** | Every legal readiness outcome serves honest proceed, defer, or release toward financial readiness |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, contract viewer component guide, or e-signature pattern library  
+- An implementation plan, API contract, document storage architecture, or legal workflow engine  
+- A replacement for Chapter 16 — Contact & Communication Experience  
+- A replacement for Chapter 37 — Commitment Experience  
+- A moderation, fraud detection, or identity verification operations chapter (Chapter 20)  
+- Legal advice, tenant rights encyclopedia, jurisdiction-specific rental law guide, or contract enforcement manual  
+- A lease drafting, clause recommendation, or legal qualification certification system  
+- A deposit handling, rent payment, guarantor verification, or financial settlement chapter (forward Financial Readiness chapter)  
+- A move-in planning, keys handover, or occupancy execution chapter (forward occupancy readiness chapters)  
+- A comparison, verification, viewing, application, or commitment depth chapter (Chapters 33–37)  
+- A realtor lease management console, contract lifecycle operations spec, or negotiation workflow  
+- A **Legal Lease Review Experience** chapter identity — legal lease review is **in-scope content**, not chapter title or architectural identity  
+
+This chapter defines the **product experience of responsible legal readiness** on Rento. It does **not** define legal contracts, counsel relationships, jurisdiction-specific procedures, financial settlement, or implementation workflows.
+
+If the question is *how to build* an e-signature flow or *which API* stores lease documents — this chapter does not answer it. If the question is *what legal readiness must accomplish for housing decision confidence, legal boundary clarity, and platform integrity* — this chapter does.
+
+Legal readiness is **not** legal advice, legal certification, lease execution, payment readiness, or move-in readiness. Legal readiness **is** responsible product-supported judgment about engaging with lease-related legal responsibility — with honest boundaries, continuity from commitment, and dignity whether users proceed, defer, or release.
+
+---
+
+## Legal Readiness Environment
+
+**Legal Readiness Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Legal Readiness Environment is the **cognitive and informational conditions under which a user prepares for, reflects on, and engages with lease-related legal responsibility for a specific property** — not the screen layout, but the **quality of the legal readiness decision space** Rento provides.
+
+A sound Legal Readiness Environment is:
+
+- **Prepared** — user knows property identity, commitment context, decision arc truth, and what legal readiness means on Rento  
+- **Oriented** — legal readiness sits legibly in the Housing Journey — not isolated signing theater or legal panic  
+- **Grounded** — evaluation, verification, viewing, application, and commitment truth available during preparation — not amnesia at legal boundary  
+- **Boundary-legible** — user understands what Rento supports versus what counsel and bilateral process must settle  
+- **Bounded** — legal readiness scope legible; product does not overclaim what engagement establishes  
+- **Voluntary** — user initiates legal attention; platform never manufactures agreement  
+- **Reversible** — defer, release, or return to commitment without penalty  
+- **Calm** — no countdown theater, no false exclusivity, no pressure to sign before ready  
+
+Chapter 31 established **Decision Environment** for evaluation. Chapter 37 established **Commitment Environment** for obligation intensification judgment. Legal Readiness Environment is the **legal execution counterpart** — the governed space where users move from *"I intensified housing obligation — with mutual expectation clarity"* to *"I engaged legal readiness responsibly — or chose not to — with legal boundary clarity about what happens next."*
+
+Legal Readiness Environment is reusable across legal readiness preparation, contract engagement posture, legal readiness outcome interpretation, and forward financial and occupancy readiness chapters.
+
+---
+
+## Legal Readiness
+
+**Legal Readiness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Legal Readiness is the user's and product's shared state where **engaging with lease-related legal responsibility for a specific property is appropriate** — because Commitment Confidence (Chapter 37) or equivalent informed judgment supports forward legal attention, Legal Readiness Preparation is sufficient, Legal Boundary Clarity is adequate, and listing truth remains current.
+
+Legal Readiness is distinct from **Commitment Readiness** (Chapter 37): Commitment Readiness governs whether **housing obligation intensification** is responsible; Legal Readiness governs whether **legal execution attention** is responsible given commitment outcome, preparation sufficiency, legal boundary clarity, and listing state.
+
+Legal Readiness is distinct from **Application Readiness** (Chapter 36): Application Readiness governs whether **formal housing interest expression** is responsible; Legal Readiness governs whether **lease-related legal engagement** is responsible after the evaluation-to-commitment arc.
+
+Legal Readiness is distinct from **Proceeding Readiness** (Chapter 34): Proceeding Readiness governs whether **commitment escalation in principle** is responsible after verification; Legal Readiness governs whether **legal execution attention for a specific property** is responsible after obligation intensification judgment and Legal Readiness Boundaries understood.
+
+Legal Readiness is distinct from **Property Verification** (Chapter 34): Property verification governs **digital proceeding trust** for a listing; Legal Readiness governs **legal responsibility engagement judgment** — whether user is prepared to attend to contract-related obligations honestly, not whether the listing passed platform verification.
+
+Legal Readiness is distinct from **Platform Trust Attestation** (Chapter 20): Platform attestation governs **what Rento independently confirms** about listing and realtor integrity; Legal Readiness governs **user preparedness for legal responsibility** — attestation does not certify legal readiness or contract fitness.
+
+Legal Readiness is distinct from **legal advice**: Legal Readiness governs **product-supported judgment posture** about contract engagement scope; it does not provide counsel, interpret jurisdiction law, or recommend contractual outcomes.
+
+Legal Readiness is distinct from **lease execution**: Legal Readiness governs **preparation and engagement posture** before and during responsible contract attention; it does not establish signed agreement, enforce terms, or complete tenancy.
+
+Legal Readiness is distinct from **payment readiness** and **move-in readiness**: Legal Readiness governs the **legal execution readiness dimension** (Chapter 37 §15.4); deposit handling, rent payment, guarantor requirements, payment schedules, and financial settlement belong to forward Financial Readiness chapters; keys, inventory, and occupancy handover belong to forward occupancy readiness chapters.
+
+Legal Readiness requires:
+
+- **Listing Integrity** intact — property still honestly available where relevant (Chapter 31)  
+- **Commitment Confidence** sufficient for legal attention — or user explicitly chooses legal readiness despite acknowledged commitment gaps with eyes open  
+- **Legal Readiness Preparation** adequate — user knows what legal engagement means and what product could not establish through commitment  
+- **Legal Boundary Clarity** adequate — user understands Rento scope limits and professional responsibility boundaries  
+- **Identity and property clarity** — user knows which home, which realtor, which process scope applies (Chapter 16)  
+- Product does not **manufacture readiness** through signing pressure, false contract certainty, simulated agreement, or legal theater  
+
+Legal Readiness is not a funnel stage to maximize. It is a **legal execution trust gate** — the first Housing Obligation readiness gate after Decision Experience completion — consistent with Commitment Readiness, Application Readiness, and prior Decision Experience readiness ethics.
+
+Legal Readiness connects Legal Readiness Confidence to legal engagement posture and legal readiness outcomes.
+
+---
+
+## Legal Readiness Preparation
+
+**Legal Readiness Preparation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Legal Readiness Preparation is the user's **informed readiness to engage with lease-related legal responsibility for a specific property** — synthesizing evaluation, verification, viewing, application, commitment, and outcome context into **conscious legal attention intent** before contract engagement intensifies.
+
+Legal Readiness Preparation includes:
+
+- **Post-commitment reconciliation** — user carries forward what commitment established, what remains pending, and what prior stages could not resolve (Chapter 37)  
+- **Legal scope understanding** — what legal readiness means on Rento versus what counsel review, financial settlement, and move-in planning require separately (forward chapters)  
+- **Professional responsibility acknowledgment** — user understands contract terms, tenant rights, and jurisdiction-specific obligations may require counsel or qualified review outside Rento  
+- **Remaining uncertainty acknowledgment** — gaps commitment could not resolve remain visible — not hidden by signing momentum  
+- **Partner alignment** — shared decision participants carry **identical property truth, commitment context, and legal readiness intent** (Chapter 33 §14.1, Chapter 37 §9.3)  
+- **Process expectations** — legal readiness expresses responsible contract engagement posture; it does not guarantee selection, favorable terms, or housing outcome  
+
+Legal Readiness Preparation is distinct from **Legal Readiness**: Legal Readiness Preparation governs **what the user knows before engaging legal responsibility**; Legal Readiness governs whether **engagement is appropriate** given that knowledge, legal boundary clarity, and listing state.
+
+Legal Readiness Preparation extends **Commitment Boundaries** (Chapter 37) into actionable legal attention intent — obligation intensification unknowns become acknowledged limits, not suppressed by signing theater.
+
+Legal Readiness Preparation does not prescribe lease clauses, deposit amounts, payment methods, or jurisdiction-specific legal procedures. It governs **product-supported judgment and legal boundary posture** — user engages as an informed participant, not a passive signature target.
+
+---
+
+## Legal Readiness Confidence
+
+**Legal Readiness Confidence** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Legal Readiness Confidence is the user's **justified belief that engaging with legal readiness — preparing for, proceeding with, deferring, or releasing legal attention — supports sound housing judgment** — before, during, and after legal readiness engagement.
+
+Legal Readiness Confidence rises when:
+
+- **Legal Readiness Preparation** aligns with listing, commitment, and decision arc truth — user knows what they are engaging toward and why  
+- **Commitment outcome** and legal intent **reconcile honestly** — surprise at legal readiness stage indicates prior stage failure, not user error  
+- **Legal Readiness Boundaries** and **Legal Boundary Clarity** understood — user knows what engagement can and cannot establish  
+- Legal attention is **voluntary and informed** — not pressure-driven signing  
+- Post-engagement **proceed, defer, or release** remains dignified based on boundary clarity and contract posture honesty  
+
+Legal Readiness Confidence falls when product simulates signed agreement before it exists, hides preparation gaps, pressures signing before Legal Readiness, treats legal engagement as automatic lease execution, provides legal advice theater, or gamifies contract progression.
+
+Legal Readiness Confidence is distinct from **Commitment Confidence** (Chapter 37): Commitment Confidence governs **housing obligation intensification judgment**; Legal Readiness Confidence governs **legal execution engagement judgment** — whether legal readiness attention was worth conducting and what it revealed for next steps.
+
+Legal Readiness Confidence is distinct from **Application Confidence** (Chapter 36): Application Confidence governs **formal interest expression judgment**; Legal Readiness Confidence governs **legal responsibility engagement judgment** after the evaluation-to-commitment arc.
+
+Legal Readiness Confidence is distinct from **Verification Confidence** (Chapter 34): Verification Confidence governs **digital proceeding judgment**; Legal Readiness Confidence governs **legal readiness judgment** after obligation intensification.
+
+Legal Readiness Confidence is distinct from **Property Confidence** (Chapter 31): Property Confidence governs whether a listing merits evaluation attention; Legal Readiness Confidence governs whether **legal execution engagement** supports justified proceed or dignified release.
+
+---
+
+## Legal Readiness Boundaries
+
+**Legal Readiness Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Legal Readiness Boundaries define **what engaging with legal readiness through Rento can and cannot establish** — the scope beyond which counsel, realtor contract process, financial settlement, move-in execution, or bilateral agreement must carry responsibility.
+
+Legal Readiness Boundaries **extend** Commitment Boundaries (Chapter 37), Application Boundaries (Chapter 36), Viewing Boundaries (Chapter 35), and Verification Boundaries (Chapter 34) — obligation intensification, formal-interest, physical, and digital limits become legal execution limits honestly stated.
+
+Rento legal readiness experience **can** support:
+
+- **Legal readiness judgment** — user signals responsible attention to lease-related legal obligations through governed product posture  
+- **Legal boundary clarity** — user understands what Rento supports versus what must settle elsewhere  
+- **Continuity of judgment** — evaluation through commitment context preserved at legal boundary  
+- **Contract understanding clarity** — user understands scope of engagement without simulated legal outcome  
+- **Outcome clarity** — user understands legal readiness proceeded, deferred, or released — without false certainty  
+- **Post-engagement judgment** — proceed toward financial readiness, defer for counsel or comparison, or release with clarity  
+
+Rento legal readiness experience **cannot** substitute for:
+
+- **Bilateral housing agreement** — legal readiness engagement does not create signed lease  
+- **Legal advice or counsel** — contract interpretation, tenant rights analysis, and jurisdiction-specific guidance remain professional or user responsibility  
+- **Legal certification** — Rento does not certify user, listing, or contract as legally fit  
+- **Realtor contract authority** — lease terms, negotiation, and acceptance belong to applicable bilateral process  
+- **Financial settlement** — deposits, rent payment, guarantor requirements, and payment schedules remain forward Financial Readiness scope  
+- **Move-in execution** — keys, inventory, and occupancy handover remain forward occupancy readiness scope  
+- **Platform attestation of legal outcome** — Rento does not certify contract success beyond defined marketplace scope (Chapter 20)  
+- **Lease enforcement** — dispute resolution, breach handling, and contract lifecycle enforcement remain outside product establishment  
+
+Legal Readiness Boundaries protect users and the platform: Rento must **never imply legal readiness equals lease executed**, and must **never hide that financial and occupancy steps remain separate responsibilities**.
+
+**The platform never creates legal agreement.** The platform only supports informed legal readiness within these boundaries.
+
+Legal Readiness Boundaries are reusable across forward financial readiness, occupancy readiness, and settled tenancy chapters — each stage inherits honest scope limits from legal readiness.
+
+---
+
+## Legal Readiness Integrity
+
+**Legal Readiness Integrity** is the **honesty of the legal readiness experience itself** — product does not simulate agreement, does not hide Legal Readiness Boundaries, does not pressure signing when Legal Readiness is insufficient, does not treat defer or release as user failure by default, does not provide legal advice theater, and does not gamify contract progression.
+
+Legal Readiness Integrity requires:
+
+- **No simulated agreement** — unsigned remains unsigned; draft remains draft; pending remains honestly communicated  
+- **No legal advice theater** — product does not impersonate counsel or jurisdiction authority  
+- **No false contract certainty** — legal readiness does not imply favorable terms or guaranteed outcome  
+- **No signing gamification** — progress badges, streaks, or completion meters for legal engagement prohibited  
+- **No psychological pressure** — urgency, scarcity framing, or countdown-driven signing prohibited  
+- **No artificial legal readiness** — platform does not auto-advance or pre-sign on user's behalf  
+- **No forced proceed** — exit, defer, and release always dignified  
+- **Boundary visibility** — Legal Readiness Boundaries legible at engagement moment  
+- **Arc honesty** — prior stage unknowns not erased at legal boundary  
+
+Legal Readiness Integrity parallels **Commitment Integrity** (Chapter 37), **Application Integrity** (Chapter 36), **Viewing Integrity** (Chapter 35), **Assessment Integrity** (Chapter 34), and **Comparison Integrity** (Chapter 33).
+
+Legal Readiness Integrity protects **long-term platform integrity** — short-term signing pressure that erodes trust destroys marketplace value in local rental markets.
+
+---
+
+## 2. Role in the Housing Journey
+
+Legal readiness sits at the **opening boundary of Housing Obligation execution** in the Housing Journey — after commitment establishes obligation intensification judgment, before financial and occupancy execution readiness intensify in forward chapters.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| Narrowing (Chapter 33) | Compare | Which candidates survive scrutiny? |
+| Verification (Chapter 34) | Verify | Can I trust this home enough to proceed digitally? |
+| Viewing (Chapter 35) | Visit | What does this home reveal in person? |
+| Application (Chapter 36) | Express interest | Am I ready to pursue this home formally — with informed consent? |
+| Commitment (Chapter 37) | Intensify obligation | Am I ready to meaningfully intensify housing obligation — with mutual expectation clarity? |
+| **Legal readiness (this chapter)** | **Engage legal responsibility** | **Am I prepared to engage lease-related legal responsibility responsibly — with legal boundary clarity?** |
+| Housing obligation (forward chapters) | Execute further | What happens next toward financial settlement, move-in, and settled tenancy? |
+
+Legal readiness succeeds when it produces **Meaningful Progress** — user engages legal responsibility prepared and boundary-aware, understands what engagement establishes, and proceeds, defer, or releases with clarity — not when user maximizes signature events or rushes past readiness gates.
+
+Legal readiness fails when it optimizes for **signing theater** — fake contract progress, pressure to sign, gamified legal progression, or legal readiness treated as platform conversion rather than housing judgment support.
+
+---
+
+## 3. Relationship to Commitment Experience
+
+Users enter legal readiness **after** Commitment Confidence supports forward legal attention — typically following obligation intensification or conscious proceed with acknowledged commitment unknowns (Chapter 37 §15.1–15.2).
+
+### 3.1 Entry Preconditions
+
+Legal readiness engagement is responsible when:
+
+- User has **Commitment Confidence** or equivalent informed judgment — obligation intensification or evaluation arc yielded sufficient trust to justify legal attention  
+- Candidate is **still honestly available** — Listing Integrity intact (Chapter 31) where relevant  
+- User understands **Commitment Boundaries** and **Legal Readiness Boundaries** — knows what legal readiness must still settle because commitment could not  
+- **Mutual Expectation Clarity** (Chapter 37) and **Legal Boundary Clarity** adequate — user understands bilateral posture without simulated agreement  
+- **Contact path** and realtor identity remain clear (Chapter 16)  
+
+### 3.2 Handoff from Commitment
+
+Chapter 37 supplies **Commitment Confidence**, **Commitment Preparation**, **Commitment Boundaries**, **Mutual Expectation Clarity**, and post-escalation proceed, defer, or release outcomes. Legal readiness must **preserve** commitment outcomes — not reset obligation intensification judgment or hide acknowledged unknowns.
+
+The handoff contract (Chapter 37 §15.2):
+
+- Legal readiness candidate is **the property user committed toward or consciously prioritizes** — not algorithmically substituted  
+- **Legal Readiness Preparation** inherits commitment context — fees, condition gaps, discrepancies, and mutual expectation posture remain visible  
+- Proceed from commitment to legal readiness **does not imply** lease signed, counsel completed, deposit settled, or financial readiness achieved  
+- Defer or release at commitment **does not erase** legal readiness preparation work if user returns with renewed confidence  
+- Commitment outcome **pending** does not default to Legal Readiness — Legal Boundary Clarity requires honest pending posture  
+
+### 3.3 Handoff from Decision Experience Arc
+
+Chapters 31–36 supply **Property Confidence, Expected Property, Verification Confidence, Narrowing Confidence, Viewing Confidence, Application Confidence**, and evaluation continuity. Legal readiness **extends** these through commitment — legal attention carries forward the full decision arc truth.
+
+Facts, evidence, verification, viewing, application, and commitment judgment at legal readiness depth **match** prior stage truth — no legal-only summary layer that contradicts evaluation through commitment.
+
+### 3.4 Proceed Without Commitment Escalation — Exception Posture
+
+When user engages legal readiness before commitment escalation clarity — product must **not** treat absence of commitment judgment as equivalent to Commitment Confidence. Legal Readiness requires **explicit acknowledgment** of obligation intensification unknowns Commitment Boundaries would have addressed. Proceed-without-commitment is valid user choice when informed — not default product posture.
+
+### 3.5 Readiness Distinction Matrix
+
+| Concept | Governs |
+|---------|---------|
+| **Contact Readiness** (Ch 31) | Initial contact after evaluation |
+| **Proceeding Readiness** (Ch 34) | Commitment escalation **in principle** after verification |
+| **Viewing Readiness** (Ch 35) | Physical visit |
+| **Application Readiness** (Ch 36) | Formal interest expression |
+| **Commitment Readiness** (Ch 37) | Meaningful housing obligation intensification |
+| **Legal Readiness** (this chapter) | Responsible lease-related legal engagement |
+
+### 3.6 Confidence Distinction Matrix
+
+| Concept | Governs |
+|---------|---------|
+| **Property Confidence** (Ch 31) | Evaluation attention worthiness |
+| **Verification Confidence** (Ch 34) | Digital proceeding judgment |
+| **Viewing Confidence** (Ch 35) | Physical visit judgment |
+| **Application Confidence** (Ch 36) | Formal interest expression judgment |
+| **Commitment Confidence** (Ch 37) | Housing obligation intensification judgment |
+| **Legal Readiness Confidence** (this chapter) | Legal execution engagement judgment |
+
+### 3.7 Relationship to Contact & Communication Experience (Chapter 16)
+
+Chapter 16 — Contact & Communication Experience remains the **authoritative contract for communication ethics** during legal readiness — identity visibility, calm professional tone, honest scope language, and contact posture at the legal execution boundary.
+
+This chapter **consumes** Chapter 16 ethics during legal readiness engagement — it does **not** redefine contact rules, messaging scope, or realtor identity standards. Legal readiness may deepen contact context — contract timing questions, clarification, partner coordination — but contact behavior remains governed by Chapter 16. Legal readiness must not use contact channels to pressure signing, simulate agreement, or substitute for Legal Readiness Boundaries.
+
+---
+
+## 4. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract** — attestation scope, moderation meaning, verification label honesty, and marketplace integrity.
+
+This chapter **consumes** platform trust signals during legal readiness engagement — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|--------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm about listing and realtor? |
+| **Property verification** | Chapter 34 | Can the user proceed digitally with justified trust? |
+| **Property commitment** | Chapter 37 | Does obligation intensification support sound judgment? |
+| **Legal readiness** | **This chapter** | Does legal execution engagement support sound judgment with legal boundary clarity? |
+
+Division of responsibility:
+
+| Concern | Governing chapter |
+|---------|-------------------|
+| Verification label meaning, moderation status, appeals | Chapter 20 |
+| Fraud prevention philosophy, trust lifecycle | Chapter 20 |
+| Digital proceeding judgment, verification boundaries | Chapter 34 |
+| Obligation intensification, mutual expectation clarity | Chapter 37 |
+| Legal readiness preparation, legal boundary clarity, legal engagement boundaries | **This chapter** |
+| Post-engagement proceed, defer, release toward financial readiness | **This chapter** |
+
+Platform verification badges **inform** legal readiness preparation — they do **not** guarantee contract fitness, selection, or lease outcome. A verified listing does not promise legal readiness success. Legal readiness must **honor** platform attestation scope honestly — attestation does not substitute for counsel, contract review, or Legal Boundary Clarity.
+
+Legal readiness must never **inflate** Chapter 20 attestation into legal certification, contract guarantees, or simulated bilateral agreement.
+
+---
+
+## 5. Relationship to Legal Lease Review
+
+**Legal lease review** — attentive review of contract terms, deposit rules, tenant rights, and jurisdiction-specific obligations — is **in-scope content** of this chapter. It is **not** the chapter identity.
+
+### 5.1 Scope Distinction
+
+| Dimension | Legal lease review (in-scope) | Legal Readiness Experience (chapter identity) |
+|-----------|--------------------------------|------------------------------------------------|
+| **Architectural role** | Content domain within legal readiness | First Housing Obligation execution chapter |
+| **Primary question** | What must user understand about contract engagement? | Is legal attention responsible now — with boundary clarity? |
+| **Product posture** | Supports informed review posture | Governs environment, readiness, confidence, boundaries, outcomes |
+| **Platform limit** | Does not provide counsel or interpret law | Does not create agreement or certify legal fitness |
+
+### 5.2 What Legal Lease Review Means on Rento
+
+Legal lease review on Rento means **responsible user attention to lease-related obligations** — understanding that contract terms, rights, and responsibilities require user judgment and often professional review outside product scope.
+
+Rento **can** support:
+
+- **Awareness** that contract engagement is serious and bounded  
+- **Continuity** of property and commitment context during review posture  
+- **Honest scope language** about what listing information does and does not establish contractually  
+- **Defer ethics** when review timing, counsel access, or preparation is insufficient  
+
+Rento **cannot** substitute for:
+
+- **Qualified legal review** of specific contract language  
+- **Jurisdiction-specific interpretation** of tenant rights or rental law  
+- **Contract drafting, revision, or enforcement**  
+- **Certification** that reviewed terms are favorable or legally sufficient  
+
+### 5.3 Verification vs Legal Lease Review
+
+Chapter 34 defers **legal lease review** to user responsibility. This chapter **defines the product experience** of that deferred responsibility — without conflating listing verification with contract verification.
+
+| Concern | Property Verification (Ch 34) | Legal Lease Review (this chapter scope) |
+|---------|------------------------------|----------------------------------------|
+| **Question** | Can I trust this listing enough to proceed digitally? | Am I prepared to engage contract-related legal responsibility? |
+| **Scope** | Listing truth, attestation consumption, proceeding judgment | Legal boundary clarity, contract engagement posture |
+| **Outcome** | Proceed, defer, or release digitally | Proceed, defer, or release toward financial readiness |
+
+### 5.4 Contract Understanding Clarity
+
+**Contract Understanding Clarity** is a secondary official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Contract Understanding Clarity is the **user's honest legibility of what they understand and do not understand about lease-related obligations** — without the product simulating legal comprehension, favorable terms, or executed agreement.
+
+Contract Understanding Clarity requires:
+
+- **Scope honesty** — user knows what listing facts establish versus what contract terms must separately settle  
+- **Uncertainty visibility** — gaps in understanding remain visible — not hidden by signing momentum  
+- **No simulated comprehension** — product does not imply user understands terms they have not responsibly reviewed  
+- **Professional boundary acknowledgment** — counsel need stated calmly when appropriate — not alarmist, not dismissive  
+
+Contract Understanding Clarity is distinct from **Legal Boundary Clarity**: Legal Boundary Clarity governs **what Rento can and cannot establish**; Contract Understanding Clarity governs **what the user honestly understands** about obligations awaiting contract settlement.
+
+Contract Understanding Clarity is distinct from **Mutual Expectation Clarity** (Chapter 37): Mutual Expectation Clarity governs **bilateral process expectations**; Contract Understanding Clarity governs **user comprehension posture** toward lease-related obligations.
+
+---
+
+## 6. Information Layer in Legal Readiness
+
+Legal readiness treats the **information layer** (Chapter 31) as input to Legal Readiness Preparation and Legal Readiness Confidence.
+
+### 6.1 Currency at Legal Readiness Time
+
+Price, availability, rooms, area, specifications, and fee disclosures must be **current at legal readiness moment** — stale truth invalidates Legal Readiness. User must not engage legal responsibility toward a property listing no longer honestly offers.
+
+### 6.2 Expected Property Carry-Forward
+
+User carries **governed facts** into legal readiness preparation — what the listing claims remains what user expects contract attention to honor. Inconsistency between claim and viewing, application, or commitment reconciliation destroys Legal Readiness Confidence and triggers defer or release — not silent proceed.
+
+### 6.3 Material Gap Awareness
+
+Missing governed fields or ambiguous fees identified at verification, viewing, application, or commitment **remain visible** at legal readiness preparation — Legal Readiness Preparation does not pretend gaps were resolved by legal attention alone.
+
+### 6.4 Fee and Cost Honesty
+
+Legal readiness preparation inherits **price and fee transparency** from evaluation — undisclosed costs discovered at prior stages remain visible; legal readiness does not bury financial surprise under signing momentum. **Financial settlement detail** — deposit amounts, payment schedules, guarantor requirements — remains forward Financial Readiness scope.
+
+### 6.5 Listing Change After Commitment
+
+Material listing change after commitment **resets legal readiness context** honestly — user must re-prepare and re-assess Legal Boundary Clarity, not proceed on stale confidence.
+
+---
+
+## 7. Evidence and Continuity Layer
+
+Legal readiness treats **evidence** (Chapter 32), **physical reconciliation** (Chapter 35), and **Housing Continuity** (Chapter 30) as input to legal readiness judgment.
+
+### 7.1 Decision Arc Carry-Forward
+
+User carries **what evaluation, verification, viewing, application, and commitment established** into legal readiness intent. Gap between Expected Property and reconciled truth must remain **interpretable at legal readiness** — not erased by signing momentum.
+
+### 7.2 Evidence Sufficiency Context
+
+Thin media or partial verification (Chapters 32–34) **increases** legal readiness preparation importance — user knows more uncertainty remains. Rich media and strong verification **do not decrease** legal readiness boundary obligation — legal engagement still does not guarantee housing outcome or contract fitness.
+
+### 7.3 Discrepancy Visibility
+
+Material listing-viewing, listing-application, or listing-commitment discrepancy **must inform** legal readiness posture — product does not encourage legal engagement on known disqualifying gap without explicit user acknowledgment.
+
+### 7.4 Housing Continuity and Context Restoration
+
+Legal readiness participates in **Housing Continuity**, **Decision Persistence**, and **Cognitive Continuity** (Chapter 30).
+
+- Commitment → legal readiness → commitment **preserves obligation judgment where appropriate**  
+- Legal readiness → financial readiness → legal readiness **preserves legal readiness judgment where appropriate**  
+- Detail → legal readiness → detail **preserves evaluation context**  
+- Compare → legal readiness → compare **preserves narrowing context**  
+
+Returning users resume **legal readiness preparation or post-engagement judgment** — not cold start. Context Restoration ethics extend through legal boundary.
+
+### 7.5 Partner and Shared Household Continuity
+
+Shared legal readiness intent requires **identical preparation truth** for all participants — same property facts, same commitment context, same Legal Readiness Boundaries — and **respectful coordination** when counsel access or readiness timing differs.
+
+### 7.6 Abandon Legal Readiness Confidence
+
+Leaving legal readiness without proceed/defer/release decision is **valid** — no blocking modals, no shame. Respectful Silence applies.
+
+---
+
+## 8. Legal Boundary Clarity
+
+**Legal Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Legal Boundary Clarity is the **shared legibility of what Rento, user, realtor, and external process each reasonably own at the legal execution boundary** — without the product simulating legal agreement, counsel role, or contract guarantee.
+
+Legal Boundary Clarity requires:
+
+- **Rento scope honesty** — product supports legal readiness posture; it does not create agreement, provide counsel, or certify contract fitness  
+- **User responsibility honesty** — user understands contract engagement may require qualified review outside Rento  
+- **Realtor process honesty** — product does not imply realtor has delivered final terms, accepted tenant, or executed lease when process remains pending  
+- **Professional boundary acknowledgment** — counsel, notary, or jurisdiction-specific requirements acknowledged calmly when relevant — not as product feature claims  
+- **Pending state legibility** — draft, unsigned, or under-review contract posture reflected honestly — not simulated execution  
+- **No false legal certainty** — legal readiness does not imply terms are favorable, complete, or enforceable through Rento  
+
+Legal Boundary Clarity is distinct from **Legal Readiness Confidence**: Legal Boundary Clarity governs **what each party and the platform reasonably own**; Legal Readiness Confidence governs **whether the user's legal engagement judgment supports sound housing decision**.
+
+Legal Boundary Clarity is distinct from **Mutual Expectation Clarity** (Chapter 37): Mutual Expectation Clarity governs **bilateral process expectations after formal interest**; Legal Boundary Clarity governs **legal execution scope limits** at contract engagement boundary.
+
+Legal Boundary Clarity protects long-term platform integrity: blurred legal boundaries produce disputes, regulatory exposure, reputational harm, and marketplace distrust. Rento must **support clarity without manufacturing agreement or impersonating counsel**.
+
+---
+
+## 9. Legal Readiness Principles
+
+This section answers the chapter's architectural question: *How should users engage lease-related legal responsibility while preserving informed decision making, legal boundary clarity, trust, and long-term platform integrity?*
+
+### 9.1 Voluntary Engagement — Not Platform Creation of Agreement
+
+Legal readiness engagement is **user-initiated housing judgment** — distinct from save, contact, commitment, or platform conversion events. The platform supports; it never creates legal agreement.
+
+### 9.2 Deliberate Over Rushed Signing
+
+Legal attention belongs **after** Legal Readiness — not as default next action after commitment escalation. Product supports pause, reflection, partner discussion, counsel scheduling, comparison return, and contract review before engagement intensifies.
+
+### 9.3 Single Property Clarity
+
+Every legal readiness engagement ties unambiguously to **one listing identity** — user knows which home legal responsibility concerns before acting.
+
+### 9.4 Informed Decision Making Preservation
+
+Full Decision Experience and commitment arc remains **interpretable at legal engagement** — user acts on synthesized judgment, not isolated signing momentum. Information and evidence cooperation (Chapters 31–32) extends through legal readiness preparation.
+
+### 9.5 Legal Boundary Clarity Before Engagement
+
+User should understand **what Rento, user, realtor, and external process each own** before legal attention intensifies — not discover scope mismatch after engagement (Legal Boundary Clarity alignment).
+
+### 9.6 Honest State Language
+
+Product language reflects **actual legal readiness posture** — preparing, engaged, deferred, released, unsigned, pending review — not false progress, simulated agreement, or implied lease execution (Chapter 16 communication ethics alignment).
+
+### 9.7 Responsibility Awareness
+
+User understands legal engagement **intensifies contract-related seriousness** — without legal advice, financial settlement, or move-in specification in this chapter. Responsibility awareness is product-ethical posture, not counsel or contract drafting.
+
+### 9.8 Engagement Without Humiliation
+
+Users who engage legal readiness and defer, release, or remain unsigned deserve **dignified outcome communication** — housing search pacing varies; unsigned or deferred contract posture is normal marketplace outcome, not moral judgment by default.
+
+### 9.9 Quality Over Volume
+
+Product optimizes for **sound legal readiness decisions** — not maximum signature events per user or listing.
+
+### 9.10 Trust Preservation
+
+Legal readiness principles serve **long-term platform integrity** — honest boundaries today preserve marketplace trust tomorrow. Short-term signing pressure violates this principle.
+
+### 9.11 Proceed, Defer, and Release Equality
+
+Proceed, defer, and release are **equally valid** legal readiness outcomes. Product must not privilege proceed through shame, dark retention, or blocked exit for defer or release.
+
+---
+
+## 10. Legal Readiness Outcomes
+
+Legal readiness outcomes are **proceed**, **defer**, and **release** — all valid and equally dignified. Users may **defer or release after engaging legal readiness** — this is intentional product posture, consistent with **Reversible over trapped**.
+
+### 10.1 Proceed
+
+Proceed means user **voluntarily engages legal readiness judgment** toward a specific property with Legal Readiness Preparation, Legal Boundary Clarity, and Legal Readiness Boundaries sufficient. Product supports clarity afterward — what legal attention established, what remains pending, what financial and occupancy steps remain separate responsibilities (forward chapters).
+
+Proceed does **not** mean lease executed, deposit paid, counsel completed, or financial readiness achieved.
+
+### 10.2 Defer
+
+Defer preserves legal readiness intent while acknowledging **insufficient Legal Readiness, Legal Boundary Clarity, or Contract Understanding Clarity** — counsel unavailable, contract not yet received, preparation incomplete, listing truth uncertain, comparison return needed, commitment outcome pending, life timing not right, or partner alignment incomplete. Defer is **not failure** — honest pacing. Housing Journey respects weeks of search and responsible contract review.
+
+Defer must preserve **Decision Persistence** — preparation work not lost on return.
+
+### 10.3 Release
+
+Release removes candidate from active legal readiness consideration **without shame** — trust shifts, listing changes, better candidate emerges, terms unacceptable, mutual expectations irreconcilable, or user reconsiders. Product treats release as **normal decision outcome**, not user moral failure by default.
+
+Release connects to Narrowing Confidence, commitment release, and application release ethics (Chapters 33–37).
+
+### 10.4 Post-Engagement Reconsideration
+
+User may **reconsider after legal readiness engagement** — defer or release remain valid. Legal attention is not irreversible trap. Legal Readiness Boundaries extend here.
+
+### 10.5 Unsigned and Pending Contract Honesty
+
+When contract remains draft, unsigned, or under external review, product maintains **pending honesty** — not simulated execution, not false exclusivity, not countdown-driven signing.
+
+### 10.6 No Forced Proceed
+
+Product must not **block exit** or **manufacture urgency** to force proceed toward signing — Legal Readiness Integrity and Legal Boundary Clarity require dignified defer and release paths.
+
+### 10.7 Proceed, Defer, and Release Equality
+
+Proceed, defer, and release are **equally valid** legal readiness outcomes. Product must not privilege proceed through shame, dark retention, or blocked exit for defer or release.
+
+---
+
+## 11. Transition to Financial Readiness
+
+Legal readiness bridges **legal execution readiness judgment** and **financial execution readiness** without owning deposit, payment, or financial settlement specification.
+
+### 11.1 Handoff Preconditions
+
+Transition toward Financial Readiness Experience (Chapter 39 or equivalent forward chapter) is responsible when:
+
+- User **engaged legal readiness judgment** or consciously proceeds with acknowledged legal unknowns  
+- **Legal Readiness Confidence** supports forward financial attention — engagement did not rest on hidden disqualifying discrepancy  
+- **Legal Readiness Boundaries** understood — user knows financial settlement steps remain separate  
+- **Legal Boundary Clarity** adequate where contract posture affects financial readiness timing  
+- **Listing Integrity** intact — property still honestly available where relevant  
+
+### 11.2 What Legal Readiness Supplies
+
+Legal readiness supplies **legal execution readiness judgment** — what legal attention established, what remains pending, what commitment and prior stages could not resolve. Forward financial readiness chapters will define **financial execution readiness** — this chapter does not redefine it.
+
+The handoff contract:
+
+- Financial readiness candidate is **the property user engaged legally toward or consciously prioritizes** — continuity preserved  
+- **Legal Readiness Preparation context** informs forward attention — fee disclosures, contract posture gaps, and legal boundary limits remain visible  
+- Proceed to financial readiness **does not imply** deposit settled, rent paid, guarantor verified, or payment schedule complete  
+- Release after legal readiness **does not erase** financial path for other candidates — comparison and narrowing context restorable  
+
+### 11.3 Explicitly Out of Scope — Forward to Financial Readiness
+
+The following belong to **Financial Readiness** forward chapters — **outside Chapter 38 scope**:
+
+- **Deposit handling** — deposit collection posture, disclosure, timing, and settlement judgment  
+- **Rent payment** — payment schedules, methods, and ongoing rent obligation engagement  
+- **Guarantor requirements** — guarantor verification posture and financial qualification scope  
+- **Payment schedules** — installment timing, due dates, and financial planning judgment  
+- **Financial settlement** — any product posture governing money movement toward tenancy  
+
+Chapter 38 may **reference** that these steps follow legal readiness — it does **not** define financial readiness, payment readiness, or deposit experience.
+
+### 11.4 Defer Across Boundary
+
+User may **defer financial readiness** after legal readiness engagement — counsel review incomplete, contract terms unresolved, partner alignment, comparison reconsideration, or life timing. Defer is valid; Legal Readiness Confidence and Decision Persistence preserved.
+
+### 11.5 Forward Reference
+
+Deposit handling, rent payment, move-in planning, and settled tenancy chapters follow per Chapter 37 §15.4 — Legal Readiness and Legal Readiness Confidence must not pretend to satisfy **financial readiness** or **occupancy readiness**. Forward reference only.
+
+---
+
+## 12. Mobile & Accessibility Considerations
+
+### 12.1 Mobile Legal Readiness Experience
+
+Mobile is the **primary legal readiness preparation and engagement judgment surface**. Tablet and desktop extend — never reverse.
+
+#### 12.1.1 Mobile Principles
+
+| Principle | Intent |
+|-----------|--------|
+| **Pre-engagement review** | Property identity, commitment context, boundaries, legal boundary posture reachable before acting |
+| **One-handed deliberation** | Defer, release, and engagement judgment reachable during life interruption |
+| **Partner handoff** | Share preparation and listing truth — not viral engagement |
+| **Glance legibility** | Legal readiness posture and property identity visible without hunt |
+| **Interrupt tolerance** | Legal readiness preparation state stable across interruption |
+| **Post-engagement reflection** | Calm capture of proceed, defer, release intent — not forced signing |
+
+#### 12.1.2 Mobile vs Desktop
+
+Desktop may show more simultaneous context — detail beside preparation — but **Legal Readiness Boundaries**, **Legal Readiness Preparation**, **Legal Boundary Clarity**, and **Legal Readiness Confidence** standards remain identical to mobile.
+
+#### 12.1.3 Legal Readiness in Life Context
+
+Legal readiness preparation and engagement judgment happen after work, with partner, before sleep, often alongside counsel scheduling — moments of reflection and household planning. Surfaces support **calm deliberation**, not legal anxiety amplification.
+
+### 12.2 Accessibility Principles
+
+Legal readiness experience must be **inclusive** — serious contract engagement judgment belongs to all users.
+
+#### 12.2.1 Non-Visual Legal Readiness Access
+
+Legal readiness posture, preparation context, boundaries, and legal boundary state require **textual and semantic equivalents** — not color-only status, not icon-only progress.
+
+#### 12.2.2 Cognitive Accessibility
+
+Legal Readiness Environment supports cognitive accessibility: plain language for boundaries and legal scope, predictable structure, calm density — users must judge legal engagement without decoding manipulation or legal jargon theater.
+
+#### 12.2.3 Legal and Contract Anxiety Sensitivity
+
+Legal readiness stage amplifies housing anxiety for many users. Product must not **weaponize** this anxiety — calm tone, honest boundaries, no alarmist legal scare unless genuinely governed harm signal (Chapter 7).
+
+#### 12.2.4 Anxiety Sensitivity
+
+Legal uncertainty is **calm**, not alarmist. Critical status color reserved for genuine harm signals — not every unsigned or pending contract state.
+
+Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 13. Anti-Patterns
+
+The following are **explicitly forbidden** in Rento legal readiness experience philosophy:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Legal Advice Theater** | Product impersonates counsel or interprets jurisdiction law — violates Legal Readiness Boundaries; creates regulatory and trust risk |
+| **Simulated Agreement** | Unsigned presented as executed; draft presented as final — violates Legal Readiness Integrity |
+| **Forced Signing** | Blocks exit, defer, or release — traps users; violates Reversible over trapped |
+| **Signing Pressure** | Urgency framing, countdown timers, anxiety amplification — violates calm Legal Readiness Environment |
+| **False Legal Certainty** | Implies terms favorable, complete, or certified — violates Legal Boundary Clarity |
+| **Legal Readiness Gamification** | Badges, streaks, completion meters for contract engagement — trivializes seriousness |
+| **Conversion Theater** | Legal readiness framed as platform success metric — violates housing judgment posture |
+| "Lease signed!" before actual execution | Violates Legal Readiness Boundaries; destroys Legal Readiness Integrity |
+| Legal readiness pressure immediately after commitment | Violates defer ethics; amplifies anxiety |
+| Legal readiness as mandatory funnel stage | Violates Legal Readiness Boundaries; traps users |
+| Hidden listing or commitment change before legal engagement | Invalidates Legal Readiness; violates Listing Integrity |
+| Thinner preparation context at legal readiness than commitment | Breaks Legal Readiness Integrity; amnesia at legal boundary |
+| Engagement implied as counsel completion | Violates Legal Readiness Boundaries |
+| Conflating commitment readiness with legal readiness | Commitment ≠ legal readiness |
+| Conflating property verification with legal readiness | Verification ≠ contract review |
+| Conflating platform attestation with legal certification | Chapter 20 scope inflation |
+| Auto-advance or pre-checked signing posture | Violates voluntary engagement |
+| Legal readiness event count as engagement metric | Anti-engagement posture violation |
+| Dark retention blocking defer or release | Violates Proceed, Defer, and Release Equality |
+| Deposit or payment UI masquerading as legal readiness | Scope violation; belongs to Financial Readiness |
+| Jurisdiction-specific legal guidance in product voice | Legal advice theater; scalability failure |
+| Shame copy for defer, release, or unsigned state | Violates dignified outcome ethics |
+| Partner share with divergent property or commitment truth | Destroys shared legal readiness preparation |
+
+---
+
+## 14. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, legal readiness initiatives must trace to this chapter and upstream contracts:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New legal readiness surfaces | Legal Readiness Environment and Legal Readiness Confidence impact |
+| Contract engagement posture features | Legal Readiness Principles and Legal Boundary Clarity honored |
+| Legal readiness preparation features | Legal Readiness Preparation and Commitment Boundaries honored |
+| Post-engagement flows | Legal Readiness Outcomes and Transition to Financial Readiness integrity |
+| Notifications about legal readiness posture | Calm tone; no simulated agreement; no signing pressure |
+| Personalization in legal readiness | Does not simulate legal certainty; Memory Transparency |
+| Performance optimization | Does not degrade currency of listing truth at legal readiness time |
+| Conversion or funnel optimization touching legal readiness | Does not violate Legal Readiness Integrity or platform-neutrality posture |
+
+**Review gate:** No legal readiness experience surface ships without checklist against Legal Readiness Environment, Legal Readiness, Legal Readiness Preparation, Legal Readiness Confidence, Legal Readiness Boundaries, Legal Boundary Clarity, Legal Readiness Principles, Legal Readiness Outcomes, and Legal Readiness Integrity.
+
+**Forward chapters:** Financial readiness and occupancy readiness extend post-legal-readiness outcomes — this chapter supplies the legal execution readiness foundation.
+
+---
+
+## 15. Chapter Summary
+
+Legal readiness is where Rento converts **housing obligation intensification judgment** into **responsible legal execution readiness with legal boundary clarity**.
+
+This chapter defines:
+
+- **Position** — First Housing Obligation execution chapter after Decision Experience completion; opens legal readiness dimension per Chapter 37 §15.4  
+- **Environment** — Legal Readiness Environment as legal execution decision space  
+- **Readiness** — Legal Readiness for responsible lease-related legal engagement  
+- **Preparation** — Legal Readiness Preparation for conscious legal attention intent  
+- **Confidence** — Legal Readiness Confidence for engagement worth and outcome judgment  
+- **Boundaries** — Legal Readiness Boundaries for legal scope limits  
+- **Clarity** — Legal Boundary Clarity and Contract Understanding Clarity for honest scope and comprehension posture  
+- **Integrity** — Legal Readiness Integrity for engagement honesty  
+- **Principles** — understanding over signing pressure; boundaries over legal theater; responsibility over platform overclaim  
+- **Outcomes** — proceed, defer, release — all valid and equally dignified  
+- **Platform posture** — the platform never creates legal agreement; it supports informed legal readiness  
+- **Integration** — extends Chapters 31–37; consumes Chapters 16 and 20 without redefining them  
+- **Legal lease review** — in-scope content domain, not chapter identity  
+- **Transition** — handoff toward Financial Readiness without owning deposit, payment, or financial settlement  
+- **Mobile** — primary preparation and judgment surface; calm, reversible, partner-ready  
+
+Legal readiness succeeds when users engage lease-related legal responsibility prepared and boundary-aware, understand what engagement establishes and what it cannot, and proceed, defer, or release with clarity — achieving **Legal Readiness Confidence** as this chapter's desired outcome — knowing what commitment settled, what legal readiness expressed, and what financial and occupancy steps must still settle in forward chapters.
+
+**Housing Obligation flow:**
+
+Property Detail Experience (Chapter 31) → Media Experience (Chapter 32) → Property Comparison Experience (Chapter 33) → Property Verification Experience (Chapter 34) → Viewing Experience (Chapter 35) → Application Experience (Chapter 36) → Commitment Experience (Chapter 37) → **Legal Readiness Experience (Chapter 38)** → Financial Readiness Experience (forward) → occupancy readiness and settled tenancy chapters (forward)
+
+---
+
+## 16. Design Director Review
+
+**Chapter:** 38 — Legal Readiness Experience  
+**Section:** XXXV — Legal Readiness  
+**Review type:** Initial standard adoption
+
+### 16.1 Approval Statement
+
+- **Architecture Review** — APPROVED  
+- **Editorial Pass** — APPROVED  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **legal readiness experience contract** for Rento. All legal readiness product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 16.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; legal readiness context; identity at legal boundary |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 31 — Property Detail Experience | Property Confidence, Listing Integrity, information layer |
+| Chapter 32 — Media Experience | Expected Property, evidence layer, reconciliation input |
+| Chapter 33 — Property Comparison Experience | Narrowing context; partner shared legal readiness |
+| Chapter 34 — Property Verification Experience | Proceeding Readiness, Verification Boundaries; verification handoff |
+| Chapter 35 — Viewing Experience | Viewing Confidence, Viewing Boundaries, viewing handoff |
+| Chapter 36 — Application Experience | Application Confidence, Application Boundaries, application handoff |
+| Chapter 37 — Commitment Experience | Commitment Confidence, Commitment Boundaries, commitment handoff |
+| Forward chapters — Financial and occupancy readiness | Financial settlement, move-in execution — forward |
+
+### 16.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Legal readiness positioned as legal execution readiness boundary — not commitment, verification, contact, financial settlement, move-in, or legal advice  
+2. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+3. New concepts (Legal Readiness Environment, Legal Readiness, Legal Readiness Preparation, Legal Readiness Confidence, Legal Readiness Boundaries, Legal Boundary Clarity, Legal Readiness Integrity, Contract Understanding Clarity) are reusable in forward housing obligation chapters  
+4. Legal Readiness and Legal Readiness Confidence clearly scoped — no overlap with Commitment Readiness, Commitment Confidence, or Proceeding Readiness  
+5. Legal Boundary Clarity and Contract Understanding Clarity defined without simulating agreement or legal advice  
+6. Platform-never-creates-legal-agreement principle explicit  
+7. Transition to Financial Readiness honest — legal readiness does not pretend financial or occupancy readiness  
+8. Anti-manipulation, anti-gamification, and boundary honesty preserved  
+9. Proceed, defer, and release equally valid  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+
+### 16.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on legal readiness experience philosophy |
+| Head of Product Design | Parity with Housing Obligation block opening |
+| Senior UX Designer | Legal boundary communication, preparation depth, mobile rhythm |
+| Product Management | Legal boundary honesty and marketplace integrity |
+| Content Design Lead | Scope language, boundary honesty, unsigned/pending copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual legal readiness access and anxiety-sensitive design |
+
+### 16.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new legal readiness experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 16.6 Design Director Closing Note
+
+Users do not rent signature buttons. They rent homes — and they deserve to engage lease-related legal responsibility only when prepared, only with legal boundary clarity, and never confuse platform-supported readiness with a signed lease, legal counsel, or manufactured agreement. This chapter exists so Rento helps people cross the legal execution boundary with honest preparation, voluntary judgment, and dignity whether they proceed, defer, or release.
+
+---
+
+**End of Chapter 38**
 
