@@ -31478,3 +31478,753 @@ Housing search is a **life process**, not a session metric. Users who save “2 
 ---
 
 **End of Chapter 30**
+
+---
+
+## Chapter 31 — Property Detail Experience
+
+**Section:** XXVIII — Property Detail
+**Status:** APPROVED
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers
+**Authority:** Subordinate to Chapters 1–30; extends Chapter 15 — Listing Detail Experience for the Decision Experience block; operationalizes Search Architecture handoff (Chapters 26–30), Listing Card & Preview System (Chapter 14), Maps & Location (Chapter 29), and Saved Searches & Search Continuity (Chapter 30); defines principles only — not implementation, visual tokens, APIs, or code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **property detail experience** as the opening surface of the **Decision Experience** block — the moment a user moves from discovery to evaluation after arriving from search results, map, saved search, favorites, shared link, or another discovery context.
+
+Property detail is not a classifieds listing page. It is a **calm decision environment** where the user judges whether one residential rental deserves deeper attention, comparison, contact, saving, or confident abandonment.
+
+Where the Search Architecture (Chapters 26–30) helps users find plausible homes, property detail helps them **decide whether a specific home is worth their life attention**. The product must answer five questions quickly and honestly:
+
+1. Is this property **relevant** to my housing need?  
+2. Is the information **trustworthy**?  
+3. Is the property **worth deeper attention**?  
+4. Is the **next action** obvious?  
+5. Can I **confidently contact** the realtor?
+
+This chapter governs information architecture, trust posture, reading rhythm, continuity from search, and decision confidence on the single-property evaluation path. It does **not** specify layouts, components, APIs, database schemas, or implementation plans.
+
+**Relationship to Chapter 15:** Chapter 15 — Listing Detail Experience remains the authoritative **listing detail contract** for structure, reading order, contact ethics, and one-listing truth. This chapter **extends** that contract for the post–Search Architecture journey: search handoff, preview fulfillment, housing continuity into detail, and the Decision Experience block that follows.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Evaluation over engagement** | Detail exists to support housing decisions — not time-on-page, not scroll depth |
+| **Truth before persuasion** | Facts, availability, and identity precede emotional framing |
+| **Preview fulfillment** | Detail must honor what search and card promised — no bait-and-switch |
+| **Calm density** | Enough information to decide; never overwhelm to appear comprehensive |
+| **Contact earned** | Contact is available when evaluation context is sufficient — not extracted by pressure |
+| **One property, one truth** | One authoritative fact set per listing — inherited from Chapter 15 |
+| **Mobile reading first** | Design for thumb, glance, and interruption — then tablet, then desktop |
+| **Continuity respected** | Search memory, place context, and return paths survive entry and exit |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, wireframe, or component guide  
+- An implementation plan, API contract, or data model  
+- A replacement for Chapter 15 — Listing Detail Experience  
+- A contact or messaging chapter (see Chapter 16)  
+- A comparison, shortlist, or application workflow chapter (later Decision Experience chapters)  
+- A realtor workspace or listing creation guide (Chapter 12)  
+- A SEO, analytics, or growth optimization playbook  
+
+If the question is *how to build* a gallery component or *which field* lives in a database — this chapter does not answer it. If the question is *what the user must understand and trust* before acting — this chapter does.
+
+---
+
+## Property Confidence
+
+**Property Confidence** is the user's justified belief in **the property itself** — that this home is a real, honestly represented housing option worth further consideration or confident rejection — after weighing available **information**, **evidence**, and **context** together.
+
+Property Confidence is distinct from Search Confidence (Chapter 13): search confidence concerns whether the hunt is fair and comprehensible; property confidence concerns whether **this home** merits trust as a housing candidate.
+
+Property Confidence is distinct from Information Confidence (below): Information Confidence governs whether facts are understandable and internally consistent; Property Confidence governs whether the user trusts **the listing as a whole** once information, evidence, and discovery context have been evaluated.
+
+Property Confidence rises when:
+
+- Preview Integrity and First Impression Integrity (Chapter 28) are honored at entry  
+- Information and evidence align — evidence supports rather than contradicts stated facts  
+- Discovery expectations from search, results, map, saved search, and preview are confirmed at entry  
+- Availability and moderation status support honest evaluation  
+- Missing or weak information or evidence is acknowledged, not disguised  
+
+Property Confidence falls when detail feels like a different listing than preview promised, when evidence undermines stated information, or when urgency replaces truth.
+
+Property Confidence is a **Decision Experience** concept — it will extend into comparison, shortlist, and contact chapters.
+
+---
+
+## Decision Environment
+
+**Decision Environment** is the cognitive and informational conditions under which a user evaluates one property — not the screen layout, but the **quality of the decision space** Rento provides.
+
+A sound Decision Environment is:
+
+- **Oriented** — user knows where they are in the Housing Journey  
+- **Grounded** — facts before narrative, evidence before persuasion  
+- **Bounded** — one listing, clear scope, no composite confusion  
+- **Action-ready** — save, share, contact, and return paths are legible without hunting  
+- **Calm** — no artificial scarcity, countdown theater, or anxiety cues  
+
+Chapter 15 established listing detail as a decision environment. This chapter positions property detail as the **first governed surface of the Decision Experience block** — where discovery outputs meet evaluation discipline after the Search Architecture is complete.
+
+---
+
+## Listing Integrity
+
+**Listing Integrity** is the alignment between what a listing **claims**, what it **shows**, and what Rento **asserts as available** for public evaluation.
+
+Listing Integrity requires:
+
+- Public detail surfaces reflect **available** listings only (domain moderation rules)  
+- Card, preview, and detail present the **same authoritative fact set**  
+- Realtor-sourced narrative does not override governed facts  
+- Status changes (unavailable, pending, removed) propagate to detail without stale trust  
+
+Listing Integrity protects the marketplace: users must never invest evaluation energy in listings that were never honestly offered or are no longer real options.
+
+---
+
+## Information Confidence
+
+**Information Confidence** is the user's confidence that the **information layer** — the factual description of the property — is understandable, complete enough for evaluation, and internally consistent.
+
+The information layer comprises governed facts: price, rooms, area, location, availability, specifications, and comparable attributes. Information Confidence does not require that the user likes what they read — only that they **understand and trust the presentation of facts** without insider knowledge.
+
+Information Confidence differs from Property Confidence: a listing may present clear information (high Information Confidence) yet fail property-level trust (low Property Confidence) when evidence contradicts facts or the home does not match discovery expectations. Conversely, confusing labels, ambiguous units, or inconsistent presentation undermine Information Confidence even when the underlying listing may be honest.
+
+Rento builds Information Confidence through:
+
+- Stable vocabulary for price, area, rooms, and fees (Chapter 5, Chapter 15)  
+- Predictable section order and progressive disclosure  
+- Plain-language explanation of non-obvious attributes  
+- Explicit handling of missing fields — not silent gaps  
+
+---
+
+## Property Transparency
+
+**Property Transparency** is Rento's obligation to make **limitations, uncertainty, and absence** visible — not only strengths.
+
+Transparency includes:
+
+- When photos are few or old — user understands evidence is partial  
+- When description is thin — product does not fake completeness  
+- When location precision is intentionally bounded — user understands why  
+- When verification applies — and when it does not  
+
+Property Transparency supports long-term rental seriousness: users plan months, not weekends. Hidden weakness discovered late destroys trust faster than an honest gap upfront.
+
+---
+
+## Contact Readiness
+
+**Contact Readiness** (as a Decision Experience concept) is the user's and product's shared state where **contact is appropriate** — evaluation context is sufficient, identity is visible, and the user knows who they will reach.
+
+Chapter 15 and Chapter 16 govern contact ethics and communication. Here, Contact Readiness names the **evaluation threshold** property detail must establish: user understands listing, price context, location, realtor identity, and listing availability before primary contact action feels responsible.
+
+Contact Readiness is not a funnel stage to maximize. It is a **trust gate** Rento refuses to lower.
+
+---
+
+## 2. Role in the Housing Journey
+
+Property detail sits at the **discovery-to-decision boundary** of the Housing Journey.
+
+| Journey phase | User mode | Primary question |
+|---------------|-----------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| **Property detail (this chapter)** | **Evaluate** | **Is this specific home worth my attention?** |
+| Decision Experience (following chapters) | Compare, commit | Which homes survive scrutiny; what happens next? |
+
+Property detail is **Meaningful Progress** when the user leaves with a clear internal answer — contact, save for later, compare, or abandon — not when they scroll longest.
+
+Detail completes the loop opened by search: filters and sort shaped the set; results and map offered candidates; continuity preserved intent; **detail judges one candidate**.
+
+---
+
+## 3. Transition from Search to Property Detail
+
+Entry to property detail must preserve **Cognitive Continuity** and **Result Continuity** from the discovery context.
+
+### 3.1 Entry Paths
+
+| Entry path | Continuity expectation |
+|------------|------------------------|
+| Search results | Return restores list position and filter context where possible |
+| Map | Geographic and place context remain mentally available |
+| Saved search | Search Memory and Search Ownership honored — user recognizes their hunt |
+| Favorites / saved listings | Evaluation resumes — not a cold start |
+| Shared link | Orientation outward — user understands marketplace context |
+| Alert / notification (future) | Claim matches detail — no surprise listing |
+
+### 3.2 Handoff Contract
+
+The handoff from discovery to detail is a **promise**:
+
+- What the card preview showed must be **verifiable** in the first screenful  
+- Price and location anchors must **match** without reconciliation effort  
+- Thumbnail media must **represent** the gallery — not a unrelated hero  
+
+Violation of handoff contract damages **Preview Integrity** and **First Impression Integrity** — user feels tricked before reading begins.
+
+### 3.3 No Amnesia Entry
+
+Detail must not behave as if search never happened. **Context Restoration** on back navigation is a product obligation (Chapter 10, Chapter 30), not a convenience.
+
+---
+
+## 4. Property Detail as a Decision Environment
+
+Property detail organizes evaluation around **clarity, trust, and forward action** — not content volume.
+
+### 4.1 Decision Environment Qualities
+
+| Quality | User experience |
+|---------|-----------------|
+| **Legibility** | I know what kind of home this is within seconds |
+| **Verifiability** | I can check claims against evidence |
+| **Proportionality** | Detail depth matches listing seriousness — not template bloat |
+| **Exit clarity** | I can leave, return, or pivot without penalty |
+| **Action honesty** | Save and contact mean what they say |
+
+### 4.2 Anti-Engagement Posture
+
+Rento does not optimize detail for:
+
+- Infinite related-listing traps  
+- Anxiety timers or false competition  
+- Dark patterns that obscure decline paths  
+- Sticky obstruction of navigation back to search  
+
+**Respectful Silence** applies: the product does not nag within detail to compensate for weak listing quality.
+
+### 4.3 Subordinate Modules
+
+Similar listings, recommendations, and cross-sell modules — when present — are **subordinate** to evaluation of the current property (Chapter 15). They may support Decision Persistence; they must not hijack Decision Environment.
+
+---
+
+## 5. Information Hierarchy
+
+Information hierarchy on property detail follows **decision order**, not data-entry order or realtor convenience.
+
+Property detail supports decisions through two complementary layers. **Information** is the factual description of the property — price, rooms, area, location, availability, specifications, and governed attributes. **Evidence** is what validates or reinforces those facts — photography and media, map context, verified realtor information, supporting descriptions, and other trust-building context. Information states what is claimed; evidence helps the user believe or challenge those claims. Neither layer substitutes for the other; both are required for sound evaluation.
+
+### 5.1 Hierarchy Layers
+
+| Layer | Purpose | Typical content domain |
+|-------|---------|------------------------|
+| **Orientation** | Confirm correct listing | Media anchor, price, location, core type |
+| **Validation** | Verify preview promise | Key facts, availability, characteristic match |
+| **Understanding** | Comprehend living proposition | Description, amenities, constraints |
+| **Trust** | Know who stands behind listing | Realtor identity, verification, moderation |
+| **Action** | Forward paths | Save, share, contact, return |
+
+### 5.2 Reading Order Principle
+
+Users on mobile scan **vertically** in confidence-building order. Critical disqualifiers (wrong price tier, wrong area, unavailable) must appear **before** deep narrative — users should not invest reading energy to discover fundamental mismatch.
+
+### 5.3 Inheritance from Chapter 15
+
+Section order, landmark logic, and fact grouping inherit Chapter 15 — Listing Detail Experience. This chapter adds: hierarchy must **satisfy search handoff** — orientation layer fulfills card promise first.
+
+---
+
+## 6. First 5 Seconds
+
+The first five seconds on property detail are **not primarily a reading moment**. They are an **expectation confirmation** moment — the user verifies whether this property matches the mental model formed during search, search results, maps, saved search, and card preview. **Cognitive Continuity** from discovery must hold: the user should recognize the same listing, the same economic and place anchors, and the same discovery context. Only after expectation is confirmed does deeper evaluation begin.
+
+### 6.1 Five-Second Questions
+
+Within five seconds, the user is not reading deeply — they are **confirming expectations**:
+
+1. Is this the listing I chose from search, results, map, or saved search?  
+2. Do price and place match what preview promised?  
+3. Does initial evidence suggest the listing is real?  
+4. Can I orient and return without losing discovery context?  
+
+If confirmation fails, Property Confidence collapses before evaluation begins.
+
+### 6.2 First Impression Integrity
+
+**First Impression Integrity** (Chapter 28) applies at depth: the first screenful must **confirm**, not contradict, discovery preview. Mismatched hero, relocated price, or hidden location destroys **Preview Integrity** and breaks **Cognitive Continuity**. **Context Restoration** on return depends on this same confirmation holding at entry.
+
+### 6.3 Calm Confirmation
+
+The ideal first five seconds feel like **confirmation** — "yes, this is the home I expected to inspect" — not like **reorientation** — "wait, which listing is this?" Confirmation complete, the user may proceed to read, compare evidence against information, and judge whether the property deserves deeper attention.
+
+---
+
+## 7. Above-the-Fold Meaning
+
+Above-the-fold is not a pixel metric. It is **the first meaningful evaluation unit** on mobile — what a user absorbs before scrolling.
+
+### 7.1 Above-the-Fold Must Carry
+
+| Element class | Why it matters |
+|---------------|----------------|
+| **Identity anchor** | User confirms correct listing |
+| **Economic anchor** | Price and period are unambiguous |
+| **Place anchor** | Location is understandable in search context |
+| **Evidence anchor** | Media proves listing is real |
+| **Navigation anchor** | Return path is visible — search continuity |
+
+### 7.2 Above-the-Fold Must Not Waste
+
+Above-the-fold must not be consumed by:
+
+- Generic platform chrome unrelated to evaluation  
+- Repeated breadcrumbs that duplicate mental model  
+- Marketing banners or promotional modules  
+- Redundant realtor promotion before property identity  
+
+### 7.3 Fold as Promise
+
+What appears above the fold is a **contract**: if it is not true or complete enough to act on, Rento must not place it there.
+
+---
+
+## 8. Property Summary Principles
+
+The property summary is the **compressed truth** of the listing — the minimum fact set for relevance judgment.
+
+### 8.1 Summary Purpose
+
+Summary answers: *What is this home, where is it, what does it cost, and is it structurally what I expected?*
+
+### 8.2 Summary Qualities
+
+| Quality | Standard |
+|---------|----------|
+| **Scannable** | Core facts parse in one pass on mobile |
+| **Comparable** | Facts align with card and filter vocabulary |
+| **Honest** | No euphemism for missing data |
+| **Stable** | Same facts in same logical positions across listings |
+
+### 8.3 Summary vs Narrative
+
+Summary is **governed facts**; description is **realtor narrative**. Summary must never be buried inside marketing prose. Narrative must not duplicate summary as padding.
+
+---
+
+## 9. Price, Location and Core Facts
+
+Price, location, and core facts belong to the **information layer** — the disqualification layer where users eliminate faster than they fall in love.
+
+### 9.1 Price
+
+Price must be:
+
+- **Primary-visible** — not discovered after scroll  
+- **Period-explicit** — monthly rent clarity for long-term residential context  
+- **Context-stable** — matches card, filters, and sort expectations  
+- **Fee-honest** — when fees exist, they are not hidden in fine print emotionally  
+
+Price surprise after search is a **Search Integrity** and **Listing Integrity** failure.
+
+### 9.2 Location
+
+Location must support **Place Confidence** (Chapter 29) and **Spatial Confidence**:
+
+- Understandable relative to search geography  
+- Honest about precision limits  
+- Connected mentally to map context when user arrived from map  
+- Free of false specificity — no fake exact pin when only district is known  
+
+### 9.3 Core Facts
+
+Rooms, area, floor, property type, and similar governed attributes must:
+
+- Use platform vocabulary consistently  
+- Match filter semantics from search  
+- Surface mismatches early — if user filtered three rooms, two rooms must be visible immediately  
+
+---
+
+## 10. Media Relationship
+
+Media belongs to the **evidence layer** — it validates or challenges the information layer; it is not decoration and not a substitute for governed facts.
+
+### 10.1 Media Roles
+
+| Role | Function |
+|------|----------|
+| **Proof** | Listing exists; condition is plausible |
+| **Disqualification** | User sees deal-breakers early |
+| **Emotional calibration** | User imagines living — without fantasy substitution for facts |
+
+### 10.2 Card-to-Gallery Continuity
+
+The card thumbnail set must be **representative** of the gallery. First gallery image must not feel like a bait switch from the card.
+
+### 10.3 Evidence Limits
+
+When media is sparse:
+
+- Property Transparency applies — user understands evidence is partial  
+- Rento does not simulate richness with stock imagery or misleading crops  
+- Text must not compensate with exaggerated claims  
+
+### 10.4 Media and Trust
+
+Manipulated perspective, outdated renovation photos, or missing rooms that description implies — all erode Property Confidence. Moderation and realtor accountability apply (governance chapters).
+
+---
+
+## 11. Trust Signals
+
+Trust signals on property detail reinforce **who vouches for this listing** and **what Rento has verified**.
+
+### 11.1 Signal Categories
+
+| Category | User question answered |
+|----------|------------------------|
+| **Platform trust** | Is Rento showing this responsibly? |
+| **Listing trust** | Is this listing honestly offered? |
+| **Realtor trust** | Who am I dealing with? |
+| **Verification trust** | What has Rento actually checked? |
+
+### 11.2 Signal Discipline
+
+Trust signals must be:
+
+- **Legible** — not hidden in icons without meaning  
+- **Honest** — verification badges only when criteria met  
+- **Proportional** — no trust theater; absence of badge is not stigma  
+- **Subordinate to facts** — badges never replace price, location, or availability  
+
+### 11.3 Moderation Visibility
+
+Users deserve to understand listing **status** in evaluation context: publicly available listings are what detail presents for consumer decision. Pending or unavailable listings must not masquerade as open inventory.
+
+---
+
+## 12. Realtor Context
+
+Realtor context answers: **who stands behind this listing** before contact.
+
+### 12.1 Identity Before Action
+
+Realtor identity block — name, agency, verification when applicable — must be **available in evaluation flow** before primary contact (Chapter 15, Chapter 16). User is not contacting "the platform"; user is contacting a **identified professional**.
+
+### 12.2 Profile as Contact Source
+
+Contacts originate from **realtor_profiles** — not ad hoc per listing. Detail must reflect that model: contact paths reinforce governed identity, not anonymous fragments.
+
+### 12.3 Realtor vs Property Balance
+
+Realtor context supports trust; it must not **outshine** property evaluation. Property remains hero; realtor is accountable human behind it.
+
+### 12.4 Agency Context
+
+When agency affiliation matters to user trust, it is visible — without turning detail into an agency landing page.
+
+---
+
+## 13. Contact Readiness
+
+Contact Readiness is the state where initiating conversation is **responsible** for both user and realtor.
+
+### 13.1 Readiness Conditions
+
+Before primary contact feels appropriate, user should have access to:
+
+- Core property identity and economic facts  
+- Location context sufficient for relevance judgment  
+- Availability understanding  
+- Realtor identity  
+- Clear expectation of what contact initiates  
+
+### 13.2 Readiness Without Pressure
+
+Contact affordances may be **visible** early — but **primary contact** must not feel like the only success path. Save, share, return, and compare are legitimate outcomes.
+
+### 13.3 Unready Contact
+
+If listing is unavailable or identity cannot be shown, contact must **not** pretend readiness. **Respectful Silence** or honest unavailability beats broken contact.
+
+---
+
+## 14. Progressive Disclosure
+
+Progressive disclosure reveals depth **as user seeks it** — not as Rento hides essentials.
+
+### 14.1 Disclose Early
+
+Disqualifiers and contract-relevant facts disclose **early**:
+
+- Price, location, core type, availability  
+- Structural deal-breakers  
+
+### 14.2 Disclose on Demand
+
+Secondary detail discloses **on scroll or expansion**:
+
+- Extended amenities  
+- Building rules  
+- Detailed descriptions  
+- Supplementary media  
+
+### 14.3 Never Hide Essentials
+
+Progressive disclosure is not an excuse to bury price, fees, or availability. **Information Confidence** requires that expansion feels optional — not mandatory archaeology.
+
+---
+
+## 15. Mobile Reading Rhythm
+
+Mobile is the **primary design surface** for property detail. Tablet and desktop extend — never reverse.
+
+### 15.1 Rhythm Qualities
+
+| Quality | Intent |
+|---------|--------|
+| **Thumb reach** | Primary actions reachable without strain |
+| **Glance blocks** | Sections digest in mobile attention units |
+| **Interrupt tolerance** | User can leave mid-read and resume coherently |
+| **Vertical honesty** | No horizontal tricks required to understand core facts |
+
+### 15.2 Scroll as Evaluation
+
+Scrolling is **evaluation time**, not engagement farming. Section pacing should feel like **walking through a home logically** — not scrolling an infinite feed.
+
+### 15.3 Breakpoint Inheritance
+
+Tablet adds horizontal breathing room; desktop may add ancillary context — but **decision order** remains mobile-origin.
+
+---
+
+## 16. Returning User Continuity
+
+Returning users arrive with **Housing Continuity** — prior searches, saved context, and mental models.
+
+### 16.1 Returning Confidence
+
+**Returning Confidence** means return to detail feels like resuming evaluation — favorite state, read position where appropriate, and search return path preserved.
+
+### 16.2 Continuity Trust
+
+**Continuity Trust** extends into detail: if user saved search "Mărăști 2 cam" and opens a listing, detail must not feel disconnected from that hunt.
+
+### 16.3 Decision Persistence
+
+**Decision Persistence** — user actions (save, dismiss, contact started) survive sessions. Detail must reflect current state without stale signals.
+
+### 16.4 Memory Transparency
+
+When detail reflects saved-search or alert context, **Memory Transparency** applies — user understands why this listing is surfaced (Chapter 30).
+
+---
+
+## 17. Missing or Weak Information
+
+Absence is information. Rento must not **simulate completeness** when data is missing or weak.
+
+### 17.1 Missing Field Philosophy
+
+| Situation | Product stance |
+|-----------|----------------|
+| Optional field empty | Omit or state absence calmly — no placeholder theater |
+| Important field missing | Reduce Information Confidence display — do not bluff |
+| Weak media | Property Transparency — partial evidence acknowledged |
+| Vague description | Do not pad with platform-generated marketing |
+
+### 17.2 Weak Information and Ranking
+
+Search may surface listings with weak detail when otherwise relevant — detail must **not** compensate with manipulative UI. User judges whether weakness matters.
+
+### 17.3 Realtor Accountability
+
+Repeated weak listings reflect on realtor trust — governance concern, not detail dark pattern opportunity.
+
+---
+
+## 18. Error and Unavailable State Principles
+
+Errors and unavailability must **protect trust**, not damage it casually.
+
+### 18.1 Unavailable Listing
+
+When listing is no longer available:
+
+- User learns **clearly and early**  
+- Contact must not invite futile conversation without explanation  
+- Return to search is **primary recovery** — preserve Search Memory  
+
+### 18.2 Load and Failure States
+
+When detail cannot load:
+
+- Message is calm and honest  
+- Retry is available without panic copy  
+- User is not trapped — navigation out remains  
+
+### 18.3 Stale Deep Links
+
+Shared links to removed listings deserve **dignified recovery** — explanation, not blame; path back to search, not dead end.
+
+### 18.4 Error Tone
+
+Error copy inherits platform voice: professional, brief, accountable — never cute, never blaming the user.
+
+---
+
+## 19. Decision Confidence
+
+**Decision Confidence** is the user's sense that they can **act or decline without regret** — the outcome of Property Confidence, Information Confidence, and Contact Readiness working together.
+
+### 19.1 Confidence Outcomes
+
+| Outcome | Meaning |
+|---------|---------|
+| **Contact confidence** | I know who I am reaching and why |
+| **Save confidence** | Saving means what I think it means |
+| **Abandon confidence** | Leaving is correct — I am not missing hidden truth |
+| **Return confidence** | I can resume search without losing place |
+
+### 19.2 Comparison Confidence Bridge
+
+Detail feeds **Comparison Confidence** (later Decision Experience): facts must be **comparable across listings** — same vocabulary, same hierarchy, same honesty about gaps.
+
+### 19.3 Decision Readiness Arrival
+
+**Decision Readiness** (Chapter 28) is the search-side promise that results are worth opening. Property detail **fulfills or breaks** that promise. Fulfillment strengthens the Decision Experience block; breakage sends users back to search with damaged Search Confidence.
+
+---
+
+## 20. Anti-Patterns
+
+The following are **explicitly forbidden** on property detail:
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| Bait-and-switch hero media | Destroys Preview Integrity |
+| Price buried or revealed late | Violates Search Integrity |
+| Fake urgency ("5 people viewing") | Anxiety manipulation — forbidden |
+| Contact-only success framing | Violates Contact Readiness ethics |
+| Infinite related listings before facts | Hijacks Decision Environment |
+| Anonymous contact | Violates realtor identity model |
+| Unavailable listing with active contact | Wastes user and realtor time |
+| Template bloat masking thin listings | Simulates Information Confidence |
+| Sticky bars that obscure content | Mobile hostility |
+| Blocking back navigation | Breaks Context Restoration |
+| Status or moderation hidden from evaluation | Violates Listing Integrity |
+| Card-detail fact mismatch | Destroys Property Confidence |
+
+---
+
+## 21. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, property detail initiatives must trace to this chapter and Chapter 15:
+
+| Initiative type | Must demonstrate |
+|-----------------|------------------|
+| New detail sections | Decision order justification; mobile-first rhythm |
+| Contact changes | Contact Readiness and Chapter 16 alignment |
+| Media features | Evidence role — not engagement role |
+| Personalization on detail | Memory Transparency; no creepy surprise |
+| Cross-sell modules | Subordinate to evaluation; Decision Persistence only |
+
+**Review gate:** No property detail surface ships without checklist against Property Confidence, Listing Integrity, and handoff from Search Architecture.
+
+**Forward chapters:** Comparison, shortlist, and application experiences extend Decision Confidence — this chapter supplies the single-property foundation.
+
+---
+
+## 22. Chapter Summary
+
+Property detail is where Rento converts **search effort** into **housing judgment**.
+
+This chapter defines:
+
+- **Position** — first surface of the Decision Experience block after Search Architecture  
+- **Handoff** — Cognitive Continuity and Preview Integrity from discovery  
+- **Environment** — calm Decision Environment optimized for trust, not engagement  
+- **Hierarchy** — orientation, validation, understanding, trust, action  
+- **Confidence** — Property Confidence, Information Confidence, Contact Readiness, Decision Confidence  
+- **Integrity** — Listing Integrity and Property Transparency as non-negotiables  
+- **Continuity** — Returning Confidence, Decision Persistence, Context Restoration  
+- **Mobile** — primary reading rhythm; tablet and desktop extend  
+- **Failure** — honest unavailable and error recovery  
+
+Chapter 15 remains the listing detail contract. This chapter extends it for the completed search stack and opens the Decision Experience arc.
+
+**Search Architecture flow:**
+
+Search Experience → Search Filters & Refinement → Sorting & Ranking → Search Results Experience → Maps & Location Experience → Saved Searches & Search Continuity → **Property Detail Experience** → Decision Experience (following chapters)
+
+---
+
+## 23. Design Director Review
+
+**Chapter:** 31 — Property Detail Experience  
+**Section:** XXVIII — Property Detail  
+**Review type:** Initial standard adoption
+
+### 23.1 Approval Statement
+
+This chapter is approved as the **property detail experience contract** for Rento. All consumer property detail evaluation surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 23.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness |
+| Chapter 4 — Layout & Information Architecture | IA and hierarchy parent |
+| Chapter 10 — Navigation System | Return integrity and Context Restoration |
+| Chapter 14 — Listing Card & Preview System | Preview promise; detail must fulfill |
+| Chapter 15 — Listing Detail Experience | Core listing detail contract — extended, not replaced |
+| Chapter 16 — Contact & Communication Experience | Contact ethics and identity after readiness |
+| Chapter 28 — Search Results Experience | First Impression Integrity, Decision Readiness |
+| Chapter 29 — Maps & Location Experience | Place Confidence, Geographic Continuity |
+| Chapter 30 — Saved Searches & Search Continuity | Search Memory, Housing Continuity into detail |
+| Chapter 32+ — Decision Experience | Comparison, shortlist, application — forward |
+
+### 23.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. No contradiction with Chapter 15 listing detail contract  
+2. Search handoff and continuity concepts applied consistently  
+3. New concepts (Property Confidence, Decision Environment, Listing Integrity, Information Confidence, Property Transparency, Contact Readiness) are reusable in later Decision Experience chapters  
+4. Anti-engagement posture preserved  
+5. Mobile-first order explicit  
+6. No implementation leakage  
+
+### 23.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on Decision Experience entry |
+| Head of Product Design | Parity with Search Architecture and Chapter 15 |
+| Senior UX Designer | Handoff, hierarchy, mobile rhythm |
+| Product Management | Marketplace integrity and contact gate |
+| Content Design Lead | Summary, transparency, error copy |
+| Accessibility Specialist | Reading order and media alternatives |
+
+### 23.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new property detail work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 23.6 Design Director Closing Note
+
+Search teaches users what might fit. Property detail teaches them whether **this home** deserves their trust. If the first five seconds confirm the promise of the card, if price and place stay honest, if the realtor stands visible before contact, and if leaving feels as dignified as staying — Rento has done its job. This chapter opens the Decision Experience not with more content, but with **clearer judgment**: the calm moment where discovery becomes a housing decision worth making.
+
+---
+
+**End of Chapter 31**
+
