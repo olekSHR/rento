@@ -85,12 +85,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 41 | [Settled Tenancy Experience](#chapter-41--settled-tenancy-experience) | Settled Tenancy | APPROVED |
 | 42 | [Rent Lifecycle Experience](#chapter-42--rent-lifecycle-experience) | Rent Lifecycle | APPROVED |
 | 43 | [Maintenance and Repair Experience](#chapter-43--maintenance-and-repair-experience) | Maintenance | APPROVED |
+| 44 | [Tenancy Dispute and Escalation Experience](#chapter-44--tenancy-dispute-and-escalation-experience) | Dispute and Escalation | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title | Section | Status |
 |-----|-------|---------|--------|
-| 44+ | Settled Tenancy specialized chapters (forward) | Settled Tenancy | NOT YET AUTHORED |
+| 45+ | Tenancy Conclusion (forward) | Settled Tenancy | NOT YET AUTHORED |
 
 See `MASTER_ROADMAP.md` for remaining domain order within and after the Settled Tenancy block.
 
@@ -125,6 +126,7 @@ See `MASTER_ROADMAP.md` for remaining domain order within and after the Settled 
 | 1.0 | 2026-07-05 | Chapter 41 — Settled Tenancy Experience approved and added — Opened Settled Tenancy macro-domain after Housing Obligation completion with Tenancy Lifecycle foundation, Housing Journey separation, and marketplace posture for experience surrounding active tenancy |
 | 1.0 | 2026-07-05 | Chapter 42 — Rent Lifecycle Experience approved and added — Established first specialized Settled Tenancy dimension for recurring rent obligation experience during Active Tenancy with Financial Readiness separation and platform-never-collects-rent posture |
 | 1.0 | 2026-07-05 | Chapter 43 — Maintenance and Repair Experience approved and added — Established second specialized Settled Tenancy dimension for maintenance and repair context experience during Active Tenancy with Viewing and Occupancy Readiness separation and platform-never-executes-maintenance posture |
+| 1.0 | 2026-07-05 | Chapter 44 — Tenancy Dispute and Escalation Experience approved and added — Established third specialized Settled Tenancy dimension for dispute and escalation context experience during Active Tenancy with rent and maintenance dimension separation and platform-never-adjudicates-disputes posture |
 
 ---
 
@@ -40868,4 +40870,758 @@ Users do not rent maintenance dispatch dashboards. They rent homes — and they 
 ---
 
 **End of Chapter 43**
+
+---
+
+## Chapter 44 — Tenancy Dispute and Escalation Experience
+
+**Section:** XLI — Dispute and Escalation  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–43; third specialized experience dimension within the Settled Tenancy macro-domain after Maintenance and Repair Experience (Chapter 43); operationalizes Settled Tenancy Boundaries (Chapter 41), Tenancy Boundary Clarity (Chapter 41), Tenancy Continuity (Chapter 41), Rent Lifecycle Boundaries (Chapter 42), Maintenance Experience Boundaries (Chapter 43), contact ethics (Chapter 16), and platform trust posture (Chapter 20); defines principles only — not legal procedure, mediation, arbitration, evidence processing, case management, ticket systems, dispute workflows, debt recovery, rent collection, maintenance dispatch, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **tenancy dispute and escalation experience philosophy** for Rento — how the product governs **experience surrounding tenancy disputes and escalation during Active Tenancy** while preserving marketplace integrity, boundary clarity, Tenancy Continuity, and long-term platform trust.
+
+Tenancy dispute and escalation experience is not viewing. Viewing governs **pre-commitment physical reconciliation** — what an in-person visit proved about property condition before housing obligation intensifies (Chapter 35). Tenancy dispute and escalation experience governs **post-commencement bilateral conflict and escalation context** — what Rento can honorably support once Active Tenancy is in scope and landlord-tenant disagreement requires orientation without platform adjudication.
+
+Tenancy dispute and escalation experience is not occupancy readiness. Occupancy Readiness governs **pre-commencement occupancy execution judgment** — whether the user is prepared to engage keys, handover, and commencement responsibility before the occupancy boundary (Chapter 40). Tenancy dispute and escalation experience governs **ongoing dispute and escalation orientation during Active Tenancy** — distinct phase, distinct architectural question.
+
+Tenancy dispute and escalation experience is not settled tenancy foundation. Settled Tenancy Experience (Chapter 41) governs **the opening architectural foundation** of the Tenancy Lifecycle macro-domain — marketplace posture, Active Tenancy, and cross-dimensional boundaries for all ongoing tenancy experience. Tenancy dispute and escalation experience governs **one specialized dimension** within that foundation: **dispute and escalation context during Active Tenancy**.
+
+Tenancy dispute and escalation experience is not rent lifecycle. Rent Lifecycle Experience (Chapter 42) governs **recurring rent obligation experience during Active Tenancy** — the financial dimension. Rent dispute **acknowledgment** may appear within rent lifecycle scope; **dispute experience depth** — escalation orientation, conflict boundary clarity, and trust preservation across dispute attention cycles — belongs to this chapter.
+
+Tenancy dispute and escalation experience is not maintenance and repair experience. Maintenance and Repair Experience (Chapter 43) governs **physical condition and repair context during Active Tenancy** — the physical dimension. Repair dispute **acknowledgment** may appear within maintenance experience scope; **dispute architecture depth** belongs to this chapter.
+
+Tenancy dispute and escalation experience is not tenancy conclusion. Tenancy conclusion experience — move-out, deposit return, relationship closure — remains explicitly deferred to a forward chapter. This chapter governs **dispute and escalation context during ongoing Active Tenancy** — not the conclusion of the Tenancy Lifecycle.
+
+Tenancy dispute and escalation experience is not legal authority. Rento remains a **marketplace platform** — it does not mediate disputes, arbitrate outcomes, process evidence as authority, manage cases, determine legal responsibility, enforce judgments, or impersonate courts, tribunals, or housing authorities. It **supports honest dispute and escalation context experience** — helping users, landlords, and realtors orient to conflict reality with integrity, boundary clarity, and dignity without impersonating adjudication or enforcement authority.
+
+**The platform never adjudicates disputes, mediates disputes, or performs dispute resolution.** Rento does not manufacture bilateral settlement posture, outcomes determined, legal responsibility assigned, mediation completed, or escalation paths executed on behalf of bilateral parties. The platform **supports informed escalation awareness** — orientation around dispute resolution pathways stakeholders may pursue independently — helping stakeholders honor conflict and escalation responsibility within marketplace boundaries without simulating mediation, arbitration, legal determination, conflict resolution execution, or enforcement.
+
+Where Chapter 41 opens the Tenancy Lifecycle, Chapter 42 specializes rent lifecycle, and Chapter 43 specializes maintenance and repair context, this chapter **specializes dispute and escalation context** — the third deferred dimension from Chapter 41 §11.3, Chapter 42 §11.3, and Chapter 43 §11.3 — without redefining Tenancy Lifecycle, Active Tenancy, Settled Tenancy Boundaries, Rent Lifecycle, Maintenance and Repair Context, or any other approved official concept.
+
+The product must help stakeholders answer five tenancy dispute and escalation experience questions:
+
+1. **During Active Tenancy — what dispute and escalation context applies, and what does Rento support versus what bilateral and external process must own?**  
+2. **How does dispute experience inherit rent and maintenance dispute acknowledgment without absorbing those dimensions or re-opening pre-commencement judgment gates?**  
+3. **Are dispute experience boundaries clear — what does platform orientation establish versus what mediation, legal process, and enforcement must settle?**  
+4. **Does Tenancy Continuity preserve dispute attention context across sessions without conflict panic, shame theater, or escalation alarmism?**  
+5. **Can users attend to, defer attention from, or conclude dispute context on Rento without trap, legal authority impersonation, or adjudication theater?**
+
+This chapter governs tenancy dispute and escalation experience as the **third specialized experience dimension within the Settled Tenancy macro-domain**. It does **not** specify case management systems, mediation platforms, legal workflow architecture, or engineering implementation.
+
+**Relationship to prior chapters:** **Settled Tenancy Boundaries** (Chapter 41) and **Tenancy Boundary Clarity** (Chapter 41) govern the parent scope within which dispute experience operates. **Rent Lifecycle Boundaries** (Chapter 42) and **Maintenance Experience Boundaries** (Chapter 43) govern parallel dimensions — dispute experience **intersects** rent and maintenance contexts where conflicts arise but does **not** merge dimensions. **Tenancy Continuity** (Chapter 41) governs persistence across dispute attention cycles. This chapter defines **Dispute Experience Environment**, **Tenancy Dispute Context**, **Escalation Awareness**, **Dispute Experience Boundaries**, **Dispute Boundary Clarity**, and **Dispute Experience Integrity**.
+
+---
+
+## 2. Why This Chapter Exists
+
+Chapter 41 established **Tenancy Lifecycle** as the complete sequence of relationship states after occupancy commencement — including rent obligation awareness, maintenance and repair context, **dispute and escalation context**, and tenancy conclusion. Chapter 41 supplies foundation and boundaries; it **does not** define specialized experience depth for each dimension.
+
+Chapter 42 specialized **rent lifecycle** — the first deferred dimension. Chapter 43 specialized **maintenance and repair context** — the second deferred dimension. **Tenancy dispute and escalation experience during Active Tenancy** remains explicitly deferred in Chapter 41 §11.3, Chapter 42 §11.3, and Chapter 43 §11.3.
+
+Without this chapter, Tenancy Lifecycle lacks **dispute and escalation experience architecture** during Active Tenancy. Product teams would lack authoritative principles for how Rento supports conflict context — risking legal authority impersonation, mediation theater, conflation with rent collection or maintenance dispatch, absorption of tenancy conclusion scope, or platform posture that appears to determine outcomes bilateral parties and external process must own.
+
+This chapter exists because **long-term rental tenancy includes bilateral conflict reality** — rent disagreements, repair disputes, deposit concerns, notice disagreements, and escalation toward legal or institutional channels — and stakeholders deserve **honest marketplace orientation** to that reality without a platform that impersonates mediator, arbitrator, court, or enforcement agent.
+
+This chapter is **not** another Readiness chapter, **not** a legal procedure guide, **not** a mediation or arbitration platform architecture chapter, and **not** tenancy conclusion depth.
+
+---
+
+## 3. Experience Philosophy
+
+Tenancy dispute and escalation experience follows the **Settled Tenancy specialized dimension pattern** established by Chapters 42 and 43 — orientation and boundary clarity within Active Tenancy, not operational or adjudication authority.
+
+| Philosophy anchor | Meaning |
+|-------------------|---------|
+| **Orientation over adjudication** | Dispute experience supports conflict and escalation **orientation** — not outcome determination, legal responsibility assignment, or enforcement |
+| **Boundaries over mediation theater** | Rento and users know what dispute experience can and cannot establish — no simulated settlement posture or legal authority |
+| **Dimension separation over conflation** | Tenancy Dispute Context, Rent Lifecycle, Maintenance and Repair Context, Tenancy Lifecycle, and Tenancy Conclusion remain distinct — never merged |
+| **Continuity over amnesia** | Rent, maintenance, and tenancy context inform dispute attention — without resetting bilateral truth |
+| **Calm over conflict panic** | No manufactured dispute alarm, legal threat amplification, or escalation shame pressure |
+| **Marketplace over authority** | Rento remains a marketplace — not mediator, arbitrator, court, debt collector, or enforcement agent |
+| **Honest scope over settlement-pathway overclaim** | Mediation, arbitration, legal determination, and enforcement remain outside platform establishment |
+| **Voluntary attention over forced dispute engagement** | Attend, defer attention, and conclude dispute context remain dignified |
+| **Bilateral truth over digital adjudication** | Product does not substitute digital posture for actual dispute or legal outcome |
+| **Mobile orientation first** | Design for calm mobile dispute context orientation — then tablet, then desktop |
+| **Dispute Experience Integrity goal** | Every dispute experience honors honest boundaries and marketplace posture |
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Orientation over adjudication** | Dispute experience supports conflict orientation — not outcome determination or enforcement |
+| **Boundaries over mediation theater** | Rento and users know what dispute experience can and cannot establish — no simulated settlement posture |
+| **Dimension separation over phase conflation** | Tenancy Dispute Context, Rent Lifecycle, Maintenance and Repair Context, and Tenancy Conclusion remain distinct |
+| **Continuity over amnesia** | Prior rent, maintenance, and tenancy context inform dispute attention — without resetting bilateral truth |
+| **Calm over conflict panic** | No manufactured dispute alarm, legal threat shame, or escalation amplification |
+| **Marketplace over authority** | Rento remains a marketplace — not legal authority, mediator, arbitrator, or enforcement agent |
+| **Honest scope over settlement-pathway overclaim** | Adjudication and enforcement remain outside platform establishment |
+| **Voluntary attention over forced engagement** | Attend, defer attention, and conclude dispute context remain dignified |
+| **Bilateral truth over digital adjudication** | Product does not substitute platform posture for actual bilateral settlement reality |
+| **Mobile orientation first** | Calm mobile dispute context orientation — then tablet, then desktop |
+| **Dispute Experience Integrity goal** | Every experience honors honest boundaries and marketplace posture |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, dispute case interface guide, mediation workflow pattern library, or legal portal design  
+- An implementation plan, API contract, case management integration, evidence storage architecture, or engineering specification  
+- A replacement for Chapters 16, 20, 35, 40, 41, 42, or 43  
+- Viewing Experience continuation, Part II, or post-commencement physical reconciliation re-gate  
+- Occupancy Readiness continuation, Part II, or commencement certification chapter  
+- Financial Readiness continuation, rent collection operations, or arrears enforcement chapter  
+- Maintenance request systems, work order administration, or contractor dispatch chapter  
+- Another Readiness chapter — dispute experience is **not** a Housing Obligation or settled tenancy readiness gate  
+- A **Tenancy Conclusion Experience** chapter — conclusion depth remains forward  
+- A **Legal Mediation Experience**, **Arbitration Platform**, **Dispute Case Management System**, or **Court Simulation Experience** chapter identity — adjudication is **out of scope**  
+- A redefinition of Tenancy Lifecycle, Active Tenancy, Settled Tenancy Environment, Settled Tenancy Boundaries, Tenancy Boundary Clarity, Settled Tenancy Integrity, Tenancy Continuity (Chapter 41), Rent Lifecycle official concepts (Chapter 42), or Maintenance and Repair Context official concepts (Chapter 43)  
+
+If the question is *how to build* mediation, arbitration, case management, or legal workflow systems — this chapter does not answer it. If the question is *what tenancy dispute and escalation experience must accomplish for marketplace integrity, conflict honesty, and platform boundary clarity during Active Tenancy* — this chapter does.
+
+Tenancy dispute and escalation experience is **not** legal authority, mediation operations, arbitration, or enforcement. Tenancy dispute and escalation experience **is** responsible product-supported experience surrounding **dispute and escalation context during Active Tenancy** — with honest boundaries and dignity whether users attend, defer attention, or conclude dispute context.
+
+---
+
+## Concept Separation — Mandatory
+
+Seven concepts govern distinct phases, dimensions, and forward scope — and must **never** be merged:
+
+| Concept | Phase / dimension | Governing chapter | Primary question |
+|---------|-------------------|-------------------|------------------|
+| **Physical reconciliation** | Pre-commitment | Chapter 35 | What did the in-person visit prove about property condition before formal interest? |
+| **Occupancy Readiness** | Pre-commencement | Chapter 40 | Am I prepared to engage occupancy commencement responsibility responsibly — with occupancy boundary clarity? |
+| **Tenancy Lifecycle** | Post-commencement — all dimensions | Chapter 41 | How does Rento honorably support experience surrounding active tenancy — with tenancy boundary clarity? |
+| **Rent Lifecycle** | Active Tenancy — financial dimension | Chapter 42 | How does Rento honorably support recurring rent obligation experience — with rent boundary clarity? |
+| **Maintenance and Repair Context** | Active Tenancy — physical dimension | Chapter 43 | How does Rento honorably support maintenance and repair context experience — with maintenance boundary clarity? |
+| **Tenancy Dispute Context** | Active Tenancy — conflict dimension | **This chapter** | How does Rento honorably support dispute and escalation context experience — with dispute boundary clarity? |
+| **Tenancy Conclusion** | Active Tenancy — closure dimension | Forward chapter | How is tenancy conclusion experienced — with conclusion boundary clarity? |
+
+**Physical reconciliation** and **Occupancy Readiness** end at the occupancy commencement boundary for judgment purposes. **Tenancy Lifecycle** begins after that boundary. **Tenancy Dispute Context** operates **within** Active Tenancy as one specialized dimension of Tenancy Lifecycle — not as a nested lifecycle beneath Tenancy Lifecycle, not as a fourth readiness gate, and not as Rent Lifecycle or Maintenance and Repair Context extended into legal operations.
+
+```
+Physical reconciliation (Ch 35)     →  Pre-commitment visit judgment
+Occupancy Readiness (Ch 40)       →  Pre-commencement occupancy gate
+        ↓ occupancy commencement boundary
+Tenancy Lifecycle (Ch 41)         →  Post-commencement relationship foundation
+        ↓ within Active Tenancy
+Rent Lifecycle (Ch 42)              →  Recurring financial obligation dimension
+Maintenance and Repair Context    →  Ongoing physical condition dimension  →  Ch 43
+Tenancy Dispute Context           →  Ongoing conflict and escalation dimension  →  This chapter
+Tenancy Conclusion                →  Relationship closure dimension  →  Forward
+```
+
+---
+
+## Dispute Experience Environment
+
+**Dispute Experience Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Dispute Experience Environment is the **cognitive and informational conditions under which a user, landlord, or realtor orients to, reflects on, and engages with tenancy dispute and escalation context experience for a specific Active Tenancy** — not the screen layout, but the **quality of the dispute experience space** Rento provides within Settled Tenancy Environment (Chapter 41).
+
+A sound Dispute Experience Environment is **oriented, grounded, boundary-legible, bounded, calm, continuity-preserving, and marketplace-honest** — a specialized calm environment within Settled Tenancy Environment, governing **dispute and escalation context attention** rather than general tenancy orientation, pre-commencement judgment, recurring rent attention, or maintenance repair attention.
+
+Dispute Experience Environment is reusable across dispute attention postures, dispute boundary communication, escalation pathway orientation, and forward tenancy conclusion chapters where dispute context remains relevant.
+
+---
+
+## Tenancy Dispute Context
+
+**Tenancy Dispute Context** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Tenancy Dispute Context is the **ongoing dispute and escalation dimension within the Tenancy Lifecycle** — the sequence of conflict-related attention, orientation, and bilateral states surrounding landlord-tenant disagreement and escalation during Active Tenancy, from first post-commencement dispute concern through tenancy conclusion (forward chapter).
+
+This term is adopted from the **Tenancy Lifecycle** definition (Chapter 41) — *dispute and escalation context* — to preserve architectural consistency without introducing a nested **Dispute Lifecycle** beneath Tenancy Lifecycle. Tenancy Dispute Context is a **dimension** of Tenancy Lifecycle, parallel to Rent Lifecycle (Chapter 42) as a financial dimension and Maintenance and Repair Context (Chapter 43) as a physical dimension — not a separate macro-lifecycle.
+
+Tenancy Dispute Context is **distinct from physical reconciliation**, **distinct from Occupancy Readiness**, **distinct from Rent Lifecycle**, **distinct from Maintenance and Repair Context**, **distinct from Tenancy Conclusion**, and **distinct from Tenancy Lifecycle as a whole**:
+
+| Concept | Scope |
+|---------|-------|
+| **Physical reconciliation** (Chapter 35) | Pre-commitment visit judgment — what viewing proved about condition |
+| **Occupancy Readiness** (Chapter 40) | Pre-commencement occupancy execution judgment — handover and commencement |
+| **Tenancy Lifecycle** (Chapter 41) | Complete post-commencement relationship lifecycle — all dimensions |
+| **Rent Lifecycle** (Chapter 42) | Recurring rent obligation experience **only** |
+| **Maintenance and Repair Context** (Chapter 43) | Ongoing physical condition and repair experience **only** |
+| **Tenancy Dispute Context** (this chapter) | Ongoing dispute and escalation experience **only** — within Active Tenancy |
+| **Tenancy Conclusion** (forward) | Relationship closure, move-out, deposit return experience **only** |
+
+Tenancy Dispute Context requires **Active Tenancy** (Chapter 41), understood **Settled Tenancy Boundaries** and **Dispute Experience Boundaries**, adequate **Dispute Boundary Clarity**, and **Tenancy Continuity** sufficient for dispute attention context. Dispute experience does not re-establish Active Tenancy, re-open Occupancy Readiness judgment, re-adjudicate viewing reconciliation, or substitute for tenancy conclusion depth.
+
+Tenancy Dispute Context is not a funnel stage to maximize. It is a **specialized experience dimension** — not a readiness gate, not a dispute conversion stage, not a legal outcome determination stage.
+
+---
+
+## Escalation Awareness
+
+**Escalation Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Escalation Awareness is the **stakeholder's informed orientation to dispute and escalation reality during Active Tenancy** — comprehending what conflict posture, bilateral responsibility, escalation pathways that exist outside platform establishment, and honest limits of platform orientation reasonably apply, without the platform performing conflict resolution, simulating dispute resolution services, certifying legal outcome, determining responsibility, or substituting for mediation, arbitration, or enforcement.
+
+Escalation Awareness includes **dispute posture understanding**, **bilateral conflict responsibility acknowledgment**, **ongoing dispute continuity**, **pending or escalated dispute state visibility**, **understanding of escalation pathways stakeholders may pursue independently**, **honest acknowledgment that external legal and institutional channels may apply**, and **honest limits of platform orientation** — awareness supports sound attention; it does not guarantee how a dispute will settle or how external legal process will conclude.
+
+Escalation Awareness **inherits** rent dispute acknowledgment context from Rent Lifecycle Experience (Chapter 42) and repair dispute acknowledgment context from Maintenance and Repair Experience (Chapter 43) through Tenancy Continuity — it does **not** re-adjudicate whether rent or maintenance dimensions were sufficient before conflict arose. Prior dimension gaps remain visible where relevant; dispute experience does not bury them under conflict amnesia or shame theater.
+
+Escalation Awareness is **in-scope content** of this chapter. It is **not** the chapter identity alone — the chapter identity is **Tenancy Dispute and Escalation Experience** governing the full dispute and escalation dimension within Tenancy Lifecycle.
+
+---
+
+## Dispute Experience Boundaries
+
+**Dispute Experience Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Dispute Experience Boundaries define **what engaging with tenancy dispute and escalation experience through Rento can and cannot establish** — the scope beyond which landlord, tenant, realtor, bilateral negotiation, mediation services, legal counsel, courts, tribunals, housing authorities, or enforcement process must carry responsibility.
+
+Dispute Experience Boundaries **extend** Settled Tenancy Boundaries (Chapter 41) into the dispute and escalation dimension — each parent limit becomes a dispute experience limit honestly stated.
+
+Rento tenancy dispute and escalation experience **can** support escalation awareness, dispute boundary clarity, Tenancy Continuity through dispute attention cycles, honest pending-state language, expectation clarity regarding platform scope, and dignified attend, defer attention, or conclude postures toward dispute context.
+
+Rento tenancy dispute and escalation experience **cannot** substitute for **dispute adjudication**, **legal responsibility determination**, **mediation execution**, **arbitration**, **evidence processing as authority**, **case management**, **outcome enforcement**, **rent collection or debt recovery** (Chapter 42), **maintenance execution or dispatch** (Chapter 43), **lease enforcement as platform authority**, **platform attestation of bilateral settlement** (Chapter 20), **tenancy conclusion depth** (forward chapter), or **impersonation of legal, housing, or institutional authority**.
+
+**The platform never adjudicates disputes.** Dispute Experience Boundaries are reusable across forward tenancy conclusion chapters where dispute history intersects conclusion context.
+
+---
+
+## Dispute Boundary Clarity
+
+**Dispute Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Dispute Boundary Clarity is the **shared legibility of what Rento, user, landlord, realtor, and external legal or institutional process each reasonably own regarding tenancy disputes and escalation during Active Tenancy** — without simulated bilateral settlement posture, legal outcome certification, or adjudication authority theater.
+
+Dispute Boundary Clarity requires **Rento scope honesty**, **bilateral conflict responsibility honesty**, **marketplace posture honesty**, **pending dispute state legibility**, **honest communication that external channels may apply**, and **no false certainty that a dispute is settled**.
+
+Dispute Boundary Clarity is distinct from **Tenancy Boundary Clarity** (Chapter 41): Tenancy Boundary Clarity governs **all ongoing tenancy dimensions**; Dispute Boundary Clarity governs **the dispute and escalation dimension only**. It is distinct from **Rent Boundary Clarity** (Chapter 42) and **Maintenance Boundary Clarity** (Chapter 43): rent, maintenance, and dispute dimensions may intersect in compound conflicts — clarity in each dimension remains separate.
+
+---
+
+## Dispute Experience Integrity
+
+**Dispute Experience Integrity** is the **honesty of the tenancy dispute and escalation experience itself** — no simulated bilateral settlement posture, no hidden dispute boundaries, no pressure to engage dispute features when inappropriate, no mediation theater, no legal authority impersonation, no conflict panic gamification, no forced adjudication posture.
+
+Dispute Experience Integrity parallels **Settled Tenancy Integrity** (Chapter 41), **Rent Lifecycle Integrity** (Chapter 42), **Maintenance Experience Integrity** (Chapter 43), and the integrity lineage from Chapters 33–40 — specialized for the dispute and escalation dimension within Active Tenancy.
+
+---
+
+## 4. Core Principles
+
+*How should Rento support tenancy dispute and escalation context experience during Active Tenancy while preserving marketplace integrity, dimension separation, and dispute boundary clarity?*
+
+### 4.1 Orientation Over Adjudication
+
+Dispute experience supports **conflict and escalation orientation** — not outcome determination, legal responsibility assignment, or enforcement.
+
+### 4.2 Boundaries Over Mediation Theater
+
+Users understand what dispute experience establishes before attention implies otherwise.
+
+### 4.3 Dimension Separation
+
+Rent lifecycle, maintenance context, dispute context, and tenancy conclusion remain **distinct** — intersection acknowledged honestly; merge forbidden.
+
+### 4.4 Pre-Commencement Separation
+
+Viewing physical reconciliation and Occupancy Readiness judgment are **not** re-opened each dispute concern.
+
+### 4.5 Tenancy Continuity Through Dispute Attention
+
+Dispute attention context persists across sessions — without amnesia or manufactured conflict urgency.
+
+### 4.6 Honest Dispute State Language
+
+Language reflects bilateral reality — raised, acknowledged, pending, escalated externally, settled bilaterally outside platform, unresolved, unknown — not simulated adjudication.
+
+### 4.7 Calm Over Conflict Panic
+
+No countdown pressure, legal threat shame, dispute-streak gamification, or escalation alarm amplification.
+
+### 4.8 Marketplace Posture
+
+Rento is marketplace — not mediator, arbitrator, court, debt collector, or enforcement agent.
+
+### 4.9 Bilateral Respect
+
+Landlord and tenant conflict realities remain **honestly represented** — platform does not impersonate either party's legal position or enforcement authority.
+
+### 4.10 Voluntary Dispute Attention
+
+Attend, defer attention, and conclude dispute context remain dignified — equal validity.
+
+### 4.11 Inheritance Without Amnesia
+
+Rent, maintenance, occupancy handoff, and decision arc context inform dispute orientation — surprises from earlier stages remain visible where relevant.
+
+### 4.12 No Legal Authority Impersonation
+
+Dispute experience does not certify legal outcome, determine responsibility, recommend enforcement action as platform authority, or impersonate housing tribunal — orientation only, not adjudication.
+
+### 4.13 Rent and Maintenance Acknowledgment Without Absorption
+
+Rent dispute acknowledgment (Chapter 42) and repair dispute acknowledgment (Chapter 43) **inform** Escalation Awareness — dispute experience supplies architectural depth without redefining rent or maintenance dimensions.
+
+### 4.14 Tenancy Conclusion Separation
+
+Dispute experience during Active Tenancy does not absorb move-out, deposit return, or relationship closure depth — forward chapter scope preserved.
+
+---
+
+## 5. Relationship with Settled Tenancy Experience (Chapter 41)
+
+Users enter tenancy dispute and escalation experience scope **within** Active Tenancy — after Settled Tenancy foundation boundaries are understood (Chapter 41 §11.2).
+
+### 5.1 Entry Preconditions
+
+Dispute and escalation experience orientation is responsible when **Active Tenancy** is in scope, **Settled Tenancy Boundaries** and **Dispute Experience Boundaries** are understood, **Tenancy Boundary Clarity** and **Dispute Boundary Clarity** are adequate, and **Tenancy Continuity** preserves relevant context.
+
+### 5.2 Handoff from Settled Tenancy Foundation
+
+Chapter 41 supplies **Tenancy Lifecycle** definition, **Settled Tenancy Environment**, **Active Tenancy**, **Settled Tenancy Boundaries**, **Tenancy Boundary Clarity**, **Settled Tenancy Integrity**, **Tenancy Continuity**, and attend, defer attention, conclude context postures. Dispute experience must **preserve** settled tenancy foundation — not redefine official concepts, not collapse Tenancy Lifecycle into dispute-only scope, not absorb tenancy conclusion dimension.
+
+The handoff contract:
+
+- Dispute experience operates **within** Settled Tenancy Boundaries — narrower, not broader  
+- **Dispute Experience Environment** specializes **Settled Tenancy Environment** for dispute and escalation context attention  
+- Attend to dispute context **does not imply** dispute settled bilaterally, outcome determined, or legal responsibility assigned through Rento  
+- Defer or conclude dispute attention **does not erase** Active Tenancy or bilateral conflict reality  
+- Settled tenancy foundation **does not substitute** for dispute experience depth — forward reference from Ch 41 §11.3 honored  
+- Chapter 41 anti-pattern **Dispute Amplification** applies — this chapter supplies architectural depth to prevent it  
+
+### 5.3 No Redefinition of Chapter 41 Concepts
+
+This chapter **consumes** Chapter 41 official concepts — it does **not** amend, extend definitions of, or replace Tenancy Lifecycle, Active Tenancy, Settled Tenancy Environment, Settled Tenancy Boundaries, Tenancy Boundary Clarity, Settled Tenancy Integrity, or Tenancy Continuity.
+
+---
+
+## 6. Role in the Tenancy Lifecycle
+
+Tenancy dispute and escalation experience sits as the **third specialized experience dimension** within the Settled Tenancy macro-domain — after Maintenance and Repair Experience (Chapter 43), within Active Tenancy scope.
+
+| Tenancy Lifecycle dimension | Governing chapter | Primary question |
+|----------------------------|-------------------|------------------|
+| **Settled tenancy foundation** | Chapter 41 | How does Rento support experience surrounding active tenancy — with tenancy boundary clarity? |
+| **Rent lifecycle** | Chapter 42 | How does Rento support recurring rent obligation experience — with rent boundary clarity? |
+| **Maintenance and repair** | Chapter 43 | How does Rento support maintenance and repair context experience — with maintenance boundary clarity? |
+| **Dispute and escalation (this chapter)** | **This chapter** | How does Rento support dispute and escalation context experience — with dispute boundary clarity? |
+| Tenancy conclusion | Forward | How is tenancy conclusion experienced? |
+
+Tenancy dispute and escalation experience **specializes** one dimension deferred from Chapter 41 §11.3, Chapter 42 §11.3, and Chapter 43 §11.3 — it does **not** complete the Tenancy Lifecycle. Forward chapters supply tenancy conclusion experience.
+
+Tenancy dispute and escalation experience succeeds through **honest conflict orientation and dispute boundary clarity** — not dispute feature maximization, external-pathway conversion theater, or adjudication theater.
+
+---
+
+## 7. User Experience Principles
+
+Tenancy dispute and escalation experience inherits **attend**, **defer attention**, and **conclude context** from Chapter 41 — specialized for dispute and escalation context attention. It is **not** a readiness gate.
+
+### 7.1 Attend
+
+User **orients to dispute and escalation context** with Escalation Awareness and Dispute Boundary Clarity sufficient. Attend does **not** mean dispute settled bilaterally, outcome adjudicated, or legal responsibility determined through Rento.
+
+### 7.2 Defer Attention
+
+Defer preserves Active Tenancy and bilateral conflict reality while acknowledging insufficient attention, clarity, or timing for dispute context engagement — honest pacing with **Tenancy Continuity** preserved.
+
+### 7.3 Conclude Dispute Context
+
+Conclude diminishes **platform dispute attention posture** — typically when dispute dimension no longer needs orientation on Rento, conflict moves fully to external channels, or tenancy concludes (forward chapter). Conclude does **not** imply dispute settled bilaterally or platform adjudication.
+
+### 7.4 Posture Reconsideration
+
+Attend, defer attention, and conclude remain available across dispute attention cycles — not irreversible traps.
+
+### 7.5 Pending Dispute Honesty
+
+Unconfirmed or unresolved dispute states remain **honestly communicated** — no simulated settled posture, no hidden escalation pressure.
+
+### 7.6 No Forced Dispute Engagement
+
+Exit, defer, and conclude paths always dignified — Dispute Experience Integrity and Dispute Boundary Clarity require it.
+
+### 7.7 Calm Return
+
+Resuming dispute context feels continuous — not alarming. Interruption tolerance preserves bilateral truth.
+
+### 7.8 Partner Parity
+
+Household participants share **identical dispute orientation truth** — same conflict posture, same boundary clarity, same pending states — without viral conflict panic or asymmetric legal pressure.
+
+### 7.9 Mobile Orientation First
+
+Dispute context orientation is designed for mobile interruption context first — glance legibility, one-handed deferral, calm return.
+
+### 7.10 External Channel Honesty
+
+Where bilateral parties may pursue mediation, legal counsel, housing authority, or institutional channels **outside Rento**, dispute experience may **acknowledge** that reality and support **orientation around escalation pathways** — it does **not** simulate, execute, mediate through, or guarantee those channels.
+
+---
+
+## 8. Platform Responsibilities
+
+Rento tenancy dispute and escalation experience **can** honorably support:
+
+### 8.1 Orientation and Context
+
+- **Escalation awareness** — helping stakeholders understand what dispute and escalation reality reasonably applies during Active Tenancy  
+- **Scope honesty** — clear communication of what Rento does and does not operate regarding disputes  
+- **Conflict posture visibility** — honest representation of raised, acknowledged, pending, escalated externally, or unknown bilateral states where product-supported  
+- **Expectation clarity** — bilateral parties understand platform orientation limits before conflict attention implies adjudication authority  
+
+### 8.2 Boundary and Continuity
+
+- **Dispute Experience Boundaries** and **Dispute Boundary Clarity** — legible limits before attention implies legal or mediation authority  
+- **Tenancy Continuity** through dispute attention cycles — context preservation across sessions and interruption  
+- **Inheritance of prior context** — rent, maintenance, occupancy handoff, and decision arc inform orientation without re-adjudication  
+
+### 8.3 Communication Ethics
+
+- **Contact ethics alignment** (Chapter 16) — dispute-related communication governed by established communication contract  
+- **Calm re-engagement posture** (Chapter 21) — inform where appropriate; do not manufacture conflict panic  
+- **Respectful Silence** (Chapter 25) — defer and conclude without shame theater  
+
+### 8.4 Dignified Attention Postures
+
+- **Attend, defer attention, conclude** — voluntary, reversible, equally valid  
+- **Pending state honesty** — no simulated bilateral settlement posture  
+- **Bilateral respect** — platform does not impersonate landlord enforcement or tenant legal demand authority  
+
+### 8.5 Trust Preservation
+
+- **Dispute Experience Integrity** — conflict attention does not erode marketplace trust through adjudication theater  
+- **Platform trust consumption** (Chapter 20) — verification and moderation inform orientation; they do not certify bilateral settlement  
+
+### 8.6 Parallel Posture Lineage
+
+| Macro-domain / dimension | Platform posture |
+|--------------------------|------------------|
+| Settled tenancy (Chapter 41) | The platform never operates settled tenancy |
+| Rent lifecycle (Chapter 42) | The platform never collects rent |
+| Maintenance and repair (Chapter 43) | The platform never executes maintenance |
+| **Dispute and escalation (this chapter)** | **The platform never adjudicates disputes** |
+
+---
+
+## 9. Platform Non-Responsibilities
+
+Rento tenancy dispute and escalation experience **does not** operate and **must not** impersonate:
+
+### 9.1 Adjudication and Legal Authority
+
+- Dispute outcome determination  
+- Legal responsibility assignment  
+- Mediation execution or facilitation as authority  
+- Arbitration or tribunal simulation  
+- Evidence processing, evaluation, or ruling as platform authority  
+- Case management, ticketing, or workflow administration for dispute handling  
+- Court, housing authority, or institutional channel impersonation  
+
+### 9.2 Enforcement and Recovery
+
+- Judgment or outcome enforcement  
+- Rent collection, debt recovery, or arrears pursuit (Chapter 42)  
+- Lease enforcement as platform operational authority  
+- Eviction process execution or simulation  
+- Deposit withholding determination as platform authority  
+
+### 9.3 Operational Authority
+
+- Maintenance execution or dispatch (Chapter 43)  
+- Property management administration  
+- Landlord-tenant relationship management as enforcement agent  
+- Emergency legal response coordination as operational authority  
+- Platform attestation of bilateral settlement (Chapter 20)  
+
+### 9.4 Dimensional Scope Violations
+
+- Pre-commencement physical reconciliation re-gate (Chapter 35)  
+- Occupancy commencement certification (Chapter 40)  
+- Rent lifecycle or maintenance dimension absorption  
+- Tenancy conclusion depth — move-out, deposit return, relationship closure (forward chapter)  
+
+**The platform never adjudicates disputes.** Bilateral parties, legal counsel, mediation services, courts, tribunals, housing authorities, and external enforcement process carry adjudication and outcome responsibility.
+
+---
+
+## 10. Cross-Chapter Relationships
+
+### 10.1 Relationship to Rent Lifecycle Experience (Chapter 42)
+
+Rent lifecycle and dispute experience are **parallel specialized dimensions** within Tenancy Lifecycle — financial versus conflict. They must **never** be merged.
+
+| Dimension | Rent Lifecycle (Ch 42) | Tenancy Dispute Context (this chapter) |
+|-----------|------------------------|----------------------------------------|
+| **Tenancy Lifecycle dimension** | Recurring financial obligation | Ongoing dispute and escalation |
+| **Platform posture** | The platform never collects rent | The platform never adjudicates disputes |
+| **Attention pattern** | attend / defer / conclude rent context | attend / defer / conclude dispute context |
+| **Dispute acknowledgment** | Rent dispute acknowledgment in-scope | Dispute experience depth — escalation, boundaries, integrity |
+
+Where rent disputes arise — unpaid rent disagreements, withholding disputes, schedule conflicts — Chapter 42 may **acknowledge** dispute state within rent dimension scope. This chapter supplies **architectural depth** for dispute and escalation experience — Escalation Awareness, Dispute Experience Boundaries, Dispute Boundary Clarity — without redefining Rent Lifecycle or absorbing rent obligation orientation.
+
+Rent dispute acknowledgment **informs** Escalation Awareness; rent lifecycle **does not substitute** dispute experience depth.
+
+### 10.2 Relationship to Maintenance and Repair Experience (Chapter 43)
+
+Maintenance and repair context and dispute experience are **parallel specialized dimensions** — physical versus conflict. They must **never** be merged.
+
+| Dimension | Maintenance and Repair Context (Ch 43) | Tenancy Dispute Context (this chapter) |
+|-----------|----------------------------------------|----------------------------------------|
+| **Tenancy Lifecycle dimension** | Ongoing physical condition and repair | Ongoing dispute and escalation |
+| **Platform posture** | The platform never executes maintenance | The platform never adjudicates disputes |
+| **Dispute acknowledgment** | Repair dispute acknowledgment in-scope | Dispute experience depth — escalation, boundaries, integrity |
+
+Where repair disputes arise — habitability disagreements, repair responsibility conflicts, condition withholding disputes — Chapter 43 may **acknowledge** dispute state within maintenance dimension scope. This chapter supplies dispute architecture depth without redefining Maintenance and Repair Context or absorbing repair orientation.
+
+Repair dispute acknowledgment **informs** Escalation Awareness; maintenance experience **does not substitute** dispute experience depth.
+
+### 10.3 Relationship to Viewing Experience (Chapter 35)
+
+Viewing governs **pre-commitment physical reconciliation**. Dispute experience governs **post-commencement conflict context** during Active Tenancy.
+
+**Viewing informs historical context; Viewing never substitutes Tenancy Dispute Context.** Physical reconciliation from Chapter 35 **informs** dispute orientation through Tenancy Continuity where condition disputes reference pre-commencement understanding — it does **not** substitute for ongoing dispute experience, and viewing reconciliation **does not replace** post-commencement conflict orientation scope.
+
+### 10.4 Relationship to Occupancy Readiness Experience (Chapter 40)
+
+Occupancy Readiness governs **pre-commencement occupancy execution judgment**. Dispute experience governs **post-commencement conflict attention**.
+
+Occupancy handoff context **informs** dispute orientation at tenancy commencement — it does **not** satisfy ongoing dispute experience scope or re-open Occupancy Readiness as a gate.
+
+### 10.5 Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract**. This chapter **consumes** platform trust signals — it does **not** redefine them.
+
+Platform verification and moderation status **inform** dispute context orientation — they do **not** guarantee dispute fairness, legal compliance, or bilateral reliability in conflict. Dispute experience must never **inflate** Chapter 20 attestation into bilateral settlement certification or adjudication authority.
+
+### 10.6 Relationship to Contact & Communication Experience (Chapter 16)
+
+Chapter 16 remains the **authoritative contract for communication ethics** during dispute experience. This chapter **consumes** Chapter 16 — it does **not** redefine contact rules.
+
+Dispute-related contact — conflict expression, escalation discussion, bilateral negotiation — remains governed by Chapter 16 ethics. Dispute experience must not use contact channels to pressure adjudication engagement, simulate legal authority, impersonate enforcement demands, or substitute for Dispute Experience Boundaries.
+
+### 10.7 Relationship to Notifications & Re-engagement (Chapter 21)
+
+Notifications within dispute experience scope must honor **Continuity Without Pressure** (Chapter 30 lineage), **Respectful Silence** (Chapter 25), and **Settled Tenancy Integrity** (Chapter 41) — inform about dispute context where appropriate; do not manufacture conflict panic, legal threat alarm, or escalation urgency.
+
+Dispute-related notifications, if ever product-supported in principle, must serve **orientation** — not conversion, shame, or simulated adjudication authority. This chapter governs **principle**; notification mechanics belong to Chapter 21 posture.
+
+---
+
+## 11. Forward References
+
+Tenancy dispute and escalation experience is the **third specialized dimension** — tenancy conclusion follows per Chapter 41 §11.3, Chapter 42 §11.3, and Chapter 43 §11.3.
+
+### 11.1 What This Chapter Supplies
+
+This chapter supplies **dispute and escalation architectural specialization** — Dispute Experience Environment, Tenancy Dispute Context, Escalation Awareness, Dispute Experience Boundaries, Dispute Boundary Clarity, Dispute Experience Integrity, and dispute experience principles reusable where dispute intersects forward dimensions.
+
+### 11.2 Handoff Preconditions to Forward Chapters
+
+Transition toward tenancy conclusion chapters is responsible when **Active Tenancy** remains in scope, **Dispute Experience Boundaries** are understood, **Dispute Boundary Clarity** is adequate, and **Settled Tenancy Integrity** posture is maintained.
+
+### 11.3 Explicitly Deferred — Forward Within Settled Tenancy Block
+
+The following remain **outside this chapter's scope** — forward chapters:
+
+- **Tenancy conclusion experience** — including move-out, deposit return, relationship closure, and conclusion context where dispute history intersects closure  
+- **Dispute adjudication, mediation execution, arbitration, evidence processing as authority, case management, and outcome enforcement** — permanently out of platform scope  
+
+### 11.4 Forward Reference
+
+Tenancy conclusion chapters follow per Chapter 41 §11.3 — Tenancy Dispute and Escalation Experience must not pretend to satisfy **tenancy conclusion** depth or absorb move-out, deposit return, and relationship closure experience.
+
+---
+
+## 12. Tenancy Dispute Context Within Active Tenancy
+
+### 12.1 Scope Gate
+
+Tenancy dispute and escalation experience applies **only** when **Active Tenancy** (Chapter 41) is legitimately in scope. Pre-commencement judgment from viewing and occupancy readiness remains Chapters 35 and 40 scope — dispute experience does not absorb it.
+
+### 12.2 Ongoing Conflict Reality
+
+Long-term rental implies **ongoing bilateral conflict possibility** across the Tenancy Lifecycle — rent disagreements, repair disputes, notice conflicts, deposit concerns, and escalation toward external legal or institutional channels. Dispute experience governs how Rento supports **orientation to that reality** — conflict posture visibility, bilateral responsibility clarity, continuity across dispute attention cycles — without operating adjudication or enforcement.
+
+### 12.3 Bilateral Dispute Reality
+
+Settlement of disputes occurs **outside platform establishment** — through bilateral negotiation, mediation services parties engage independently, legal counsel, courts, tribunals, housing authorities, or enforcement channels stakeholders determine. Rento may support **orientation around dispute resolution pathways** and **understanding of escalation pathways** stakeholders may pursue independently; orientation is **not** adjudication, mediation, or conflict resolution execution.
+
+### 12.4 Pending and Escalated Dispute States
+
+Raised, acknowledged, pending, escalated externally, settled bilaterally outside platform, unresolved, or unknown must remain **honestly communicated** — no simulated settled posture, no hidden legal threat theater, no platform determination of outcome. Compound conflicts spanning rent and maintenance dimensions maintain **separate dimensional clarity** within unified dispute attention where product-supported.
+
+### 12.5 Trust Preservation Under Conflict
+
+Dispute experience must **preserve marketplace trust** even when bilateral conflict is active — boundary honesty, calm environment, and Dispute Experience Integrity prevent conflict attention from converting the platform into adjudication theater or eroding trust established through Chapters 1–43.
+
+---
+
+## 13. Tenancy Continuity and Information Layer
+
+### 13.1 Tenancy Continuity Through Dispute Attention
+
+**Tenancy Continuity** (Chapter 41) governs dispute attention persistence — conflict posture, last orientation state, bilateral context carry-forward across sessions. Dispute experience **specializes** Tenancy Continuity for the dispute dimension without redefining it.
+
+### 13.2 Information Inheritance
+
+Dispute experience treats listing and decision arc information as **historical context** — honesty from evaluation through viewing, financial readiness, and occupancy readiness preserved; material bilateral change communicated honestly outside platform establishment.
+
+### 13.3 Rent and Maintenance Dimension Carry-Forward
+
+Rent dispute acknowledgment from Chapter 42 and repair dispute acknowledgment from Chapter 43 remain **interpretable** through Tenancy Continuity — they inform Escalation Awareness; they do not authorize dimensional merge or operational claims in sibling dimensions.
+
+### 13.4 Dispute History and Forward Conclusion
+
+Dispute attention history may **inform** forward tenancy conclusion experience — it does **not** satisfy conclusion scope. Conclusion chapters govern closure; this chapter governs ongoing dispute context during Active Tenancy.
+
+---
+
+## 14. Mobile & Accessibility Considerations
+
+Mobile is the **primary dispute context orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Conflict posture at glance** | Dispute context and boundaries reachable without hunt |
+| **One-handed deferral** | Defer and conclude dispute attention reachable during interruption |
+| **Calm return** | Resuming dispute context feels continuous — not alarming |
+| **No conflict shame layout** | Dignified language for pending or escalated states |
+| **Partner parity** | Shared dispute truth across household participants |
+| **Anxiety-sensitive design** | Legal threat and conflict copy must not weaponize fear |
+
+Dispute experience must be **inclusive** — textual equivalents for conflict posture and boundaries; plain language; calm tone without weaponized legal anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 15. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Adjudication Theater** | Impersonates mediator, arbitrator, court, or housing authority — scope violation |
+| **Simulated Bilateral Settlement Posture** | Unconfirmed settlement presented as determined — integrity violation |
+| **Mediation Platform Creep** | Product posture implying case management or mediation execution — scope violation |
+| **Legal Authority Impersonation** | Platform certifies legal outcome or assigns responsibility — boundary violation |
+| **Conflict Panic Amplification** | Manufactured dispute alarm, legal threat shame, escalation urgency — violates calm environment (Chapter 41 §14) |
+| **Rent Collection Through Dispute** | Uses dispute experience to pursue payment or debt recovery — Ch 42 scope violation |
+| **Maintenance Dispatch Through Dispute** | Uses dispute experience to simulate repair execution — Ch 43 scope violation |
+| **Viewing Re-Gate** | Treats each dispute as physical reconciliation — phase conflation |
+| **Occupancy Readiness Re-Gate** | Treats dispute as commencement certification — trilogy violation |
+| **Conclusion Masquerading as Dispute** | Move-out or deposit closure presented as dispute chapter scope — forward violation |
+| **Evidence Processing Theater** | Platform evaluates or rules on evidence as authority — adjudication violation |
+| **Ticket System Creep** | Dispute experience as case ticketing or workflow engine — PMS/legal platform violation |
+| **Dispute Gamification** | Settlement streaks, escalation badges — trivializes bilateral responsibility |
+| **Conflict Resolution Theater** | Product posture implying conflict resolution execution or dispute resolution services — scope violation |
+| **Conversion Theater** | Dispute experience as pathway-conversion metric — judgment violation |
+| Conflating Rent Lifecycle, Maintenance Context, or platform attestation with adjudication | Concept conflation across chapters |
+| Thinner boundaries than Settled Tenancy foundation | Amnesia at dispute dimension |
+| Shame copy for defer, conclude, or pending dispute | Dignified posture violation |
+
+---
+
+## 16. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, tenancy dispute and escalation experience initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Dispute Experience Environment**, **Tenancy Dispute Context**, **Escalation Awareness**, **Dispute Experience Boundaries**, **Dispute Boundary Clarity**, **Dispute Experience Integrity**, and **Tenancy Continuity** specialization integrity.
+
+**Review gate:** No tenancy dispute and escalation experience surface ships without checklist against all official concepts, principles, attention postures, and integrity requirements defined herein.
+
+**Forward chapters:** Tenancy conclusion experience extends Tenancy Lifecycle — this chapter supplies the dispute and escalation context foundation within the Settled Tenancy block.
+
+---
+
+## 17. Architectural Summary
+
+Tenancy dispute and escalation experience converts **Settled Tenancy foundation, Rent Lifecycle specialization, and Maintenance and Repair Context specialization** into **honest dispute and escalation context experience during Active Tenancy with dispute boundary clarity** — the third specialized dimension within the Tenancy Lifecycle.
+
+This chapter defines Dispute Experience Environment, Tenancy Dispute Context, Escalation Awareness, Dispute Experience Boundaries, Dispute Boundary Clarity, and Dispute Experience Integrity; principles of orientation over adjudication and boundaries over mediation theater; mandatory separation from Viewing physical reconciliation, Occupancy Readiness, Rent Lifecycle, Maintenance and Repair Context, and Tenancy Conclusion; attend, defer attention, and conclude dispute context postures; platform-never-adjudicates-disputes posture; integration with Chapters 16, 20, 21, 25, 30, 35, 40, 41, 42, 43; and honest transition toward tenancy conclusion chapters without owning adjudication, mediation execution, arbitration, evidence processing as authority, case management, outcome enforcement, or tenancy conclusion depth.
+
+**Settled Tenancy flow:**
+
+Property Detail (Ch 31) → … → Occupancy Readiness (Ch 40) → Settled Tenancy (Ch 41) → Rent Lifecycle (Ch 42) → Maintenance and Repair (Ch 43) → **Dispute and Escalation (Ch 44)** → tenancy conclusion (forward)
+
+**Terminology note:** This chapter adopts **Tenancy Dispute Context** — the dimension name from Tenancy Lifecycle (Chapter 41) — *dispute and escalation context* — rather than introducing a nested **Dispute Lifecycle** beneath Tenancy Lifecycle. **Rent Lifecycle** (Chapter 42) remains the established financial dimension term; **Maintenance and Repair Context** (Chapter 43) remains the established physical dimension term; **Tenancy Dispute Context** is the parallel conflict dimension term — all are dimensions **within** Tenancy Lifecycle, not separate macro-lifecycles.
+
+---
+
+## 18. Design Director Review
+
+**Chapter:** 44 — Tenancy Dispute and Escalation Experience  
+**Section:** XLI — Dispute and Escalation  
+**Review type:** Initial standard adoption
+
+### 18.1 Approval Statement
+
+- **Architecture Review** — APPROVED WITH REQUIRED CHANGES (RC-1 applied)  
+- **Required Architectural Amendments** — RC-1 applied (dispute resolution and mediation language semantic pass)  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **tenancy dispute and escalation experience contract** for Rento. All dispute and escalation context product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 18.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; dispute-related communication context |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 21 — Notifications & User Re-engagement Experience | Re-engagement posture; Continuity Without Pressure |
+| Chapter 25 — Feedback, Status & System Communication Experience | Respectful Silence; system communication posture |
+| Chapter 30 — Saved Searches & Search Continuity | Housing Continuity parent; Tenancy Continuity via Ch 41 |
+| Chapter 35 — Viewing Experience | Pre-commitment physical reconciliation; informs, not substitutes |
+| Chapter 40 — Occupancy Readiness Experience | Commencement boundary; occupancy handoff |
+| Chapter 41 — Settled Tenancy Experience | Parent foundation; official concepts consumed, not redefined |
+| Chapter 42 — Rent Lifecycle Experience | Parallel specialized dimension; rent dispute acknowledgment; intersection without merge |
+| Chapter 43 — Maintenance and Repair Experience | Parallel specialized dimension; repair dispute acknowledgment; intersection without merge |
+| Forward chapters — Tenancy Conclusion | Specialized Tenancy Lifecycle dimension — forward |
+
+### 18.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Tenancy dispute and escalation experience positioned as third specialized Settled Tenancy dimension — not Viewing continuation, not Occupancy Readiness Part II, not readiness gate, not legal authority or mediation platform  
+2. Physical reconciliation / Occupancy Readiness / Rent Lifecycle / Maintenance and Repair Context / Tenancy Dispute Context explicitly separated — no merge  
+3. Platform-never-adjudicates-disputes principle explicit — marketplace posture preserved; platform never mediates disputes or performs dispute resolution  
+4. Chapter 41, Chapter 42, and Chapter 43 official concepts consumed — not redefined  
+5. Rent and maintenance dispute acknowledgment handoffs honest — no dimensional absorption  
+6. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+7. Forward deferral from Ch 41 §11.3, Ch 42 §11.3, and Ch 43 §11.3 honored — tenancy conclusion deferred  
+8. Attend, defer attention, conclude postures — not readiness proceed/defer/release  
+9. Dispute Experience Boundaries extend — not replace — Settled Tenancy Boundaries  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+12. No nested Dispute Lifecycle beneath Tenancy Lifecycle  
+
+### 18.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on tenancy dispute and escalation experience philosophy |
+| Head of Product Design | Settled Tenancy specialized dimension parity |
+| Senior UX Designer | Dispute boundary communication, mobile rhythm |
+| Product Management | Marketplace posture honesty and dispute boundary integrity |
+| Content Design Lead | Scope language, dispute state honesty, escalation pathway copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual dispute orientation access and anxiety-sensitive design |
+
+### 18.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new tenancy dispute and escalation experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 18.6 Design Director Closing Note
+
+Users do not rent mediation dashboards or court simulations. They rent homes — and they deserve honest marketplace orientation when bilateral conflict arises during tenancy, not a platform that impersonates legal authority, manufactures settlement certainty, or chases conflict engagement. This chapter exists so Rento supports dispute and escalation context experience with boundary clarity, rent and maintenance dimension separation, and dignity whether users attend to dispute context, defer attention, or conclude platform orientation — without ever confusing a serious rental marketplace with a Property Management System or dispute resolution authority.
+
+---
+
+**End of Chapter 44**
 
