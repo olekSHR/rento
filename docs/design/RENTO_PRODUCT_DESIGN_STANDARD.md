@@ -83,12 +83,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 39 | [Financial Readiness Experience](#chapter-39--financial-readiness-experience) | Financial Readiness | APPROVED |
 | 40 | [Occupancy Readiness Experience](#chapter-40--occupancy-readiness-experience) | Occupancy Readiness | APPROVED |
 | 41 | [Settled Tenancy Experience](#chapter-41--settled-tenancy-experience) | Settled Tenancy | APPROVED |
+| 42 | [Rent Lifecycle Experience](#chapter-42--rent-lifecycle-experience) | Rent Lifecycle | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title | Section | Status |
 |-----|-------|---------|--------|
-| 42+ | Settled Tenancy specialized chapters (forward) | Settled Tenancy | NOT YET AUTHORED |
+| 43+ | Settled Tenancy specialized chapters (forward) | Settled Tenancy | NOT YET AUTHORED |
 
 See `MASTER_ROADMAP.md` for remaining domain order within and after the Settled Tenancy block.
 
@@ -121,6 +122,7 @@ See `MASTER_ROADMAP.md` for remaining domain order within and after the Settled 
 | 1.0 | 2026-07-04 | Chapter 39 — Financial Readiness Experience approved and added — Established financial execution readiness gate in Housing Obligation block after Legal Readiness and architectural standard for responsible financial readiness judgment before Occupancy Readiness |
 | 1.0 | 2026-07-04 | Chapter 40 — Occupancy Readiness Experience approved and added — Completed Housing Obligation execution trilogy with occupancy execution readiness gate after Financial Readiness and architectural standard for responsible occupancy readiness judgment before Settled Tenancy |
 | 1.0 | 2026-07-05 | Chapter 41 — Settled Tenancy Experience approved and added — Opened Settled Tenancy macro-domain after Housing Obligation completion with Tenancy Lifecycle foundation, Housing Journey separation, and marketplace posture for experience surrounding active tenancy |
+| 1.0 | 2026-07-05 | Chapter 42 — Rent Lifecycle Experience approved and added — Established first specialized Settled Tenancy dimension for recurring rent obligation experience during Active Tenancy with Financial Readiness separation and platform-never-collects-rent posture |
 
 ---
 
@@ -39615,4 +39617,555 @@ Users do not rent property management dashboards. They rent homes — and they d
 ---
 
 **End of Chapter 41**
+
+
+## Chapter 42 — Rent Lifecycle Experience
+
+**Section:** XXXIX — Rent Lifecycle  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–41; first specialized experience dimension within the Settled Tenancy macro-domain after Settled Tenancy Experience (Chapter 41); operationalizes Settled Tenancy Boundaries (Chapter 41), Tenancy Boundary Clarity (Chapter 41), Tenancy Continuity (Chapter 41), Financial Readiness Boundaries (Chapter 39), and contact ethics (Chapter 16); defines principles only — not rent collection, payment processing, banking integration, accounting, arrears management, lease enforcement, property management operations, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **rent lifecycle experience philosophy** for Rento — how the product governs **experience surrounding ongoing rent obligations during Active Tenancy** while preserving marketplace integrity, boundary clarity, Tenancy Continuity, and long-term platform trust.
+
+Rent lifecycle is not financial readiness. Financial readiness governs **pre-commencement financial execution judgment** — whether the user is prepared to engage deposit, rent schedule, guarantor, and payment settlement responsibility before occupancy commencement (Chapter 39). Rent lifecycle governs **post-commencement recurring rent obligation experience** — what Rento can honorably support once Active Tenancy is in scope and rent obligations recur throughout the Tenancy Lifecycle.
+
+Rent lifecycle is not settled tenancy foundation. Settled Tenancy Experience (Chapter 41) governs **the opening architectural foundation** of the Tenancy Lifecycle macro-domain — marketplace posture, Active Tenancy, and cross-dimensional boundaries for all ongoing tenancy experience. Rent lifecycle governs **one specialized dimension** within that foundation: **recurring rent obligation awareness and orientation during Active Tenancy**.
+
+Rent lifecycle is not property management. Rento remains a **marketplace platform** — it does not collect rent, process payments, manage arrears, or enforce lease terms. It **supports honest rent lifecycle experience** — helping users, landlords, and realtors orient to recurring rent obligations with integrity, boundary clarity, and dignity without impersonating financial or operational authority.
+
+**The platform never collects rent.** Rento does not manufacture rent paid, payment schedule executed, arrears resolved, or rent compliance certified. The platform **supports informed rent obligation awareness** — helping stakeholders honor recurring rent responsibility within marketplace boundaries without simulating collection, banking, or enforcement.
+
+Where Chapter 41 opens the Tenancy Lifecycle and defines what settled tenancy experience can and cannot establish broadly, this chapter **specializes rent lifecycle** — the first deferred dimension from Chapter 41 §11.3 — without redefining Tenancy Lifecycle, Active Tenancy, Settled Tenancy Boundaries, or any other Chapter 41 official concept.
+
+The product must help stakeholders answer five rent lifecycle questions:
+
+1. **During Active Tenancy — what recurring rent obligations apply, and what does Rento support versus what bilateral process must own?**  
+2. **How does rent lifecycle experience inherit Financial Readiness context without re-opening pre-commencement financial judgment?**  
+3. **Are rent lifecycle boundaries clear — what does platform orientation establish versus what collection, banking, and enforcement must settle?**  
+4. **Does Tenancy Continuity preserve rent attention context across sessions without rent panic or shame theater?**  
+5. **Can users attend to, defer attention from, or conclude rent context on Rento without trap, arrears alarm, or collection theater?**
+
+This chapter governs rent lifecycle as the **first specialized experience dimension within the Settled Tenancy macro-domain**. It does **not** specify payment systems, ledger architecture, banking APIs, or engineering implementation.
+
+**Relationship to prior chapters:** **Settled Tenancy Boundaries** (Chapter 41) and **Tenancy Boundary Clarity** (Chapter 41) govern the parent scope within which rent lifecycle operates. **Financial Readiness Boundaries** (Chapter 39) govern pre-commencement financial execution — rent lifecycle **inherits** boundary lineage without re-adjudicating Financial Readiness. **Tenancy Continuity** (Chapter 41) governs persistence across rent attention cycles. This chapter defines **Rent Lifecycle Environment**, **Rent Lifecycle**, **Rent Obligation Awareness**, **Rent Lifecycle Boundaries**, **Rent Boundary Clarity**, and **Rent Lifecycle Integrity**.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Awareness over collection** | Rent lifecycle supports obligation orientation — not payment execution or rent collection |
+| **Boundaries over rent theater** | Rento and users know what rent experience can and cannot establish — no simulated payment completion |
+| **Lifecycle separation over readiness conflation** | Rent Lifecycle, Tenancy Lifecycle, and Financial Readiness remain distinct — never merged |
+| **Continuity over amnesia** | Financial readiness and tenancy context inform rent attention — without resetting bilateral truth |
+| **Calm over rent panic** | No manufactured due-date alarm, arrears shame, or countdown pressure |
+| **Marketplace over operations** | Rento remains a marketplace — not rent collector, bank, or enforcement agent |
+| **Honest scope over payment overclaim** | Recurring rent administration remains outside platform establishment |
+| **Voluntary attention over forced rent engagement** | Attend, defer attention, and conclude rent context remain dignified |
+| **Bilateral truth over digital settlement** | Product does not substitute digital posture for actual payment reality |
+| **Mobile orientation first** | Design for calm mobile rent obligation orientation — then tablet, then desktop |
+| **Rent Lifecycle Integrity goal** | Every rent lifecycle outcome honors honest boundaries and marketplace posture |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, rent payment interface guide, banking integration pattern, or arrears dashboard design  
+- An implementation plan, API contract, payment processor integration, or engineering architecture  
+- A replacement for Chapters 16, 20, 39, or 41  
+- Financial Readiness continuation, Part II, or post-commencement financial readiness gate  
+- Another Readiness chapter — rent lifecycle is **not** a Housing Obligation or settled tenancy readiness gate  
+- A maintenance, dispute, tenancy conclusion, or property management operations chapter (forward within Settled Tenancy block)  
+- A **Rent Payment Experience** or **Rent Collection Experience** chapter identity — payment execution is **out of scope**  
+- A redefinition of Tenancy Lifecycle, Active Tenancy, Settled Tenancy Environment, Settled Tenancy Boundaries, Tenancy Boundary Clarity, Settled Tenancy Integrity, or Tenancy Continuity (Chapter 41)  
+
+If the question is *how to build* rent collection or payment processing — this chapter does not answer it. If the question is *what rent lifecycle experience must accomplish for marketplace integrity, recurring rent obligation honesty, and platform boundary clarity during Active Tenancy* — this chapter does.
+
+Rent lifecycle is **not** rent collection, payment processing, or arrears management. Rent lifecycle **is** responsible product-supported experience surrounding **ongoing rent obligations during Active Tenancy** — with honest boundaries and dignity whether users attend, defer attention, or conclude rent context.
+
+---
+
+## Concept Separation — Mandatory
+
+Three concepts govern distinct phases and must **never** be merged:
+
+| Concept | Phase | Governing chapter | Primary question |
+|---------|-------|-------------------|------------------|
+| **Financial Readiness** | Pre-commencement | Chapter 39 | Am I prepared to engage financial settlement responsibility responsibly before occupancy — with financial boundary clarity? |
+| **Tenancy Lifecycle** | Post-commencement | Chapter 41 | How does Rento honorably support experience surrounding active tenancy — with tenancy boundary clarity across all lifecycle dimensions? |
+| **Rent Lifecycle** | Active tenancy — recurring rent dimension | **This chapter** | How does Rento honorably support experience surrounding ongoing rent obligations during Active Tenancy — with rent boundary clarity? |
+
+**Financial Readiness** ends at the occupancy commencement boundary for judgment purposes. **Tenancy Lifecycle** begins after that boundary. **Rent Lifecycle** operates **within** Active Tenancy as one specialized dimension of Tenancy Lifecycle — not as a fourth readiness gate and not as Financial Readiness extended into operations.
+
+```
+Financial Readiness (Ch 39)     →  Can tenancy begin financially?  →  Pre-commencement judgment
+        ↓ occupancy commencement boundary
+Tenancy Lifecycle (Ch 41)       →  Overall relationship lifecycle   →  Post-commencement foundation
+        ↓ within Active Tenancy
+Rent Lifecycle (this chapter)   →  Recurring rent obligation experience  →  Specialized dimension
+```
+
+---
+
+## Rent Lifecycle Environment
+
+**Rent Lifecycle Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Rent Lifecycle Environment is the **cognitive and informational conditions under which a user, landlord, or realtor orients to, reflects on, and engages with recurring rent obligation experience for a specific Active Tenancy** — not the screen layout, but the **quality of the rent lifecycle experience space** Rento provides within Settled Tenancy Environment (Chapter 41).
+
+A sound Rent Lifecycle Environment is **oriented, grounded, boundary-legible, bounded, calm, continuity-preserving, and marketplace-honest** — a specialized calm environment within Settled Tenancy Environment, governing **recurring rent obligation attention** rather than general tenancy orientation or pre-commencement financial judgment.
+
+Rent Lifecycle Environment is reusable across rent lifecycle attention postures, rent boundary communication, outcome interpretation, and forward maintenance, dispute, and tenancy conclusion chapters where rent context remains relevant.
+
+---
+
+## Rent Lifecycle
+
+**Rent Lifecycle** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Rent Lifecycle is the **ongoing recurring rent obligation dimension within the Tenancy Lifecycle** — the sequence of rent-related attention, orientation, and bilateral states surrounding scheduled rent obligations during Active Tenancy, from first recurring obligation through tenancy conclusion (forward chapter).
+
+Rent Lifecycle is **distinct from Financial Readiness** and **distinct from Tenancy Lifecycle as a whole**:
+
+| Concept | Scope |
+|---------|-------|
+| **Financial Readiness** (Chapter 39) | Pre-commencement financial execution judgment — deposit, initial settlement, schedule understanding before occupancy |
+| **Tenancy Lifecycle** (Chapter 41) | Complete post-commencement relationship lifecycle — all dimensions including rent, maintenance, dispute, conclusion |
+| **Rent Lifecycle** (this chapter) | Recurring rent obligation experience **only** — within Active Tenancy |
+
+Rent Lifecycle requires **Active Tenancy** (Chapter 41), understood **Settled Tenancy Boundaries** and **Rent Lifecycle Boundaries**, adequate **Rent Boundary Clarity**, and **Tenancy Continuity** sufficient for rent attention context. Rent lifecycle does not re-establish Active Tenancy or re-open occupancy readiness judgment.
+
+Rent Lifecycle is not a funnel stage to maximize. It is a **specialized experience dimension** — not a readiness gate, not a payment conversion stage.
+
+---
+
+## Rent Obligation Awareness
+
+**Rent Obligation Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Rent Obligation Awareness is the **stakeholder's informed orientation to recurring rent obligations during Active Tenancy** — comprehending what rent schedule posture, payment responsibility, and bilateral rent process reasonably apply, without the platform simulating payment completion, certifying compliance, or substituting for banking or enforcement.
+
+Rent Obligation Awareness includes **schedule posture understanding**, **bilateral payment responsibility acknowledgment**, **recurring obligation continuity**, **pending or disputed rent state visibility**, and **honest limits of platform orientation** — awareness supports sound attention; it does not guarantee payment outcome.
+
+Rent Obligation Awareness **inherits** financial obligation understanding from Financial Readiness Preparation (Chapter 39) through Tenancy Continuity — it does **not** re-adjudicate whether user was financially ready before commencement. Pre-commencement gaps remain visible where relevant; rent lifecycle does not bury them under post-commencement amnesia.
+
+Rent Obligation Awareness is **in-scope content** of this chapter. It is **not** the chapter identity alone — the chapter identity is **Rent Lifecycle Experience** governing the full rent lifecycle dimension within Tenancy Lifecycle.
+
+---
+
+## Rent Lifecycle Boundaries
+
+**Rent Lifecycle Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Rent Lifecycle Boundaries define **what engaging with rent lifecycle experience through Rento can and cannot establish** — the scope beyond which landlord, tenant, realtor, banking, bilateral payment process, or legal enforcement must carry responsibility.
+
+Rent Lifecycle Boundaries **extend** Settled Tenancy Boundaries (Chapter 41) and **Financial Readiness Boundaries** (Chapter 39) into the recurring rent dimension — each parent limit becomes a rent lifecycle limit honestly stated.
+
+Rento rent lifecycle experience **can** support rent obligation awareness, rent boundary clarity, Tenancy Continuity through rent attention cycles, honest pending-state language, and dignified attend, defer attention, or conclude postures toward rent context.
+
+Rento rent lifecycle experience **cannot** substitute for **rent collection**, **payment processing**, **banking or transfer execution**, **accounting or ledger operations**, **arrears management or enforcement**, **affordability or credit judgment**, **lease enforcement**, **guarantor pursuit**, **platform attestation of rent paid** (Chapter 20), or **financial settlement completion** (Chapter 39 scope).
+
+**The platform never collects rent.** Rent Lifecycle Boundaries are reusable across forward maintenance, dispute, and tenancy conclusion chapters where rent context intersects other dimensions.
+
+---
+
+## Rent Boundary Clarity
+
+**Rent Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Rent Boundary Clarity is the **shared legibility of what Rento, user, landlord, realtor, banking, and external process each reasonably own regarding recurring rent obligations during Active Tenancy** — without simulated payment completion, rent compliance certification, or collection authority theater.
+
+Rent Boundary Clarity requires **Rento scope honesty**, **bilateral payment responsibility honesty**, **marketplace posture honesty**, **pending rent state legibility**, and **no false rent settlement certainty**.
+
+Rent Boundary Clarity is distinct from **Tenancy Boundary Clarity** (Chapter 41): Tenancy Boundary Clarity governs **all ongoing tenancy dimensions**; Rent Boundary Clarity governs **the recurring rent dimension only**. It extends **Financial Boundary Clarity** (Chapter 39) into post-commencement recurring rent — without re-opening Financial Readiness judgment.
+
+---
+
+## Rent Lifecycle Integrity
+
+**Rent Lifecycle Integrity** is the **honesty of the rent lifecycle experience itself** — no simulated rent paid, no hidden rent boundaries, no pressure to engage rent features when inappropriate, no collection theater, no arrears shame gamification, no forced payment posture.
+
+Rent Lifecycle Integrity parallels **Settled Tenancy Integrity** (Chapter 41) and the integrity lineage from Chapters 33–40 — specialized for the recurring rent dimension within Active Tenancy.
+
+---
+
+## 2. Role in the Tenancy Lifecycle
+
+Rent lifecycle sits as the **first specialized experience dimension** within the Settled Tenancy macro-domain — immediately after Settled Tenancy Experience (Chapter 41) foundation, within Active Tenancy scope.
+
+| Tenancy Lifecycle dimension | Governing chapter | Primary question |
+|----------------------------|-------------------|------------------|
+| **Settled tenancy foundation** | Chapter 41 | How does Rento support experience surrounding active tenancy — with tenancy boundary clarity? |
+| **Rent lifecycle (this chapter)** | **This chapter** | How does Rento support experience surrounding recurring rent obligations — with rent boundary clarity? |
+| Maintenance and repair | Forward | How is maintenance experienced during tenancy? |
+| Dispute and escalation | Forward | How are tenancy disputes experienced? |
+| Tenancy conclusion | Forward | How is tenancy conclusion experienced? |
+
+Rent lifecycle **specializes** one dimension deferred from Chapter 41 §11.3 — it does **not** complete the Tenancy Lifecycle. Forward chapters supply maintenance, dispute, and conclusion experience.
+
+Rent lifecycle succeeds through **honest rent obligation orientation and rent boundary clarity** — not rent feature maximization, payment conversion, or collection theater.
+
+---
+
+## 3. Relationship to Settled Tenancy Experience (Chapter 41)
+
+Users enter rent lifecycle experience scope **within** Active Tenancy — after Settled Tenancy foundation boundaries are understood (Chapter 41 §11.2).
+
+### 3.1 Entry Preconditions
+
+Rent lifecycle orientation is responsible when **Active Tenancy** is in scope, **Settled Tenancy Boundaries** and **Rent Lifecycle Boundaries** are understood, **Tenancy Boundary Clarity** and **Rent Boundary Clarity** are adequate, and **Tenancy Continuity** preserves relevant context.
+
+### 3.2 Handoff from Settled Tenancy Foundation
+
+Chapter 41 supplies **Tenancy Lifecycle** definition, **Settled Tenancy Environment**, **Active Tenancy**, **Settled Tenancy Boundaries**, **Tenancy Boundary Clarity**, **Settled Tenancy Integrity**, **Tenancy Continuity**, and attend, defer attention, conclude context postures. Rent lifecycle must **preserve** settled tenancy foundation — not redefine official concepts, not collapse Tenancy Lifecycle into rent-only scope, not absorb maintenance or dispute dimensions.
+
+The handoff contract:
+
+- Rent lifecycle operates **within** Settled Tenancy Boundaries — narrower, not broader  
+- **Rent Lifecycle Environment** specializes **Settled Tenancy Environment** for recurring rent attention  
+- Attend to rent context **does not imply** rent collected, payment processed, or arrears resolved  
+- Defer or conclude rent attention **does not erase** Active Tenancy or bilateral rent reality  
+- Settled tenancy foundation **does not substitute** for rent lifecycle depth — forward reference honored  
+
+### 3.3 No Redefinition of Chapter 41 Concepts
+
+This chapter **consumes** Chapter 41 official concepts — it does **not** amend, extend definitions of, or replace Tenancy Lifecycle, Active Tenancy, Settled Tenancy Environment, Settled Tenancy Boundaries, Tenancy Boundary Clarity, Settled Tenancy Integrity, or Tenancy Continuity.
+
+---
+
+## 4. Relationship to Financial Readiness Experience (Chapter 39)
+
+Financial readiness and rent lifecycle govern **different phases** of financial obligation — pre-commencement judgment versus post-commencement recurring experience. They must **never** be merged.
+
+### 4.1 Phase Separation
+
+| Dimension | Financial Readiness (Ch 39) | Rent Lifecycle (this chapter) |
+|-----------|------------------------------|-------------------------------|
+| **Phase** | Pre-commencement | Active Tenancy — recurring |
+| **Question** | Am I prepared to engage financial settlement before occupancy? | How does rent obligation experience remain honest during ongoing tenancy? |
+| **Platform posture** | The platform never creates financial settlement | The platform never collects rent |
+| **Outcome pattern** | proceed / defer / release (readiness judgment) | attend / defer attention / conclude (attention postures) |
+| **Scope** | Deposit, initial settlement, schedule understanding | Recurring rent obligation orientation |
+
+### 4.2 Inheritance Without Re-Adjudication
+
+Chapter 39 supplies **Financial Readiness Boundaries**, **Financial Boundary Clarity**, **Financial Readiness Preparation**, and post-engagement outcomes. Rent lifecycle **inherits** this context through Tenancy Continuity — financial obligation understanding from pre-commencement informs Rent Obligation Awareness; it does **not** re-open Financial Readiness Confidence judgment or simulate that financial readiness equals ongoing rent compliance.
+
+Financial readiness outcome **pending** at commencement does not default to rent lifecycle certainty. Pre-commencement unknowns remain visible where relevant without shame theater.
+
+### 4.3 Financial Readiness Informs; Financial Readiness Never Substitutes Rent Lifecycle
+
+Schedule posture and deposit context from Financial Readiness **inform** Rent Obligation Awareness — they do **not** satisfy maintenance, dispute, or rent collection scope. Financial Readiness **does not** govern recurring rent experience during Active Tenancy — this chapter does.
+
+### 4.4 No Financial Readiness Re-Gate
+
+Rent lifecycle must not present as **Financial Readiness Part II**, affordability re-certification, or pre-payment readiness gate before each rent cycle. Recurring rent experience is **orientation and boundary clarity** — not repeated financial execution judgment.
+
+---
+
+## 5. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract**. This chapter **consumes** platform trust signals — it does **not** redefine them.
+
+Platform verification and moderation status **inform** rent context orientation — they do **not** guarantee rent paid, payment compliance, or landlord financial reliability. Rent lifecycle must never **inflate** Chapter 20 attestation into rent payment certification or collection authority.
+
+---
+
+## 6. Relationship to Contact & Communication Experience (Chapter 16)
+
+Chapter 16 remains the **authoritative contract for communication ethics** during rent lifecycle experience. This chapter **consumes** Chapter 16 — it does **not** redefine contact rules.
+
+Rent-related contact — schedule clarification, payment timing questions, bilateral coordination — remains governed by Chapter 16 ethics. Rent lifecycle must not use contact channels to pressure payment, simulate collection, impersonate landlord payment demands, or substitute for Rent Lifecycle Boundaries.
+
+---
+
+## 7. Relationship to Notifications & Re-engagement (Chapter 21)
+
+Notifications within rent lifecycle scope must honor **Continuity Without Pressure** (Chapter 30 lineage), **Respectful Silence** (Chapter 25), and **Settled Tenancy Integrity** (Chapter 41) — inform about rent context where appropriate; do not manufacture rent panic, arrears alarm, or collection urgency.
+
+Rent due reminders, if ever product-supported in principle, must serve **orientation** — not conversion, shame, or simulated enforcement authority. This chapter governs **principle**; notification mechanics belong to Chapter 21 posture.
+
+---
+
+## 8. Rent Lifecycle Within Active Tenancy
+
+### 8.1 Scope Gate
+
+Rent lifecycle experience applies **only** when **Active Tenancy** (Chapter 41) is legitimately in scope. Pre-commencement rent schedule understanding remains Financial Readiness (Chapter 39) — rent lifecycle does not absorb it.
+
+### 8.2 Recurring Obligation Rhythm
+
+Long-term rental implies **recurring rent obligations** across the Tenancy Lifecycle. Rent lifecycle experience governs how Rento supports **orientation to that rhythm** — schedule posture visibility, bilateral responsibility clarity, continuity across rent attention cycles — without operating the rhythm.
+
+### 8.3 Bilateral Payment Reality
+
+Actual rent payment occurs **outside platform establishment** — through bilateral agreement, banking, cash, or other channels landlord and tenant determine. Rento may support **orientation** to that reality; orientation is **not** payment.
+
+### 8.4 Pending and Disputed Rent States
+
+Rent due, paid bilaterally, pending confirmation, disputed, or unknown must remain **honestly communicated** — no simulated paid, no hidden arrears theater, no platform adjudication of dispute outcome. Dispute experience depth belongs to forward chapters — rent lifecycle acknowledges dispute state honestly without absorbing dispute architecture.
+
+---
+
+## 9. Rent Lifecycle Principles
+
+*How should Rento support recurring rent obligation experience during Active Tenancy while preserving marketplace integrity, Financial Readiness separation, and rent boundary clarity?*
+
+### 9.1 Awareness Over Collection
+
+Rent lifecycle supports **obligation orientation** — not payment execution.
+
+### 9.2 Boundaries Over Rent Theater
+
+Users understand what rent experience establishes before attention implies otherwise.
+
+### 9.3 Financial Readiness Separation
+
+Pre-commencement financial judgment is **not** re-opened each rent cycle.
+
+### 9.4 Tenancy Continuity Through Rent Cycles
+
+Rent attention context persists across sessions — without amnesia or manufactured urgency.
+
+### 9.5 Honest Rent State Language
+
+Language reflects bilateral reality — due, paid outside platform, pending, disputed, unknown — not simulated settlement.
+
+### 9.6 Calm Over Rent Panic
+
+No countdown pressure, arrears shame, or rent-streak gamification.
+
+### 9.7 Marketplace Posture
+
+Rento is marketplace — not rent collector, bank, or enforcement agent.
+
+### 9.8 Bilateral Respect
+
+Landlord and tenant payment responsibilities remain **honestly represented** — platform does not impersonate either party's collection or payment authority.
+
+### 9.9 Voluntary Rent Attention
+
+Attend, defer attention, and conclude rent context remain dignified — equal validity.
+
+### 9.10 Inheritance Without Amnesia
+
+Financial readiness and decision arc context inform rent orientation — surprises from earlier stages remain visible where relevant.
+
+### 9.11 No Affordability Re-Certification
+
+Rent lifecycle does not judge whether user can afford rent — orientation only, not qualification.
+
+---
+
+## 10. Rent Lifecycle Attention Postures
+
+Rent lifecycle is **not** a readiness gate. It inherits **attend**, **defer attention**, and **conclude context** from Chapter 41 — specialized for recurring rent obligation attention.
+
+### 10.1 Attend
+
+User **orients to rent lifecycle context** with Rent Obligation Awareness and Rent Boundary Clarity sufficient. Attend does **not** mean rent collected or payment processed through Rento.
+
+### 10.2 Defer Attention
+
+Defer preserves Active Tenancy and bilateral rent reality while acknowledging insufficient attention, clarity, or timing for rent lifecycle engagement — honest pacing with **Tenancy Continuity** preserved.
+
+### 10.3 Conclude Rent Context
+
+Conclude diminishes **platform rent attention posture** — typically when rent dimension no longer needs orientation on Rento, or tenancy concludes (forward chapter). Conclude does **not** imply rent settled or platform adjudication.
+
+### 10.4 Posture Reconsideration
+
+Attend, defer attention, and conclude remain available across rent cycles — not irreversible traps.
+
+### 10.5 Pending Rent Honesty
+
+Unconfirmed payment states remain **honestly communicated** — no simulated paid, no hidden arrears.
+
+### 10.6 No Forced Rent Engagement
+
+Exit, defer, and conclude paths always dignified — Rent Lifecycle Integrity and Rent Boundary Clarity require it.
+
+---
+
+## 11. Transition to Forward Settled Tenancy Chapters
+
+Rent lifecycle is the **first specialized dimension** — maintenance, dispute, and tenancy conclusion follow per Chapter 41 §11.3.
+
+### 11.1 What This Chapter Supplies
+
+This chapter supplies **rent lifecycle architectural specialization** — Rent Lifecycle Environment, Rent Lifecycle, Rent Obligation Awareness, Rent Lifecycle Boundaries, Rent Boundary Clarity, Rent Lifecycle Integrity, and rent lifecycle principles reusable where rent intersects forward dimensions.
+
+### 11.2 Handoff Preconditions to Forward Chapters
+
+Transition toward maintenance, dispute, or conclusion chapters is responsible when **Active Tenancy** remains in scope, **Rent Lifecycle Boundaries** are understood, **Rent Boundary Clarity** is adequate, and **Settled Tenancy Integrity** posture is maintained.
+
+### 11.3 Explicitly Deferred — Forward Within Settled Tenancy Block
+
+The following remain **outside this chapter's scope** — forward chapters:
+
+- **Maintenance and repair experience** during tenancy  
+- **Tenancy dispute and escalation experience** (dispute depth — rent dispute acknowledgment in-scope; adjudication out-of-scope)  
+- **Tenancy conclusion experience**  
+- **Rent collection, payment processing, and arrears operations** — permanently out of platform scope  
+
+### 11.4 Forward Reference
+
+Maintenance, dispute, and conclusion chapters follow per Chapter 41 §11.3 — Rent Lifecycle must not pretend to satisfy **maintenance execution**, **dispute adjudication**, or **tenancy conclusion** depth.
+
+---
+
+## 12. Tenancy Continuity and Information Layer
+
+### 12.1 Tenancy Continuity Through Rent Cycles
+
+**Tenancy Continuity** (Chapter 41) governs rent attention persistence — rent schedule posture, last orientation state, bilateral context carry-forward across sessions. Rent lifecycle **specializes** Tenancy Continuity for the rent dimension without redefining it.
+
+### 12.2 Information Inheritance
+
+Rent lifecycle treats listing and decision arc information as **historical context** — price and fee honesty from evaluation through Financial Readiness preserved; material bilateral change communicated honestly outside platform establishment.
+
+### 12.3 Partner Alignment
+
+Household participants share **identical rent orientation truth** — same schedule posture, same boundary clarity, same pending states — without viral rent panic or asymmetric pressure.
+
+---
+
+## 13. Mobile & Accessibility Considerations
+
+Mobile is the **primary rent lifecycle orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Rent posture at glance** | Schedule posture and boundaries reachable without hunt |
+| **One-handed deferral** | Defer and conclude rent attention reachable during interruption |
+| **Calm return** | Resuming rent context feels continuous — not alarming |
+| **No arrears shame layout** | Dignified language for pending or disputed states |
+| **Partner parity** | Shared rent truth across household participants |
+
+Rent lifecycle must be **inclusive** — textual equivalents for rent posture and boundaries; plain language; calm tone without weaponized rent anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 14. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Rent Collection Theater** | Impersonates payment processor or collector — scope violation |
+| **Simulated Rent Paid** | Unconfirmed payment presented as complete — integrity violation |
+| **Rent Panic** | Countdown, arrears shame, urgency amplification — violates calm environment |
+| **Financial Readiness Re-Gate** | Treats each rent cycle as Financial Readiness — phase conflation |
+| **Affordability Re-Certification** | Platform judges ongoing affordability — boundary violation |
+| **Rent Gamification** | Payment streaks, on-time badges — trivializes bilateral obligation |
+| **Conversion Theater** | Rent lifecycle as payment conversion metric — judgment violation |
+| **Banking Impersonation** | Product posture implying transfer execution — scope violation |
+| Conflating Financial Readiness, Tenancy Lifecycle, or platform attestation with rent collection | Concept conflation across chapters |
+| Thinner boundaries than Settled Tenancy foundation | Amnesia at rent dimension |
+| Maintenance or dispute masquerading as rent lifecycle | Forward chapter scope violation |
+| Shame copy for defer, conclude, or pending payment | Dignified posture violation |
+
+---
+
+## 15. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, rent lifecycle initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Rent Lifecycle Environment**, **Rent Lifecycle**, **Rent Obligation Awareness**, **Rent Lifecycle Boundaries**, **Rent Boundary Clarity**, **Rent Lifecycle Integrity**, and **Tenancy Continuity** specialization integrity.
+
+**Review gate:** No rent lifecycle surface ships without checklist against all official concepts, principles, attention postures, and integrity requirements defined herein.
+
+**Forward chapters:** Maintenance, dispute, and tenancy conclusion experience extend Tenancy Lifecycle — this chapter supplies the rent lifecycle foundation within the Settled Tenancy block.
+
+---
+
+## 16. Chapter Summary
+
+Rent lifecycle converts **Settled Tenancy foundation** into **honest recurring rent obligation experience during Active Tenancy with rent boundary clarity** — the first specialized dimension within the Tenancy Lifecycle.
+
+This chapter defines Rent Lifecycle Environment, Rent Lifecycle, Rent Obligation Awareness, Rent Lifecycle Boundaries, Rent Boundary Clarity, and Rent Lifecycle Integrity; principles of awareness over collection and boundaries over rent theater; mandatory Financial Readiness / Tenancy Lifecycle / Rent Lifecycle separation; attend, defer attention, and conclude rent context postures; platform-never-collects-rent posture; integration with Chapters 16, 20, 21, 30, 39, 41; and honest transition toward maintenance, dispute, and conclusion chapters without owning payment processing, arrears management, or lease enforcement.
+
+**Settled Tenancy flow:**
+
+Property Detail (Ch 31) → … → Occupancy Readiness (Ch 40) → Settled Tenancy (Ch 41) → **Rent Lifecycle (Ch 42)** → maintenance, dispute, conclusion (forward)
+
+---
+
+## 17. Design Director Review
+
+**Chapter:** 42 — Rent Lifecycle Experience  
+**Section:** XXXIX — Rent Lifecycle  
+**Review type:** Initial standard adoption
+
+### 17.1 Approval Statement
+
+- **Architecture Review** — APPROVED  
+- **Required Architectural Amendments** — N/A  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **rent lifecycle experience contract** for Rento. All rent lifecycle product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 17.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; rent-related communication context |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 21 — Notifications & User Re-engagement Experience | Re-engagement posture; Continuity Without Pressure |
+| Chapter 30 — Saved Searches & Search Continuity | Housing Continuity parent; Tenancy Continuity via Ch 41 |
+| Chapter 39 — Financial Readiness Experience | Pre-commencement financial dimension; inherited, not re-adjudicated |
+| Chapter 40 — Occupancy Readiness Experience | Commencement boundary; occupancy handoff |
+| Chapter 41 — Settled Tenancy Experience | Parent foundation; official concepts consumed, not redefined |
+| Forward chapters — Maintenance, Dispute, Conclusion | Specialized Tenancy Lifecycle dimensions — forward |
+
+### 17.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Rent lifecycle positioned as first specialized Settled Tenancy dimension — not Financial Readiness continuation, not readiness gate, not rent collection  
+2. Financial Readiness / Tenancy Lifecycle / Rent Lifecycle explicitly separated — no merge  
+3. Platform-never-collects-rent principle explicit — marketplace posture preserved  
+4. Chapter 41 official concepts consumed — not redefined  
+5. Occupancy and Financial Readiness handoffs honest — no re-gate  
+6. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+7. Forward deferral from Ch 41 §11.3 honored — maintenance, dispute, conclusion deferred  
+8. Attend, defer attention, conclude postures — not readiness proceed/defer/release  
+9. Rent Lifecycle Boundaries extend — not replace — Settled Tenancy and Financial Readiness Boundaries  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+
+### 17.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on rent lifecycle experience philosophy |
+| Head of Product Design | Settled Tenancy specialized dimension parity |
+| Senior UX Designer | Rent boundary communication, mobile rhythm |
+| Product Management | Marketplace posture honesty and rent boundary integrity |
+| Content Design Lead | Scope language, rent state honesty, pending payment copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual rent orientation access and anxiety-sensitive design |
+
+### 17.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new rent lifecycle experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 17.6 Design Director Closing Note
+
+Users do not rent payment dashboards. They rent homes — and they deserve honest marketplace orientation when rent recurs each month, not a platform that impersonates their bank, chases arrears, or re-tests whether they were ever financially ready. This chapter exists so Rento supports recurring rent obligation experience with boundary clarity, Financial Readiness separation, and dignity whether users attend to rent context, defer attention, or conclude platform orientation — without ever confusing a serious rental marketplace with a rent collection service.
+
+---
+
+**End of Chapter 42**
 

@@ -34,17 +34,17 @@ Scope: Product Design Standard only — no implementation unless explicitly requ
 
 ## CURRENT STATUS
 
-Approved chapters: **1–41** (41 chapters total)  
-Latest approved chapter: **Chapter 41 — Settled Tenancy Experience**  
-Latest checkpoint: **a63cd8b** (Chapter 41 integration pending commit)
+Approved chapters: **1–42** (42 chapters total)  
+Latest approved chapter: **Chapter 42 — Rent Lifecycle Experience**  
+Latest checkpoint: **0ed5451**
 
 **Decision Experience judgment progression: COMPLETE** (Chapters 31–37)
 
 **Housing Obligation execution trilogy: COMPLETE** (Chapters 38–40 — Legal, Financial, and Occupancy Readiness approved)
 
-**Settled Tenancy block: IN PROGRESS** (Chapter 41 foundation approved; Chapter 42+ specialized chapters forward)
+**Settled Tenancy block: IN PROGRESS** (Ch 41 foundation + Ch 42 rent lifecycle approved; Ch 43+ specialized chapters forward)
 
-Chapter 41 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
+Chapter 42 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
 - ✓ Phase 1 — Authoring
 - ✓ Phase 2 — Architecture Review (APPROVED)
 - ✓ Phase 3 — Required Architectural Amendments (N/A)
@@ -52,14 +52,14 @@ Chapter 41 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
 - ✓ Phase 5 — Approval Integration
 - ⏳ Phase 6 — Git Checkpoint Preparation (prepared, NOT executed)
 
-Chapter 41 location: after Chapter 40 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
-Section: **XXXVIII — Settled Tenancy**  
+Chapter 42 location: after Chapter 41 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
+Section: **XXXIX — Rent Lifecycle**  
 Status: **APPROVED**
 
 Pending user action: Git commit(s). Suggested message:
 
 ```
-approve chapter 41 settled tenancy experience
+approve chapter 42 rent lifecycle experience
 ```
 
 ```
@@ -76,91 +76,86 @@ Housing Obligation ✓ COMPLETE
 ↓
 Settled Tenancy ← IN PROGRESS
   Ch 41 — Settled Tenancy Experience ✓ APPROVED (foundation)
-  Ch 42+ — specialized tenancy chapters ← ACTIVE
+  Ch 42 — Rent Lifecycle Experience ✓ APPROVED (first specialized dimension)
+  Ch 43+ — maintenance, dispute, conclusion ← ACTIVE
 ```
 
 --------------------------------------------------
 
 ## LATEST APPROVED CHAPTER
 
-**Chapter 41 — Settled Tenancy Experience** (Section XXXVIII)
+**Chapter 42 — Rent Lifecycle Experience** (Section XXXIX)
 
 Architectural role:
-- Settled Tenancy macro-domain opening — foundation chapter after Occupancy Readiness Experience (Ch 40)
-- Tenancy Lifecycle foundation — relationship lifecycle after occupancy commencement boundary
-- Housing Journey separation preserved — Tenancy Lifecycle distinct from Housing Journey (Ch 23)
-- Extends Occupancy Readiness Boundaries (Ch 40), Occupancy Boundary Clarity (Ch 40), Housing Continuity (Ch 30), Contact ethics (Ch 16)
+- First specialized Settled Tenancy dimension — recurring rent obligation experience during Active Tenancy
+- Extends Settled Tenancy foundation (Ch 41) without redefining Chapter 41 official concepts
+- Financial Readiness / Tenancy Lifecycle / Rent Lifecycle separation — mandatory
+- Platform posture: **the platform never collects rent**
 
-Key concepts introduced in Chapter 41:
-- Tenancy Lifecycle
-- Settled Tenancy Environment
-- Active Tenancy
-- Settled Tenancy Boundaries
-- Tenancy Boundary Clarity
-- Tenancy Continuity
+Key concepts introduced in Chapter 42:
+- Rent Lifecycle Environment
+- Rent Lifecycle
+- Rent Obligation Awareness
+- Rent Lifecycle Boundaries
+- Rent Boundary Clarity
 
 Secondary concepts:
-- Settled Tenancy Integrity (parallel to Occupancy Readiness Integrity and prior integrity lineage)
+- Rent Lifecycle Integrity (parallel to Settled Tenancy Integrity and prior integrity lineage)
 
 Terminology bridge (approved):
-- **Settled Tenancy** — macro-domain governing experience surrounding active tenancy; not Property Management
-- **Tenancy Lifecycle** — official concept distinct from **Housing Journey** — must never be merged
+- **Rent Lifecycle** — recurring rent obligation dimension within Tenancy Lifecycle — distinct from Financial Readiness (Ch 39)
+- **Rent Obligation Awareness** — orientation to recurring rent obligations — not payment execution
 
 Editorial themes (approved):
-- Boundaries over tenancy theater — honest scope limits for ongoing relationship experience
-- Marketplace over operations — Rento remains a marketplace, not a Property Management System
-- The platform never operates settled tenancy — supports orientation and boundary clarity only
-- Housing Journey and Tenancy Lifecycle remain separate — no merge, no Chapter 23 amendment
-- Attend / defer attention / conclude context — all valid and equally dignified attention postures
-- NOT another Readiness chapter — Housing Obligation trilogy complete (Ch 38–40)
+- Awareness over collection — orientation, not payment processing
+- Boundaries over rent theater — honest scope limits for recurring rent experience
+- Financial Readiness separation — no re-gate, no Part II
+- The platform never collects rent — marketplace posture preserved
+- Attend / defer attention / conclude rent context — dignified attention postures
+- NOT another Readiness chapter — NOT rent collection
 
-Settled Tenancy flow (foundation approved — Ch 41):
+Settled Tenancy flow (Ch 41–42 approved):
 
-Search Architecture (Ch 26–30) → Property Detail (Ch 31) → Media (Ch 32) → Comparison (Ch 33) → Property Verification (Ch 34) → Viewing Experience (Ch 35) → Application Experience (Ch 36) → Commitment Experience (Ch 37) → Legal Readiness Experience (Ch 38) → Financial Readiness Experience (Ch 39) → Occupancy Readiness Experience (Ch 40) → **Settled Tenancy Experience (Ch 41)** → specialized tenancy chapters (forward)
+Search Architecture (Ch 26–30) → … → Occupancy Readiness (Ch 40) → Settled Tenancy (Ch 41) → **Rent Lifecycle (Ch 42)** → maintenance, dispute, conclusion (forward)
 
 Extends (does not replace):
-- Occupancy Readiness Confidence, Occupancy Readiness Boundaries, Occupancy Boundary Clarity (Chapter 40)
-- Financial Readiness Boundaries, Financial Boundary Clarity (Chapter 39)
-- Legal Readiness Boundaries, Legal Boundary Clarity (Chapter 38)
-- Commitment Boundaries, Mutual Expectation Clarity (Chapter 37)
-- Housing Continuity, Decision Persistence (Chapter 30)
-- Housing Journey definition (Chapter 23) — consumed, not redefined
+- Settled Tenancy Boundaries, Tenancy Boundary Clarity, Tenancy Continuity (Chapter 41)
+- Financial Readiness Boundaries, Financial Boundary Clarity (Chapter 39) — inherited, not re-adjudicated
+- Occupancy Readiness Boundaries (Chapter 40)
 - Contact ethics (Chapter 16)
 - Platform trust attestation (Chapter 20)
+- Notifications posture (Chapter 21)
 
 --------------------------------------------------
 
-## DESIGN COUNCIL DECISION — CHAPTER 41
+## DESIGN COUNCIL DECISION — CHAPTER 42
 
 **Status:** APPROVED  
-**Governance reference:** MASTER_ROADMAP — Governance Decision 005 (Pre-Authoring); Chapter 41 Final Design Council Review (Approval)
+**Governance reference:** Chapter 42 Final Design Council Review (Approval)
 
-### Approved architectural conclusions (retained)
+### Approved architectural conclusions
 
-1. Chapter 40 completes the **Housing Obligation** macro-domain.
-2. **Chapter 41** opens the **Settled Tenancy** macro-domain.
-3. Chapter 41 is **NOT** another Readiness chapter, Property Management, Realtor Platform, or Admin Platform.
-4. **Housing Journey** and **Tenancy Lifecycle** are distinct — **must never be merged**.
-5. Rento remains a **marketplace platform** — does **NOT** become a Property Management System.
-6. **The platform never operates settled tenancy.**
+1. Chapter 42 is the **first specialized dimension** within the Settled Tenancy macro-domain.
+2. Chapter 42 governs **Rent Lifecycle Experience** — recurring rent obligation experience during Active Tenancy.
+3. Chapter 42 is **NOT** Financial Readiness continuation, rent collection, payment processing, or Property Management.
+4. **Financial Readiness** (Ch 39), **Tenancy Lifecycle** (Ch 41), and **Rent Lifecycle** (Ch 42) remain distinct — **must never be merged**.
+5. **The platform never collects rent** — specialization of Ch 41 marketplace posture.
 
-### Deferred to Chapter 42+ (Ch 41 §11.3)
+### Deferred to Chapter 43+ (Ch 42 §11.3)
 
-- Rent lifecycle management experience beyond occupancy commencement
 - Maintenance and repair experience during tenancy
-- Tenancy dispute and escalation experience
+- Tenancy dispute and escalation experience (depth)
 - Tenancy conclusion experience
-- Specialized ongoing landlord-tenant relationship dimensions
 
 --------------------------------------------------
 
 ## CURRENT WORKFLOW
 
-Current phase: **Chapter 42 — not yet started**
+Current phase: **Chapter 43 — not yet started**
 
-Next step: **Pre-Authoring Analysis** for Chapter 42 before Phase 1 Authoring (when authorized).
+Next step: **Pre-Authoring Analysis** for Chapter 43 before Phase 1 Authoring (when authorized).
 
-Do NOT assume Chapter 42 theme. Determine architectural position from documentation authority and Ch 41 §11.3 deferral.
+Do NOT assume Chapter 43 theme. Determine architectural position from Ch 41–42 forward deferrals and documentation authority.
 
 Standard chapter workflow:
 1. Pre-Authoring Analysis (Design Council approval required before authoring)
@@ -174,7 +169,7 @@ Standard chapter workflow:
 Do NOT skip phases. Do NOT approve without explicit Design Council decision.  
 Do NOT commit without explicit user request.
 
-Repository status: **Chapter 41 approval integration complete** — uncommitted changes pending user commit
+Repository status: **Chapter 42 approval integration complete** — uncommitted changes pending user commit
 
 --------------------------------------------------
 
@@ -266,6 +261,13 @@ From Chapter 41:
 - Tenancy Boundary Clarity
 - Tenancy Continuity
 
+From Chapter 42:
+- Rent Lifecycle Environment
+- Rent Lifecycle
+- Rent Obligation Awareness
+- Rent Lifecycle Boundaries
+- Rent Boundary Clarity
+
 Established vocabulary (reuse across chapters):
 - Housing Journey (Ch 23 — user journey; do not merge with Tenancy Lifecycle)
 - Preview Integrity
@@ -283,6 +285,19 @@ Established vocabulary (reuse across chapters):
 
 Secondary from Chapter 41:
 - Settled Tenancy Integrity
+
+Secondary from Chapter 42:
+- Rent Lifecycle Integrity
+
+### Concept separation (mandatory)
+
+| Concept | Chapter | Phase |
+|---------|---------|-------|
+| Financial Readiness | 39 | Pre-commencement financial judgment |
+| Tenancy Lifecycle | 41 | Post-commencement relationship foundation |
+| Rent Lifecycle | 42 | Active Tenancy — recurring rent dimension |
+
+Never merge these concepts.
 
 --------------------------------------------------
 
@@ -302,9 +317,10 @@ Housing Obligation block (**COMPLETE — execution trilogy**, Ch 38–40 approve
 - Ch 39: Financial readiness — Financial Readiness, Financial Readiness Preparation, Financial Readiness Boundaries, Financial Boundary Clarity, financial execution readiness gate
 - Ch 40: Occupancy readiness — Occupancy Readiness, Occupancy Readiness Preparation, Occupancy Readiness Boundaries, Occupancy Boundary Clarity, occupancy execution readiness gate
 
-Settled Tenancy block (**IN PROGRESS — Ch 41 foundation approved**, Ch 42+ forward):
-- Ch 41: Settled Tenancy foundation — Tenancy Lifecycle, marketplace posture, platform never operates settled tenancy; NOT another Readiness chapter
-- Ch 42+: Specialized settled tenancy dimensions forward (rent lifecycle, maintenance, dispute, conclusion — per Ch 41 §11.3)
+Settled Tenancy block (**IN PROGRESS — Ch 41–42 approved**, Ch 43+ forward):
+- Ch 41: Settled Tenancy foundation — Tenancy Lifecycle, marketplace posture, platform never operates settled tenancy
+- Ch 42: Rent Lifecycle — recurring rent obligation experience; platform never collects rent; Financial Readiness separation
+- Ch 43+: Maintenance, dispute, conclusion — per Ch 41 §11.3 and Ch 42 §11.3 deferral
 
 Verification vs platform trust (Ch 20):
 - Ch 20: what Rento attests — platform trust contract
@@ -316,21 +332,28 @@ Verification vs platform trust (Ch 20):
 - Ch 39: how financial execution readiness is judged — financial readiness experience
 - Ch 40: how occupancy execution readiness is judged — occupancy readiness experience
 - Ch 41: how settled tenancy foundation is governed — Tenancy Lifecycle, marketplace boundaries
-- Ch 42+ (forward): specialized settled tenancy experience dimensions
-- Verification ≠ moderation ≠ legal due diligence ≠ financial qualification ≠ move-in completion ≠ settled tenancy operations
+- Ch 42: how recurring rent obligation experience is governed — Rent Lifecycle, rent boundaries
+- Ch 43+ (forward): maintenance, dispute, conclusion dimensions
+- Verification ≠ moderation ≠ financial qualification ≠ rent collection ≠ settled tenancy operations
 
-Housing Journey vs Tenancy Lifecycle:
-- Housing Journey (Ch 23): search → decision → execution readiness — ends at occupancy commencement boundary
-- Tenancy Lifecycle (Ch 41): relationship lifecycle after occupancy begins — separate macro-domain
+Housing Journey vs Tenancy Lifecycle vs Rent Lifecycle:
+- Housing Journey (Ch 23): search → decision → execution readiness
+- Tenancy Lifecycle (Ch 41): relationship lifecycle after occupancy begins
+- Rent Lifecycle (Ch 42): recurring rent dimension within Active Tenancy
 - Never merge these concepts
 
-Settled tenancy principles (Chapter 41 — approved):
+Settled tenancy principles (Ch 41 — approved):
 - Boundaries over tenancy theater
-- Marketplace over operations — Rento does not become a Property Management System
-- Tenancy Lifecycle distinct from Housing Journey
+- Marketplace over operations
 - The platform never operates settled tenancy
-- Attend / defer attention / conclude context — dignified attention postures
-- Inherits Occupancy Readiness Boundaries and Tenancy Continuity where appropriate
+- Tenancy Lifecycle distinct from Housing Journey
+
+Rent lifecycle principles (Ch 42 — approved):
+- Awareness over collection
+- Boundaries over rent theater
+- Financial Readiness separation — no re-gate
+- The platform never collects rent
+- Attend / defer attention / conclude rent context — dignified postures
 
 Design standard scope:
 - Principles only — no implementation leakage in chapter content
@@ -345,7 +368,7 @@ Branch: main
 Latest commit:
 
 ```
-a63cd8b approve chapter 40 occupancy readiness experience
+0ed5451 approve chapter 41 settled tenancy experience
 ```
 
 Uncommitted changes:
@@ -356,14 +379,14 @@ M docs/design/MASTER_ROADMAP.md
 M docs/design/CURSOR_HANDOFF.md
 ```
 
-Includes Chapter 41 Phase 5 approval integration — uncommitted.
+Includes Chapter 42 Phase 5 approval integration — uncommitted.
 
 No commit yet — awaiting user command.
 
-Suggested commit message for Chapter 41:
+Suggested commit message for Chapter 42:
 
 ```
-approve chapter 41 settled tenancy experience
+approve chapter 42 rent lifecycle experience
 ```
 
 --------------------------------------------------
@@ -372,59 +395,58 @@ approve chapter 41 settled tenancy experience
 
 Primary:
 
-- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~39,600+ lines)
+- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~40,150+ lines)
 
-Chapter 41 location in document:
-- After Chapter 40 — `## Chapter 41 — Settled Tenancy Experience`
-- End of document — End of Chapter 41
+Chapter 42 location in document:
+- After Chapter 41 — `## Chapter 42 — Rent Lifecycle Experience`
+- End of document — End of Chapter 42
 
 --------------------------------------------------
 
 ## NEXT CHAPTER
 
-**Chapter 42** — NOT YET STARTED
+**Chapter 43** — NOT YET STARTED
 
-Do NOT assume Chapter 42 theme.
+Do NOT assume Chapter 43 theme.
 
-Begin with **Pre-Authoring Analysis** — determine architectural position from Ch 41 §11.3 deferral and documentation authority before Phase 1 Authoring.
+Begin with **Pre-Authoring Analysis** — determine architectural position from Ch 41 §11.3 and Ch 42 §11.3 deferrals before Phase 1 Authoring.
 
-Forward specialized domains (per Ch 41 §11.3 — candidates for Ch 42+):
-- Rent lifecycle management experience beyond occupancy commencement
+Forward specialized domains (candidates for Ch 43+):
 - Maintenance and repair experience during tenancy
 - Tenancy dispute and escalation experience
 - Tenancy conclusion experience
 
-Do NOT begin Chapter 42 until explicitly authorized in a new session.
+Do NOT begin Chapter 43 until explicitly authorized in a new session.
 
 --------------------------------------------------
 
 ## IMPORTANT RULES
 
 **DO:**
-- Follow chapter workflow including Pre-Authoring Analysis for Ch 42+
+- Follow chapter workflow including Pre-Authoring Analysis for Ch 43+
 - Preserve approved vocabulary
 - Keep chapters principles-only (no implementation leakage)
-- Match approval block format of Chapters 30–41 for future chapters
+- Match approval block format of Chapters 30–42 for future chapters
 - Update TOC and Version History on approval integration
 - Commit only when user explicitly requests
 - Explain in Russian; code/identifiers/commits in English
-- Maintain Housing Journey / Tenancy Lifecycle separation
+- Maintain Financial Readiness / Tenancy Lifecycle / Rent Lifecycle separation
 
 **DO NOT:**
 - Implement product features in code during design standard work
-- Modify approved chapters 1–41 without explicit approval
+- Modify approved chapters 1–42 without explicit approval
 - Mark chapters APPROVED without Design Council decision
 - Create git commits without user request
 - Rename or redefine established product concepts
 - Add API/UI/CDN/database specifications to design standard chapters
-- Merge Housing Journey with Tenancy Lifecycle
-- Assume Chapter 42 theme without documentation authority
+- Merge Financial Readiness with Rent Lifecycle
+- Assume Chapter 43 theme without documentation authority
 
 Release strategy (design standard document):
 - Per-chapter git checkpoints: YES (continue pattern)
 - Decision Experience judgment progression milestone: **COMPLETE** (Ch 31–37)
 - Housing Obligation execution trilogy milestone: **COMPLETE** (Ch 38–40)
-- Settled Tenancy block milestone: **IN PROGRESS** (Ch 41 foundation approved; Ch 42+ forward)
+- Settled Tenancy block milestone: **IN PROGRESS** (Ch 41–42 approved; Ch 43+ forward)
 
 --------------------------------------------------
 
@@ -448,11 +470,11 @@ See **AI Session Initialization** at the top of this document.
 
 Current active phase: **Rento Product Design Standard** (Phase 1). Future phases must not begin until this phase is completed and formally approved.
 
-Approved chapters per roadmap: **1–41**  
+Approved chapters per roadmap: **1–42**  
 Decision Experience: **COMPLETE** (judgment progression, Ch 31–37)  
 Housing Obligation: **COMPLETE** (execution trilogy, Ch 38–40)  
-Settled Tenancy: **IN PROGRESS** (Ch 41 foundation approved; Ch 42+ active)  
-Current chapter: **42 — not yet started (Pre-Authoring Analysis next)**
+Settled Tenancy: **IN PROGRESS** (Ch 41–42 approved; Ch 43+ active)  
+Current chapter: **43 — not yet started (Pre-Authoring Analysis next)**
 
 Governance Decision 005: Chapter 41 opens Settled Tenancy block — see MASTER_ROADMAP.
 
