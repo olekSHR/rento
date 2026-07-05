@@ -34,13 +34,13 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–42 |
-| **Latest approved** | Chapter 42 — Rent Lifecycle Experience |
-| **Latest checkpoint** | 0ed5451 (Chapter 42 integration pending commit) |
-| **Current chapter** | Chapter 43 — not yet started |
+| **Approved chapters** | 1–43 |
+| **Latest approved** | Chapter 43 — Maintenance and Repair Experience |
+| **Latest checkpoint** | efdfdfb (Chapter 43 integration pending commit) |
+| **Current chapter** | Chapter 44 — not yet started |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
-| **Settled Tenancy** | **IN PROGRESS** (Ch 41 foundation + Ch 42 rent lifecycle approved; Ch 43+ specialized chapters forward) |
+| **Settled Tenancy** | **IN PROGRESS** (Ch 41 foundation + Ch 42–43 specialized dimensions approved; Ch 44+ dispute, conclusion forward) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Product architecture progression
@@ -57,19 +57,20 @@ Housing Obligation (Ch 38–40) ✓ COMPLETE
 Settled Tenancy (Ch 41+) ← IN PROGRESS
     Ch 41 — Settled Tenancy Experience ✓ APPROVED (foundation)
     Ch 42 — Rent Lifecycle Experience ✓ APPROVED (first specialized dimension)
-    Ch 43+ — maintenance, dispute, conclusion ← ACTIVE
+    Ch 43 — Maintenance and Repair Experience ✓ APPROVED (second specialized dimension)
+    Ch 44+ — dispute, conclusion ← ACTIVE
     ↓
 Platform & governance domains (forward)
 ```
 
-**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43+ continues with maintenance, dispute, and conclusion dimensions per Chapters 41–42 forward deferrals.
+**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44+ continues with dispute and conclusion dimensions per Chapters 41–43 forward deferrals.
 
 **Concept separation (mandatory):**
 
 | Concept | Scope |
 |---------|-------|
 | **Housing Journey** | User journey from search through housing decision and execution readiness (Chapters 13–40) — defined in Chapter 23 |
-| **Tenancy Lifecycle** | Relationship lifecycle after occupancy begins — foundation in Chapter 41; rent lifecycle in Chapter 42; further dimensions in Chapter 43+ |
+| **Tenancy Lifecycle** | Relationship lifecycle after occupancy begins — foundation in Chapter 41; rent lifecycle in Chapter 42; maintenance and repair context in Chapter 43; further dimensions in Chapter 44+ |
 
 These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience.
 
@@ -79,7 +80,7 @@ These concepts must **never** be merged. Housing Journey does not extend into on
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Settled Tenancy** *(IN PROGRESS — Ch 41 foundation + Ch 42 rent lifecycle approved; Ch 43+ maintenance, dispute, conclusion forward)* — experience surrounding an active tenancy; principles only — not property management operations
+- **Settled Tenancy** *(IN PROGRESS — Ch 41 foundation + Ch 42–43 specialized dimensions approved; Ch 44+ dispute, conclusion forward)* — experience surrounding an active tenancy; principles only — not property management operations
 - **Realtor Platform** — realtor-facing product experience beyond existing foundation chapters
 - **Admin Platform** — moderation, governance, and administrative experience
 - **Design System Governance** — standards enforcement, evolution, and exception policy

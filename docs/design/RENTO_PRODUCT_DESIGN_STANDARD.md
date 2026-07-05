@@ -84,12 +84,13 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 40 | [Occupancy Readiness Experience](#chapter-40--occupancy-readiness-experience) | Occupancy Readiness | APPROVED |
 | 41 | [Settled Tenancy Experience](#chapter-41--settled-tenancy-experience) | Settled Tenancy | APPROVED |
 | 42 | [Rent Lifecycle Experience](#chapter-42--rent-lifecycle-experience) | Rent Lifecycle | APPROVED |
+| 43 | [Maintenance and Repair Experience](#chapter-43--maintenance-and-repair-experience) | Maintenance | APPROVED |
 
 ### Planned (not yet authored)
 
 | Ch. | Title | Section | Status |
 |-----|-------|---------|--------|
-| 43+ | Settled Tenancy specialized chapters (forward) | Settled Tenancy | NOT YET AUTHORED |
+| 44+ | Settled Tenancy specialized chapters (forward) | Settled Tenancy | NOT YET AUTHORED |
 
 See `MASTER_ROADMAP.md` for remaining domain order within and after the Settled Tenancy block.
 
@@ -123,6 +124,7 @@ See `MASTER_ROADMAP.md` for remaining domain order within and after the Settled 
 | 1.0 | 2026-07-04 | Chapter 40 — Occupancy Readiness Experience approved and added — Completed Housing Obligation execution trilogy with occupancy execution readiness gate after Financial Readiness and architectural standard for responsible occupancy readiness judgment before Settled Tenancy |
 | 1.0 | 2026-07-05 | Chapter 41 — Settled Tenancy Experience approved and added — Opened Settled Tenancy macro-domain after Housing Obligation completion with Tenancy Lifecycle foundation, Housing Journey separation, and marketplace posture for experience surrounding active tenancy |
 | 1.0 | 2026-07-05 | Chapter 42 — Rent Lifecycle Experience approved and added — Established first specialized Settled Tenancy dimension for recurring rent obligation experience during Active Tenancy with Financial Readiness separation and platform-never-collects-rent posture |
+| 1.0 | 2026-07-05 | Chapter 43 — Maintenance and Repair Experience approved and added — Established second specialized Settled Tenancy dimension for maintenance and repair context experience during Active Tenancy with Viewing and Occupancy Readiness separation and platform-never-executes-maintenance posture |
 
 ---
 
@@ -40168,4 +40170,702 @@ Users do not rent payment dashboards. They rent homes — and they deserve hones
 ---
 
 **End of Chapter 42**
+
+
+## Chapter 43 — Maintenance and Repair Experience
+
+**Section:** XL — Maintenance  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–42; second specialized experience dimension within the Settled Tenancy macro-domain after Rent Lifecycle Experience (Chapter 42); operationalizes Settled Tenancy Boundaries (Chapter 41), Tenancy Boundary Clarity (Chapter 41), Tenancy Continuity (Chapter 41), Rent Lifecycle Boundaries (Chapter 42), physical reconciliation lineage (Chapter 35), occupancy handoff context (Chapter 40), and contact ethics (Chapter 16); defines principles only — not property management operations, maintenance ticketing, work order systems, contractor dispatch, repair execution, habitability adjudication, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **maintenance and repair experience philosophy** for Rento — how the product governs **experience surrounding maintenance and repair context during Active Tenancy** while preserving marketplace integrity, boundary clarity, Tenancy Continuity, and long-term platform trust.
+
+Maintenance and repair experience is not viewing. Viewing governs **pre-commitment physical reconciliation** — what an in-person visit proved, contradicted, or left unknown before housing obligation intensifies (Chapter 35). Maintenance and repair experience governs **post-commencement ongoing physical condition and repair context** — what Rento can honorably support once Active Tenancy is in scope and property condition matters throughout the Tenancy Lifecycle.
+
+Maintenance and repair experience is not occupancy readiness. Occupancy Readiness governs **pre-commencement occupancy execution judgment** — whether the user is prepared to engage keys, handover, and commencement responsibility before the occupancy boundary (Chapter 40). Maintenance and repair experience governs **ongoing repair and condition orientation during Active Tenancy** — distinct phase, distinct architectural question.
+
+Maintenance and repair experience is not settled tenancy foundation. Settled Tenancy Experience (Chapter 41) governs **the opening architectural foundation** of the Tenancy Lifecycle macro-domain — marketplace posture, Active Tenancy, and cross-dimensional boundaries for all ongoing tenancy experience. Maintenance and repair experience governs **one specialized dimension** within that foundation: **maintenance and repair context during Active Tenancy**.
+
+Maintenance and repair experience is not rent lifecycle. Rent Lifecycle Experience (Chapter 42) governs **recurring rent obligation experience during Active Tenancy** — the financial dimension. Maintenance and repair experience governs **the physical condition and repair dimension** — parallel specialization within Tenancy Lifecycle, not a sub-chapter of rent lifecycle.
+
+Maintenance and repair experience is not property management. Rento remains a **marketplace platform** — it does not dispatch contractors, execute repairs, manage work orders, certify habitability, or guarantee repair completion. It **supports honest maintenance and repair context experience** — helping users, landlords, and realtors orient to property condition and repair responsibility with integrity, boundary clarity, and dignity without impersonating operational or dispatch authority.
+
+**The platform never executes maintenance.** Rento does not manufacture repairs completed, contractors dispatched, work orders resolved, or habitability certified. The platform **supports informed maintenance context awareness** — helping stakeholders honor repair and condition responsibility within marketplace boundaries without simulating dispatch, execution, or resolution.
+
+Where Chapter 41 opens the Tenancy Lifecycle and Chapter 42 specializes rent lifecycle, this chapter **specializes maintenance and repair context** — the second deferred dimension from Chapter 41 §11.3 and Chapter 42 §11.3 — without redefining Tenancy Lifecycle, Active Tenancy, Settled Tenancy Boundaries, Rent Lifecycle, or any other approved official concept.
+
+The product must help stakeholders answer five maintenance and repair experience questions:
+
+1. **During Active Tenancy — what maintenance and repair context applies, and what does Rento support versus what bilateral process must own?**  
+2. **How does maintenance experience inherit physical reconciliation and occupancy handoff context without re-opening pre-commencement judgment gates?**  
+3. **Are maintenance experience boundaries clear — what does platform orientation establish versus what repair execution and contractor coordination must settle?**  
+4. **Does Tenancy Continuity preserve maintenance attention context across sessions without repair panic or alarm theater?**  
+5. **Can users attend to, defer attention from, or conclude maintenance context on Rento without trap, urgency manipulation, or dispatch theater?**
+
+This chapter governs maintenance and repair experience as the **second specialized experience dimension within the Settled Tenancy macro-domain**. It does **not** specify work order systems, contractor platforms, ticketing architecture, or engineering implementation.
+
+**Relationship to prior chapters:** **Settled Tenancy Boundaries** (Chapter 41) and **Tenancy Boundary Clarity** (Chapter 41) govern the parent scope within which maintenance experience operates. **Rent Lifecycle Boundaries** (Chapter 42) govern the financial dimension — maintenance experience **intersects** rent context where disputes arise but does **not** merge dimensions. **Tenancy Continuity** (Chapter 41) governs persistence across maintenance attention cycles. This chapter defines **Maintenance Experience Environment**, **Maintenance and Repair Context**, **Maintenance Context Awareness**, **Maintenance Experience Boundaries**, **Maintenance Boundary Clarity**, and **Maintenance Experience Integrity**.
+
+---
+
+## 2. Why This Chapter Exists
+
+Chapter 41 established **Tenancy Lifecycle** as the complete sequence of relationship states after occupancy commencement — including rent obligation awareness, **maintenance and repair context**, dispute and escalation context, and tenancy conclusion. Chapter 41 supplies foundation and boundaries; it **does not** define specialized experience depth for each dimension.
+
+Chapter 42 specialized **rent lifecycle** — the first deferred dimension. **Maintenance and repair experience during tenancy** remains explicitly deferred in Chapter 41 §11.3 and Chapter 42 §11.3.
+
+Without this chapter, Tenancy Lifecycle lacks **physical condition and repair experience architecture** during Active Tenancy. Product teams would lack authoritative principles for how Rento supports maintenance context — risking Property Management theater, repair dispatch simulation, conflation with viewing reconciliation, or absorption of dispute and conclusion scope.
+
+This chapter exists because **long-term rental tenancy includes ongoing property condition reality** — leaks, heating failures, appliance issues, wear, and bilateral repair negotiation — and stakeholders deserve **honest marketplace orientation** to that reality without a platform that impersonates maintenance operations.
+
+This chapter is **not** another Readiness chapter, **not** Viewing Experience continuation, **not** Occupancy Readiness Part II, and **not** a work order or contractor platform architecture chapter.
+
+---
+
+## 3. Experience Philosophy
+
+Maintenance and repair experience follows the **Settled Tenancy specialized dimension pattern** established by Chapter 42 — orientation and boundary clarity within Active Tenancy, not operational authority.
+
+| Philosophy anchor | Meaning |
+|-------------------|---------|
+| **Context over execution** | Maintenance experience supports condition and repair **orientation** — not repair execution, contractor dispatch, or work order completion |
+| **Boundaries over dispatch theater** | Rento and users know what maintenance experience can and cannot establish — no simulated repair completion |
+| **Dimension separation over conflation** | Maintenance and Repair Context, Rent Lifecycle, Tenancy Lifecycle, Viewing physical reconciliation, and Occupancy Readiness remain distinct — never merged |
+| **Continuity over amnesia** | Physical reconciliation, occupancy handoff, and tenancy context inform maintenance attention — without resetting bilateral truth |
+| **Calm over repair panic** | No manufactured urgency alarm, habitability shame, or countdown pressure to drive engagement |
+| **Marketplace over operations** | Rento remains a marketplace — not maintenance dispatcher, contractor coordinator, or repair guarantor |
+| **Honest scope over resolution overclaim** | Repair execution and contractor coordination remain outside platform establishment |
+| **Voluntary attention over forced maintenance engagement** | Attend, defer attention, and conclude maintenance context remain dignified |
+| **Bilateral truth over digital resolution** | Product does not substitute digital posture for actual repair reality |
+| **Mobile orientation first** | Design for calm mobile maintenance context orientation — then tablet, then desktop |
+| **Maintenance Experience Integrity goal** | Every maintenance experience outcome honors honest boundaries and marketplace posture |
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Context over execution** | Maintenance experience supports condition orientation — not repair execution or contractor dispatch |
+| **Boundaries over dispatch theater** | Rento and users know what maintenance experience can and cannot establish — no simulated repair completion |
+| **Dimension separation over phase conflation** | Maintenance and Repair Context, Rent Lifecycle, Viewing reconciliation, and Occupancy Readiness remain distinct |
+| **Continuity over amnesia** | Prior physical and occupancy context inform maintenance attention — without resetting bilateral truth |
+| **Calm over repair panic** | No manufactured repair alarm, habitability shame, or urgency amplification |
+| **Marketplace over operations** | Rento remains a marketplace — not maintenance operator, dispatcher, or repair guarantor |
+| **Honest scope over resolution overclaim** | Repair execution remains outside platform establishment |
+| **Voluntary attention over forced engagement** | Attend, defer attention, and conclude maintenance context remain dignified |
+| **Bilateral truth over digital resolution** | Product does not substitute platform posture for actual repair outcome |
+| **Mobile orientation first** | Calm mobile maintenance context orientation — then tablet, then desktop |
+| **Maintenance Experience Integrity goal** | Every outcome honors honest boundaries and marketplace posture |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, maintenance request interface guide, work order pattern library, or contractor dispatch dashboard design  
+- An implementation plan, API contract, ticketing integration, or engineering architecture  
+- A replacement for Chapters 16, 20, 35, 40, 41, or 42  
+- Viewing Experience continuation, Part II, or post-commencement physical reconciliation re-gate  
+- Occupancy Readiness continuation, Part II, or move-in condition certification chapter  
+- Another Readiness chapter — maintenance experience is **not** a Housing Obligation or settled tenancy readiness gate  
+- A dispute, tenancy conclusion, or property management operations chapter (forward within Settled Tenancy block)  
+- A **Maintenance Request System**, **Work Order Experience**, **Contractor Platform**, or **Repair Dispatch Experience** chapter identity — execution is **out of scope**  
+- A redefinition of Tenancy Lifecycle, Active Tenancy, Settled Tenancy Environment, Settled Tenancy Boundaries, Tenancy Boundary Clarity, Settled Tenancy Integrity, Tenancy Continuity (Chapter 41), or Rent Lifecycle official concepts (Chapter 42)  
+
+If the question is *how to build* maintenance ticketing or contractor dispatch — this chapter does not answer it. If the question is *what maintenance and repair experience must accomplish for marketplace integrity, physical condition honesty, and platform boundary clarity during Active Tenancy* — this chapter does.
+
+Maintenance and repair experience is **not** property management, work order administration, or repair execution. Maintenance and repair experience **is** responsible product-supported experience surrounding **maintenance and repair context during Active Tenancy** — with honest boundaries and dignity whether users attend, defer attention, or conclude maintenance context.
+
+---
+
+## Concept Separation — Mandatory
+
+Five concepts govern distinct phases and dimensions and must **never** be merged:
+
+| Concept | Phase / dimension | Governing chapter | Primary question |
+|---------|-------------------|-------------------|------------------|
+| **Physical reconciliation** | Pre-commitment | Chapter 35 | What did the in-person visit prove about property condition before formal interest? |
+| **Occupancy Readiness** | Pre-commencement | Chapter 40 | Am I prepared to engage occupancy commencement responsibility responsibly — with occupancy boundary clarity? |
+| **Tenancy Lifecycle** | Post-commencement — all dimensions | Chapter 41 | How does Rento honorably support experience surrounding active tenancy — with tenancy boundary clarity? |
+| **Rent Lifecycle** | Active Tenancy — financial dimension | Chapter 42 | How does Rento honorably support recurring rent obligation experience — with rent boundary clarity? |
+| **Maintenance and Repair Context** | Active Tenancy — physical dimension | **This chapter** | How does Rento honorably support maintenance and repair context experience — with maintenance boundary clarity? |
+
+**Physical reconciliation** and **Occupancy Readiness** end at the occupancy commencement boundary for judgment purposes. **Tenancy Lifecycle** begins after that boundary. **Maintenance and Repair Context** operates **within** Active Tenancy as one specialized dimension of Tenancy Lifecycle — not as a nested lifecycle beneath Tenancy Lifecycle, not as a fourth readiness gate, and not as Viewing Experience extended into operations.
+
+```
+Physical reconciliation (Ch 35)  →  Pre-commitment visit judgment
+Occupancy Readiness (Ch 40)      →  Pre-commencement occupancy gate
+        ↓ occupancy commencement boundary
+Tenancy Lifecycle (Ch 41)        →  Post-commencement relationship foundation
+        ↓ within Active Tenancy
+Rent Lifecycle (Ch 42)             →  Recurring financial obligation dimension
+Maintenance and Repair Context   →  Ongoing physical condition dimension  →  This chapter
+```
+
+---
+
+## Maintenance Experience Environment
+
+**Maintenance Experience Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Maintenance Experience Environment is the **cognitive and informational conditions under which a user, landlord, or realtor orients to, reflects on, and engages with maintenance and repair context experience for a specific Active Tenancy** — not the screen layout, but the **quality of the maintenance experience space** Rento provides within Settled Tenancy Environment (Chapter 41).
+
+A sound Maintenance Experience Environment is **oriented, grounded, boundary-legible, bounded, calm, continuity-preserving, and marketplace-honest** — a specialized calm environment within Settled Tenancy Environment, governing **maintenance and repair context attention** rather than general tenancy orientation, pre-commencement physical judgment, or recurring rent obligation attention.
+
+Maintenance Experience Environment is reusable across maintenance attention postures, maintenance boundary communication, outcome interpretation, and forward dispute and tenancy conclusion chapters where maintenance context remains relevant.
+
+---
+
+## Maintenance and Repair Context
+
+**Maintenance and Repair Context** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Maintenance and Repair Context is the **ongoing physical condition and repair dimension within the Tenancy Lifecycle** — the sequence of condition-related attention, orientation, and bilateral states surrounding property maintenance and repair responsibility during Active Tenancy, from first post-commencement condition concern through tenancy conclusion (forward chapter).
+
+This term is adopted from the **Tenancy Lifecycle** definition (Chapter 41) — *maintenance and repair context* — to preserve architectural consistency without introducing a nested **Maintenance Lifecycle** beneath Tenancy Lifecycle. Maintenance and repair context is a **dimension** of Tenancy Lifecycle, parallel to Rent Lifecycle (Chapter 42) as a financial dimension — not a separate macro-lifecycle.
+
+Maintenance and Repair Context is **distinct from physical reconciliation**, **distinct from Occupancy Readiness**, **distinct from Rent Lifecycle**, and **distinct from Tenancy Lifecycle as a whole**:
+
+| Concept | Scope |
+|---------|-------|
+| **Physical reconciliation** (Chapter 35) | Pre-commitment visit judgment — what viewing proved about condition |
+| **Occupancy Readiness** (Chapter 40) | Pre-commencement occupancy execution judgment — handover and commencement |
+| **Tenancy Lifecycle** (Chapter 41) | Complete post-commencement relationship lifecycle — all dimensions |
+| **Rent Lifecycle** (Chapter 42) | Recurring rent obligation experience **only** |
+| **Maintenance and Repair Context** (this chapter) | Ongoing physical condition and repair experience **only** — within Active Tenancy |
+
+Maintenance and Repair Context requires **Active Tenancy** (Chapter 41), understood **Settled Tenancy Boundaries** and **Maintenance Experience Boundaries**, adequate **Maintenance Boundary Clarity**, and **Tenancy Continuity** sufficient for maintenance attention context. Maintenance experience does not re-establish Active Tenancy, re-open Occupancy Readiness judgment, or re-adjudicate viewing reconciliation.
+
+Maintenance and Repair Context is not a funnel stage to maximize. It is a **specialized experience dimension** — not a readiness gate, not a repair conversion stage.
+
+---
+
+## Maintenance Context Awareness
+
+**Maintenance Context Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Maintenance Context Awareness is the **stakeholder's informed orientation to maintenance and repair responsibility during Active Tenancy** — comprehending what condition posture, repair responsibility, and bilateral maintenance process reasonably apply, without the platform simulating repair completion, certifying habitability, or substituting for contractor dispatch or execution.
+
+Maintenance Context Awareness includes **condition posture understanding**, **bilateral repair responsibility acknowledgment**, **ongoing condition continuity**, **pending or disputed repair state visibility**, and **honest limits of platform orientation** — awareness supports sound attention; it does not guarantee repair outcome.
+
+Maintenance Context Awareness **inherits** physical reconciliation context from Viewing Experience (Chapter 35) and occupancy handoff context from Occupancy Readiness (Chapter 40) through Tenancy Continuity — it does **not** re-adjudicate whether viewing or occupancy readiness judgment was sufficient before commencement. Pre-commencement gaps remain visible where relevant; maintenance experience does not bury them under post-commencement amnesia.
+
+Maintenance Context Awareness is **in-scope content** of this chapter. It is **not** the chapter identity alone — the chapter identity is **Maintenance and Repair Experience** governing the full maintenance and repair context dimension within Tenancy Lifecycle.
+
+---
+
+## Maintenance Experience Boundaries
+
+**Maintenance Experience Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Maintenance Experience Boundaries define **what engaging with maintenance and repair experience through Rento can and cannot establish** — the scope beyond which landlord, tenant, realtor, contractor, bilateral repair process, or legal habitability process must carry responsibility.
+
+Maintenance Experience Boundaries **extend** Settled Tenancy Boundaries (Chapter 41) into the maintenance and repair dimension — each parent limit becomes a maintenance experience limit honestly stated.
+
+Rento maintenance and repair experience **can** support maintenance context awareness, maintenance boundary clarity, Tenancy Continuity through maintenance attention cycles, honest pending-state language, and dignified attend, defer attention, or conclude postures toward maintenance context.
+
+Rento maintenance and repair experience **cannot** substitute for **maintenance scheduling execution**, **repair execution**, **contractor dispatch or coordination**, **work order administration**, **vendor management**, **habitability certification or adjudication**, **property inspection operations**, **inventory management**, **lease enforcement for repair obligations**, **platform attestation of repair completed** (Chapter 20), or **dispute adjudication** (forward chapter).
+
+**The platform never executes maintenance.** Maintenance Experience Boundaries are reusable across forward dispute and tenancy conclusion chapters where maintenance context intersects other dimensions.
+
+---
+
+## Maintenance Boundary Clarity
+
+**Maintenance Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Maintenance Boundary Clarity is the **shared legibility of what Rento, user, landlord, realtor, contractor, and external process each reasonably own regarding maintenance and repair responsibility during Active Tenancy** — without simulated repair completion, habitability certification, or dispatch authority theater.
+
+Maintenance Boundary Clarity requires **Rento scope honesty**, **bilateral repair responsibility honesty**, **marketplace posture honesty**, **pending repair state legibility**, and **no false repair resolution certainty**.
+
+Maintenance Boundary Clarity is distinct from **Tenancy Boundary Clarity** (Chapter 41): Tenancy Boundary Clarity governs **all ongoing tenancy dimensions**; Maintenance Boundary Clarity governs **the maintenance and repair dimension only**. It is distinct from **Rent Boundary Clarity** (Chapter 42): rent and maintenance dimensions may intersect in disputes — clarity in each dimension remains separate.
+
+---
+
+## Maintenance Experience Integrity
+
+**Maintenance Experience Integrity** is the **honesty of the maintenance and repair experience itself** — no simulated repair completed, no hidden maintenance boundaries, no pressure to engage maintenance features when inappropriate, no dispatch theater, no repair panic gamification, no forced operational posture.
+
+Maintenance Experience Integrity parallels **Settled Tenancy Integrity** (Chapter 41), **Rent Lifecycle Integrity** (Chapter 42), and the integrity lineage from Chapters 33–40 — specialized for the maintenance and repair dimension within Active Tenancy.
+
+---
+
+## 4. Core Principles
+
+*How should Rento support maintenance and repair context experience during Active Tenancy while preserving marketplace integrity, dimension separation, and maintenance boundary clarity?*
+
+### 4.1 Context Over Execution
+
+Maintenance experience supports **condition and repair orientation** — not repair execution or contractor dispatch.
+
+### 4.2 Boundaries Over Dispatch Theater
+
+Users understand what maintenance experience establishes before attention implies otherwise.
+
+### 4.3 Viewing and Occupancy Separation
+
+Pre-commencement physical judgment is **not** re-opened each repair concern.
+
+### 4.4 Tenancy Continuity Through Maintenance Attention
+
+Maintenance attention context persists across sessions — without amnesia or manufactured urgency.
+
+### 4.5 Honest Repair State Language
+
+Language reflects bilateral reality — reported, acknowledged, pending, disputed, resolved bilaterally, unknown — not simulated completion.
+
+### 4.6 Calm Over Repair Panic
+
+No countdown pressure, habitability shame, or repair-streak gamification.
+
+### 4.7 Marketplace Posture
+
+Rento is marketplace — not maintenance operator, dispatcher, or repair guarantor.
+
+### 4.8 Bilateral Respect
+
+Landlord and tenant repair responsibilities remain **honestly represented** — platform does not impersonate either party's dispatch or execution authority.
+
+### 4.9 Voluntary Maintenance Attention
+
+Attend, defer attention, and conclude maintenance context remain dignified — equal validity.
+
+### 4.10 Inheritance Without Amnesia
+
+Physical reconciliation, occupancy handoff, and decision arc context inform maintenance orientation — surprises from earlier stages remain visible where relevant.
+
+### 4.11 No Habitability Adjudication
+
+Maintenance experience does not certify habitability, condemn property condition, or impersonate housing authority — orientation only, not adjudication.
+
+### 4.12 Rent Dimension Separation
+
+Maintenance context does not absorb rent lifecycle scope — intersection acknowledged honestly; dimensions remain distinct.
+
+---
+
+## 5. Relationship with Settled Tenancy Experience (Chapter 41)
+
+Users enter maintenance and repair experience scope **within** Active Tenancy — after Settled Tenancy foundation boundaries are understood (Chapter 41 §11.2).
+
+### 5.1 Entry Preconditions
+
+Maintenance and repair experience orientation is responsible when **Active Tenancy** is in scope, **Settled Tenancy Boundaries** and **Maintenance Experience Boundaries** are understood, **Tenancy Boundary Clarity** and **Maintenance Boundary Clarity** are adequate, and **Tenancy Continuity** preserves relevant context.
+
+### 5.2 Handoff from Settled Tenancy Foundation
+
+Chapter 41 supplies **Tenancy Lifecycle** definition, **Settled Tenancy Environment**, **Active Tenancy**, **Settled Tenancy Boundaries**, **Tenancy Boundary Clarity**, **Settled Tenancy Integrity**, **Tenancy Continuity**, and attend, defer attention, conclude context postures. Maintenance experience must **preserve** settled tenancy foundation — not redefine official concepts, not collapse Tenancy Lifecycle into maintenance-only scope, not absorb dispute or conclusion dimensions.
+
+The handoff contract:
+
+- Maintenance experience operates **within** Settled Tenancy Boundaries — narrower, not broader  
+- **Maintenance Experience Environment** specializes **Settled Tenancy Environment** for maintenance and repair context attention  
+- Attend to maintenance context **does not imply** repair executed, contractor dispatched, or condition certified  
+- Defer or conclude maintenance attention **does not erase** Active Tenancy or bilateral repair reality  
+- Settled tenancy foundation **does not substitute** for maintenance experience depth — forward reference honored  
+- Chapter 41 anti-pattern **Maintenance Alarmism** applies — this chapter supplies architectural depth to prevent it  
+
+### 5.3 No Redefinition of Chapter 41 Concepts
+
+This chapter **consumes** Chapter 41 official concepts — it does **not** amend, extend definitions of, or replace Tenancy Lifecycle, Active Tenancy, Settled Tenancy Environment, Settled Tenancy Boundaries, Tenancy Boundary Clarity, Settled Tenancy Integrity, or Tenancy Continuity.
+
+---
+
+## 6. Role in the Tenancy Lifecycle
+
+Maintenance and repair experience sits as the **second specialized experience dimension** within the Settled Tenancy macro-domain — after Rent Lifecycle Experience (Chapter 42), within Active Tenancy scope.
+
+| Tenancy Lifecycle dimension | Governing chapter | Primary question |
+|----------------------------|-------------------|------------------|
+| **Settled tenancy foundation** | Chapter 41 | How does Rento support experience surrounding active tenancy — with tenancy boundary clarity? |
+| **Rent lifecycle** | Chapter 42 | How does Rento support recurring rent obligation experience — with rent boundary clarity? |
+| **Maintenance and repair (this chapter)** | **This chapter** | How does Rento support maintenance and repair context experience — with maintenance boundary clarity? |
+| Dispute and escalation | Forward | How are tenancy disputes experienced? |
+| Tenancy conclusion | Forward | How is tenancy conclusion experienced? |
+
+Maintenance and repair experience **specializes** one dimension deferred from Chapter 41 §11.3 and Chapter 42 §11.3 — it does **not** complete the Tenancy Lifecycle. Forward chapters supply dispute and conclusion experience.
+
+Maintenance and repair experience succeeds through **honest condition orientation and maintenance boundary clarity** — not maintenance feature maximization, repair conversion, or dispatch theater.
+
+---
+
+## 7. User Experience Principles
+
+Maintenance and repair experience inherits **attend**, **defer attention**, and **conclude context** from Chapter 41 — specialized for maintenance and repair context attention. It is **not** a readiness gate.
+
+### 7.1 Attend
+
+User **orients to maintenance and repair context** with Maintenance Context Awareness and Maintenance Boundary Clarity sufficient. Attend does **not** mean repair executed, contractor dispatched, or habitability certified through Rento.
+
+### 7.2 Defer Attention
+
+Defer preserves Active Tenancy and bilateral repair reality while acknowledging insufficient attention, clarity, or timing for maintenance context engagement — honest pacing with **Tenancy Continuity** preserved.
+
+### 7.3 Conclude Maintenance Context
+
+Conclude diminishes **platform maintenance attention posture** — typically when maintenance dimension no longer needs orientation on Rento, or tenancy concludes (forward chapter). Conclude does **not** imply repair resolved or platform adjudication.
+
+### 7.4 Posture Reconsideration
+
+Attend, defer attention, and conclude remain available across maintenance attention cycles — not irreversible traps.
+
+### 7.5 Pending Repair Honesty
+
+Unconfirmed repair states remain **honestly communicated** — no simulated resolved, no hidden urgency.
+
+### 7.6 No Forced Maintenance Engagement
+
+Exit, defer, and conclude paths always dignified — Maintenance Experience Integrity and Maintenance Boundary Clarity require it.
+
+### 7.7 Calm Return
+
+Resuming maintenance context feels continuous — not alarming. Interruption tolerance preserves bilateral truth.
+
+### 7.8 Partner Parity
+
+Household participants share **identical maintenance orientation truth** — same condition posture, same boundary clarity, same pending states — without viral repair panic or asymmetric pressure.
+
+### 7.9 Mobile Orientation First
+
+Maintenance context orientation is designed for mobile interruption context first — glance legibility, one-handed deferral, calm return.
+
+---
+
+## 8. Platform Responsibilities
+
+Rento maintenance and repair experience **can** honorably support:
+
+### 8.1 Orientation and Context
+
+- **Maintenance context awareness** — helping stakeholders understand what condition and repair responsibility reasonably apply during Active Tenancy  
+- **Scope honesty** — clear communication of what Rento does and does not operate regarding maintenance  
+- **Condition posture visibility** — honest representation of reported, pending, or unknown bilateral states where product-supported  
+
+### 8.2 Boundary and Continuity
+
+- **Maintenance Experience Boundaries** and **Maintenance Boundary Clarity** — legible limits before attention implies operational authority  
+- **Tenancy Continuity** through maintenance attention cycles — context preservation across sessions and interruption  
+- **Inheritance of prior context** — physical reconciliation and occupancy handoff inform orientation without re-adjudication  
+
+### 8.3 Communication Ethics
+
+- **Contact ethics alignment** (Chapter 16) — repair-related communication governed by established communication contract  
+- **Calm re-engagement posture** (Chapter 21) — inform where appropriate; do not manufacture repair panic  
+- **Respectful Silence** (Chapter 25) — defer and conclude without shame theater  
+
+### 8.4 Dignified Attention Postures
+
+- **Attend, defer attention, conclude** — voluntary, reversible, equally valid  
+- **Pending state honesty** — no simulated repair completion  
+- **Bilateral respect** — platform does not impersonate landlord dispatch or tenant demand authority  
+
+### 8.5 Parallel Posture Lineage
+
+| Macro-domain / dimension | Platform posture |
+|--------------------------|------------------|
+| Settled tenancy (Chapter 41) | The platform never operates settled tenancy |
+| Rent lifecycle (Chapter 42) | The platform never collects rent |
+| **Maintenance and repair (this chapter)** | **The platform never executes maintenance** |
+
+---
+
+## 9. Platform Non-Responsibilities
+
+Rento maintenance and repair experience **does not** operate and **must not** impersonate:
+
+### 9.1 Execution and Dispatch
+
+- Maintenance scheduling execution  
+- Repair execution or completion  
+- Contractor dispatch, selection, or coordination  
+- Work order creation, tracking, or closure  
+- Vendor management or contractor marketplace operations  
+
+### 9.2 Certification and Adjudication
+
+- Habitability certification or condemnation  
+- Repair quality attestation  
+- Property inspection operations as authority  
+- Dispute investigation or adjudication (forward chapter)  
+- Platform attestation of repair outcome (Chapter 20)  
+
+### 9.3 Operational Authority
+
+- Property management administration  
+- Lease enforcement for repair obligations  
+- Inventory management or handover execution  
+- Emergency response coordination as operational authority  
+- Landlord-tenant relationship management as dispatch agent  
+
+### 9.4 Dimensional Scope Violations
+
+- Rent collection or payment processing (Chapter 42)  
+- Pre-commencement physical reconciliation re-gate (Chapter 35)  
+- Occupancy commencement certification (Chapter 40)  
+- Tenancy conclusion depth (forward chapter)  
+
+**The platform never executes maintenance.** Bilateral parties, contractors, and external legal or habitability process carry execution responsibility.
+
+---
+
+## 10. Cross-Chapter Relationships
+
+### 10.1 Relationship to Viewing Experience (Chapter 35)
+
+Viewing governs **pre-commitment physical reconciliation** — what the in-person visit established about property condition before housing obligation intensifies. Maintenance and repair experience governs **post-commencement ongoing condition context** during Active Tenancy.
+
+**Viewing informs Maintenance and Repair Context; Viewing never substitutes Maintenance and Repair Context.** Physical reconciliation from Chapter 35 **informs** Maintenance Context Awareness through Tenancy Continuity — it does **not** substitute for ongoing maintenance experience, and viewing reconciliation **does not replace** post-commencement repair orientation scope.
+
+| Dimension | Viewing (Ch 35) | Maintenance and Repair Context (this chapter) |
+|-----------|-----------------|-----------------------------------------------|
+| **Phase** | Pre-commitment | Active Tenancy — ongoing |
+| **Question** | What did the visit prove about condition? | How does repair context experience remain honest during ongoing tenancy? |
+| **Platform posture** | Supports visit judgment — not condition certification | Supports context orientation — not repair execution |
+
+### 10.2 Relationship to Occupancy Readiness Experience (Chapter 40)
+
+Occupancy Readiness governs **pre-commencement occupancy execution judgment**. Maintenance experience governs **post-commencement ongoing physical condition attention**.
+
+Move-in condition reconciliation posture deferred from Chapter 39 §11.3 and referenced in Chapter 40 §7 **informs** Maintenance Context Awareness at tenancy commencement — it does **not** satisfy ongoing maintenance experience scope or re-open Occupancy Readiness as a gate.
+
+Occupancy Readiness outcome **pending** at commencement does not default to maintenance certainty. Pre-commencement unknowns remain visible where relevant without shame theater.
+
+### 10.3 Relationship to Rent Lifecycle Experience (Chapter 42)
+
+Rent lifecycle and maintenance experience are **parallel specialized dimensions** within Tenancy Lifecycle — financial versus physical. They must **never** be merged.
+
+| Dimension | Rent Lifecycle (Ch 42) | Maintenance and Repair Context (this chapter) |
+|-----------|------------------------|-----------------------------------------------|
+| **Tenancy Lifecycle dimension** | Recurring financial obligation | Ongoing physical condition and repair |
+| **Platform posture** | The platform never collects rent | The platform never executes maintenance |
+| **Attention pattern** | attend / defer / conclude rent context | attend / defer / conclude maintenance context |
+
+Where rent and maintenance concerns intersect — for example repair disputes affecting rent withholding — each dimension maintains **separate boundary clarity**. Maintenance experience acknowledges intersection honestly without absorbing rent lifecycle or dispute architecture depth.
+
+### 10.4 Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract**. This chapter **consumes** platform trust signals — it does **not** redefine them.
+
+Platform verification and moderation status **inform** maintenance context orientation — they do **not** guarantee repair completion, habitability, or landlord maintenance reliability. Maintenance experience must never **inflate** Chapter 20 attestation into repair certification or dispatch authority.
+
+### 10.5 Relationship to Contact & Communication Experience (Chapter 16)
+
+Chapter 16 remains the **authoritative contract for communication ethics** during maintenance experience. This chapter **consumes** Chapter 16 — it does **not** redefine contact rules.
+
+Repair-related contact — condition reporting, scheduling coordination, bilateral negotiation — remains governed by Chapter 16 ethics. Maintenance experience must not use contact channels to pressure repair engagement, simulate dispatch, impersonate landlord repair demands, or substitute for Maintenance Experience Boundaries.
+
+### 10.6 Relationship to Notifications & Re-engagement (Chapter 21)
+
+Notifications within maintenance experience scope must honor **Continuity Without Pressure** (Chapter 30 lineage), **Respectful Silence** (Chapter 25), and **Settled Tenancy Integrity** (Chapter 41) — inform about maintenance context where appropriate; do not manufacture repair panic, habitability alarm, or dispatch urgency.
+
+Repair-related notifications, if ever product-supported in principle, must serve **orientation** — not conversion, shame, or simulated operational authority. This chapter governs **principle**; notification mechanics belong to Chapter 21 posture.
+
+---
+
+## 11. Forward References
+
+Maintenance and repair experience is the **second specialized dimension** — dispute and tenancy conclusion follow per Chapter 41 §11.3 and Chapter 42 §11.3.
+
+### 11.1 What This Chapter Supplies
+
+This chapter supplies **maintenance and repair architectural specialization** — Maintenance Experience Environment, Maintenance and Repair Context, Maintenance Context Awareness, Maintenance Experience Boundaries, Maintenance Boundary Clarity, Maintenance Experience Integrity, and maintenance experience principles reusable where maintenance intersects forward dimensions.
+
+### 11.2 Handoff Preconditions to Forward Chapters
+
+Transition toward dispute or conclusion chapters is responsible when **Active Tenancy** remains in scope, **Maintenance Experience Boundaries** are understood, **Maintenance Boundary Clarity** is adequate, and **Settled Tenancy Integrity** posture is maintained.
+
+### 11.3 Explicitly Deferred — Forward Within Settled Tenancy Block
+
+The following remain **outside this chapter's scope** — forward chapters:
+
+- **Tenancy dispute and escalation experience** (dispute depth — repair dispute acknowledgment in-scope; adjudication out-of-scope)  
+- **Tenancy conclusion experience** — including move-out condition and deposit return context where maintenance history intersects conclusion  
+- **Maintenance execution, contractor dispatch, and work order operations** — permanently out of platform scope  
+
+### 11.4 Forward Reference
+
+Dispute and conclusion chapters follow per Chapter 41 §11.3 — Maintenance and Repair Experience must not pretend to satisfy **dispute adjudication** or **tenancy conclusion** depth.
+
+---
+
+## 12. Maintenance and Repair Context Within Active Tenancy
+
+### 12.1 Scope Gate
+
+Maintenance and repair experience applies **only** when **Active Tenancy** (Chapter 41) is legitimately in scope. Pre-commencement condition understanding from viewing remains Chapter 35 scope — maintenance experience does not absorb it.
+
+### 12.2 Ongoing Condition Reality
+
+Long-term rental implies **ongoing property condition concerns** across the Tenancy Lifecycle — wear, appliance failure, heating issues, leaks, and bilateral repair negotiation. Maintenance experience governs how Rento supports **orientation to that reality** — condition posture visibility, bilateral responsibility clarity, continuity across maintenance attention cycles — without operating repair execution.
+
+### 12.3 Bilateral Repair Reality
+
+Actual repair execution occurs **outside platform establishment** — through bilateral agreement, direct contractor engagement, landlord maintenance process, or legal habitability channels stakeholders determine. Rento may support **orientation** to that reality; orientation is **not** execution.
+
+### 12.4 Pending and Disputed Repair States
+
+Reported, acknowledged, pending, disputed, resolved bilaterally, or unknown must remain **honestly communicated** — no simulated resolved, no hidden urgency theater, no platform adjudication of dispute outcome. Dispute experience depth belongs to forward chapters — maintenance experience acknowledges dispute state honestly without absorbing dispute architecture.
+
+---
+
+## 13. Tenancy Continuity and Information Layer
+
+### 13.1 Tenancy Continuity Through Maintenance Attention
+
+**Tenancy Continuity** (Chapter 41) governs maintenance attention persistence — condition posture, last orientation state, bilateral context carry-forward across sessions. Maintenance experience **specializes** Tenancy Continuity for the maintenance dimension without redefining it.
+
+### 13.2 Information Inheritance
+
+Maintenance experience treats listing and decision arc information as **historical context** — condition honesty from evaluation through viewing and occupancy readiness preserved; material bilateral change communicated honestly outside platform establishment.
+
+### 13.3 Physical Reconciliation Carry-Forward
+
+Physical reconciliation outcomes from Chapter 35 remain **interpretable** through Tenancy Continuity — they inform Maintenance Context Awareness; they do not authorize re-evaluation gates or operational repair claims.
+
+---
+
+## 14. Mobile & Accessibility Considerations
+
+Mobile is the **primary maintenance context orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Condition posture at glance** | Maintenance context and boundaries reachable without hunt |
+| **One-handed deferral** | Defer and conclude maintenance attention reachable during interruption |
+| **Calm return** | Resuming maintenance context feels continuous — not alarming |
+| **No repair shame layout** | Dignified language for pending or disputed states |
+| **Partner parity** | Shared maintenance truth across household participants |
+
+Maintenance experience must be **inclusive** — textual equivalents for condition posture and boundaries; plain language; calm tone without weaponized repair anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 15. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Repair Dispatch Theater** | Impersonates maintenance operator or contractor coordinator — scope violation |
+| **Simulated Repair Completed** | Unconfirmed repair presented as resolved — integrity violation |
+| **Maintenance Alarmism** | Manufactured repair panic, habitability shame, urgency amplification — violates calm environment (Chapter 41 §14) |
+| **Viewing Re-Gate** | Treats each repair concern as physical reconciliation — phase conflation |
+| **Occupancy Readiness Re-Gate** | Treats maintenance as move-in certification — trilogy violation |
+| **Work Order Theater** | Product posture implying ticketing or dispatch execution — scope violation |
+| **Habitability Impersonation** | Platform certifies or condemns habitability — boundary violation |
+| **Contractor Platform Creep** | Vendor marketplace or dispatch conversion — PMS scope violation |
+| **Maintenance Gamification** | Repair streaks, response-time badges — trivializes bilateral responsibility |
+| **Conversion Theater** | Maintenance experience as repair conversion metric — judgment violation |
+| Conflating Rent Lifecycle, Tenancy Lifecycle, or platform attestation with repair execution | Concept conflation across chapters |
+| Thinner boundaries than Settled Tenancy foundation | Amnesia at maintenance dimension |
+| Dispute or conclusion masquerading as maintenance experience | Forward chapter scope violation |
+| Shame copy for defer, conclude, or pending repair | Dignified posture violation |
+
+---
+
+## 16. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, maintenance and repair experience initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Maintenance Experience Environment**, **Maintenance and Repair Context**, **Maintenance Context Awareness**, **Maintenance Experience Boundaries**, **Maintenance Boundary Clarity**, **Maintenance Experience Integrity**, and **Tenancy Continuity** specialization integrity.
+
+**Review gate:** No maintenance and repair experience surface ships without checklist against all official concepts, principles, attention postures, and integrity requirements defined herein.
+
+**Forward chapters:** Dispute and tenancy conclusion experience extend Tenancy Lifecycle — this chapter supplies the maintenance and repair context foundation within the Settled Tenancy block.
+
+---
+
+## 17. Architectural Summary
+
+Maintenance and repair experience converts **Settled Tenancy foundation and Rent Lifecycle specialization** into **honest maintenance and repair context experience during Active Tenancy with maintenance boundary clarity** — the second specialized dimension within the Tenancy Lifecycle.
+
+This chapter defines Maintenance Experience Environment, Maintenance and Repair Context, Maintenance Context Awareness, Maintenance Experience Boundaries, Maintenance Boundary Clarity, and Maintenance Experience Integrity; principles of context over execution and boundaries over dispatch theater; mandatory separation from Viewing physical reconciliation, Occupancy Readiness, Rent Lifecycle, and Tenancy Lifecycle foundation; attend, defer attention, and conclude maintenance context postures; platform-never-executes-maintenance posture; integration with Chapters 16, 20, 21, 25, 30, 35, 40, 41, 42; and honest transition toward dispute and conclusion chapters without owning repair execution, contractor dispatch, work order administration, or habitability adjudication.
+
+**Settled Tenancy flow:**
+
+Property Detail (Ch 31) → … → Occupancy Readiness (Ch 40) → Settled Tenancy (Ch 41) → Rent Lifecycle (Ch 42) → **Maintenance and Repair (Ch 43)** → dispute, conclusion (forward)
+
+**Terminology note:** This chapter adopts **Maintenance and Repair Context** — the dimension name from Tenancy Lifecycle (Chapter 41) — rather than introducing a nested **Maintenance Lifecycle** beneath Tenancy Lifecycle. **Rent Lifecycle** (Chapter 42) remains the established financial dimension term; **Maintenance and Repair Context** is the parallel physical dimension term — both are dimensions **within** Tenancy Lifecycle, not separate macro-lifecycles.
+
+---
+
+## 18. Design Director Review
+
+**Chapter:** 43 — Maintenance and Repair Experience  
+**Section:** XL — Maintenance  
+**Review type:** Initial standard adoption
+
+### 18.1 Approval Statement
+
+- **Architecture Review** — APPROVED WITH REQUIRED CHANGES (RC-1 applied)  
+- **Required Architectural Amendments** — RC-1 applied (post-commencement physical reconciliation re-gate terminology)  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **maintenance and repair experience contract** for Rento. All maintenance and repair context product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 18.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; repair-related communication context |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 21 — Notifications & User Re-engagement Experience | Re-engagement posture; Continuity Without Pressure |
+| Chapter 25 — Feedback, Status & System Communication Experience | Respectful Silence; system communication posture |
+| Chapter 30 — Saved Searches & Search Continuity | Housing Continuity parent; Tenancy Continuity via Ch 41 |
+| Chapter 35 — Viewing Experience | Pre-commitment physical reconciliation; informs, not substitutes |
+| Chapter 40 — Occupancy Readiness Experience | Commencement boundary; occupancy handoff |
+| Chapter 41 — Settled Tenancy Experience | Parent foundation; official concepts consumed, not redefined |
+| Chapter 42 — Rent Lifecycle Experience | Parallel specialized dimension; intersection without merge |
+| Forward chapters — Dispute, Conclusion | Specialized Tenancy Lifecycle dimensions — forward |
+
+### 18.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Maintenance and repair experience positioned as second specialized Settled Tenancy dimension — not Viewing continuation, not Occupancy Readiness Part II, not readiness gate, not property management  
+2. Physical reconciliation / Occupancy Readiness / Rent Lifecycle / Maintenance and Repair Context explicitly separated — no merge  
+3. Platform-never-executes-maintenance principle explicit — marketplace posture preserved  
+4. Chapter 41 and Chapter 42 official concepts consumed — not redefined  
+5. Viewing and Occupancy Readiness handoffs honest — no re-gate  
+6. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+7. Forward deferral from Ch 41 §11.3 and Ch 42 §11.3 honored — dispute, conclusion deferred  
+8. Attend, defer attention, conclude postures — not readiness proceed/defer/release  
+9. Maintenance Experience Boundaries extend — not replace — Settled Tenancy Boundaries  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+12. No nested Maintenance Lifecycle beneath Tenancy Lifecycle  
+
+### 18.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on maintenance and repair experience philosophy |
+| Head of Product Design | Settled Tenancy specialized dimension parity |
+| Senior UX Designer | Maintenance boundary communication, mobile rhythm |
+| Product Management | Marketplace posture honesty and maintenance boundary integrity |
+| Content Design Lead | Scope language, repair state honesty, pending condition copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual maintenance orientation access and anxiety-sensitive design |
+
+### 18.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new maintenance and repair experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 18.6 Design Director Closing Note
+
+Users do not rent maintenance dispatch dashboards. They rent homes — and they deserve honest marketplace orientation when property condition matters during tenancy, not a platform that impersonates repair crews, chases urgency, or re-tests whether viewing ever happened. This chapter exists so Rento supports maintenance and repair context experience with boundary clarity, Viewing and Occupancy Readiness separation, and dignity whether users attend to maintenance context, defer attention, or conclude platform orientation — without ever confusing a serious rental marketplace with a Property Management System.
+
+---
+
+**End of Chapter 43**
 
