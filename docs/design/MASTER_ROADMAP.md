@@ -34,14 +34,14 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–44 |
-| **Latest approved** | Chapter 44 — Tenancy Dispute and Escalation Experience |
+| **Approved chapters** | 1–45 |
+| **Latest approved** | Chapter 45 — Tenancy Conclusion Experience |
 | **Latest checkpoint** | 2d1a0b6 — approve chapter 43 maintenance and repair experience |
-| **Pending checkpoint** | Chapter 44 — Approval Integration complete |
-| **Current chapter** | Chapter 45 — not yet started |
+| **Pending checkpoint** | Chapter 45 — Approval Integration complete |
+| **Current chapter** | None — Settled Tenancy block complete; next domain per roadmap |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
-| **Settled Tenancy** | **IN PROGRESS** (Ch 41 foundation + Ch 42–44 specialized dimensions approved; Ch 45+ tenancy conclusion forward) |
+| **Settled Tenancy** | **COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Product architecture progression
@@ -55,24 +55,24 @@ Decision Experience (Ch 31–37) ✓ COMPLETE
     ↓
 Housing Obligation (Ch 38–40) ✓ COMPLETE
     ↓
-Settled Tenancy (Ch 41+) ← IN PROGRESS
+Settled Tenancy (Ch 41–45) ✓ COMPLETE
     Ch 41 — Settled Tenancy Experience ✓ APPROVED (foundation)
     Ch 42 — Rent Lifecycle Experience ✓ APPROVED (first specialized dimension)
     Ch 43 — Maintenance and Repair Experience ✓ APPROVED (second specialized dimension)
     Ch 44 — Tenancy Dispute and Escalation Experience ✓ APPROVED (third specialized dimension)
-    Ch 45+ — tenancy conclusion ← ACTIVE
+    Ch 45 — Tenancy Conclusion Experience ✓ APPROVED (terminal specialized dimension)
     ↓
 Platform & governance domains (forward)
 ```
 
-**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44 establishes the **third specialized dimension** — Tenancy Dispute and Escalation Experience — governing dispute and escalation context during Active Tenancy. Chapter 45+ continues with tenancy conclusion per Chapters 41–44 forward deferrals.
+**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44 establishes the **third specialized dimension** — Tenancy Dispute and Escalation Experience — governing dispute and escalation context during Active Tenancy. Chapter 45 establishes the **terminal specialized dimension** — Tenancy Conclusion Experience — governing normal and expected tenancy conclusion during Active Tenancy. **Settled Tenancy macro-domain (Chapters 41–45) is architecturally complete** for Tenancy Lifecycle specialized dimension coverage.
 
 **Concept separation (mandatory):**
 
 | Concept | Scope |
 |---------|-------|
 | **Housing Journey** | User journey from search through housing decision and execution readiness (Chapters 13–40) — defined in Chapter 23 |
-| **Tenancy Lifecycle** | Relationship lifecycle after occupancy begins — foundation in Chapter 41; rent lifecycle in Chapter 42; maintenance and repair context in Chapter 43; dispute and escalation context in Chapter 44; tenancy conclusion in Chapter 45+ |
+| **Tenancy Lifecycle** | Relationship lifecycle after occupancy begins — foundation in Chapter 41; rent lifecycle in Chapter 42; maintenance and repair context in Chapter 43; dispute and escalation context in Chapter 44; tenancy conclusion in Chapter 45 |
 
 These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience.
 
@@ -82,7 +82,6 @@ These concepts must **never** be merged. Housing Journey does not extend into on
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Settled Tenancy** *(IN PROGRESS — Ch 41 foundation + Ch 42–44 specialized dimensions approved; Ch 45+ tenancy conclusion forward)* — experience surrounding an active tenancy; principles only — not property management operations
 - **Realtor Platform** — realtor-facing product experience beyond existing foundation chapters
 - **Admin Platform** — moderation, governance, and administrative experience
 - **Design System Governance** — standards enforcement, evolution, and exception policy
