@@ -34,18 +34,51 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–40 |
-| **Latest approved** | Chapter 40 — Occupancy Readiness Experience |
-| **Current chapter** | Chapter 41 — not yet started |
+| **Approved chapters** | 1–41 |
+| **Latest approved** | Chapter 41 — Settled Tenancy Experience |
+| **Latest checkpoint** | a63cd8b (Chapter 41 integration pending commit) |
+| **Current chapter** | Chapter 42 — not yet started |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
-| **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness approved) |
+| **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
+| **Settled Tenancy** | **IN PROGRESS** (Chapter 41 foundation approved; Chapter 42+ specialized chapters forward) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
+
+## Product architecture progression
+
+```
+Foundation (Ch 1–12)
+    ↓
+Search Experience (Ch 13–30) ✓ COMPLETE
+    ↓
+Decision Experience (Ch 31–37) ✓ COMPLETE
+    ↓
+Housing Obligation (Ch 38–40) ✓ COMPLETE
+    ↓
+Settled Tenancy (Ch 41+) ← IN PROGRESS
+    Ch 41 — Settled Tenancy Experience ✓ APPROVED (foundation)
+    Ch 42+ — specialized tenancy chapters ← ACTIVE
+    ↓
+Platform & governance domains (forward)
+```
+
+**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain after Housing Obligation completion. Chapter 41 is the **foundation chapter** — not another Readiness chapter, not Property Management. Chapter 42+ continues the Settled Tenancy block with specialized experience dimensions deferred from Chapters 40–41.
+
+**Concept separation (mandatory):**
+
+| Concept | Scope |
+|---------|-------|
+| **Housing Journey** | User journey from search through housing decision and execution readiness (Chapters 13–40) — defined in Chapter 23 |
+| **Tenancy Lifecycle** | Relationship lifecycle after occupancy begins — foundation in Chapter 41; specialized dimensions in Chapter 42+ |
+
+These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience.
+
+**Platform posture (Settled Tenancy block):** Rento remains a marketplace platform. Rento does **not** become a Property Management System.
 
 ## Remaining work
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Settled Tenancy** — ongoing landlord-tenant relationship experience beyond occupancy execution readiness (Chapter 40)
+- **Settled Tenancy** *(IN PROGRESS — Ch 41 foundation approved; Ch 42+ specialized chapters forward)* — experience surrounding an active tenancy; rent lifecycle, maintenance, dispute, and conclusion dimensions per Chapter 41 §11.3 deferral; principles only — not property management operations
 - **Realtor Platform** — realtor-facing product experience beyond existing foundation chapters
 - **Admin Platform** — moderation, governance, and administrative experience
 - **Design System Governance** — standards enforcement, evolution, and exception policy
@@ -210,6 +243,26 @@ RENTO_PRODUCT_DESIGN_STANDARD.md
 Operational Continuity  
 
 CURSOR_HANDOFF.md
+
+---
+
+## Governance Decision 005
+
+**Status:** APPROVED
+
+**Title:**  
+Chapter 41 Pre-Authoring Analysis — Settled Tenancy Block Opening
+
+**Decision:**
+
+1. Chapter 40 completes the Housing Obligation macro-domain.
+2. The next macro-domain is **Settled Tenancy**.
+3. **Chapter 41** opens the Settled Tenancy architectural block.
+4. Chapter 41 is **not** another Readiness chapter, Property Management, Realtor Platform, Admin Platform, or implementation guidance.
+5. Settled Tenancy governs the experience surrounding an active tenancy.
+6. Rento remains a marketplace platform and does **not** become a Property Management System.
+7. **Housing Journey** (user journey) and **Tenancy Lifecycle** (relationship lifecycle after occupancy begins) are distinct official concepts and must never be merged.
+8. Phase 1 Authoring of Chapter 41 may begin only after explicit Design Council authorization following this preparation phase.
 
 ---
 

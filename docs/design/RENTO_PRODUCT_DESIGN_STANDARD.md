@@ -82,12 +82,15 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 38 | [Legal Readiness Experience](#chapter-38--legal-readiness-experience) | Legal Readiness | APPROVED |
 | 39 | [Financial Readiness Experience](#chapter-39--financial-readiness-experience) | Financial Readiness | APPROVED |
 | 40 | [Occupancy Readiness Experience](#chapter-40--occupancy-readiness-experience) | Occupancy Readiness | APPROVED |
+| 41 | [Settled Tenancy Experience](#chapter-41--settled-tenancy-experience) | Settled Tenancy | APPROVED |
 
 ### Planned (not yet authored)
 
-| Ch. | Title |
-|-----|-------|
-| 41+ | Future chapters per design standard roadmap |
+| Ch. | Title | Section | Status |
+|-----|-------|---------|--------|
+| 42+ | Settled Tenancy specialized chapters (forward) | Settled Tenancy | NOT YET AUTHORED |
+
+See `MASTER_ROADMAP.md` for remaining domain order within and after the Settled Tenancy block.
 
 ---
 
@@ -117,6 +120,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 1.0 | 2026-07-04 | Chapter 38 — Legal Readiness Experience approved and added — Opened Housing Obligation block with legal readiness execution gate after Decision Experience completion and established the architectural standard for responsible legal execution readiness before Financial Readiness |
 | 1.0 | 2026-07-04 | Chapter 39 — Financial Readiness Experience approved and added — Established financial execution readiness gate in Housing Obligation block after Legal Readiness and architectural standard for responsible financial readiness judgment before Occupancy Readiness |
 | 1.0 | 2026-07-04 | Chapter 40 — Occupancy Readiness Experience approved and added — Completed Housing Obligation execution trilogy with occupancy execution readiness gate after Financial Readiness and architectural standard for responsible occupancy readiness judgment before Settled Tenancy |
+| 1.0 | 2026-07-05 | Chapter 41 — Settled Tenancy Experience approved and added — Opened Settled Tenancy macro-domain after Housing Obligation completion with Tenancy Lifecycle foundation, Housing Journey separation, and marketplace posture for experience surrounding active tenancy |
 
 ---
 
@@ -38977,4 +38981,638 @@ Users do not rent move-in completion screens. They rent homes — and they deser
 ---
 
 **End of Chapter 40**
+
+
+## Chapter 41 — Settled Tenancy Experience
+
+**Section:** XXXVIII — Settled Tenancy  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–40; opens the Settled Tenancy macro-domain after Occupancy Readiness Experience (Chapter 40); operationalizes Occupancy Readiness Boundaries (Chapter 40), Occupancy Boundary Clarity (Chapter 40), Housing Continuity (Chapter 30), Housing Journey separation (Chapter 23), and contact ethics (Chapter 16); defines principles only — not property management operations, rent collection systems, maintenance workflows, dispute resolution procedures, APIs, databases, or UI implementation.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **settled tenancy experience philosophy** for Rento — how the product governs **experience surrounding an active tenancy** after the occupancy commencement boundary while preserving marketplace integrity, boundary clarity, relationship respect, and long-term platform trust.
+
+Settled tenancy is not occupancy readiness. Occupancy readiness governs **pre-commencement occupancy execution judgment** (Chapter 40). Settled tenancy governs **post-commencement relationship experience** — what Rento can honorably support once the Tenancy Lifecycle has begun.
+
+Settled tenancy is not the Housing Journey. The Housing Journey governs **the user's path from search through housing decision and execution readiness** (Chapter 23, Chapters 13–40). The Tenancy Lifecycle governs **the relationship lifecycle after occupancy begins** — a separate macro-domain that must never be merged with Housing Journey.
+
+Settled tenancy is not property management. Rento remains a **marketplace platform** — it facilitates housing discovery, evaluation, decision, and honest transition into bilateral landlord-tenant life. It does **not** become a Property Management System.
+
+**The platform never operates settled tenancy.** Rento does not manufacture rent collected, maintenance resolved, disputes adjudicated, or ongoing tenancy administered. The platform **supports honest experience surrounding active tenancy** — helping users, landlords, and realtors navigate the Tenancy Lifecycle with integrity, boundary clarity, and dignity without impersonating operational authority.
+
+Where Chapter 40 completes the Housing Obligation execution trilogy and carries users to the occupancy commencement boundary, this chapter **opens the Settled Tenancy macro-domain** — defining where ongoing tenancy experience begins, what Rento owns, what bilateral relationship must own, and how forward settled tenancy chapters extend this foundation.
+
+The product must help stakeholders answer five settled tenancy foundation questions:
+
+1. **Has the Tenancy Lifecycle begun — is active tenancy legitimately in scope for settled tenancy experience?**  
+2. **What does Rento support versus what landlord, tenant, realtor, and external process must own during ongoing tenancy?**  
+3. **How does settled tenancy experience preserve continuity from the Housing Journey without collapsing the two concepts?**  
+4. **How does the platform honor Occupancy Readiness outcomes without simulating tenancy operations?**  
+5. **Can users engage with, defer attention to, or conclude tenancy context on Rento without trap, shame, or property-management theater?**
+
+This chapter governs settled tenancy as the **opening architectural foundation of the Settled Tenancy macro-domain**. It does **not** specify rent payment systems, maintenance ticketing, dispute workflows, or engineering architecture.
+
+**Relationship to prior chapters:** **Occupancy Readiness Boundaries** (Chapter 40) and **Occupancy Boundary Clarity** (Chapter 40) govern what occupancy readiness established and deferred. **Housing Continuity** (Chapter 30) governs search-to-decision persistence — Tenancy Continuity (this chapter) governs post-commencement relationship persistence separately. This chapter defines **Tenancy Lifecycle**, **Settled Tenancy Environment**, **Settled Tenancy Boundaries**, **Tenancy Boundary Clarity**, **Settled Tenancy Integrity**, and **Tenancy Continuity**.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Boundaries over tenancy theater** | Rento and users know what settled tenancy experience can and cannot establish — no simulated property management |
+| **Marketplace over operations** | Rento remains a marketplace — not a Property Management System |
+| **Lifecycle separation over journey conflation** | Tenancy Lifecycle and Housing Journey remain distinct — never merged |
+| **Continuity over amnesia** | Decision arc and occupancy context inform tenancy experience — without resetting Housing Journey truth |
+| **Honest scope over operational overclaim** | Ongoing tenancy administration remains outside platform establishment |
+| **Relationship respect over engagement extraction** | Settled tenancy serves bilateral relationship dignity — not tenancy engagement metrics |
+| **Calm over urgency** | No manufactured rent panic, maintenance alarm, or dispute amplification |
+| **Voluntary attention over forced tenancy engagement** | Users may attend, defer, or conclude tenancy context with dignity |
+| **Physical truth over digital operations** | Product does not substitute digital posture for bilateral tenancy reality |
+| **Mobile orientation first** | Design for calm mobile tenancy context — then tablet, then desktop |
+| **Settled Tenancy Integrity goal** | Every experience honors honest boundaries, marketplace posture, and Tenancy Lifecycle separation |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, rent payment interface guide, maintenance request pattern library, or dispute resolution workflow  
+- An implementation plan, API contract, property management system, or engineering architecture  
+- A replacement for Chapters 16, 20, 23, or 40  
+- Another Readiness chapter — settled tenancy is **not** a fourth Housing Obligation readiness gate  
+- A Housing Journey redefinition or extension chapter (Chapter 23 remains authoritative for Housing Journey)  
+- A rent lifecycle, maintenance, dispute, or property management operations depth chapter (forward within Settled Tenancy block)  
+- A realtor workspace or admin moderation operations chapter (Chapters 18–20, forward platform blocks)  
+- A **Rent Payment Experience** or **Maintenance Request Experience** chapter identity — those are **forward specialized domains** within the Settled Tenancy block  
+
+If the question is *how to build* property management tooling — this chapter does not answer it. If the question is *what settled tenancy experience must accomplish for marketplace integrity, Tenancy Lifecycle honesty, and platform boundary clarity* — this chapter does.
+
+Settled tenancy is **not** property management, rent collection operations, or dispute adjudication. Settled tenancy **is** responsible product-supported experience surrounding an active tenancy — with honest boundaries and dignity whether users attend, defer, or conclude tenancy context.
+
+---
+
+## Tenancy Lifecycle
+
+**Tenancy Lifecycle** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Tenancy Lifecycle is the **complete sequence of relationship states and experiences surrounding an active landlord-tenant tenancy after occupancy commencement** — including ongoing relationship orientation, rent obligation awareness, maintenance and repair context, dispute and escalation context, and tenancy conclusion — across sessions, devices, and the duration of the tenancy.
+
+Tenancy Lifecycle is **distinct from Housing Journey**:
+
+| Concept | Governing scope | Begins | Ends |
+|---------|-----------------|--------|------|
+| **Housing Journey** (Chapter 23) | User journey from search through housing decision and execution readiness | First housing search attention | Occupancy commencement boundary (Chapter 40 handoff) |
+| **Tenancy Lifecycle** (this chapter) | Relationship lifecycle after occupancy begins | Occupancy commencement boundary | Tenancy conclusion (bilateral; outside platform establishment) |
+
+These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy administration. Tenancy Lifecycle does not subsume search, evaluation, comparison, or decision experience.
+
+Tenancy Lifecycle is a **cross-chapter concept** within the Settled Tenancy macro-domain. Forward chapters may reference it when governing rent lifecycle, maintenance experience, dispute experience, notifications (Chapter 21), and Product Development Methodology when formally established.
+
+No implementation, channel, or technical mechanism is implied by this term. Tenancy Lifecycle is a **product philosophy anchor** for the Settled Tenancy block — the human relationship sequence settled tenancy experience exists to honor.
+
+---
+
+## Settled Tenancy Environment
+
+**Settled Tenancy Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Settled Tenancy Environment is the **cognitive and informational conditions under which a user, landlord, or realtor orients to, reflects on, and engages with experience surrounding an active tenancy for a specific property** — not the screen layout, but the **quality of the settled tenancy experience space** Rento provides.
+
+A sound Settled Tenancy Environment is **oriented, grounded, boundary-legible, bounded, calm, continuity-preserving, and marketplace-honest** — consistent with the calm decision environments established from Property Detail (Chapter 31) through Occupancy Readiness (Chapter 40), but governing **ongoing relationship experience** rather than judgment gates.
+
+Settled Tenancy Environment is the **post-commencement counterpart** — the governed space where stakeholders move from *"occupancy readiness judgment concluded — commencement boundary crossed"* to *"I engage with, defer attention to, or conclude tenancy context on Rento — with tenancy boundary clarity about what the platform supports."*
+
+Settled Tenancy Environment is reusable across forward settled tenancy chapters — rent lifecycle, maintenance, dispute, and tenancy conclusion experience.
+
+---
+
+## Active Tenancy
+
+**Active Tenancy** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Active Tenancy is the state where **occupancy commencement has occurred or bilateral landlord-tenant process legitimately treats commencement as underway** — placing a specific property relationship within Tenancy Lifecycle scope.
+
+Active Tenancy is **not** established by Rento. The platform may **recognize** that bilateral process has crossed the occupancy commencement boundary — it does **not** certify, manufacture, or adjudicate commencement. Recognition serves experience orientation only; it does not substitute for landlord, tenant, or legal confirmation.
+
+Active Tenancy is the **entry condition** for settled tenancy experience scope. Pre-commencement states remain governed by Occupancy Readiness (Chapter 40) and upstream chapters — settled tenancy must not absorb occupancy readiness judgment.
+
+---
+
+## Settled Tenancy Boundaries
+
+**Settled Tenancy Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Settled Tenancy Boundaries define **what experience surrounding active tenancy through Rento can and cannot establish** — the scope beyond which landlord, tenant, realtor, bilateral agreement, household judgment, and external legal or financial process must carry responsibility.
+
+Settled Tenancy Boundaries **extend** Occupancy Readiness Boundaries (Chapter 40) and the full Decision Experience and Housing Obligation boundary lineage — each prior limit becomes a settled tenancy limit honestly stated.
+
+Rento settled tenancy experience **can** support relationship orientation, tenancy boundary clarity, continuity of context from the Housing Journey where appropriate, honest scope language, and dignified attend, defer, or conclude postures toward tenancy context.
+
+Rento settled tenancy experience **cannot** substitute for **rent collection operations**, **maintenance execution**, **dispute adjudication**, **lease enforcement**, **property management administration**, **financial settlement completion** (Chapter 39 scope), **occupancy commencement certification** (Chapter 40 scope), or **platform attestation of tenancy outcome** (Chapter 20).
+
+**The platform never operates settled tenancy.** Settled Tenancy Boundaries are reusable across all forward settled tenancy chapters.
+
+---
+
+## Tenancy Boundary Clarity
+
+**Tenancy Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Tenancy Boundary Clarity is the **shared legibility of what Rento, user, landlord, realtor, and external process each reasonably own during ongoing tenancy experience** — without simulated property management, rent operations theater, or tenancy administration overclaim.
+
+Tenancy Boundary Clarity requires **Rento scope honesty**, **bilateral relationship honesty**, **marketplace posture honesty**, **pending state legibility**, and **no false tenancy operational certainty**.
+
+Tenancy Boundary Clarity extends **Occupancy Boundary Clarity** (Chapter 40), **Financial Boundary Clarity** (Chapter 39), and **Legal Boundary Clarity** (Chapter 38) into the ongoing tenancy dimension — without creating a separate readiness gate or re-opening Housing Obligation judgment.
+
+---
+
+## Settled Tenancy Integrity
+
+**Settled Tenancy Integrity** is the **honesty of the settled tenancy experience itself** — no simulated property management, no hidden boundaries, no pressure to engage tenancy features when inappropriate, no rent or maintenance theater, no gamification of tenancy duration, no forced operational posture.
+
+Settled Tenancy Integrity parallels the integrity lineage from Chapters 33–40 — **Comparison Integrity**, **Viewing Integrity**, **Application Integrity**, **Commitment Integrity**, **Legal Readiness Integrity**, **Financial Readiness Integrity**, and **Occupancy Readiness Integrity** — while governing **ongoing relationship experience**, not pre-commencement judgment gates.
+
+---
+
+## Tenancy Continuity
+
+**Tenancy Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Tenancy Continuity is the **preservation of tenancy relationship context across sessions, devices, and interruptions during the Tenancy Lifecycle** — so users returning to settled tenancy experience recognize where relationship attention paused without reconstructing bilateral truth from scratch.
+
+Tenancy Continuity is **distinct from Housing Continuity** (Chapter 30):
+
+| Concept | Governs | Scope |
+|---------|---------|-------|
+| **Housing Continuity** (Chapter 30) | Search-to-decision persistence across the Housing Journey | Discovery, refinement, results, maps, favorites, saved search, return to evaluation |
+| **Tenancy Continuity** (this chapter) | Relationship context persistence during Tenancy Lifecycle | Post-commencement orientation, tenancy attention state, bilateral context carry-forward |
+
+Tenancy Continuity **inherits** relevant judgment context from Housing Journey and Occupancy Readiness — it does **not** extend Housing Journey into tenancy operations. Decision arc truth, Listing Integrity where applicable, and occupancy handoff context may inform Tenancy Continuity — they do not authorize platform operation of tenancy.
+
+Tenancy Continuity connects **Context Restoration** (Chapter 30 lineage), **Decision Persistence**, **Respectful Silence** (Chapter 25), and **Notifications & User Re-engagement** (Chapter 21) within Tenancy Lifecycle scope — re-engagement informs; it does not pressure.
+
+---
+
+## 2. Role in Product Architecture
+
+Settled tenancy sits at the **opening position of the Settled Tenancy macro-domain** — immediately after Occupancy Readiness Experience (Chapter 40) and the occupancy commencement boundary.
+
+| Architecture phase | User or stakeholder mode | Primary question |
+|--------------------|--------------------------|------------------|
+| Discovery (Search Architecture) | Hunt | What exists that might fit? |
+| Evaluation (Chapters 31–32) | Judge one | Is this specific home worth my attention? |
+| Narrowing (Chapter 33) | Compare | Which candidates survive scrutiny? |
+| Verification (Chapter 34) | Verify | Can I trust this home enough to proceed digitally? |
+| Viewing (Chapter 35) | Visit | What does this home reveal in person? |
+| Application (Chapter 36) | Express interest | Am I ready to pursue this home formally — with informed consent? |
+| Commitment (Chapter 37) | Intensify obligation | Am I ready to meaningfully intensify housing obligation? |
+| Legal readiness (Chapter 38) | Engage legal responsibility | Am I prepared to engage lease-related legal responsibility responsibly? |
+| Financial readiness (Chapter 39) | Engage financial responsibility | Am I prepared to engage financial settlement responsibility responsibly? |
+| Occupancy readiness (Chapter 40) | Engage occupancy responsibility | Am I prepared to engage occupancy commencement responsibility responsibly? |
+| **Settled tenancy (this chapter)** | **Live active tenancy** | **How does Rento honorably support experience surrounding this tenancy — with tenancy boundary clarity?** |
+| Forward chapters | Specialized tenancy dimensions | How are rent lifecycle, maintenance, dispute, and conclusion experienced? |
+
+Settled tenancy **opens** the Tenancy Lifecycle — it does **not** complete it. Forward chapters within the Settled Tenancy block supply specialized experience dimensions deferred from Chapter 40 §11.3.
+
+Settled tenancy succeeds through **honest relationship orientation and boundary clarity** — not tenancy feature maximization, operational theater, or engagement extraction.
+
+---
+
+## 3. Relationship to Housing Journey
+
+Chapter 23 defines **Housing Journey** — the complete sequence of decisions from beginning apartment search until successfully renting a home. This chapter **does not amend, extend, or redefine** Housing Journey.
+
+### 3.1 Concept Separation — Mandatory
+
+| Dimension | Housing Journey | Tenancy Lifecycle |
+|-----------|-----------------|-------------------|
+| **Official definition** | Chapter 23 | This chapter |
+| **Temporal scope** | Search through execution readiness | After occupancy commencement |
+| **Primary product posture** | Discovery, evaluation, decision, readiness judgment | Relationship experience surrounding active tenancy |
+| **Macro-domain** | Search Experience, Decision Experience, Housing Obligation | Settled Tenancy |
+| **Merge permitted** | **No** | **No** |
+
+Housing Journey **ends at the occupancy commencement boundary** — where Occupancy Readiness Experience (Chapter 40) supplies execution readiness judgment and honest handoff. Tenancy Lifecycle **begins after** that boundary when Active Tenancy is legitimately in scope.
+
+### 3.2 What Housing Journey Supplies
+
+The Housing Journey supplies **decision arc truth**, **Property Confidence** lineage, **Listing Integrity** where applicable, **Housing Continuity** through search and decision, and the full confidence and boundary lineage from Chapters 31–40. Settled tenancy experience **inherits** this context through Tenancy Continuity — it does **not** re-open evaluation, comparison, verification, or readiness judgment.
+
+### 3.3 What Settled Tenancy Does Not Inherit
+
+Settled tenancy does **not** inherit:
+
+- Ongoing search refinement responsibility (Chapters 26–30)  
+- Decision gate re-adjudication (Chapters 31–37)  
+- Housing Obligation readiness re-engagement (Chapters 38–40) — unless user legitimately returns to a new Housing Journey for a different property  
+
+A user may simultaneously hold **tenancy context** for one property and **Housing Journey attention** for another — product must preserve **separation** without conflation or false exclusivity theater.
+
+### 3.4 Successfully Renting a Home
+
+Chapter 23's endpoint — *successfully renting a home* — encompasses achieving housing through the Housing Journey arc including execution readiness judgment. It does **not** encompass ongoing tenancy administration. Tenancy Lifecycle governs what follows **after** the occupancy commencement boundary — without retroactively expanding Housing Journey into property management scope.
+
+---
+
+## 4. Relationship to Occupancy Readiness Experience
+
+Users enter settled tenancy experience scope **after** the occupancy commencement boundary — typically following Occupancy Readiness judgment and bilateral commencement process (Chapter 40 §11).
+
+### 4.1 Entry Preconditions
+
+Settled tenancy experience orientation is responsible when **Active Tenancy** is legitimately in scope, **Occupancy Readiness Boundaries** and **Tenancy Boundary Clarity** are understood, relevant **Housing Journey** context is preserved through **Tenancy Continuity**, and **Listing Integrity** remains intact where applicable.
+
+### 4.2 Handoff from Occupancy Readiness
+
+Chapter 40 supplies **Occupancy Readiness Confidence**, **Occupancy Readiness Preparation**, **Occupancy Readiness Boundaries**, **Occupancy Boundary Clarity**, and post-engagement proceed, defer, or release outcomes. Settled tenancy must **preserve** occupancy readiness outcomes — not reset commencement judgment or hide acknowledged unknowns.
+
+The handoff contract (Chapter 40 §11.2):
+
+- Tenancy candidate preserves **continuity** from occupancy engagement  
+- Preparation and boundary context inform forward tenancy attention — limits remain visible  
+- Entry into settled tenancy experience **does not imply** property management, rent operations, or ongoing tenancy administered through Rento  
+- Release at occupancy readiness **does not erase** bilateral tenancy reality — it removes platform attention posture for that candidate  
+- Occupancy readiness outcome **pending** does not default to Active Tenancy or settled tenancy scope  
+
+### 4.3 Occupancy Readiness Informs; Occupancy Readiness Never Substitutes Settled Tenancy
+
+Occupancy readiness judgment **informs** Tenancy Continuity and boundary inheritance — it does **not** substitute for settled tenancy experience dimensions deferred to forward chapters. Commencement preparation understanding from Chapter 40 **informs** orientation — it does **not** satisfy rent lifecycle, maintenance, or dispute experience scope.
+
+### 4.4 No Fourth Readiness Gate
+
+Settled tenancy is **not** Occupancy Readiness continuation, **not** a fourth Housing Obligation readiness stage, and **not** a readiness judgment gate. The readiness trilogy (Chapters 38–40) is **architecturally complete**. Settled tenancy governs **experience surrounding active tenancy** — a different architectural pattern.
+
+---
+
+## 5. Relationship to Platform Trust (Chapter 20)
+
+Chapter 20 defines the **platform trust contract**. This chapter **consumes** platform trust signals — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|----------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm about listing and marketplace integrity? |
+| **Occupancy readiness** | Chapter 40 | Did occupancy execution engagement support sound judgment with occupancy boundary clarity? |
+| **Settled tenancy** | **This chapter** | Does experience surrounding active tenancy honor marketplace posture with tenancy boundary clarity? |
+
+Platform verification badges and moderation status **inform** tenancy context orientation — they do **not** guarantee tenancy health, rent compliance, maintenance resolution, or dispute outcome. Settled tenancy must never **inflate** Chapter 20 attestation into tenancy administration certification or operational authority.
+
+---
+
+## 6. Relationship to Contact & Communication Experience (Chapter 16)
+
+Chapter 16 remains the **authoritative contract for communication ethics** during settled tenancy experience. This chapter **consumes** Chapter 16 — it does **not** redefine contact rules.
+
+Chapter 16's bridge model — contact as bridge from platform evaluation to offline housing process — **extends in posture** to settled tenancy: Rento may support **orientation and boundary-legible communication context** surrounding active tenancy; it does **not** become the whole tenancy relationship inside the app.
+
+Settled tenancy must not use contact channels to simulate property management, pressure rent payment through platform authority, or impersonate landlord operational voice.
+
+---
+
+## 7. Where Settled Tenancy Begins
+
+### 7.1 The Occupancy Commencement Boundary
+
+Settled tenancy experience scope begins at the **occupancy commencement boundary** — the architectural line between:
+
+- **Before:** Housing Journey execution readiness judgment (Chapters 13–40)  
+- **After:** Tenancy Lifecycle relationship experience (Chapter 41+, this macro-domain)  
+
+This boundary is **bilateral and physical in nature**. Rento recognizes orientation context; it does not adjudicate commencement.
+
+### 7.2 Active Tenancy as Scope Gate
+
+| State | Governing domain |
+|-------|------------------|
+| Pre-commencement; occupancy readiness in progress | Occupancy Readiness (Chapter 40) |
+| Commencement pending; bilateral process underway | Occupancy Readiness outcomes + honest pending posture |
+| **Active Tenancy in scope** | **Settled Tenancy macro-domain (this chapter and forward)** |
+| Tenancy concluded bilaterally | Tenancy conclusion experience (forward); platform role diminishes honestly |
+
+### 7.3 Marketplace Recognition Without Operational Establishment
+
+Rento may help users **orient** to Active Tenancy context — property identity, relationship participants, boundary reminders, continuity from decision arc. Orientation is **not** operation. Recognition is **not** administration.
+
+---
+
+## 8. Platform Responsibility and Marketplace Posture
+
+### 8.1 Rento as Marketplace
+
+Rento's settled tenancy posture inherits Product Philosophy (Chapter 1): a serious long-term rental **marketplace** — not a property management platform, not a landlord substitute, not a tenant services operator.
+
+### 8.2 What the Platform Supports
+
+Rento settled tenancy experience **can** support:
+
+- **Relationship orientation** — who is involved, what property, what bilateral context applies  
+- **Tenancy boundary clarity** — honest scope language about platform limits  
+- **Tenancy continuity** — context preservation across return and interruption  
+- **Calm attention postures** — attend, defer, conclude without shame  
+- **Inheritance of decision truth** — prior evaluation and readiness context visible where appropriate  
+- **Forward orientation** — honest pointers to what specialized forward chapters govern  
+
+### 8.3 What the Platform Does Not Operate
+
+Rento settled tenancy experience **does not** operate:
+
+- Rent collection, payment processing, or rent arrears administration  
+- Maintenance scheduling, repair execution, or contractor coordination  
+- Dispute investigation, adjudication, or escalation authority  
+- Lease enforcement, eviction process, or legal tenancy administration  
+- Property inspection operations, inventory management, or handover execution  
+- Landlord-tenant relationship management as operational authority  
+
+**The platform never operates settled tenancy.**
+
+### 8.4 Parallel Posture Lineage
+
+| Macro-domain | Platform posture |
+|--------------|------------------|
+| Commitment (Chapter 37) | The platform never creates commitment |
+| Legal readiness (Chapter 38) | The platform never creates legal agreement |
+| Financial readiness (Chapter 39) | The platform never creates financial settlement |
+| Occupancy readiness (Chapter 40) | The platform never creates occupancy |
+| **Settled tenancy (this chapter)** | **The platform never operates settled tenancy** |
+
+---
+
+## 9. Settled Tenancy Principles
+
+*How should Rento support experience surrounding active tenancy while preserving marketplace integrity, Tenancy Lifecycle honesty, boundary clarity, and relationship dignity?*
+
+### 9.1 Marketplace Posture — Not Property Management Simulation
+
+Settled tenancy experience must consistently communicate **marketplace role** — orientation and boundary clarity, not operational authority.
+
+### 9.2 Tenancy Lifecycle Separation — Not Housing Journey Extension
+
+Product surfaces must **never** collapse Housing Journey and Tenancy Lifecycle into a single undifferentiated arc.
+
+### 9.3 Boundary Clarity Before Operational Implication
+
+Users, landlords, and realtors understand **what Rento does not operate** before any tenancy feature implies otherwise.
+
+### 9.4 Tenancy Continuity Without Housing Journey Reset
+
+Relevant decision and occupancy context remains **interpretable** at tenancy engagement — not erased by post-commencement amnesia.
+
+### 9.5 Honest State Language
+
+Product language reflects **actual bilateral and platform posture** — active tenancy, attention deferred, context concluded, obligations pending — not simulated rent paid, maintenance resolved, or dispute settled.
+
+### 9.6 Bilateral Relationship Respect
+
+Landlord, tenant, and realtor roles remain **honestly represented** — platform does not flatten asymmetry into false symmetry or impersonate either party's operational authority.
+
+### 9.7 Voluntary Attention — Not Forced Tenancy Engagement
+
+Users may **attend** to tenancy context, **defer** attention, or **conclude** platform tenancy context — all dignified outcomes.
+
+### 9.8 Calm Over Urgency
+
+No manufactured rent countdown, maintenance panic, dispute alarm, or tenancy streak gamification.
+
+### 9.9 Physical and Bilateral Truth Over Digital Operations
+
+Product does not substitute digital tenancy posture for bilateral relationship reality.
+
+### 9.10 Occupancy and Readiness Boundary Respect
+
+Settled tenancy does not re-adjudicate Occupancy Readiness, Financial Readiness, or Legal Readiness — pending or concluded states remain visible where relevant.
+
+### 9.11 Engagement Without Humiliation
+
+Defer, conclude, and unresolved bilateral states deserve **dignified communication** — normal outcomes, not moral failure by default.
+
+---
+
+## 10. Settled Tenancy Attention Postures
+
+Settled tenancy is **not** a readiness gate with proceed, defer, and release as judgment outcomes. It governs **ongoing relationship experience** with distinct attention postures — all valid and equally dignified.
+
+### 10.1 Attend
+
+User **voluntarily orients to tenancy context** on Rento with boundary clarity sufficient. Attend does **not** mean Rento operates rent, maintenance, or dispute resolution.
+
+### 10.2 Defer Attention
+
+Defer preserves bilateral tenancy reality while acknowledging **insufficient attention, clarity, or timing** for platform tenancy engagement — honest pacing with **Tenancy Continuity** preserved.
+
+### 10.3 Conclude Context
+
+Conclude removes or diminishes **platform tenancy attention posture** for a relationship — typically when tenancy ends bilaterally or user no longer seeks platform orientation for that tenancy. Conclude does **not** erase Housing Journey history or imply platform adjudication of tenancy termination.
+
+### 10.4 Posture Reconsideration
+
+Attend, defer, and conclude remain available across the Tenancy Lifecycle — not irreversible traps.
+
+### 10.5 Pending Bilateral Honesty
+
+Unresolved rent, maintenance, or dispute states remain **honestly communicated** — no simulated resolution or operational certainty.
+
+### 10.6 No Forced Operational Engagement
+
+Exit, defer, and conclude paths always dignified — Settled Tenancy Integrity and Tenancy Boundary Clarity require it.
+
+---
+
+## 11. Transition to Forward Settled Tenancy Chapters
+
+This chapter opens the Settled Tenancy macro-domain. Specialized experience dimensions follow in forward chapters — per Chapter 40 §11.3 deferral and MASTER_ROADMAP remaining work within the block.
+
+### 11.1 What This Chapter Supplies
+
+This chapter supplies **architectural foundation** — Tenancy Lifecycle definition, marketplace posture, platform responsibility limits, Housing Journey separation, Occupancy Readiness handoff contract, and official boundary concepts reusable across forward chapters.
+
+### 11.2 Handoff Preconditions to Forward Chapters
+
+Transition toward specialized settled tenancy chapters is responsible when **Active Tenancy** is in scope, **Settled Tenancy Boundaries** are understood, **Tenancy Boundary Clarity** is adequate, **Tenancy Continuity** preserves relevant context, and **Settled Tenancy Integrity** posture is maintained.
+
+### 11.3 Explicitly Deferred — Forward Within Settled Tenancy Block
+
+The following belong to **forward settled tenancy chapters** — outside this chapter's definitional scope:
+
+- **Rent lifecycle management experience** beyond occupancy commencement  
+- **Maintenance and repair experience** during tenancy  
+- **Tenancy dispute and escalation experience**  
+- **Tenancy conclusion experience**  
+- **Ongoing landlord-tenant relationship experience** specialized dimensions beyond this foundation  
+
+This chapter **references** these domains — it does **not** define them.
+
+### 11.4 Relationship to Platform Role Blocks
+
+Realtor Platform, Admin Platform, and other MASTER_ROADMAP domains remain **separate forward blocks** — not subsets of Settled Tenancy. Settled tenancy governs **user-facing experience surrounding active tenancy**; realtor and admin platform chapters govern their respective roles without conflating marketplace tenancy experience with professional workspace or moderation operations.
+
+### 11.5 Forward Reference
+
+Specialized settled tenancy chapters follow per Chapter 40 §11.3 — Settled Tenancy foundation must not pretend to satisfy **rent lifecycle**, **maintenance**, **dispute**, or **property management operations** depth.
+
+---
+
+## 12. Information and Continuity Layer
+
+### 12.1 Information Inheritance
+
+Settled tenancy treats the **information layer** (Chapter 31) as historical context — not live listing marketing during active tenancy unless user legitimately initiates a new Housing Journey.
+
+- **Currency** — tenancy-relevant facts must be honest; stale or misleading orientation invalidates Settled Tenancy Integrity  
+- **Listing Integrity carry-forward** — governed facts from decision arc honored where applicable; material change in bilateral reality communicated honestly outside platform establishment  
+- **Transparency inheritance** — price, fee, and condition honesty from evaluation through occupancy readiness preserved in Tenancy Continuity  
+
+### 12.2 Evidence and Decision Arc
+
+Evidence lineage (Chapter 32), physical reconciliation (Chapter 35), and full Decision Experience arc remain **interpretable** through Tenancy Continuity — they do not authorize re-evaluation gates or operational claims.
+
+### 12.3 Notifications and Re-engagement
+
+Notifications (Chapter 21) within Tenancy Lifecycle scope must honor **Continuity Without Pressure** (Chapter 30 lineage) and **Respectful Silence** (Chapter 25) — inform about tenancy context; do not manufacture urgency or operational authority.
+
+---
+
+## 13. Mobile & Accessibility Considerations
+
+Mobile is the **primary settled tenancy orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Orientation at glance** | Property identity, tenancy posture, and boundaries reachable without hunt |
+| **One-handed deferral** | Defer and conclude attention reachable during interruption |
+| **Partner alignment** | Shared participants carry identical boundary truth — not viral engagement |
+| **Interrupt tolerance** | Tenancy context stable across interruption |
+| **Calm return** | Resuming tenancy attention feels continuous — not alarming |
+| **Bilateral dignity** | Language accessible to all parties without operational impersonation |
+
+Settled tenancy must be **inclusive** — textual and semantic equivalents for posture and boundaries; plain language; calm tone without weaponized rent or dispute anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 14. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Property Management Theater** | Impersonates rent, maintenance, or dispute operational authority — scope violation |
+| **Simulated Tenancy Operations** | Unresolved bilateral states presented as platform-resolved — integrity violation |
+| **Housing Journey Conflation** | Merges search-decision arc with Tenancy Lifecycle — architectural violation |
+| **Fourth Readiness Gate** | Treats settled tenancy as Occupancy Readiness continuation — trilogy violation |
+| **Rent Pressure** | Urgency, countdown, arrears shame amplification — violates calm environment |
+| **Maintenance Alarmism** | Manufactured repair panic to drive engagement — relationship harm |
+| **Dispute Amplification** | Platform posture implying adjudication authority — boundary violation |
+| **Tenancy Gamification** | Streaks, badges, tenure scores — trivializes bilateral relationship |
+| **Conversion Theater** | Settled tenancy as platform retention metric — judgment violation |
+| Conflating occupancy readiness, financial readiness, or platform attestation with settled tenancy operations | Scope conflation across chapters |
+| Thinner boundaries than Occupancy Readiness | Amnesia at tenancy boundary |
+| Occupancy readiness masquerading as settled tenancy | Backward scope violation |
+| Shame copy for defer, conclude, or pending bilateral states | Dignified posture violation |
+
+---
+
+## 15. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, settled tenancy initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Tenancy Lifecycle** separation, **Settled Tenancy Environment**, **Settled Tenancy Boundaries**, **Tenancy Boundary Clarity**, **Settled Tenancy Integrity**, **Tenancy Continuity**, and **Transition to Forward Settled Tenancy Chapters** integrity.
+
+**Review gate:** No settled tenancy surface ships without checklist against all official concepts, principles, attention postures, and integrity requirements defined herein.
+
+**Forward chapters:** Rent lifecycle, maintenance, dispute, and tenancy conclusion experience extend this foundation — this chapter opens the Settled Tenancy macro-domain.
+
+---
+
+## 16. Chapter Summary
+
+Settled tenancy opens the **Tenancy Lifecycle macro-domain** — converting **occupancy commencement boundary crossing** into **honest marketplace experience surrounding active tenancy with tenancy boundary clarity**.
+
+This chapter defines Tenancy Lifecycle, Settled Tenancy Environment, Active Tenancy, Settled Tenancy Boundaries, Tenancy Boundary Clarity, Settled Tenancy Integrity, and Tenancy Continuity; principles of boundaries over theater and marketplace over operations; attend, defer attention, and conclude context postures; platform-never-operates-settled-tenancy posture; mandatory Housing Journey separation; integration with Chapters 16, 20, 23, 30, 31–40; and honest transition toward specialized forward settled tenancy chapters without owning rent operations, maintenance execution, or dispute adjudication.
+
+**Product architecture flow:**
+
+Property Detail (Ch 31) → Media (Ch 32) → Comparison (Ch 33) → Verification (Ch 34) → Viewing (Ch 35) → Application (Ch 36) → Commitment (Ch 37) → Legal Readiness (Ch 38) → Financial Readiness (Ch 39) → Occupancy Readiness (Ch 40) → **Settled Tenancy (Ch 41)** → specialized tenancy chapters (forward)
+
+---
+
+## 17. Design Director Review
+
+**Chapter:** 41 — Settled Tenancy Experience  
+**Section:** XXXVIII — Settled Tenancy  
+**Review type:** Initial standard adoption
+
+### 17.1 Approval Statement
+
+- **Architecture Review** — APPROVED  
+- **Required Architectural Amendments** — N/A  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **settled tenancy experience foundation** for Rento. All settled tenancy product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 17.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, housing seriousness, marketplace identity |
+| Chapter 16 — Contact & Communication Experience | Contact ethics; settled tenancy context; bridge model extension in posture |
+| Chapter 20 — Trust, Verification & Moderation Experience | Platform attestation parent; consumed, not redefined |
+| Chapter 23 — Onboarding & First-Time Experience | Housing Journey parent; consumed, not redefined or extended |
+| Chapter 30 — Saved Searches & Search Continuity | Housing Continuity parent; distinct from Tenancy Continuity |
+| Chapter 31 — Property Detail Experience | Property Confidence, Listing Integrity; information inheritance |
+| Chapter 32 — Media Experience | Expected Property, evidence layer; decision arc inheritance |
+| Chapter 33 — Property Comparison Experience | Narrowing context; partner shared tenancy orientation |
+| Chapter 34 — Property Verification Experience | Proceeding Readiness, Verification Boundaries |
+| Chapter 35 — Viewing Experience | Viewing Confidence; physical reconciliation inheritance |
+| Chapter 36 — Application Experience | Application Confidence, Application Boundaries |
+| Chapter 37 — Commitment Experience | Commitment Confidence, Commitment Boundaries |
+| Chapter 38 — Legal Readiness Experience | Legal Readiness Boundaries; boundary lineage |
+| Chapter 39 — Financial Readiness Experience | Financial Readiness Boundaries; boundary lineage |
+| Chapter 40 — Occupancy Readiness Experience | Occupancy Readiness Boundaries; occupancy handoff; trilogy completion |
+| Forward chapters — Settled Tenancy specialized | Rent lifecycle, maintenance, dispute, conclusion — forward |
+
+### 17.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Settled tenancy positioned as Settled Tenancy macro-domain opening — not Occupancy Readiness continuation, not fourth readiness gate, not property management  
+2. Tenancy Lifecycle and Housing Journey explicitly separated — no merge, no Chapter 23 amendment  
+3. Platform-never-operates-settled-tenancy principle explicit — marketplace posture preserved  
+4. Official concepts defined once — Tenancy Lifecycle, Tenancy Continuity distinct from Housing Journey, Housing Continuity  
+5. Occupancy Readiness handoff honest — Ch 40 §11 contract preserved  
+6. No contradiction with Chapter 16 contact ethics or Chapter 20 platform trust contract  
+7. Forward deferral from Ch 40 §11.3 honored — rent, maintenance, dispute deferred to forward chapters  
+8. Attend, defer attention, conclude postures — not readiness gate proceed/defer/release pattern  
+9. Settled Tenancy Boundaries extend — not replace — Occupancy Readiness Boundaries  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+
+### 17.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on settled tenancy experience philosophy |
+| Head of Product Design | Settled Tenancy block opening parity with prior macro-domain transitions |
+| Senior UX Designer | Tenancy boundary communication, mobile rhythm |
+| Product Management | Marketplace posture honesty and tenancy boundary integrity |
+| Content Design Lead | Scope language, boundary honesty, bilateral state copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation |
+| Accessibility Specialist | Non-visual tenancy orientation access and anxiety-sensitive design |
+
+### 17.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new settled tenancy experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 17.6 Design Director Closing Note
+
+Users do not rent property management dashboards. They rent homes — and they deserve honest marketplace support when tenancy begins, not a platform that impersonates rent collection, maintenance dispatch, or dispute courts. This chapter exists so Rento opens the Tenancy Lifecycle with boundary clarity, marketplace integrity, and dignity whether users attend to tenancy context, defer attention, or conclude platform orientation — without ever confusing a serious rental marketplace with a Property Management System.
+
+---
+
+**End of Chapter 41**
 
