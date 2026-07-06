@@ -34,10 +34,10 @@ Scope: Product Design Standard only — no implementation unless explicitly requ
 
 ## CURRENT STATUS
 
-Approved chapters: **1–46** (46 chapters total)  
-Latest approved chapter: **Chapter 46 — Realtor Platform Experience**  
-Latest Git checkpoint: **aa65637** — `approve chapter 45 tenancy conclusion experience`  
-Pending Git checkpoint: **Chapter 46 — Approval Integration complete**  
+Approved chapters: **1–47** (47 chapters total)  
+Latest approved chapter: **Chapter 47 — Listing Publication and Moderation Participation Experience**  
+Latest Git checkpoint: **Pending user commit** — Chapter 47 Approval Integration complete  
+Pending Git checkpoint: **Chapter 47 — Git checkpoint (user-managed)**  
 Repository status: **Modified (awaiting commit)**
 
 **Decision Experience judgment progression: COMPLETE** (Chapters 31–37)
@@ -46,24 +46,25 @@ Repository status: **Modified (awaiting commit)**
 
 **Settled Tenancy block: COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension)
 
-**Realtor Platform block: IN PROGRESS** (Ch 46 macro-domain foundation approved; Ch 47+ specialized dimensions forward)
+**Realtor Platform block: IN PROGRESS** (Ch 46 foundation + Ch 47 first specialized dimension approved; remaining specialized dimensions forward per Design Council)
 
-Chapter 46 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
+Chapter 47 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
+- ✓ Phase 0 — Pre-Authoring Analysis
 - ✓ Phase 1 — Authoring
-- ✓ Phase 2 — Architecture Review (APPROVED WITH REQUIRED AMENDMENTS)
-- ✓ Phase 3 — Required Architectural Amendments (RC-1 through RC-4 applied)
-- ✓ Phase 4 — Final Design Council Review (APPROVED)
+- ✓ Phase 2 — Architecture Review (APPROVED WITH CLARIFICATIONS)
+- ✓ Phase 3 — Required Architectural Amendments (N/A)
+- ✓ Phase 4 — Final Design Council Review (APPROVED WITH CLARIFICATIONS)
 - ✓ Phase 5 — Approval Integration
 - ⏳ Phase 6 — Git Checkpoint Preparation (prepared, NOT executed)
 
-Chapter 46 location: after Chapter 45 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
-Section: **XLIII — Realtor Platform**  
+Chapter 47 location: after Chapter 46 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
+Section: **XLIV — Publication Participation**  
 Status: **APPROVED**
 
 Pending user action: Git commit. Suggested message:
 
 ```
-approve chapter 46 realtor platform experience
+approve chapter 47 listing publication and moderation participation experience
 ```
 
 ```
@@ -80,7 +81,8 @@ Settled Tenancy ✓ COMPLETE
 ↓
 Realtor Platform ← IN PROGRESS
   Ch 46 — Realtor Platform Experience ✓ APPROVED (macro-domain foundation)
-  Ch 47+ — specialized dimensions ← NEXT
+  Ch 47 — Listing Publication and Moderation Participation Experience ✓ APPROVED (first specialized dimension)
+  Ch 48+ — remaining specialized dimensions ← NEXT (order per Design Council)
 ↓
 Admin Platform and governance domains (forward — per MASTER_ROADMAP)
 ```
@@ -89,7 +91,79 @@ Admin Platform and governance domains (forward — per MASTER_ROADMAP)
 
 ## LATEST APPROVED CHAPTER
 
-**Chapter 46 — Realtor Platform Experience** (Section XLIII)
+**Chapter 47 — Listing Publication and Moderation Participation Experience** (Section XLIV)
+
+Architectural role:
+- **First specialized dimension** within the Realtor Platform macro-domain after Chapter 46 foundation
+- Governs realtor's **architectural relationship with Publication Integrity** inside the marketplace
+- Consumes Chapter 46 macro-domain foundations without redefinition
+- Consumes Chapter 19 Listing Lifecycle (sole authority — not recreated or extended)
+- Consumes Chapter 20 trust and moderation meaning (not redefined)
+- Mandatory separation from Admin Platform moderation execution
+
+Key concepts introduced in Chapter 47:
+- Publication Integrity (central concept — macro-domain architectural invariant)
+- Publication Participation (ongoing relationship — continuous, not event-based)
+- Publication Participation Environment
+- Publication Participation Awareness
+- Publication Participation Boundaries
+- Publication Boundary Clarity
+
+Secondary concepts:
+- Publication Participation Integrity (parallel to Realtor Platform Integrity and prior integrity lineage)
+- Moderation Participation (consequence of Publication Integrity — not primary concept)
+
+Platform posture:
+- **The platform never self-approves marketplace publication**
+- **The platform never operates the realtor's professional business** (inherited from Ch 46)
+
+Design Council clarifications applied:
+- **C-1:** Publication Integrity stated as architectural invariant of Realtor Platform macro-domain — strengthens Ch 46 relationship without redefinition
+- **C-2:** Publication Participation exists because Publication Integrity is continuous — ongoing relationship, not discrete action
+- **C-3:** Chapter 47 establishes architectural foundation for remaining specialized Realtor Platform chapters — no forward enumeration or order prescription
+
+Extends (does not replace):
+- Realtor Platform Experience (Chapter 46) — parent macro-domain foundation
+- Realtor Workspace Experience (Chapter 19) — Listing Lifecycle authority consumed
+- Trust, Verification & Moderation Experience (Chapter 20) — moderation meaning consumed
+- Realtor Profile Experience (Chapter 18) — identity presence coherence
+
+--------------------------------------------------
+
+## DESIGN COUNCIL DECISION — CHAPTER 47
+
+**Status:** APPROVED WITH CLARIFICATIONS  
+**Governance reference:** Chapter 47 Final Design Council Review (Approval)
+
+### Approved architectural conclusions
+
+1. Chapter 47 is the **first specialized dimension** within the Realtor Platform macro-domain.
+2. **Publication Integrity** is the central architectural concept — macro-domain invariant.
+3. **Moderation Participation** is a consequence of Publication Integrity — not the primary concept.
+4. **Publication Participation** is continuous and ongoing — not a discrete publish action.
+5. **Listing Lifecycle** (Ch 19) / **Publication Participation** (Ch 47) / **Realtor Professional Lifecycle** (Ch 46) / **Admin moderation authority** remain distinct — must never be merged.
+6. **The platform never self-approves marketplace publication** — specialization of Ch 46 posture.
+7. Chapter 47 establishes **architectural foundation for remaining specialized Realtor Platform chapters** — without prescribing forward order.
+
+### Required amendments
+
+- N/A — clarifications only (C-1 through C-3 applied)
+
+### Realtor Platform block status
+
+- Chapters 46–47 approved — foundation + first specialized dimension
+- Remaining specialized dimensions forward per Ch 46 §13.3 (Design Council governs order)
+- Next step: **Pre-Authoring Analysis for next specialized dimension** — when authorized
+
+--------------------------------------------------
+
+## PRIOR MILESTONE — CHAPTER 46 (Realtor Platform Foundation)
+
+**Chapter 46 — Realtor Platform Experience** remains approved as macro-domain foundation. See DESIGN COUNCIL DECISION — CHAPTER 46 below for full record.
+
+--------------------------------------------------
+
+## LATEST APPROVED CHAPTER (PRIOR) — CHAPTER 46
 
 Architectural role:
 - **Macro-domain foundation** opening the Realtor Platform block after Settled Tenancy completion
@@ -119,8 +193,8 @@ Required amendments integrated (RC-1 through RC-4):
 - **RC-3:** Professional Continuity macro-domain scope only — Ch 19 operational continuity authoritative
 - **RC-4:** Deferred registry non-sequential, non-exhaustive — Design Council governs block completion
 
-Deferred specialized dimensions (Ch 46 §13.3 — placeholders only):
-- Listing publication and moderation participation experience
+Deferred specialized dimensions (Ch 46 §13.3 — remaining forward per Design Council):
+- ~~Listing publication and moderation participation experience~~ — **Chapter 47 APPROVED**
 - Professional verification journey experience
 - Inquiry stewardship experience
 - Professional activation experience
@@ -155,8 +229,8 @@ Extends (does not replace):
 
 ### Realtor Platform block status
 
-- Chapter 46 completes **macro-domain foundation** only — specialized dimensions forward (Ch 47+)
-- Next step: **Chapter 47 Pre-Authoring Analysis** — do not start Phase 1 without Design Council authorization
+- Chapter 46 completes **macro-domain foundation** — Ch 47 establishes first specialized dimension (approved)
+- Remaining specialized dimensions forward per Ch 46 §13.3 (Design Council governs order)
 
 --------------------------------------------------
 
@@ -262,11 +336,11 @@ Extends (does not replace):
 
 Current phase: **Phase 6 — Git Checkpoint Preparation**
 
-Next chapter: **Chapter 47 — not yet started**
+Next chapter: **Next specialized Realtor Platform dimension — not yet started**
 
-Next expected step: **Chapter 47 Pre-Authoring Analysis** (when authorized) — then Phase 6 Git Checkpoint for Chapter 46 if not yet committed
+Next expected step: **Pre-Authoring Analysis for next specialized dimension** (when authorized by Design Council) — then Phase 6 Git Checkpoint for Chapter 47 if not yet committed
 
-Do NOT start Chapter 47 Phase 1 Authoring without explicit Design Council authorization.
+Do NOT start next chapter Phase 1 Authoring without explicit Design Council authorization.
 
 Standard chapter workflow:
 1. Pre-Authoring Analysis (Design Council approval required before authoring)
@@ -280,7 +354,7 @@ Standard chapter workflow:
 Do NOT skip phases. Do NOT approve without explicit Design Council decision.  
 Do NOT commit without explicit user request.
 
-Repository status: **Chapter 46 approval integration complete** — uncommitted changes pending user commit
+Repository status: **Chapter 47 approval integration complete** — uncommitted changes pending user commit
 
 --------------------------------------------------
 
@@ -407,6 +481,14 @@ From Chapter 46:
 - Realtor Platform Boundaries
 - Realtor Platform Boundary Clarity
 
+From Chapter 47:
+- Publication Integrity
+- Publication Participation
+- Publication Participation Environment
+- Publication Participation Awareness
+- Publication Participation Boundaries
+- Publication Boundary Clarity
+
 Established vocabulary (reuse across chapters):
 - Housing Journey (Ch 23 — user journey; do not merge with Tenancy Lifecycle)
 - Preview Integrity
@@ -445,6 +527,10 @@ Secondary from Chapter 46:
 - Realtor Platform Integrity
 - Professional Continuity
 
+Secondary from Chapter 47:
+- Publication Participation Integrity
+- Moderation Participation (consequence concept — not primary)
+
 ### Concept separation (mandatory)
 
 | Concept | Chapter | Phase |
@@ -456,7 +542,10 @@ Secondary from Chapter 46:
 | Maintenance and Repair Context | 43 | Active Tenancy — physical condition dimension |
 | Tenancy Dispute Context | 44 | Active Tenancy — conflict and escalation dimension |
 | Tenancy Conclusion | 45 | Active Tenancy — closure dimension |
-| Realtor Professional Lifecycle | 46 | Supply-side professional marketplace participation |
+| Realtor Professional Lifecycle | 46 | Supply-side professional marketplace participation — foundation |
+| Listing Lifecycle | 19 | Workspace operational listing states — sole authority |
+| Publication Participation | 47 | Realtor relationship with Publication Integrity — specialized dimension |
+| Publication Integrity | 47 | Macro-domain invariant — continuous governed publication truth |
 
 Never merge these concepts.
 
@@ -482,11 +571,12 @@ Settled Tenancy block (**COMPLETE — Ch 41–45 approved**):
 - Ch 41: Settled Tenancy foundation — Tenancy Lifecycle, marketplace posture, platform never operates settled tenancy
 - Ch 42–45: Specialized dimensions — rent, maintenance, dispute, conclusion
 
-Realtor Platform block (**IN PROGRESS — Ch 46 foundation approved**, Ch 47+ forward):
-- Ch 18: Antecedent public identity foundation — consumed by Ch 46
-- Ch 19: Antecedent professional operations foundation — consumed by Ch 46
+Realtor Platform block (**IN PROGRESS — Ch 46 foundation + Ch 47 first specialized dimension approved**):
+- Ch 18: Antecedent public identity foundation — consumed by Ch 46–47
+- Ch 19: Antecedent professional operations foundation — Listing Lifecycle sole authority
 - Ch 46: Realtor Platform macro-domain foundation — Realtor Professional Lifecycle, platform never operates realtor professional business, never self-approves publication
-- Ch 47+: Specialized dimensions per Ch 46 §13.3 deferral — placeholders only
+- Ch 47: First specialized dimension — Publication Integrity, Publication Participation, moderation participation as consequence
+- Ch 48+: Remaining specialized dimensions per Ch 46 §13.3 deferral — order per Design Council
 
 Verification vs platform trust (Ch 20):
 - Ch 20: what Rento attests — platform trust contract
@@ -502,7 +592,9 @@ Verification vs platform trust (Ch 20):
 - Ch 43: how maintenance and repair context experience is governed — Maintenance and Repair Context, maintenance boundaries
 - Ch 44: how dispute and escalation context experience is governed — Tenancy Dispute Context, dispute boundaries
 - Ch 45: how tenancy conclusion experience is governed — Tenancy Conclusion, conclusion boundaries, Trust Continuity at Tenancy Conclusion
-- Verification ≠ moderation ≠ financial qualification ≠ rent collection ≠ maintenance execution ≠ dispute adjudication ≠ move-out execution ≠ settled tenancy operations
+- Ch 46: how realtor platform foundation is governed — Realtor Professional Lifecycle, marketplace boundaries, never operates realtor business
+- Ch 47: how publication integrity participation is governed — Publication Integrity, Publication Participation, publication boundaries, never self-approves publication
+- Verification ≠ moderation ≠ financial qualification ≠ rent collection ≠ maintenance execution ≠ dispute adjudication ≠ move-out execution ≠ settled tenancy operations ≠ publication self-approval
 
 Housing Journey vs Tenancy Lifecycle vs specialized dimensions:
 - Housing Journey (Ch 23): search → decision → execution readiness
@@ -549,6 +641,16 @@ Tenancy conclusion principles (Ch 45 — approved):
 - Attend / defer attention / conclude closure context — dignified postures
 - Chapter 44 remains authoritative for exceptional, disputed, unresolved, or escalated situations
 
+Publication participation principles (Ch 47 — approved):
+- Publication Integrity first — moderation participation is consequence, not center
+- Participation over execution — realtor participates; admin executes governance
+- Continuity over event fixation — integrity is ongoing, not discrete publish action
+- Boundaries over approval theater — no self-approval, no guaranteed-publication illusions
+- Listing Lifecycle separation — Ch 19 operational authority preserved
+- The platform never self-approves marketplace publication
+- Orient / defer attention / conclude publication context — dignified postures
+- Status-resilient — principles valid even if publication states evolve
+
 Design standard scope:
 - Principles only — no implementation leakage in chapter content
 - No frontend/backend/API/database/CDN/upload pipeline specs in chapters
@@ -570,7 +672,7 @@ aa65637 approve chapter 45 tenancy conclusion experience
 Pending Git checkpoint:
 
 ```
-Chapter 46 — Approval Integration complete
+Chapter 47 — Approval Integration complete
 ```
 
 Uncommitted changes:
@@ -581,14 +683,14 @@ M docs/design/MASTER_ROADMAP.md
 M docs/design/CURSOR_HANDOFF.md
 ```
 
-Includes Chapter 46 Phase 5 approval integration — uncommitted.
+Includes Chapter 47 Phase 5 approval integration — uncommitted.
 
 No commit yet — awaiting user command.
 
-Suggested commit message for Chapter 46:
+Suggested commit message for Chapter 47:
 
 ```
-approve chapter 46 realtor platform experience
+approve chapter 47 listing publication and moderation participation experience
 ```
 
 --------------------------------------------------
@@ -597,23 +699,28 @@ approve chapter 46 realtor platform experience
 
 Primary:
 
-- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~43,350+ lines)
+- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~44,000+ lines)
 
-Chapter 46 location in document:
-- After Chapter 45 — `## Chapter 46 — Realtor Platform Experience`
-- End of document — End of Chapter 46
+Chapter 47 location in document:
+- After Chapter 46 — `## Chapter 47 — Listing Publication and Moderation Participation Experience`
+- End of document — End of Chapter 47
 
 --------------------------------------------------
 
 ## NEXT CHAPTER
 
-**Chapter 47 — not yet started**
+**Next specialized Realtor Platform dimension — not yet started**
 
-Current macro-domain: **Realtor Platform** (Ch 46 foundation approved)
+Current macro-domain: **Realtor Platform** (Ch 46 foundation + Ch 47 first specialized dimension approved)
 
-Next expected step: **Chapter 47 Pre-Authoring Analysis** (when authorized)
+Remaining deferred dimensions (Ch 46 §13.3 — order per Design Council):
+- Professional verification journey experience
+- Inquiry stewardship experience
+- Professional activation experience
 
-Do NOT start Chapter 47 Phase 1 Authoring without explicit Design Council authorization.
+Next expected step: **Pre-Authoring Analysis for next specialized dimension** (when authorized)
+
+Do NOT start next chapter Phase 1 Authoring without explicit Design Council authorization.
 
 --------------------------------------------------
 
@@ -623,28 +730,29 @@ Do NOT start Chapter 47 Phase 1 Authoring without explicit Design Council author
 - Follow chapter workflow including Pre-Authoring Analysis for future chapters
 - Preserve approved vocabulary
 - Keep chapters principles-only (no implementation leakage)
-- Match approval block format of Chapters 30–46 for future chapters
+- Match approval block format of Chapters 30–47 for future chapters
 - Update TOC and Version History on approval integration
 - Commit only when user explicitly requests
 - Explain in Russian; code/identifiers/commits in English
-- Maintain dimension separation across Ch 35, 40, 41, 42, 43, 44, 45, 46
+- Maintain dimension separation across Ch 35, 40, 41, 42, 43, 44, 45, 46, 47
 
 **DO NOT:**
 - Implement product features in code during design standard work
-- Modify approved chapters 1–46 without explicit approval
+- Modify approved chapters 1–47 without explicit approval
 - Mark chapters APPROVED without Design Council decision
 - Create git commits without user request
 - Rename or redefine established product concepts
 - Add API/UI/CDN/database specifications to design standard chapters
 - Introduce nested Conclusion Lifecycle beneath Tenancy Lifecycle
-- Start Chapter 47 Phase 1 Authoring without Design Council authorization
+- Recreate or extend Listing Lifecycle in publication participation chapters
+- Start next chapter Phase 1 Authoring without Design Council authorization
 
 Release strategy (design standard document):
 - Per-chapter git checkpoints: YES (continue pattern)
 - Decision Experience judgment progression milestone: **COMPLETE** (Ch 31–37)
 - Housing Obligation execution trilogy milestone: **COMPLETE** (Ch 38–40)
 - Settled Tenancy block milestone: **COMPLETE** (Ch 41–45)
-- Realtor Platform block milestone: **IN PROGRESS** (Ch 46 foundation approved; Ch 47+ forward)
+- Realtor Platform block milestone: **IN PROGRESS** (Ch 46 foundation + Ch 47 first specialized dimension approved; remaining dimensions forward)
 
 --------------------------------------------------
 
@@ -668,16 +776,16 @@ See **AI Session Initialization** at the top of this document.
 
 Current active phase: **Rento Product Design Standard** (Phase 1). Future phases must not begin until this phase is completed and formally approved.
 
-Approved chapters per roadmap: **1–46**  
+Approved chapters per roadmap: **1–47**  
 Decision Experience: **COMPLETE** (judgment progression, Ch 31–37)  
 Housing Obligation: **COMPLETE** (execution trilogy, Ch 38–40)  
 Settled Tenancy: **COMPLETE** (Ch 41–45 — foundation + four specialized dimensions)  
-Realtor Platform: **IN PROGRESS** (Ch 46 foundation approved; Ch 47+ specialized dimensions forward)  
-Current chapter: **None — Ch 47 Pre-Authoring next per roadmap**  
-Next expected step: **Chapter 47 Pre-Authoring Analysis** (when authorized); Phase 6 Git Checkpoint for Chapter 46 pending user commit
+Realtor Platform: **IN PROGRESS** (Ch 46 foundation + Ch 47 first specialized dimension approved; remaining specialized dimensions forward)  
+Current chapter: **None — next specialized dimension Pre-Authoring per Design Council**  
+Next expected step: **Pre-Authoring Analysis for next specialized Realtor Platform dimension** (when authorized); Phase 6 Git Checkpoint for Chapter 47 pending user commit
 
 Governance Decision 005: Chapter 41 opens Settled Tenancy block — see MASTER_ROADMAP.  
-Governance: Chapter 46 opens Realtor Platform macro-domain — Ch 46 foundation approved.
+Governance: Chapter 46 opens Realtor Platform macro-domain; Chapter 47 establishes first specialized dimension.
 
 --------------------------------------------------
 

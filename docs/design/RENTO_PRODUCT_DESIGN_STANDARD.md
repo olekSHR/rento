@@ -88,10 +88,11 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 44 | [Tenancy Dispute and Escalation Experience](#chapter-44--tenancy-dispute-and-escalation-experience) | Dispute and Escalation | APPROVED |
 | 45 | [Tenancy Conclusion Experience](#chapter-45--tenancy-conclusion-experience) | Tenancy Conclusion | APPROVED |
 | 46 | [Realtor Platform Experience](#chapter-46--realtor-platform-experience) | Realtor Platform | APPROVED |
+| 47 | [Listing Publication and Moderation Participation Experience](#chapter-47--listing-publication-and-moderation-participation-experience) | Publication Participation | APPROVED |
 
 ### Planned (not yet authored)
 
-See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform foundation chapter.
+See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform specialized dimensions in progress.
 
 ---
 
@@ -127,6 +128,7 @@ See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform fo
 | 1.0 | 2026-07-05 | Chapter 44 — Tenancy Dispute and Escalation Experience approved and added — Established third specialized Settled Tenancy dimension for dispute and escalation context experience during Active Tenancy with rent and maintenance dimension separation and platform-never-adjudicates-disputes posture |
 | 1.0 | 2026-07-05 | Chapter 45 — Tenancy Conclusion Experience approved and added — Established terminal specialized Settled Tenancy dimension for normal and expected tenancy conclusion experience during Active Tenancy with Symmetry without inversion, Trust Continuity at Tenancy Conclusion, Lifecycle Completion Pattern, and platform-never-executes-move-out posture — Settled Tenancy macro-domain Chapters 41–45 architecturally complete |
 | 1.0 | 2026-07-06 | Chapter 46 — Realtor Platform Experience approved and added — Opened Realtor Platform macro-domain with Realtor Professional Lifecycle foundation, Chapters 18–19 antecedent layer consumption, platform-never-operates-realtor-business posture, and Housing Journey / Tenancy Lifecycle / Admin Platform separation — Status: APPROVED |
+| 1.0 | 2026-07-06 | Chapter 47 — Listing Publication and Moderation Participation Experience approved and added — Established first specialized Realtor Platform dimension with Publication Integrity as central concept, moderation participation as consequence, Listing Lifecycle separation, and platform-never-self-approves-publication posture — Status: APPROVED |
 
 ---
 
@@ -43349,3 +43351,516 @@ Consumers do not rent CRM dashboards or agency ERP portals. They rent homes — 
 ---
 
 **End of Chapter 46**
+
+
+## Chapter 47 — Listing Publication and Moderation Participation Experience
+
+**Section:** XLIV — Publication Participation  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–46; first specialized experience dimension within the Realtor Platform macro-domain after Realtor Platform Experience (Chapter 46); operationalizes Realtor Platform Boundaries (Chapter 46), Active Realtor Participation (Chapter 46), Professional Continuity (Chapter 46), Listing Lifecycle (Chapter 19 — consumed, not recreated or extended), trust and moderation meaning (Chapter 20 — consumed, not redefined), and public identity integrity (Chapter 18); defines principles only — not implementation, UI, workflows, moderation queues, permissions, APIs, databases, or engineering architecture.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **listing publication and moderation participation experience philosophy** for Rento — how the product governs the realtor's **architectural relationship with Publication Integrity inside the marketplace** while preserving marketplace truth, role boundary clarity, professional dignity, and long-term platform trust.
+
+Publication participation is not listing lifecycle management. Listing Lifecycle (Chapter 19) governs **operational listing state sequence inside Realtor Workspace** — draft through public availability and beyond. Publication participation governs **macro-domain depth on publication integrity** — how a professional's marketplace presence remains aligned with governed public truth across identity, inventory, and integrity posture.
+
+Publication participation is not realtor platform foundation. Realtor Platform Experience (Chapter 46) governs **the opening architectural foundation** of the Realtor Platform macro-domain — Realtor Professional Lifecycle, marketplace posture, and cross-dimensional boundaries for all supply-side professional experience. Publication participation governs **one specialized dimension** within that foundation: **the realtor's ongoing relationship with Publication Integrity during Active Realtor Participation**.
+
+Publication participation is not trust philosophy alone. Trust, Verification & Moderation Experience (Chapter 20) governs **what trust, verification, and moderation mean across all roles**. Publication participation **consumes** Chapter 20 on realtor surfaces — it does **not** redefine trust attestation, verification presentation, or moderation communication meaning.
+
+Publication participation is not admin operations. Admin Platform (forward per MASTER_ROADMAP) governs **moderation decision execution, approvals, and role management**. Publication participation governs **realtor-facing participation context** — orientation and boundary clarity surrounding publication integrity, not adjudication execution.
+
+Publication participation is not CRM, inquiry brokerage, or agency operations. Rento remains a **marketplace platform** — it supports honest professional presence within governed publication integrity. It does **not** become the realtor's client pipeline manager, conversion optimizer, or business operating system.
+
+**The platform never self-approves marketplace publication.** **The platform never operates the realtor's professional business.** Publication participation specializes these Chapter 46 postures for the publication integrity dimension — without impersonating approval authority or operational back-office.
+
+Where Chapter 46 opens the Realtor Platform macro-domain and defers publication participation depth beyond workspace awareness, this chapter **specializes publication participation** — the first deferred dimension from Chapter 46 §13.3 — without redefining Realtor Professional Lifecycle, Active Realtor Participation, Realtor Platform Boundaries, Professional Continuity, Listing Lifecycle, or any other approved official concept.
+
+The product must help stakeholders answer five publication participation questions:
+
+1. **What does Publication Integrity require of a realtor's professional presence on Rento — beyond operational listing management?**  
+2. **What does Rento support versus what admin governance and external process must own to preserve publication integrity?**  
+3. **How does publication participation remain distinct from Listing Lifecycle (Chapter 19), Realtor Professional Lifecycle (Chapter 46), and Admin moderation authority (forward)?**  
+4. **How does participation remain valid even as publication states evolve over time?**  
+5. **Can realtors orient to, defer attention from, or conclude publication context with dignity — without self-approval theater, moderation obsession, or CRM creep?**
+
+This chapter governs publication participation as the **first specialized experience dimension within the Realtor Platform macro-domain**. It does **not** specify listing APIs, permission matrices, moderation consoles, or engineering architecture.
+
+**Relationship to prior chapters:** **Realtor Platform Boundaries** (Chapter 46) and **Realtor Platform Boundary Clarity** (Chapter 46) govern the parent scope within which publication participation operates. **Listing Lifecycle** (Chapter 19) governs operational listing states — publication participation **consumes** listing lifecycle without recreating or extending it. **Professional Continuity** (Chapter 46) governs persistence across publication attention cycles at macro-domain level. This chapter defines **Publication Participation Environment**, **Publication Integrity**, **Publication Participation**, **Publication Participation Awareness**, **Publication Participation Boundaries**, **Publication Boundary Clarity**, and **Publication Participation Integrity**.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Publication Integrity first** | Professional participation is governed as relationship to publication truth — not a moderation workflow |
+| **Participation over execution** | Realtor participates in integrity; admin executes governance decisions |
+| **Boundaries over approval theater** | No implied self-approval, no guaranteed-publication illusions |
+| **Continuity over event fixation** | Publication integrity is ongoing — participation is not a discrete publish action |
+| **Marketplace over back-office** | Publication participation is not CRM, agency ERP, or business operations platform |
+| **Separation over conflation** | Distinct from Listing Lifecycle (Ch 19), Realtor Professional Lifecycle (Ch 46), Admin Platform (forward) |
+| **Status resilience** | Principles remain true even if publication states change in future |
+| **Dignity under governance** | Governance communication is calm, non-punitive, non-humiliating |
+| **Public-private coherence** | Public truth and workspace truth align without split reality |
+| **Honest uncertainty** | Where visibility is not certain, language must not simulate certainty |
+| **Mobile orientation first** | Participation clarity is reachable at glance on mobile |
+| **Publication Participation Integrity goal** | Every publication participation outcome honors honest boundaries and marketplace posture |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A listing lifecycle chapter, state machine, or operational workflow guide (Chapter 19 remains authoritative)  
+- A moderation execution chapter, approvals guide, queue design, or governance console spec (Admin Platform forward)  
+- A trust semantics chapter redefining what verification or moderation mean (Chapter 20 remains authoritative)  
+- A UI, screen, or interaction specification; no frontend, backend, API, database, or permissions content  
+- A chapter built around one publication state — statuses may appear only as examples  
+- A "how to get approved" playbook or growth funnel for publication volume  
+- A replacement for Chapters 18, 19, 20, or 46  
+
+If the question is *how moderation is executed* — this chapter does not answer it. If the question is *how realtor publication participation must preserve Publication Integrity with boundary clarity* — this chapter does.
+
+Publication participation is **not** moderation execution, approval authority, or operational review process. Publication participation **is** responsible product-supported experience surrounding **the realtor's ongoing architectural relationship with marketplace publication integrity** — with honest boundaries and dignity whether professionals orient, defer attention, or conclude publication context.
+
+---
+
+## 2. Why This Chapter Exists
+
+Chapter 46 established **Realtor Professional Lifecycle** as the complete sequence of professional states through which a realtor participates in the Rento marketplace — including role activation context, public identity maintenance, owned inventory stewardship, **publication integrity awareness**, moderation participation context, and professional obligation continuity. Chapter 46 supplies foundation and boundaries; it **does not** define specialized experience depth for publication participation beyond workspace awareness.
+
+Chapter 19 governs **listing lifecycle** — operational listing states and day-to-day workspace stewardship. Chapter 19 supplies operational depth; it **does not** define macro-domain publication integrity architecture — the realtor's broader professional presence relationship with governed marketplace truth.
+
+Without this chapter, Realtor Platform lacks **publication integrity experience architecture** during Active Realtor Participation. Product teams would lack authoritative principles for how realtors participate in publication integrity — risking self-approval theater, moderation obsession, Listing Lifecycle conflation, or absorption of admin governance scope.
+
+This chapter exists because **marketplace supply integrity requires governed publication truth** — consumers assume public availability is honest, not self-certified — and realtors deserve **dignified participation orientation** to that reality without a platform that impersonates approval authority or reduces professional presence to listing management alone.
+
+This chapter is **not** another workspace operations chapter, **not** Admin Platform preview, and **not** a CRM or inquiry conversion architecture chapter.
+
+---
+
+## 3. Concept Separation — Mandatory
+
+Four concepts govern distinct scopes and must **never** be merged:
+
+| Concept | Governing chapter | Primary question | Must not become |
+|---------|-------------------|------------------|-----------------|
+| **Listing Lifecycle** | Chapter 19 | How does the realtor operate listings day to day in workspace? | Publication participation architecture |
+| **Publication Participation** | **This chapter** | How does the realtor maintain architectural relationship with Publication Integrity? | Listing lifecycle or admin moderation process |
+| **Realtor Professional Lifecycle** | Chapter 46 | How does supply-side professional marketplace participation arc operate? | A superset replacing Ch 19 or Ch 47 |
+| **Admin moderation authority** | Admin Platform (forward) | How does the platform execute governance decisions? | Realtor participation experience layer |
+
+**Listing Lifecycle** ends at operational workspace depth for judgment purposes. **Publication Participation** operates **within** Active Realtor Participation as one specialized dimension of Realtor Professional Lifecycle — not as a nested lifecycle beneath Listing Lifecycle, not as Listing Lifecycle extended into macro-domain, and not as admin moderation renamed for realtors.
+
+```
+Listing Lifecycle (Ch 19)              →  Operational listing states in workspace  →  Antecedent operations layer
+        ↓ consumed, not recreated
+Publication Participation (this ch.)   →  Relationship with Publication Integrity  →  Specialized dimension
+        ↓ within
+Realtor Professional Lifecycle (Ch 46) →  Complete professional participation arc   →  Macro-domain foundation
+```
+
+---
+
+## 4. Publication Integrity
+
+**Publication Integrity** is the central official product concept in the RENTO PRODUCT DESIGN STANDARD for this chapter.
+
+Publication Integrity is the **honesty, legibility, and governed truth of what the marketplace publicly presents as publishable supply** — such that consumers can trust that public availability is marketplace-governed, not self-certified or simulated.
+
+**Publication Integrity is an architectural invariant of the Realtor Platform macro-domain.** It is not optional surface polish, not a moderation feature, and not a workspace convenience. Every specialized dimension within the Realtor Platform block must honor Publication Integrity as a governing constraint — without redefining Chapter 46 macro-domain foundations. Chapter 46 establishes marketplace posture and professional boundaries; this chapter **specializes** the publication integrity invariant into governed participation experience.
+
+Publication Integrity is expressed through multiple consumed layers (without redefining their authority):
+
+| Layer | Governing chapter | Integrity contribution |
+|-------|-------------------|------------------------|
+| **Identity integrity** | Chapter 18 | Who stands behind supply is knowable and consistent |
+| **Operational integrity** | Chapter 19 | Listings are stewarded responsibly in workspace |
+| **Trust integrity meaning** | Chapter 20 | What the platform attests; how governance signals communicate |
+| **Macro-domain boundary integrity** | Chapter 46 | Platform never operates realtor business; never self-approves publication |
+
+### 4.1 What Publication Integrity Requires (Principle-Level)
+
+Publication Integrity requires that the professional experience:
+
+- Makes **public visibility truth** legible without implying realtor approval authority  
+- Preserves **public-private coherence** — no split truth between workspace and public surfaces  
+- Communicates **governance constraints** calmly, without humiliation  
+- Avoids **approval theater** — no action that implies guaranteed public presence  
+- Avoids **moderation obsession** — moderation is consequence of integrity, not the product center  
+- Remains **continuous** — integrity is an ongoing marketplace obligation, not a one-time publish event  
+
+### 4.2 Publication Integrity Is Continuous — Not Event-Based
+
+Publication Integrity does not begin or end at a single workspace action. It persists across sessions, inventory changes, identity updates, and governance communications for the duration of Active Realtor Participation. Product must govern **ongoing integrity posture** — not only moment-of-submission experience.
+
+---
+
+## 5. Publication Participation
+
+**Publication Participation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Publication Participation is the realtor's **architectural relationship with Publication Integrity inside the marketplace** — the ongoing professional orientation to governed publication truth across identity presence, inventory presence, and integrity posture.
+
+**Participation exists because Publication Integrity is continuous rather than event-based.** Publication Participation represents an **ongoing architectural relationship** with marketplace publication integrity — not a discrete action, not a single submission moment, and not an approval transaction. The realtor participates in integrity across the duration of professional marketplace presence — aligning public truth, operational truth, and governance meaning without simulating authority.
+
+Publication Participation means the professional can:
+
+- Orient to what Publication Integrity expects of their marketplace presence  
+- Understand what the platform can and cannot establish about public visibility  
+- Maintain coherent truth across identity and inventory without simulating governance authority  
+- Engage with integrity signals and governance communications with dignity across time  
+
+Publication Participation does **not** mean:
+
+- Moderation execution or decision authority  
+- Approval actions or bypass of governance  
+- Operational review processes or queue mechanics  
+- A performance game to optimize for approval  
+- A discrete publish event that completes participation  
+
+Although listing publication is the **primary manifestation** of Publication Integrity, participation scope is **broader than listings alone** — it governs professional presence coherence across public identity, governed inventory, and marketplace representational truth.
+
+---
+
+## 6. Publication Participation Environment
+
+**Publication Participation Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Publication Participation Environment is the **cognitive and informational conditions under which a realtor orients to, reflects on, and engages with Publication Integrity in their professional marketplace presence** — not the screen layout, but the **quality of the participation space** Rento provides within publication participation scope.
+
+A sound Publication Participation Environment is:
+
+- **Boundary-legible** — clear about what is governed versus outside platform scope  
+- **Coherent** — public and private truth align  
+- **Calm** — no panic cycles, no punitive tone  
+- **Status-resilient** — communicates reality without binding architecture to one state taxonomy  
+- **Dignified** — governance participation does not humiliate professionals  
+- **Marketplace-honest** — never implies the platform runs the realtor's business  
+- **Continuity-preserving** — integrity posture persists across interruption and return  
+
+Publication Participation Environment is reusable across publication participation attention postures, boundary communication, and forward Realtor Platform specialized dimensions where publication integrity remains relevant.
+
+---
+
+## 7. Publication Participation Awareness
+
+**Publication Participation Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Publication Participation Awareness is the **realtor's oriented understanding of Publication Integrity expectations, current integrity posture, and governance limits** — without false certainty about outcomes, without moderation obsession, and without conflating operational listing actions with guaranteed public visibility.
+
+Publication Participation Awareness requires:
+
+- **Integrity expectation clarity** — what governed publication truth requires of professional presence  
+- **Governance limit clarity** — what admin process owns versus what participation context establishes  
+- **Outcome uncertainty honesty** — visibility is governed; participation does not certify approval  
+- **Continuous orientation** — awareness persists across sessions, not only at submission moments  
+
+Publication Participation Awareness is distinct from **listing lifecycle awareness** (Chapter 19): operational state knowledge does not substitute for publication integrity orientation at macro-domain depth.
+
+---
+
+## 8. Publication Participation Boundaries
+
+**Publication Participation Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Publication Participation Boundaries define **what engaging with Publication Integrity through Rento can and cannot establish** — the scope beyond which realtor, admin governance, and external professional process must carry responsibility.
+
+Publication Participation Boundaries **extend** Realtor Platform Boundaries (Chapter 46) and Listing Lifecycle operational limits (Chapter 19) — each prior limit becomes a publication participation limit honestly stated.
+
+Rento publication participation experience **can** support:
+
+- Orientation to Publication Integrity expectations for professional presence  
+- Clear communication that public visibility is governed — without promising outcomes  
+- Coherent propagation of public truth from operational truth — without duplicating authoritative sources  
+- Calm explanation of what preserves integrity — without approval-gaming guidance  
+- Dignified participation in governance communications — meaning from Chapter 20  
+- Continuous integrity posture across Active Realtor Participation  
+
+Rento publication participation experience **cannot** substitute for:
+
+- Realtor authority to approve, guarantee, or certify publication outcomes  
+- Moderation decision execution, approvals, or role management (Admin Platform)  
+- A permanent fixed taxonomy of publication states as architectural law  
+- CRM, inquiry pipeline, or conversion optimization as publication prerequisite  
+- Agency hierarchy, commission, or transaction administration  
+- Consumer Housing Journey judgment or Tenancy Lifecycle administration  
+
+**The platform never self-approves marketplace publication.** Publication Participation Boundaries are reusable across forward Realtor Platform specialized dimensions where publication integrity intersects.
+
+---
+
+## 9. Publication Boundary Clarity
+
+**Publication Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Publication Boundary Clarity is the **shared legibility of what Rento, realtor, admin governance, and external professional process each reasonably own during publication participation** — without simulated approval authority, moderation obsession, CRM overclaim, or admin capability leakage.
+
+Publication Boundary Clarity requires:
+
+- **Rento scope honesty** — participation orients; it does not execute governance  
+- **Professional responsibility honesty** — realtor stewards truth; does not self-certify public availability  
+- **Governance separation honesty** — admin executes; realtor participates  
+- **Visibility uncertainty honesty** — governed states communicated without false certainty  
+- **No approval theater** — operational actions never imply guaranteed publication  
+
+Publication Boundary Clarity is distinct from **Realtor Platform Boundary Clarity** (Chapter 46): macro-domain clarity governs all professional participation; publication boundary clarity **specializes** integrity and participation scope within that foundation.
+
+---
+
+## 10. Publication Participation Integrity
+
+**Publication Participation Integrity** is the **honesty of the publication participation experience itself** — no simulated self-approval, no hidden publication boundaries, no moderation obsession as product center, no punitive governance tone, no public-private split truth, no pressure to treat publication as conversion funnel.
+
+Publication Participation Integrity parallels **Realtor Platform Integrity** (Chapter 46) and the integrity lineage from Chapters 33–45 — specialized for **publication integrity participation**, not consumer judgment gates or admin governance execution.
+
+---
+
+## 11. Moderation Participation as Consequence — Not Center
+
+**Moderation Participation** is the realtor's governed experience of **integrity-related governance signals** — a **consequence** of Publication Integrity, never the primary concept of this chapter.
+
+Moderation exists because Publication Integrity requires marketplace governance. The realtor participates as an affected professional actor — receiving governed signals and maintaining integrity posture — without execution authority.
+
+This chapter does **not** redefine moderation meaning. It consumes Chapter 20:
+
+- Moderation communication must be understandable, factual, calm  
+- Absence of approval is communicated honestly  
+- The platform avoids punitive or humiliating tone  
+- Trust signals must not be marketing  
+
+Moderation Participation governs **how realtors experience governance context** — not how moderation is executed. Admin Platform (forward) owns execution.
+
+### 11.1 Statuses as Examples Only — Non-Foundational
+
+Publication states (for example, under review, changes required, publicly available) may appear as **illustrative examples only**. This chapter must remain valid if publication states are introduced, renamed, regrouped, or replaced in future product evolution. The architecture governs **relationships and boundaries** — not a fixed state taxonomy.
+
+---
+
+## 12. Participation Across Professional Presence — Broader Than Listings
+
+Publication Integrity manifests most visibly in listing visibility — but participation scope is **broader than listings alone**.
+
+Publication participation governs **professional presence coherence** across:
+
+- **Identity presence** (Chapter 18) — public identity must not imply publication certainty beyond governance  
+- **Inventory presence** (Chapter 19) — supply presented as governed truth, not self-published advertising  
+- **Integrity posture** (Chapter 46) — professional accountability within marketplace boundaries  
+
+A realtor's Publication Participation is therefore an **ongoing professional presence relationship** — not reducible to listing management tasks alone.
+
+### 12.1 Public-Private Coherence Requirement
+
+Publication Participation Integrity requires **profile truth and workspace truth alignment** (Chapter 46 §4.3, §14.2) specialized for publication integrity — public presentation and operational state must not diverge in ways that harm consumer trust or simulate governed availability.
+
+### 12.2 Professional Continuity Inheritance
+
+**Professional Continuity** (Chapter 46) governs macro-domain persistence — publication participation **inherits** continuity expectations for integrity posture across sessions without redefining Chapter 19 operational context preservation mechanics.
+
+---
+
+## 13. Relationship to Prior Chapters
+
+### 13.1 Chapter 46 — Realtor Platform Experience (Parent Foundation)
+
+Chapter 46 defines Realtor Professional Lifecycle, Active Realtor Participation, Realtor Platform Boundaries, and Professional Continuity. This chapter **consumes** all Chapter 46 official concepts — it does **not** amend, extend definitions of, or replace them.
+
+Publication Integrity as macro-domain invariant **strengthens** the relationship with Chapter 46 — it specializes Chapter 46 marketplace posture and never-self-approves-publication principle into governed participation experience without redefining macro-domain foundations.
+
+### 13.2 Chapter 19 — Realtor Workspace Experience (Listing Lifecycle Authority)
+
+Chapter 19 remains **sole authority** for Listing Lifecycle and workspace operational lifecycle. This chapter **does not** recreate, extend, or subsume Listing Lifecycle.
+
+| Layer | Chapter 19 | This chapter |
+|-------|------------|--------------|
+| **Scope** | Operational listing states and workspace stewardship | Publication integrity participation at macro-domain depth |
+| **Question** | What must I do next operationally? | How do I maintain relationship with governed publication truth? |
+| **Authority** | Listing lifecycle — authoritative | Consumes listing lifecycle — not replacement |
+
+### 13.3 Chapter 20 — Trust, Verification & Moderation Experience
+
+Chapter 20 remains **sole authority** for trust attestation and moderation **meaning**. This chapter consumes moderation communication meaning on realtor surfaces — it does **not** redefine moderation decisions, verification semantics, or platform attestation scope.
+
+### 13.4 Chapter 18 — Realtor Profile Experience
+
+Chapter 18 governs public identity presentation. Publication participation requires identity presence to remain coherent with Publication Integrity — consuming Chapter 18 without redefining public identity rules.
+
+### 13.5 Admin Platform (Forward) — Separation Contract
+
+Admin Platform owns moderation execution, approvals, and role management. Publication participation owns **realtor-facing participation context only** — permanent separation without capability leakage.
+
+---
+
+## 14. Professional Attention Postures — Publication Participation
+
+Within Active Realtor Participation (Chapter 46), publication participation supports dignified attention postures — parallel in dignity to Chapter 46 §12, specialized for publication integrity scope:
+
+### 14.1 Orient
+
+Realtor **engages publication integrity context** with Publication Boundary Clarity sufficient. Orient does **not** mean Rento certifies approval, guarantees public visibility, or substitutes admin governance.
+
+### 14.2 Defer Attention
+
+Defer preserves Active Realtor Participation and integrity reality while acknowledging **insufficient attention, clarity, or timing** for specific publication engagement — honest pacing with **Professional Continuity** preserved. Defer does **not** imply integrity abandonment or governance bypass.
+
+### 14.3 Conclude Publication Context
+
+Conclude diminishes **active publication attention posture** — when integrity orientation no longer needs macro-domain attention on Rento for the moment. Conclude does **not** imply listings automatically withdrawn, moderation bypassed, or admin actions substituted.
+
+### 14.4 Posture Reconsideration
+
+Orient, defer attention, and conclude remain available across publication participation — not irreversible traps.
+
+### 14.5 Governance State Honesty
+
+Governed visibility uncertainty remains **honestly communicated** — no simulated availability or approval theater regardless of illustrative state examples.
+
+### 14.6 No Forced Publication Engagement
+
+Exit, defer, and conclude paths always dignified — Publication Participation Integrity requires it.
+
+---
+
+## 15. Mobile & Accessibility Considerations
+
+Mobile is the **primary publication participation orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Integrity posture at glance** | Publication integrity expectations and boundaries reachable without hunt |
+| **One-handed deferral** | Defer and conclude publication attention reachable during field work |
+| **Calm return** | Resuming publication context feels continuous — not alarming |
+| **Governance state legibility** | Governed states plain-language — no coded humiliation |
+| **Public-private coherence** | Profile preview from workspace reflects actual public truth |
+| **No moderation obsession** | Mobile surfaces center integrity — not queue anxiety |
+
+Publication participation must be **inclusive** — textual equivalents for integrity posture and boundaries; plain language; calm tone without weaponized governance or publication anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 16. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Self-approval theater** | Collapses governance boundary; violates marketplace trust and domain rules |
+| **Moderation-as-product** | Makes moderation the core experience rather than consequence of Publication Integrity |
+| **State taxonomy fixation** | Ties architecture to specific states; breaks future scalability |
+| **Public-private split truth** | Damages marketplace integrity; creates consumer distrust |
+| **Punitive governance tone** | Erodes professional dignity; conflicts with Chapter 20 and calm posture |
+| **Listing lifecycle redefinition** | Violates Chapter 19 authority |
+| **Admin capability leakage** | Collapses role separation; violates Chapter 46 and forward Admin block |
+| **CRM creep** | Shifts from publication integrity into business operations scope |
+| **Publish-event fixation** | Treats participation as discrete action; violates continuous integrity architecture |
+| **Approval gaming guidance** | Converts integrity participation into conversion optimization — integrity violation |
+| **Chapter 46 rewrite** | Redefines macro-domain foundations in specialized dimension — governance violation |
+| **Chapter 20 redefinition** | Replaces trust attestation philosophy — authority violation |
+
+---
+
+## 17. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, publication participation initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Publication Integrity**, **Publication Participation**, **Publication Participation Environment**, **Publication Participation Awareness**, **Publication Participation Boundaries**, **Publication Boundary Clarity**, **Publication Participation Integrity**, and **Chapters 18–20 and 46 consumption integrity**.
+
+**Review gate:** No publication participation surface ships without checklist against all official concepts, principles, attention postures, separation requirements, and integrity requirements defined herein — plus compliance with Chapters 18, 19, 20, and 46 as authoritative upstream layers.
+
+**Forward dimensions:** Remaining Realtor Platform specialized dimensions extend publication participation foundation — this chapter supplies the publication integrity specialization within the Realtor Platform block.
+
+---
+
+## 18. Chapter Summary
+
+Publication participation converts **Realtor Platform foundation** into **honest publication integrity participation experience during Active Realtor Participation with publication boundary clarity** — the first specialized dimension within the Realtor Platform macro-domain.
+
+This chapter establishes **Publication Integrity as the central architectural concept and macro-domain invariant**; defines Publication Participation as ongoing relationship with continuous integrity (not discrete action); positions Moderation Participation as consequence not center; defines Publication Participation Environment, Publication Participation Awareness, Publication Participation Boundaries, Publication Boundary Clarity, and Publication Participation Integrity; principles of integrity first and participation over execution; mandatory separation from Listing Lifecycle (Chapter 19), Realtor Professional Lifecycle foundations (Chapter 46), trust meaning (Chapter 20), and Admin moderation authority (forward); orient, defer attention, and conclude publication context postures; platform-never-self-approves-publication posture; status-resilient architecture; participation scope broader than listings alone; and honest consumption of Chapters 18–20 and 46 without redefinition.
+
+**Chapter 47 establishes the architectural foundation for the remaining specialized Realtor Platform chapters** — without prescribing their identity, count, sequence, or block completion criteria. Design Council retains authority over forward specialized dimension order and grouping per Chapter 46 §13.3 and §13.4.
+
+**Realtor Platform flow:**
+
+Realtor Profile (Ch 18) + Realtor Workspace (Ch 19) → Realtor Platform Foundation (Ch 46) → **Publication Participation (Ch 47)** → remaining specialized dimensions (forward per Design Council)
+
+---
+
+## 19. Design Director Review
+
+**Chapter:** 47 — Listing Publication and Moderation Participation Experience  
+**Section:** XLIV — Publication Participation  
+**Review type:** Initial standard adoption
+
+### 19.1 Approval Statement
+
+- **Pre-Authoring Analysis** — APPROVED  
+- **Architecture Review** — APPROVED WITH CLARIFICATIONS  
+- **Required Architectural Amendments** — N/A  
+- **Design Council Clarifications** — Applied (Publication Integrity macro-domain invariant; continuous participation; foundation for remaining specialized chapters)  
+- **Final Design Council Review** — APPROVED WITH CLARIFICATIONS  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **publication participation experience contract** for Rento — first specialized dimension within the Realtor Platform macro-domain. All publication participation product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 19.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity, human-centered professionalism |
+| Chapter 16 — Contact & Communication Experience | Consumer contact initiation; inquiry stewardship deferred forward |
+| Chapter 18 — Realtor Profile Experience | Public identity layer — consumed for identity presence coherence |
+| Chapter 19 — Realtor Workspace Experience | Listing Lifecycle sole authority — consumed, not recreated or extended |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust and moderation meaning sole authority — consumed, not redefined |
+| Chapter 23 — Onboarding & First-Time Experience | Housing Journey parent; professional activation deferred forward |
+| Chapter 46 — Realtor Platform Experience | Parent macro-domain foundation — official concepts consumed, not redefined |
+| Admin Platform (forward) | Moderation execution, approvals, role management — mandatory separation |
+| Forward Realtor Platform chapters | Remaining specialized dimensions — forward per Design Council |
+
+### 19.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Publication participation positioned as first specialized Realtor Platform dimension — not Listing Lifecycle extension, not admin platform, not CRM  
+2. Publication Integrity remains central concept — Moderation Participation remains consequence, not center  
+3. Listing Lifecycle (Ch 19) / Publication Participation (Ch 47) / Realtor Professional Lifecycle (Ch 46) / Admin authority explicitly separated — no merge  
+4. Publication Integrity stated as macro-domain architectural invariant — without redefining Chapter 46  
+5. Publication Participation stated as continuous ongoing relationship — not discrete publish action  
+6. Platform-never-self-approves-publication principle explicit — marketplace posture preserved  
+7. Chapter 46, 19, and 20 official concepts consumed — not redefined  
+8. Status-resilience explicit — no state taxonomy as architectural foundation  
+9. Participation scope broader than listings — professional presence coherence honored  
+10. Orient, defer attention, conclude postures — not readiness proceed/defer/release  
+11. Mobile-first order explicit  
+12. No implementation leakage  
+13. Chapter 47 foundation role for remaining specialized chapters stated — without prescribing forward order  
+
+### 19.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on publication participation philosophy |
+| Head of Product Design | Realtor Platform specialized dimension parity; Ch 46 consumption integrity |
+| Senior UX Designer | Publication boundary communication, mobile rhythm, governance dignity |
+| Product Management | Marketplace posture honesty and realtor-admin boundary integrity |
+| Content Design Lead | Scope language, governance state honesty, integrity copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation; admin separation |
+| Accessibility Specialist | Non-visual publication orientation access and anxiety-sensitive design |
+
+### 19.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new publication participation experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 19.6 Design Director Closing Note
+
+Realtors do not need another platform that treats moderation like a game or publication like a self-service switch. They need a marketplace that makes governed publication truth legible — where professional presence stays coherent, where integrity is continuous rather than transactional, and where participation means honest relationship with what the marketplace can publicly stand behind. This chapter exists so Rento specializes supply-side publication integrity with the same rigor brought to tenancy dimensions — because a marketplace that governs demand without governing how supply earns public trust is incomplete.
+
+---
+
+**End of Chapter 47**
