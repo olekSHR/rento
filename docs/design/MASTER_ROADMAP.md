@@ -36,13 +36,13 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–50 |
 | **Latest approved** | Chapter 50 — Inquiry Stewardship Experience |
-| **Latest checkpoint** | Pending — Chapter 50 Approval Integration complete |
-| **Pending checkpoint** | Chapter 50 — Git checkpoint (user-managed) |
-| **Current chapter** | None — Realtor Platform Macro-domain Completion Sign-off pending per Design Council |
+| **Latest checkpoint** | `ff61ee6` — approve chapter 50 inquiry stewardship experience |
+| **Pending checkpoint** | Realtor Platform macro-domain completion sign-off (this commit) |
+| **Current chapter** | None — next Product Design Standard macro-domain per MASTER_ROADMAP remaining work |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
 | **Settled Tenancy** | **COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension) |
-| **Realtor Platform** | **IN PROGRESS** (Ch 46 foundation + Ch 47–50 specialized dimensions approved; named Ch 46 §13.3 registry closed — macro-domain completion sign-off pending) |
+| **Realtor Platform** | **COMPLETE** (Ch 46 foundation + Ch 47–50 specialized dimensions — named Ch 46 §13.3 registry closed) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Product architecture progression
@@ -63,18 +63,19 @@ Settled Tenancy (Ch 41–45) ✓ COMPLETE
     Ch 44 — Tenancy Dispute and Escalation Experience ✓ APPROVED (third specialized dimension)
     Ch 45 — Tenancy Conclusion Experience ✓ APPROVED (terminal specialized dimension)
     ↓
-Platform & governance domains (forward)
-    Realtor Platform ← IN PROGRESS
+Realtor Platform (Ch 46–50) ✓ COMPLETE
     Ch 46 — Realtor Platform Experience ✓ APPROVED (macro-domain foundation)
     Ch 47 — Listing Publication and Moderation Participation Experience ✓ APPROVED (first specialized dimension)
     Ch 48 — Professional Activation Experience ✓ APPROVED (second specialized dimension)
     Ch 49 — Professional Verification Participation Experience ✓ APPROVED (third specialized dimension)
     Ch 50 — Inquiry Stewardship Experience ✓ APPROVED (fourth specialized dimension)
-    Named Ch 46 §13.3 registry ✓ CLOSED — macro-domain completion sign-off pending per Design Council
-    Admin Platform, Design System Governance, and other forward blocks
+    ↓
+Platform & governance domains (forward)
+    Admin Platform ← NEXT (per MASTER_ROADMAP — Design Council authorization required)
+    Design System Governance, Accessibility & Internationalization, Performance Experience, Future Product Evolution
 ```
 
-**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44 establishes the **third specialized dimension** — Tenancy Dispute and Escalation Experience — governing dispute and escalation context during Active Tenancy. Chapter 45 establishes the **terminal specialized dimension** — Tenancy Conclusion Experience — governing normal and expected tenancy conclusion during Active Tenancy. **Settled Tenancy macro-domain (Chapters 41–45) is architecturally complete** for Tenancy Lifecycle specialized dimension coverage. Chapter 46 opens the **Realtor Platform macro-domain** — macro-domain foundation consuming Chapters 18–19 antecedent layers. Chapter 47 establishes the **first specialized dimension** — Listing Publication and Moderation Participation Experience — governing the realtor's architectural relationship with Publication Integrity inside the marketplace. Chapter 48 establishes the **second specialized dimension** — Professional Activation Experience — governing orientation into legitimate marketplace professional participation. Chapter 49 establishes the **third specialized dimension** — Professional Verification Participation Experience — governing participation in platform attestation of professional standing. Chapter 50 establishes the **fourth specialized dimension** — Inquiry Stewardship Experience — governing professional responsibility toward consumer inquiries beyond contact initiation. **All four named deferred dimensions from Chapter 46 §13.3 are approved** — Realtor Platform macro-domain completion sign-off remains a separate Design Council governance act per Chapter 46 §13.4. Additional specialized dimensions remain subject to Design Council scoping only.
+**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44 establishes the **third specialized dimension** — Tenancy Dispute and Escalation Experience — governing dispute and escalation context during Active Tenancy. Chapter 45 establishes the **terminal specialized dimension** — Tenancy Conclusion Experience — governing normal and expected tenancy conclusion during Active Tenancy. **Settled Tenancy macro-domain (Chapters 41–45) is architecturally complete** for Tenancy Lifecycle specialized dimension coverage. Chapter 46 opens the **Realtor Platform macro-domain** — macro-domain foundation consuming Chapters 18–19 antecedent layers. Chapter 47 establishes the **first specialized dimension** — Listing Publication and Moderation Participation Experience — governing the realtor's architectural relationship with Publication Integrity inside the marketplace. Chapter 48 establishes the **second specialized dimension** — Professional Activation Experience — governing orientation into legitimate marketplace professional participation. Chapter 49 establishes the **third specialized dimension** — Professional Verification Participation Experience — governing participation in platform attestation of professional standing. Chapter 50 establishes the **fourth specialized dimension** — Inquiry Stewardship Experience — governing professional responsibility toward consumer inquiries beyond contact initiation. **Realtor Platform macro-domain (Chapters 46–50) is architecturally complete** for named Ch 46 §13.3 specialized dimension coverage. Additional Realtor Platform specialized dimensions are not currently justified; future dimensions require a documented architectural gap and Design Council approval. Realtor Platform completion does **not** imply Product Design Standard v1.0 completion.
 
 **Concept separation (mandatory):**
 
@@ -82,7 +83,7 @@ Platform & governance domains (forward)
 |---------|-------|
 | **Housing Journey** | User journey from search through housing decision and execution readiness (Chapters 13–40) — defined in Chapter 23 |
 | **Tenancy Lifecycle** | Relationship lifecycle after occupancy begins — foundation in Chapter 41; rent lifecycle in Chapter 42; maintenance and repair context in Chapter 43; dispute and escalation context in Chapter 44; tenancy conclusion in Chapter 45 |
-| **Realtor Professional Lifecycle** | Supply-side professional marketplace participation — foundation in Chapter 46; publication participation in Chapter 47; professional activation in Chapter 48; professional verification participation in Chapter 49; inquiry stewardship in Chapter 50; macro-domain completion sign-off pending per Design Council |
+| **Realtor Professional Lifecycle** | Supply-side professional marketplace participation — foundation in Chapter 46; publication participation in Chapter 47; professional activation in Chapter 48; professional verification participation in Chapter 49; inquiry stewardship in Chapter 50 |
 
 These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience. Realtor Professional Lifecycle does not subsume Housing Journey or Tenancy Lifecycle.
 
@@ -96,8 +97,7 @@ The following chapter domains remain to be authored, reviewed, and approved:
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Realtor Platform** *(IN PROGRESS — Ch 46 foundation + Ch 47–50 specialized dimensions approved; named Ch 46 §13.3 registry closed — macro-domain completion sign-off pending per Design Council)* — realtor-facing product experience beyond Chapters 18–19 antecedent layers
-- **Admin Platform** — moderation, governance, and administrative experience
+- **Admin Platform** — moderation, governance, and administrative experience *(next forward macro-domain per MASTER_ROADMAP — Design Council authorization required)*
 - **Design System Governance** — standards enforcement, evolution, and exception policy
 - **Accessibility & Internationalization** — inclusive and multilingual product experience
 - **Performance Experience** — perceived performance as a product trust dimension
@@ -280,6 +280,25 @@ Chapter 41 Pre-Authoring Analysis — Settled Tenancy Block Opening
 6. Rento remains a marketplace platform and does **not** become a Property Management System.
 7. **Housing Journey** (user journey) and **Tenancy Lifecycle** (relationship lifecycle after occupancy begins) are distinct official concepts and must never be merged.
 8. Phase 1 Authoring of Chapter 41 may begin only after explicit Design Council authorization following this preparation phase.
+
+---
+
+## Governance Decision 006
+
+**Status:** APPROVED
+
+**Title:**  
+Realtor Platform Macro-domain Completion Sign-off
+
+**Decision:**
+
+1. Chapters 46–50 complete the **Realtor Platform macro-domain** — foundation (Ch 46) plus four specialized dimensions (Ch 47–50).
+2. All **named deferred dimensions** from Chapter 46 §13.3 are **closed** — publication participation, professional activation, professional verification participation, inquiry stewardship.
+3. **No documented architectural gap** remains inside Realtor Platform at this time.
+4. **Additional Realtor Platform specialized dimensions are not currently justified.** Future dimensions require a documented architectural gap and explicit Design Council approval.
+5. **Realtor Platform macro-domain status is COMPLETE.** This does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion.
+6. **Admin Platform** is the next forward macro-domain per MASTER_ROADMAP remaining work — Phase 0 Pre-Authoring may begin only after explicit Design Council authorization.
+7. Rento remains a marketplace platform — Realtor Platform completion does **not** change platform posture (no CRM, agency ERP, or property management for realtors).
 
 ---
 
