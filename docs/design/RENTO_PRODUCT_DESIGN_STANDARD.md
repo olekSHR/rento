@@ -90,6 +90,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 46 | [Realtor Platform Experience](#chapter-46--realtor-platform-experience) | Realtor Platform | APPROVED |
 | 47 | [Listing Publication and Moderation Participation Experience](#chapter-47--listing-publication-and-moderation-participation-experience) | Publication Participation | APPROVED |
 | 48 | [Professional Activation Experience](#chapter-48--professional-activation-experience) | Professional Activation | APPROVED |
+| 49 | [Professional Verification Participation Experience](#chapter-49--professional-verification-participation-experience) | Professional Verification | APPROVED |
 
 ### Planned (not yet authored)
 
@@ -131,6 +132,7 @@ See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform sp
 | 1.0 | 2026-07-06 | Chapter 46 — Realtor Platform Experience approved and added — Opened Realtor Platform macro-domain with Realtor Professional Lifecycle foundation, Chapters 18–19 antecedent layer consumption, platform-never-operates-realtor-business posture, and Housing Journey / Tenancy Lifecycle / Admin Platform separation — Status: APPROVED |
 | 1.0 | 2026-07-06 | Chapter 47 — Listing Publication and Moderation Participation Experience approved and added — Established first specialized Realtor Platform dimension with Publication Integrity as central concept, moderation participation as consequence, Listing Lifecycle separation, and platform-never-self-approves-publication posture — Status: APPROVED |
 | 1.0 | 2026-07-06 | Chapter 48 — Professional Activation Experience approved and added — Established second specialized Realtor Platform dimension with Professional Activation as central concept, Active Realtor Participation disambiguation, Role Grant Participation as consequence, dual-role clarity, and participation orientation posture — Status: APPROVED |
+| 1.0 | 2026-07-07 | Chapter 49 — Professional Verification Participation Experience approved and added — Established third specialized Realtor Platform dimension with Professional Verification Participation as central concept, verification participation invariant, Ch 20/34 disambiguation, Verification Program Participation as consequence, and participation-never-determines-status posture — Status: APPROVED |
 
 ---
 
@@ -44410,3 +44412,520 @@ Realtors do not need another platform that treats professional entry like a grow
 ---
 
 **End of Chapter 48**
+
+
+---
+
+## Chapter 49 — Professional Verification Participation Experience
+
+**Section:** XLVI — Professional Verification  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–48; third specialized experience dimension within the Realtor Platform macro-domain; operationalizes Realtor Platform Boundaries (Chapter 46), Realtor Platform Integrity (Chapter 46), Professional Continuity (Chapter 46), Publication Integrity intersection (Chapter 47 — consumed), Professional Activation (Chapter 48 — sibling), Realtor Verification meaning (Chapter 20 — consumed, not redefined), public identity presentation (Chapter 18 — consumed), and workspace verification visibility (Chapter 19 — consumed, not recreated); defines principles only — not implementation, UI, verification workflows, document review, permissions, APIs, databases, or engineering architecture.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **professional verification participation experience philosophy** for Rento — how the product governs the realtor's **architectural relationship with platform attestation of professional standing** while preserving participation-over-execution boundaries, attestation honesty, professional dignity, and long-term platform trust.
+
+Professional verification participation is not property verification. Property Verification Experience (Chapter 34) governs **whether a consumer can proceed digitally with property-level judgment** during the Housing Journey. Professional verification participation governs **how a realtor participates in platform attestation of professional identity standing** — a separate specialized dimension that must never be merged with property verification.
+
+Professional verification participation is not trust philosophy alone. Trust, Verification & Moderation Experience (Chapter 20) governs **what Realtor Verification means across all roles** — attestation scope, presentation rules, and the principle that realtors cannot self-verify. This chapter **consumes** Chapter 20 on realtor surfaces — it does **not** redefine trust attestation, verification semantics, or platform attestation scope.
+
+Professional verification participation is not public identity presentation alone. Realtor Profile Experience (Chapter 18) governs **how professional identity is presented to consumers** — including compact verification signals on profile and listing surfaces. This chapter governs **macro-domain participation depth** in the verification attestation arc — how realtors orient to program meaning, limits, and ongoing standing — without redefining public identity presentation rules.
+
+Professional verification participation is not workspace operational depth. Realtor Workspace Experience (Chapter 19) governs **day-to-day professional operations** — including workspace visibility of verification status and next steps. This chapter governs **macro-domain participation architecture** — boundary clarity and awareness at professional verification scope — without redefining workspace task mechanics.
+
+Professional verification participation is not publication participation. Listing Publication and Moderation Participation Experience (Chapter 47) governs **the realtor's ongoing relationship with Publication Integrity**. Professional verification participation governs **platform attestation of professional standing** — distinct scope that intersects identity presence without absorbing publication integrity architecture.
+
+Professional verification participation is not professional activation. Professional Activation Experience (Chapter 48) governs **orientation into legitimate marketplace participation** after role grant. Professional verification participation governs **participation in platform verification attestation context** — sibling specialized dimension, non-sequential.
+
+Professional verification participation is not admin operations. Admin Platform (forward per MASTER_ROADMAP) governs **verification program execution, document review, adjudication, and outcome determination**. Professional verification participation governs **realtor-facing participation context** — orientation and boundary clarity, not verification execution.
+
+**The realtor participates in professional verification. The platform administration determines verification outcome. Professional verification participation never determines verification status.** This architectural invariant specializes Chapter 46 marketplace posture and Chapter 20 §10.2 for the professional verification dimension — without impersonating adjudication authority or self-certification.
+
+Where Chapter 46 defers professional verification journey depth beyond profile attestation display (Chapter 18) and trust meaning (Chapter 20), this chapter **specializes professional verification participation** — one deferred dimension from Chapter 46 §13.3 — without redefining Realtor Professional Lifecycle, Realtor Verification (Chapter 20), Property Verification (Chapter 34), Publication Integrity (Chapter 47), Professional Activation (Chapter 48), or any other approved official concept.
+
+**Terminology decision (Design Council RA-1):** **Professional Verification Participation** is adopted as the central official concept — not Professional Verification Journey. Journey language is reserved for Housing Journey (Chapter 23) and must not be extended to supply-side specialized dimensions (Chapter 46). **Participation** aligns with Publication Participation (Chapter 47), participation-over-execution posture across Chapters 46–48, and the verification participation invariant above.
+
+**Specialized dimension order is non-sequential.** Chapters 47 and 48 were authorized and approved before this chapter without implying mandatory workflow sequence. This chapter's position as Chapter 49 **does not establish** that verification must precede or follow publication, activation, or inquiry stewardship in product experience.
+
+The product must help stakeholders answer five professional verification participation questions:
+
+1. **What does platform attestation of professional standing require of a realtor's participation — beyond public badge display and workspace status visibility?**  
+2. **What does Rento support versus what admin governance and external professional process must own in verification attestation?**  
+3. **How does professional verification participation remain distinct from Realtor Verification meaning (Chapter 20), Property Verification (Chapter 34), and admin verification execution (forward)?**  
+4. **How does participation remain valid when verification program requirements evolve over time?**  
+5. **Can realtors orient to, defer attention from, or conclude verification context with dignity — without self-verify theater, outcome certainty illusion, or admin authority leakage?**
+
+This chapter governs professional verification participation as a **specialized experience dimension within the Realtor Platform macro-domain**. It does **not** specify verification APIs, document upload mechanics, admin consoles, or engineering architecture.
+
+**Relationship to prior chapters:** **Realtor Platform Boundaries** (Chapter 46) and **Realtor Platform Boundary Clarity** (Chapter 46) govern parent scope. **Realtor Platform Environment** (Chapter 46) supplies macro-domain cognitive conditions — this chapter **does not introduce** a separate Environment concept (Design Council RA-3). **Realtor Verification** (Chapter 20) governs attestation **meaning** — this chapter specializes **participation experience** without redefinition. This chapter defines **Professional Verification Participation**, **Verification Awareness**, **Verification Participation Boundaries**, **Verification Boundary Clarity**, and **Verification Program Participation** (consequence concept).
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Participation over execution** | Realtor participates in verification context; administration determines outcome |
+| **Attestation honesty** | What platform confirms and does not confirm remains legible — no overclaim |
+| **Boundaries over verification theater** | No self-verify UI, no simulated standing, no outcome certainty illusion |
+| **Separation over conflation** | Distinct from Property Verification (Ch 34), Realtor Verification meaning (Ch 20), admin execution (forward) |
+| **Dignity under uncertainty** | Program communication calm, non-punitive, non-humiliating |
+| **Status resilience** | Principles remain true if program requirements or states evolve |
+| **Identity coherence** | Participation honors public identity truth (Ch 18) and Publication Integrity intersection (Ch 47) |
+| **Marketplace over credential theater** | Verification participation is not professional marketing funnel |
+| **Continuity over event fixation** | Standing awareness persists across sessions — not one-time submission moment |
+| **Mobile orientation first** | Verification boundaries and awareness reachable at glance on mobile |
+| **Realtor Platform Integrity goal** | Every verification participation outcome honors honest boundaries and marketplace posture (Chapter 46) |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A property verification chapter (Chapter 34 remains authoritative for consumer property judgment)  
+- A trust semantics chapter redefining Realtor Verification meaning (Chapter 20 remains authoritative)  
+- A public identity presentation chapter (Chapter 18 remains authoritative)  
+- A workspace verification UI or status mechanics chapter (Chapter 19 remains authoritative)  
+- A verification program execution, document review, or adjudication chapter (Admin Platform forward)  
+- A publication integrity or professional activation chapter (Chapters 47–48 remain authoritative)  
+- An inquiry stewardship or CRM architecture chapter (forward specialized dimensions)  
+- A UI, screen, workflow, API, database, or permissions specification  
+- A chapter built around one verification state — outcomes may appear only as examples  
+- A "how to get verified fast" playbook or credential conversion funnel  
+- A replacement for Chapters 18, 19, 20, 34, 46, 47, or 48  
+
+If the question is *how admin reviews documents and determines verification outcome* — this chapter does not answer it. If the question is *how realtor professional verification participation must honor attestation boundaries with dignity and without determining status* — this chapter does.
+
+Professional verification participation is **not** verification execution, self-certification, or property-level judgment. Professional verification participation **is** responsible product-supported experience surrounding **the realtor's architectural relationship with platform attestation of professional standing** — with honest boundaries and dignity whether professionals orient, defer attention, or conclude verification context.
+
+---
+
+## 2. Why This Chapter Exists
+
+Chapter 46 established **Realtor Professional Lifecycle** and deferred **professional verification journey experience** beyond profile attestation display and trust meaning. Chapter 46 supplies foundation and boundaries; it **does not** define specialized experience depth for how realtors **participate** in platform verification attestation at macro-domain depth.
+
+Chapter 20 §10 defines **Realtor Verification** — what platform attestation of professional identity standing means, that realtors cannot self-verify, workspace visibility expectations, and public display posture. Chapter 20 supplies **meaning and presentation authority**; it **does not** define macro-domain **participation architecture** for the realtor's ongoing relationship with verification attestation across the professional arc.
+
+Chapter 18 governs **public identity presentation** including verification signals on consumer surfaces. Chapter 19 governs **workspace operational depth** including verification status visibility. Both supply antecedent layers; neither defines **professional verification participation** as a specialized Realtor Platform dimension.
+
+Chapter 47 established **Publication Integrity** as macro-domain invariant — including identity presence coherence across public and operational truth. Professional standing attestation **intersects** publication integrity without merging scopes — realtors must understand how verification posture relates to marketplace presence honesty.
+
+Without this chapter, Realtor Platform lacks **professional verification participation experience architecture** during Active Realtor Participation. Product teams would lack authoritative principles for verification participation — risking self-verify theater, Ch 20 redefinition, Property Verification conflation, outcome certainty illusion, or absorption of admin adjudication scope.
+
+This chapter exists because **marketplace trust requires governed professional standing participation** — consumers deserve honest attestation signals, and realtors deserve **dignified participation orientation** to what the platform can and cannot confirm — without a product that lets realtors certify themselves or simulates verification outcomes.
+
+---
+
+## 3. Concept Separation — Mandatory (Design Council RA-4)
+
+Three verification-related concepts govern **permanently independent** scopes and must **never** be merged:
+
+| Concept | Governing chapter | Primary question | Must not become |
+|---------|-------------------|------------------|-----------------|
+| **Property Verification** | Chapter 34 | Can the consumer proceed with property-level digital judgment during Housing Journey? | Realtor standing participation |
+| **Realtor Verification** | Chapter 20 | What does platform attestation of professional identity standing **mean** — and how is it presented? | Participation experience architecture or property verification |
+| **Professional Verification Participation** | **This chapter** | How does the realtor **participate** in platform attestation context with boundary clarity? | Attestation meaning redefinition, property judgment, or admin execution |
+
+### 3.1 Property Verification (Chapter 34) — Consumer Judgment
+
+Property Verification governs **property-level proceed judgment** for consumers evaluating a specific listing during Decision Experience — distinct from realtor identity standing, distinct from listing moderation approval, distinct from lease or legal verification.
+
+**Property Verification never substitutes for Professional Verification Participation.** A consumer may proceed on property verification grounds while realtor standing attestation remains a separate trust layer (Chapter 20, this chapter).
+
+### 3.2 Realtor Verification (Chapter 20) — Attestation Meaning
+
+**Realtor Verification** is the official product concept for **what the platform attests about professional identity standing** — per defined program. Chapter 20 governs meaning, presentation, revocation communication, and the rule that **realtors cannot self-verify**.
+
+**Chapter 20 defines attestation meaning.** **Chapter 49 specializes participation experience** into that meaning — without redefining attestation scope, badge semantics, or platform trust contract.
+
+### 3.3 Professional Verification Participation (This Chapter) — Participation Experience
+
+**Professional Verification Participation** is the realtor's **architectural relationship with platform attestation of professional standing** — ongoing orientation to program meaning, participation boundaries, and standing awareness within Active Realtor Participation.
+
+Participation **inherits** Realtor Verification meaning from Chapter 20 — it does **not** create parallel attestation authority.
+
+### 3.4 Separation Diagram
+
+```
+Property Verification (Ch 34)     →  Consumer property proceed judgment     →  Housing Journey / Decision Experience
+        ↓ no merge
+Realtor Verification (Ch 20)      →  Attestation meaning and presentation  →  Platform trust contract
+        ↓ meaning consumed, not redefined
+Professional Verification         →  Realtor participation in attestation   →  Specialized Realtor Platform
+Participation (this ch.)              context with boundary clarity            dimension
+        ↓ within
+Realtor Professional Lifecycle (Ch 46) → Supply-side professional arc        →  Macro-domain foundation
+```
+
+### 3.5 Listing Verification Separation
+
+**Listing verification** and **listing-level trust** (Chapter 20 §11) remain **distinct** from realtor-level verification and from Property Verification (Chapter 34). Moderation approval is not full property verification. This chapter does **not** subsume listing-level trust architecture.
+
+### 3.6 Sibling Dimensions — Non-Sequential
+
+| Concept | Governing chapter | Relationship to this chapter |
+|---------|-------------------|------------------------------|
+| **Publication Participation** | Chapter 47 | Sibling — identity presence coherence intersects; scopes not merged |
+| **Professional Activation** | Chapter 48 | Sibling — orientation to participation; verification participation separate |
+| **Inquiry stewardship** | Forward | Sibling — response context; not verification scope |
+
+---
+
+## 4. Verification Participation Invariant (Design Council RA-2)
+
+The following architectural invariant governs all professional verification participation experience on Rento — **implementation-independent**, **status-resilient**, and **non-negotiable**:
+
+1. **The realtor participates in professional verification.**  
+   The professional orients to program context, understands attestation limits, and maintains honest standing awareness — without executing adjudication.
+
+2. **The platform administration determines verification outcome.**  
+   Verification status, approval, rejection, revocation, and program decisions are **admin-governed** — not realtor-determined, not participation-determined.
+
+3. **Professional verification participation never determines verification status.**  
+   No participation action, orientation flow, boundary communication, or realtor-facing surface may **establish, simulate, or imply** verification outcome. Participation orients — it does **not** certify.
+
+This invariant **specializes** Chapter 20 §10.2 (*Realtor Cannot Self-Verify*) and Chapter 46 marketplace posture for the professional verification dimension. It applies regardless of future program design, document mechanics, or state taxonomy.
+
+---
+
+## 5. Professional Verification Participation
+
+**Professional Verification Participation** is the central official product concept in the RENTO PRODUCT DESIGN STANDARD for this chapter.
+
+Professional Verification Participation is the realtor's **architectural relationship with platform attestation of professional standing** — the ongoing professional orientation to what Rento independently confirms about professional identity standing, within governed program boundaries, across the duration of Active Realtor Participation.
+
+**Participation is relationship — not outcome.** Professional Verification Participation represents **how the product supports honest engagement with attestation context** — not how verification is adjudicated, not how documents are reviewed, and not how standing is granted. The realtor participates; administration determines outcome (§4 invariant).
+
+Professional Verification Participation means the professional can:
+
+- Orient to what **Realtor Verification** (Chapter 20) attests and does not attest  
+- Understand **verification participation boundaries** — what Rento supports versus what admin and external process own  
+- Maintain **standing awareness** across sessions without outcome certainty illusion  
+- Engage with program context and revocation communication with **dignity**  
+- Preserve **identity coherence** with public presentation (Chapter 18) and Publication Integrity intersection (Chapter 47)  
+
+Professional Verification Participation does **not** mean:
+
+- Self-verification or status self-assignment (Chapter 20 §10.2)  
+- Verification outcome determination or implied approval  
+- Document review, adjudication, or program execution (Admin Platform)  
+- Property-level proceed judgment (Chapter 34)  
+- Publication integrity participation (Chapter 47)  
+- Professional activation orientation (Chapter 48)  
+- Credential marketing, conversion optimization, or standing as engagement funnel  
+- A discrete "verification complete" event that permanently closes participation context  
+
+Professional Verification Participation is **ongoing** — standing awareness and boundary clarity persist across program changes, re-review, and return after interruption — governed by **Professional Continuity** (Chapter 46) and **Realtor Platform Environment** (Chapter 46) at macro-domain level.
+
+---
+
+## 6. Verification Awareness
+
+**Verification Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Verification Awareness is the **realtor's oriented understanding of Realtor Verification meaning (Chapter 20), current standing posture, program limits, and governance separation** — without false certainty about outcomes, without self-verify illusion, and without conflating attestation with property verification or publication approval.
+
+Verification Awareness requires:
+
+- **Attestation scope clarity** — what platform confirms about professional standing  
+- **Limit clarity** — what attestation does not guarantee (legal compliance, outcome quality, transaction success)  
+- **Governance separation clarity** — administration owns outcome; participation orients  
+- **Outcome uncertainty honesty** — verification is governed; participation does not certify approval  
+- **Continuous orientation** — awareness persists across sessions, not only at submission moments  
+
+Verification Awareness is distinct from **workspace verification status visibility** (Chapter 19): operational status knowledge does not substitute for macro-domain participation orientation.
+
+Verification Awareness is distinct from **consumer-facing verification signal comprehension** (Chapter 18): public presentation rules remain Chapter 18 authoritative; this chapter governs **realtor-side participation depth**.
+
+### 6.1 Environment — Reuse, Not Redefinition (Design Council RA-3)
+
+**Verification Participation Environment is not introduced.** A separate Environment concept is **not architecturally necessary** for this dimension — **Realtor Platform Environment** (Chapter 46) already governs macro-domain cognitive conditions for realtor marketplace participation.
+
+Professional verification participation **operates within** Realtor Platform Environment — specialized through **Verification Awareness**, **Verification Participation Boundaries**, and **Verification Boundary Clarity** — without terminological symmetry imposed solely because Chapters 47–48 introduced dimension-specific Environment concepts where architectural necessity required them.
+
+---
+
+## 7. Verification Participation Boundaries
+
+**Verification Participation Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Verification Participation Boundaries define **what engaging with professional verification through Rento can and cannot establish** — the scope beyond which realtor, admin governance, and external professional or legal process must carry responsibility.
+
+Verification Participation Boundaries **extend** Realtor Platform Boundaries (Chapter 46) and Realtor Verification limits (Chapter 20) — each prior limit becomes a verification participation limit honestly stated.
+
+Rento professional verification participation experience **can** support:
+
+- Orientation to **Realtor Verification** meaning and program expectations  
+- Clear communication that standing is **admin-governed** — without promising outcomes  
+- Honest standing awareness across sessions — without simulating adjudication  
+- Calm explanation of what attestation preserves for marketplace trust  
+- Dignified participation in program communications — meaning from Chapter 20  
+- Coherence with public identity presentation (Chapter 18) and Publication Integrity intersection (Chapter 47)  
+- **Realtor Platform Integrity** (Chapter 46) honored throughout verification participation scope  
+
+Rento professional verification participation experience **cannot** substitute for:
+
+- Realtor self-verification or status self-assignment  
+- Verification outcome determination, document review, or program adjudication (Admin Platform)  
+- Property Verification proceed judgment (Chapter 34)  
+- Publication integrity participation or moderation execution (Chapter 47; Admin Platform)  
+- Professional activation orientation (Chapter 48)  
+- Legal licensing authority, professional outcome certification, or compliance guarantee  
+- CRM, credential marketing, or conversion optimization as verification prerequisite  
+- Inquiry stewardship or consumer contact architecture (forward; Chapter 16)  
+
+**Professional verification participation never determines verification status** (§4 invariant). Verification Participation Boundaries are reusable when verification posture intersects forward Realtor Platform specialized dimensions.
+
+---
+
+## 8. Verification Boundary Clarity
+
+**Verification Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Verification Boundary Clarity is the **shared legibility of what Rento, realtor, platform administration, and external professional or legal process each reasonably own during professional verification participation** — without simulated adjudication authority, self-verify theater, attestation overclaim, or admin capability leakage.
+
+Verification Boundary Clarity requires:
+
+- **Rento scope honesty** — participation orients; it does not determine standing  
+- **Attestation honesty** — what platform confirms matches Chapter 20 meaning — not inflated  
+- **Governance separation honesty** — administration executes; realtor participates  
+- **Property verification separation honesty** — consumer property judgment (Ch 34) remains distinct  
+- **No outcome theater** — participation never implies verified status before admin determination  
+
+Verification Boundary Clarity is distinct from **Realtor Platform Boundary Clarity** (Chapter 46): macro-domain clarity governs all professional participation; verification boundary clarity **specializes** attestation participation scope within that foundation.
+
+---
+
+## 9. Verification Program Participation as Consequence — Not Center
+
+**Verification Program Participation** is the realtor's governed experience of **orientation to admin-governed verification program context** — a **consequence** of the verification participation invariant (§4), never the primary concept of this chapter.
+
+Verification program exists because marketplace trust requires governed professional standing attestation. The realtor participates as the affected professional actor — understanding program context and limits — without adjudication authority.
+
+This chapter does **not** redefine verification program mechanics. It consumes Chapter 20 §10 and §4 invariant:
+
+- Program attests **professional identity standing** — not transaction outcomes or legal compliance by default  
+- Realtor cannot self-verify — permanent domain rule  
+- Revocation is admin-governed — dignified communication (Chapter 20 §10.5 posture)  
+- Program context orients — it does not impersonate admin determination narrative  
+
+Verification Program Participation governs **how realtors experience program context orientation** — not how programs are executed. Admin Platform (forward) owns execution.
+
+### 9.1 Program States as Examples Only — Non-Foundational
+
+Verification outcomes (for example, under review, attested, not attested, revoked) may appear as **illustrative examples only**. This chapter must remain valid if program states are introduced, renamed, regrouped, or replaced. The architecture governs **participation relationships and boundaries** — not a fixed state taxonomy.
+
+---
+
+## 10. Relationship to Prior Chapters
+
+### 10.1 Chapter 46 — Realtor Platform Experience (Parent Foundation)
+
+Chapter 46 defines Realtor Professional Lifecycle, Realtor Platform Environment, Realtor Platform Boundaries, **Realtor Platform Integrity**, and Professional Continuity. This chapter **consumes** all Chapter 46 official concepts — it does **not** amend, extend definitions of, or replace them.
+
+### 10.2 Chapter 47 — Publication Participation (Sibling Dimension)
+
+Chapter 47 governs Publication Integrity and Publication Participation. Identity presence coherence (Chapter 47 §12) **intersects** professional standing attestation — this chapter consumes that intersection without merging publication scope.
+
+### 10.3 Chapter 48 — Professional Activation (Sibling Dimension)
+
+Chapter 48 governs Professional Activation orientation. Verification participation is a **separate specialized dimension** — activation may orient toward verification expectations without defining verification participation architecture.
+
+### 10.4 Chapter 20 — Trust, Verification & Moderation Experience
+
+Chapter 20 remains **sole authority** for **Realtor Verification** meaning, attestation presentation, and revocation communication semantics. This chapter **consumes** Chapter 20 — it does **not** redefine verification decisions, badge meaning, or platform trust contract.
+
+| Layer | Chapter 20 | This chapter |
+|-------|------------|--------------|
+| **Scope** | What attestation means; presentation rules; no self-verify | How realtor participates in attestation context at macro-domain depth |
+| **Question** | What did Rento attest? | How does realtor maintain honest participation relationship with attestation? |
+| **Authority** | Realtor Verification meaning — authoritative | Participation experience — specialized |
+
+### 10.5 Chapter 34 — Property Verification Experience
+
+Chapter 34 remains **sole authority** for property-level consumer verification judgment. Mandatory separation per §3 — permanent.
+
+### 10.6 Chapter 18 — Realtor Profile Experience
+
+Chapter 18 governs public identity and verification signal presentation on consumer surfaces. This chapter requires participation to remain coherent with public presentation — consuming Chapter 18 without redefining identity grammar.
+
+### 10.7 Chapter 19 — Realtor Workspace Experience
+
+Chapter 19 governs workspace operational depth including verification status visibility. Workspace mechanics remain **Chapter 19 authoritative** — this chapter does not recreate operational flows.
+
+### 10.8 Admin Platform (Forward) — Separation Contract
+
+Admin Platform owns verification program **execution**, document review, adjudication, and outcome determination. Professional verification participation owns **realtor-facing participation context only** — permanent separation without capability leakage.
+
+---
+
+## 11. Professional Attention Postures — Verification Participation
+
+Within Active Realtor Participation (Chapter 46), professional verification participation supports dignified attention postures — parallel in dignity to Chapter 46 §12, specialized for verification participation scope:
+
+### 11.1 Orient
+
+Realtor **engages verification participation context** with Verification Boundary Clarity sufficient. Orient does **not** mean Rento certifies standing, guarantees program approval, or substitutes admin adjudication.
+
+### 11.2 Defer Attention
+
+Defer preserves Active Realtor Participation and standing reality while acknowledging **insufficient attention, clarity, or timing** for specific verification engagement — honest pacing with **Professional Continuity** preserved. Defer does **not** imply standing abandonment or program bypass.
+
+### 11.3 Conclude Verification Context
+
+Conclude diminishes **active verification attention posture** — when attestation orientation no longer needs macro-domain attention on Rento for the moment. Conclude does **not** imply standing revoked, program exited, or admin actions substituted.
+
+### 11.4 Posture Reconsideration
+
+Orient, defer attention, and conclude remain available across verification participation — not irreversible traps.
+
+### 11.5 Standing Uncertainty Honesty
+
+Governed standing uncertainty remains **honestly communicated** — no simulated attestation or self-verify theater regardless of illustrative state examples.
+
+### 11.6 No Forced Verification Engagement
+
+Exit, defer, and conclude paths always dignified — **Realtor Platform Integrity** (Chapter 46) requires it.
+
+---
+
+## 12. Mobile & Accessibility Considerations
+
+Mobile is the **primary verification participation orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Attestation scope at glance** | What platform confirms and does not confirm reachable without hunt |
+| **One-handed deferral** | Defer and conclude verification attention reachable during field work |
+| **Calm return** | Resuming verification context feels continuous — not alarming |
+| **Standing legibility** | Program posture plain-language — no coded humiliation |
+| **No self-verify affordances** | Mobile surfaces never imply realtor certifies own standing |
+| **Public-private coherence** | Profile attestation preview reflects actual standing truth |
+
+Professional verification participation must be **inclusive** — textual equivalents for attestation scope and boundaries; plain language; calm tone without weaponized credential anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 13. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Self-verify theater** | Collapses §4 invariant and Chapter 20 §10.2 — domain violation |
+| **Outcome certainty illusion** | Participation implies approval before admin determination — integrity violation |
+| **Ch 20 redefinition** | Replaces attestation meaning in specialized chapter — governance violation |
+| **Property Verification conflation** | Merges consumer property judgment with realtor standing — architectural violation |
+| **Publication Integrity absorption** | Redefines Ch 47 scope inside verification — sibling violation |
+| **Admin capability leakage** | Exposes adjudication execution in realtor participation — role violation |
+| **Credential funnel theater** | Treats verification as conversion game — integrity violation |
+| **State taxonomy fixation** | Ties architecture to specific states; breaks future scalability |
+| **Workspace task substitution** | Operational status replaces macro-domain participation — scope violation |
+| **Listing verification blur** | Collapses listing-level trust with realtor standing — Ch 20 §11 violation |
+| **Participation determines status** | Violates §4 invariant — architectural violation |
+| **Chapter 46 rewrite** | Redefines macro-domain foundations — governance violation |
+| **Gratuitous Environment concept** | Terminology symmetry without architectural necessity — RA-3 violation |
+
+---
+
+## 14. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, professional verification participation initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Professional Verification Participation**, **Verification Awareness**, **Verification Participation Boundaries**, **Verification Boundary Clarity**, **Verification Program Participation**, **Verification Participation Invariant** (§4), **Realtor Platform Integrity** (Chapter 46), and **Chapters 18–20, 34, 46–48 consumption integrity**.
+
+**Review gate:** No professional verification participation surface ships without checklist against all official concepts, principles, attention postures, separation requirements, §4 invariant, and **Realtor Platform Integrity** requirements defined herein — plus compliance with Chapters 18, 19, 20, 34, 46, 47, and 48 as authoritative upstream layers.
+
+**Forward dimensions:** Inquiry stewardship and additional dimensions per Design Council extend Realtor Platform foundation alongside this chapter. This chapter supplies professional verification participation specialization; it does not prescribe forward dimension order.
+
+---
+
+## 15. Chapter Summary
+
+Professional verification participation converts **Realtor Platform foundation** into **honest attestation participation experience during Active Realtor Participation with verification boundary clarity** — a specialized dimension within the Realtor Platform macro-domain.
+
+This chapter establishes **Professional Verification Participation as the central architectural concept** (RA-1 — Participation, not Journey); defines **Verification Participation Invariant** — realtor participates, administration determines outcome, participation never determines status (RA-2); mandatory **Property Verification / Realtor Verification / Professional Verification Participation** separation (RA-4); defines Verification Awareness, Verification Participation Boundaries, and Verification Boundary Clarity; reuses **Realtor Platform Environment** without gratuitous Environment concept (RA-3); positions Verification Program Participation as consequence not center; principles of participation over execution and attestation honesty; mandatory separation from Chapters 20, 34, 47, 48, and Admin execution; non-sequential sibling dimension positioning; orient, defer attention, and conclude verification context postures; and honest consumption of Chapters 18–20, 34, 46–48 without redefinition.
+
+**Realtor Platform flow (non-sequential — authoring order shown, not workflow mandate):**
+
+Realtor Profile (Ch 18) + Realtor Workspace (Ch 19) → Realtor Platform Foundation (Ch 46) → Publication Participation (Ch 47) + Professional Activation (Ch 48) + **Professional Verification Participation (Ch 49)** + remaining specialized dimensions (forward per Design Council)
+
+---
+
+## 16. Design Director Review
+
+**Chapter:** 49 — Professional Verification Participation Experience  
+**Section:** XLVI — Professional Verification  
+**Review type:** Initial standard adoption
+
+### 16.1 Approval Statement
+
+- **Pre-Authoring Analysis** — APPROVED  
+- **Architecture Review** — APPROVED  
+- **Required Architectural Amendments** — N/A (RA-1 through RA-4 integrated at authoring)  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **professional verification participation experience contract** for Rento — specialized dimension within the Realtor Platform macro-domain. All professional verification participation product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 16.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity, human-centered professionalism |
+| Chapter 18 — Realtor Profile Experience | Public identity and verification signal presentation — consumed, not redefined |
+| Chapter 19 — Realtor Workspace Experience | Workspace verification visibility — consumed, not recreated |
+| Chapter 20 — Trust, Verification & Moderation Experience | Realtor Verification meaning sole authority — consumed, not redefined |
+| Chapter 34 — Property Verification Experience | Consumer property judgment — mandatory separation |
+| Chapter 46 — Realtor Platform Experience | Parent macro-domain foundation; Realtor Platform Environment reused |
+| Chapter 47 — Publication Participation | Sibling dimension — identity coherence intersection; mandatory separation |
+| Chapter 48 — Professional Activation Experience | Sibling dimension — non-sequential |
+| Admin Platform (forward) | Verification program execution — mandatory separation |
+| Forward Realtor Platform chapters | Inquiry stewardship — forward per Design Council |
+
+### 16.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Professional verification participation positioned as specialized Realtor Platform dimension — not Ch 20 rewrite, not Ch 34, not admin platform  
+2. Professional Verification Participation remains central concept — Verification Program Participation remains consequence, not center  
+3. Property Verification (Ch 34) / Realtor Verification (Ch 20) / Professional Verification Participation (Ch 49) explicitly separated — no merge  
+4. §4 Verification Participation Invariant explicit — participation never determines status  
+5. RA-1 terminology — Participation adopted; Journey not used as official concept  
+6. RA-3 — no gratuitous Environment concept; Realtor Platform Environment reused  
+7. Platform-never-self-verify and participation-over-execution principles explicit  
+8. Chapters 18, 19, 20, 34, 46, 47, and 48 official concepts consumed — not redefined  
+9. Orient, defer attention, conclude postures — not readiness proceed/defer/release  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+12. Non-sequential sibling positioning explicit  
+
+### 16.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on professional verification participation philosophy |
+| Head of Product Design | Realtor Platform specialized dimension parity; Ch 20/34 consumption integrity |
+| Senior UX Designer | Verification boundary communication, dignity under uncertainty, mobile rhythm |
+| Product Management | Marketplace posture honesty and realtor-admin boundary integrity |
+| Content Design Lead | Attestation scope language, program honesty, standing copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation; Ch 34 separation; admin separation |
+| Accessibility Specialist | Non-visual attestation orientation access and anxiety-sensitive design |
+
+### 16.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new professional verification participation experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 16.6 Design Director Closing Note
+
+Realtors do not need another platform that treats verification like a badge hunt or lets them certify their own standing. They need a marketplace that makes attestation boundaries legible — where participation means honest relationship with what the platform can confirm, where administration owns outcomes, and where professional dignity survives uncertainty. This chapter exists so Rento specializes supply-side verification participation with the same rigor brought to publication integrity and professional activation — because a marketplace that displays trust signals without governing how professionals participate in attestation honestly is incomplete.
+
+---
+
+**End of Chapter 49**
