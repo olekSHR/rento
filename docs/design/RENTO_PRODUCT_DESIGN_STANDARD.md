@@ -91,6 +91,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 47 | [Listing Publication and Moderation Participation Experience](#chapter-47--listing-publication-and-moderation-participation-experience) | Publication Participation | APPROVED |
 | 48 | [Professional Activation Experience](#chapter-48--professional-activation-experience) | Professional Activation | APPROVED |
 | 49 | [Professional Verification Participation Experience](#chapter-49--professional-verification-participation-experience) | Professional Verification | APPROVED |
+| 50 | [Inquiry Stewardship Experience](#chapter-50--inquiry-stewardship-experience) | Inquiry Stewardship | APPROVED |
 
 ### Planned (not yet authored)
 
@@ -133,6 +134,7 @@ See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform sp
 | 1.0 | 2026-07-06 | Chapter 47 — Listing Publication and Moderation Participation Experience approved and added — Established first specialized Realtor Platform dimension with Publication Integrity as central concept, moderation participation as consequence, Listing Lifecycle separation, and platform-never-self-approves-publication posture — Status: APPROVED |
 | 1.0 | 2026-07-06 | Chapter 48 — Professional Activation Experience approved and added — Established second specialized Realtor Platform dimension with Professional Activation as central concept, Active Realtor Participation disambiguation, Role Grant Participation as consequence, dual-role clarity, and participation orientation posture — Status: APPROVED |
 | 1.0 | 2026-07-07 | Chapter 49 — Professional Verification Participation Experience approved and added — Established third specialized Realtor Platform dimension with Professional Verification Participation as central concept, verification participation invariant, Ch 20/34 disambiguation, Verification Program Participation as consequence, and participation-never-determines-status posture — Status: APPROVED |
+| 1.0 | 2026-07-07 | Chapter 50 — Inquiry Stewardship Experience approved and added — Established fourth specialized Realtor Platform dimension with Inquiry Stewardship as central concept, inquiry stewardship invariant, Ch 16/19/21 separation, stewardship-over-performance posture, and stewardship-never-determines-outcome architecture — Status: APPROVED |
 
 ---
 
@@ -44929,3 +44931,576 @@ Realtors do not need another platform that treats verification like a badge hunt
 ---
 
 **End of Chapter 49**
+
+
+---
+
+## Chapter 50 — Inquiry Stewardship Experience
+
+**Section:** XLVII — Inquiry Stewardship  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–49; fourth specialized experience dimension within the Realtor Platform macro-domain; operationalizes Realtor Platform Boundaries (Chapter 46), Realtor Platform Integrity (Chapter 46), Professional Continuity (Chapter 46), Publication Integrity intersection (Chapter 47 — consumed), Professional Activation (Chapter 48 — sibling), Professional Verification Participation (Chapter 49 — sibling), contact initiation meaning (Chapter 16 — consumed, not extended), workspace inquiry handling (Chapter 19 — consumed, not recreated), and inquiry reply notification ethics (Chapter 21 — consumed, not redefined); defines principles only — not implementation, UI, messaging protocols, notification delivery, permissions, APIs, databases, or engineering architecture.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **inquiry stewardship experience philosophy** for Rento — how the product governs the realtor's **architectural relationship with professional responsibility toward consumer inquiries** while preserving stewardship-over-execution boundaries, marketplace honesty, professional dignity, and long-term platform trust.
+
+Inquiry stewardship is not contact initiation. Contact & Communication Experience (Chapter 16) governs **how renters initiate contact, what contact means, and how communication is initiated with transparency and recovery** on the demand side of the marketplace bridge. Inquiry stewardship governs **how a realtor stewards professional response context for consumer interest** — macro-domain depth beyond contact initiation — a separate specialized dimension that must never absorb consumer contact architecture.
+
+Inquiry stewardship is not workspace inquiry handling. Realtor Workspace Experience (Chapter 19) governs **day-to-day operational inquiry handling** — inquiry tied to listing, response paths, workspace accountability surfaces, and professional task depth inside Realtor Workspace. Inquiry stewardship governs **macro-domain stewardship architecture** — boundary clarity and responsibility orientation at inquiry stewardship scope — without redefining workspace operational mechanics.
+
+Inquiry stewardship is not inquiry reply notifications. Notifications & User Re-engagement Experience (Chapter 21) governs **when and how Rento may interrupt users** — including inquiry reply alerts — with ethical re-engagement rules. Inquiry stewardship governs **professional responsibility philosophy toward inquiries** — not notification delivery implementation.
+
+Inquiry stewardship is not publication participation. Listing Publication and Moderation Participation Experience (Chapter 47) governs **the realtor's ongoing relationship with Publication Integrity**. Inquiry stewardship governs **professional response context for consumer interest** — distinct scope that intersects published inventory and identity without absorbing publication integrity architecture.
+
+Inquiry stewardship is not professional activation. Professional Activation Experience (Chapter 48) governs **orientation into legitimate marketplace participation** after role grant. Inquiry stewardship governs **ongoing professional responsibility toward inquiries during Active Realtor Participation** — sibling specialized dimension, non-sequential.
+
+Inquiry stewardship is not professional verification participation. Professional Verification Participation Experience (Chapter 49) governs **participation in platform attestation of professional standing**. Inquiry stewardship governs **response context stewardship** — distinct scope that intersects trust standing at contact without merging verification participation architecture.
+
+Inquiry stewardship is not CRM, inquiry brokerage, or agency operations. Rento remains a **marketplace platform** — it supports honest professional responsibility toward marketplace inquiries. It does **not** become the realtor's client pipeline manager, conversion optimizer, or business operating system.
+
+**Inquiry Stewardship governs professional responsibility toward consumer inquiries. Inquiry Stewardship never determines communication outcome. Inquiry Stewardship never determines transaction outcome. Inquiry Stewardship never determines relationship outcome.** This architectural invariant specializes Chapter 46 marketplace posture for the inquiry stewardship dimension — without impersonating brokerage authority, outcome certification, or relationship administration.
+
+Where Chapter 46 defers inquiry stewardship experience beyond contact initiation (Chapter 16) and workspace operational inquiry handling (Chapter 19), this chapter **specializes inquiry stewardship** — the final named deferred dimension from Chapter 46 §13.3 — without redefining Realtor Professional Lifecycle, Contact Initiation (Chapter 16), Workspace Inquiry Handling (Chapter 19), Inquiry Reply Notifications (Chapter 21), Publication Integrity (Chapter 47), Professional Activation (Chapter 48), Professional Verification Participation (Chapter 49), or any other approved official concept.
+
+**Terminology decision (Design Council RA-4):** **Inquiry Stewardship** is adopted as the central official concept — not Inquiry Journey. Journey language is reserved for Housing Journey (Chapter 23) and must not be extended to supply-side specialized dimensions. **Inquiry Stewardship Environment is not introduced** — **Realtor Platform Environment** (Chapter 46) is reused. CRM, lead, pipeline, conversion, and sales terminology are **rejected** — stewardship is architectural responsibility, not commercial operations vocabulary.
+
+**Specialized dimension order is non-sequential.** Chapters 47, 48, and 49 were authorized and approved before this chapter without implying mandatory workflow sequence. This chapter's position as Chapter 50 **does not establish** that inquiry stewardship must precede or follow publication, activation, or verification participation in product experience.
+
+The product must help stakeholders answer five inquiry stewardship questions:
+
+1. **What does professional responsibility toward consumer inquiries require of a realtor on Rento — beyond contact initiation and workspace operational handling?**  
+2. **What does Rento support versus what realtor, consumer, and external process must own in inquiry response context?**  
+3. **How does inquiry stewardship remain distinct from Contact Initiation (Chapter 16), Workspace Inquiry Handling (Chapter 19), and Inquiry Reply Notifications (Chapter 21)?**  
+4. **How does stewardship remain valid when inquiry channels, volumes, or response patterns evolve over time?**  
+5. **Can realtors orient to, defer attention from, or conclude inquiry stewardship context with dignity — without CRM theater, response-metric vanity, or outcome certainty illusion?**
+
+This chapter governs inquiry stewardship as a **specialized experience dimension within the Realtor Platform macro-domain**. It does **not** specify messaging APIs, notification providers, inbox UI patterns, permissions matrices, or engineering architecture.
+
+**Relationship to prior chapters:** **Realtor Platform Boundaries** (Chapter 46) and **Realtor Platform Boundary Clarity** (Chapter 46) govern parent scope. **Realtor Platform Environment** (Chapter 46) supplies macro-domain cognitive conditions — this chapter **does not introduce** a separate Environment concept (Design Council RA-4). **Contact Initiation** (Chapter 16) governs consumer contact architecture — this chapter specializes **stewardship experience** without redefinition. This chapter defines **Inquiry Stewardship**, **Stewardship Awareness**, **Inquiry Stewardship Boundaries**, **Stewardship Boundary Clarity**, and **Inquiry Response Orientation** (consequence concept).
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Stewardship over execution** | Realtor stewards response context; platform does not broker outcomes or operate inquiry business |
+| **Responsibility over metrics** | Stewardship is architectural obligation — not response speed, volume, or conversion performance |
+| **Boundaries over CRM theater** | No pipeline, lead scoring, conversion optimization, or inquiry brokerage as platform authority |
+| **Separation over conflation** | Distinct from Contact Initiation (Ch 16), Workspace Inquiry Handling (Ch 19), Inquiry Reply Notifications (Ch 21) |
+| **Dignity under pending response** | Pending inquiry is normal marketplace state — not shame theater or punitive urgency |
+| **Status resilience** | Principles remain true if inquiry channels or volumes evolve |
+| **Marketplace honesty** | Stewardship supports connection — not transaction, lease, or relationship outcome claims |
+| **Identity and inventory coherence** | Stewardship honors Publication Integrity (Ch 47) and trust standing intersection (Ch 49) |
+| **Continuity over event fixation** | Stewardship awareness persists across sessions — not one-response event closure |
+| **Mobile orientation first** | Stewardship boundaries and awareness reachable at glance on mobile |
+| **Realtor Platform Integrity goal** | Every inquiry stewardship outcome honors honest boundaries and marketplace posture (Chapter 46) |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A contact initiation chapter (Chapter 16 remains authoritative for consumer contact architecture)  
+- A workspace inquiry handling or inbox operations chapter (Chapter 19 remains authoritative)  
+- A notification delivery or alert implementation chapter (Chapter 21 remains authoritative)  
+- A messaging protocol, chat UI, SMS gateway, or telephony integration chapter  
+- A publication integrity, professional activation, or verification participation chapter (Chapters 47–49 remain authoritative)  
+- A CRM, client pipeline, lead management, conversion optimization, or sales funnel chapter  
+- An inquiry brokerage or agency operations chapter  
+- An admin moderation execution chapter (Admin Platform forward)  
+- A UI, screen, workflow, API, database, or permissions specification  
+- A chapter built around one inquiry state — outcomes may appear only as examples  
+- A "respond faster to win" playbook or response-rate gamification guide  
+- A replacement for Chapters 16, 19, 21, 46, 47, 48, or 49  
+
+If the question is *how renters initiate contact or how workspace inquiry tasks operate* — this chapter does not answer it. If the question is *how realtor inquiry stewardship must honor professional responsibility with boundary clarity without determining communication, transaction, or relationship outcomes* — this chapter does.
+
+Inquiry stewardship is **not** inquiry brokerage, pipeline management, or outcome certification. Inquiry stewardship **is** responsible product-supported experience surrounding **the realtor's architectural relationship with professional responsibility toward consumer inquiries** — with honest boundaries and dignity whether professionals orient, defer attention, or conclude inquiry stewardship context.
+
+---
+
+## 2. Why This Chapter Exists
+
+Chapter 46 established **Realtor Professional Lifecycle** and deferred **inquiry stewardship experience** beyond contact initiation (Chapter 16) and workspace awareness. Chapter 46 supplies foundation and boundaries; it **does not** define specialized experience depth for how realtors **steward professional response context** at macro-domain depth.
+
+Chapter 16 governs **contact initiation** — trust bridge from evaluation to human conversation, expectation setting, identity presentation, and recovery on the consumer path. Chapter 16 §12 addresses realtor responsiveness at philosophy level and defers inquiry stewardship depth forward. Chapter 16 supplies **initiation authority**; it **does not** define macro-domain **stewardship architecture** for supply-side professional responsibility.
+
+Chapter 19 governs **workspace inquiry handling** — inquiry tied to listing, response from workspace, inquiry accountability surfaces, and operational task depth. Chapter 19 supplies **operational authority**; it **does not** define macro-domain stewardship philosophy for professional responsibility toward inquiries across the Realtor Professional Lifecycle.
+
+Chapter 21 governs **inquiry reply notifications** — when Rento may interrupt for inquiry-related re-engagement. Chapter 21 supplies **notification ethics authority**; it **does not** define inquiry stewardship as a Realtor Platform specialized dimension.
+
+Chapter 47 established **Publication Integrity** — honest published inventory and identity presence on the marketplace. Consumer inquiries attach to **governed listings and identified professionals** — stewardship intersects publication and identity truth without merging scopes.
+
+Chapter 49 established **Professional Verification Participation** — attestation participation with outcome-independent invariant. Trust standing at contact **intersects** inquiry stewardship without merging verification scope.
+
+Without this chapter, Realtor Platform lacks **inquiry stewardship experience architecture** during Active Realtor Participation. Product teams would lack authoritative principles for inquiry stewardship — risking CRM creep, inquiry conversion theater, Ch 16/19 redefinition, response-metric vanity, or absorption of brokerage operations scope.
+
+This chapter exists because **a two-sided marketplace requires governed supply-side response responsibility** — consumers deserve honest connection context after contact initiation, and realtors deserve **dignified stewardship orientation** to what Rento supports versus what external professional process must own — without a product that treats inquiries as leads, scores response performance, or certifies housing outcomes.
+
+---
+
+## 3. Concept Separation — Mandatory (Design Council RA-3)
+
+Four inquiry-related concepts govern **permanently independent** scopes and must **never** be merged:
+
+| Concept | Governing chapter | Primary question | Must not become |
+|---------|-------------------|------------------|-----------------|
+| **Contact Initiation** | Chapter 16 | How does the renter initiate contact with identified professional accountability? | Inquiry stewardship architecture or realtor response operations |
+| **Inquiry Stewardship** | **This chapter** | How does the realtor **steward professional responsibility** toward consumer inquiries with boundary clarity? | Contact initiation, workspace operations, notification delivery, or CRM scope |
+| **Workspace Inquiry Handling** | Chapter 19 | How does the realtor **operate** inquiry tasks day to day in workspace? | Macro-domain stewardship philosophy or consumer contact architecture |
+| **Inquiry Reply Notifications** | Chapter 21 | When may Rento **interrupt** users for inquiry-related re-engagement? | Stewardship architecture or inquiry outcome determination |
+
+### 3.1 Contact Initiation (Chapter 16) — Demand-Side Bridge
+
+Contact Initiation governs **how renters reach realtors about listings** — initiation paths, expectation setting, identity transparency, contact continuity, and honest failure recovery on the consumer side of the marketplace bridge.
+
+**Contact Initiation never substitutes for Inquiry Stewardship.** Initiation establishes connection intent; stewardship governs **professional responsibility orientation** toward that interest on the supply side — without redefining initiation architecture.
+
+### 3.2 Inquiry Stewardship (This Chapter) — Macro-Domain Responsibility
+
+**Inquiry Stewardship** is the realtor's **architectural relationship with professional responsibility toward consumer inquiries** — ongoing orientation to response context, stewardship boundaries, and obligation awareness within Active Realtor Participation.
+
+Stewardship **inherits** contact ethics from Chapter 16 and operational inquiry context from Chapter 19 — it does **not** create parallel contact authority or workspace redefinition.
+
+### 3.3 Workspace Inquiry Handling (Chapter 19) — Operational Layer
+
+**Workspace Inquiry Handling** governs **operational inquiry tasks inside Realtor Workspace** — listing context, response paths, inquiry accountability displays, and day-to-day professional task depth.
+
+**Chapter 19 defines operational handling.** **Chapter 50 specializes stewardship experience** at macro-domain depth — without redefining workspace inquiry mechanics, inbox patterns, or task flows.
+
+### 3.4 Inquiry Reply Notifications (Chapter 21) — Interruption Ethics
+
+**Inquiry Reply Notifications** govern **when and how Rento may notify** participants about inquiry-related events — ethical interruption, journey continuation, and calm re-engagement posture.
+
+Notifications **inform** stewardship attention — they do **not** define stewardship architecture, determine response obligation outcomes, or substitute for macro-domain boundary clarity.
+
+### 3.5 Separation Diagram
+
+```
+Contact Initiation (Ch 16)           →  Renter reaches identified professional  →  Demand-side contact bridge
+        ↓ initiation consumed, not extended
+Inquiry Stewardship (this ch.)       →  Realtor stewards response context       →  Specialized Realtor Platform
+                                         with boundary clarity                     dimension
+        ↓ operational layer consumed, not recreated
+Workspace Inquiry Handling (Ch 19)   →  Day-to-day inquiry task operations      →  Antecedent operations layer
+        ↓ notification ethics consumed, not redefined
+Inquiry Reply Notifications (Ch 21)  →  Ethical interruption for inquiry events →  Notification authority
+        ↓ within
+Realtor Professional Lifecycle (Ch 46) → Supply-side professional arc           →  Macro-domain foundation
+```
+
+### 3.6 Sibling Dimensions — Non-Sequential
+
+| Concept | Governing chapter | Relationship to this chapter |
+|---------|-------------------|------------------------------|
+| **Publication Participation** | Chapter 47 | Sibling — inquiries attach to governed inventory; scopes not merged |
+| **Professional Activation** | Chapter 48 | Sibling — legitimate participation precondition; stewardship separate |
+| **Professional Verification Participation** | Chapter 49 | Sibling — trust standing intersects contact; stewardship separate |
+
+---
+
+## 4. Inquiry Stewardship Invariant (Design Council RA-1)
+
+The following architectural invariant governs all inquiry stewardship experience on Rento — **implementation-independent**, **channel-resilient**, and **non-negotiable**:
+
+1. **Inquiry Stewardship governs professional responsibility toward consumer inquiries.**  
+   The professional orients to response context, understands stewardship limits, and maintains honest obligation awareness — without operating inquiry brokerage or determining outcomes.
+
+2. **Inquiry Stewardship never determines communication outcome.**  
+   Whether a conversation continues, concludes, or fails is **bilateral and external** to stewardship architecture — not platform-established, not stewardship-determined, not metric-certified.
+
+3. **Inquiry Stewardship never determines transaction outcome.**  
+   Lease execution, rental agreement, price negotiation result, or placement success are **outside** inquiry stewardship establishment — stewardship supports marketplace connection honesty, not transaction certification.
+
+4. **Inquiry Stewardship never determines relationship outcome.**  
+   Renter–realtor relationship depth, exclusivity, agency representation, or ongoing client relationship administration are **outside** platform stewardship scope — external professional and bilateral process own relationship outcomes.
+
+This invariant **specializes** Chapter 46 marketplace posture (*the platform never operates the realtor's professional business*) and Chapter 16 communication ethics for the inquiry stewardship dimension. It applies regardless of future messaging channels, inquiry volumes, or response tracking mechanics.
+
+---
+
+## 5. Stewardship Responsibility — Not Performance Metric (Design Council RA-2)
+
+**Inquiry Stewardship is an architectural responsibility — not a performance metric.**
+
+Inquiry stewardship exists independently of, and must never be reduced to:
+
+| Excluded reduction | Why it is excluded |
+|--------------------|-------------------|
+| **Response speed** | Speed is operational context — not stewardship architecture; urgency theater harms dignity (Chapter 16 §12, Chapter 46 §11.9) |
+| **Response quantity** | Volume is not professional obligation quality; vanity counts invite gaming |
+| **Number of conversations** | Conversation count is not marketplace integrity measure |
+| **Successful rental** | Housing outcome is bilateral and external — stewardship does not certify placement |
+| **Commercial outcome** | Commission, revenue, conversion, or deal closure are **outside** marketplace stewardship scope |
+
+### 5.1 Accountability Without Vanity
+
+Rento may support **honest accountability orientation** — realtor understands inquiry context awaits attention — without **public shaming** (Chapter 16 §12.3), **response-rate badges as trust signals**, **leaderboards**, **conversion funnels**, or **inquiry scoring as professional quality proxy**.
+
+### 5.2 Professional Obligation — Architectural, Not Gamified
+
+Professional responsibility toward inquiries is a **marketplace integrity obligation** — identified professionals on a serious housing marketplace owe **honest, dignified response orientation** to consumer interest initiated through governed contact paths. That obligation is **philosophical and boundary-governed** — not a KPI surface, not a growth metric, not a sales performance dashboard.
+
+### 5.3 Implication for Product Surfaces
+
+Any future surface that displays inquiry-related information to realtors must **trace to stewardship architecture** — orientation and boundary clarity — not to commercial performance optimization. Metrics may exist for internal operations; they must **not** become the center of inquiry stewardship experience philosophy.
+
+---
+
+## 6. Inquiry Stewardship
+
+**Inquiry Stewardship** is the central official product concept in the RENTO PRODUCT DESIGN STANDARD for this chapter.
+
+Inquiry Stewardship is the realtor's **architectural relationship with professional responsibility toward consumer inquiries** — the ongoing professional orientation to what responding to marketplace interest means, within governed stewardship boundaries, across the duration of Active Realtor Participation.
+
+**Stewardship is relationship — not outcome.** Inquiry Stewardship represents **how the product supports honest professional responsibility toward inquiry context** — not how conversations conclude, not how rentals close, and not how relationships form. The realtor stewards responsibility orientation; external bilateral and professional process own outcomes (§4 invariant).
+
+Inquiry Stewardship means the professional can:
+
+- Orient to **what consumer inquiry context means** on Rento — listing attachment, identity boundaries, marketplace limits  
+- Understand **inquiry stewardship boundaries** — what Rento supports versus what realtor and external process own  
+- Maintain **stewardship awareness** across sessions without outcome certainty illusion  
+- Engage with pending inquiry context with **dignity** — pending is normal, not failure by default (Chapter 16 §18.2 alignment)  
+- Preserve **inventory and identity coherence** with Publication Integrity (Chapter 47) and trust standing intersection (Chapter 49)  
+
+Inquiry Stewardship does **not** mean:
+
+- Inquiry brokerage, pipeline management, or lead conversion as platform authority  
+- Communication, transaction, or relationship outcome determination (§4 invariant)  
+- Contact initiation architecture (Chapter 16)  
+- Workspace inquiry task mechanics (Chapter 19)  
+- Notification delivery implementation (Chapter 21)  
+- Publication integrity participation (Chapter 47)  
+- Professional activation orientation (Chapter 48)  
+- Professional verification participation (Chapter 49)  
+- Response speed optimization, inquiry volume maximization, or conversion funnel design  
+- A discrete "inquiry cleared" event that certifies housing or relationship success  
+
+Inquiry Stewardship is **ongoing** — responsibility awareness and boundary clarity persist across inquiry volumes, channels, and return after interruption — governed by **Professional Continuity** (Chapter 46) and **Realtor Platform Environment** (Chapter 46) at macro-domain level.
+
+---
+
+## 7. Stewardship Awareness
+
+**Stewardship Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Stewardship Awareness is the **realtor's oriented understanding of inquiry context meaning, stewardship limits, obligation posture, and outcome independence** — without false certainty about communication results, without CRM illusion, and without conflating stewardship with workspace task completion alone.
+
+Stewardship Awareness requires:
+
+- **Inquiry context clarity** — which listing, which initiation path, what identity exposure rules apply (Chapter 16 consumed)  
+- **Limit clarity** — what stewardship does not establish (communication success, lease, relationship) per §4 invariant  
+- **Responsibility honesty** — professional accountability orientation without punitive shame  
+- **Outcome independence honesty** — stewardship orients; it does not certify results  
+- **Continuous orientation** — awareness persists across sessions, not only at first inquiry event  
+
+Stewardship Awareness is distinct from **workspace inquiry status visibility** (Chapter 19): operational task knowledge does not substitute for macro-domain stewardship orientation.
+
+Stewardship Awareness is distinct from **consumer contact expectation comprehension** (Chapter 16): initiation rules remain Chapter 16 authoritative; this chapter governs **realtor-side stewardship depth**.
+
+### 7.1 Environment — Reuse, Not Redefinition (Design Council RA-4)
+
+**Inquiry Stewardship Environment is not introduced.** A separate Environment concept is **not architecturally necessary** — **Realtor Platform Environment** (Chapter 46) already governs macro-domain cognitive conditions for realtor marketplace participation.
+
+Inquiry stewardship **operates within** Realtor Platform Environment — specialized through **Stewardship Awareness**, **Inquiry Stewardship Boundaries**, and **Stewardship Boundary Clarity** — without terminological symmetry imposed without architectural necessity (Chapter 49 RA-3 precedent).
+
+---
+
+## 8. Inquiry Stewardship Boundaries
+
+**Inquiry Stewardship Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Inquiry Stewardship Boundaries define **what engaging with inquiry stewardship through Rento can and cannot establish** — the scope beyond which realtor, consumer, and external professional process must carry responsibility.
+
+Inquiry Stewardship Boundaries **extend** Realtor Platform Boundaries (Chapter 46) and contact ethics limits (Chapter 16) — each prior limit becomes a stewardship limit honestly stated.
+
+Rento inquiry stewardship experience **can** support:
+
+- Orientation to **professional responsibility** toward marketplace inquiries with dignity  
+- Clear communication that **outcomes are not platform-certified** — communication, transaction, and relationship results remain external  
+- Honest stewardship awareness across sessions — without simulating brokerage authority  
+- Calm explanation of what marketplace connection supports — and what it does not  
+- Coherence with **Publication Integrity** (Chapter 47) — inquiries attach to honest inventory context  
+- Coherence with trust standing intersection (Chapter 49) — without merging verification scope  
+- **Realtor Platform Integrity** (Chapter 46) honored throughout inquiry stewardship scope  
+
+Rento inquiry stewardship experience **cannot** substitute for:
+
+- Contact initiation architecture or consumer contact flows (Chapter 16)  
+- Workspace inquiry handling, inbox operations, or task mechanics (Chapter 19)  
+- Notification delivery, alert timing, or channel implementation (Chapter 21)  
+- Communication outcome determination, transaction certification, or relationship administration  
+- CRM, client pipeline, lead scoring, conversion optimization, or inquiry brokerage as platform authority  
+- Publication integrity participation or moderation execution (Chapter 47; Admin Platform)  
+- Professional activation or verification participation (Chapters 48–49)  
+- Tenancy administration, lease execution, or housing outcome guarantee  
+
+**Inquiry Stewardship never determines communication, transaction, or relationship outcomes** (§4 invariant). Inquiry Stewardship Boundaries are reusable when inquiry context intersects forward Realtor Platform governance or block completion evaluation.
+
+---
+
+## 9. Stewardship Boundary Clarity
+
+**Stewardship Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Stewardship Boundary Clarity is the **shared legibility of what Rento, realtor, consumer, and external professional process each reasonably own during inquiry stewardship** — without simulated brokerage authority, CRM theater, response-metric vanity, or outcome certainty illusion.
+
+Stewardship Boundary Clarity requires:
+
+- **Rento scope honesty** — stewardship orients responsibility; it does not determine outcomes  
+- **Marketplace posture honesty** — connection facilitation, not inquiry business operations  
+- **Responsibility honesty** — accountability orientation without shame theater (Chapter 16 §12.3)  
+- **Chapter separation honesty** — Ch 16, Ch 19, Ch 21 authorities remain distinct per §3  
+- **No outcome theater** — stewardship never implies lease success, deal closure, or relationship establishment  
+
+Stewardship Boundary Clarity is distinct from **Realtor Platform Boundary Clarity** (Chapter 46): macro-domain clarity governs all professional participation; stewardship boundary clarity **specializes** inquiry responsibility scope within that foundation.
+
+---
+
+## 10. Inquiry Response Orientation as Consequence — Not Center
+
+**Inquiry Response Orientation** is the realtor's governed experience of **orientation to professional response context** — a **consequence** of the inquiry stewardship invariant (§4), never the primary concept of this chapter.
+
+Consumer interest on a marketplace creates **legitimate inquiry context** when contact is initiated through governed paths (Chapter 16). The realtor orients as the identified professional responsible for honest response context — without brokerage authority or outcome determination.
+
+This chapter does **not** redefine response mechanics. It consumes Chapter 16 §12 and §4 invariant:
+
+- Contact initiates **introduction and inquiry** — not lease guarantee (Chapter 16 §11)  
+- Pending response is **normal state** — not default failure styling (Chapter 16 §18.2)  
+- Workspace surfaces inquiry accountability **without consumer anxiety transplanted to B2B shame** (Chapter 19 §14.5 posture consumed)  
+- Response orientation informs — it does not impersonate outcome determination  
+
+Inquiry Response Orientation governs **how realtors experience response context orientation** — not how messaging is implemented. Channel implementations remain subordinate to stewardship principles.
+
+### 10.1 Inquiry States as Examples Only — Non-Foundational
+
+Inquiry postures (for example, awaiting attention, responded, deferred, unavailable listing) may appear as **illustrative examples only**. This chapter must remain valid if inquiry states are introduced, renamed, regrouped, or replaced. The architecture governs **stewardship relationships and boundaries** — not a fixed state taxonomy.
+
+---
+
+## 11. Relationship to Prior Chapters
+
+### 11.1 Chapter 46 — Realtor Platform Experience (Parent Foundation)
+
+Chapter 46 defines Realtor Professional Lifecycle, **Realtor Platform Environment**, Realtor Platform Boundaries, **Realtor Platform Integrity**, **Active Realtor Participation**, and **Professional Continuity**. This chapter **consumes** all Chapter 46 official concepts — it does **not** amend, extend definitions of, or replace them.
+
+### 11.2 Chapter 47 — Publication Participation (Sibling Dimension)
+
+Chapter 47 governs Publication Integrity. Inquiries attach to **governed published inventory** — stewardship consumes publication truth without merging publication participation architecture.
+
+### 11.3 Chapter 48 — Professional Activation (Sibling Dimension)
+
+Chapter 48 governs Professional Activation orientation. Inquiry stewardship is a **separate specialized dimension** — activation may orient toward professional obligations without defining stewardship architecture.
+
+### 11.4 Chapter 49 — Professional Verification Participation (Sibling Dimension)
+
+Chapter 49 governs attestation participation. Trust standing **intersects** inquiry context at contact — this chapter consumes that intersection without merging verification participation scope.
+
+### 11.5 Chapter 16 — Contact & Communication Experience
+
+Chapter 16 remains **sole authority** for **Contact Initiation** — initiation paths, expectations, identity at contact, continuity, and recovery. This chapter **consumes** Chapter 16 — it does **not** extend contact initiation into supply-side operations or redefine consumer contact architecture.
+
+| Layer | Chapter 16 | This chapter |
+|-------|------------|--------------|
+| **Scope** | How renters initiate and understand contact | How realtors steward professional responsibility toward inquiries at macro-domain depth |
+| **Question** | What does contact mean for the renter? | What does inquiry stewardship mean for the realtor? |
+| **Authority** | Contact Initiation — authoritative | Inquiry Stewardship — specialized |
+
+### 11.6 Chapter 19 — Realtor Workspace Experience
+
+Chapter 19 remains **sole authority** for **Workspace Inquiry Handling** — operational inquiry tasks, listing context in workspace, response paths, and inquiry accountability surfaces. Workspace mechanics remain **Chapter 19 authoritative** — this chapter does not recreate operational flows.
+
+### 11.7 Chapter 21 — Notifications & User Re-engagement Experience
+
+Chapter 21 remains **sole authority** for **Inquiry Reply Notifications** — ethical interruption, alert purpose, and re-engagement rules. This chapter **consumes** notification ethics where inquiry alerts intersect stewardship attention — it does **not** redefine notification delivery.
+
+### 11.8 Chapter 18 — Realtor Profile Experience
+
+Chapter 18 governs public identity and contact source of truth. Inquiry stewardship requires coherence with **One Source of Truth** contact inheritance — consuming Chapter 18 without redefining identity grammar.
+
+### 11.9 Chapter 20 — Trust, Verification & Moderation Experience
+
+Chapter 20 supplies cross-role trust meaning consumed on inquiry surfaces — this chapter does **not** redefine trust attestation or moderation meaning.
+
+### 11.10 Admin Platform (Forward) — Separation Contract
+
+Admin Platform owns moderation execution, role grant, and governance operations. Inquiry stewardship owns **realtor-facing responsibility orientation only** — permanent separation without capability leakage.
+
+---
+
+## 12. Professional Attention Postures — Inquiry Stewardship
+
+Within Active Realtor Participation (Chapter 46), inquiry stewardship supports dignified attention postures — parallel in dignity to Chapter 46 §12, specialized for inquiry stewardship scope:
+
+### 12.1 Orient
+
+Realtor **engages inquiry stewardship context** with Stewardship Boundary Clarity sufficient. Orient does **not** mean Rento certifies response success, guarantees transaction outcome, or substitutes bilateral conversation administration.
+
+### 12.2 Defer Attention
+
+Defer preserves Active Realtor Participation and inquiry reality while acknowledging **insufficient attention, clarity, or timing** for specific inquiry engagement — honest pacing with **Professional Continuity** preserved. Defer does **not** imply professional abandonment or consumer disrespect by default.
+
+### 12.3 Conclude Inquiry Stewardship Context
+
+Conclude diminishes **active inquiry stewardship attention posture** — when responsibility orientation no longer needs macro-domain attention on Rento for the moment. Conclude does **not** imply inquiry resolved, lease executed, or relationship established.
+
+### 12.4 Posture Reconsideration
+
+Orient, defer attention, and conclude remain available across inquiry stewardship — not irreversible traps.
+
+### 12.5 Pending Inquiry Honesty
+
+Pending inquiry and pending response remain **honestly communicated** — normal marketplace states, not default shame or panic styling (Chapter 16 §18.2 alignment).
+
+### 12.6 No Forced Inquiry Engagement
+
+Exit, defer, and conclude paths always dignified — **Realtor Platform Integrity** (Chapter 46) requires it. No manufactured inquiry urgency or conversion pressure.
+
+---
+
+## 13. Mobile & Accessibility Considerations
+
+Mobile is the **primary inquiry stewardship orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Stewardship scope at glance** | What responsibility means and does not mean reachable without hunt |
+| **One-handed deferral** | Defer and conclude stewardship attention reachable during field work |
+| **Calm return** | Resuming inquiry context feels continuous — not alarming |
+| **Pending legibility** | Inquiry posture plain-language — no coded humiliation |
+| **No conversion affordances** | Mobile surfaces never imply inquiry stewardship is sales funnel |
+| **Listing context coherence** | Inquiry attaches to honest inventory truth (Chapter 47) |
+
+Inquiry stewardship must be **inclusive** — textual equivalents for stewardship scope and boundaries; plain language; calm tone without weaponized response anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 14. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **CRM theater** | Impersonates pipeline, lead management, or inquiry brokerage — scope violation (Chapter 46) |
+| **Inquiry conversion theater** | Treats stewardship as conversion funnel — integrity violation (Chapter 46) |
+| **Outcome certainty illusion** | Stewardship implies lease, deal, or relationship success — violates §4 invariant |
+| **Response metric vanity** | Speed, volume, or count as stewardship success — violates §5 (RA-2) |
+| **Ch 16 extension** | Redefines contact initiation in specialized chapter — governance violation |
+| **Ch 19 rewrite** | Recreates workspace inquiry handling — authority violation |
+| **Ch 21 redefinition** | Replaces notification ethics with stewardship architecture — authority violation |
+| **Publication Integrity absorption** | Redefines Ch 47 scope inside stewardship — sibling violation |
+| **Verification participation merge** | Collapses Ch 49 into inquiry scope — sibling violation |
+| **Public shaming** | Punitive response labels on realtors — violates Chapter 16 §12.3 and dignity |
+| **Inquiry Journey terminology** | Collides with Housing Journey — RA-4 violation |
+| **Gratuitous Environment concept** | Inquiry Stewardship Environment without necessity — RA-4 violation |
+| **Lead / pipeline / sales language** | Commercial operations vocabulary — RA-4 violation |
+| **Stewardship determines outcome** | Violates §4 invariant — architectural violation |
+| **Chapter 46 rewrite** | Redefines macro-domain foundations — governance violation |
+
+---
+
+## 15. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, inquiry stewardship initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Inquiry Stewardship**, **Stewardship Awareness**, **Inquiry Stewardship Boundaries**, **Stewardship Boundary Clarity**, **Inquiry Response Orientation**, **Inquiry Stewardship Invariant** (§4), **Stewardship Responsibility — Not Performance Metric** (§5), **Realtor Platform Integrity** (Chapter 46), and **Chapters 16, 19, 21, 46–49 consumption integrity**.
+
+**Review gate:** No inquiry stewardship surface ships without checklist against all official concepts, principles, attention postures, separation requirements (§3), §4 invariant, §5 metric independence, and **Realtor Platform Integrity** requirements defined herein — plus compliance with Chapters 16, 18, 19, 20, 21, 46, 47, 48, and 49 as authoritative upstream layers.
+
+**Block completion note:** Upon Design Council approval, this chapter **completes the four named deferred dimensions** from Chapter 46 §13.3. Realtor Platform block completion remains a **Design Council governance decision** per Chapter 46 §13.4 — not automatic upon this chapter's approval.
+
+---
+
+## 16. Chapter Summary
+
+Inquiry stewardship converts **Realtor Platform foundation** into **honest professional responsibility experience toward consumer inquiries during Active Realtor Participation with stewardship boundary clarity** — the fourth specialized dimension within the Realtor Platform macro-domain and the **final named deferred dimension** from Chapter 46 §13.3.
+
+This chapter establishes **Inquiry Stewardship as the central architectural concept** (RA-4 — Stewardship, not Journey; no CRM/lead/pipeline/conversion/sales terminology); defines **Inquiry Stewardship Invariant** — stewardship governs professional responsibility; never determines communication, transaction, or relationship outcomes (RA-1); establishes **Stewardship Responsibility — Not Performance Metric** — independence from response speed, quantity, conversations, successful rental, and commercial outcome (RA-2); mandatory **Contact Initiation / Inquiry Stewardship / Workspace Inquiry Handling / Inquiry Reply Notifications** separation (RA-3); defines Stewardship Awareness, Inquiry Stewardship Boundaries, and Stewardship Boundary Clarity; reuses **Realtor Platform Environment** without gratuitous Environment concept (RA-4); positions Inquiry Response Orientation as consequence not center; principles of stewardship over execution and responsibility over metrics; mandatory separation from Chapters 16, 19, 21, 47, 48, 49, and Admin execution; non-sequential sibling dimension positioning; orient, defer attention, and conclude inquiry stewardship postures; and honest consumption of Chapters 16–21, 46–49 without redefinition.
+
+**Realtor Platform flow (non-sequential — authoring order shown, not workflow mandate):**
+
+Realtor Profile (Ch 18) + Realtor Workspace (Ch 19) → Realtor Platform Foundation (Ch 46) → Publication Participation (Ch 47) + Professional Activation (Ch 48) + Professional Verification Participation (Ch 49) + **Inquiry Stewardship (Ch 50)**
+
+---
+
+## 17. Design Director Review
+
+**Chapter:** 50 — Inquiry Stewardship Experience  
+**Section:** XLVII — Inquiry Stewardship  
+**Review type:** Initial standard adoption
+
+### 17.1 Approval Statement
+
+- **Pre-Authoring Analysis** — APPROVED  
+- **Architecture Review** — APPROVED  
+- **Required Architectural Amendments** — N/A (RA-1 through RA-4 integrated at authoring)  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **inquiry stewardship experience contract** for Rento — fourth specialized dimension within the Realtor Platform macro-domain. All inquiry stewardship product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 17.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity, human-centered professionalism |
+| Chapter 16 — Contact & Communication Experience | Contact Initiation sole authority — consumed, not extended |
+| Chapter 18 — Realtor Profile Experience | Public identity and contact source of truth — consumed, not redefined |
+| Chapter 19 — Realtor Workspace Experience | Workspace Inquiry Handling sole authority — consumed, not recreated |
+| Chapter 20 — Trust, Verification & Moderation Experience | Cross-role trust meaning — consumed, not redefined |
+| Chapter 21 — Notifications & User Re-engagement Experience | Inquiry Reply Notifications sole authority — consumed, not redefined |
+| Chapter 46 — Realtor Platform Experience | Parent macro-domain foundation; Realtor Platform Environment reused |
+| Chapter 47 — Publication Participation | Sibling dimension — inventory context intersection; mandatory separation |
+| Chapter 48 — Professional Activation Experience | Sibling dimension — non-sequential |
+| Chapter 49 — Professional Verification Participation Experience | Sibling dimension — trust standing intersection; mandatory separation |
+| Admin Platform (forward) | Moderation and governance execution — mandatory separation |
+
+### 17.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Inquiry stewardship positioned as specialized Realtor Platform dimension — not Ch 16 rewrite, not Ch 19 workspace rewrite, not CRM  
+2. Inquiry Stewardship remains central concept — Inquiry Response Orientation remains consequence, not center  
+3. Contact Initiation (Ch 16) / Inquiry Stewardship (Ch 50) / Workspace Inquiry Handling (Ch 19) / Inquiry Reply Notifications (Ch 21) explicitly separated — no merge (RA-3)  
+4. §4 Inquiry Stewardship Invariant explicit — stewardship never determines communication, transaction, or relationship outcomes (RA-1)  
+5. §5 metric independence explicit — stewardship not reducible to speed, quantity, conversations, rental success, commercial outcome (RA-2)  
+6. RA-4 — no Inquiry Journey, Inquiry Stewardship Environment, CRM, lead, pipeline, conversion, or sales terminology; Realtor Platform Environment reused  
+7. Platform-never-operates-inquiry-business and stewardship-over-execution principles explicit  
+8. Chapters 16, 19, 21, 46, 47, 48, and 49 official concepts consumed — not redefined  
+9. Orient, defer attention, conclude postures — not readiness proceed/defer/release  
+10. Mobile-first order explicit  
+11. No implementation leakage  
+12. Non-sequential sibling positioning explicit  
+13. Named Ch 46 §13.3 deferral registry completion honest upon approval  
+
+### 17.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on inquiry stewardship philosophy |
+| Head of Product Design | Realtor Platform specialized dimension parity; Ch 16/19/21 consumption integrity |
+| Senior UX Designer | Stewardship boundary communication, dignity under pending inquiry, mobile rhythm |
+| Product Management | Marketplace posture honesty; CRM boundary enforcement |
+| Content Design Lead | Responsibility scope language, non-punitive pending copy |
+| Trust & Safety Lead | Alignment with Chapter 16 without scope conflation; admin separation |
+| Marketplace Experience | Two-sided bridge coherence — contact initiation to supply stewardship |
+| Accessibility Specialist | Non-visual stewardship orientation access and anxiety-sensitive design |
+
+### 17.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new inquiry stewardship experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 17.6 Design Director Closing Note
+
+Realtors do not need another platform that treats every inquiry like a lead to be converted or scores their professionalism by response speed. They need a marketplace that makes responsibility boundaries legible — where stewardship means honest orientation toward consumer interest, where outcomes stay outside platform certification, and where professional dignity survives pending response. This chapter exists so Rento completes the supply-side specialized architecture begun with publication integrity and verification participation — because a marketplace that connects renters to professionals without governing how professionals steward that responsibility honestly is incomplete.
+
+---
+
+**End of Chapter 50**
