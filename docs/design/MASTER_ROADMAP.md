@@ -34,14 +34,15 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–45 |
-| **Latest approved** | Chapter 45 — Tenancy Conclusion Experience |
-| **Latest checkpoint** | 2d1a0b6 — approve chapter 43 maintenance and repair experience |
-| **Pending checkpoint** | Chapter 45 — Approval Integration complete |
-| **Current chapter** | None — Settled Tenancy block complete; next domain per roadmap |
+| **Approved chapters** | 1–46 |
+| **Latest approved** | Chapter 46 — Realtor Platform Experience |
+| **Latest checkpoint** | aa65637 — approve chapter 45 tenancy conclusion experience |
+| **Pending checkpoint** | Chapter 46 — Approval Integration complete |
+| **Current chapter** | None — Ch 47 Pre-Authoring next per roadmap |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
 | **Settled Tenancy** | **COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension) |
+| **Realtor Platform** | **IN PROGRESS** (Ch 46 foundation approved; specialized dimensions forward) |
 | **Standard version target** | RENTO PRODUCT DESIGN STANDARD v1.0 |
 
 ## Product architecture progression
@@ -63,9 +64,13 @@ Settled Tenancy (Ch 41–45) ✓ COMPLETE
     Ch 45 — Tenancy Conclusion Experience ✓ APPROVED (terminal specialized dimension)
     ↓
 Platform & governance domains (forward)
+    Realtor Platform ← IN PROGRESS
+    Ch 46 — Realtor Platform Experience ✓ APPROVED (macro-domain foundation)
+    Ch 47+ — specialized realtor dimensions ← NEXT
+    Admin Platform, Design System Governance, and other forward blocks
 ```
 
-**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44 establishes the **third specialized dimension** — Tenancy Dispute and Escalation Experience — governing dispute and escalation context during Active Tenancy. Chapter 45 establishes the **terminal specialized dimension** — Tenancy Conclusion Experience — governing normal and expected tenancy conclusion during Active Tenancy. **Settled Tenancy macro-domain (Chapters 41–45) is architecturally complete** for Tenancy Lifecycle specialized dimension coverage.
+**Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44 establishes the **third specialized dimension** — Tenancy Dispute and Escalation Experience — governing dispute and escalation context during Active Tenancy. Chapter 45 establishes the **terminal specialized dimension** — Tenancy Conclusion Experience — governing normal and expected tenancy conclusion during Active Tenancy. **Settled Tenancy macro-domain (Chapters 41–45) is architecturally complete** for Tenancy Lifecycle specialized dimension coverage. Chapter 46 opens the **Realtor Platform macro-domain** — macro-domain foundation consuming Chapters 18–19 antecedent layers; specialized realtor platform dimensions follow in forward chapters.
 
 **Concept separation (mandatory):**
 
@@ -73,16 +78,21 @@ Platform & governance domains (forward)
 |---------|-------|
 | **Housing Journey** | User journey from search through housing decision and execution readiness (Chapters 13–40) — defined in Chapter 23 |
 | **Tenancy Lifecycle** | Relationship lifecycle after occupancy begins — foundation in Chapter 41; rent lifecycle in Chapter 42; maintenance and repair context in Chapter 43; dispute and escalation context in Chapter 44; tenancy conclusion in Chapter 45 |
+| **Realtor Professional Lifecycle** | Supply-side professional marketplace participation — foundation in Chapter 46; specialized dimensions forward |
 
-These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience.
+These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience. Realtor Professional Lifecycle does not subsume Housing Journey or Tenancy Lifecycle.
 
 **Platform posture (Settled Tenancy block):** Rento remains a marketplace platform. Rento does **not** become a Property Management System.
+
+**Platform posture (Realtor Platform block):** Rento remains a marketplace platform. Rento does **not** become CRM, agency ERP, or property management for realtors. **The platform never operates the realtor's professional business.**
 
 ## Remaining work
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Realtor Platform** — realtor-facing product experience beyond existing foundation chapters
+The following chapter domains remain to be authored, reviewed, and approved:
+
+- **Realtor Platform** *(IN PROGRESS — Ch 46 macro-domain foundation approved; Ch 47+ specialized dimensions forward)* — realtor-facing product experience beyond Chapters 18–19 antecedent layers
 - **Admin Platform** — moderation, governance, and administrative experience
 - **Design System Governance** — standards enforcement, evolution, and exception policy
 - **Accessibility & Internationalization** — inclusive and multilingual product experience

@@ -34,10 +34,10 @@ Scope: Product Design Standard only — no implementation unless explicitly requ
 
 ## CURRENT STATUS
 
-Approved chapters: **1–45** (45 chapters total)  
-Latest approved chapter: **Chapter 45 — Tenancy Conclusion Experience**  
-Latest Git checkpoint: **2d1a0b6** — `approve chapter 43 maintenance and repair experience`  
-Pending Git checkpoint: **Chapter 45 — Approval Integration complete**  
+Approved chapters: **1–46** (46 chapters total)  
+Latest approved chapter: **Chapter 46 — Realtor Platform Experience**  
+Latest Git checkpoint: **aa65637** — `approve chapter 45 tenancy conclusion experience`  
+Pending Git checkpoint: **Chapter 46 — Approval Integration complete**  
 Repository status: **Modified (awaiting commit)**
 
 **Decision Experience judgment progression: COMPLETE** (Chapters 31–37)
@@ -46,22 +46,24 @@ Repository status: **Modified (awaiting commit)**
 
 **Settled Tenancy block: COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension)
 
-Chapter 45 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
+**Realtor Platform block: IN PROGRESS** (Ch 46 macro-domain foundation approved; Ch 47+ specialized dimensions forward)
+
+Chapter 46 workflow — COMPLETE (Phase 6 Git Checkpoint pending user):
 - ✓ Phase 1 — Authoring
-- ✓ Phase 2 — Architecture Review (APPROVED WITH REQUIRED CHANGES)
-- ✓ Phase 3 — Required Architectural Amendments (RC-1 through RC-5 applied)
+- ✓ Phase 2 — Architecture Review (APPROVED WITH REQUIRED AMENDMENTS)
+- ✓ Phase 3 — Required Architectural Amendments (RC-1 through RC-4 applied)
 - ✓ Phase 4 — Final Design Council Review (APPROVED)
 - ✓ Phase 5 — Approval Integration
 - ⏳ Phase 6 — Git Checkpoint Preparation (prepared, NOT executed)
 
-Chapter 45 location: after Chapter 44 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
-Section: **XLII — Tenancy Conclusion**  
+Chapter 46 location: after Chapter 45 in `RENTO_PRODUCT_DESIGN_STANDARD.md`  
+Section: **XLIII — Realtor Platform**  
 Status: **APPROVED**
 
 Pending user action: Git commit. Suggested message:
 
 ```
-approve chapter 45 tenancy conclusion experience
+approve chapter 46 realtor platform experience
 ```
 
 ```
@@ -72,25 +74,99 @@ Search Experience ✓ COMPLETE
 Decision Experience ✓ COMPLETE
 ↓
 Housing Obligation ✓ COMPLETE
-  Legal Readiness ✓
-  Financial Readiness ✓
-  Occupancy Readiness ✓
 ↓
 Settled Tenancy ✓ COMPLETE
-  Ch 41 — Settled Tenancy Experience ✓ APPROVED (foundation)
-  Ch 42 — Rent Lifecycle Experience ✓ APPROVED (first specialized dimension)
-  Ch 43 — Maintenance and Repair Experience ✓ APPROVED (second specialized dimension)
-  Ch 44 — Tenancy Dispute and Escalation Experience ✓ APPROVED (third specialized dimension)
-  Ch 45 — Tenancy Conclusion Experience ✓ APPROVED (terminal specialized dimension)
+  Ch 41–45 ✓ APPROVED
 ↓
-Platform & governance domains (forward — per MASTER_ROADMAP)
+Realtor Platform ← IN PROGRESS
+  Ch 46 — Realtor Platform Experience ✓ APPROVED (macro-domain foundation)
+  Ch 47+ — specialized dimensions ← NEXT
+↓
+Admin Platform and governance domains (forward — per MASTER_ROADMAP)
 ```
 
 --------------------------------------------------
 
 ## LATEST APPROVED CHAPTER
 
-**Chapter 45 — Tenancy Conclusion Experience** (Section XLII)
+**Chapter 46 — Realtor Platform Experience** (Section XLIII)
+
+Architectural role:
+- **Macro-domain foundation** opening the Realtor Platform block after Settled Tenancy completion
+- Consumes Chapters 18–19 as antecedent foundation layers (public identity + professional operations) without redefinition
+- Consumes Chapter 20 cross-role trust meaning without redefinition
+- Mandatory separation from Housing Journey, Tenancy Lifecycle, and Admin Platform
+
+Key concepts introduced in Chapter 46:
+- Realtor Professional Lifecycle
+- Realtor Platform Environment
+- Active Realtor Participation
+- Realtor Platform Boundaries
+- Realtor Platform Boundary Clarity
+
+Secondary concepts:
+- Realtor Platform Integrity (parallel to Settled Tenancy Integrity and prior integrity lineage)
+- Professional Continuity (distinct from Housing Continuity and Tenancy Continuity)
+- Listing Lifecycle Disambiguation (Ch 19 operational vs Ch 46 macro-domain)
+
+Platform posture:
+- **The platform never operates the realtor's professional business**
+- **The platform never self-approves marketplace publication**
+
+Required amendments integrated (RC-1 through RC-4):
+- **RC-1:** Listing Lifecycle disambiguation — Ch 19 authoritative for listing lifecycle; not superset of Realtor Professional Lifecycle
+- **RC-2:** CRM terminology removed — inquiry stewardship deferral naming
+- **RC-3:** Professional Continuity macro-domain scope only — Ch 19 operational continuity authoritative
+- **RC-4:** Deferred registry non-sequential, non-exhaustive — Design Council governs block completion
+
+Deferred specialized dimensions (Ch 46 §13.3 — placeholders only):
+- Listing publication and moderation participation experience
+- Professional verification journey experience
+- Inquiry stewardship experience
+- Professional activation experience
+
+Extends (does not replace):
+- Realtor Profile Experience (Chapter 18) — antecedent public identity foundation
+- Realtor Workspace Experience (Chapter 19) — antecedent professional operations foundation
+- Trust, Verification & Moderation Experience (Chapter 20) — cross-role trust layer
+- Settled Tenancy block (Chapters 41–45) — mandatory separation
+
+--------------------------------------------------
+
+## DESIGN COUNCIL DECISION — CHAPTER 46
+
+**Status:** APPROVED  
+**Governance reference:** Chapter 46 Final Design Council Review (Approval)
+
+### Approved architectural conclusions
+
+1. Chapter 46 opens the **Realtor Platform macro-domain** as **foundation chapter**.
+2. Chapters 18–19 are **antecedent foundation layers** — consumed, not redefined.
+3. **Realtor Professional Lifecycle** is objectively justified — distinct from Housing Journey and Tenancy Lifecycle.
+4. **Lifecycle Completion Pattern** is governance principle — not rigid template for Realtor Platform block.
+5. **The platform never operates the realtor's professional business** and **never self-approves marketplace publication**.
+
+### Required amendments applied
+
+- **RC-1:** Listing Lifecycle disambiguation
+- **RC-2:** CRM terminology removal (inquiry stewardship)
+- **RC-3:** Professional Continuity macro-domain scope
+- **RC-4:** Deferred registry non-sequential clause
+
+### Realtor Platform block status
+
+- Chapter 46 completes **macro-domain foundation** only — specialized dimensions forward (Ch 47+)
+- Next step: **Chapter 47 Pre-Authoring Analysis** — do not start Phase 1 without Design Council authorization
+
+--------------------------------------------------
+
+## PRIOR MILESTONE — CHAPTER 45 (Settled Tenancy Complete)
+
+**Chapter 45 — Tenancy Conclusion Experience** remains approved as terminal Settled Tenancy dimension. See DESIGN COUNCIL DECISION — CHAPTER 45 below for full record.
+
+--------------------------------------------------
+
+## LATEST APPROVED CHAPTER (PRIOR) — CHAPTER 45
 
 Architectural role:
 - Fourth and **terminal specialized Settled Tenancy dimension** — normal and expected tenancy conclusion experience during Active Tenancy
@@ -186,11 +262,11 @@ Extends (does not replace):
 
 Current phase: **Phase 6 — Git Checkpoint Preparation**
 
-Next chapter: **None — do not start Chapter 46 or any new chapter without explicit Design Council authorization**
+Next chapter: **Chapter 47 — not yet started**
 
-Next expected step: **Phase 6 — Git Checkpoint** (user-executed commit when requested)
+Next expected step: **Chapter 47 Pre-Authoring Analysis** (when authorized) — then Phase 6 Git Checkpoint for Chapter 46 if not yet committed
 
-Next macro-domain (forward, not active): **Realtor Platform** — per MASTER_ROADMAP remaining work order
+Do NOT start Chapter 47 Phase 1 Authoring without explicit Design Council authorization.
 
 Standard chapter workflow:
 1. Pre-Authoring Analysis (Design Council approval required before authoring)
@@ -204,7 +280,7 @@ Standard chapter workflow:
 Do NOT skip phases. Do NOT approve without explicit Design Council decision.  
 Do NOT commit without explicit user request.
 
-Repository status: **Chapter 45 approval integration complete** — uncommitted changes pending user commit
+Repository status: **Chapter 46 approval integration complete** — uncommitted changes pending user commit
 
 --------------------------------------------------
 
@@ -324,6 +400,13 @@ From Chapter 45:
 - Conclusion Experience Boundaries
 - Conclusion Boundary Clarity
 
+From Chapter 46:
+- Realtor Professional Lifecycle
+- Realtor Platform Environment
+- Active Realtor Participation
+- Realtor Platform Boundaries
+- Realtor Platform Boundary Clarity
+
 Established vocabulary (reuse across chapters):
 - Housing Journey (Ch 23 — user journey; do not merge with Tenancy Lifecycle)
 - Preview Integrity
@@ -358,6 +441,10 @@ Secondary from Chapter 45:
 - Terminal Specialized Dimension
 - Lifecycle Completion Pattern
 
+Secondary from Chapter 46:
+- Realtor Platform Integrity
+- Professional Continuity
+
 ### Concept separation (mandatory)
 
 | Concept | Chapter | Phase |
@@ -369,6 +456,7 @@ Secondary from Chapter 45:
 | Maintenance and Repair Context | 43 | Active Tenancy — physical condition dimension |
 | Tenancy Dispute Context | 44 | Active Tenancy — conflict and escalation dimension |
 | Tenancy Conclusion | 45 | Active Tenancy — closure dimension |
+| Realtor Professional Lifecycle | 46 | Supply-side professional marketplace participation |
 
 Never merge these concepts.
 
@@ -392,10 +480,13 @@ Housing Obligation block (**COMPLETE — execution trilogy**, Ch 38–40 approve
 
 Settled Tenancy block (**COMPLETE — Ch 41–45 approved**):
 - Ch 41: Settled Tenancy foundation — Tenancy Lifecycle, marketplace posture, platform never operates settled tenancy
-- Ch 42: Rent Lifecycle — recurring rent obligation experience; platform never collects rent; Financial Readiness separation
-- Ch 43: Maintenance and Repair — maintenance and repair context experience; platform never executes maintenance; Viewing and Occupancy Readiness separation
-- Ch 44: Dispute and Escalation — dispute and escalation context experience; platform never adjudicates disputes; rent and maintenance dimension separation
-- Ch 45: Tenancy Conclusion — normal and expected closure experience; platform never executes move-out, never processes deposit returns, never certifies tenancy termination; Symmetry without inversion with Ch 40
+- Ch 42–45: Specialized dimensions — rent, maintenance, dispute, conclusion
+
+Realtor Platform block (**IN PROGRESS — Ch 46 foundation approved**, Ch 47+ forward):
+- Ch 18: Antecedent public identity foundation — consumed by Ch 46
+- Ch 19: Antecedent professional operations foundation — consumed by Ch 46
+- Ch 46: Realtor Platform macro-domain foundation — Realtor Professional Lifecycle, platform never operates realtor professional business, never self-approves publication
+- Ch 47+: Specialized dimensions per Ch 46 §13.3 deferral — placeholders only
 
 Verification vs platform trust (Ch 20):
 - Ch 20: what Rento attests — platform trust contract
@@ -473,13 +564,13 @@ Repository status: **Modified (awaiting commit)**
 Latest Git checkpoint:
 
 ```
-2d1a0b6 approve chapter 43 maintenance and repair experience
+aa65637 approve chapter 45 tenancy conclusion experience
 ```
 
 Pending Git checkpoint:
 
 ```
-Chapter 45 — Approval Integration complete
+Chapter 46 — Approval Integration complete
 ```
 
 Uncommitted changes:
@@ -490,14 +581,14 @@ M docs/design/MASTER_ROADMAP.md
 M docs/design/CURSOR_HANDOFF.md
 ```
 
-Includes Chapter 45 Phase 5 approval integration — uncommitted.
+Includes Chapter 46 Phase 5 approval integration — uncommitted.
 
 No commit yet — awaiting user command.
 
-Suggested commit message for Chapter 45:
+Suggested commit message for Chapter 46:
 
 ```
-approve chapter 45 tenancy conclusion experience
+approve chapter 46 realtor platform experience
 ```
 
 --------------------------------------------------
@@ -506,23 +597,23 @@ approve chapter 45 tenancy conclusion experience
 
 Primary:
 
-- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~42,560+ lines)
+- `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md` (~43,350+ lines)
 
-Chapter 45 location in document:
-- After Chapter 44 — `## Chapter 45 — Tenancy Conclusion Experience`
-- End of document — End of Chapter 45
+Chapter 46 location in document:
+- After Chapter 45 — `## Chapter 46 — Realtor Platform Experience`
+- End of document — End of Chapter 46
 
 --------------------------------------------------
 
 ## NEXT CHAPTER
 
-**No new chapter active.**
+**Chapter 47 — not yet started**
 
-Settled Tenancy block (Chapters 41–45) is **COMPLETE**.
+Current macro-domain: **Realtor Platform** (Ch 46 foundation approved)
 
-Do NOT start Chapter 46 or any new chapter without explicit Design Council authorization.
+Next expected step: **Chapter 47 Pre-Authoring Analysis** (when authorized)
 
-Next macro-domain per MASTER_ROADMAP: **Realtor Platform** — not yet started.
+Do NOT start Chapter 47 Phase 1 Authoring without explicit Design Council authorization.
 
 --------------------------------------------------
 
@@ -532,27 +623,28 @@ Next macro-domain per MASTER_ROADMAP: **Realtor Platform** — not yet started.
 - Follow chapter workflow including Pre-Authoring Analysis for future chapters
 - Preserve approved vocabulary
 - Keep chapters principles-only (no implementation leakage)
-- Match approval block format of Chapters 30–45 for future chapters
+- Match approval block format of Chapters 30–46 for future chapters
 - Update TOC and Version History on approval integration
 - Commit only when user explicitly requests
 - Explain in Russian; code/identifiers/commits in English
-- Maintain dimension separation across Ch 35, 40, 41, 42, 43, 44, 45
+- Maintain dimension separation across Ch 35, 40, 41, 42, 43, 44, 45, 46
 
 **DO NOT:**
 - Implement product features in code during design standard work
-- Modify approved chapters 1–45 without explicit approval
+- Modify approved chapters 1–46 without explicit approval
 - Mark chapters APPROVED without Design Council decision
 - Create git commits without user request
 - Rename or redefine established product concepts
 - Add API/UI/CDN/database specifications to design standard chapters
 - Introduce nested Conclusion Lifecycle beneath Tenancy Lifecycle
-- Start Chapter 46 or new macro-domains without Design Council authorization
+- Start Chapter 47 Phase 1 Authoring without Design Council authorization
 
 Release strategy (design standard document):
 - Per-chapter git checkpoints: YES (continue pattern)
 - Decision Experience judgment progression milestone: **COMPLETE** (Ch 31–37)
 - Housing Obligation execution trilogy milestone: **COMPLETE** (Ch 38–40)
 - Settled Tenancy block milestone: **COMPLETE** (Ch 41–45)
+- Realtor Platform block milestone: **IN PROGRESS** (Ch 46 foundation approved; Ch 47+ forward)
 
 --------------------------------------------------
 
@@ -576,14 +668,16 @@ See **AI Session Initialization** at the top of this document.
 
 Current active phase: **Rento Product Design Standard** (Phase 1). Future phases must not begin until this phase is completed and formally approved.
 
-Approved chapters per roadmap: **1–45**  
+Approved chapters per roadmap: **1–46**  
 Decision Experience: **COMPLETE** (judgment progression, Ch 31–37)  
 Housing Obligation: **COMPLETE** (execution trilogy, Ch 38–40)  
 Settled Tenancy: **COMPLETE** (Ch 41–45 — foundation + four specialized dimensions)  
-Current chapter: **None — Phase 6 Git Checkpoint next; no new chapter without authorization**  
-Next forward macro-domain: **Realtor Platform** (per MASTER_ROADMAP)
+Realtor Platform: **IN PROGRESS** (Ch 46 foundation approved; Ch 47+ specialized dimensions forward)  
+Current chapter: **None — Ch 47 Pre-Authoring next per roadmap**  
+Next expected step: **Chapter 47 Pre-Authoring Analysis** (when authorized); Phase 6 Git Checkpoint for Chapter 46 pending user commit
 
-Governance Decision 005: Chapter 41 opens Settled Tenancy block — see MASTER_ROADMAP.
+Governance Decision 005: Chapter 41 opens Settled Tenancy block — see MASTER_ROADMAP.  
+Governance: Chapter 46 opens Realtor Platform macro-domain — Ch 46 foundation approved.
 
 --------------------------------------------------
 

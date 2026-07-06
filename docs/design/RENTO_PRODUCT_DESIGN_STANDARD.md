@@ -87,10 +87,11 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 43 | [Maintenance and Repair Experience](#chapter-43--maintenance-and-repair-experience) | Maintenance | APPROVED |
 | 44 | [Tenancy Dispute and Escalation Experience](#chapter-44--tenancy-dispute-and-escalation-experience) | Dispute and Escalation | APPROVED |
 | 45 | [Tenancy Conclusion Experience](#chapter-45--tenancy-conclusion-experience) | Tenancy Conclusion | APPROVED |
+| 46 | [Realtor Platform Experience](#chapter-46--realtor-platform-experience) | Realtor Platform | APPROVED |
 
 ### Planned (not yet authored)
 
-See `MASTER_ROADMAP.md` for remaining domain order after the Settled Tenancy block.
+See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform foundation chapter.
 
 ---
 
@@ -125,6 +126,7 @@ See `MASTER_ROADMAP.md` for remaining domain order after the Settled Tenancy blo
 | 1.0 | 2026-07-05 | Chapter 43 — Maintenance and Repair Experience approved and added — Established second specialized Settled Tenancy dimension for maintenance and repair context experience during Active Tenancy with Viewing and Occupancy Readiness separation and platform-never-executes-maintenance posture |
 | 1.0 | 2026-07-05 | Chapter 44 — Tenancy Dispute and Escalation Experience approved and added — Established third specialized Settled Tenancy dimension for dispute and escalation context experience during Active Tenancy with rent and maintenance dimension separation and platform-never-adjudicates-disputes posture |
 | 1.0 | 2026-07-05 | Chapter 45 — Tenancy Conclusion Experience approved and added — Established terminal specialized Settled Tenancy dimension for normal and expected tenancy conclusion experience during Active Tenancy with Symmetry without inversion, Trust Continuity at Tenancy Conclusion, Lifecycle Completion Pattern, and platform-never-executes-move-out posture — Settled Tenancy macro-domain Chapters 41–45 architecturally complete |
+| 1.0 | 2026-07-06 | Chapter 46 — Realtor Platform Experience approved and added — Opened Realtor Platform macro-domain with Realtor Professional Lifecycle foundation, Chapters 18–19 antecedent layer consumption, platform-never-operates-realtor-business posture, and Housing Journey / Tenancy Lifecycle / Admin Platform separation — Status: APPROVED |
 
 ---
 
@@ -42555,3 +42557,795 @@ Users do not rent move-out dashboards or deposit processing portals. They rent h
 ---
 
 **End of Chapter 45**
+
+
+---
+
+## Chapter 46 — Realtor Platform Experience
+
+**Section:** XLIII — Realtor Platform  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–45; opens the Realtor Platform macro-domain after Settled Tenancy macro-domain completion (Chapters 41–45); operationalizes Realtor Profile Experience (Chapter 18), Realtor Workspace Experience (Chapter 19), and Trust, Verification & Moderation Experience (Chapter 20) as consumed layers; preserves Housing Journey separation (Chapter 23) and Tenancy Lifecycle separation (Chapter 41); defines principles only — not CRM systems, agency management platforms, admin moderation consoles, listing APIs, permissions implementation, or UI code.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **realtor platform experience philosophy** for Rento — how the product governs **realtor-facing product experience as marketplace supply-side professional participation** while preserving marketplace integrity, role boundary clarity, professional dignity, and long-term platform trust.
+
+Realtor platform experience is not consumer Housing Journey. The Housing Journey governs **the user's path from search through housing decision and execution readiness** (Chapter 23, Chapters 13–40). Realtor platform experience governs **how supply-side professionals participate in the marketplace** — a separate macro-domain that must never be merged with Housing Journey.
+
+Realtor platform experience is not Tenancy Lifecycle. The Tenancy Lifecycle governs **relationship experience surrounding active tenancy after occupancy commencement** (Chapter 41, Chapters 41–45). Realtor platform experience governs **professional marketplace participation** — inventory stewardship, public identity, and operational obligation on Rento as a listing marketplace. A realtor may simultaneously hold professional platform scope and bilateral off-platform relationships; product must preserve **separation** without conflation.
+
+Realtor platform experience is not realtor profile depth alone. Realtor Profile Experience (Chapter 18) governs **public trust identity** — who the professional is for consumers. Realtor platform experience governs **the macro-domain within which public identity and professional operations coexist** — boundaries, lifecycle, continuity, and forward specialized dimensions beyond profile presentation rules.
+
+Realtor platform experience is not realtor workspace depth alone. Realtor Workspace Experience (Chapter 19) governs **private professional operations** — how realtors manage listings and obligations day to day. Realtor platform experience governs **macro-domain architecture** within which workspace operations exist — marketplace posture, role limits, and honest scope across the full realtor professional arc on Rento.
+
+Realtor platform experience is not platform trust philosophy alone. Trust, Verification & Moderation Experience (Chapter 20) governs **what trust, verification, and moderation mean across all roles**. Realtor platform experience **consumes** Chapter 20 on realtor surfaces — it does **not** redefine trust attestation, verification presentation, or moderation communication.
+
+Realtor platform experience is not admin operations. Admin Platform (forward per MASTER_ROADMAP) governs **moderation execution, role grant, and governance operations**. Realtor platform experience governs **realtor role experience only** — never admin authority, never self-approval, never moderation queue operations.
+
+Realtor platform experience is not agency ERP, CRM, or property management. Rento remains a **marketplace platform** — it enables professional listing publication, public identity, and honest inventory presence. It does **not** become the realtor's full business operating system, client relationship manager, or tenancy administrator.
+
+**The platform never operates the realtor's professional business.** Rento does not manufacture bilateral transaction outcomes, commissions earned, agency hierarchy administered, tenancies managed, or professional outcomes certified. The platform **supports honest realtor-facing marketplace experience** — helping professionals maintain trustworthy public presence and owned inventory integrity with boundary clarity — without impersonating agency authority, operational back-office, or bilateral housing process.
+
+Where Chapter 45 completes the Settled Tenancy macro-domain and Chapter 41 §11.4 establishes platform role blocks as forward work, this chapter **opens the Realtor Platform macro-domain** — defining why supply-side professional experience requires independent architecture, what Rento owns in realtor scope, what professional and external process must own, and how forward realtor platform chapters extend this foundation.
+
+The product must help stakeholders answer five realtor platform foundation questions:
+
+1. **Why does Realtor Platform exist as an independent macro-domain — and what architectural problem does it solve that Chapters 18–20 do not?**  
+2. **What does Rento support versus what realtor, consumer, admin, and external professional process must own during marketplace participation?**  
+3. **How does realtor platform experience preserve separation from Housing Journey and Tenancy Lifecycle without role conflation?**  
+4. **How does the platform honor Chapters 18–19 outcomes without simulating agency operations or admin authority?**  
+5. **Can realtors engage with, defer attention from, or conclude professional platform context on Rento without trap, CRM theater, or false operational authority?**
+
+This chapter governs realtor platform experience as the **opening architectural foundation of the Realtor Platform macro-domain**. It does **not** specify listing APIs, permission matrices, moderation consoles, or engineering architecture.
+
+**Relationship to prior chapters:** **Realtor Profile Experience** (Chapter 18) and **Realtor Workspace Experience** (Chapter 19) supply **antecedent foundation layers** consumed by this chapter — not redefined. **Trust, Verification & Moderation Experience** (Chapter 20) supplies cross-role trust meaning — consumed, not redefined. This chapter defines **Realtor Professional Lifecycle**, **Realtor Platform Environment**, **Active Realtor Participation**, **Realtor Platform Boundaries**, **Realtor Platform Boundary Clarity**, **Realtor Platform Integrity**, and **Professional Continuity**.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Boundaries over professional theater** | Rento and realtors know what realtor platform experience can and cannot establish — no simulated agency operations |
+| **Marketplace over back-office** | Rento remains a marketplace — not CRM, ERP, or agency management platform |
+| **Role separation over conflation** | Realtor Platform, Housing Journey, Tenancy Lifecycle, and Admin Platform remain distinct — never merged |
+| **Consumption over redefinition** | Chapters 18–20 remain authoritative — this chapter integrates and bounds |
+| **Professional continuity over amnesia** | Profile and workspace context inform professional participation — without resetting marketplace truth |
+| **Honest scope over operational overclaim** | CRM-style inquiry management, agency administration, and tenancy operations remain outside platform establishment |
+| **Accountability over vanity** | Professional experience serves marketplace integrity — not engagement metrics theater |
+| **Calm over operational panic** | No manufactured publication alarm, moderation shame, or inventory urgency amplification |
+| **Voluntary attention over forced professional engagement** | Realtors may orient, defer, or conclude platform professional context with dignity |
+| **Public-private parity over split truth** | Profile truth and workspace truth remain aligned — marketplace integrity requires it |
+| **Mobile orientation first** | Design for calm mobile professional orientation — then tablet, then desktop |
+| **Realtor Platform Integrity goal** | Every realtor-facing experience honors honest boundaries, marketplace posture, and role separation |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, dashboard layout guide, listing form pattern library, or moderation console design  
+- An implementation plan, API contract, permissions matrix, CRM integration, or engineering architecture  
+- A replacement for Chapters 18, 19, or 20  
+- A rewrite, merge, or amendment of Realtor Profile Experience or Realtor Workspace Experience  
+- A Housing Journey extension, amendment, or realtor consumer onboarding chapter (Chapter 23 remains authoritative for consumer onboarding)  
+- A Tenancy Lifecycle extension or settled tenancy operations chapter (Chapters 41–45 remain authoritative)  
+- An Admin Platform chapter identity — admin moderation execution and role grant belong to forward Admin Platform macro-domain  
+- A **Listing Publication Operations**, **CRM Experience**, **Agency Management Experience**, or **Inquiry Conversion Platform** chapter identity — those exceed marketplace scope  
+- A rigid application of Lifecycle Completion Pattern as mandatory four-dimension template — pattern is governance guidance, not structural law for every macro-domain  
+
+If the question is *how to build* CRM tooling, agency administration, or moderation admin consoles — this chapter does not answer it. If the question is *what realtor platform experience must accomplish for marketplace integrity, supply-side professional honesty, role boundary clarity, and macro-domain architectural coherence* — this chapter does.
+
+Realtor platform experience is **not** agency ERP, brokerage-style inquiry operations, or property management. Realtor platform experience **is** responsible product-supported experience surrounding **realtor marketplace participation** — with honest boundaries and dignity whether professionals orient, defer attention, or conclude platform professional context.
+
+---
+
+## Why Realtor Platform Exists as an Independent Macro-Domain
+
+Realtor Platform exists as an independent macro-domain because **Rento is a two-sided marketplace** whose architectural completeness requires governed experience for **both demand and supply** — and supply-side professional experience cannot be derived from consumer journey architecture alone.
+
+### Architectural Necessity
+
+| Problem | Why Chapters 18–20 Do Not Resolve It Alone |
+|---------|---------------------------------------------|
+| **Macro-domain boundaries** | Ch 18 governs public identity slices; Ch 19 governs workspace operations; neither defines Realtor Platform scope, lifecycle parent concept, or block completion criteria |
+| **Role-based product architecture** | Immutable domain rules establish `realtor` as distinct role — experience architecture must formalize supply-side participation separately from `user` consumer journeys |
+| **Marketplace supply integrity** | Consumer-facing chapters (Search through Settled Tenancy) assume trustworthy inventory — supply-side architecture must govern how that trust is maintained professionally |
+| **Admin vs realtor separation** | Ch 20 governs trust meaning cross-role; admin operations are forward — realtor experience must not absorb moderation execution or role grant |
+| **Journey independence** | Housing Journey ends at occupancy commencement; Tenancy Lifecycle begins after — neither governs how realtors publish and steward listings on the marketplace |
+| **Ecosystem completion** | Ch 45 §11.3 establishes that Settled Tenancy completion ≠ marketplace ecosystem completion — Realtor Platform is the first forward role block per MASTER_ROADMAP |
+
+### What Would Fail Without This Macro-Domain
+
+Without Realtor Platform macro-domain architecture, product teams would lack authoritative principles for:
+
+- How supply-side experience relates to consumer Housing Journey without merge  
+- How realtor professional participation differs from Tenancy Lifecycle when the same person holds multiple roles  
+- Where Ch 18 public identity and Ch 19 workspace operations sit within a unified professional arc  
+- What specialized realtor experience dimensions remain deferred beyond profile and workspace foundations  
+- How to prevent CRM creep, agency management theater, and admin authority leakage into realtor surfaces  
+
+### Independence Does Not Mean Isolation
+
+Realtor Platform **intersects** consumer experience at listing surfaces, contact handoffs, and trust signals — intersection requires **explicit boundaries**, not architectural merge. Realtors appear **within** consumer journeys; consumer journeys do **not** subsume Realtor Professional Lifecycle.
+
+---
+
+## Realtor Professional Lifecycle
+
+**Realtor Professional Lifecycle** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+### Why This Name — Objective Justification
+
+A parent lifecycle concept is **architecturally necessary** for this macro-domain: forward chapters need a shared anchor for specialized realtor experience dimensions, boundary inheritance, and continuity — without nesting lifecycles beneath consumer journeys.
+
+**Realtor Professional Lifecycle** is adopted — not for symmetry with Tenancy Lifecycle naming — but because:
+
+1. **Immutable domain role** — `realtor` is the governing role boundary; the lifecycle describes marketplace participation **as realtor**, not as consumer or admin  
+2. **Spans antecedent layers** — public identity (Chapter 18) and professional operations (Chapter 19) are phases within one professional arc on Rento, not separate macro-domains  
+3. **Distinct temporal scope** — begins when realtor role is legitimately in scope for marketplace participation; distinct from Housing Journey (consumer search-to-readiness) and Tenancy Lifecycle (post-occupancy relationship)  
+4. **Supply-side anchor** — centers marketplace inventory stewardship and professional accountability — the supply-side obligation Rento's consumer architecture assumes  
+5. **No nested lifecycle beneath it** — specialized forward dimensions are **within** this lifecycle, parallel to Rent Lifecycle within Tenancy Lifecycle — not separate macro-lifecycles  
+
+Alternative names were considered and rejected on architectural grounds:
+
+| Rejected name | Rejection reason |
+|---------------|------------------|
+| **Listing Lifecycle** | Too narrow — excludes profile identity, role activation, and professional obligation beyond single listing states |
+| **Agency Lifecycle** | Implies agency enterprise administration — outside marketplace scope; many realtors are independent professionals |
+| **Supply Lifecycle** | Abstract — loses role boundary clarity essential to domain rules |
+| **Realtor Journey** | Collides conceptually with Housing Journey — journey language reserved for consumer arc per Chapter 23 |
+
+### Definition
+
+Realtor Professional Lifecycle is the **complete sequence of professional states and experiences through which a realtor participates in the Rento marketplace as supply-side professional** — including role activation context, public identity maintenance, owned inventory stewardship, publication integrity awareness, moderation participation context, and professional obligation continuity — across sessions, devices, and the duration of marketplace participation.
+
+Realtor Professional Lifecycle is **distinct from Housing Journey** and **distinct from Tenancy Lifecycle**:
+
+| Concept | Governing scope | Begins | Ends |
+|---------|-----------------|--------|------|
+| **Housing Journey** (Chapter 23) | Consumer path from search through execution readiness | First housing search attention | Occupancy commencement boundary |
+| **Tenancy Lifecycle** (Chapter 41) | Relationship experience after occupancy begins | Occupancy commencement boundary | Tenancy conclusion (bilateral; outside platform establishment) |
+| **Realtor Professional Lifecycle** (this chapter) | Supply-side professional marketplace participation | Realtor role legitimately in scope for marketplace participation | Professional platform participation concluded or role revoked (admin; outside realtor self-establishment) |
+
+These concepts must **never** be merged. A person may simultaneously participate in Housing Journey as consumer, Tenancy Lifecycle as tenant or landlord off-platform, and Realtor Professional Lifecycle as professional — product must preserve **dimensional clarity** without false exclusivity.
+
+Realtor Professional Lifecycle is a **cross-chapter concept** within the Realtor Platform macro-domain. Forward chapters may reference it when governing listing publication participation, professional verification journey, inquiry stewardship, and Product Development Methodology when formally established.
+
+No implementation, channel, or technical mechanism is implied by this term. Realtor Professional Lifecycle is a **product philosophy anchor** for the Realtor Platform block — the professional participation sequence realtor platform experience exists to honor.
+
+### Listing Lifecycle Disambiguation
+
+**Listing lifecycle** and **Realtor Professional Lifecycle** are **distinct official concepts** — and must **never** be merged, renamed, or treated as parent-child substitutes.
+
+| Concept | Governing chapter | Scope |
+|---------|-------------------|-------|
+| **Listing lifecycle** | Chapter 19 | Operational listing state sequence inside Realtor Workspace — draft through public availability and beyond; workspace-authoritative |
+| **Realtor Professional Lifecycle** | This chapter | Complete marketplace professional participation arc — role activation context through public identity, inventory stewardship, publication integrity awareness, and professional obligation continuity |
+
+**Listing lifecycle** governs **operational listing states inside Realtor Workspace**. **Realtor Professional Lifecycle** governs **the entire professional participation of the realtor within the marketplace**.
+
+**Realtor Professional Lifecycle** is **not** a rename, replacement, or superset of Chapter 19 listing lifecycle. **Chapter 19 remains authoritative** for listing lifecycle management, listing lifecycle awareness, and workspace operational depth.
+
+No nested **Listing Lifecycle** beneath Realtor Professional Lifecycle — listing lifecycle is an **operational dimension consumed from Chapter 19**, parallel to how rent lifecycle is a dimension within Tenancy Lifecycle without renaming Tenancy Lifecycle.
+
+---
+
+## Realtor Platform Environment
+
+**Realtor Platform Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Realtor Platform Environment is the **cognitive and informational conditions under which a realtor orients to, reflects on, and engages with realtor-facing product experience for their marketplace participation** — not the screen layout, but the **quality of the professional experience space** Rento provides within realtor role scope.
+
+A sound Realtor Platform Environment is **oriented, grounded, boundary-legible, bounded, calm, continuity-preserving, accountability-honest, and marketplace-honest** — consistent with the calm professional posture established in Realtor Workspace Experience (Chapter 19), but governing **macro-domain participation** rather than individual operational task depth.
+
+Realtor Platform Environment is the **supply-side counterpart** to consumer decision environments (Chapters 31–40) and settled tenancy environments (Chapter 41) — the governed space where professionals move from *"I hold realtor role on Rento"* to *"I participate in the marketplace with professional boundary clarity about what the platform supports."*
+
+Realtor Platform Environment is reusable across forward realtor platform chapters — listing publication participation, professional verification journey, inquiry stewardship, and professional activation experience.
+
+---
+
+## Active Realtor Participation
+
+**Active Realtor Participation** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Active Realtor Participation is the state where **realtor role is legitimately in scope** and the professional is actively participating in the Rento marketplace — maintaining public identity, stewarding owned inventory, or engaging professional obligations within Realtor Platform Boundaries.
+
+Active Realtor Participation is **not** granted by realtor self-declaration alone. Admin grants realtor role per immutable domain rules — grant serves role scope; it does **not** certify professional quality, legal compliance, or marketplace outcome. Recognition serves experience orientation only.
+
+Active Realtor Participation is the **entry condition** for realtor platform experience scope at macro-domain depth. Consumer Housing Journey and Tenancy Lifecycle states remain governed by their respective chapters — realtor platform must not absorb consumer journey judgment or tenancy relationship administration.
+
+A realtor without Active Realtor Participation in scope — role pending, revoked, or concluded — retains **dignified platform communication** per Chapter 20; macro-domain professional experience scope adjusts honestly.
+
+---
+
+## Realtor Platform Boundaries
+
+**Realtor Platform Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Realtor Platform Boundaries define **what engaging with realtor platform experience through Rento can and cannot establish** — the scope beyond which realtor, consumer, admin, agency, and external professional process must carry responsibility.
+
+Realtor Platform Boundaries **extend** the professional obligation lineage from Chapters 18–19 and trust boundaries from Chapter 20 — each prior limit becomes a realtor platform limit honestly stated.
+
+Rento realtor platform experience **can** support professional orientation, realtor platform boundary clarity, professional continuity across sessions, public-private truth alignment between profile and workspace, honest pending-state language, dignified orient, defer attention, or conclude postures toward professional context, and honest scope communication about marketplace limits.
+
+Rento realtor platform experience **cannot** substitute for **agency hierarchy administration**, **CRM or client pipeline management as platform authority**, **commission or transaction processing**, **brokerage-style inquiry conversion or conversion optimization as operational authority**, **self-approval to public listing status**, **moderation decision execution** (Admin Platform), **role grant or revocation** (admin only), **tenancy administration** (Settled Tenancy block), **rent collection or property management operations**, **consumer Housing Journey judgment**, **platform attestation of professional outcome** (Chapter 20), or **impersonation of legal, licensing, or housing authority**.
+
+**The platform never operates the realtor's professional business.** **The platform never self-approves marketplace publication.** Realtor Platform Boundaries are reusable across all forward realtor platform chapters.
+
+---
+
+## Realtor Platform Boundary Clarity
+
+**Realtor Platform Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Realtor Platform Boundary Clarity is the **shared legibility of what Rento, realtor, consumer, admin, and external professional process each reasonably own during realtor marketplace participation** — without simulated agency authority, self-approval theater, CRM overclaim, or admin capability leakage.
+
+Realtor Platform Boundary Clarity requires **Rento scope honesty**, **professional responsibility honesty**, **marketplace posture honesty**, **pending publication state legibility**, **moderation participation honesty without execution impersonation**, and **no false certainty that professional or listing outcomes are platform-certified**.
+
+Realtor Platform Boundary Clarity is distinct from **Tenancy Boundary Clarity** (Chapter 41) and **Housing Journey** scope: consumer and tenancy dimensions remain separate even when the same person holds multiple roles.
+
+---
+
+## Realtor Platform Integrity
+
+**Realtor Platform Integrity** is the **honesty of the realtor platform experience itself** — no simulated self-approval, no hidden professional boundaries, no pressure to engage professional features when inappropriate, no CRM theater, no agency management impersonation, no admin capability suggestion, no publication gamification, no false operational authority.
+
+Realtor Platform Integrity parallels **Settled Tenancy Integrity** (Chapter 41) and the integrity lineage from Chapters 33–45 — specialized for **supply-side professional marketplace participation**, not consumer judgment gates or tenancy relationship administration.
+
+---
+
+## Professional Continuity
+
+**Professional Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Professional Continuity is the **preservation of realtor professional context across sessions, devices, and interruptions during the Realtor Professional Lifecycle** — so realtors returning to realtor platform experience recognize where professional attention paused without reconstructing inventory, identity, or obligation truth from scratch.
+
+Professional Continuity is **distinct from Housing Continuity** (Chapter 30) and **Tenancy Continuity** (Chapter 41):
+
+| Concept | Governs | Scope |
+|---------|---------|-------|
+| **Housing Continuity** (Chapter 30) | Search-to-decision persistence across Housing Journey | Consumer discovery, evaluation, return |
+| **Tenancy Continuity** (Chapter 41) | Relationship context persistence during Tenancy Lifecycle | Post-commencement tenancy orientation |
+| **Professional Continuity** (this chapter) | Professional context persistence during Realtor Professional Lifecycle | Profile-workspace alignment, inventory state, moderation awareness, obligation carry-forward |
+
+Professional Continuity requires **public-private alignment** — Realtor Profile Experience (Chapter 18) truth and Realtor Workspace Experience (Chapter 19) operational truth must not diverge in ways that harm marketplace integrity. Continuity **inherits** trust signals from Chapter 20 — it does **not** extend trust attestation into professional outcome certification.
+
+Professional Continuity connects **Context Restoration** (Chapter 30 lineage), **Respectful Silence** (Chapter 25), and **Notifications & User Re-engagement** (Chapter 21) within Realtor Professional Lifecycle scope — re-engagement informs; it does not pressure.
+
+**Macro-domain scope only:** Professional Continuity operates **only at the Realtor Platform macro-domain level**. It **does not** redefine Chapter 19 workspace continuity, operational context persistence, portfolio return integrity, or workspace task continuity depth. **Chapter 19 remains authoritative** for operational continuity mechanics within Realtor Workspace Experience.
+
+---
+
+## 2. Role in Product Architecture
+
+Realtor platform experience sits at the **opening position of the Realtor Platform macro-domain** — immediately after Settled Tenancy macro-domain completion (Chapters 41–45) and per MASTER_ROADMAP forward domain order.
+
+| Architecture domain | Stakeholder mode | Primary question |
+|--------------------|------------------|------------------|
+| Search through Housing Obligation (Ch 13–40) | Consumer demand | How does the user find, evaluate, and prepare for housing? |
+| Settled Tenancy (Ch 41–45) | Consumer / bilateral tenancy | How does Rento support experience surrounding active tenancy? |
+| **Realtor Platform (this chapter)** | **Supply-side professional** | **How does Rento honorably support realtor marketplace participation — with professional boundary clarity?** |
+| Realtor Profile (Chapter 18) | Public identity layer | Who is this professional — can consumers trust them? |
+| Realtor Workspace (Chapter 19) | Operations layer | What must I do next as a professional? |
+| Forward realtor chapters | Specialized professional dimensions | How are publication participation, verification journey, and inquiry stewardship experienced? |
+| Admin Platform (forward) | Admin governance | How does the platform govern moderation and role operations? |
+
+Realtor platform experience **opens** the Realtor Professional Lifecycle — it does **not** complete it. Forward chapters within the Realtor Platform block supply specialized experience dimensions deferred from this foundation.
+
+Chapters 18 and 19 are **antecedent foundation layers** — authored before macro-domain formalization, now **positioned within** this macro-domain without redefinition:
+
+| Layer | Chapter | Architectural role within macro-domain |
+|-------|---------|------------------------------------------|
+| **Public Identity Foundation** | Chapter 18 | Consumer-facing professional trust identity |
+| **Professional Operations Foundation** | Chapter 19 | Private professional operating environment |
+| **Macro-domain Foundation** | **This chapter** | Boundaries, lifecycle, continuity, deferred dimensions, block architecture |
+
+Realtor platform succeeds through **honest professional orientation and boundary clarity** — not CRM feature maximization, inquiry conversion theater, or agency operations impersonation.
+
+---
+
+## 3. Relationship to Realtor Profile Experience (Chapter 18)
+
+Chapter 18 defines **public trust identity** — the complete realtor profile experience philosophy. This chapter **does not amend, extend definitions of, or replace** Chapter 18 official concepts.
+
+### 3.1 Consumption Contract
+
+- Chapter 18 governs **who the realtor is publicly** — identity hierarchy, verification display, contact source of truth, listings relationship on profile  
+- This chapter governs **within which macro-domain and boundaries** that public identity exists  
+- Realtor Profile Experience **inherits** Realtor Platform Boundaries — public identity must not imply operational authority beyond marketplace scope  
+- Profile completeness and trust presentation remain **Chapter 18 authoritative** — this chapter supplies macro-domain context only  
+
+### 3.2 What Chapter 18 Supplies
+
+Public identity foundation supplies **professional accountability visibility**, **One Realtor One Identity**, **contact source of truth**, and **consumer trust evaluation infrastructure** — consumed across Realtor Professional Lifecycle.
+
+### 3.3 What This Chapter Adds Beyond Chapter 18
+
+Macro-domain boundaries, lifecycle parent concept, Active Realtor Participation scope gate, Professional Continuity, and forward specialized dimension deferral — architectural depth Chapter 18 explicitly deferred to workspace and forward chapters.
+
+---
+
+## 4. Relationship to Realtor Workspace Experience (Chapter 19)
+
+Chapter 19 defines **private professional operations** — the complete realtor workspace experience philosophy. This chapter **does not amend, extend definitions of, or replace** Chapter 19 official concepts.
+
+### 4.1 Consumption Contract
+
+- Chapter 19 governs **how the realtor works day to day** — listing portfolio, create/edit flows, status awareness, workspace navigation, professional ethics  
+- This chapter governs **macro-domain architecture within which workspace operates** — marketplace posture, role limits, lifecycle boundaries  
+- Realtor Workspace Experience **operates within** Realtor Platform Boundaries — workspace must not expose admin capabilities or imply self-approval  
+- Operational task depth, listing lifecycle management, and workspace productivity philosophy remain **Chapter 19 authoritative**  
+
+### 4.2 What Chapter 19 Supplies
+
+Professional operations foundation supplies **listing stewardship mechanics**, **workspace professional OS posture**, **listing lifecycle awareness** (draft through public availability and beyond), and **accountability ethics** — consumed across Realtor Professional Lifecycle.
+
+### 4.3 Public-Private Alignment Requirement
+
+Realtor Platform Integrity requires **profile truth and workspace truth alignment** — Chapter 18 public presentation and Chapter 19 operational state must not diverge in ways that harm consumer trust. This chapter establishes the **macro-domain integrity contract** binding both layers; neither chapter is rewritten.
+
+---
+
+## 5. Relationship to Trust, Verification & Moderation Experience (Chapter 20)
+
+Chapter 20 defines the **platform trust contract** across all roles. This chapter **consumes** platform trust signals on realtor surfaces — it does **not** redefine them.
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|----------|
+| **Platform attestation** | Chapter 20 | What did Rento independently confirm about listing and marketplace integrity? |
+| **Public identity presentation** | Chapter 18 | How is professional identity presented with honesty? |
+| **Professional operations** | Chapter 19 | How does workspace communicate status and moderation awareness? |
+| **Realtor platform** | **This chapter** | Does realtor marketplace participation honor professional boundary clarity and marketplace posture? |
+
+Verification badges, moderation status, and rejection communication on realtor surfaces **inherit Chapter 20 meaning** — this chapter does not inflate attestation into professional outcome certification, legal compliance guarantee, or self-approval authority.
+
+Moderation **execution** — queues, role grant, approval actions — belongs to **Admin Platform** (forward). Realtor platform governs **realtor-facing experience of moderation participation context** — orientation and boundary clarity, not adjudication execution.
+
+---
+
+## 6. Relationship to Housing Journey (Chapter 23)
+
+Chapter 23 defines **Housing Journey** — the consumer sequence from search through execution readiness. This chapter **does not amend, extend, or redefine** Housing Journey.
+
+### 6.1 Concept Separation — Mandatory
+
+| Dimension | Housing Journey | Realtor Professional Lifecycle |
+|-----------|-----------------|--------------------------------|
+| **Official definition** | Chapter 23 | This chapter |
+| **Primary stakeholder** | Consumer seeking housing | Realtor as supply-side professional |
+| **Temporal scope** | Search through execution readiness | Marketplace professional participation |
+| **Macro-domain** | Search, Decision, Housing Obligation | Realtor Platform |
+| **Merge permitted** | **No** | **No** |
+
+### 6.2 Intersection Without Merge
+
+Realtors **appear within** consumer Housing Journey at listing surfaces — as identity behind inventory consumers evaluate. That intersection is **Chapter 18 + consumer chapters** — not Realtor Professional Lifecycle substituting for consumer journey architecture.
+
+Consumer onboarding (Chapter 23) **explicitly excludes** realtor professional onboarding — forward specialized chapters govern professional activation within this macro-domain.
+
+### 6.3 Dual Role Clarity
+
+A user who is also realtor requires **clear role separation** on professional access (Chapter 23 §29.2, Chapter 19) — Housing Journey attention and Realtor Professional Lifecycle attention remain **distinct** even for one person.
+
+---
+
+## 7. Relationship to Tenancy Lifecycle (Chapters 41–45)
+
+Settled Tenancy Experience (Chapter 41) and specialized dimensions (Chapters 42–45) govern **consumer and bilateral relationship experience surrounding active tenancy**. This chapter **does not amend, extend, or redefine** Tenancy Lifecycle official concepts.
+
+### 7.1 Concept Separation — Mandatory
+
+| Dimension | Tenancy Lifecycle | Realtor Professional Lifecycle |
+|-----------|-------------------|--------------------------------|
+| **Official definition** | Chapter 41 | This chapter |
+| **Primary question** | How is ongoing tenancy experienced? | How is marketplace professional participation experienced? |
+| **Platform posture** | Never operates settled tenancy | Never operates realtor professional business |
+| **Merge permitted** | **No** | **No** |
+
+### 7.2 Realtor as Participant — Not Operator
+
+A realtor may be landlord or tenant **bilaterally off-platform** — bilateral tenancy relationship administration is **Tenancy Lifecycle or external process**, not Realtor Professional Lifecycle. Rento does not conflate **listing marketplace participation** with **tenancy relationship administration**.
+
+### 7.3 Listing vs Tenancy
+
+Realtor stewards **listing inventory on marketplace** — Tenancy Lifecycle governs **relationship after occupancy**. A listed property may transition to rented status; **tenancy experience depth** remains Chapters 41–45 scope when Active Tenancy is legitimately in scope for participants — not realtor platform operations scope.
+
+---
+
+## 8. Relationship to Admin Platform (Forward)
+
+Admin Platform (forward per MASTER_ROADMAP) governs **moderation execution, role grant, governance operations, and administrative experience**. This chapter establishes **separation contract** — not Admin Platform content.
+
+### 8.1 Admin Owns
+
+- Realtor role grant and revocation  
+- Listing moderation decision execution (`pending` → `available`)  
+- Moderation queue operations and governance consoles  
+- Platform policy enforcement execution  
+
+### 8.2 Realtor Platform Owns
+
+- Realtor-facing experience **surrounding** participation in marketplace — identity, workspace, publication context, moderation awareness  
+- Professional boundary clarity — what realtor can and cannot do through Rento  
+- Honest communication of moderation state on realtor surfaces (meaning from Chapter 20)  
+
+### 8.3 Never Merge
+
+Realtor workspace must **never** expose admin capabilities. Admin console must **never** be skinned as realtor feature. Chapter 19 §2.4 role boundary and this chapter **reinforce** separation without redefining either forward block.
+
+---
+
+## 9. Professional Role Boundaries
+
+Immutable domain rules govern realtor role architecture within this macro-domain:
+
+| Rule | Product expression |
+|------|-------------------|
+| **Admin grants realtor role** | Realtor cannot self-elevate; professional activation experience must honor admin authority |
+| **Realtor owns listings** | `owner_id` integrity; workspace stewardship within owned inventory only |
+| **Realtor cannot change `owner_id` or `status` directly** | Publication status changes through moderation flow — not realtor self-approval |
+| **Contacts from `realtor_profiles`** | Public identity and listing contact inheritance — Chapter 18 source of truth |
+| **Realtor manages profile and publication** | Within platform boundaries — not beyond marketplace scope |
+| **Realtor never receives admin rights** | Workspace and all realtor surfaces — permanent separation |
+
+### 9.1 Realtor ≠ Admin
+
+Role confusion is an **integrity violation** — Realtor Platform Integrity and Chapter 19 ethics require permanent clarity.
+
+### 9.2 Realtor ≠ Consumer Journey
+
+Professional marketplace participation is **not** consumer Housing Journey — dual-role users receive **dimensional separation**, not merged surfaces.
+
+### 9.3 Realtor ≠ Tenancy Administrator
+
+Listing stewardship on marketplace is **not** tenancy relationship administration — Settled Tenancy block governs tenancy experience for participants.
+
+---
+
+## 10. Platform Responsibility and Marketplace Posture
+
+### 10.1 Rento as Marketplace for Supply
+
+Rento's realtor platform posture inherits Product Philosophy (Chapter 1): a serious long-term rental **marketplace** — not CRM, not agency ERP, not property management platform, not inquiry brokerage.
+
+### 10.2 What the Platform Supports
+
+Rento realtor platform experience **can** support:
+
+- **Professional orientation** — role scope, obligation awareness, marketplace participation context  
+- **Realtor platform boundary clarity** — honest scope language about platform limits  
+- **Professional continuity** — context preservation across return and interruption  
+- **Public-private alignment** — profile and workspace truth coherence  
+- **Calm professional postures** — orient, defer attention, conclude without shame  
+- **Inheritance of trust meaning** — Chapter 20 signals on realtor surfaces  
+- **Forward orientation** — honest pointers to specialized forward chapters  
+
+### 10.3 What the Platform Does Not Operate
+
+Rento realtor platform experience **does not** operate:
+
+- Agency hierarchy, commission, or transaction administration  
+- CRM, client pipeline, or inquiry brokerage management as platform authority  
+- Self-approval of public listing publication  
+- Moderation decision execution or role grant  
+- Tenancy administration, rent collection, or property management  
+- Professional licensing, legal compliance, or outcome certification  
+- Consumer housing judgment or readiness gates  
+
+**The platform never operates the realtor's professional business.** **The platform never self-approves marketplace publication.**
+
+### 10.4 Parallel Posture Lineage
+
+| Macro-domain | Platform posture |
+|--------------|------------------|
+| Settled tenancy (Chapter 41) | The platform never operates settled tenancy |
+| **Realtor platform (this chapter)** | **The platform never operates the realtor's professional business** |
+| Admin Platform (forward) | Governs governance execution — separate block |
+
+---
+
+## 11. Realtor Platform Principles
+
+*How should Rento support realtor marketplace participation while preserving integrity, role separation, professional boundary clarity, and marketplace honesty?*
+
+### 11.1 Marketplace Posture — Not Agency Operations Simulation
+
+Realtor platform experience must consistently communicate **marketplace role** — inventory and identity on a listing marketplace, not full professional back-office.
+
+### 11.2 Role Separation — Not Journey Conflation
+
+Product surfaces must **never** collapse Housing Journey, Tenancy Lifecycle, and Realtor Professional Lifecycle into a single undifferentiated arc.
+
+### 11.3 Consumption — Not Redefinition of Chapters 18–20
+
+Antecedent chapters remain authoritative — this chapter integrates macro-domain architecture only.
+
+### 11.4 Boundary Clarity Before Operational Implication
+
+Realtors understand **what Rento does not operate** before any professional feature implies otherwise.
+
+### 11.5 Professional Continuity Without Public-Private Split
+
+Profile and workspace truth remain **aligned** — marketplace integrity requires coherence.
+
+### 11.6 Honest State Language
+
+Product language reflects **actual professional and moderation posture** — pending review, revision required, available, withdrawn — not simulated approval or false operational certainty.
+
+### 11.7 Moderation Participation Honesty
+
+Realtors understand **moderation flow** and **platform limits** — without impersonating admin authority or promising self-approval.
+
+### 11.8 Voluntary Professional Attention
+
+Realtors may **orient** to professional context, **defer** attention, or **conclude** platform professional orientation — all dignified outcomes within Active Realtor Participation scope.
+
+### 11.9 Calm Over Operational Panic
+
+No manufactured publication countdown, moderation shame theater, inventory alarm, or inquiry-conversion pressure.
+
+### 11.10 Accountability Over Vanity Metrics
+
+Professional experience serves **marketplace integrity** — not dashboard engagement extraction.
+
+### 11.11 Admin Boundary Respect
+
+No realtor surface suggests admin capability — permanent separation from Admin Platform.
+
+### 11.12 Mobile Orientation First
+
+Professional orientation designed for mobile interruption context first — glance legibility, calm return.
+
+---
+
+## 12. Professional Attention Postures
+
+Realtor platform foundation is **not** a readiness gate with proceed, defer, and release as judgment outcomes. It governs **ongoing professional marketplace participation** with distinct attention postures — parallel in dignity to settled tenancy postures (Chapter 41 §10), specialized for professional scope.
+
+### 12.1 Orient
+
+Realtor **engages professional marketplace context** on Rento with Realtor Platform Boundary Clarity sufficient. Orient does **not** mean Rento operates agency business, certifies professional outcome, or self-approves publication.
+
+### 12.2 Defer Attention
+
+Defer preserves Active Realtor Participation and inventory reality while acknowledging **insufficient attention, clarity, or timing** for specific professional engagement — honest pacing with **Professional Continuity** preserved.
+
+### 12.3 Conclude Professional Context
+
+Conclude diminishes **platform professional attention posture** — typically when professional scope no longer needs macro-domain orientation on Rento, or role status changes outside realtor self-establishment. Conclude does **not** imply listings automatically withdrawn, moderation bypassed, or admin actions substituted.
+
+### 12.4 Posture Reconsideration
+
+Orient, defer attention, and conclude remain available across Realtor Professional Lifecycle — not irreversible traps.
+
+### 12.5 Pending State Honesty
+
+Pending moderation, incomplete profile, or unresolved publication states remain **honestly communicated** — no simulated availability or approval theater.
+
+### 12.6 No Forced Professional Engagement
+
+Exit, defer, and conclude paths always dignified — Realtor Platform Integrity requires it.
+
+---
+
+## 13. Transition to Forward Realtor Platform Chapters
+
+This chapter opens the Realtor Platform macro-domain. Specialized experience dimensions follow in forward chapters — per MASTER_ROADMAP remaining work within this block and gaps identified in Chapters 18–19 out-of-scope domains.
+
+### 13.1 What This Chapter Supplies
+
+This chapter supplies **architectural foundation** — Realtor Professional Lifecycle definition, marketplace posture, platform responsibility limits, Housing Journey and Tenancy Lifecycle separation, Chapters 18–19 positioning as antecedent foundation layers, and official boundary concepts reusable across forward chapters.
+
+### 13.2 Antecedent Foundation Layers — Not Rewritten
+
+| Layer | Chapter | Status |
+|-------|---------|--------|
+| Public Identity Foundation | Chapter 18 | Approved — consumed |
+| Professional Operations Foundation | Chapter 19 | Approved — consumed |
+| Macro-domain Foundation | **Chapter 46** | This chapter |
+
+Forward specialized chapters **extend** this foundation — they do **not** replace Chapters 18 or 19.
+
+### 13.3 Explicitly Deferred — Forward Within Realtor Platform Block
+
+The deferred specialized dimensions below are **architectural placeholders only**. They are **not sequential commitments**, **not implementation roadmap items**, **not exhaustive**, and **do not determine final chapter count**. Design Council retains authority over specialized chapter **order**, **grouping**, **splitting**, **merging**, and **block completion** — per §13.4.
+
+The following belong to **forward realtor platform chapters** — outside this chapter's definitional scope:
+
+- **Listing publication and moderation participation experience** — realtor-facing depth on publication integrity, pending states, and moderation participation context beyond workspace awareness  
+- **Professional verification journey experience** — realtor professional verification arc beyond profile attestation display (Chapter 18) and trust meaning (Chapter 20)  
+- **Inquiry stewardship experience** — professional response context for consumer interest beyond contact initiation (Chapter 16)  
+- **Professional activation experience** — role activation and first professional use after admin grant — beyond consumer onboarding (Chapter 23)  
+- **Additional specialized dimensions** — subject to Design Council scoping as Realtor Platform block evolves  
+
+This chapter **references** these domains — it does **not** define them.
+
+### 13.4 Lifecycle Completion Pattern — Governance Principle
+
+**Lifecycle Completion Pattern** (Chapter 45 §11.1) is a **governance principle** for macro-domain authoring — not a rigid template every block must replicate.
+
+Settled Tenancy (Chapters 41–45) implemented: Foundation → three specialized dimensions → terminal specialized dimension — because **architectural necessity** required that depth for Tenancy Lifecycle dimensions.
+
+Realtor Platform **may** follow a different dimension count and sequence. Chapters 18–19 already supply substantial antecedent foundation before this macro-domain chapter. Forward chapters should demonstrate **foundation → specialized dimensions → block completion criteria** without forcing structural symmetry where architectural necessity does not require it.
+
+Design Council governs block completion — not predetermined dimension count.
+
+### 13.5 Relationship to Admin Platform and Other Forward Blocks
+
+This subsection **extends** Realtor Platform opening with explicit ecosystem boundary — consistent with Chapter 41 §11.4, Chapter 45 §11.3, and MASTER_ROADMAP forward domain order.
+
+Admin Platform, Design System Governance, Accessibility & Internationalization, Performance Experience, and Future Product Evolution remain **separate forward blocks** — not subsets of Realtor Platform. Approval of forward realtor chapters completes **Realtor Platform specialized coverage** only — not marketplace ecosystem completion.
+
+### 13.6 Handoff Preconditions to Forward Chapters
+
+Transition toward specialized realtor platform chapters is responsible when **Active Realtor Participation** is in scope, **Realtor Platform Boundaries** are understood, **Realtor Platform Boundary Clarity** is adequate, **Professional Continuity** preserves relevant context, and **Realtor Platform Integrity** posture is maintained.
+
+---
+
+## 14. Information and Continuity Layer
+
+### 14.1 Professional Continuity Across Sessions
+
+**Professional Continuity** governs persistence of profile state awareness, inventory posture, moderation context, and last orientation across professional sessions — without amnesia or false state reset — **at macro-domain level only**. It does **not** redefine Chapter 19 workspace context preservation, portfolio return integrity, or operational task continuity mechanics.
+
+### 14.2 Public-Private Alignment
+
+Listing state in workspace (Chapter 19) and presentation on profile and consumer surfaces (Chapter 18) must remain **interpretable as coherent truth** — divergence is a marketplace integrity risk this chapter governs at macro-domain level.
+
+### 14.3 Trust Signal Inheritance
+
+Chapter 20 trust, verification, and moderation meaning **informs** Professional Continuity on realtor surfaces — it does **not** authorize professional outcome claims beyond platform attestation.
+
+### 14.4 Consumer Intersection Context
+
+When consumer Housing Journey surfaces display realtor identity, **Chapter 18 governs presentation** — Professional Continuity ensures workspace changes propagate to public truth honestly.
+
+---
+
+## 15. Mobile & Accessibility Considerations
+
+Mobile is the **primary professional orientation surface** for marketplace participation context. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Professional posture at glance** | Role scope, inventory summary, and boundaries reachable without hunt |
+| **One-handed deferral** | Defer and conclude professional attention reachable during field work |
+| **Calm return** | Resuming professional context feels continuous — not alarming |
+| **Moderation state legibility** | Pending and revision states plain-language — no coded humiliation |
+| **Public-private coherence** | Profile preview from workspace reflects actual public truth |
+| **Role clarity** | Dual-role users understand which hat they wear — consumer vs professional |
+
+Realtor platform foundation must be **inclusive** — textual equivalents for professional posture and boundaries; plain language; calm tone without weaponized moderation or publication anxiety (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 16. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **CRM Theater** | Impersonates client pipeline, inquiry brokerage, or agency operations — scope violation |
+| **Self-Approval Theater** | Realtor-facing control implies direct public publication without moderation — domain violation |
+| **Admin Capability Leakage** | Moderation execution or role grant exposed in realtor workspace — role violation |
+| **Agency ERP Creep** | Commission, hierarchy, or transaction administration in realtor surfaces — scope violation |
+| **Housing Journey Conflation** | Merges consumer search-decision arc with professional lifecycle — architectural violation |
+| **Tenancy Lifecycle Conflation** | Merges listing stewardship with tenancy administration — architectural violation |
+| **Chapter 18–19 Rewrite** | Redefines profile or workspace philosophy in macro-domain chapter — governance violation |
+| **Chapter 20 Redefinition** | Replaces trust attestation philosophy — authority violation |
+| **Publication Panic Amplification** | Manufactured urgency to publish or revise — violates calm environment |
+| **Moderation Shame Theater** | Punitive rejection UX — violates Chapter 20 and professional dignity |
+| **Inquiry Conversion Theater** | Professional experience as conversion funnel metric — integrity violation |
+| **Vanity Dashboard** | Engagement metrics over marketplace truth — accountability violation |
+| **Public-Private Split** | Workspace state diverges from profile consumer truth — integrity violation |
+| **Dual-Role Confusion** | Consumer and professional surfaces merged without separation — role violation |
+| **Rigid Lifecycle Template Forcing** | Assuming four dimensions because Settled Tenancy had four — governance violation |
+
+---
+
+## 17. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, realtor platform initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Realtor Professional Lifecycle** separation, **Realtor Platform Environment**, **Realtor Platform Boundaries**, **Realtor Platform Boundary Clarity**, **Realtor Platform Integrity**, **Professional Continuity**, and **Chapters 18–20 consumption integrity**.
+
+**Lifecycle Completion Pattern governance:** Future Realtor Platform initiatives should trace to foundation scope, specialized dimension necessity, block completion criteria, and explicit separation from Admin Platform and consumer journeys — without assuming structural symmetry with Settled Tenancy unless architectural necessity requires it.
+
+**Review gate:** No realtor platform surface ships without checklist against all official concepts, principles, attention postures, role boundaries, and integrity requirements defined herein — plus compliance with Chapters 18, 19, and 20 as authoritative antecedent layers.
+
+---
+
+## 18. Chapter Summary
+
+Realtor platform experience opens the **Realtor Platform macro-domain** — converting **supply-side professional marketplace participation** into **honest realtor-facing experience with professional boundary clarity** after Settled Tenancy macro-domain completion.
+
+This chapter establishes **why Realtor Platform exists as an independent macro-domain**; defines Realtor Professional Lifecycle (objectively justified parent concept), Realtor Platform Environment, Active Realtor Participation, Realtor Platform Boundaries, Realtor Platform Boundary Clarity, Realtor Platform Integrity, and Professional Continuity; principles of boundaries over theater and marketplace over back-office; mandatory separation from Housing Journey, Tenancy Lifecycle, and Admin Platform; consumption of Chapters 18, 19, and 20 without redefinition; orient, defer attention, and conclude professional context postures; platform-never-operates-realtor-business and never-self-approves-publication posture; Lifecycle Completion Pattern as governance principle not rigid template; and honest transition toward specialized forward realtor platform chapters without owning CRM, agency administration, moderation execution, or tenancy operations.
+
+**Product architecture flow:**
+
+Search (Ch 13–30) → Decision (Ch 31–37) → Housing Obligation (Ch 38–40) → Settled Tenancy (Ch 41–45) → **Realtor Platform (Ch 46)** → specialized realtor chapters (forward) → Admin Platform and governance domains (forward per MASTER_ROADMAP)
+
+**Antecedent layers within Realtor Platform:**
+
+Realtor Profile (Ch 18) + Realtor Workspace (Ch 19) → **Realtor Platform Foundation (Ch 46)** → forward specialized dimensions
+
+---
+
+## 19. Design Director Review
+
+**Chapter:** 46 — Realtor Platform Experience  
+**Section:** XLIII — Realtor Platform  
+**Review type:** Initial standard adoption
+
+### 19.1 Approval Statement
+
+- **Pre-Authoring Analysis** — APPROVED WITH CLARIFICATIONS  
+- **Architecture Review** — APPROVED WITH REQUIRED AMENDMENTS (RC-1 through RC-4 applied)  
+- **Required Architectural Amendments** — RC-1 through RC-4 applied  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **realtor platform experience foundation** opening the Realtor Platform macro-domain for Rento. All realtor platform product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 19.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity, human-centered professionalism |
+| Chapter 16 — Contact & Communication Experience | Consumer contact initiation; inquiry stewardship deferred forward |
+| Chapter 18 — Realtor Profile Experience | Antecedent public identity foundation — consumed, not redefined |
+| Chapter 19 — Realtor Workspace Experience | Antecedent professional operations foundation — consumed, not redefined |
+| Chapter 20 — Trust, Verification & Moderation Experience | Cross-role trust parent — consumed, not redefined |
+| Chapter 23 — Onboarding & First-Time Experience | Housing Journey parent; realtor professional activation deferred forward |
+| Chapter 41 — Settled Tenancy Experience | Tenancy Lifecycle parent — mandatory separation |
+| Chapter 45 — Tenancy Conclusion Experience | Settled Tenancy block completion; ecosystem bridge to forward domains |
+
+### 19.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Realtor platform positioned as Realtor Platform macro-domain opening — not Ch 18–19 rewrite, not admin platform, not CRM  
+2. Housing Journey / Tenancy Lifecycle / Realtor Professional Lifecycle explicitly separated — no merge  
+3. Why macro-domain exists section present and architecturally motivated — not assumed from symmetry  
+4. Realtor Professional Lifecycle name objectively justified — not copied from Tenancy Lifecycle without necessity  
+5. Platform-never-operates-realtor-business and never-self-approves-publication principles explicit  
+6. Chapters 18, 19, and 20 consumed — not redefined  
+7. Admin Platform separation explicit — no moderation execution or role grant in realtor scope  
+8. Lifecycle Completion Pattern treated as governance principle — not rigid four-dimension mandate  
+9. Antecedent foundation layer positioning for Ch 18–19 explicit  
+10. Orient, defer attention, conclude professional postures — not readiness proceed/defer/release  
+11. Professional Continuity distinct from Housing Continuity and Tenancy Continuity  
+12. Mobile-first order explicit  
+13. No implementation leakage  
+14. Forward deferral registry honest — publication, verification journey, inquiry stewardship, professional activation  
+
+### 19.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on realtor platform foundation philosophy |
+| Head of Product Design | Macro-domain transition parity; Ch 18–19 consumption integrity |
+| Senior UX Designer | Professional boundary communication, mobile rhythm, role separation |
+| Product Management | Marketplace posture honesty and realtor-admin boundary integrity |
+| Content Design Lead | Scope language, moderation state honesty, professional copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation; admin separation |
+| Accessibility Specialist | Non-visual professional orientation access and anxiety-sensitive design |
+
+### 19.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new realtor platform experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 19.6 Design Director Closing Note
+
+Consumers do not rent CRM dashboards or agency ERP portals. They rent homes — from professionals they can identify and trust. Realtors do not need another back-office platform pretending to run their entire business. They need a serious marketplace that respects professional accountability, honest inventory, and clear boundaries — where public identity and private operations stay aligned, where moderation is understood without humiliation, and where the platform never confuses listing publication with self-approval or professional participation with property management. This chapter exists so Rento opens supply-side architecture with the same rigor brought to Housing Journey and Tenancy Lifecycle — because a marketplace that governs demand without governing supply is incomplete.
+
+---
+
+**End of Chapter 46**
