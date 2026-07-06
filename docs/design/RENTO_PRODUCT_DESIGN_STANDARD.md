@@ -89,6 +89,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 45 | [Tenancy Conclusion Experience](#chapter-45--tenancy-conclusion-experience) | Tenancy Conclusion | APPROVED |
 | 46 | [Realtor Platform Experience](#chapter-46--realtor-platform-experience) | Realtor Platform | APPROVED |
 | 47 | [Listing Publication and Moderation Participation Experience](#chapter-47--listing-publication-and-moderation-participation-experience) | Publication Participation | APPROVED |
+| 48 | [Professional Activation Experience](#chapter-48--professional-activation-experience) | Professional Activation | APPROVED |
 
 ### Planned (not yet authored)
 
@@ -129,6 +130,7 @@ See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform sp
 | 1.0 | 2026-07-05 | Chapter 45 — Tenancy Conclusion Experience approved and added — Established terminal specialized Settled Tenancy dimension for normal and expected tenancy conclusion experience during Active Tenancy with Symmetry without inversion, Trust Continuity at Tenancy Conclusion, Lifecycle Completion Pattern, and platform-never-executes-move-out posture — Settled Tenancy macro-domain Chapters 41–45 architecturally complete |
 | 1.0 | 2026-07-06 | Chapter 46 — Realtor Platform Experience approved and added — Opened Realtor Platform macro-domain with Realtor Professional Lifecycle foundation, Chapters 18–19 antecedent layer consumption, platform-never-operates-realtor-business posture, and Housing Journey / Tenancy Lifecycle / Admin Platform separation — Status: APPROVED |
 | 1.0 | 2026-07-06 | Chapter 47 — Listing Publication and Moderation Participation Experience approved and added — Established first specialized Realtor Platform dimension with Publication Integrity as central concept, moderation participation as consequence, Listing Lifecycle separation, and platform-never-self-approves-publication posture — Status: APPROVED |
+| 1.0 | 2026-07-06 | Chapter 48 — Professional Activation Experience approved and added — Established second specialized Realtor Platform dimension with Professional Activation as central concept, Active Realtor Participation disambiguation, Role Grant Participation as consequence, dual-role clarity, and participation orientation posture — Status: APPROVED |
 
 ---
 
@@ -43864,3 +43866,547 @@ Realtors do not need another platform that treats moderation like a game or publ
 ---
 
 **End of Chapter 47**
+
+
+---
+
+## Chapter 48 — Professional Activation Experience
+
+**Section:** XLV — Professional Activation  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Reviewers  
+**Authority:** Subordinate to Chapters 1–47; second specialized experience dimension within the Realtor Platform macro-domain after Listing Publication and Moderation Participation Experience (Chapter 47); operationalizes Realtor Platform Boundaries (Chapter 46), Active Realtor Participation (Chapter 46 — consumed, not redefined), Professional Continuity (Chapter 46), dual-role clarity (Chapter 23 §29.2 — consumed), Realtor Workspace Experience (Chapter 19 — consumed, not recreated), and trust meaning (Chapter 20 — consumed, not redefined); defines principles only — not implementation, UI, role grant workflows, permissions, APIs, databases, or engineering architecture.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **professional activation experience philosophy** for Rento — how the product governs the realtor's **orientation into legitimate marketplace professional participation** after authority has already been granted — while preserving role clarity, boundary understanding, dual-role separation, admin authority awareness, professional dignity, and long-term platform trust.
+
+Professional activation is not consumer onboarding. Onboarding & First-Time Experience (Chapter 23) governs **how users enter the Housing Journey** — trust, exploration, and meaningful progress as consumers seeking housing. Professional activation governs **how a realtor orients to legitimate supply-side marketplace participation** — a separate specialized dimension that must never be merged with consumer onboarding.
+
+Professional activation is not realtor platform foundation. Realtor Platform Experience (Chapter 46) governs **the opening architectural foundation** of the Realtor Platform macro-domain — Realtor Professional Lifecycle, marketplace posture, and cross-dimensional boundaries for all supply-side professional experience. Professional activation governs **one specialized dimension** within that foundation: **how a realtor experiences orientation into legitimate professional participation when Active Realtor Participation is in scope**.
+
+Professional activation is not workspace operational depth. Realtor Workspace Experience (Chapter 19) governs **private professional operations** — listing portfolio, create/edit flows, status awareness, and day-to-day accountability. Professional activation governs **macro-domain orientation depth** — role clarity, participation limits, and boundary understanding at professional entry — without redefining workspace task mechanics.
+
+Professional activation is not publication participation. Listing Publication and Moderation Participation Experience (Chapter 47) governs **the realtor's ongoing relationship with Publication Integrity** during Active Realtor Participation. Professional activation governs **participation orientation** — how a realtor understands legitimate professional scope, role boundaries, and marketplace limits — without defining publication integrity architecture.
+
+Professional activation is not admin operations. Admin Platform (forward per MASTER_ROADMAP) governs **role grant and revocation execution, moderation decision execution, and governance operations**. Professional activation governs **realtor-facing participation context surrounding role grant** — orientation and boundary clarity, not grant execution.
+
+Professional activation is not CRM, agency onboarding, or activation funnel design. Rento remains a **marketplace platform** — it supports honest professional orientation within governed participation boundaries. It does **not** become the realtor's business launchpad, lead pipeline, or conversion optimization system.
+
+**The platform never self-elevates realtor role.** **The platform never operates the realtor's professional business.** Professional activation specializes these Chapter 46 postures for the participation orientation dimension — without impersonating admin grant authority or operational back-office.
+
+Where Chapter 46 opens the Realtor Platform macro-domain and defers professional activation depth beyond Active Realtor Participation definition, and where Chapter 23 explicitly excludes realtor professional onboarding from consumer onboarding scope, this chapter **specializes professional activation** — one deferred dimension from Chapter 46 §13.3 — without redefining Realtor Professional Lifecycle, Active Realtor Participation, Realtor Platform Boundaries, Professional Continuity, Housing Journey, or any other approved official concept.
+
+**Specialized dimension order is non-sequential.** Chapter 47 established Publication Participation as the first specialized Realtor Platform dimension per Design Council. This chapter's position as Chapter 48 **does not imply** that professional activation should have preceded publication participation, **does not establish** a mandatory linear workflow order, and **does not prescribe** that activation must occur before other specialized dimensions in product implementation. Professional activation governs **participation orientation** — not chronological chapter sequencing.
+
+The product must help stakeholders answer five professional activation questions:
+
+1. **What does legitimate professional participation orientation require — beyond knowing that realtor role is in scope?**  
+2. **What does Rento support versus what admin governance and external professional process must own at participation entry?**  
+3. **How does professional activation remain distinct from Active Realtor Participation (Chapter 46), consumer onboarding (Chapter 23), and admin role grant execution (forward)?**  
+4. **How does dual-role clarity preserve Housing Journey and Realtor Professional Lifecycle separation for users who hold both roles?**  
+5. **Can realtors orient to, defer attention from, or conclude activation context with dignity — without onboarding funnel theater, self-elevation illusion, or admin authority leakage?**
+
+This chapter governs professional activation as a **specialized experience dimension within the Realtor Platform macro-domain**. It does **not** specify role grant APIs, permission matrices, admin consoles, or engineering architecture.
+
+**Relationship to prior chapters:** **Realtor Platform Boundaries** (Chapter 46) and **Realtor Platform Boundary Clarity** (Chapter 46) govern the parent scope within which professional activation operates. **Active Realtor Participation** (Chapter 46) governs the professional participation **state** — professional activation **specializes the orientation experience** into that state without redefining it. **Professional Continuity** (Chapter 46) governs persistence across activation attention cycles at macro-domain level. This chapter defines **Professional Activation Environment**, **Professional Activation**, **Activation Awareness**, **Professional Activation Boundaries**, **Activation Boundary Clarity**, and **Role Grant Participation** (consequence concept).
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Orientation over funnel** | Professional activation orients to legitimate participation — not activation metrics or conversion theater |
+| **Participation over execution** | Realtor participates in role grant context; admin executes grant and revocation |
+| **Clarity over ceremony** | Role scope and boundaries legible — not tutorial overlays or feature tours |
+| **Boundaries over professional theater** | No implied self-elevation, no simulated admin authority, no agency ERP posture |
+| **Dual-role separation over conflation** | Housing Journey and Realtor Professional Lifecycle remain distinct even for one person |
+| **Dignity over pressure** | Activation communication calm, non-punitive, non-humiliating |
+| **Marketplace over back-office** | Orientation to marketplace participation — not CRM, pipeline, or business launch |
+| **Separation over conflation** | Distinct from Active Realtor Participation definition (Ch 46), consumer onboarding (Ch 23), Admin Platform (forward) |
+| **Positive scope over negation-only** | Chapter defines what activation governs — not only what it is not |
+| **Honest limits** | Marketplace participation limits stated plainly — platform never operates realtor business |
+| **Mobile orientation first** | Role clarity and boundaries reachable at glance on mobile |
+| **Realtor Platform Integrity goal** | Every professional activation outcome honors honest boundaries and marketplace posture (Chapter 46) |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A consumer onboarding chapter, registration funnel, or Housing Journey extension (Chapter 23 remains authoritative)  
+- A role grant execution chapter, admin console design, or permissions implementation spec (Admin Platform forward)  
+- A workspace operations chapter, dashboard layout guide, or listing task workflow (Chapter 19 remains authoritative)  
+- A publication integrity or moderation participation chapter (Chapter 47 remains authoritative)  
+- A verification journey chapter, inquiry stewardship chapter, or CRM architecture chapter (forward specialized dimensions)  
+- A UI, screen, or interaction specification; no frontend, backend, API, database, or permissions content  
+- A chapter built around one grant state — grant outcomes may appear only as examples  
+- A "how to become a successful realtor" playbook or growth funnel for professional activation volume  
+- A replacement for Chapters 19, 20, 23, 46, or 47  
+- A claim that this dimension must precede other specialized dimensions chronologically  
+
+If the question is *how admin grants or revokes realtor role* — this chapter does not answer it. If the question is *how realtor professional activation must orient legitimate participation with boundary clarity and dignity* — this chapter does.
+
+Professional activation is **not** admin grant execution, consumer onboarding, or workspace task management. Professional activation **is** responsible product-supported experience surrounding **orientation into legitimate marketplace professional participation** — with honest boundaries and dignity whether professionals orient, defer attention, or conclude activation context.
+
+---
+
+## 2. Why This Chapter Exists
+
+Chapter 46 established **Realtor Professional Lifecycle** as the complete sequence of professional states through which a realtor participates in the Rento marketplace — including **role activation context**, public identity maintenance, owned inventory stewardship, publication integrity awareness, moderation participation context, and professional obligation continuity. Chapter 46 supplies foundation and defines **Active Realtor Participation** as the state where realtor role is legitimately in scope; it **does not** define specialized experience depth for how realtors **orient** to that participation after authority has been granted.
+
+Chapter 23 governs **consumer onboarding** within the Housing Journey. Chapter 23 §2.2 explicitly excludes realtor workspace onboarding and professional verification flows from consumer onboarding scope. Chapter 23 §29.2 requires **clear role separation** on first professional access for dual-role users — consumed by this chapter, not redefined.
+
+Chapter 19 governs **workspace operational depth** — how realtors manage listings and professional obligations day to day. Chapter 19 supplies operational first-use context; it **does not** define macro-domain professional activation architecture — how a realtor understands legitimate participation scope, marketplace limits, and role boundaries at professional orientation depth.
+
+Without this chapter, Realtor Platform lacks **professional activation experience architecture** when Active Realtor Participation is in scope. Product teams would lack authoritative principles for how realtors orient to legitimate participation — risking consumer onboarding conflation, self-elevation theater, admin authority leakage, dual-role confusion, or activation funnel metrics over boundary clarity.
+
+This chapter exists because **supply-side marketplace participation requires governed orientation** — realtors deserve **legible role clarity and honest participation limits** when professional scope becomes available — and consumers deserve **professionals who understand marketplace boundaries** without a platform that impersonates grant authority or reduces professional entry to a conversion funnel.
+
+This chapter is **not** another consumer onboarding chapter, **not** Admin Platform preview, and **not** a CRM or agency onboarding architecture chapter.
+
+---
+
+## 3. Concept Separation — Mandatory
+
+### 3.1 Active Realtor Participation Disambiguation Contract
+
+**Active Realtor Participation** and **Professional Activation** are **distinct official concepts** — and must **never** be merged, renamed, or treated as definition-and-specialization substitutes.
+
+| Concept | Governing chapter | Scope |
+|---------|-------------------|-------|
+| **Active Realtor Participation** | Chapter 46 | The **state** where realtor role is legitimately in scope and the professional is actively participating in the Rento marketplace within Realtor Platform Boundaries — **definition and scope gate** |
+| **Professional Activation** | **This chapter** | The **experience** of orienting into legitimate professional participation after authority has already been granted — **specialized orientation dimension** |
+
+**Chapter 46 defines the professional participation state.** **Chapter 48 specializes the experience of orientation into legitimate professional participation after authority has already been granted.**
+
+Active Realtor Participation answers: *Is realtor role legitimately in scope for marketplace participation?*  
+Professional Activation answers: *How does the realtor orient to what legitimate participation means — with role clarity, boundary understanding, and dignity?*
+
+Professional Activation operates **within** Active Realtor Participation when that state is in scope — it does **not** grant, certify, or establish Active Realtor Participation. Admin grant establishes role scope; this chapter governs how product supports **orientation** to that scope.
+
+No nested **Activation Lifecycle** beneath Realtor Professional Lifecycle — professional activation is a **specialized dimension within** Realtor Professional Lifecycle, parallel to Publication Participation (Chapter 47) within the same parent lifecycle.
+
+### 3.2 Multi-Concept Separation Table
+
+| Concept | Governing chapter | Primary question | Must not become |
+|---------|-------------------|------------------|-----------------|
+| **Housing Journey onboarding** | Chapter 23 | How do consumers enter housing search with trust? | Professional activation |
+| **Active Realtor Participation** | Chapter 46 | Is realtor role in scope? | Professional activation experience layer |
+| **Professional Activation** | **This chapter** | How does realtor orient to legitimate participation? | Consumer onboarding or role grant execution |
+| **Publication Participation** | Chapter 47 | How does realtor maintain Publication Integrity relationship? | Professional activation |
+| **Admin role grant authority** | Admin Platform (forward) | How does platform execute grant and revocation? | Realtor orientation experience layer |
+
+```
+Admin role grant (forward)           →  Grant/revocation execution        →  Admin Platform authority
+        ↓ establishes scope (outside realtor self-establishment)
+Active Realtor Participation (Ch 46) →  Professional participation state  →  Macro-domain definition
+        ↓ orientation experience when in scope
+Professional Activation (this ch.)   →  Legitimate participation orientation →  Specialized dimension
+        ↓ parallel specialized dimensions (non-sequential)
+Publication Participation (Ch 47)    →  Publication Integrity relationship  →  Sibling dimension
+```
+
+### 3.3 Non-Sequential Dimension Positioning
+
+Realtor Platform specialized dimensions are **architectural placeholders governed by Design Council** — not sequential workflow commitments (Chapter 46 §13.3, RC-4).
+
+Chapter 47 (Publication Participation) was authorized and approved **before** this chapter without implying that publication must always precede activation in product experience. Chapter 48 (Professional Activation) **does not** assert that it should have existed before Chapter 47. **Chapter number reflects authoring order — not mandatory professional workflow sequence.**
+
+Professional activation governs **participation orientation** — the cognitive and informational conditions under which a realtor understands legitimate marketplace scope. That orientation may be needed at different moments for different professionals: upon first professional access, upon return after interruption, upon dual-role transition, or alongside other specialized dimensions. Product must support orientation **without** forcing a linear "activation before publication" or "publication before activation" workflow template.
+
+---
+
+## 4. Professional Activation
+
+**Professional Activation** is the central official product concept in the RENTO PRODUCT DESIGN STANDARD for this chapter.
+
+Professional Activation is the realtor's **architectural experience of orienting into legitimate marketplace professional participation** — understanding role scope, participation boundaries, marketplace limits, and professional obligations with clarity and dignity after authority has already been granted.
+
+**Activation is orientation — not grant.** Professional Activation represents **how the product supports legitimate participation understanding** — not how role is granted, not how workspace tasks are executed, and not how publication integrity is maintained. The realtor orients to what marketplace professional participation means on Rento; admin governance and external professional process carry responsibilities beyond platform establishment.
+
+Professional Activation means the professional can:
+
+- Understand **role clarity** — what realtor role on Rento establishes and does not establish  
+- Achieve **legitimate participation orientation** — what marketplace participation means with honesty  
+- Internalize **boundary understanding** — what Rento supports versus what external process must own  
+- Maintain **dual-role separation** when also participating in Housing Journey as consumer  
+- Hold **admin authority awareness** — grant is governed; realtor does not self-elevate  
+- Experience **professional dignity** — calm orientation without funnel pressure or humiliation  
+- Recognize **marketplace participation limits** — platform never operates realtor business  
+
+Professional Activation does **not** mean:
+
+- Role grant, revocation, or self-elevation  
+- Consumer onboarding replay or Housing Journey extension  
+- Workspace operational task completion or listing lifecycle management  
+- Publication integrity participation or moderation execution  
+- Verification program completion or inquiry stewardship  
+- CRM pipeline setup, lead capture, or conversion optimization  
+- A discrete "activation complete" event that certifies professional quality  
+
+Professional Activation is **revisitable** — orientation may be needed again after return, role context change, or dual-role transition. Activation is not a one-time funnel gate.
+
+---
+
+## 5. What Professional Activation Positively Governs
+
+This chapter defines **positive architectural scope** — what professional activation experience must accomplish:
+
+| Domain | What activation governs |
+|--------|-------------------------|
+| **Role clarity** | Legible understanding of realtor role scope on Rento — what the role enables within marketplace boundaries |
+| **Legitimate participation orientation** | Honest framing of what supply-side marketplace participation means — not agency ERP, not CRM, not tenancy administration |
+| **Boundary understanding** | Clear inheritance of Realtor Platform Boundaries (Chapter 46) at orientation depth — what platform can and cannot establish |
+| **Dual-role separation** | Distinct professional attention versus consumer Housing Journey attention for users who hold both roles |
+| **Admin authority awareness** | Grant and governance are admin-executed; realtor orients to outcomes without impersonating authority |
+| **Professional dignity** | Calm, respectful orientation — no funnel pressure, no shame, no manufactured urgency |
+| **Marketplace participation limits** | Plain communication that Rento is marketplace — not business operating system, not client pipeline, not property management |
+
+Professional activation **orients** realtors toward other specialized dimensions — including Publication Participation (Chapter 47), verification journey, and inquiry stewardship (forward) — without owning their scope. Orientation may **reference** forward dimensions honestly; it does **not** substitute for them.
+
+---
+
+## 6. Professional Activation Environment
+
+**Professional Activation Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Professional Activation Environment is the **cognitive and informational conditions under which a realtor orients to legitimate marketplace professional participation** — not the screen layout, but the **quality of the orientation space** Rento provides within professional activation scope.
+
+A sound Professional Activation Environment is:
+
+- **Role-legible** — realtor scope understandable without hunting  
+- **Boundary-legible** — marketplace limits plain, not buried  
+- **Calm** — no activation panic, no funnel pressure  
+- **Dignified** — professional respect, not growth-hacking tone  
+- **Separation-honest** — dual-role clarity when applicable  
+- **Authority-honest** — admin grant context without impersonation  
+- **Marketplace-honest** — never implies platform runs realtor business  
+- **Continuity-preserving** — orientation survives interruption and return via Professional Continuity (Chapter 46)  
+
+Professional Activation Environment is reusable across activation attention postures, boundary communication, and forward Realtor Platform specialized dimensions where participation orientation remains relevant.
+
+---
+
+## 7. Activation Awareness
+
+**Activation Awareness** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Activation Awareness is the **realtor's oriented understanding of legitimate professional participation scope, role boundaries, marketplace limits, and admin governance context** — without false certainty about professional outcomes, without self-elevation illusion, and without conflating orientation with grant execution or workspace operational readiness.
+
+Activation Awareness requires:
+
+- **Role scope clarity** — what realtor role establishes on Rento  
+- **Participation limit clarity** — what marketplace participation does and does not include  
+- **Governance separation clarity** — what admin process owns versus what orientation establishes  
+- **Dual-role clarity** — consumer and professional attention remain distinct when both apply  
+- **Revisitable orientation** — awareness may deepen over time; not a one-time checkbox  
+
+Activation Awareness is distinct from **listing lifecycle awareness** (Chapter 19): operational task knowledge does not substitute for professional participation orientation at macro-domain depth.
+
+Activation Awareness is distinct from **Active Realtor Participation** (Chapter 46): state definition does not substitute for orientation experience.
+
+---
+
+## 8. Professional Activation Boundaries
+
+**Professional Activation Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Professional Activation Boundaries define **what engaging with professional activation through Rento can and cannot establish** — the scope beyond which realtor, admin governance, and external professional process must carry responsibility.
+
+Professional Activation Boundaries **extend** Realtor Platform Boundaries (Chapter 46) — each prior limit becomes an activation boundary honestly stated at orientation depth.
+
+Rento professional activation experience **can** support:
+
+- Orientation to legitimate marketplace professional participation scope  
+- Clear communication of role boundaries and marketplace limits  
+- Dual-role separation guidance for users who are also consumers  
+- Calm admin grant context orientation — without impersonating grant authority  
+- Honest pointers to specialized forward dimensions — publication, verification, inquiry  
+- Dignified participation entry whether first access or return orientation  
+- **Realtor Platform Integrity** (Chapter 46) honored throughout activation scope  
+
+Rento professional activation experience **cannot** substitute for:
+
+- Realtor self-elevation or role grant execution (Admin Platform)  
+- Consumer onboarding or Housing Journey progression (Chapter 23)  
+- Workspace operational task flows or listing lifecycle management (Chapter 19)  
+- Publication integrity participation (Chapter 47)  
+- Verification journey, inquiry stewardship, or forward specialized dimensions  
+- CRM, lead pipeline, agency onboarding, or conversion optimization  
+- Professional quality certification, legal compliance guarantee, or marketplace outcome promise  
+- Tenancy Lifecycle administration or property management operations  
+
+**The platform never self-elevates realtor role.** **The platform never operates the realtor's professional business.** Professional Activation Boundaries are reusable when participation orientation intersects forward Realtor Platform specialized dimensions.
+
+---
+
+## 9. Activation Boundary Clarity
+
+**Activation Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Activation Boundary Clarity is the **shared legibility of what Rento, realtor, admin governance, and external professional process each reasonably own during professional activation** — without simulated grant authority, onboarding funnel theater, CRM overclaim, or admin capability leakage.
+
+Activation Boundary Clarity requires:
+
+- **Rento scope honesty** — activation orients; it does not grant role or execute governance  
+- **Professional responsibility honesty** — realtor stewards marketplace participation within boundaries; does not self-certify standing  
+- **Governance separation honesty** — admin executes grant; realtor orients to scope  
+- **Dual-role honesty** — consumer and professional journeys remain distinct  
+- **No funnel theater** — orientation never implies activation metrics equal professional success  
+
+Activation Boundary Clarity is distinct from **Realtor Platform Boundary Clarity** (Chapter 46): macro-domain clarity governs all professional participation; activation boundary clarity **specializes** orientation scope within that foundation.
+
+---
+
+## 10. Role Grant Participation as Consequence — Not Center
+
+**Role Grant Participation** is the realtor's governed experience of **orientation to admin-granted role scope** — a **consequence** of legitimate marketplace participation architecture, never the primary concept of this chapter.
+
+Role grant exists because realtor role is admin-governed per immutable domain rules. The realtor participates as the affected professional actor — understanding grant meaning and scope — without execution authority.
+
+This chapter does **not** redefine role grant mechanics. It consumes Chapter 46 §8–§9 and Chapter 20 trust meaning where relevant:
+
+- Grant establishes **role scope** — not professional quality certification  
+- Revocation is admin-executed — realtor receives dignified communication (Chapter 20 posture)  
+- Realtor cannot self-elevate — permanent domain rule  
+- Grant context orients — it does not impersonate admin decision narrative  
+
+Role Grant Participation governs **how realtors experience grant context orientation** — not how grants are executed. Admin Platform (forward) owns execution.
+
+### 10.1 Grant States as Examples Only — Non-Foundational
+
+Grant outcomes (for example, role granted, role pending, role revoked) may appear as **illustrative examples only**. This chapter must remain valid if grant states are introduced, renamed, regrouped, or replaced in future product evolution. The architecture governs **orientation relationships and boundaries** — not a fixed grant state taxonomy.
+
+---
+
+## 11. Dual-Role Clarity
+
+**Dual-Role Clarity** is a product philosophy principle governing professional activation when a user simultaneously participates in **Housing Journey** (Chapter 23) and **Realtor Professional Lifecycle** (Chapter 46).
+
+Dual-Role Clarity requires:
+
+- Consumer attention and professional attention remain **architecturally distinct** — not merged surfaces  
+- First professional access honors **role separation** (Chapter 23 §29.2 — consumed, not redefined)  
+- Housing Journey progress does not substitute for professional participation orientation  
+- Professional orientation does not interrupt consumer journey with funnels or pressure  
+- One person may hold both roles — product preserves **dimensional clarity** without false exclusivity  
+
+Dual-Role Clarity is not a separate macro-lifecycle — it is an **activation-scope principle** ensuring legitimate participation orientation respects both journeys.
+
+---
+
+## 12. Relationship to Prior Chapters
+
+### 12.1 Chapter 46 — Realtor Platform Experience (Parent Foundation)
+
+Chapter 46 defines Realtor Professional Lifecycle, **Active Realtor Participation**, Realtor Platform Boundaries, **Realtor Platform Integrity**, and Professional Continuity. This chapter **consumes** all Chapter 46 official concepts — it does **not** amend, extend definitions of, or replace them.
+
+Per the **Active Realtor Participation Disambiguation Contract** (§3.1): Chapter 46 owns the participation **state**; this chapter owns the orientation **experience** into that state.
+
+### 12.2 Chapter 47 — Publication Participation (Sibling Dimension)
+
+Chapter 47 governs Publication Integrity and Publication Participation during Active Realtor Participation. This chapter **does not** subsume, precede, or replace publication participation. The two dimensions are **siblings** within Realtor Professional Lifecycle — order of authoring does not prescribe workflow sequence.
+
+Professional activation may **orient** toward Publication Integrity expectations without defining publication participation architecture.
+
+### 12.3 Chapter 23 — Onboarding & First-Time Experience
+
+Chapter 23 remains **sole authority** for consumer onboarding and Housing Journey entry. This chapter **does not** extend, amend, or mirror consumer onboarding patterns for realtors.
+
+| Layer | Chapter 23 | This chapter |
+|-------|------------|--------------|
+| **Scope** | Housing Journey entry and consumer first-time experience | Professional participation orientation after grant |
+| **Question** | How do consumers build trust to begin housing search? | How do realtors orient to legitimate marketplace participation? |
+| **Authority** | Consumer onboarding — authoritative | Professional activation — specialized |
+
+### 12.4 Chapter 19 — Realtor Workspace Experience
+
+Chapter 19 remains **sole authority** for Listing Lifecycle and workspace operational depth. This chapter **does not** recreate workspace task flows or listing management philosophy.
+
+Workspace first-use operational context **informs** activation — it does **not** satisfy professional activation scope or replace macro-domain orientation.
+
+### 12.5 Chapter 20 — Trust, Verification & Moderation Experience
+
+Chapter 20 remains **sole authority** for trust attestation and verification **meaning**. This chapter consumes trust meaning on realtor surfaces during activation orientation — it does **not** redefine verification semantics or define verification journey (forward dimension).
+
+### 12.6 Chapter 18 — Realtor Profile Experience
+
+Chapter 18 governs public identity presentation. Professional activation requires identity coherence awareness — consuming Chapter 18 without redefining public identity rules.
+
+### 12.7 Admin Platform (Forward) — Separation Contract
+
+Admin Platform owns role grant and revocation **execution**, moderation decision execution, and governance operations. Professional activation owns **realtor-facing orientation context only** — permanent separation without capability leakage.
+
+---
+
+## 13. Professional Attention Postures — Professional Activation
+
+Within Active Realtor Participation (Chapter 46), professional activation supports dignified attention postures — parallel in dignity to Chapter 46 §12, specialized for participation orientation scope:
+
+### 13.1 Orient
+
+Realtor **engages professional activation context** with Activation Boundary Clarity sufficient. Orient does **not** mean Rento certifies professional quality, guarantees marketplace outcomes, or substitutes admin grant authority.
+
+### 13.2 Defer Attention
+
+Defer preserves Active Realtor Participation and orientation reality while acknowledging **insufficient attention, clarity, or timing** for specific activation engagement — honest pacing with **Professional Continuity** preserved. Defer does **not** imply role abandonment or governance bypass.
+
+### 13.3 Conclude Activation Context
+
+Conclude diminishes **active activation attention posture** — when participation orientation no longer needs macro-domain attention on Rento for the moment. Conclude does **not** imply role revoked, workspace access removed, or admin actions substituted.
+
+### 13.4 Posture Reconsideration
+
+Orient, defer attention, and conclude remain available across professional activation — not irreversible traps.
+
+### 13.5 Grant Context Honesty
+
+Grant and scope uncertainty remain **honestly communicated** — no simulated authority or self-elevation theater regardless of illustrative state examples.
+
+### 13.6 No Forced Activation Engagement
+
+Exit, defer, and conclude paths always dignified — **Realtor Platform Integrity** (Chapter 46) requires it.
+
+---
+
+## 14. Mobile & Accessibility Considerations
+
+Mobile is the **primary professional activation orientation surface**. Tablet and desktop extend — never reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Role clarity at glance** | Participation scope and boundaries reachable without hunt |
+| **One-handed deferral** | Defer and conclude activation attention reachable during field work |
+| **Calm return** | Resuming activation context feels continuous — not alarming |
+| **Dual-role legibility** | Role switch understandable on small screens — not hidden |
+| **Authority honesty** | Grant context plain-language — no coded admin impersonation |
+| **No funnel pressure** | Mobile surfaces center orientation — not activation metric anxiety |
+
+Professional activation must be **inclusive** — textual equivalents for role scope and boundaries; plain language; calm tone without weaponized urgency or professional shame (Chapter 7). Accessibility implementation is out of scope; **principle** is mandatory.
+
+---
+
+## 15. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Consumer onboarding conflation** | Merges Housing Journey with professional activation — architectural violation |
+| **Self-elevation theater** | Implies realtor can grant own role — domain violation |
+| **Admin capability leakage** | Exposes grant execution in realtor orientation — role violation |
+| **Activation funnel theater** | Treats orientation as conversion metric game — integrity violation |
+| **Active Realtor Participation redefinition** | Collapses state definition into experience layer — governance violation |
+| **Chronological ordering implication** | Suggests activation must precede or follow other dimensions rigidly — RC-4 violation |
+| **CRM / agency onboarding creep** | Shifts from orientation into business operations scope |
+| **Workspace task substitution** | Operational first-use replaces macro-domain orientation — scope violation |
+| **Publication participation absorption** | Redefines Ch 47 scope inside activation — sibling violation |
+| **Dual-role merge** | Consumer and professional surfaces undifferentiated — role violation |
+| **Grant state taxonomy fixation** | Ties architecture to specific states; breaks future scalability |
+| **Chapter 46 rewrite** | Redefines macro-domain foundations in specialized dimension — governance violation |
+| **Chapter 23 extension** | Recreates consumer onboarding for realtors — authority violation |
+
+---
+
+## 16. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, professional activation initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Professional Activation**, **Professional Activation Environment**, **Activation Awareness**, **Professional Activation Boundaries**, **Activation Boundary Clarity**, **Role Grant Participation**, **Dual-Role Clarity**, **Realtor Platform Integrity** (Chapter 46), and **Chapters 19–20, 23, 46–47 consumption integrity**.
+
+**Review gate:** No professional activation surface ships without checklist against all official concepts, principles, attention postures, separation requirements, and **Realtor Platform Integrity** requirements defined herein — plus compliance with Chapters 19, 20, 23, 46, and 47 as authoritative upstream layers.
+
+**Forward dimensions:** Remaining Realtor Platform specialized dimensions — verification journey, inquiry stewardship, and additional dimensions per Design Council — extend Realtor Platform foundation alongside this chapter. This chapter supplies participation orientation specialization; it does not prescribe forward dimension order.
+
+---
+
+## 17. Chapter Summary
+
+Professional activation converts **Realtor Platform foundation** into **honest participation orientation experience when Active Realtor Participation is in scope — with activation boundary clarity** — a specialized dimension within the Realtor Platform macro-domain.
+
+This chapter establishes **Professional Activation as the central architectural concept**; defines Active Realtor Participation disambiguation contract (Chapter 46 defines state; this chapter specializes orientation experience); positions Role Grant Participation as consequence not center; defines Professional Activation Environment, Activation Awareness, Professional Activation Boundaries, and Activation Boundary Clarity; principles of orientation over funnel and participation over execution; mandatory separation from consumer onboarding (Chapter 23), Active Realtor Participation definition (Chapter 46), publication participation (Chapter 47), workspace operations (Chapter 19), and Admin grant execution (forward); non-sequential dimension positioning without implying Chapter 48 should have preceded Chapter 47; positive governance of role clarity, legitimate participation orientation, boundary understanding, dual-role separation, admin authority awareness, professional dignity, and marketplace participation limits; orient, defer attention, and conclude activation context postures; platform-never-self-elevates and never-operates-realtor-business posture; and honest consumption of Chapters 19–20, 23, 46–47 without redefinition.
+
+**Realtor Platform flow (non-sequential — authoring order shown, not workflow mandate):**
+
+Realtor Profile (Ch 18) + Realtor Workspace (Ch 19) → Realtor Platform Foundation (Ch 46) → Publication Participation (Ch 47) + **Professional Activation (Ch 48)** + remaining specialized dimensions (forward per Design Council)
+
+---
+
+## 18. Design Director Review
+
+**Chapter:** 48 — Professional Activation Experience  
+**Section:** XLV — Professional Activation  
+**Review type:** Initial standard adoption
+
+### 18.1 Approval Statement
+
+- **Pre-Authoring Analysis** — APPROVED WITH REQUIRED AMENDMENTS  
+- **Architecture Review** — APPROVED  
+- **Required Architectural Amendments** — N/A (RA-1 through RA-4 integrated at authoring)  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **professional activation experience contract** for Rento — specialized dimension within the Realtor Platform macro-domain. All professional activation product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 18.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority on trust, calm, marketplace identity, human-centered professionalism |
+| Chapter 16 — Contact & Communication Experience | Consumer contact initiation; inquiry stewardship deferred forward |
+| Chapter 18 — Realtor Profile Experience | Public identity layer — consumed for identity coherence at orientation |
+| Chapter 19 — Realtor Workspace Experience | Listing Lifecycle and workspace operational sole authority — consumed, not recreated |
+| Chapter 20 — Trust, Verification & Moderation Experience | Trust meaning sole authority — consumed, not redefined |
+| Chapter 23 — Onboarding & First-Time Experience | Housing Journey and consumer onboarding sole authority — mandatory separation |
+| Chapter 46 — Realtor Platform Experience | Parent macro-domain foundation; Active Realtor Participation definition — consumed, not redefined |
+| Chapter 47 — Publication Participation | Sibling specialized dimension — mandatory separation; non-sequential |
+| Admin Platform (forward) | Role grant/revocation execution — mandatory separation |
+| Forward Realtor Platform chapters | Verification journey, inquiry stewardship — forward per Design Council |
+
+### 18.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Professional activation positioned as specialized Realtor Platform dimension — not consumer onboarding, not admin platform, not CRM  
+2. Professional Activation remains central concept — Role Grant Participation remains consequence, not center  
+3. Active Realtor Participation (Ch 46) / Professional Activation (Ch 48) disambiguation contract explicit — state vs orientation experience  
+4. Consumer onboarding (Ch 23) / Professional Activation / Admin grant authority explicitly separated — no merge  
+5. Non-sequential dimension positioning explicit — no implication Ch 48 should have preceded Ch 47  
+6. Positive architectural identity present — not negation-only chapter  
+7. No Professional Activation Integrity introduced — Realtor Platform Integrity (Ch 46) used instead  
+8. Platform-never-self-elevates and never-operates-realtor-business principles explicit  
+9. Chapters 19, 20, 23, 46, and 47 official concepts consumed — not redefined  
+10. Dual-Role Clarity honors Ch 23 §29.2 without redefinition  
+11. Orient, defer attention, conclude postures — not readiness proceed/defer/release  
+12. Mobile-first order explicit  
+13. No implementation leakage  
+
+### 18.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on professional activation philosophy |
+| Head of Product Design | Realtor Platform specialized dimension parity; Ch 46–47 consumption integrity |
+| Senior UX Designer | Activation boundary communication, dual-role clarity, mobile rhythm |
+| Product Management | Marketplace posture honesty and realtor-admin boundary integrity |
+| Content Design Lead | Scope language, grant context honesty, orientation copy posture |
+| Trust & Safety Lead | Alignment with Chapter 20 without scope conflation; admin separation |
+| Accessibility Specialist | Non-visual activation orientation access and anxiety-sensitive design |
+
+### 18.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new professional activation experience work immediately upon approval. Existing surfaces align during scheduled improvement cycles.
+
+### 18.6 Design Director Closing Note
+
+Realtors do not need another platform that treats professional entry like a growth funnel or confuses marketplace participation with running a business on Rento. They need a marketplace that makes legitimate role scope legible — where orientation means honest boundary understanding, where dual-role users know which hat they wear, and where grant authority stays with governance rather than leaking into professional surfaces. This chapter exists so Rento specializes supply-side participation orientation with the same rigor brought to publication integrity — because a marketplace that grants professional scope without helping professionals understand what that scope honestly means is incomplete.
+
+---
+
+**End of Chapter 48**
