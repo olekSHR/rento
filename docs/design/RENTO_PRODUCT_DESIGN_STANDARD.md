@@ -92,10 +92,11 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 48 | [Professional Activation Experience](#chapter-48--professional-activation-experience) | Professional Activation | APPROVED |
 | 49 | [Professional Verification Participation Experience](#chapter-49--professional-verification-participation-experience) | Professional Verification | APPROVED |
 | 50 | [Inquiry Stewardship Experience](#chapter-50--inquiry-stewardship-experience) | Inquiry Stewardship | APPROVED |
+| 51 | [Admin Platform Experience](#chapter-51--admin-platform-experience) | Admin Platform | APPROVED |
 
 ### Planned (not yet authored)
 
-See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform specialized dimensions in progress.
+See `MASTER_ROADMAP.md` for remaining domain order after Admin Platform foundation (Chapter 51).
 
 ---
 
@@ -135,6 +136,7 @@ See `MASTER_ROADMAP.md` for remaining domain order after the Realtor Platform sp
 | 1.0 | 2026-07-06 | Chapter 48 — Professional Activation Experience approved and added — Established second specialized Realtor Platform dimension with Professional Activation as central concept, Active Realtor Participation disambiguation, Role Grant Participation as consequence, dual-role clarity, and participation orientation posture — Status: APPROVED |
 | 1.0 | 2026-07-07 | Chapter 49 — Professional Verification Participation Experience approved and added — Established third specialized Realtor Platform dimension with Professional Verification Participation as central concept, verification participation invariant, Ch 20/34 disambiguation, Verification Program Participation as consequence, and participation-never-determines-status posture — Status: APPROVED |
 | 1.0 | 2026-07-07 | Chapter 50 — Inquiry Stewardship Experience approved and added — Established fourth specialized Realtor Platform dimension with Inquiry Stewardship as central concept, inquiry stewardship invariant, Ch 16/19/21 separation, stewardship-over-performance posture, and stewardship-never-determines-outcome architecture — Status: APPROVED |
+| 1.0 | 2026-07-07 | Chapter 51 — Admin Platform Experience approved and added — Opened Admin Platform macro-domain with Platform Governance Lifecycle foundation, Chapter 20 antecedent consumption, participation-execution separation from Chapters 46–50, governance-execution-honors-delegated-authority-only posture, and GD-008 macro-domain governance principles — Status: APPROVED |
 
 ---
 
@@ -45504,3 +45506,793 @@ Realtors do not need another platform that treats every inquiry like a lead to b
 ---
 
 **End of Chapter 50**
+
+
+## Chapter 51 — Admin Platform Experience
+
+**Section:** XLVIII — Admin Platform  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Marketplace Experience, Trust & Safety, Moderation Operations, Reviewers  
+**Authority:** Subordinate to Chapters 1–50; opens the Admin Platform macro-domain after Realtor Platform macro-domain completion (Chapters 46–50); operationalizes Trust, Verification & Moderation Experience (Chapter 20) as consumed antecedent layer; preserves Housing Journey separation (Chapter 23), Tenancy Lifecycle separation (Chapter 41), and Realtor Professional Lifecycle separation (Chapter 46); honors participation/execution separation contracts from Chapters 47–50 and GD-008; defines principles only — not moderation consoles, role grant workflows, verification pipelines, permissions matrices, APIs, databases, or engineering architecture.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **admin platform experience philosophy** for Rento — how the product governs **admin-facing experience for marketplace governance execution** while preserving marketplace integrity, role boundary clarity, delegated authority honesty, and long-term platform trust.
+
+Admin platform experience is not consumer Housing Journey. The Housing Journey governs **the user's path from search through housing decision and execution readiness** (Chapter 23, Chapters 13–40). Admin platform experience governs **how platform governance is executed** — a separate macro-domain that must never be merged with Housing Journey.
+
+Admin platform experience is not Tenancy Lifecycle. The Tenancy Lifecycle governs **relationship experience surrounding active tenancy after occupancy commencement** (Chapter 41, Chapters 41–45). Admin platform experience does **not** administer tenancy relationships, rent, maintenance, disputes, or conclusion — even when admins act on marketplace inventory that affects consumers and realtors.
+
+Admin platform experience is not Realtor Professional Lifecycle. Realtor Platform Experience (Chapter 46) and specialized dimensions (Chapters 47–50) govern **supply-side professional participation** — identity, workspace context, publication participation, activation orientation, verification participation, and inquiry stewardship. Admin platform experience governs **governance execution** — never realtor participation, never professional business operations, never self-approval impersonation on realtor surfaces.
+
+Admin platform experience is not platform trust philosophy alone. Trust, Verification & Moderation Experience (Chapter 20) governs **what trust, verification, and moderation mean across all roles**. Admin platform experience **consumes** Chapter 20 — it governs **execution experience** for authority already delegated upstream. It does **not** redefine trust attestation, verification scope, moderation meaning, appeals philosophy, or automation boundaries.
+
+Admin platform experience is not agency ERP, CRM, property management, or organizational governance software. Rento remains a **marketplace platform** — admin scope is **delegated marketplace governance execution** only. It does **not** become corporate policy administration, compliance program management, audit operations design authority, security operations, or incident management.
+
+**Governance execution honors delegated authority only.** Rento does not invent governance authority through admin experience design. Admin platform experience **executes** moderation decisions, role grants, verification adjudication, and policy enforcement **only where** immutable domain rules and authoritative upstream chapters have already delegated that authority. Execution serves marketplace integrity — not operational empire building.
+
+Where Chapter 50 completes the Realtor Platform macro-domain and Chapter 46 §8 establishes admin operations as forward work, this chapter **opens the Admin Platform macro-domain** — defining why marketplace governance execution requires independent architecture, what Rento owns in admin scope, what remains outside delegated authority, and how forward admin platform chapters extend this foundation.
+
+The product must help stakeholders answer five admin platform foundation questions:
+
+1. **Why does Admin Platform exist as an independent macro-domain — and what architectural problem does Chapter 20 not resolve alone?**  
+2. **What governance execution does Rento own versus what consumer journeys, realtor participation, tenancy relationships, and external legal process must own?**  
+3. **How does admin platform experience preserve separation from Housing Journey, Tenancy Lifecycle, and Realtor Professional Lifecycle without role conflation?**  
+4. **How does the platform execute delegated governance without redefining Chapter 20 meaning or absorbing Chapters 47–50 participation scope?**  
+5. **Can administrators engage with, defer attention from, or conclude governance execution context with accountability, calm, and boundary clarity — without governance theater, CRM creep, or authority invention?**
+
+This chapter governs admin platform experience as the **opening architectural foundation of the Admin Platform macro-domain**. It does **not** specify moderation queues, role grant APIs, verification review screens, permissions matrices, or engineering architecture.
+
+**Relationship to prior chapters:** **Trust, Verification & Moderation Experience** (Chapter 20) supplies the **antecedent foundation layer** consumed by this chapter — not redefined. **Realtor Platform Experience** (Chapter 46) and specialized dimensions (Chapters 47–50) supply **participation-layer separation contracts** — consumed, not redefined. This chapter defines **Platform Governance Lifecycle**, **Admin Platform Environment**, **Active Governance Scope**, **Admin Platform Boundaries**, **Admin Platform Boundary Clarity**, **Admin Platform Integrity**, and **Governance Continuity**.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Delegated authority over invention** | Admin executes only authority upstream chapters delegate — never creates or redefines authority |
+| **Execution over participation** | Admin governs governance execution — inverse of Ch 47–50 participation posture |
+| **Consumption over redefinition** | Chapter 20 and Chapters 46–50 remain authoritative — this chapter integrates and bounds execution |
+| **Boundaries over governance theater** | Admin and platform know what governance execution can and cannot establish |
+| **Marketplace over back-office** | Rento remains a marketplace — not CRM, ERP, agency software, or PMS |
+| **Role separation over conflation** | Admin Platform, Housing Journey, Tenancy Lifecycle, and Realtor Platform remain distinct — never merged |
+| **Meaning-execution separation** | Chapter 20 meaning stable; admin experience governs execution layer only |
+| **Accountability over throughput vanity** | Governance serves marketplace integrity — not queue clearance metrics theater |
+| **Calm over punitive governance** | No moderation shame theater, no authority display for its own sake |
+| **Governance continuity over amnesia** | Delegated execution context persists across admin sessions — within macro-domain scope only |
+| **Boundary inheritance over redefinition** | Forward specialized chapters inherit foundation boundaries — extend only, never redefine |
+| **Lifecycle necessity over symmetry** | Parent lifecycle introduced only when objectively independent — not copied from prior macro-domains |
+| **Admin Platform Integrity goal** | Every admin-facing experience honors delegated authority, marketplace posture, and role separation |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A UI specification, moderation console layout guide, queue design pattern library, or governance dashboard spec  
+- An implementation plan, API contract, permissions matrix, role grant workflow, or engineering architecture  
+- A replacement for Chapter 20 or Chapters 46–50  
+- A rewrite, merge, or amendment of trust, verification, or moderation **meaning**  
+- A Housing Journey extension, Tenancy Lifecycle operations chapter, or Realtor Platform participation chapter  
+- A **CRM Experience**, **Agency Management Experience**, **Property Management Experience**, or **Compliance Program Experience** chapter identity  
+- Organizational governance, audit operations, security incident management, or enterprise policy administration  
+- A rigid application of Lifecycle Completion Pattern as mandatory dimension template — pattern is governance guidance, not structural law  
+
+If the question is *how to build* moderation tooling, role grant systems, or verification pipelines — this chapter does not answer it. If the question is *what admin platform experience must accomplish for marketplace governance integrity, delegated authority honesty, role boundary clarity, and macro-domain architectural coherence* — this chapter does.
+
+Admin platform experience is **not** agency software, tenancy administration, or realtor business operations. Admin platform experience **is** responsible product-supported experience surrounding **delegated marketplace governance execution** — with honest boundaries and accountability whether administrators orient, defer attention, or conclude governance execution context.
+
+---
+
+## Why Admin Platform Exists as an Independent Macro-Domain
+
+Admin Platform exists as an independent macro-domain because **Rento is a governed marketplace** whose architectural completeness requires explicit experience architecture for **platform governance execution** — and execution experience cannot be derived from trust meaning alone or absorbed into realtor participation layers.
+
+### Architectural Necessity
+
+| Problem | Why Chapter 20 and Chapters 46–50 Do Not Resolve It Alone |
+|---------|----------------------------------------------------------|
+| **Meaning-execution separation** | Ch 20 governs what trust, verification, and moderation **mean** cross-role — not how admins **execute** delegated decisions with accountability |
+| **Participation-execution split** | Ch 47–50 govern realtor **participation context** — orientation and boundary clarity, not adjudication execution |
+| **Role-based governance architecture** | Immutable domain rules establish `admin` as distinct role with exclusive grant and moderation authority — experience architecture must formalize governance execution separately |
+| **Ecosystem completion** | Ch 45 §11.3 and Ch 46 §13.5 establish Admin Platform as independent forward block — marketplace triangle requires demand, supply, and **governance** experience domains |
+| **Authority consumption discipline** | Without macro-domain foundation, execution chapters risk redefining Ch 20 meaning or expanding authority beyond delegation |
+| **Registry honesty** | Ch 46 §8.1 explicitly defers moderation execution, role grant, and policy enforcement — requires authoritative block to close deferral |
+
+### What Would Fail Without This Macro-Domain
+
+Without Admin Platform macro-domain architecture, product teams would lack authoritative principles for:
+
+- How governance **execution** relates to trust **meaning** without merge or redefinition  
+- How admin experience differs from realtor participation when the same person holds multiple roles  
+- What specialized governance execution dimensions remain deferred beyond this foundation  
+- How to prevent CRM creep, compliance theater, and capability leakage between admin and realtor surfaces  
+- How to honor GD-008 Governance Execution Ownership and Boundary Inheritance across forward chapters  
+
+### Independence Does Not Mean Isolation
+
+Admin Platform **intersects** consumer and realtor experience through moderation outcomes, role grants, and verification adjudication — intersection affects visibility, trust signals, and professional scope. Intersection requires **explicit boundaries** and **Chapter 20-aligned communication** on affected surfaces — not architectural merge of role domains.
+
+---
+
+## Platform Governance Lifecycle
+
+**Platform Governance Lifecycle** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+### Lifecycle Necessity — Objective Justification
+
+A parent lifecycle concept is **architecturally necessary** for this macro-domain — not for structural symmetry with Tenancy Lifecycle (Chapter 41) or Realtor Professional Lifecycle (Chapter 46).
+
+**Platform Governance Lifecycle** is adopted because:
+
+1. **Immutable governance role** — `admin` is the governing role boundary for delegated marketplace governance execution; the lifecycle describes platform governance **as admin-executed marketplace integrity**, not as consumer journey or professional participation  
+2. **Spans delegated execution dimensions** — moderation decision execution, role grant and revocation, verification program adjudication, and policy enforcement are phases within one governance arc on Rento, not separate macro-domains  
+3. **Distinct temporal scope** — begins when legitimate admin governance execution is in scope for delegated marketplace integrity matters; distinct from Housing Journey, Tenancy Lifecycle, and Realtor Professional Lifecycle  
+4. **Governance-side anchor** — centers marketplace integrity enforcement that consumer and realtor architecture assumes but does not execute  
+5. **No nested lifecycle beneath it** — specialized forward dimensions are **within** this lifecycle — not separate macro-lifecycles  
+
+**Lifecycle Necessity Principle satisfied:** Platform Governance Lifecycle represents an **objectively independent architectural domain** — marketplace governance execution — not a nominal mirror of prior macro-domains.
+
+Alternative names were considered and rejected:
+
+| Rejected name | Rejection reason |
+|---------------|------------------|
+| **Admin Journey** | Collides with Housing Journey — journey language reserved for consumer arc per Chapter 23 |
+| **Moderation Lifecycle** | Too narrow — excludes role grant, verification adjudication, and policy enforcement dimensions |
+| **Compliance Lifecycle** | Implies organizational compliance scope — excluded per Governance Continuity Scope (GD-008) |
+| **Operations Lifecycle** | Too abstract — loses delegated authority and marketplace governance clarity |
+
+### Definition
+
+Platform Governance Lifecycle is the **complete sequence of governance states and experiences through which legitimate admin role holders execute delegated marketplace governance on Rento** — including moderation decision execution context, role grant and revocation execution, verification program adjudication context, policy enforcement execution, and governance obligation continuity — across sessions, devices, and the duration of admin governance responsibility.
+
+Platform Governance Lifecycle is **distinct from Housing Journey**, **Tenancy Lifecycle**, and **Realtor Professional Lifecycle**:
+
+| Concept | Governing scope | Begins | Ends |
+|---------|-----------------|--------|------|
+| **Housing Journey** (Chapter 23) | Consumer path from search through execution readiness | First housing search attention | Occupancy commencement boundary |
+| **Tenancy Lifecycle** (Chapter 41) | Relationship experience after occupancy begins | Occupancy commencement boundary | Tenancy conclusion (bilateral; outside platform establishment) |
+| **Realtor Professional Lifecycle** (Chapter 46) | Supply-side professional marketplace participation | Realtor role legitimately in scope | Professional participation concluded or role revoked (admin execution; outside realtor self-establishment) |
+| **Platform Governance Lifecycle** (this chapter) | Delegated marketplace governance execution | Admin governance execution legitimately in scope for delegated matters | Governance responsibility transferred, concluded, or role scope changed outside admin self-expansion |
+
+These concepts must **never** be merged. A person may simultaneously hold consumer Housing Journey attention, Tenancy Lifecycle context off-platform, Realtor Professional Lifecycle scope, and Platform Governance Lifecycle responsibility as admin — product must preserve **dimensional clarity** without false exclusivity or capability leakage.
+
+Platform Governance Lifecycle is a **cross-chapter concept** within the Admin Platform macro-domain. Forward chapters may reference it when governing specialized governance execution dimensions.
+
+No implementation, channel, or technical mechanism is implied. Platform Governance Lifecycle is a **product philosophy anchor** for the Admin Platform block.
+
+### Trust Lifecycle Disambiguation
+
+**Trust lifecycle** (Chapter 20 §6) and **Platform Governance Lifecycle** are **distinct official concepts** — must **never** be merged.
+
+| Concept | Governing chapter | Scope |
+|---------|-------------------|-------|
+| **Trust lifecycle** | Chapter 20 | How trust is built, tested, damaged, and recovered **across all roles and journeys** — meaning layer |
+| **Platform Governance Lifecycle** | This chapter | How delegated governance execution is experienced **within admin role scope** — execution layer |
+
+Chapter 20 remains authoritative for trust lifecycle **meaning**. This chapter governs governance **execution experience** that honors trust lifecycle meaning without redefining it.
+
+---
+
+## Admin Platform Environment
+
+**Admin Platform Environment** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Admin Platform Environment is the **cognitive and informational conditions under which an administrator orients to, reflects on, and engages with admin-facing product experience for delegated marketplace governance execution** — not the screen layout, but the **quality of the governance execution experience space** Rento provides within admin role scope.
+
+A sound Admin Platform Environment is **oriented, grounded, boundary-legible, bounded, calm, continuity-preserving, accountability-honest, and delegation-honest** — consistent with administrator clarity from Product Philosophy (Chapter 1 §3.3) and calm trust posture from Chapter 20, but governing **macro-domain governance execution** rather than consumer evaluation or realtor participation depth.
+
+Admin Platform Environment is the **governance-side counterpart** to consumer decision environments (Chapters 31–40), settled tenancy environments (Chapter 41), and realtor platform environments (Chapter 46) — the governed space where administrators move from *"I hold admin role with delegated authority"* to *"I execute marketplace governance with boundary clarity about what authority I consume — and what I do not invent."*
+
+Admin Platform Environment is reusable across forward admin platform chapters — moderation execution, role grant execution, verification program execution, and policy enforcement experience.
+
+---
+
+## Active Governance Scope
+
+**Active Governance Scope** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Active Governance Scope is the state where **admin role is legitimately in scope** and the administrator is actively executing **delegated marketplace governance** within Admin Platform Boundaries — moderation decisions, role grants or revocations, verification adjudication, or policy enforcement actions that upstream authority has already assigned to admin execution.
+
+Active Governance Scope is **not** expanded by admin self-declaration or interface design implication. Scope is **bounded by delegated authority** from immutable domain rules and authoritative upstream chapters. Active Governance Scope serves experience orientation and accountability — it does **not** certify legal compliance, professional outcome quality, or tenancy health.
+
+Active Governance Scope is the **entry condition** for admin platform experience at macro-domain depth. Consumer Housing Journey, Tenancy Lifecycle, and Realtor Professional Lifecycle states remain governed by their respective chapters — admin platform must not absorb consumer judgment, tenancy administration, or realtor participation.
+
+An administrator without Active Governance Scope for a given matter — outside delegated authority, wrong role context, or concluded governance attention — retains **honest scope communication**; macro-domain experience adjusts without authority theater.
+
+### Disambiguation from Active Realtor Participation
+
+| Concept | Governing chapter | Posture |
+|---------|-------------------|---------|
+| **Active Realtor Participation** | Chapter 46 | Professional **participation** in marketplace — orientation and stewardship |
+| **Active Governance Scope** | This chapter | Governance **execution** of delegated authority — accountability and decision execution |
+
+Realtor participation and admin governance execution remain **permanently separated** — even when one person holds both roles.
+
+---
+
+## Admin Platform Boundaries
+
+**Admin Platform Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Admin Platform Boundaries define **what engaging with admin platform experience through Rento can and cannot establish** — the scope beyond which consumer journeys, realtor participation, tenancy relationships, bilateral process, and external legal authority must carry responsibility.
+
+Admin Platform Boundaries **extend** trust and moderation boundaries from Chapter 20 and role separation contracts from Chapters 46–50 — each prior limit becomes an admin platform limit honestly stated.
+
+### Governance Execution Ownership Principle
+
+**Admin Platform owns governance execution only where execution authority has already been delegated by authoritative upstream chapters.**
+
+Admin Platform **consumes** authority. Admin Platform **never redefines** authority.
+
+Rento admin platform experience **can** support:
+
+- **Governance execution orientation** — delegated authority scope, accountability awareness, marketplace integrity context  
+- **Admin platform boundary clarity** — honest scope language about what governance execution establishes — and what it does not  
+- **Governance continuity** — execution context preservation across admin sessions within macro-domain scope  
+- **Calm accountability postures** — orient, defer attention, conclude without punitive theater  
+- **Chapter 20-aligned execution** — decisions and communications honor trust meaning without redefinition  
+- **Forward orientation** — honest pointers to specialized forward chapters  
+
+Rento admin platform experience **cannot** substitute for:
+
+- **Consumer Housing Journey judgment** (Chapters 13–40)  
+- **Tenancy relationship administration** (Chapters 41–45)  
+- **Realtor professional business operations** (Chapters 46–50)  
+- **Realtor participation orientation** (Chapters 47–50) — admin executes; realtors participate  
+- **Agency hierarchy, CRM, or client pipeline management**  
+- **Property management, rent collection, or maintenance operations**  
+- **Organizational governance, compliance programs, audit operations, security operations, or incident management** (Governance Continuity Scope — GD-008)  
+- **Platform attestation meaning redefinition** (Chapter 20)  
+- **Authority invention** — new governance powers not delegated upstream  
+- **Impersonation of legal, licensing, or housing authority** beyond delegated marketplace governance  
+
+**Governance execution honors delegated authority only.**
+
+Admin Platform Boundaries are reusable across all forward admin platform chapters.
+
+---
+
+## Admin Platform Boundary Clarity
+
+**Admin Platform Boundary Clarity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Admin Platform Boundary Clarity is the **shared legibility of what Rento governance execution, consumer journeys, realtor participation, tenancy relationships, and external process each reasonably own** — without simulated agency authority, compliance theater, tenancy administration overclaim, or realtor capability leakage.
+
+Admin Platform Boundary Clarity requires:
+
+- **Delegated authority honesty** — what admin may execute versus what upstream chapters own  
+- **Meaning-execution honesty** — Chapter 20 meaning preserved on all affected surfaces  
+- **Role separation honesty** — admin, realtor, and consumer scopes legible  
+- **Marketplace posture honesty** — governance marketplace, not enterprise back-office  
+- **Pending and outcome state legibility** — moderation, grant, and verification execution states honestly represented  
+- **No false certainty** that governance execution certifies housing outcome, tenancy health, or professional quality beyond delegated attestation scope  
+
+Admin Platform Boundary Clarity is distinct from **Realtor Platform Boundary Clarity** (Chapter 46) and **Tenancy Boundary Clarity** (Chapter 41) — each governs its role domain; intersection requires clarity without merge.
+
+---
+
+## Admin Platform Integrity
+
+**Admin Platform Integrity** is the **honesty of the admin platform experience itself** — no authority invention, no hidden governance boundaries, no punitive moderation theater, no CRM or compliance impersonation, no realtor capability suggestion on admin surfaces, no consumer journey substitution, no throughput gamification over marketplace truth.
+
+Admin Platform Integrity parallels **Settled Tenancy Integrity** (Chapter 41), **Realtor Platform Integrity** (Chapter 46), and the integrity lineage from Chapters 33–50 — specialized for **delegated governance execution**, not consumer judgment gates, tenancy relationship administration, or professional participation orientation.
+
+---
+
+## Governance Continuity
+
+**Governance Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Governance Continuity is the **preservation of delegated governance execution context across admin sessions, devices, and interruptions during Platform Governance Lifecycle** — so administrators returning to governance execution recognize where accountability attention paused without reconstructing marketplace integrity context from scratch.
+
+### Governance Continuity Scope (GD-008 — Mandatory)
+
+Governance Continuity governs continuity of **governance execution within the Admin Platform macro-domain only**.
+
+Governance Continuity **does not** govern, subsume, or imply:
+
+- Organizational governance or corporate policy administration  
+- Compliance program management  
+- Audit operations or audit trail product design authority  
+- Security operations or security incident response  
+- Incident management workflows  
+
+Broader platform governance topics belong to **separate forward macro-domains** per MASTER_ROADMAP (e.g., Design System Governance) — not Governance Continuity as defined herein.
+
+Governance Continuity is **distinct from Housing Continuity** (Chapter 30), **Tenancy Continuity** (Chapter 41), and **Professional Continuity** (Chapter 46):
+
+| Concept | Governs | Scope |
+|---------|---------|-------|
+| **Housing Continuity** | Search-to-decision persistence | Consumer Housing Journey |
+| **Tenancy Continuity** | Relationship context persistence | Tenancy Lifecycle |
+| **Professional Continuity** | Professional context persistence | Realtor Professional Lifecycle |
+| **Governance Continuity** | Delegated governance execution context persistence | Platform Governance Lifecycle |
+
+Governance Continuity **inherits** trust meaning from Chapter 20 for execution alignment — it does **not** extend or redefine attestation scope.
+
+**Macro-domain scope only:** Governance Continuity operates at Admin Platform macro-domain level. Forward specialized chapters **specialize** continuity for their execution dimensions without redefining this macro-domain contract.
+
+---
+
+## 2. Role in Product Architecture
+
+Admin platform experience sits at the **opening position of the Admin Platform macro-domain** — immediately after Realtor Platform macro-domain completion (Chapters 46–50) and per MASTER_ROADMAP forward domain order.
+
+| Architecture domain | Stakeholder mode | Primary question |
+|--------------------|------------------|------------------|
+| Housing Journey (Ch 13–40) | Consumer demand | How does the user find, evaluate, and prepare for housing? |
+| Settled Tenancy (Ch 41–45) | Consumer / bilateral tenancy | How does Rento support experience surrounding active tenancy? |
+| Realtor Platform (Ch 46–50) | Supply-side professional | How does Rento support realtor marketplace participation? |
+| **Admin Platform (this chapter)** | **Platform governance** | **How does Rento execute delegated marketplace governance with accountability and boundary clarity?** |
+| Trust meaning (Chapter 20) | Cross-role | What does Rento attest — and how is moderation experienced in meaning? |
+| Forward admin chapters | Specialized governance execution | How are moderation, grant, verification, and policy enforcement executed? |
+
+Admin platform experience **opens** Platform Governance Lifecycle — it does **not** complete it. Forward chapters supply specialized execution dimensions deferred from this foundation.
+
+| Layer | Chapter | Architectural role within macro-domain |
+|-------|---------|----------------------------------------|
+| **Trust Meaning Foundation** | Chapter 20 | Cross-role trust, verification, moderation meaning |
+| **Participation Separation Contracts** | Chapters 46–50 | Realtor participation vs admin execution boundary |
+| **Macro-domain Foundation** | **This chapter** | Boundaries, lifecycle, continuity, deferred dimensions, block architecture |
+
+Admin platform succeeds through **accountable governance execution and delegated authority clarity** — not queue throughput theater, compliance dashboard maximization, or enterprise operations impersonation.
+
+---
+
+## 3. Relationship to Trust, Verification & Moderation Experience (Chapter 20)
+
+Chapter 20 defines the **platform trust contract** across all roles. This chapter **consumes** Chapter 20 — it does **not** redefine, extend definitions of, or replace Chapter 20 official concepts.
+
+### 3.1 Consumption Contract
+
+| Layer | Governing chapter | Question |
+|-------|-------------------|----------|
+| **Trust, verification, moderation meaning** | Chapter 20 | What did Rento attest? How is integrity communicated cross-role? |
+| **Realtor participation context** | Chapters 47–50 | How do realtors experience governance surrounding their actions? |
+| **Admin governance execution** | **This chapter** | Does governance execution honor delegated authority with accountability and Chapter 20-aligned outcomes? |
+
+### 3.2 What Chapter 20 Supplies
+
+Trust philosophy, verification presentation rules, moderation communication ethics, appeals posture, automation boundaries, human review principles, and marketplace trust mental model — consumed across Platform Governance Lifecycle execution experience.
+
+### 3.3 What This Chapter Adds Beyond Chapter 20
+
+Macro-domain boundaries, Platform Governance Lifecycle, Active Governance Scope, governance execution experience architecture, Governance Continuity, participation-execution separation at block level, and forward specialized dimension deferral — depth Chapter 20 explicitly deferred to admin operations chapter when authored.
+
+### 3.4 What Admin Platform Does Not Redefine
+
+Verification scope, moderation meaning, appeals fairness, automation limits, trust badges semantics, consumer/realtor communication ethics, and public availability rules — **Chapter 20 authoritative**. Admin execution must produce outcomes **expressible in Chapter 20 terms** on affected surfaces.
+
+---
+
+## 4. Relationship to Realtor Platform (Chapters 46–50)
+
+Realtor Platform macro-domain is **complete** (GD-006). This chapter **honors** separation contracts without amending Chapters 46–50.
+
+### 4.1 Participation vs Execution — Mandatory
+
+| Layer | Governing chapters | Posture |
+|-------|-------------------|---------|
+| **Participation** | Ch 47–50 | Realtors experience governance **context** — orientation, boundary clarity, dignity |
+| **Execution** | **Admin Platform** | Admins **execute** governance decisions delegated upstream |
+
+### 4.2 What Chapters 46–50 Deferred — Now Forward Within Admin Platform
+
+Per Chapter 46 §8.1 and specialized dimension separation contracts:
+
+- Listing moderation decision execution (`pending` → `available`)  
+- Realtor role grant and revocation execution  
+- Verification program execution, document review, adjudication, outcome determination  
+- Platform policy enforcement execution  
+
+### 4.3 Never Merge
+
+Realtor workspace must **never** expose admin execution capabilities. Admin surfaces must **never** be skinned as realtor features. Admin execution must **never** impersonate realtor participation orientation. Chapter 46 §8.3 permanent separation **reinforced** — not redefined.
+
+---
+
+## 5. Relationship to Housing Journey (Chapter 23)
+
+Chapter 23 defines Housing Journey. This chapter **does not amend, extend, or redefine** Housing Journey.
+
+Admin governance may **affect** consumer-visible inventory through moderation outcomes — that intersection is governed by Chapter 20 communication rules and consumer chapters displaying honest status. Admin platform does **not** govern consumer journey architecture, evaluation judgment, or readiness gates.
+
+---
+
+## 6. Relationship to Tenancy Lifecycle (Chapters 41–45)
+
+Settled Tenancy macro-domain is **complete**. Admin platform does **not** administer tenancy relationships.
+
+A listing may transition to rented status through marketplace mechanics — **tenancy experience depth** remains Chapters 41–45 scope for participants. Admin moderation of listing availability is **not** tenancy administration, rent collection, dispute adjudication, or conclusion certification.
+
+---
+
+## 7. Relationship to Settled Tenancy Completion (Chapter 45)
+
+Chapter 45 §11.3 establishes Admin Platform as **independent architectural domain** — not subset of Settled Tenancy. Approval of this chapter opens Admin Platform specialized coverage only — **not** marketplace ecosystem completion and **not** Product Design Standard v1.0 completion.
+
+---
+
+## 8. Governance Role Boundaries
+
+Immutable domain rules govern admin role architecture within this macro-domain:
+
+| Rule | Product expression |
+|------|-------------------|
+| **Admin grants realtor role** | Grant and revocation execution within admin scope — Ch 48 orients realtor participation only |
+| **Admin executes moderation** | Listing status transitions through moderation flow — realtors cannot self-approve |
+| **Realtor never receives admin rights** | Permanent separation — all realtor surfaces |
+| **Admin does not change `owner_id` through experience design** | Ownership integrity preserved — domain rules authoritative |
+| **Admin executes; platform meaning from Ch 20** | Outcomes communicated per trust contract — not ad hoc internal language exported to consumers |
+
+### 8.1 Admin ≠ Realtor
+
+Capability leakage in either direction is an **integrity violation**.
+
+### 8.2 Admin ≠ Consumer Journey
+
+Governance execution is **not** consumer Housing Journey — admin density and operational scope never exported to consumer polish paths (Chapter 1 §3.3).
+
+### 8.3 Admin ≠ Tenancy Administrator
+
+Marketplace governance execution is **not** tenancy relationship administration.
+
+---
+
+## 9. Platform Responsibility and Marketplace Governance Posture
+
+### 9.1 Rento as Governed Marketplace
+
+Admin platform posture inherits Product Philosophy (Chapter 1): a serious long-term rental **marketplace** — governance serves marketplace integrity, not enterprise operations expansion.
+
+### 9.2 What Governance Execution Supports
+
+- **Accountable decision execution** within delegated authority  
+- **Admin platform boundary clarity** — honest limits of governance establishment  
+- **Governance continuity** — execution context across sessions within macro-domain  
+- **Chapter 20-aligned outcomes** — meaning preserved on affected surfaces  
+- **Calm accountability** — professional tone without punitive theater  
+- **Forward orientation** — honest pointers to specialized execution chapters  
+
+### 9.3 What Governance Execution Does Not Establish
+
+- Consumer housing judgment or journey architecture  
+- Tenancy operations or property management  
+- Realtor professional business operations or participation orientation  
+- Agency ERP, CRM, or brokerage operations  
+- Organizational compliance, audit, security, or incident programs  
+- New governance authority beyond upstream delegation  
+- Professional outcome, legal compliance, or tenancy health certification beyond delegated attestation scope  
+
+### 9.4 Parallel Posture Lineage
+
+| Macro-domain | Platform posture |
+|--------------|------------------|
+| Settled tenancy (Chapter 41) | The platform never operates settled tenancy |
+| Realtor platform (Chapter 46) | The platform never operates the realtor's professional business |
+| **Admin platform (this chapter)** | **Governance execution honors delegated authority only** |
+
+---
+
+## 10. Macro-Domain Governance Principles (GD-008)
+
+The following principles are **mandatory** for this macro-domain and all forward specialized chapters:
+
+### 10.1 Lifecycle Necessity Principle
+
+A parent lifecycle concept may only be introduced when it represents an objectively independent architectural domain. Structural symmetry with previous macro-domains is never sufficient justification.
+
+**Application:** Platform Governance Lifecycle satisfies this principle through objective architectural necessity — not symmetry with Chapters 41 or 46.
+
+### 10.2 Governance Execution Ownership Principle
+
+Admin Platform owns governance execution only where execution authority has already been delegated by authoritative upstream chapters. It consumes authority. It never redefines authority.
+
+### 10.3 Governance Continuity Scope
+
+Governance Continuity governs continuity of governance execution within the Admin Platform macro-domain only. It does not include organizational governance, compliance, audit, security operations, or incident management.
+
+### 10.4 Boundary Inheritance Principle
+
+All future specialized Admin Platform chapters **inherit** Admin Platform Boundaries, Admin Platform Boundary Clarity, Admin Platform Integrity, and macro-domain governance principles established herein. Specialized chapters may **extend** within those boundaries but may **never redefine** them.
+
+---
+
+## 11. Admin Platform Principles
+
+*How should Rento support delegated marketplace governance execution while preserving integrity, role separation, accountability clarity, and Chapter 20 meaning?*
+
+### 11.1 Delegated Authority First
+
+Every governance execution surface must trace to **delegated authority** — immutable domain rules or authoritative upstream chapters.
+
+### 11.2 Execution Over Participation
+
+Admin experience governs **execution** — inverse of Ch 47–50 participation posture. Never substitute participation orientation for execution accountability.
+
+### 11.3 Consumption Over Redefinition
+
+Chapter 20 and Chapters 46–50 remain authoritative — this chapter and forward specialized chapters integrate execution only.
+
+### 11.4 Boundary Clarity Before Operational Implication
+
+Administrators understand **what governance execution does not establish** before any admin feature implies otherwise.
+
+### 11.5 Meaning-Execution Separation
+
+Chapter 20 meaning stable across all execution outcomes — admin experience translates execution into communicable integrity states, not new trust vocabulary.
+
+### 11.6 Accountability Over Throughput Vanity
+
+Governance serves marketplace integrity — not queue clearance metrics, approval rate gamification, or reviewer leaderboard theater.
+
+### 11.7 Calm Over Punitive Governance
+
+Moderation and enforcement communication **respectful and actionable** per Chapter 20 — no shame theater on admin or affected-party paths.
+
+### 11.8 Role Separation Permanence
+
+Admin, realtor, and consumer domains **never merged** — dual-role humans receive dimensional separation.
+
+### 11.9 Marketplace Posture Permanence
+
+Admin platform **never** becomes CRM, ERP, agency software, PMS, or organizational governance suite.
+
+### 11.10 Governance Continuity Scope Discipline
+
+Continuity preserves **execution context** — not compliance, audit, security, or incident programs.
+
+### 11.11 Human Accountability Center
+
+Consequential governance decisions honor Chapter 20 human review principles — automation assists, defined policy governs.
+
+### 11.12 Operational Density Without Consumer Export
+
+Higher operational density permitted within admin scope (Chapter 10 §4.4) — **never exported** to consumer-facing paths.
+
+---
+
+## 12. Governance Attention Postures
+
+Admin platform foundation is **not** a readiness gate. It governs **ongoing governance execution responsibility** with distinct attention postures — parallel in dignity to professional and tenancy postures, specialized for governance scope.
+
+### 12.1 Orient
+
+Administrator **engages delegated governance execution context** with Admin Platform Boundary Clarity sufficient. Orient does **not** mean authority expansion, compliance program administration, or tenancy operations.
+
+### 12.2 Defer Attention
+
+Defer preserves governance reality while acknowledging **insufficient attention, clarity, or timing** for specific execution engagement — honest pacing with **Governance Continuity** preserved within macro-domain scope.
+
+### 12.3 Conclude Governance Context
+
+Conclude diminishes **platform governance attention posture** for a matter or session scope — typically when execution attention no longer requires macro-domain orientation, or responsibility transfers per policy. Conclude does **not** imply moderation bypassed, authority self-granted, or Chapter 20 meaning altered.
+
+### 12.4 Posture Reconsideration
+
+Orient, defer attention, and conclude remain available across Platform Governance Lifecycle — not irreversible traps.
+
+### 12.5 Pending and Escalated Honesty
+
+Pending review, escalated matters, and backlog states remain **honestly communicated** — no simulated resolution or hidden suppression.
+
+### 12.6 No Forced Governance Theater
+
+Exit, defer, and conclude paths always accountable — Admin Platform Integrity requires dignity without punitive design.
+
+---
+
+## 13. Transition to Forward Admin Platform Chapters
+
+This chapter opens the Admin Platform macro-domain. Specialized governance **execution** dimensions follow in forward chapters — per Chapter 46 §8.1 deferral, Chapter 20 §2.2 deferral, MASTER_ROADMAP remaining work, and GD-008.
+
+### 13.1 What This Chapter Supplies
+
+Architectural foundation — Platform Governance Lifecycle, marketplace governance posture, delegated authority limits, Housing Journey / Tenancy Lifecycle / Realtor Professional Lifecycle separation, Chapter 20 consumption contract, Chapters 46–50 execution-participation separation, official boundary concepts, GD-008 principles, and reusable governance attention postures.
+
+### 13.2 Antecedent Foundation Layer — Not Rewritten
+
+| Layer | Chapter | Status |
+|-------|---------|--------|
+| Trust Meaning Foundation | Chapter 20 | Approved — consumed |
+| Participation Separation | Chapters 46–50 | Approved — consumed |
+| Macro-domain Foundation | **Chapter 51** | This chapter |
+
+Forward specialized chapters **extend** this foundation — they do **not** replace Chapter 20 or Chapters 46–50.
+
+### 13.3 Explicitly Deferred — Forward Within Admin Platform Block
+
+The following are **architectural placeholders only**. They are **not sequential commitments**, **not implementation roadmap items**, **not exhaustive**, and **do not determine final chapter count**. Design Council retains authority over specialized chapter **order**, **grouping**, **splitting**, **merging**, and **block completion** — per §13.4.
+
+The following belong to **forward admin platform chapters** — outside this chapter's definitional scope:
+
+- **Listing moderation decision execution experience** — admin execution depth on publication integrity decisions beyond participation context (Chapter 47)  
+- **Role grant and revocation execution experience** — admin execution depth on realtor role authority beyond activation orientation (Chapter 48)  
+- **Verification program execution experience** — admin execution depth on verification adjudication beyond participation context (Chapter 49)  
+- **Platform policy enforcement experience** — governance operations execution within delegated marketplace policy scope  
+- **Additional specialized dimensions** — subject to Design Council scoping as Admin Platform block evolves  
+
+This chapter **references** these domains — it does **not** define them.
+
+### 13.4 Lifecycle Completion Pattern — Governance Principle
+
+**Lifecycle Completion Pattern** (Chapter 45 §11.1) is a **governance principle** — not a rigid template every block must replicate.
+
+Realtor Platform (Chapters 46–50) implemented four specialized dimensions because **architectural necessity** required that depth. Admin Platform **may** follow a different dimension count and sequence. Forward chapters should demonstrate **foundation → specialized dimensions → block completion criteria** without forcing symmetry where architectural necessity does not require it.
+
+Design Council governs block completion — not predetermined dimension count.
+
+### 13.5 Relationship to Other Forward Macro-Domains
+
+Design System Governance, Accessibility & Internationalization, Performance Experience, and Future Product Evolution remain **separate forward blocks** per MASTER_ROADMAP — not subsets of Admin Platform. Approval of forward admin chapters completes **Admin Platform specialized coverage** only — not Product Design Standard v1.0 completion.
+
+### 13.6 Handoff Preconditions to Forward Chapters
+
+Transition toward specialized admin platform chapters is responsible when **Active Governance Scope** is in scope for the execution dimension, **Admin Platform Boundaries** are understood, **Admin Platform Boundary Clarity** is adequate, **Governance Continuity** preserves relevant execution context, and **Admin Platform Integrity** posture is maintained.
+
+---
+
+## 14. Information and Governance Continuity Layer
+
+### 14.1 Governance Continuity Across Sessions
+
+Governance Continuity governs persistence of pending execution context, last accountability orientation, and delegated-matter carry-forward across admin sessions — **within Admin Platform macro-domain scope only**.
+
+### 14.2 Chapter 20 Outcome Alignment
+
+Execution outcomes must remain **expressible in Chapter 20 terms** on all affected consumer and realtor surfaces — Governance Continuity preserves execution context that honors this alignment.
+
+### 14.3 Participation Surface Impact Awareness
+
+When governance execution affects realtor participation context (Chapters 47–50) or consumer trust surfaces, **Chapter 20 communication rules** govern affected-party experience — admin execution context does not bypass them.
+
+### 14.4 Cross-Role Intersection Without Merge
+
+Dual-role administrators who also hold realtor scope require **explicit dimensional separation** (Chapter 23 §29.2 lineage, Chapter 46 dual-role clarity) — governance execution and professional participation remain distinct attention domains.
+
+---
+
+## 15. Mobile & Accessibility Considerations
+
+Admin operational surfaces may prioritize **desktop and tablet accountability context** — higher information density permitted within admin scope (Chapter 10 §4.4). Mobile admin access, where provided, must preserve **boundary legibility** and **delegated authority clarity** — not consumer-mobile-first patterns exported in reverse.
+
+| Principle | Intent |
+|-----------|--------|
+| **Accountability at glance** | Delegated scope and matter status legible without hunt |
+| **Calm return** | Resuming governance context feels continuous — not alarming |
+| **Outcome legibility** | Execution states plain-language — aligned with Chapter 20 |
+| **Role clarity** | Dual-role administrators understand governance vs professional hat |
+| **No punitive layout** | Rejection and enforcement paths dignity-preserving |
+
+Accessibility implementation is out of scope; **principle** is mandatory — textual equivalents for governance posture, plain language, calm tone without weaponized moderation anxiety (Chapter 7).
+
+---
+
+## 16. Anti-Patterns
+
+| Anti-pattern | Why it harms |
+|--------------|--------------|
+| **Authority Invention** | Admin scope expands beyond delegation — governance violation |
+| **Chapter 20 Redefinition** | Trust meaning altered through execution layer — authority violation |
+| **Participation-Execution Collapse** | Admin surfaces orient like Ch 47–50; realtor surfaces execute — role violation |
+| **Realtor Capability Leakage** | Admin features appear in workspace — Ch 46 §8.3 violation |
+| **Admin Capability Leakage** | Moderation execution exposed to realtors — domain violation |
+| **CRM / Agency ERP Creep** | Client pipeline, commission, hierarchy in admin scope — scope violation |
+| **PMS / Tenancy Administration Creep** | Rent, maintenance, dispute operations in admin scope — Ch 41 violation |
+| **Compliance Theater** | Organizational compliance programs in Governance Continuity scope — GD-008 violation |
+| **Throughput Gamification** | Approval metrics over integrity — accountability violation |
+| **Moderation Shame Theater** | Punitive admin or downstream UX — Ch 20 violation |
+| **Consumer Journey Substitution** | Admin paths replace housing evaluation — Ch 23 violation |
+| **Housing Journey Conflation** | Merges governance with consumer arc — architectural violation |
+| **Tenancy Lifecycle Conflation** | Admin moderates tenancy operations — scope violation |
+| **Rigid Lifecycle Template Forcing** | Assumes dimension count from prior macro-domains — governance violation |
+| **Boundary Redefinition in Specialized Chapters** | Forward chapter narrows or expands foundation boundaries — GD-008 violation |
+| **Implementation Leakage in Principles Chapter** | Queue/console/API language in standard — PDS contract violation |
+
+---
+
+## 17. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, admin platform initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Platform Governance Lifecycle** separation, **Admin Platform Environment**, **Active Governance Scope**, **Admin Platform Boundaries**, **Admin Platform Boundary Clarity**, **Admin Platform Integrity**, **Governance Continuity** scope discipline, **GD-008 principles**, and **Chapters 20 and 46–50 consumption integrity**.
+
+**Review gate:** No admin platform surface ships without checklist against all official concepts, principles, governance attention postures, role boundaries, integrity requirements, and GD-008 macro-domain governance principles defined herein — plus compliance with Chapter 20 and Chapters 46–50 as authoritative upstream layers.
+
+---
+
+## 18. Chapter Summary
+
+Admin platform experience opens the **Admin Platform macro-domain** — converting **delegated marketplace governance authority** into **accountable admin-facing execution experience with governance boundary clarity** after Realtor Platform macro-domain completion.
+
+This chapter establishes **why Admin Platform exists as an independent macro-domain**; defines **Platform Governance Lifecycle** (objectively justified per Lifecycle Necessity Principle), **Admin Platform Environment**, **Active Governance Scope**, **Admin Platform Boundaries**, **Admin Platform Boundary Clarity**, **Admin Platform Integrity**, and **Governance Continuity** (scoped per GD-008); principles of delegated authority over invention and execution over participation; mandatory separation from Housing Journey, Tenancy Lifecycle, and Realtor Professional Lifecycle; consumption of Chapter 20 and Chapters 46–50 without redefinition; **Governance Execution Ownership**, **Boundary Inheritance**, and **Lifecycle Necessity** principles; orient, defer attention, and conclude governance postures; **governance execution honors delegated authority only** posture; Lifecycle Completion Pattern as governance principle not rigid template; and honest transition toward specialized forward admin platform chapters without owning CRM, agency operations, property management, tenancy administration, organizational governance, or authority invention.
+
+**Product architecture flow:**
+
+Search (Ch 13–30) → Decision (Ch 31–37) → Housing Obligation (Ch 38–40) → Settled Tenancy (Ch 41–45) → Realtor Platform (Ch 46–50) → **Admin Platform (Ch 51)** → specialized admin chapters (forward) → governance domains (forward per MASTER_ROADMAP)
+
+**Antecedent layer within Admin Platform:**
+
+Trust Meaning (Ch 20) + Participation Separation (Ch 46–50) → **Admin Platform Foundation (Ch 51)** → forward specialized execution dimensions
+
+---
+
+## 19. Design Director Review
+
+**Chapter:** 51 — Admin Platform Experience  
+**Section:** XLVIII — Admin Platform  
+**Review type:** Initial standard adoption
+
+### 19.1 Approval Statement
+
+- **Phase 0 Pre-Authoring Analysis** — APPROVED (GD-008)  
+- **Phase 1 Authoring** — APPROVED  
+- **Architecture Review** — APPROVED  
+- **Approval Integration** — COMPLETE  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0  
+
+This chapter is approved as the **admin platform experience foundation** opening the Admin Platform macro-domain for Rento. All admin platform product surfaces must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 19.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 1 — Product Philosophy | Parent authority — administrator clarity, honesty, marketplace identity |
+| Chapter 10 — Navigation System | Admin architecture §4.4 — consumed, not redefined |
+| Chapter 20 — Trust, Verification & Moderation Experience | Antecedent trust meaning foundation — consumed, not redefined |
+| Chapter 23 — Onboarding & First-Time Experience | Housing Journey parent — mandatory separation |
+| Chapter 41 — Settled Tenancy Experience | Tenancy Lifecycle parent — mandatory separation |
+| Chapter 45 — Tenancy Conclusion Experience | Ecosystem boundary — Admin Platform independent forward block |
+| Chapter 46 — Realtor Platform Experience | Participation-execution separation — Ch 46 §8 consumed and reinforced |
+| Chapters 47–50 | Participation invariants — execution deferred to Admin Platform specialized chapters |
+| PHASE_0_ADMIN_PLATFORM.md | Phase 0 authority — entry chapter and GD-008 principles honored |
+
+### 19.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Admin platform positioned as Admin Platform macro-domain opening — not Ch 20 rewrite, not realtor participation, not tenancy operations  
+2. Housing Journey / Tenancy Lifecycle / Realtor Professional Lifecycle / Platform Governance Lifecycle explicitly separated  
+3. Platform Governance Lifecycle objectively justified — not symmetry-only  
+4. Governance execution honors delegated authority only — explicit posture  
+5. Chapter 20 and Chapters 46–50 consumed — not redefined  
+6. GD-008 principles explicit — Lifecycle Necessity, Governance Execution Ownership, Governance Continuity Scope, Boundary Inheritance  
+7. Participation vs execution separation reinforced — inverse of Ch 47–50  
+8. Governance Continuity scoped — excludes organizational/compliance/audit/security/incident governance  
+9. Deferred registry honest — moderation, grant, verification, policy enforcement placeholders  
+10. Lifecycle Completion Pattern as governance principle — not rigid dimension mandate  
+11. No implementation leakage  
+12. Admin ≠ CRM, ERP, PMS, agency software — explicit  
+
+### 19.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on admin platform foundation philosophy |
+| Head of Product Design | Macro-domain transition; Ch 20 consumption integrity |
+| Senior UX Designer | Governance boundary communication, role separation |
+| Product Management | Delegated authority honesty; marketplace posture |
+| Content Design Lead | Scope language, outcome honesty, calm accountability copy |
+| Trust & Safety Lead | Chapter 20 alignment without meaning redefinition; execution accountability |
+| Accessibility Specialist | Non-visual governance orientation access |
+
+### 19.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new admin platform experience work immediately upon approval.
+
+### 19.6 Design Director Closing Note
+
+Consumers do not rent moderation consoles. Realtors do not self-approve their way to public trust. Administrators do not need another enterprise suite pretending to run housing markets, tenancy relationships, or agency empires. They need a serious marketplace whose governance execution is **bounded, accountable, and honest about what authority was delegated** — where trust meaning stays stable while integrity decisions get made, where participation and execution never collapse into one confused role, and where the platform never invents powers it was never given. This chapter exists so Rento closes the governance side of marketplace architecture with the same rigor brought to Housing Journey, Tenancy Lifecycle, and Realtor Professional Lifecycle — because a marketplace that governs demand and supply without governing how governance itself is experienced is incomplete.
+
+---
+
+**End of Chapter 51**
