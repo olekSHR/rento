@@ -36,9 +36,9 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–50 |
 | **Latest approved** | Chapter 50 — Inquiry Stewardship Experience |
-| **Latest checkpoint** | `ff61ee6` — approve chapter 50 inquiry stewardship experience |
-| **Pending checkpoint** | Realtor Platform macro-domain completion sign-off (this commit) |
-| **Current chapter** | None — next Product Design Standard macro-domain per MASTER_ROADMAP remaining work |
+| **Latest checkpoint** | `966e7a2` — complete realtor platform macro-domain |
+| **Pending checkpoint** | GD-007 governance integration (this commit) |
+| **Current chapter** | None — Admin Platform Phase 0 pending Design Council authorization |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
 | **Settled Tenancy** | **COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension) |
@@ -299,6 +299,119 @@ Realtor Platform Macro-domain Completion Sign-off
 5. **Realtor Platform macro-domain status is COMPLETE.** This does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion.
 6. **Admin Platform** is the next forward macro-domain per MASTER_ROADMAP remaining work — Phase 0 Pre-Authoring may begin only after explicit Design Council authorization.
 7. Rento remains a marketplace platform — Realtor Platform completion does **not** change platform posture (no CRM, agency ERP, or property management for realtors).
+
+---
+
+## Governance Decision 007
+
+**Status:** APPROVED
+
+**Title:**  
+Macro-domain Development Lifecycle
+
+**Decision:**
+
+The following **Macro-domain Development Lifecycle** is the standard governance process for every Product Design Standard macro-domain — proven during Realtor Platform (Chapters 46–50) and mandatory for all forward macro-domains including Admin Platform, Design System Governance, Accessibility & Internationalization, Performance Experience, and Future Product Evolution.
+
+### Why this lifecycle exists
+
+Macro-domains are architectural units larger than individual chapters. A single macro-domain may require a foundation chapter, multiple specialized dimensions, cross-chapter consumption contracts, and explicit boundary separation from sibling domains. Chapter-by-chapter approval alone does not guarantee macro-domain coherence, registry closure, or release discipline. This lifecycle formalizes the process that produced Realtor Platform without ad hoc variation.
+
+### Standard lifecycle
+
+```
+Repository Initialization
+    (MASTER_ROADMAP → RENTO_PRODUCT_DESIGN_STANDARD → CURSOR_HANDOFF)
+        ↓
+Phase 0 — Pre-Authoring Analysis
+        ↓
+Design Council Review (Phase 0 authorization)
+        ↓
+Phase 1 — Authoring (per chapter)
+        ↓
+Phase 2 — Architecture Review (per chapter)
+        ↓
+Phase 3 — Approval Integration (per chapter)
+        ↓
+Git Commit (per chapter approval)
+        ↓
+Git Push (per chapter approval)
+        ↓
+[Repeat Phase 0–3 through final chapter in macro-domain]
+        ↓
+Macro-domain Completion Review
+        ↓
+Macro-domain Completion Sign-off (Design Council governance act)
+        ↓
+Git Commit (macro-domain completion)
+        ↓
+Git Push (macro-domain completion)
+        ↓
+GitHub Release (macro-domain milestone — user-managed)
+        ↓
+Next Macro-domain (Design Council authorization required)
+```
+
+### Governance benefits
+
+| Benefit | Outcome |
+|---------|---------|
+| **Predictability** | Every macro-domain follows the same governance stages |
+| **Authorization gates** | Design Council reviews at Phase 0 and completion sign-off |
+| **Traceability** | Git checkpoints and releases map to architectural milestones |
+| **Session continuity** | Repository initialization prevents chat-history drift |
+| **Registry honesty** | Completion review verifies named deferrals are closed before sign-off |
+
+### Architectural consistency
+
+- Phase 0 evaluates all remaining candidates objectively (RC-4: non-sequential registry order is not authority).
+- Each chapter consumes upstream authorities — no silent redefinition.
+- Specialized dimensions follow established patterns (participation/stewardship over execution, boundary clarity, invariants where architecturally necessary).
+- Macro-domain Completion Review verifies integrity before the block is declared complete.
+
+### Scalability
+
+- Lifecycle scales to macro-domains of varying dimension count — no forced symmetry with prior blocks (Lifecycle Completion Pattern is governance principle, not rigid template).
+- Per-chapter git discipline keeps review units manageable as the standard grows toward 60–70 chapters.
+- GitHub Releases per macro-domain provide durable milestones without requiring a release per chapter.
+
+### Documentation integrity
+
+- **Documentation is the single source of truth** — repository initialization is mandatory at every session.
+- Approval Integration synchronizes `RENTO_PRODUCT_DESIGN_STANDARD.md`, `MASTER_ROADMAP.md`, and `CURSOR_HANDOFF.md`.
+- Macro-domain Completion Sign-off is recorded as a Governance Decision in `MASTER_ROADMAP.md`.
+- `CURSOR_HANDOFF.md` carries operational state; it must reflect latest checkpoint after each integration.
+
+### Release discipline
+
+- **Git commit** — per approved chapter and per macro-domain completion sign-off.
+- **Git push** — after each commit that integrates approved governance state.
+- **GitHub Release** — after macro-domain completion sign-off only (not per chapter, not per Phase 0).
+- Release tags document macro-domain milestones (e.g. `v1.0-realtor-platform`) — not Product Design Standard v1.0 completion.
+
+### Completion separation (mandatory)
+
+Three completion levels must **never** be conflated:
+
+| Level | Meaning | Does NOT imply |
+|-------|---------|----------------|
+| **Chapter approval** | Individual chapter APPROVED and integrated into the standard | Macro-domain complete |
+| **Macro-domain completion** | Foundation + all named specialized dimensions closed; Completion Review and Sign-off passed | Product Design Standard v1.0 complete |
+| **Product Design Standard v1.0 completion** | All macro-domains authored; Phase 2 comprehensive audit passed; Design Council final sign-off | Engineering implementation ready |
+
+**Chapter approval ≠ Macro-domain completion.**
+
+**Macro-domain completion ≠ Product Design Standard completion.**
+
+### Application to forward macro-domains
+
+1. **Admin Platform** — next macro-domain; Phase 0 Pre-Authoring requires explicit Design Council authorization.
+2. Each subsequent macro-domain in MASTER_ROADMAP remaining work follows this lifecycle.
+3. Additional specialized dimensions within a completed macro-domain require documented architectural gap and Design Council approval — not lifecycle bypass.
+
+### Reference implementation
+
+Realtor Platform (Chapters 46–50) is the reference implementation of this lifecycle — including GD-006 Macro-domain Completion Sign-off and GitHub Release `v1.0-realtor-platform`.
 
 ---
 

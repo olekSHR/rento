@@ -20,12 +20,15 @@ Project documentation is the single source of truth.
 
 Approved chapters: **1–50** (50 chapters total)  
 Latest approved chapter: **Chapter 50 — Inquiry Stewardship Experience**  
-Latest Git checkpoint: **Pending user commit** — Realtor Platform macro-domain completion sign-off  
-Repository status: **Modified (awaiting commit)**
+Latest Git checkpoint: `966e7a2` — complete realtor platform macro-domain  
+Latest GitHub Release: `v1.0-realtor-platform`  
+Repository status: **Modified (awaiting GD-007 commit)**
 
 **Realtor Platform block: COMPLETE** (Ch 46 foundation + Ch 47–50 specialized dimensions — named Ch 46 §13.3 registry closed)
 
 **Product Design Standard v1.0: IN PROGRESS** — Realtor Platform completion does not complete the standard
+
+**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED
 
 ```
 Realtor Platform ✓ COMPLETE
@@ -35,6 +38,7 @@ Realtor Platform ✓ COMPLETE
   Ch 49 — Professional Verification Participation ✓ APPROVED
   Ch 50 — Inquiry Stewardship ✓ APPROVED
   Named Ch 46 §13.3 registry ✓ CLOSED
+  GitHub Release: v1.0-realtor-platform ✓
 
 Forward macro-domains (MASTER_ROADMAP):
   Admin Platform ← NEXT (Design Council authorization required)
@@ -44,32 +48,55 @@ Forward macro-domains (MASTER_ROADMAP):
 
 --------------------------------------------------
 
-## REALTOR PLATFORM MACRO-DOMAIN — COMPLETION SIGN-OFF
+## GOVERNANCE — GD-007 MACRO-DOMAIN DEVELOPMENT LIFECYCLE
 
-**Status:** COMPLETE  
-**Governance:** MASTER_ROADMAP Governance Decision 006
+**Status:** APPROVED
 
-### Sign-off validation
+Standard lifecycle for every forward macro-domain:
 
-1. **Chapter 46 §13.3 named registry — CLOSED**
-   - Ch 47 — Publication Participation ✓
-   - Ch 48 — Professional Activation ✓
-   - Ch 49 — Professional Verification Participation ✓
-   - Ch 50 — Inquiry Stewardship ✓
+```
+Repository Initialization
+    ↓
+Phase 0 — Pre-Authoring Analysis
+    ↓
+Design Council Review
+    ↓
+Phase 1 — Authoring
+    ↓
+Phase 2 — Architecture Review
+    ↓
+Phase 3 — Approval Integration
+    ↓
+Git Commit → Git Push (per chapter)
+    ↓
+Macro-domain Completion Review
+    ↓
+Macro-domain Completion Sign-off
+    ↓
+Git Commit → Git Push → GitHub Release
+    ↓
+Next Macro-domain
+```
 
-2. **No documented architectural gap** remains inside Realtor Platform.
+**Completion separation (mandatory):**
 
-3. **Additional specialized dimensions NOT currently justified.** Future dimensions require documented architectural gap + Design Council approval.
+| Level | Status |
+|-------|--------|
+| Chapter approval | Individual chapter APPROVED |
+| Macro-domain completion | Block sign-off (e.g. GD-006) — **≠ chapter approval alone** |
+| Product Design Standard v1.0 | All macro-domains + Phase 2 audit — **≠ macro-domain completion** |
 
-4. **Product Design Standard v1.0 NOT complete** — forward macro-domains remain per MASTER_ROADMAP.
+Reference implementation: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-platform`
 
-### Macro-domain coverage (Ch 46–50)
+--------------------------------------------------
+
+## REALTOR PLATFORM — COMPLETE (GD-006)
 
 | Layer | Chapters |
 |-------|----------|
-| Antecedent foundation | Ch 18 (public identity), Ch 19 (workspace operations), Ch 20 (trust meaning) |
+| Antecedent foundation | Ch 18, Ch 19, Ch 20 |
 | Macro-domain foundation | Ch 46 |
-| Specialized dimensions | Ch 47 (publication), Ch 48 (activation), Ch 49 (verification participation), Ch 50 (inquiry stewardship) |
+| Specialized dimensions | Ch 47, Ch 48, Ch 49, Ch 50 |
 
 --------------------------------------------------
 
@@ -83,39 +110,27 @@ Forward macro-domains (MASTER_ROADMAP):
 3. Inquiry Stewardship never determines transaction outcome.
 4. Inquiry Stewardship never determines relationship outcome.
 
-Key concepts: Inquiry Stewardship, Stewardship Awareness, Inquiry Stewardship Boundaries, Stewardship Boundary Clarity, Inquiry Response Orientation (consequence)
-
---------------------------------------------------
-
-## DEFERRED DIMENSIONS (Ch 46 §13.3) — ALL CLOSED
-
-- ~~Publication participation~~ — Ch 47 APPROVED
-- ~~Professional activation~~ — Ch 48 APPROVED
-- ~~Professional verification journey~~ — Ch 49 APPROVED
-- ~~Inquiry stewardship experience~~ — Ch 50 APPROVED
-- Additional specialized dimensions — not currently justified (Design Council scoping only if documented gap emerges)
-
 --------------------------------------------------
 
 ## GIT STATUS
 
-Latest checkpoint: `ff61ee6` — approve chapter 50 inquiry stewardship experience
+Latest checkpoint: `966e7a2` — complete realtor platform macro-domain
 
 Pending commit message:
 
 ```
-complete realtor platform macro-domain
+add governance decision gd-007 macro-domain lifecycle
 ```
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Admin Platform** — next Product Design Standard macro-domain per MASTER_ROADMAP.
+**Admin Platform — Phase 0 Pre-Authoring Analysis**
 
-Do NOT start Phase 0 Pre-Authoring without explicit Design Council authorization.
+Requires explicit Design Council authorization per GD-007.
 
-**Ready for:** GitHub Release `v1.0-realtor-platform` (user-managed — not created by agent)
+Do NOT author Chapter 51 without authorization.
 
 --------------------------------------------------
 
