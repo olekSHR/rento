@@ -34,11 +34,11 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–52 |
-| **Latest approved** | Chapter 52 — Listing Moderation Decision Execution Experience |
-| **Latest checkpoint** | Pending — Chapter 52 Approval Integration |
-| **Current chapter** | None — Chapter 53 Phase 0 Pre-Authoring Analysis (next) |
-| **Admin Platform** | **IN PROGRESS** (Ch 51 foundation ✓ + Ch 52 first specialized dimension ✓ — remaining dimensions forward) |
+| **Approved chapters** | 1–53 |
+| **Latest approved** | Chapter 53 — Role Grant and Revocation Execution Experience |
+| **Latest checkpoint** | Pending — Chapter 53 Approval Integration |
+| **Current chapter** | None — Chapter 54 Phase 0 Pre-Authoring Analysis (next) |
+| **Admin Platform** | **IN PROGRESS** (Ch 51 foundation ✓ + Ch 52 first specialized dimension ✓ + Ch 53 second specialized dimension ✓ — remaining dimensions forward) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
@@ -74,7 +74,8 @@ Realtor Platform (Ch 46–50) ✓ COMPLETE
 Admin Platform (Ch 51+) — IN PROGRESS
     Ch 51 — Admin Platform Experience ✓ APPROVED (macro-domain foundation)
     Ch 52 — Listing Moderation Decision Execution Experience ✓ APPROVED (first specialized dimension)
-    Ch 53+ — specialized governance execution dimensions (forward)
+    Ch 53 — Role Grant and Revocation Execution Experience ✓ APPROVED (second specialized dimension)
+    Ch 54+ — specialized governance execution dimensions (forward)
     ↓
 Platform & governance domains (forward)
     Design System Governance, Accessibility & Internationalization, Performance Experience, Future Product Evolution
@@ -105,7 +106,7 @@ The following chapter domains remain to be authored, reviewed, and approved:
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Admin Platform** — specialized governance execution dimensions (Ch 53+ forward) — foundation Ch 51 ✓ + Ch 52 first dimension ✓ APPROVED; macro-domain IN PROGRESS
+- **Admin Platform** — specialized governance execution dimensions (Ch 54+ forward) — foundation Ch 51 ✓ + Ch 52 first dimension ✓ + Ch 53 second dimension ✓ APPROVED; macro-domain IN PROGRESS
 - **Design System Governance** — standards enforcement, evolution, and exception policy
 - **Accessibility & Internationalization** — inclusive and multilingual product experience
 - **Performance Experience** — perceived performance as a product trust dimension
@@ -413,7 +414,7 @@ Three completion levels must **never** be conflated:
 
 ### Application to forward macro-domains
 
-1. **Admin Platform** — macro-domain IN PROGRESS (Ch 51 foundation approved; Ch 52 first specialized dimension approved; Ch 53+ specialized dimensions forward); next: Chapter 53 Phase 0 Pre-Authoring Analysis.
+1. **Admin Platform** — macro-domain IN PROGRESS (Ch 51 foundation approved; Ch 52 first specialized dimension approved; Ch 53 second specialized dimension approved; Ch 54+ specialized dimensions forward); next: Chapter 54 Phase 0 Pre-Authoring Analysis.
 2. Each subsequent macro-domain in MASTER_ROADMAP remaining work follows this lifecycle.
 3. Additional specialized dimensions within a completed macro-domain require documented architectural gap and Design Council approval — not lifecycle bypass.
 
