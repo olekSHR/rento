@@ -99,17 +99,17 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 55 | [Platform Policy Enforcement Experience](#chapter-55--platform-policy-enforcement-experience) | Platform Policy Enforcement | APPROVED |
 | 56 | [Design System Governance Experience](#chapter-56--design-system-governance-experience) | Design System Governance | APPROVED |
 | 57 | [Standards Enforcement Experience](#chapter-57--standards-enforcement-experience) | Standards Enforcement | APPROVED |
+| 58 | [Standards Evolution Experience](#chapter-58--standards-evolution-experience) | Standards Evolution | APPROVED |
 
 ### Planned (not yet authored)
 
 | Planned chapter | Macro-domain | Status |
 |---------------|--------------|--------|
-| Standards evolution experience | Design System Governance | planned — specialized dimension; chapter number TBD at registry scoping |
-| Exception policy experience | Design System Governance | planned — specialized dimension; chapter number TBD at registry scoping |
+| Chapter 59 — Exception Policy Experience | Design System Governance | planned — specialized dimension; chapter number authorized by Design Council registry scoping |
 | Anti-Patterns Registry | Design System Governance | planned — forward specialized chapter per Ch 56 §10.5; chapter number TBD |
 | Product Review Checklist | Design System Governance | planned — forward specialized chapter per Ch 56 §10.5; chapter number TBD |
 
-See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain is IN PROGRESS** — Chapter 56 foundation and Chapter 57 standards enforcement APPROVED.
+See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain is IN PROGRESS** — Chapter 56 foundation, Chapter 57 standards enforcement, and Chapter 58 standards evolution APPROVED.
 
 ### Macro-domain Completion Status
 
@@ -119,7 +119,7 @@ See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domai
 | Settled Tenancy | 41–45 | COMPLETE |
 | Realtor Platform | 46–50 | COMPLETE (GD-006) |
 | Admin Platform | 51–55 | **COMPLETE (GD-009)** |
-| Design System Governance | 56+ | **IN PROGRESS** (Ch 56 foundation + Ch 57 standards enforcement APPROVED) |
+| Design System Governance | 56+ | **IN PROGRESS** (Ch 56 foundation + Ch 57 standards enforcement + Ch 58 standards evolution APPROVED) |
 | Accessibility & Internationalization | forward | not yet authored |
 | Performance Experience | forward | not yet authored |
 | Future Product Evolution | forward | not yet authored |
@@ -170,6 +170,7 @@ See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domai
 | 1.0 | 2026-07-08 | **Admin Platform Macro-domain Completion Sign-off (GD-009)** — Chapters 51–55 architecturally complete; named Ch 51 §13.3 registry fully closed; additional specialized dimensions remain Design Council extension point only; Boundary Inheritance, Governance Execution Ownership, Governance Continuity Scope, and Chapter 20 authority preserved — does **not** imply Product Design Standard v1.0 completion |
 | 1.0 | 2026-07-09 | Chapter 56 — Design System Governance Experience approved and added — Opened Design System Governance macro-domain with Product Design Standard Lifecycle foundation, Governance Subject Principle, architectural ownership levels (Product Experience / Platform Governance / Design System Governance), Chapters 5 and 11 antecedent consumption, Platform Governance separation, Anti-Patterns Registry and Product Review Checklist macro-domain ownership per §10.5, three MASTER_ROADMAP pillar placeholders (standards enforcement, evolution, exception policy), and forward reference reconciliation — Status: APPROVED |
 | 1.0 | 2026-07-09 | Chapter 57 — Standards Enforcement Experience approved and added — Established first specialized Design System Governance dimension with Standard Compliance as architectural state, standards enforcement as protection of Product Design Standard authority, Chapter 5 / Chapter 11 / Chapter 56 consumption preservation, no implementation enforcement, no registry content, and principles-only Standard Compliance architecture — Status: APPROVED |
+| 1.0 | 2026-07-09 | Chapter 58 — Standards Evolution Experience approved and added — Established second specialized Design System Governance dimension with Standards Evolution as controlled Product Design Standard change discipline, Evolution Candidate / Evaluation / Approval separation, Continuous Architectural Lineage, Chapter 5 / Chapter 11 / Chapter 56 / Chapter 57 ownership preservation, no implementation scope, no workflow/tooling/DesignOps/release-management scope, and no Product Review Checklist or Anti-Patterns Registry content — Status: APPROVED |
 
 ---
 
@@ -51198,3 +51199,542 @@ A standard that cannot say what compliance means cannot protect itself. Standard
 ---
 
 **End of Chapter 57 — Standards Enforcement Experience**
+
+
+---
+
+## Chapter 58 — Standards Evolution Experience
+
+**Section:** LV — Standards Evolution  
+**Status:** APPROVED  
+**Audience:** Product Design, UX, Product Management, Content Design, Design Council, Engineering Leadership, Reviewers  
+**Authority:** Subordinate to Chapters 1–57; second specialized dimension within the Design System Governance macro-domain after Standards Enforcement Experience (Chapter 57); operationalizes Chapter 56 boundaries, Product Design Standard Lifecycle, Governance Subject Principle, architectural ownership levels, Design System Governance Integrity, Standards Governance Continuity, and Boundary Inheritance; consumes Product Design Decision Framework (Chapter 5), Component Philosophy & Component System (Chapter 11), and Standards Enforcement Experience (Chapter 57) without redefinition; preserves Platform Governance separation from Admin Platform (Chapters 51–55) and forward macro-domain separation (Accessibility & Internationalization, Performance Experience, Future Product Evolution); defines principles only — not implementation, UI, frontend, backend, APIs, databases, tokens, Figma, tooling, automation, engineering standards, DesignOps, organizational governance, delivery governance, project management, release management, Admin Platform execution, Product Review Checklist content, or Anti-Patterns Registry content.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **standards evolution experience philosophy** for Rento — how the Product Design Standard changes deliberately while preserving architectural stability, authority continuity, and long-term product language integrity.
+
+Standards evolution exists because a product standard must remain durable without becoming frozen. Rento will grow across markets, roles, product surfaces, trust models, accessibility expectations, performance expectations, and future product capabilities. Some future needs will be handled by approved chapters as written. Some will require authorized exceptions under Chapter 5. Some will reveal that the Product Design Standard itself needs controlled evolution.
+
+Standards evolution governs only the third case: **controlled change to the Product Design Standard itself**.
+
+Standards evolution is not standards enforcement. Chapter 57 governs Standard Compliance with the currently approved Product Design Standard. Enforcement may identify that current standard authority is insufficient, but enforcement does not change the standard. This chapter governs how Product Design Standard evolution is understood, bounded, and protected as a standard-level architectural matter.
+
+Standards evolution is not continual change. Its purpose is to preserve long-term architectural stability by preventing silent drift, shadow standards, repeated exceptions, and disconnected revisions. Evolution is justified only when the approved standard can no longer responsibly govern a recurring, validated, or structurally important product design need within existing authority.
+
+The product must help stakeholders answer five standards evolution questions:
+
+1. What makes a matter an evolution candidate rather than Standard Compliance, exception handling, component evolution, or out-of-scope work?  
+2. How are identifying an evolution candidate, evaluating an evolution candidate, and approving Product Design Standard evolution kept distinct?  
+3. How does the standard evolve without encouraging continual change, local invention, or revision churn?  
+4. How does evolution preserve continuous architectural lineage across approved chapters rather than producing disconnected revisions?  
+5. How does standards evolution remain principles-only without becoming workflow, tooling, release management, DesignOps, implementation, or engineering standards?
+
+This chapter governs Standards Evolution Experience as a specialized dimension within Design System Governance. It does not specify UI, implementation, review tooling, approval tooling, release mechanics, checklist content, registry content, or engineering architecture.
+
+**Relationship to prior chapters:** Chapter 5, Chapter 11, Chapter 56, and Chapter 57 supply authoritative layers consumed by this chapter. This chapter defines **Standards Evolution**, **Evolution Candidate**, **Evolution Candidate Identification**, **Evolution Candidate Evaluation**, **Product Design Standard Evolution Approval**, **Standards Evolution Boundaries**, **Standards Evolution Boundary Clarity**, **Standards Evolution Integrity**, and **Continuous Architectural Lineage**.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Evolution protects stability** | Standards evolution exists to preserve long-term architectural stability — not to encourage continual change |
+| **Candidate is not approval** | Identifying an evolution candidate creates no new standard authority |
+| **Evaluation is not approval** | Evaluating an evolution candidate clarifies architectural merit but does not change the standard |
+| **Approval changes authority only through Design Council** | Product Design Standard evolution becomes authority only when approved and integrated |
+| **Current compliance remains current authority** | Until evolution is approved, Standard Compliance remains alignment with the currently approved Product Design Standard |
+| **Evolution is not exception** | Exceptions remain Chapter 5 authority; persistent exception pressure may become an evolution candidate |
+| **Evolution is not component lifecycle** | Component lifecycle remains Chapter 11 authority; component pressure may reveal a standard-level gap |
+| **Lineage over revision fragments** | The Product Design Standard remains a continuous architectural lineage, not disconnected revisions |
+| **Controlled change over accumulation** | The standard evolves by clarifying, extending, reconciling, deprecating, or retiring approved authority |
+| **Boundary inheritance over foundation rewrite** | Standards evolution inherits Chapter 56 boundaries and does not reopen the foundation |
+| **Principles only** | Standards evolution defines product-design architecture only — not implementation, workflow, tooling, automation, release management, DesignOps, or engineering standards |
+| **Standards Evolution Integrity goal** | Every evolution concept preserves Product Design Standard authority, Standard Compliance distinction, ownership boundaries, and continuous lineage |
+
+---
+
+## 2. Architectural Position
+
+Standards Evolution Experience sits within the Design System Governance macro-domain after Chapter 56 foundation and Chapter 57 Standards Enforcement.
+
+Chapter 57 establishes that Standard Compliance applies to the currently approved Product Design Standard. It also establishes that when the standard itself needs to change, that matter belongs to Standards Evolution. This chapter therefore specializes the architectural space that Chapter 57 intentionally left forward.
+
+Standards evolution succeeds through **controlled standard change discipline**: product-design clarity about when current authority is insufficient, how evolution candidacy is distinguished from compliance and exception, and how approved changes preserve lineage.
+
+Standards evolution does not imply that the Product Design Standard should change frequently. A standard that changes too easily becomes unstable. A standard that cannot evolve becomes brittle. Standards evolution exists to hold that tension with discipline.
+
+### 2.1 Why Standards Evolution Requires Specialized Depth
+
+Chapter 56 establishes Design System Governance foundations, but it does not define specialized evolution depth. Chapter 57 defines Standard Compliance, but it does not authorize standard change.
+
+Without this chapter, the standard would have:
+
+- A governance subject — the Product Design Standard itself  
+- A lifecycle — Product Design Standard Lifecycle  
+- Compliance meaning — Standard Compliance as architectural state  
+- Enforcement discipline — protection from silent drift  
+- Registry ownership — Product Review Checklist and Anti-Patterns Registry assigned to Design System Governance
+
+But it would not define how the Product Design Standard evolves without silent drift, exception accumulation, component lifecycle conflation, or disconnected revisions.
+
+### 2.2 Non-Sequential Position
+
+Chapter 56 §10.3 registers standards enforcement, standards evolution, and exception policy as forward placeholders. Per RC-4 and GD-007, registry order is not mandatory workflow order. This chapter reflects Design Council registry scoping authorization for Chapter 58 — Standards Evolution Experience. It does not determine the grouping, splitting, merging, or completion of remaining Design System Governance work.
+
+---
+
+## 3. Standards Evolution
+
+**Standards Evolution** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Standards Evolution is the **product-design governance responsibility of changing the Product Design Standard itself only when controlled change is necessary to preserve long-term architectural stability, authority clarity, product language continuity, and future applicability**.
+
+Standards Evolution is not change preference, novelty, cleanup, taste correction, visual refresh, delivery convenience, implementation pressure, tooling output, or organizational process.
+
+Standards Evolution exists when the approved Product Design Standard must be deliberately adjusted because current authority is insufficient, incomplete, obsolete, ambiguous, structurally inconsistent, or unable to govern a recurring product-design need without harm.
+
+Standards Evolution may clarify, extend, reconcile, deprecate, or retire Product Design Standard authority. It must always preserve the standard as a continuous architectural lineage.
+
+### 3.1 Standards Evolution and Stability
+
+Standards Evolution preserves stability by making necessary change explicit. It prevents teams from solving standard gaps through silent local rules, permanent exceptions, shadow standards, or component-level workarounds.
+
+The stable product standard is not the one that never changes. The stable product standard is the one whose changes remain justified, bounded, traceable, and continuous with approved authority.
+
+### 3.2 Standards Evolution and Current Authority
+
+Until Product Design Standard evolution is approved, the currently approved Product Design Standard remains authoritative.
+
+A future improvement idea does not weaken current Standard Compliance. A suspected standard gap does not authorize local deviation. A draft evolution proposal does not create interim authority.
+
+### 3.3 Standards Evolution Invariant (EV-1)
+
+**Standards Evolution changes Product Design Standard authority only through controlled standard-level governance; it never operates as informal drift, local substitute authority, exception permanence, component lifecycle substitution, implementation pressure, or disconnected revision.**
+
+Violation of EV-1 is an architectural integrity failure because it turns evolution into instability.
+
+---
+
+## Evolution Candidate
+
+**Evolution Candidate** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+An Evolution Candidate is a **standards governance matter that may justify Product Design Standard evolution because current approved authority appears insufficient, incomplete, obsolete, ambiguous, structurally inconsistent, or repeatedly unable to govern legitimate product-design needs without harm**.
+
+An Evolution Candidate is not approved evolution, not an exception, not Standard Compliance, not component evolution, not implementation feedback by itself, and not a request to change the standard because change would be convenient.
+
+A matter may become an Evolution Candidate when one or more of the following is true:
+
+- A legitimate product-design need cannot be expressed within current approved authority without harming trust, clarity, consistency, accessibility, maintainability, or marketplace posture  
+- The same ambiguity appears across multiple standard-governed contexts  
+- A time-bound exception persists beyond its intended scope and must become standard change or be removed under Chapter 5  
+- Current standard language creates avoidable conflict between approved chapters  
+- A future macro-domain requires standard continuity that existing chapters do not yet define  
+- A component-level governance issue reveals standard-level insufficiency, while component lifecycle remains Chapter 11 authority  
+- A repeated Standard Compliance ambiguity cannot be resolved by Chapter 57 enforcement alone
+
+A matter is not an Evolution Candidate when it can be resolved by applying current chapters correctly, belongs only to Chapter 5 exception handling, belongs only to Chapter 11 component lifecycle, reflects local preference, or belongs to another macro-domain or out-of-scope implementation layer.
+
+---
+
+## 4. Mandatory Distinctions
+
+The following distinctions are mandatory. They are architectural states of meaning that prevent premature authority creation — not implementation workflow.
+
+| State | Meaning | Cannot establish |
+|-------|---------|------------------|
+| **Evolution Candidate Identification** | Recognition that a standards governance matter may involve Product Design Standard evolution because current authority may be insufficient | Standard change, exception approval, compliance suspension, component lifecycle change, or implementation permission |
+| **Evolution Candidate Evaluation** | Standards governance judgment of whether an identified candidate has architectural necessity, boundary fit, lineage continuity, and authority integrity | Approved Product Design Standard evolution, new authority, new exception policy rules, new component lifecycle rules, registry content, or implementation requirements |
+| **Product Design Standard Evolution Approval** | Design Council governance act authorizing a change to the Product Design Standard itself | Implementation completion, UI readiness, engineering readiness, tooling compliance, release readiness, registry content, or macro-domain completion |
+
+Candidate identification is a signal of possible need, not a grant of authority. Candidate evaluation is architectural judgment, not approval. Approval changes Product Design Standard authority only at standard level after Design Council approval and integration.
+
+---
+
+## 5. Scope
+
+Standards Evolution Experience governs product-design architecture for:
+
+- Standards Evolution as controlled Product Design Standard change discipline  
+- Evolution Candidate as a possible standard-level change matter  
+- Distinction between identifying, evaluating, and approving evolution  
+- Preservation of current Standard Compliance until evolution is approved  
+- Long-term architectural stability as the purpose of evolution  
+- Continuous architectural lineage across Product Design Standard revisions  
+- Relationship between standards evolution and Chapter 5 Exception Policy without redefining exceptions  
+- Relationship between standards evolution and Chapter 11 Component Lifecycle without redefining component governance  
+- Relationship between standards evolution and Chapter 56 Product Design Standard Lifecycle without reopening foundation  
+- Relationship between standards evolution and Chapter 57 Standard Compliance without weakening enforcement  
+- Evolution boundaries, boundary clarity, integrity, attention postures, and invariants  
+- Registry ownership preservation without defining Product Review Checklist or Anti-Patterns Registry content
+
+Standards evolution may establish principles for recognizing, evaluating, and approving standard-level change as architectural meaning. It may not prescribe operational workflow, tooling, automation, implementation, or release mechanics.
+
+---
+
+## 6. Out of Scope
+
+The following remain outside Standards Evolution Experience scope:
+
+| Exclusion | Governing authority |
+|-----------|---------------------|
+| Decision Framework | Chapter 5 |
+| Exception Policy rules, severity, justification, rollback, and exception approval | Chapter 5 |
+| Component philosophy, component lifecycle, component governance, catalog health, pattern stewardship, and component retirement | Chapter 11 |
+| Design System Governance foundation, Product Design Standard Lifecycle definition, DSG invariants, and Boundary Inheritance foundation | Chapter 56 |
+| Standard Compliance definition and standards enforcement boundaries | Chapter 57 |
+| Product Review Checklist content | Forward DSG chapter per Chapter 56 §10.5 |
+| Anti-Patterns Registry content | Forward DSG chapter per Chapter 56 §10.5 |
+| Platform governance execution | Admin Platform, Chapters 51–55 |
+| Accessibility & Internationalization | Forward macro-domain |
+| Performance Experience | Forward macro-domain |
+| Future Product Evolution | Forward macro-domain |
+| UI, frontend, backend, APIs, databases, tokens, Figma, tooling, automation, CI/CD, lint, scripts, release management, engineering standards, DesignOps, organizational governance, delivery governance, and project management | Outside Product Design Standard scope or excluded by Governance Subject Principle |
+
+This canonical exclusion section governs all later boundary references in this chapter.
+
+---
+
+## 7. Ownership and Cross-Chapter Contracts
+
+Standards evolution consumes approved authorities without redefining them:
+
+| Authority | Owner | Standards Evolution relationship |
+|-----------|-------|----------------------------------|
+| Decision hierarchy and Exception Policy | Chapter 5 | Consumed; persistent exception pressure may become an Evolution Candidate, but exception rules remain unchanged |
+| Component philosophy, lifecycle, and governance | Chapter 11 | Consumed; component-level pressure may reveal a standard-level gap, but component lifecycle remains unchanged |
+| DSG foundation, Product Design Standard Lifecycle, boundaries, integrity, continuity, registry ownership, and DSG-1 through DSG-10 | Chapter 56 | Inherited; foundation is not reopened |
+| Standard Compliance, standards enforcement boundaries, and SE-1 through SE-10 | Chapter 57 | Preserved; enforcement may identify evolution candidacy but does not evolve the standard |
+
+Standards evolution does not approve exceptions, components, implementation, registry content, or forward macro-domain content.
+
+---
+
+## Standards Evolution Boundaries
+
+**Standards Evolution Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Standards Evolution Boundaries define what standards evolution can and cannot establish within the Design System Governance macro-domain.
+
+Standards evolution can establish:
+
+- Whether an identified matter is eligible for standard-level evolution consideration  
+- Whether current approved Product Design Standard authority is insufficient for a legitimate product-design need  
+- Whether repeated exception pressure should become an Evolution Candidate or be removed  
+- Whether Standard Compliance ambiguity requires standard-level clarification  
+- Whether a proposed change preserves authority order, consumption contracts, and macro-domain boundaries  
+- Whether approved standard change must clarify, extend, reconcile, deprecate, or retire existing authority  
+- Whether Continuous Architectural Lineage is preserved
+
+Standards evolution cannot establish anything excluded by §6 or owned by Chapters 5, 11, 56, or 57 per §7.
+
+---
+
+## Standards Evolution Boundary Clarity
+
+**Standards Evolution Boundary Clarity** is the shared legibility of what standards evolution owns, what standards enforcement owns, what Chapter 5 owns, what Chapter 11 owns, what Chapter 56 owns, and what future macro-domains own.
+
+Standards Evolution Boundary Clarity requires:
+
+- **Candidate clarity** — identifying an Evolution Candidate does not approve standard change  
+- **Evaluation clarity** — evaluating a candidate does not create new authority  
+- **Approval clarity** — Product Design Standard evolution changes authority only through Design Council approval  
+- **Standard Compliance clarity** — current approved standard remains authoritative until evolution is approved  
+- **Ownership clarity** — Chapter 5, Chapter 11, Chapter 56, and Chapter 57 retain their approved authority  
+- **Registry clarity** — checklist and registry ownership does not become content definition  
+- **Forward macro-domain clarity** — Accessibility & Internationalization, Performance Experience, and Future Product Evolution remain separate blocks  
+- **Lineage clarity** — approved evolution must connect to prior standard authority rather than create disconnected revision fragments
+
+---
+
+## Continuous Architectural Lineage
+
+**Continuous Architectural Lineage** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Continuous Architectural Lineage is the preservation of the Product Design Standard as one coherent architectural authority across approved changes, so every evolution remains traceable to prior principles, consumption contracts, boundaries, and product posture.
+
+The Product Design Standard must evolve as a continuous lineage rather than a sequence of disconnected revisions. A new standard statement must know what it clarifies, extends, reconciles, deprecates, or retires. It must not appear as an isolated replacement detached from the approved chapters that came before it.
+
+Continuous Architectural Lineage requires:
+
+- Preservation of authority order  
+- Explicit relationship to affected approved chapters  
+- No silent redefinition of upstream authorities  
+- No unresolved contradiction with prior approved concepts  
+- No local substitute language replacing official terminology  
+- No disconnected revision that leaves teams uncertain which authority governs  
+- No erasure of historical reasoning where continuity is needed for future judgment
+
+Continuous Architectural Lineage does not require preserving obsolete language forever. It requires that any change to obsolete language remains architecturally honest about what changed and why the standard remains one coherent authority.
+
+---
+
+## Standards Evolution Integrity
+
+**Standards Evolution Integrity** is the honesty of standards evolution itself — no change for novelty, no candidate treated as approval, no evaluation treated as authority, no exception permanence disguised as evolution, no component lifecycle substitution, no foundation rewrite, no implementation pressure, no release management substitution, no registry content invention, no future macro-domain absorption, and no disconnected revisions.
+
+Standards Evolution Integrity specializes Design System Governance Integrity for the standards evolution dimension.
+
+Standards Evolution Integrity is preserved when:
+
+- The standard changes only to preserve or strengthen product-design authority  
+- Current Standard Compliance remains intact until approval  
+- Evolution candidates remain visibly pending until evaluated and approved  
+- Exceptions remain exceptions until removed or converted through approved standard change  
+- Component evolution remains Chapter 11 scope  
+- Approved changes preserve Continuous Architectural Lineage  
+- The standard becomes more coherent, not merely larger
+
+---
+
+## 8. Governance Principles
+
+### 8.1 Evolution Preserves Stability
+
+Standards evolution exists to preserve long-term architectural stability. It does not encourage continual change, revision churn, novelty, or product language reinvention.
+
+### 8.2 Candidate and Evaluation Do Not Create Authority
+
+Evolution Candidate Identification and Evolution Candidate Evaluation are necessary governance states, but neither changes Product Design Standard authority.
+
+### 8.3 Approval Changes Authority Only Through Design Council
+
+Product Design Standard evolution becomes authoritative only through Design Council approval and standard integration. Before approval, current approved standard authority remains binding.
+
+### 8.4 Current Compliance Remains Current Authority
+
+Standard Compliance is judged against the currently approved Product Design Standard until evolution is approved. Future evolution possibility does not weaken current compliance.
+
+### 8.5 Ownership Is Preserved
+
+Standards evolution preserves Chapter 5, Chapter 11, Chapter 56, and Chapter 57 authority per §7.
+
+### 8.6 Lineage Over Disconnected Revision
+
+Approved Product Design Standard changes must preserve Continuous Architectural Lineage. The standard must remain one coherent authority across time.
+
+### 8.7 Controlled Change Over Accumulation
+
+Standards evolution clarifies, extends, reconciles, deprecates, or retires authority. It does not accumulate parallel standards, shadow rules, or local dialects.
+
+### 8.8 Principles Only
+
+Standards evolution defines product-design architecture only. It never becomes workflow, tooling, automation, implementation, release management, DesignOps, or engineering standards.
+
+---
+
+## 9. Architectural Invariants
+
+The following invariants are mandatory across Standards Evolution Experience. All inherit DSG-1 through DSG-10.
+
+| ID | Invariant | Statement |
+|----|-----------|-----------|
+| **EV-1** | **Stability Preservation** | Standards Evolution exists to preserve long-term architectural stability, not to encourage continual change |
+| **EV-2** | **Candidate Non-Authority** | An Evolution Candidate is not approved Product Design Standard evolution and creates no new standard authority |
+| **EV-3** | **Evaluation Non-Authority** | Evolution Candidate Evaluation does not approve or authorize Product Design Standard change |
+| **EV-4** | **Approval Authority** | Product Design Standard evolution becomes authoritative only through Design Council approval and standard integration |
+| **EV-5** | **Current Compliance Preservation** | Standard Compliance remains alignment with the currently approved Product Design Standard until evolution is approved |
+| **EV-6** | **Chapter 5 Preservation** | Exception Policy remains Chapter 5 authority |
+| **EV-7** | **Chapter 11 Preservation** | Component Lifecycle and Component Governance remain Chapter 11 authority |
+| **EV-8** | **Chapter 56 Inheritance** | Standards evolution inherits Chapter 56 foundations, boundaries, continuity, and DSG invariants without reopening them |
+| **EV-9** | **Chapter 57 Preservation** | Standards evolution preserves Standard Compliance and standards enforcement boundaries |
+| **EV-10** | **Continuous Architectural Lineage** | Approved Product Design Standard evolution must preserve the standard as a continuous architectural lineage, not disconnected revisions |
+| **EV-11** | **No Implementation Evolution** | Standards evolution does not specify UI, code, APIs, databases, tooling, automation, tokens, Figma, release mechanics, or engineering standards |
+| **EV-12** | **No Registry Content** | Standards evolution does not define Product Review Checklist or Anti-Patterns Registry content |
+| **EV-13** | **Forward Macro-Domain Separation** | Standards evolution does not absorb Accessibility & Internationalization, Performance Experience, or Future Product Evolution |
+| **EV-14** | **No Change by Drift** | Silent drift, shadow standards, local substitute rules, and exception permanence are not standards evolution |
+
+---
+
+## 10. Boundary Inheritance
+
+Standards Evolution Experience inherits all Chapter 56 boundaries.
+
+It may extend within those boundaries by defining:
+
+- Standards Evolution  
+- Evolution Candidate  
+- Evolution Candidate Identification  
+- Evolution Candidate Evaluation  
+- Product Design Standard Evolution Approval  
+- Standards Evolution Boundaries  
+- Standards Evolution Boundary Clarity  
+- Standards Evolution Integrity  
+- Continuous Architectural Lineage  
+- Evolution-specific principles and invariants  
+- Evolution relationship to standards enforcement, exception policy, component lifecycle, registries, and future macro-domains
+
+It may never violate the exclusions in §6, redefine the ownership contracts in §7, or treat candidates or evaluations as approved Product Design Standard evolution.
+
+---
+
+## 11. Relationship With Future Design System Governance Chapters
+
+### 11.1 Exception Policy Experience
+
+Standards Evolution and Exception Policy Experience remain separate specialized dimensions.
+
+Exception Policy Experience will specialize how standard-level exceptions are experienced while consuming Chapter 5. Standards Evolution governs controlled change to the Product Design Standard itself.
+
+A persistent exception may become an Evolution Candidate, but standards evolution does not redefine exception rules. Exception status remains distinct from Standard Compliance and from approved evolution.
+
+### 11.2 Product Review Checklist
+
+Product Review Checklist is owned by Design System Governance per Chapter 56 §10.5. Standards evolution may establish that checklist content, when authored, must distinguish current compliance, exception status, and evolution candidacy.
+
+This chapter does not define checklist items, format, sequence, tooling, operation, ship gates, or review mechanics.
+
+### 11.3 Anti-Patterns Registry
+
+Anti-Patterns Registry is owned by Design System Governance per Chapter 56 §10.5. Standards evolution may establish that repeated drift, disconnected revisions, and exception permanence can become anti-pattern candidates when a registry chapter is authorized.
+
+This chapter does not define registry entries, taxonomy, format, tooling, or operation.
+
+### 11.4 Additional Specialized Dimensions
+
+Additional specialized dimensions remain Design Council scoping only. Standards evolution does not determine macro-domain completion, chapter count, registry closure, or future chapter numbering.
+
+---
+
+## 12. Standards Evolution Attention Postures
+
+Standards evolution is not a workflow, gate, or release process. It governs ongoing standards evolution attention within Product Design Standard Lifecycle.
+
+### 12.1 Orient
+
+Orient means a team or reviewer recognizes that a standards governance matter may involve Product Design Standard evolution, identifies current approved authority, and preserves the distinction between compliance, exception, component lifecycle, and evolution candidacy.
+
+### 12.2 Defer Attention
+
+Defer attention preserves an evolution question honestly when the matter lacks sufficient clarity for evaluation or approval consideration. Defer attention does not imply rejection, approval, exception, compliance, or standard change.
+
+### 12.3 Conclude Standards Evolution Context
+
+Conclude means the standards evolution question no longer requires active specialized attention because the matter has been made architecturally legible as current Standard Compliance, Chapter 5 exception matter, Chapter 11 component lifecycle matter, valid Evolution Candidate, rejected evolution candidate, approved Product Design Standard evolution, or out-of-scope matter.
+
+### 12.4 Pending Honesty
+
+Unresolved evolution ambiguity remains honestly pending. It must not be hidden behind local convention, implementation progress, exception permanence, or assumed future approval.
+
+---
+
+## 13. Common Architectural Failures
+
+The following are chapter-local review risks. They do not populate the Anti-Patterns Registry.
+
+| Failure | Why it harms |
+|---------|--------------|
+| **Evolution as churn** | Treats the standard as something to revise whenever preference, trend, or team composition changes |
+| **Candidate as approval** | Treats an identified Evolution Candidate as permission to change product work before approval |
+| **Evaluation as authority** | Treats candidate evaluation as if it created new standard authority |
+| **Future standard as current compliance** | Claims Standard Compliance based on proposed or likely future authority |
+| **Exception permanence** | Allows exceptions to persist as shadow rules instead of removing them or converting them through approved standard change |
+| **Chapter 5 rewrite** | Changes exception rules through standards evolution |
+| **Chapter 11 rewrite** | Treats component lifecycle evolution as Product Design Standard evolution |
+| **Chapter 56 reopening** | Rewrites Governance Subject, Product Design Standard Lifecycle, boundaries, or DSG invariants |
+| **Chapter 57 weakening** | Uses evolution possibility to soften Standard Compliance or standards enforcement |
+| **Disconnected revision** | Approves new standard language without lineage to prior authority |
+| **Out-of-scope substitution** | Lets implementation, tooling, release, delivery, DesignOps, or future macro-domain pressure define evolution |
+| **Registry content prematurity** | Defines Product Review Checklist or Anti-Patterns Registry content before authorized forward chapter |
+| **Local substitute standard** | Allows a team-level rule to become de facto authority without Product Design Standard approval |
+
+---
+
+## 14. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, standards evolution initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Standards Evolution**, **Evolution Candidate**, **Evolution Candidate Identification**, **Evolution Candidate Evaluation**, **Product Design Standard Evolution Approval**, **Standards Evolution Boundaries**, **Standards Evolution Boundary Clarity**, **Standards Evolution Integrity**, **Continuous Architectural Lineage**, ownership preservation, Chapter 57 Standard Compliance preservation, and EV-1 through EV-14.
+
+**Governance note:** No standards evolution work may claim Product Design Standard authority without preserving current Standard Compliance, Design Council approval authority, Continuous Architectural Lineage, Chapter 56 inherited boundaries, and all upstream consumption contracts.
+
+---
+
+## 15. Chapter Summary
+
+Standards Evolution Experience specializes Chapter 56 in one direction: controlled evolution of the Product Design Standard itself.
+
+This chapter establishes **Standards Evolution** as the product-design governance responsibility for changing the Product Design Standard only when controlled change is necessary to preserve long-term architectural stability, authority clarity, product language continuity, and future applicability. It defines **Evolution Candidate**, **Evolution Candidate Identification**, **Evolution Candidate Evaluation**, **Product Design Standard Evolution Approval**, **Standards Evolution Boundaries**, **Standards Evolution Boundary Clarity**, **Standards Evolution Integrity**, and **Continuous Architectural Lineage**.
+
+It preserves Chapter 5 as Decision Framework and Exception Policy authority; preserves Chapter 11 as Component Lifecycle and Component Governance authority; inherits Chapter 56 foundation and DSG-1 through DSG-10; preserves Chapter 57 Standard Compliance and standards enforcement distinction; introduces EV-1 through EV-14; and keeps Product Review Checklist content, Anti-Patterns Registry content, Exception Policy Experience, Accessibility & Internationalization, Performance Experience, and Future Product Evolution forward.
+
+**Design System Governance flow (non-sequential — authoring order shown, not operational mandate):**
+
+Design System Governance Foundation (Ch 56) → Standards Enforcement (Ch 57) + **Standards Evolution (Ch 58)** + Exception Policy Experience (Ch 59 forward specialized dimension) + Product Review Checklist and Anti-Patterns Registry content (forward per Design Council scoping)
+
+**Macro-domain status upon this chapter's approval:** Standards evolution placeholder from Chapter 56 §10.3 is closed. Exception Policy Experience and forward registry content remain open. Design System Governance macro-domain remains **IN PROGRESS**. Product Design Standard v1.0 remains **IN PROGRESS**.
+
+---
+
+## 16. Design Director Review
+
+**Chapter:** 58 — Standards Evolution Experience  
+**Section:** LV — Standards Evolution  
+**Review type:** Initial standard adoption
+
+### 16.1 Approval Statement
+
+- **Pre-Authoring Analysis** — APPROVED WITH CLARIFICATIONS  
+- **Architecture Review** — APPROVED WITH CLARIFICATIONS COMPLETE  
+- **Registry Scoping** — APPROVED (Chapter 58 authorized)  
+- **Required Editorial Consolidations** — COMPLETE  
+- **Final Design Council Review** — APPROVED  
+- **Official Status** — APPROVED  
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0
+
+This chapter is approved as the **standards evolution experience contract** for Rento — second specialized dimension within the Design System Governance macro-domain. All standards evolution product-design work must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+Officially approved by the Rento Design Council.
+
+### 16.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 5 — Product Design Decision Framework | Decision Framework and Exception Policy authority — consumed, not redefined |
+| Chapter 11 — Component Philosophy & Component System | Component Governance and Component Lifecycle authority — consumed, not redefined |
+| Chapter 56 — Design System Governance Experience | Macro-domain foundation — inherited, not reopened |
+| Chapter 57 — Standards Enforcement Experience | Standard Compliance and enforcement authority — preserved |
+| Chapters 51–55 — Admin Platform | Platform Governance execution — mandatory separation |
+| Forward DSG chapters | Exception Policy Experience, Product Review Checklist, and Anti-Patterns Registry content remain forward |
+
+### 16.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Standards Evolution continues to preserve long-term architectural stability rather than encouraging continual change  
+2. Evolution Candidate Identification, Evolution Candidate Evaluation, and Product Design Standard Evolution Approval remain distinct  
+3. Candidate and evaluation states create no new authority  
+4. Current Standard Compliance remains binding until evolution is approved  
+5. Chapter 5, Chapter 11, Chapter 56, and Chapter 57 ownership remains preserved  
+6. Continuous Architectural Lineage remains explicit and mandatory  
+7. No implementation, tooling, automation, workflow, release management, DesignOps, or engineering standards are introduced  
+8. Product Review Checklist and Anti-Patterns Registry content remain forward  
+9. Accessibility & Internationalization, Performance Experience, and Future Product Evolution are not absorbed  
+10. EV-1 through EV-14 remain intact
+
+### 16.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on standards evolution philosophy |
+| Head of Product Design | Chapter 5 / Chapter 11 / Chapter 56 / Chapter 57 consumption integrity |
+| Design Council | Evolution authority, lineage continuity, registry boundaries, and dimension scoping |
+| Design System Architect | Standard-level vs component-level separation |
+| Senior Product Designer | Standards evolution boundary clarity |
+| Product Management | Marketplace posture honesty and no delivery governance creep |
+
+### 16.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new standards evolution product-design work immediately upon approval.
+
+### 16.6 Design Director Closing Note
+
+A product standard must be stable enough to be trusted and alive enough to remain true. Standards evolution exists for that narrow responsibility. It protects Rento from two equal failures: a brittle standard that cannot absorb legitimate future need, and a loose standard that changes whenever pressure arrives. The Product Design Standard should evolve only when evolution makes the architecture more coherent, more honest, and more continuous with its own lineage. Anything else is not evolution. It is drift.
+
+---
+
+**End of Chapter 58 — Standards Evolution Experience**
