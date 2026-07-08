@@ -36,7 +36,7 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–55 |
 | **Latest approved** | Chapter 55 — Platform Policy Enforcement Experience |
-| **Latest checkpoint** | `7dc49eb` — approve chapter 55 platform policy enforcement experience |
+| **Latest checkpoint** | `31c5702` — approve chapter 55 platform policy enforcement experience |
 | **Current chapter** | None — Admin Platform Macro-domain Completion Review (next) |
 | **Admin Platform** | **IN PROGRESS** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**; Macro-domain Completion Review **PENDING**) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |
