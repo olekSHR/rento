@@ -100,7 +100,20 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 
 ### Planned (not yet authored)
 
-See `MASTER_ROADMAP.md` for remaining domain order after Admin Platform specialized dimensions in progress.
+See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009.
+
+### Macro-domain Completion Status
+
+| Macro-domain | Chapters | Status |
+|--------------|----------|--------|
+| Housing Journey | 13–40 | COMPLETE |
+| Settled Tenancy | 41–45 | COMPLETE |
+| Realtor Platform | 46–50 | COMPLETE (GD-006) |
+| Admin Platform | 51–55 | **COMPLETE (GD-009)** |
+| Design System Governance | forward | not yet authored |
+| Accessibility & Internationalization | forward | not yet authored |
+| Performance Experience | forward | not yet authored |
+| Future Product Evolution | forward | not yet authored |
 
 ---
 
@@ -145,6 +158,7 @@ See `MASTER_ROADMAP.md` for remaining domain order after Admin Platform speciali
 | 1.0 | 2026-07-08 | Chapter 53 — Role Grant and Revocation Execution Experience approved and added — Established second specialized Admin Platform governance execution dimension with Role Grant and Revocation Execution as central concept, professional activation separation (C-1), revocation boundary (C-2), authority preservation (C-3), execution finality independence (C-4), role neutrality principle (C-5), participation-execution separation from Chapter 48, and principles-only execution posture — Status: APPROVED |
 | 1.0 | 2026-07-08 | Chapter 54 — Verification Program Execution Experience approved and added — Established third specialized Admin Platform governance execution dimension with Verification Program Execution as central concept, four-concept verification separation (C-1), adjudication neutrality with communication honesty (C-2), delegated execution only invariant (C-3), participation-execution separation from Chapter 49, meaning-execution consumption from Chapter 20, property verification separation from Chapter 34, and principles-only execution posture — Status: APPROVED |
 | 1.0 | 2026-07-08 | Chapter 55 — Platform Policy Enforcement Experience approved and added — Established fourth named specialized Admin Platform governance execution dimension with Platform Policy Enforcement as central concept, residual scope discipline (P-11), existing authority requirement (P-10), coordination without ownership (P-9), appeals meaning separation (P-5), sibling independence from Chapters 52–54, authority preservation (P-2), enforcement scope discipline (E-3), and principles-only execution posture — closes final named Ch 51 §13.3 placeholder — Status: APPROVED |
+| 1.0 | 2026-07-08 | **Admin Platform Macro-domain Completion Sign-off (GD-009)** — Chapters 51–55 architecturally complete; named Ch 51 §13.3 registry fully closed; additional specialized dimensions remain Design Council extension point only; Boundary Inheritance, Governance Execution Ownership, Governance Continuity Scope, and Chapter 20 authority preserved — does **not** imply Product Design Standard v1.0 completion |
 
 ---
 
