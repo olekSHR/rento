@@ -21,7 +21,7 @@ Project documentation is the single source of truth.
 Approved chapters: **1–55** (55 chapters total)  
 Latest approved chapter: **Chapter 55 — Platform Policy Enforcement Experience**  
 Latest Git checkpoint: `b193596` — complete admin platform macro-domain  
-Latest GitHub Release: `v1.0-admin-platform` (pending — user-managed)  
+Latest GitHub Release: `v1.0-admin-platform` (tag pushed; GitHub Release page — publish via GitHub UI or authenticated `gh release create`)  
 Repository status: **Clean (pushed to origin/main)**
 
 **Admin Platform block: COMPLETE** (Ch 51 foundation + Ch 52–55 named execution dimensions — named Ch 51 §13.3 registry closed)
@@ -139,7 +139,7 @@ Repository status: **Clean (pushed to origin/main)**
 
 Do NOT start Phase 0 Pre-Authoring without explicit Design Council authorization.
 
-**Ready for:** GitHub Release `v1.0-admin-platform`
+**Ready for:** GitHub Release `v1.0-admin-platform` — tag pushed; publish release notes from `docs/design/releases/v1.0-admin-platform.md`
 
 --------------------------------------------------
 
