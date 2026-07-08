@@ -18,17 +18,17 @@ Project documentation is the single source of truth.
 
 ## CURRENT STATUS
 
-Approved chapters: **1–51** (51 chapters total)  
-Latest approved chapter: **Chapter 51 — Admin Platform Experience**  
-Latest Git checkpoint: Pending — Chapter 51 Approval Integration  
+Approved chapters: **1–52** (52 chapters total)  
+Latest approved chapter: **Chapter 52 — Listing Moderation Decision Execution Experience**  
+Latest Git checkpoint: Pending — Chapter 52 Approval Integration  
 Latest GitHub Release: `v1.0-realtor-platform`  
-Repository status: **Modified (awaiting Chapter 51 commit)**
+Repository status: **Modified (awaiting Chapter 52 commit)**
 
 **Realtor Platform block: COMPLETE** (Ch 46 foundation + Ch 47–50 specialized dimensions — named Ch 46 §13.3 registry closed)
 
-**Admin Platform block: IN PROGRESS** (Ch 51 foundation ✓ APPROVED — specialized dimensions forward)
+**Admin Platform block: IN PROGRESS** (Ch 51 foundation ✓ + Ch 52 first specialized dimension ✓ — remaining dimensions forward)
 
-**Product Design Standard v1.0: IN PROGRESS** — Admin Platform foundation does not complete the standard
+**Product Design Standard v1.0: IN PROGRESS** — Admin Platform specialized dimensions remain
 
 **Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE
 
@@ -43,9 +43,11 @@ Realtor Platform ✓ COMPLETE
   GitHub Release: v1.0-realtor-platform ✓
 
 Admin Platform — IN PROGRESS
-  Phase 0 ✓ COMPLETE (GD-008)
+  Phase 0 (entry) ✓ COMPLETE (GD-008)
   Ch 51 — Admin Platform Experience ✓ APPROVED (foundation)
-  Ch 52+ — specialized governance execution dimensions (forward)
+  Ch 52 — Listing Moderation Decision Execution ✓ APPROVED (first specialized dimension)
+  Ch 51 §13.3 registry: moderation execution ✓ CLOSED · 3 placeholders open
+  Ch 53+ — specialized governance execution dimensions (forward)
 
 Forward macro-domains (MASTER_ROADMAP):
   Design System Governance, Accessibility & Internationalization,
@@ -54,24 +56,28 @@ Forward macro-domains (MASTER_ROADMAP):
 
 --------------------------------------------------
 
-## ADMIN PLATFORM — CHAPTER 51 APPROVAL INTEGRATION COMPLETE
+## ADMIN PLATFORM — CHAPTER 52 APPROVAL INTEGRATION COMPLETE
 
 | Stage | Status |
 |-------|--------|
-| Phase 0 Pre-Authoring Analysis | ✓ COMPLETE (GD-008) |
-| Chapter 51 Authoring | ✓ COMPLETE |
+| Phase 0 Pre-Authoring Analysis | ✓ COMPLETE (`PHASE_0_CHAPTER_52.md`) |
+| Chapter 52 Authoring | ✓ COMPLETE |
 | Design Council Architecture Review | ✓ APPROVED |
 | Approval Integration | ✓ COMPLETE |
 
-**Chapter 51 — Admin Platform Experience** (Section XLVIII) — **APPROVED**
+**Chapter 52 — Listing Moderation Decision Execution Experience** (Section XLIX) — **APPROVED**
 
-**Platform posture:** Governance execution honors delegated authority only.
+**Macro-domain:** Admin Platform — first specialized governance execution dimension
 
-**Official concepts introduced:** Platform Governance Lifecycle, Admin Platform Environment, Active Governance Scope, Admin Platform Boundaries, Admin Platform Boundary Clarity, Admin Platform Integrity, Governance Continuity.
+**Platform posture:** Governance execution honors delegated authority only · Governance execution never transfers ownership
 
-**GD-008 principles (mandatory):** Lifecycle Necessity · Governance Execution Ownership · Governance Continuity Scope · Boundary Inheritance.
+**Official concepts introduced:** Moderation Decision Execution, Moderation Execution Awareness, Moderation Execution Boundaries, Moderation Execution Boundary Clarity, Moderation Execution Integrity, Publication Governance Execution (consequence)
 
-**Ch 51 §13.3 deferred registry (placeholders):** moderation execution · role grant/revocation execution · verification program execution · policy enforcement.
+**Mandatory invariants:** Execution Scope Invariant (RC-1) · Participation/execution separation · Ownership Preservation (RC-3) · Moderation Boundary — governance ≠ moderation (RC-4) · Execution Ownership Check (RC-5) · Principles-only (RC-2)
+
+**Ch 51 §13.3 registry:** Listing moderation decision execution — ✓ **CLOSED** by Chapter 52
+
+**Ch 51 §13.3 remaining (open):** role grant/revocation execution · verification program execution · policy enforcement · additional specialized dimensions
 
 --------------------------------------------------
 
@@ -91,13 +97,13 @@ Reference implementation: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-p
 
 --------------------------------------------------
 
-## LATEST APPROVED CHAPTER — CHAPTER 51
+## LATEST APPROVED CHAPTER — CHAPTER 52
 
-**Chapter 51 — Admin Platform Experience** (Section XLVIII) — **APPROVED**
+**Chapter 52 — Listing Moderation Decision Execution Experience** (Section XLIX) — **APPROVED**
 
-**Macro-domain:** Admin Platform — foundation chapter
+**Macro-domain:** Admin Platform — first specialized governance execution dimension
 
-**Antecedent layer:** Chapter 20 (trust meaning) + Chapters 46–50 (participation separation)
+**Authority layers consumed (not redefined):** Ch 20 moderation meaning · Ch 47 publication participation · Ch 51 Admin Platform foundation
 
 --------------------------------------------------
 
@@ -108,20 +114,20 @@ Repository modified — Approval Integration complete, commit pending.
 Suggested commit message:
 
 ```
-approve chapter 51 admin platform experience foundation
+approve chapter 52 listing moderation decision execution experience
 ```
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Chapter 52 — Phase 0 Pre-Authoring Analysis**
+**Chapter 53 — Phase 0 Pre-Authoring Analysis**
 
-First specialized governance execution dimension within Admin Platform macro-domain.
+Next specialized governance execution dimension within Admin Platform macro-domain.
 
 Requires explicit Design Council authorization per GD-007.
 
-Do NOT author Chapter 52 without Phase 0 authorization.
+Do NOT author Chapter 53 without Phase 0 authorization.
 
 --------------------------------------------------
 
