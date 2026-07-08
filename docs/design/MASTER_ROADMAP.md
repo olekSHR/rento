@@ -36,8 +36,8 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–55 |
 | **Latest approved** | Chapter 55 — Platform Policy Enforcement Experience |
-| **Latest checkpoint** | `31c5702` — approve chapter 55 platform policy enforcement experience |
-| **Pending checkpoint** | Admin Platform macro-domain completion sign-off (this commit) |
+| **Latest checkpoint** | `b193596` — complete admin platform macro-domain |
+| **Pending checkpoint** | None — next macro-domain Phase 0 per Design Council authorization |
 | **Current chapter** | None — next Product Design Standard macro-domain per MASTER_ROADMAP remaining work |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |
