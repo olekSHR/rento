@@ -18,17 +18,16 @@ Project documentation is the single source of truth.
 
 ## CURRENT STATUS
 
-Approved chapters: **1–55** (55 chapters total)  
-Latest approved chapter: **Chapter 55 — Platform Policy Enforcement Experience**  
-Latest Git checkpoint: `b193596` — complete admin platform macro-domain  
-Latest GitHub Release: `v1.0-admin-platform` (tag pushed; GitHub Release page — publish via GitHub UI or authenticated `gh release create`)  
-Repository status: **Clean (pushed to origin/main)**
+Approved chapters: **1–56** (56 chapters total)  
+Latest approved chapter: **Chapter 56 — Design System Governance Experience**  
+Latest Git checkpoint: `b193596` — complete admin platform macro-domain *(Chapter 56 Approval Integration pending git checkpoint)*  
+Repository status: **Modified — Chapter 56 Approval Integration complete (not committed)**
 
-**Admin Platform block: COMPLETE** (Ch 51 foundation + Ch 52–55 named execution dimensions — named Ch 51 §13.3 registry closed)
+**Design System Governance block: IN PROGRESS** (Ch 56 foundation APPROVED + Ch 57+ specialized dimensions — registry placeholders open)
 
-**Product Design Standard v1.0: IN PROGRESS** — Admin Platform completion does not complete the standard
+**Product Design Standard v1.0: IN PROGRESS** — Design System Governance completion does not complete the standard
 
-**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED
+**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE
 
 ```
 Housing Journey ✓ COMPLETE (Ch 13–40)
@@ -36,75 +35,48 @@ Settled Tenancy ✓ COMPLETE (Ch 41–45)
 Realtor Platform ✓ COMPLETE (Ch 46–50)
   GitHub Release: v1.0-realtor-platform ✓
 
-Admin Platform ✓ COMPLETE
-  Phase 0 (entry) ✓ COMPLETE (GD-008)
-  Ch 51 — Admin Platform Experience ✓ APPROVED (foundation)
-  Ch 52 — Listing Moderation Decision Execution ✓ APPROVED (first specialized dimension)
-  Ch 53 — Role Grant and Revocation Execution ✓ APPROVED (second specialized dimension)
-  Ch 54 — Verification Program Execution ✓ APPROVED (third specialized dimension)
-  Ch 55 — Platform Policy Enforcement ✓ APPROVED (fourth named specialized dimension)
-  Named Ch 51 §13.3 registry ✓ CLOSED (all four named placeholders)
-  Additional specialized dimensions — Design Council scoping only (not currently justified)
-  Macro-domain Completion Sign-off ✓ GD-009
+Admin Platform ✓ COMPLETE (Ch 51–55)
+  GitHub Release: v1.0-admin-platform ✓
+
+Design System Governance — IN PROGRESS
+  Phase 0 (entry) ✓ COMPLETE (PHASE_0_DESIGN_SYSTEM_GOVERNANCE)
+  Ch 56 — Design System Governance Experience ✓ APPROVED (foundation)
+  Ch 56 §10.3 registry — OPEN (specialized dimension placeholders):
+    • Standards enforcement experience — planned (chapter number TBD)
+    • Standards evolution experience — planned (chapter number TBD)
+    • Exception policy experience — planned (chapter number TBD)
+  Registry ownership (Ch 56 §10.5):
+    • Anti-Patterns Registry — DSG macro-domain owner; chapter number TBD
+    • Product Review Checklist — DSG macro-domain owner; chapter number TBD
+  Additional specialized dimensions — Design Council scoping only
 
 Forward macro-domains (MASTER_ROADMAP):
-  Design System Governance ← NEXT (Design Council authorization required)
   Accessibility & Internationalization,
   Performance Experience, Future Product Evolution
 ```
 
 --------------------------------------------------
 
-## ADMIN PLATFORM MACRO-DOMAIN — COMPLETION SIGN-OFF
+## LATEST APPROVED CHAPTER — CHAPTER 56
 
-**Status:** COMPLETE  
-**Governance:** MASTER_ROADMAP Governance Decision 009
+**Chapter 56 — Design System Governance Experience** (Section LIII) — **APPROVED**
 
-### Sign-off validation
+**Macro-domain:** Design System Governance — macro-domain foundation (opening chapter)
 
-1. **Chapter 51 §13.3 named registry — CLOSED**
-   - Ch 52 — Listing Moderation Decision Execution ✓
-   - Ch 53 — Role Grant and Revocation Execution ✓
-   - Ch 54 — Verification Program Execution ✓
-   - Ch 55 — Platform Policy Enforcement ✓
+**Key invariants:** Governance Subject (DSG-1) · Consumption over Redefinition (DSG-2) · Lifecycle Subject Discipline (DSG-3) · Platform Governance Separation (DSG-5) · Implementation Prohibition (DSG-6)
 
-2. **No documented architectural gap** remains inside Admin Platform.
-
-3. **Additional specialized dimensions NOT currently justified.** Future dimensions require documented architectural gap + Design Council approval. **Additional Specialized Dimensions** remains intentional Design Council extension point per Ch 51 §13.4.
-
-4. **Product Design Standard v1.0 NOT complete** — forward macro-domains remain per MASTER_ROADMAP.
-
-5. **Preserved invariants:** Boundary Inheritance (GD-008) · Governance Execution Ownership · Governance Continuity Scope · Chapter 20 meaning authority · participation-execution separation (Ch 46–50 ↔ Ch 52–55)
-
-### Macro-domain coverage (Ch 51–55)
-
-| Layer | Chapters |
-|-------|----------|
-| Antecedent trust meaning | Ch 20 (consumed, not redefined) |
-| Macro-domain foundation | Ch 51 |
-| Specialized execution dimensions | Ch 52 (moderation), Ch 53 (role grant/revocation), Ch 54 (verification), Ch 55 (policy enforcement) |
-
-**Platform posture:** Governance execution honors delegated authority only · Rento does not become CRM, agency ERP, property management, or organizational governance software.
+**Official concepts introduced:** Product Design Standard Lifecycle · Design System Governance Environment · Active Standards Governance Scope · Design System Governance Boundaries · Design System Governance Boundary Clarity · Design System Governance Integrity · Standards Governance Continuity
 
 --------------------------------------------------
 
-## LATEST APPROVED CHAPTER — CHAPTER 55
+## DEFERRED DIMENSIONS (Ch 56 §10.3) — REGISTRY OPEN
 
-**Chapter 55 — Platform Policy Enforcement Experience** (Section LII) — **APPROVED**
-
-**Macro-domain:** Admin Platform — fourth named specialized governance execution dimension (terminal named dimension)
-
-**Key invariants:** Residual Scope Discipline (P-11) · Existing Authority Requirement (P-10) · Coordination Without Ownership (P-9) · Sibling independence from Ch 52–54
-
---------------------------------------------------
-
-## DEFERRED DIMENSIONS (Ch 51 §13.3) — ALL NAMED CLOSED
-
-- ~~Listing moderation decision execution~~ — Ch 52 APPROVED
-- ~~Role grant and revocation execution~~ — Ch 53 APPROVED
-- ~~Verification program execution~~ — Ch 54 APPROVED
-- ~~Platform policy enforcement~~ — Ch 55 APPROVED
-- Additional specialized dimensions — not currently justified (Design Council scoping only if documented gap emerges)
+- **Standards enforcement experience** — *forward* (planned specialized dimension; chapter number TBD)
+- **Standards evolution experience** — *forward* (planned specialized dimension; chapter number TBD)
+- **Exception policy experience** — *forward* (planned specialized dimension; chapter number TBD)
+- **Anti-Patterns Registry** — macro-domain owner assigned (Ch 56 §10.5); content and chapter number TBD
+- **Product Review Checklist** — macro-domain owner assigned (Ch 56 §10.5); content and chapter number TBD
+- Additional specialized dimensions — Design Council scoping only
 
 --------------------------------------------------
 
@@ -112,34 +84,38 @@ Forward macro-domains (MASTER_ROADMAP):
 
 **Status:** APPROVED
 
-Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-platform` · Admin Platform (Ch 51–55), GD-009, `v1.0-admin-platform`
+Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-platform` · Admin Platform (Ch 51–55), GD-009, `v1.0-admin-platform` · Design System Governance (Ch 56 foundation — in progress)
 
 **Completion separation (mandatory):**
 
 | Level | Status |
 |-------|--------|
-| Chapter approval | Ch 55 APPROVED — fourth named execution dimension |
-| Named registry closure | Ch 51 §13.3 named placeholders ✓ CLOSED |
-| Macro-domain completion | Admin Platform ✓ COMPLETE (GD-009) |
+| Chapter approval | Ch 56 APPROVED — Design System Governance foundation |
+| Named registry closure | Ch 56 §10.3 placeholders **OPEN** |
+| Macro-domain completion | Design System Governance **IN PROGRESS** |
 | Product Design Standard v1.0 | All macro-domains + Phase 2 audit — **≠ macro-domain completion** |
 
 --------------------------------------------------
 
 ## GIT STATUS
 
-Latest checkpoint: `b193596` — complete admin platform macro-domain
+Latest committed checkpoint: `b193596` — complete admin platform macro-domain
 
-Repository status: **Clean (pushed to origin/main)**
+Repository status: **Modified — Chapter 56 Approval Integration (awaiting git checkpoint)**
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Design System Governance** — next Product Design Standard macro-domain per MASTER_ROADMAP.
+**Phase 0 Pre-Authoring Analysis** — next **Design System Governance specialized dimension** per Ch 56 §10.3 registry.
 
-Do NOT start Phase 0 Pre-Authoring without explicit Design Council authorization.
+**Do NOT** assign a final chapter number until Design Council registry scoping reconciles specialized dimension order and registry chapter assignment (Anti-Patterns Registry · Product Review Checklist).
 
-**Ready for:** GitHub Release `v1.0-admin-platform` — tag pushed; publish release notes from `docs/design/releases/v1.0-admin-platform.md`
+**Candidate dimensions (non-sequential — RC-4):** standards enforcement experience · standards evolution experience · exception policy experience
+
+Do NOT start Phase 0 without explicit Design Council authorization for the selected specialized dimension.
+
+**Ready for:** Git checkpoint — `approve chapter 56 design system governance foundation`
 
 --------------------------------------------------
 
