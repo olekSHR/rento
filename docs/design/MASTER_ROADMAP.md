@@ -36,8 +36,8 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–58 |
 | **Latest approved** | Chapter 58 — Standards Evolution Experience |
-| **Latest checkpoint** | Pending — approve standards evolution experience |
-| **Pending checkpoint** | Git checkpoint for Chapter 58 Approval Integration |
+| **Latest checkpoint** | `6df79ff` — approve chapter 58 standards evolution experience |
+| **Pending checkpoint** | None — Chapter 58 Approval Integration checkpoint complete |
 | **Current chapter** | None — next Design System Governance specialized dimension per Ch 56 §10.3 registry |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |

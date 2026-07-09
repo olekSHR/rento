@@ -20,8 +20,8 @@ Project documentation is the single source of truth.
 
 Approved chapters: **1–58** (58 chapters total)  
 Latest approved chapter: **Chapter 58 — Standards Evolution Experience**  
-Latest committed checkpoint: `b193596` — complete admin platform macro-domain *(Chapter 58 Approval Integration pending git checkpoint)*  
-Repository status: **Modified — Chapter 58 Approval Integration complete (not committed)**
+Latest committed checkpoint: `6df79ff` — approve chapter 58 standards evolution experience  
+Repository status: **Chapter 58 Approval Integration checkpoint complete**
 
 **Design System Governance block: IN PROGRESS** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + remaining specialized dimension — registry placeholder open)
 
@@ -101,9 +101,9 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 ## GIT STATUS
 
-Latest committed checkpoint: `b193596` — complete admin platform macro-domain
+Latest committed checkpoint: `6df79ff` — approve chapter 58 standards evolution experience
 
-Repository status: **Modified — Chapter 58 Approval Integration (awaiting git checkpoint)**
+Repository status: **Chapter 58 Approval Integration checkpoint complete**
 
 --------------------------------------------------
 
@@ -113,7 +113,7 @@ Repository status: **Modified — Chapter 58 Approval Integration (awaiting git 
 
 **Forward registries:** Product Review Checklist and Anti-Patterns Registry remain forward DSG registry content; chapter numbers TBD at future Design Council registry scoping.
 
-**Ready for:** Git checkpoint — `approve standards evolution experience`
+**Ready for:** Chapter 59 Phase 1 — Authoring
 
 --------------------------------------------------
 
