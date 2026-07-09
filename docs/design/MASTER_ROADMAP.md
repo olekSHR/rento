@@ -37,12 +37,12 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Approved chapters** | 1–61 |
 | **Latest approved** | Chapter 61 — Anti-Patterns Registry |
 | **Latest approved chapter checkpoint** | `a273f81` — approve chapter 61 anti-patterns registry |
-| **Latest repository continuity checkpoint / current HEAD** | `fabfed2` — clarify approval and continuity checkpoint semantics |
-| **Pending checkpoint** | None — Chapter 61 checkpoint complete |
-| **Current chapter** | None — Chapter 61 approved and integrated; DSG macro-domain completion review not started |
+| **Latest repository continuity checkpoint / current HEAD** | `71e469f` — sync current continuity checkpoint reference |
+| **Pending checkpoint** | Design System Governance Macro-domain Completion Sign-off integration complete in working tree — commit checkpoint pending explicit authorization |
+| **Current chapter** | None — Design System Governance macro-domain completion sign-off complete; next macro-domain not started |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |
-| **Design System Governance** | **IN PROGRESS** (Ch 56 foundation ✓ APPROVED + Ch 57 standards enforcement ✓ APPROVED + Ch 58 standards evolution ✓ APPROVED + Ch 59 exception policy experience ✓ APPROVED + Ch 60 Product Review Checklist ✓ APPROVED + Ch 61 Anti-Patterns Registry ✓ APPROVED; Ch 56 §10.5 Anti-Patterns Registry forward object closed by Chapter 61; macro-domain completion review not started) |
+| **Design System Governance** | **COMPLETE (GD-010)** (Ch 56 foundation ✓ + Ch 57 standards enforcement ✓ + Ch 58 standards evolution ✓ + Ch 59 exception policy experience ✓ + Ch 60 Product Review Checklist ✓ + Ch 61 Anti-Patterns Registry ✓; Ch 56 §10.3 named execution dimensions closed; Ch 56 §10.5 forward objects closed; additional specialized dimensions remain Design Council extension point only) |
 | **Design System Governance Phase 0** | **COMPLETE** (PHASE_0_DESIGN_SYSTEM_GOVERNANCE) |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
@@ -82,7 +82,7 @@ Admin Platform (Ch 51–55) ✓ COMPLETE
     Ch 54 — Verification Program Execution Experience ✓ APPROVED (third specialized dimension)
     Ch 55 — Platform Policy Enforcement Experience ✓ APPROVED (fourth named specialized dimension)
     ↓
-Design System Governance (Ch 56+) — IN PROGRESS
+Design System Governance (Ch 56–61) ✓ COMPLETE
     Ch 56 — Design System Governance Experience ✓ APPROVED (macro-domain foundation)
     Ch 57 — Standards Enforcement Experience ✓ APPROVED (first specialized dimension)
     Ch 58 — Standards Evolution Experience ✓ APPROVED (second specialized dimension)
@@ -90,7 +90,7 @@ Design System Governance (Ch 56+) — IN PROGRESS
     Ch 60 — Product Review Checklist ✓ APPROVED (fourth specialized Design System Governance dimension)
     Ch 61 — Anti-Patterns Registry ✓ APPROVED (fifth specialized Design System Governance dimension; closes Ch 56 §10.5 Anti-Patterns Registry forward object)
     ↓
-Platform & governance domains (forward)
+Forward macro-domains
     Accessibility & Internationalization, Performance Experience, Future Product Evolution
 ```
 
@@ -116,11 +116,12 @@ These concepts must **never** be merged. Housing Journey does not extend into on
 
 **Platform posture (Design System Governance block):** Rento remains a marketplace platform. Design System Governance governs **the Product Design Standard itself** — not DesignOps, organizational process, delivery governance, or implementation artifacts.
 
+**Design System Governance completion (GD-010):** Chapters 56–61 complete the **Design System Governance macro-domain**. Chapter 56 foundation is sufficient; standards enforcement, standards evolution, and exception policy execution dimensions are closed by Chapters 57–59; Product Review Checklist and Anti-Patterns Registry forward objects are closed by Chapters 60–61. Additional specialized dimensions remain an intentional Design Council extension point only. Design System Governance completion does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion, does **not** assign Chapter 62, and does **not** start the next macro-domain.
+
 ## Remaining work
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Design System Governance completion review** — not started; requires separate explicit authorization; additional specialized dimensions remain Design Council scoping only
 - **Accessibility & Internationalization** — inclusive and multilingual product experience
 - **Performance Experience** — perceived performance as a product trust dimension
 - **Future Product Evolution** — forward-looking product capability and evolution principles
@@ -218,7 +219,7 @@ These principles govern all phases of the Master Roadmap:
 
 **Status:** APPROVED
 
-**Title:**  
+**Title:**
 MASTER_ROADMAP
 
 **Decision:**
@@ -476,6 +477,28 @@ Admin Platform Macro-domain Completion Sign-off
 6. **Design System Governance** is the next forward macro-domain per MASTER_ROADMAP remaining work — Phase 0 Pre-Authoring may begin only after explicit Design Council authorization.
 7. Rento remains a marketplace platform — Admin Platform completion does **not** change platform posture (no CRM, agency ERP, property management, or organizational governance software). **Governance execution honors delegated authority only.**
 8. **Boundary Inheritance**, **Governance Execution Ownership**, **Governance Continuity Scope**, and **Chapter 20** meaning authority remain preserved across the completed block.
+
+---
+
+## Governance Decision 010
+
+**Status:** APPROVED
+
+**Title:**
+Design System Governance Macro-domain Completion Sign-off
+
+**Decision:**
+
+1. Chapters 56–61 complete the **Design System Governance macro-domain** — foundation (Ch 56), standards enforcement (Ch 57), standards evolution (Ch 58), exception policy experience (Ch 59), Product Review Checklist (Ch 60), and Anti-Patterns Registry (Ch 61).
+2. All **named execution dimensions** from Chapter 56 §10.3 are **closed** — standards enforcement, standards evolution, and exception policy experience.
+3. All **named forward objects** from Chapter 56 §10.5 are **closed** — Product Review Checklist and Anti-Patterns Registry.
+4. **No documented architectural gap** remains inside Design System Governance at this time.
+5. **Additional Design System Governance specialized dimensions are not currently justified.** Future dimensions require a documented architectural gap and explicit Design Council approval. **Additional specialized dimensions** remains an intentional extension point — not architectural debt.
+6. **Design System Governance macro-domain status is COMPLETE.** This does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion.
+7. Chapter 62 is **not assigned** by this sign-off, and no next macro-domain is started by this decision.
+8. Chapter 5, Chapter 11, Chapter 20, and Chapters 56–61 authority boundaries remain preserved.
+9. Anti-Patterns Registry population is not required for macro-domain completion; Chapter 61 establishes registry architecture without creating actual registry entries.
+10. Product Design Standard v1.0 completion requires separate repository-derived review, Phase 2 comprehensive audit, and final Design Council sign-off.
 
 ---
 

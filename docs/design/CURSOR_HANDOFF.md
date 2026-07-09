@@ -21,14 +21,14 @@ Project documentation is the single source of truth.
 Approved chapters: **1–61** (61 chapters total)
 Latest approved chapter: **Chapter 61 — Anti-Patterns Registry**
 Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
-Latest repository continuity checkpoint / current HEAD: `fabfed2` — clarify approval and continuity checkpoint semantics
-Repository status: **Chapter 61 Approval Integration checkpoint complete; repository continuity synchronized; local main, origin/main, and origin/HEAD synchronized at `fabfed2`**
+Latest repository continuity checkpoint / current HEAD: `71e469f` — sync current continuity checkpoint reference
+Repository status: **Design System Governance Macro-domain Completion Sign-off integrated in working tree; commit checkpoint pending explicit authorization; local main, origin/main, and origin/HEAD synchronized at `71e469f` before this uncommitted integration**
 
-**Design System Governance block: IN PROGRESS** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.5 Anti-Patterns Registry forward object CLOSED by Chapter 61; DSG macro-domain completion review not started)
+**Design System Governance block: COMPLETE (GD-010)** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.3 execution dimensions CLOSED by Ch 57–59; Ch 56 §10.5 forward objects CLOSED by Ch 60–61; additional specialized dimensions remain Design Council extension point only)
 
-**Product Design Standard v1.0: IN PROGRESS** — Design System Governance completion does not complete the standard
+**Product Design Standard v1.0: IN PROGRESS** — Design System Governance completion does not complete the standard, assign Chapter 62, or start the next macro-domain
 
-**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE
+**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE
 
 ```
 Housing Journey ✓ COMPLETE (Ch 13–40)
@@ -39,7 +39,7 @@ Realtor Platform ✓ COMPLETE (Ch 46–50)
 Admin Platform ✓ COMPLETE (Ch 51–55)
   GitHub Release: v1.0-admin-platform ✓
 
-Design System Governance — IN PROGRESS
+Design System Governance ✓ COMPLETE (Ch 56–61; GD-010)
   Phase 0 (entry) ✓ COMPLETE (PHASE_0_DESIGN_SYSTEM_GOVERNANCE)
   Ch 56 — Design System Governance Experience ✓ APPROVED (foundation)
   Ch 57 — Standards Enforcement Experience ✓ APPROVED (first specialized dimension)
@@ -47,7 +47,7 @@ Design System Governance — IN PROGRESS
   Ch 59 — Exception Policy Experience ✓ APPROVED (third specialized dimension)
   Ch 60 — Product Review Checklist ✓ APPROVED (fourth specialized dimension)
   Ch 61 — Anti-Patterns Registry ✓ APPROVED (fifth specialized dimension)
-  Ch 56 §10.3 registry — OPEN (specialized dimension placeholders):
+  Ch 56 §10.3 registry — CLOSED (named execution dimensions):
     • Standards enforcement experience — CLOSED by Ch 57
     • Standards evolution experience — CLOSED by Ch 58
     • Exception policy experience — CLOSED by Ch 59
@@ -55,7 +55,8 @@ Design System Governance — IN PROGRESS
     • Product Review Checklist — Chapter 60; DSG macro-domain owner; APPROVED
     • Anti-Patterns Registry — Chapter 61; DSG macro-domain owner; APPROVED; forward object CLOSED by Ch 61
   Additional specialized dimensions — Design Council scoping only
-  DSG macro-domain completion review — NOT STARTED
+  DSG macro-domain completion review — COMPLETE; decision APPROVED WITH CLARIFICATIONS
+  DSG macro-domain completion sign-off — COMPLETE; decision APPROVED (GD-010)
 
 Forward macro-domains (MASTER_ROADMAP):
   Accessibility & Internationalization,
@@ -76,7 +77,7 @@ Forward macro-domains (MASTER_ROADMAP):
 
 --------------------------------------------------
 
-## DEFERRED DIMENSIONS (Ch 56 §10.3) — REGISTRY OPEN
+## DEFERRED DIMENSIONS (Ch 56 §10.3) — REGISTRY CLOSED
 
 - ~~Standards enforcement experience~~ — Ch 57 APPROVED
 - ~~Standards evolution experience~~ — Ch 58 APPROVED
@@ -91,7 +92,7 @@ Forward macro-domains (MASTER_ROADMAP):
 
 **Status:** APPROVED
 
-Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-platform` · Admin Platform (Ch 51–55), GD-009, `v1.0-admin-platform` · Design System Governance (Ch 56 foundation — in progress)
+Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-platform` · Admin Platform (Ch 51–55), GD-009, `v1.0-admin-platform` · Design System Governance (Ch 56–61), GD-010
 
 **Completion separation (mandatory):**
 
@@ -99,7 +100,7 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 |-------|--------|
 | Chapter approval | Ch 61 APPROVED — Anti-Patterns Registry specialized dimension |
 | Named registry closure | Ch 56 §10.3 placeholders **CLOSED** for standards enforcement, standards evolution, and exception policy; Product Review Checklist approved per Ch 56 §10.5; Anti-Patterns Registry forward object **CLOSED** by Ch 61 |
-| Macro-domain completion | Design System Governance **IN PROGRESS**; completion review **NOT STARTED** |
+| Macro-domain completion | Design System Governance **COMPLETE (GD-010)**; completion review and sign-off complete |
 | Product Design Standard v1.0 | All macro-domains + Phase 2 audit — **≠ macro-domain completion** |
 
 --------------------------------------------------
@@ -108,23 +109,23 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
 
-Latest repository continuity checkpoint / current HEAD: `fabfed2` — clarify approval and continuity checkpoint semantics
+Latest repository continuity checkpoint / current HEAD: `71e469f` — sync current continuity checkpoint reference
 
-Pending checkpoint: None — Chapter 61 checkpoint complete
+Pending checkpoint: Design System Governance Macro-domain Completion Sign-off integration — commit checkpoint pending explicit authorization
 
-Repository status: **Chapter 61 Approval Integration checkpoint complete; repository continuity synchronized; local main, origin/main, and origin/HEAD synchronized at `fabfed2`; no tag or release created for Design System Governance**
+Repository status: **Design System Governance completion state integrated in documentation working tree; local main, origin/main, and origin/HEAD synchronized at `71e469f` before this uncommitted integration; no commit, push, tag, or release created for Design System Governance in this sign-off**
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Next required workflow step:** Commit and push checkpoint semantics correction, then rerun Design System Governance Macro-domain Completion Review.
+**Next required workflow step:** Commit and push Design System Governance Macro-domain Completion Sign-off checkpoint only if explicitly authorized by the user. After that, any GitHub Release or next macro-domain authorization requires separate Design Council instruction.
 
 **Forward registries:** Product Review Checklist is approved as Chapter 60. Anti-Patterns Registry is approved as Chapter 61 and the Ch 56 §10.5 Anti-Patterns Registry forward object is closed. Additional specialized dimensions remain Design Council scoping only.
 
-**Chapter 61 approval does not populate Anti-Patterns Registry.** Chapter 61 approval does not complete Design System Governance macro-domain, does not start DSG macro-domain completion review, does not complete Product Design Standard v1.0, and does not imply implementation readiness.
+**Chapter 61 approval does not populate Anti-Patterns Registry.** GD-010 completes Design System Governance macro-domain only. It does not populate Anti-Patterns Registry, complete Product Design Standard v1.0, assign Chapter 62, start the next macro-domain, or imply implementation readiness.
 
-**Ready for:** Checkpoint semantics correction checkpoint, then Design System Governance Macro-domain Completion Review
+**Ready for:** Explicitly authorized DSG completion checkpoint commit/push, then separate Design Council authorization for any GitHub Release, Chapter 62 assignment, next macro-domain, or Product Design Standard v1.0 completion audit
 
 --------------------------------------------------
 
