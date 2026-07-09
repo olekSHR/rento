@@ -18,12 +18,12 @@ Project documentation is the single source of truth.
 
 ## CURRENT STATUS
 
-Approved chapters: **1–60** (60 chapters total)
-Latest approved chapter: **Chapter 60 — Product Review Checklist**
-Latest committed checkpoint: `906642f` — approve chapter 59 exception policy experience
-Repository status: **Chapter 60 Approval Integration complete; git checkpoint pending**
+Approved chapters: **1–61** (61 chapters total)
+Latest approved chapter: **Chapter 61 — Anti-Patterns Registry**
+Latest committed checkpoint: `16c7f7e` — approve chapter 60 product review checklist
+Repository status: **Chapter 61 Approval Integration complete in working tree; commit checkpoint pending explicit authorization**
 
-**Design System Governance block: IN PROGRESS** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry assigned forward but not active for authoring + additional specialized dimensions subject to Design Council scoping)
+**Design System Governance block: IN PROGRESS** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.5 Anti-Patterns Registry forward object CLOSED by Chapter 61; DSG macro-domain completion review not started)
 
 **Product Design Standard v1.0: IN PROGRESS** — Design System Governance completion does not complete the standard
 
@@ -45,14 +45,16 @@ Design System Governance — IN PROGRESS
   Ch 58 — Standards Evolution Experience ✓ APPROVED (second specialized dimension)
   Ch 59 — Exception Policy Experience ✓ APPROVED (third specialized dimension)
   Ch 60 — Product Review Checklist ✓ APPROVED (fourth specialized dimension)
+  Ch 61 — Anti-Patterns Registry ✓ APPROVED (fifth specialized dimension)
   Ch 56 §10.3 registry — OPEN (specialized dimension placeholders):
     • Standards enforcement experience — CLOSED by Ch 57
     • Standards evolution experience — CLOSED by Ch 58
     • Exception policy experience — CLOSED by Ch 59
   Registry ownership (Ch 56 §10.5):
     • Product Review Checklist — Chapter 60; DSG macro-domain owner; APPROVED
-    • Anti-Patterns Registry — Chapter 61; DSG macro-domain owner; assigned forward; not active for authoring; not yet authored or approved
+    • Anti-Patterns Registry — Chapter 61; DSG macro-domain owner; APPROVED; forward object CLOSED by Ch 61
   Additional specialized dimensions — Design Council scoping only
+  DSG macro-domain completion review — NOT STARTED
 
 Forward macro-domains (MASTER_ROADMAP):
   Accessibility & Internationalization,
@@ -61,15 +63,15 @@ Forward macro-domains (MASTER_ROADMAP):
 
 --------------------------------------------------
 
-## LATEST APPROVED CHAPTER — CHAPTER 60
+## LATEST APPROVED CHAPTER — CHAPTER 61
 
-**Chapter 60 — Product Review Checklist** (Section LVII) — **APPROVED**
+**Chapter 61 — Anti-Patterns Registry** (Section LVIII) — **APPROVED**
 
-**Macro-domain:** Design System Governance — fourth specialized dimension
+**Macro-domain:** Design System Governance — fifth specialized dimension
 
-**Key invariants:** Review Artifact Only (PRC-1) · Completion Is Not Compliance (PRC-2) · Finding Is Signal (PRC-3) · Classification Follows Ownership (PRC-4) · Semantic Separation (PRC-5) · Checklist Semantics Discipline (PRC-6) · No Automatic Consequence Expansion (PRC-7) · Chapter 57 Preservation (PRC-8) · Chapter 5 / 59 Preservation (PRC-9) · Chapter 58 Preservation (PRC-10) · Chapter 11 Preservation (PRC-11) · Chapter 20 Preservation (PRC-12) · Chapter 56 Inheritance (PRC-13) · No Implementation Checklist Governance (PRC-14) · Chapter 61 Separation (PRC-15)
+**Key invariants:** Negative Precedent Only (APR-1) · Pattern-Shaped Requirement (APR-2) · Evidence Is Not Authority (APR-3) · Registry Eligibility Discipline (APR-4) · Local Default (APR-5) · Taxonomy Restraint (APR-6) · Minimal Lifecycle (APR-7) · Entry Semantics Discipline (APR-8) · Chapter 57 Preservation (APR-9) · Chapter 5 / 59 Preservation (APR-10) · Chapter 58 Preservation (APR-11) · Chapter 60 Separation (APR-12) · Chapter 11 Preservation (APR-13) · Chapter 20 Preservation (APR-14) · Chapter 56 Inheritance (APR-15) · No Implementation Registry Governance (APR-16) · No Governance Inflation (APR-17)
 
-**Official concepts introduced:** Product Review Checklist · Product Review Checklist Completion State · Architectural Finding · Governed Classification · Product Review Checklist Boundaries · Product Review Checklist Boundary Clarity · Product Review Checklist Integrity
+**Official concepts introduced:** Anti-Patterns Registry · Registry-Level Anti-Pattern · Anti-Pattern Evidence · Registry Eligibility · Registry Classification Semantics · Registry Lifecycle Meaning · Registry-Entry Semantics · Anti-Patterns Registry Boundaries · Anti-Patterns Registry Boundary Clarity · Anti-Patterns Registry Integrity
 
 --------------------------------------------------
 
@@ -79,7 +81,7 @@ Forward macro-domains (MASTER_ROADMAP):
 - ~~Standards evolution experience~~ — Ch 58 APPROVED
 - ~~Exception policy experience~~ — Ch 59 APPROVED
 - ~~Product Review Checklist~~ — Ch 60 APPROVED
-- **Anti-Patterns Registry** — Chapter 61; macro-domain owner assigned (Ch 56 §10.5); assigned forward; not active for authoring; not yet authored or approved
+- ~~Anti-Patterns Registry~~ — Ch 61 APPROVED; Ch 56 §10.5 forward object CLOSED
 - Additional specialized dimensions — Design Council scoping only
 
 --------------------------------------------------
@@ -94,33 +96,32 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 | Level | Status |
 |-------|--------|
-| Chapter approval | Ch 60 APPROVED — Product Review Checklist specialized dimension |
-| Named registry closure | Ch 56 §10.3 placeholders **CLOSED** (standards enforcement, standards evolution, and exception policy closed); Product Review Checklist approved per Ch 56 §10.5 |
-| Chapter 61 assignment | Anti-Patterns Registry assigned forward — not active for authoring |
-| Macro-domain completion | Design System Governance **IN PROGRESS** |
+| Chapter approval | Ch 61 APPROVED — Anti-Patterns Registry specialized dimension |
+| Named registry closure | Ch 56 §10.3 placeholders **CLOSED** for standards enforcement, standards evolution, and exception policy; Product Review Checklist approved per Ch 56 §10.5; Anti-Patterns Registry forward object **CLOSED** by Ch 61 |
+| Macro-domain completion | Design System Governance **IN PROGRESS**; completion review **NOT STARTED** |
 | Product Design Standard v1.0 | All macro-domains + Phase 2 audit — **≠ macro-domain completion** |
 
 --------------------------------------------------
 
 ## GIT STATUS
 
-Latest committed checkpoint: `906642f` — approve chapter 59 exception policy experience
+Latest committed checkpoint: `16c7f7e` — approve chapter 60 product review checklist
 
-Pending checkpoint: Git checkpoint for Chapter 60 Approval Integration
+Pending checkpoint: Chapter 61 Approval Integration complete in working tree — commit checkpoint pending explicit authorization
 
-Repository status: **Chapter 60 Approval Integration complete; git checkpoint pending**
+Repository status: **Chapter 61 Approval Integration complete; no commit, push, tag, or release created**
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Next required workflow step:** Git checkpoint for Chapter 60 Approval Integration, when explicitly requested.
+**Next required workflow step:** Post-integration review / verification for Chapter 61 Approval Integration, then separate commit authorization if approved.
 
-**Forward registries:** Product Review Checklist is approved as Chapter 60. Anti-Patterns Registry is assigned to Chapter 61 and remains forward, not active for authoring.
+**Forward registries:** Product Review Checklist is approved as Chapter 60. Anti-Patterns Registry is approved as Chapter 61 and the Ch 56 §10.5 Anti-Patterns Registry forward object is closed. Additional specialized dimensions remain Design Council scoping only.
 
-**Chapter 60 approval does not approve Chapter 61 content.** Chapter 61 assignment does not authorize Chapter 61 authoring. Additional specialized dimensions remain Design Council scoping only. Design System Governance macro-domain remains **IN PROGRESS** until a separately authorized completion review.
+**Chapter 61 approval does not populate Anti-Patterns Registry.** Chapter 61 approval does not complete Design System Governance macro-domain, does not start DSG macro-domain completion review, does not complete Product Design Standard v1.0, and does not imply implementation readiness.
 
-**Ready for:** Git checkpoint — approve chapter 60 product review checklist
+**Ready for:** Chapter 61 post-integration review / verification and separate commit authorization decision
 
 --------------------------------------------------
 
