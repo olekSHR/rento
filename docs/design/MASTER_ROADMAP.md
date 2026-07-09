@@ -36,8 +36,8 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–61 |
 | **Latest approved** | Chapter 61 — Anti-Patterns Registry |
-| **Latest checkpoint** | `16c7f7e` — approve chapter 60 product review checklist |
-| **Pending checkpoint** | Chapter 61 Approval Integration complete in working tree — commit checkpoint pending explicit authorization |
+| **Latest checkpoint** | `a273f81` — approve chapter 61 anti-patterns registry |
+| **Pending checkpoint** | None — Chapter 61 checkpoint complete |
 | **Current chapter** | None — Chapter 61 approved and integrated; DSG macro-domain completion review not started |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |
@@ -119,7 +119,7 @@ These concepts must **never** be merged. Housing Journey does not extend into on
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Design System Governance completion review** — not started; requires separate explicit authorization after post-integration review and checkpoint decision; additional specialized dimensions remain Design Council scoping only
+- **Design System Governance completion review** — not started; requires separate explicit authorization; additional specialized dimensions remain Design Council scoping only
 - **Accessibility & Internationalization** — inclusive and multilingual product experience
 - **Performance Experience** — perceived performance as a product trust dimension
 - **Future Product Evolution** — forward-looking product capability and evolution principles
