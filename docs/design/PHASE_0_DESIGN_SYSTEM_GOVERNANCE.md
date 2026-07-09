@@ -43,7 +43,7 @@ The following terms are **not** official macro-domain names and must not be used
 
 **Ecosystem position:** Consumer-side architecture, Settled Tenancy, Realtor Platform, and Admin Platform are complete. **Design System Governance** is the **next forward macro-domain** per `MASTER_ROADMAP.md` remaining work and GD-009 §6.
 
-**Documented deferral context:** Chapters 5 and 11 establish decision-level exception discipline and component-level governance respectively. Forward references across the standard defer **Anti-Patterns Registry** (Chapter 59) and **Product Review Checklist** (Chapter 60) — ownership to be determined in Design System Governance foundation (see §6).
+**Documented deferral context:** Chapters 5 and 11 establish decision-level exception discipline and component-level governance respectively. Forward references across the standard defer **Product Review Checklist** and **Anti-Patterns Registry** — ownership to be determined in Design System Governance foundation (see §6). Subsequent governance reconciliation assigned Product Review Checklist to Chapter 60 and Anti-Patterns Registry to Chapter 61; subsequent Chapter 60 Approval Integration approved Product Review Checklist.
 
 ---
 
@@ -226,8 +226,8 @@ Chapter 56 foundation authoring **must determine architectural ownership** of th
 
 | Forward-deferred artifact | Current state | Foundation requirement |
 |---------------------------|---------------|------------------------|
-| **Anti-Patterns Registry** | Referenced across Ch 5, Ch 11 as Chapter 59 — not yet authored | Ch 56 must assign **architectural owner** (macro-domain chapter, specialized dimension, or explicit deferral with boundary) |
-| **Product Review Checklist** | Referenced across Ch 5, Ch 11, and experience chapters as Chapter 60 — not yet authored | Ch 56 must assign **architectural owner** (macro-domain chapter, specialized dimension, or explicit deferral with boundary) |
+| **Product Review Checklist** | Referenced across Ch 5, Ch 11, and experience chapters; assigned Chapter 60 by subsequent governance reconciliation; approved by subsequent Chapter 60 Approval Integration | Ch 56 must assign **architectural owner** (macro-domain chapter, specialized dimension, or explicit deferral with boundary) |
+| **Anti-Patterns Registry** | Referenced across Ch 5 and Ch 11; assigned Chapter 61 by subsequent governance reconciliation — not yet authored | Ch 56 must assign **architectural owner** (macro-domain chapter, specialized dimension, or explicit deferral with boundary) |
 
 Ownership determination does **not** authorize content authoring of these registries in Phase 0 or require premature content specification.
 
