@@ -100,16 +100,16 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 | 56 | [Design System Governance Experience](#chapter-56--design-system-governance-experience) | Design System Governance | APPROVED |
 | 57 | [Standards Enforcement Experience](#chapter-57--standards-enforcement-experience) | Standards Enforcement | APPROVED |
 | 58 | [Standards Evolution Experience](#chapter-58--standards-evolution-experience) | Standards Evolution | APPROVED |
+| 59 | [Exception Policy Experience](#chapter-59--exception-policy-experience) | Exception Policy | APPROVED |
 
 ### Planned (not yet authored)
 
 | Planned chapter | Macro-domain | Status |
 |---------------|--------------|--------|
-| Chapter 59 — Exception Policy Experience | Design System Governance | planned — specialized dimension; chapter number authorized by Design Council registry scoping |
 | Anti-Patterns Registry | Design System Governance | planned — forward specialized chapter per Ch 56 §10.5; chapter number TBD |
 | Product Review Checklist | Design System Governance | planned — forward specialized chapter per Ch 56 §10.5; chapter number TBD |
 
-See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain is IN PROGRESS** — Chapter 56 foundation, Chapter 57 standards enforcement, and Chapter 58 standards evolution APPROVED.
+See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain is IN PROGRESS** — Chapter 56 foundation, Chapter 57 standards enforcement, Chapter 58 standards evolution, and Chapter 59 exception policy experience APPROVED.
 
 ### Macro-domain Completion Status
 
@@ -119,7 +119,7 @@ See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domai
 | Settled Tenancy | 41–45 | COMPLETE |
 | Realtor Platform | 46–50 | COMPLETE (GD-006) |
 | Admin Platform | 51–55 | **COMPLETE (GD-009)** |
-| Design System Governance | 56+ | **IN PROGRESS** (Ch 56 foundation + Ch 57 standards enforcement + Ch 58 standards evolution APPROVED) |
+| Design System Governance | 56+ | **IN PROGRESS** (Ch 56 foundation + Ch 57 standards enforcement + Ch 58 standards evolution + Ch 59 exception policy experience APPROVED; forward registry content remains scoped by Design Council) |
 | Accessibility & Internationalization | forward | not yet authored |
 | Performance Experience | forward | not yet authored |
 | Future Product Evolution | forward | not yet authored |
@@ -171,6 +171,7 @@ See `MASTER_ROADMAP.md` for remaining domain order. **Admin Platform macro-domai
 | 1.0 | 2026-07-09 | Chapter 56 — Design System Governance Experience approved and added — Opened Design System Governance macro-domain with Product Design Standard Lifecycle foundation, Governance Subject Principle, architectural ownership levels (Product Experience / Platform Governance / Design System Governance), Chapters 5 and 11 antecedent consumption, Platform Governance separation, Anti-Patterns Registry and Product Review Checklist macro-domain ownership per §10.5, three MASTER_ROADMAP pillar placeholders (standards enforcement, evolution, exception policy), and forward reference reconciliation — Status: APPROVED |
 | 1.0 | 2026-07-09 | Chapter 57 — Standards Enforcement Experience approved and added — Established first specialized Design System Governance dimension with Standard Compliance as architectural state, standards enforcement as protection of Product Design Standard authority, Chapter 5 / Chapter 11 / Chapter 56 consumption preservation, no implementation enforcement, no registry content, and principles-only Standard Compliance architecture — Status: APPROVED |
 | 1.0 | 2026-07-09 | Chapter 58 — Standards Evolution Experience approved and added — Established second specialized Design System Governance dimension with Standards Evolution as controlled Product Design Standard change discipline, Evolution Candidate / Evaluation / Approval separation, Continuous Architectural Lineage, Chapter 5 / Chapter 11 / Chapter 56 / Chapter 57 ownership preservation, no implementation scope, no workflow/tooling/DesignOps/release-management scope, and no Product Review Checklist or Anti-Patterns Registry content — Status: APPROVED |
+| 1.0 | 2026-07-09 | Chapter 59 — Exception Policy Experience approved and added — Established third specialized Design System Governance dimension for standard-level authorized exception status legibility, exception non-authority, visible-but-not-normalized exception posture, exception pressure as signal only, Chapter 5 / Chapter 11 / Chapter 56 / Chapter 57 / Chapter 58 ownership preservation, no implementation scope, no workflow/tooling/DesignOps/release-management scope, and no Product Review Checklist or Anti-Patterns Registry content — Status: APPROVED |
 
 ---
 
@@ -51738,3 +51739,656 @@ A product standard must be stable enough to be trusted and alive enough to remai
 ---
 
 **End of Chapter 58 — Standards Evolution Experience**
+
+
+---
+
+## Chapter 59 — Exception Policy Experience
+
+**Section:** LVI — Exception Policy
+**Status:** APPROVED
+**Audience:** Product Design, UX, Product Management, Content Design, Design Council, Engineering Leadership, Reviewers
+**Authority:** Subordinate to Chapters 1–58; third specialized dimension within the Design System Governance macro-domain after Standards Evolution Experience (Chapter 58); operationalizes Chapter 56 boundaries, Product Design Standard Lifecycle, Governance Subject Principle, architectural ownership levels, Design System Governance Integrity, Standards Governance Continuity, and Boundary Inheritance; consumes Product Design Decision Framework and Exception Policy authority (Chapter 5), Component Philosophy & Component System (Chapter 11), Standards Enforcement Experience (Chapter 57), and Standards Evolution Experience (Chapter 58) without redefinition; preserves Platform Governance separation from Admin Platform (Chapters 51–55) and forward macro-domain separation (Accessibility & Internationalization, Performance Experience, Future Product Evolution); defines principles only — not implementation, UI, frontend, backend, APIs, databases, tokens, Figma, tooling, automation, engineering standards, workflow, DesignOps, organizational governance, delivery governance, project management, release management, Admin Platform execution, operational exception registers, Product Review Checklist content, or Anti-Patterns Registry content.
+
+---
+
+## 1. Purpose
+
+This chapter defines the **exception policy experience philosophy** for Rento — how an authorized exception remains architecturally legible, bounded, visible, and non-authoritative inside the Product Design Standard Lifecycle.
+
+Exception Policy Experience exists because the Product Design Standard must allow legitimate pressure to be handled without turning pressure into drift. Chapter 5 already defines when exceptions may be considered, what justification they require, who reviews them, how expiry and rollback work, and how exceptions are governed at decision level. This chapter does **not** redefine that authority. It specializes one narrower Design System Governance question: how an authorized exception is experienced as a standards-governance state after Chapter 5 authority has recognized it.
+
+Exception Policy Experience is not Product Design Decision Framework. Chapter 5 remains authoritative for decision hierarchy, Exception Policy rules, exception criteria, severity, approval authority, required justification, expiry, rollback, and escalation. This chapter consumes Chapter 5 — it does **not** create new exception rules, alternate approval paths, severity categories, or justification requirements.
+
+Exception Policy Experience is not Component Philosophy & Component System. Chapter 11 remains authoritative for component philosophy, Component Lifecycle, Component Governance, pattern stewardship, catalog health, and component retirement. This chapter may clarify that component-related deviations can have standard-level exception status, but it does **not** govern component lifecycle, approve components, define catalog process, or duplicate component stewardship.
+
+Exception Policy Experience is not Design System Governance foundation. Chapter 56 remains authoritative for Governance Subject Principle, Product Design Standard Lifecycle, Active Standards Governance Scope, Design System Governance Boundaries, Design System Governance Boundary Clarity, Design System Governance Integrity, Standards Governance Continuity, registry ownership, DSG invariants, and Boundary Inheritance. This chapter inherits those foundations without reopening them.
+
+Exception Policy Experience is not Standards Enforcement. Chapter 57 remains authoritative for Standard Compliance and Standards Enforcement. This chapter preserves the rule that an authorized exception may be legitimate under Chapter 5 but is **not** Standard Compliance. Exception status never converts deviation into normal alignment with the currently approved Product Design Standard.
+
+Exception Policy Experience is not Standards Evolution. Chapter 58 remains authoritative for Standards Evolution, Evolution Candidate, Evolution Candidate Identification, Evolution Candidate Evaluation, Product Design Standard Evolution Approval, Continuous Architectural Lineage, and controlled standard change. This chapter preserves the rule that exception pressure may be a signal for evolution consideration, but exception existence, frequency, duration, recurrence, or persistence never automatically creates an Evolution Candidate, approves evolution, or modifies Product Design Standard authority.
+
+The product must help stakeholders answer five exception policy experience questions:
+
+1. How does an authorized exception remain legitimate without becoming a new standard rule, alternative authority, local standard, or substitute for the Product Design Standard?
+2. How does an authorized exception remain visible without becoming normalized as Standard Compliance, default behavior, or permanent rule?
+3. How does exception pressure remain a signal without becoming an automatic Evolution Candidate, approved evolution, or authority change?
+4. How are Standard Compliance, non-compliance, authorized exception, Evolution Candidate, Evolution Candidate Evaluation, and approved Product Design Standard evolution kept distinct?
+5. How does exception status remain principles-only without becoming workflow, tooling, operational register design, DesignOps, implementation, or engineering standards?
+
+This chapter governs Exception Policy Experience as a specialized dimension within Design System Governance. It does not specify UI, implementation, review tooling, operational registers, approval tooling, checklist content, registry content, or engineering architecture.
+
+**Relationship to prior chapters:** Chapter 5, Chapter 11, Chapter 56, Chapter 57, and Chapter 58 supply authoritative layers consumed by this chapter. This chapter defines **Exception Policy Experience**, **Authorized Exception Status**, **Exception Policy Experience Boundaries**, **Exception Policy Boundary Clarity**, **Exception Policy Integrity**, and **Exception Continuity**.
+
+---
+
+## Design Principles Summary
+
+| Principle | Meaning |
+|-----------|---------|
+| **Exception is legitimate but non-authoritative** | An authorized exception may be valid under Chapter 5, but it never becomes a new standard rule, alternative authority, local standard, or substitute for the approved Product Design Standard |
+| **Exception is visible but not normalized** | Exception status must remain legible without becoming ordinary Standard Compliance, accepted default behavior, or implicit permanent rule |
+| **Exception pressure is signal, not decision** | Repeated or persistent exception pressure may invite Chapter 58 consideration, but never automatically creates candidacy, approval, or authority change |
+| **Chapter 5 authority preservation** | Exception criteria, approval, severity, justification, expiry, rollback, and escalation remain Chapter 5 authority |
+| **Chapter 11 preservation** | Component Lifecycle and Component Governance remain Chapter 11 authority |
+| **Chapter 56 inheritance** | DSG foundation, Product Design Standard Lifecycle, DSG invariants, Boundary Inheritance, and registry ownership are inherited, not reopened |
+| **Chapter 57 preservation** | Standard Compliance remains alignment with the currently approved Product Design Standard; exception status is not compliance |
+| **Chapter 58 preservation** | Evolution Candidate, Evaluation, Approval, and Continuous Architectural Lineage remain Chapter 58 authority |
+| **No shadow authority** | Exceptions must not become local substitute rules, tolerated defaults, or hidden parallel standards |
+| **Boundary clarity over convenience** | Every exception state must remain distinguishable from compliance, non-compliance, and evolution states |
+| **Registry ownership is not registry content** | Product Review Checklist and Anti-Patterns Registry ownership remains per Chapter 56 §10.5; this chapter does not define content |
+| **Principles only** | Exception Policy Experience defines product-design architecture only — not implementation, workflow, tooling, DesignOps, release management, or engineering standards |
+| **Exception Policy Integrity goal** | Every exception concept preserves Product Design Standard authority while keeping legitimate deviation bounded and visible |
+
+---
+
+## What This Chapter Is NOT
+
+This chapter is **not**:
+
+- A rewrite of Chapter 5 Exception Policy rules
+- A new exception approval model, severity model, justification model, expiry model, or rollback model
+- An operational exception register, tracking tool, review workflow, ticket state, UI surface, dashboard, or reporting process
+- A Product Review Checklist content chapter
+- An Anti-Patterns Registry content chapter
+- A replacement for Chapter 11 Component Lifecycle or Component Governance
+- A replacement for Chapter 56 Design System Governance foundation or Product Design Standard Lifecycle
+- A replacement for Chapter 57 Standard Compliance or Standards Enforcement
+- A replacement for Chapter 58 Standards Evolution, Evolution Candidate, Evaluation, Approval, or Continuous Architectural Lineage
+- Admin Platform execution, platform policy enforcement, moderation, role grant, verification adjudication, or delegated marketplace governance
+- Accessibility & Internationalization, Performance Experience, or Future Product Evolution depth
+- Implementation, UI, frontend, backend, APIs, databases, tokens, Figma, tooling, automation, workflow, CI/CD, release management, DesignOps, or engineering standards
+
+If the question is *whether an exception is allowed, who approves it, what severity it has, what justification it needs, when it expires, or how rollback works* — Chapter 5 answers it. If the question is *how an already authorized exception remains legible, bounded, visible, and non-authoritative inside Product Design Standard governance* — this chapter answers it.
+
+---
+
+## 2. Architectural Position
+
+Exception Policy Experience sits within the Design System Governance macro-domain after Chapter 56 foundation, Chapter 57 Standards Enforcement, and Chapter 58 Standards Evolution.
+
+Chapter 57 establishes that Standard Compliance is alignment with the currently approved Product Design Standard and that authorized exception status is not Standard Compliance. Chapter 58 establishes that exception pressure may become an evolution signal but does not itself create evolution authority. This chapter specializes the remaining architectural space: how exception status itself remains honest while the standard remains authoritative.
+
+Exception Policy Experience succeeds through **authorized exception status clarity** — not exception minimization theater, operational tracking, tooling output, checklist mechanics, or delivery pressure.
+
+### 2.1 Why Exception Policy Experience Requires Specialized Depth
+
+Chapter 56 establishes Design System Governance foundation, Chapter 57 defines Standard Compliance, and Chapter 58 defines controlled Product Design Standard evolution. Without this chapter, the standard would have:
+
+- A governance subject — the Product Design Standard itself
+- A lifecycle — Product Design Standard Lifecycle
+- Compliance meaning — Standard Compliance as architectural state
+- Evolution discipline — controlled standard change with candidate/evaluation/approval separation
+- Registry ownership — Product Review Checklist and Anti-Patterns Registry assigned to Design System Governance
+
+But it would not define how authorized exception status remains legitimate without becoming standard authority, visible without becoming normalized, and pressure-bearing without becoming automatic evolution.
+
+### 2.2 Non-Sequential Position
+
+Chapter 56 §10.3 registers standards enforcement, standards evolution, and exception policy as forward placeholders. Per RC-4 and GD-007, registry order is not mandatory workflow order. This chapter reflects Design Council authorization for Chapter 59 Phase 1 authoring. It does not determine the grouping, splitting, merging, completion, or future numbering of remaining Design System Governance work.
+
+---
+
+## 3. Exception Policy Experience
+
+**Exception Policy Experience** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Exception Policy Experience is the **product-design governance responsibility of keeping authorized exception status legible, bounded, visible, and non-authoritative within the Product Design Standard Lifecycle**.
+
+Exception Policy Experience does not decide whether an exception is valid. Chapter 5 decides exception validity. This chapter governs the standard-level meaning of exception status after Chapter 5 authority has recognized it: the deviation is legitimate, but it remains a deviation from current approved standard authority.
+
+Exception Policy Experience protects:
+
+- **Standard authority** — current Product Design Standard authority remains binding
+- **Exception visibility** — legitimate deviation is not hidden as normal alignment
+- **Non-authority discipline** — exception status does not become local standard authority
+- **Compliance distinction** — exception status does not become Standard Compliance
+- **Evolution distinction** — exception pressure does not become automatic Evolution Candidate or approved evolution
+- **Boundary integrity** — Chapter 5, Chapter 11, Chapter 56, Chapter 57, and Chapter 58 ownership remains intact
+
+### 3.1 Exception Policy Experience and Chapter 5
+
+Chapter 5 supplies the Exception Policy decision authority. Exception Policy Experience consumes that authority and adds standard-governance legibility only.
+
+This chapter must never be used to make an unauthorized deviation appear legitimate. A deviation is authorized only through Chapter 5 authority. Once authorized, this chapter prevents the exception from becoming silent drift, shadow authority, or implied standard change.
+
+### 3.2 Exception Policy Experience Invariant (EX-1)
+
+**Exception Policy Experience governs authorized exception status legibility within Product Design Standard governance; it never defines exception eligibility, approval, severity, justification, expiry, rollback, workflow, tooling, implementation, or standard evolution authority.**
+
+Violation of EX-1 is an architectural integrity failure because it replaces Chapter 5 decision authority or Chapter 58 evolution authority with exception-status interpretation.
+
+---
+
+## Authorized Exception Status
+
+**Authorized Exception Status** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Authorized Exception Status is the **standard-governance state in which a deviation from the currently approved Product Design Standard has been legitimately recognized under Chapter 5 authority while remaining outside Standard Compliance under normal standard alignment and non-authoritative as future standard rule**.
+
+Authorized Exception Status means:
+
+- The exception is legitimate under Chapter 5 authority
+- The exception remains visible as an exception
+- The exception is bounded by Chapter 5 scope, duration, justification, and rollback expectations
+- The currently approved Product Design Standard remains authoritative
+- Standard Compliance is not claimed
+- Evolution candidacy is not automatic
+- Product Design Standard authority is not modified
+
+Authorized Exception Status does **not** mean:
+
+- The deviation has become Standard Compliance
+- The deviation has become a new standard rule
+- The deviation has become an alternative authority
+- The deviation has become a local standard
+- The deviation has become accepted default behavior
+- The deviation has become an Evolution Candidate automatically
+- The deviation has been evaluated for evolution automatically
+- The Product Design Standard has evolved
+
+### 3.3 Legitimate but Non-Authoritative (C-1)
+
+An authorized exception may be legitimate under Chapter 5 authority, but legitimacy is not authority creation.
+
+Authorized Exception Status must never become:
+
+- A new standard rule
+- An alternative authority
+- A local standard
+- A substitute for the currently approved Product Design Standard
+- A precedent that silently overrides approved chapters
+- A permission structure for unrelated future deviations
+
+The exception may explain why a specific deviation is temporarily or conditionally allowed. It may not teach future teams that the Product Design Standard has changed.
+
+### 3.4 Visible but Not Normalized (C-2)
+
+An authorized exception must remain architecturally legible without becoming normalized.
+
+Visibility protects integrity because teams can see that ordinary Standard Compliance has not been achieved. Normalization destroys integrity because teams begin treating the exception as accepted default behavior.
+
+Authorized Exception Status must therefore remain distinguishable from:
+
+- Standard Compliance
+- Normal product behavior
+- Pattern adoption
+- Component approval
+- Standard evolution
+- Permanent policy
+
+The product-design standard remains coherent when exceptions are visible enough to prevent confusion and bounded enough to prevent imitation.
+
+### 3.5 Exception Pressure Is Signal, Not Decision (C-3)
+
+Persistent or repeated exception pressure may indicate that a matter deserves consideration under Chapter 58 Standards Evolution. It does not decide that matter.
+
+Exception frequency, duration, recurrence, or persistence must never automatically:
+
+- Create an Evolution Candidate
+- Approve Product Design Standard evolution
+- Modify Product Design Standard authority
+- Suspend Standard Compliance
+- Convert exception status into default behavior
+- Create a local substitute rule
+
+Exception pressure is an architectural signal. Chapter 58 remains the authority for whether that signal becomes Evolution Candidate Identification, Evaluation, or approved Product Design Standard evolution.
+
+---
+
+## 4. Mandatory Semantic Distinctions
+
+The following distinctions are mandatory. They are architectural states of meaning, not workflow steps, tooling states, or implementation gates.
+
+| State | Governing authority | Meaning | Cannot establish |
+|-------|---------------------|---------|------------------|
+| **Standard Compliance** | Chapter 57 | Alignment with the currently approved Product Design Standard | Exception legitimacy, non-compliance permission, evolution candidacy, approved evolution, implementation readiness |
+| **Non-compliance** | Chapter 57 enforcement boundary | Drift, boundary breach, local substitute rule, or unauthorized deviation from approved authority | Authorized exception, compliance, evolution candidacy, approved evolution, implementation permission |
+| **Authorized Exception** | Chapter 5 authority; this chapter for status legibility only | Chapter 5-governed deviation that is legitimate, bounded, visible, and non-authoritative | Standard Compliance, new standard rule, local standard, automatic Evolution Candidate, approved evolution |
+| **Evolution Candidate** | Chapter 58 | Possible matter for Product Design Standard evolution consideration | Approved evolution, exception approval, compliance suspension, component lifecycle change, implementation permission |
+| **Evolution Candidate Evaluation** | Chapter 58 | Architectural judgment about candidate merit, boundary fit, lineage continuity, and authority integrity | New authority, approved evolution, new Exception Policy rules, registry content, implementation requirements |
+| **Approved Product Design Standard Evolution** | Chapter 58 / Design Council approval and integration | Design Council-approved and integrated change to Product Design Standard authority | Retroactive normalization of prior exceptions, implementation completion, registry content, macro-domain completion |
+
+These states must never collapse into one another.
+
+### 4.1 Compliance Is Not Exception
+
+Standard Compliance remains alignment with the currently approved Product Design Standard. An authorized exception may be legitimate, but it is not Standard Compliance.
+
+### 4.2 Non-Compliance Is Not Exception
+
+A deviation is non-compliance unless it is legitimately authorized under Chapter 5. This chapter does not authorize deviations and cannot convert non-compliance into Authorized Exception Status.
+
+### 4.3 Exception Is Not Evolution Candidate
+
+An authorized exception may produce useful evidence, but exception status alone does not create an Evolution Candidate. Chapter 58 governs candidate identification.
+
+### 4.4 Evolution Candidate Is Not Evaluation
+
+Identifying that a matter may deserve evolution consideration does not evaluate it, approve it, or change standard authority.
+
+### 4.5 Evaluation Is Not Approval
+
+Evolution Candidate Evaluation clarifies architectural merit. It does not create new authority.
+
+### 4.6 Approved Evolution Is Not Exception Normalization
+
+Approved Product Design Standard evolution changes authority through Design Council approval and integration. It does not mean prior exceptions were retroactively Standard Compliance; it means the standard has changed from the point of approved integration.
+
+---
+
+## 5. Scope
+
+Exception Policy Experience governs product-design architecture for:
+
+- Authorized Exception Status as a standard-governance state
+- Exception status legibility at Product Design Standard governance depth
+- Boundary clarity between Standard Compliance, non-compliance, authorized exception, and evolution candidacy
+- Exception integrity as intentional, bounded, visible, and non-authoritative
+- Exception continuity within Product Design Standard Lifecycle without operational workflow definition
+- Preservation of current Product Design Standard authority while an authorized exception exists
+- Relationship between exception status and Chapter 5 Exception Policy without redefining Exception Policy rules
+- Relationship between exception status and Chapter 11 Component Lifecycle without duplicating component governance
+- Relationship between exception status and Chapter 56 foundation without reopening DSG architecture
+- Relationship between exception status and Chapter 57 Standard Compliance without weakening compliance semantics
+- Relationship between exception pressure and Chapter 58 evolution candidacy without automatic candidacy or approval
+- Registry ownership preservation without defining Product Review Checklist or Anti-Patterns Registry content
+
+Exception Policy Experience may establish principles for recognizing what exception status can and cannot mean architecturally. It may not prescribe operational workflow, tooling, automation, implementation, release mechanics, or registry content.
+
+---
+
+## 6. Out of Scope
+
+The following remain outside Exception Policy Experience scope:
+
+| Exclusion | Governing authority |
+|-----------|---------------------|
+| Product Design Decision Framework | Chapter 5 |
+| Exception Policy criteria, approval rules, severity, required justification, expiry, rollback, and escalation | Chapter 5 |
+| Component philosophy, Component Lifecycle, Component Governance, catalog health, pattern stewardship, and component retirement | Chapter 11 |
+| Design System Governance foundation, Product Design Standard Lifecycle definition, DSG invariants, Boundary Inheritance, registry ownership, and Governance Subject Principle | Chapter 56 |
+| Standard Compliance definition and Standards Enforcement | Chapter 57 |
+| Standards Evolution, Evolution Candidate, Evolution Candidate Evaluation, Product Design Standard Evolution Approval, and Continuous Architectural Lineage | Chapter 58 |
+| Product Review Checklist content | Forward DSG chapter per Chapter 56 §10.5 |
+| Anti-Patterns Registry content | Forward DSG chapter per Chapter 56 §10.5 |
+| Platform governance execution | Admin Platform, Chapters 51–55 |
+| Accessibility & Internationalization | Forward macro-domain |
+| Performance Experience | Forward macro-domain |
+| Future Product Evolution | Forward macro-domain |
+| UI, frontend, backend, APIs, databases, tokens, Figma, tooling, automation, CI/CD, scripts, workflow, operational registers, release management, engineering standards, DesignOps, organizational governance, delivery governance, and project management | Outside Product Design Standard scope or excluded by Governance Subject Principle |
+
+This canonical exclusion section governs all later boundary references in this chapter.
+
+---
+
+## 7. Ownership and Cross-Chapter Contracts
+
+Exception Policy Experience consumes approved authorities without redefining them:
+
+| Authority | Owner | Exception Policy Experience relationship |
+|-----------|-------|------------------------------------------|
+| Product Design Decision Framework and Exception Policy | Chapter 5 | Consumed; this chapter governs exception status legibility only after Chapter 5 authorization |
+| Component Lifecycle and Component Governance | Chapter 11 | Preserved; component-related deviations may have exception status, but component lifecycle remains unchanged |
+| DSG foundation, Product Design Standard Lifecycle, boundaries, integrity, continuity, registry ownership, and DSG-1 through DSG-10 | Chapter 56 | Inherited; foundation is not reopened |
+| Standard Compliance and Standards Enforcement | Chapter 57 | Preserved; authorized exception is legitimate but not Standard Compliance |
+| Standards Evolution, Evolution Candidate, Evaluation, Approval, and Continuous Architectural Lineage | Chapter 58 | Preserved; exception pressure is signal only, never automatic decision |
+
+Exception Policy Experience does not approve exceptions, approve components, define implementation, define registry content, create Evolution Candidates, evaluate candidates, approve Product Design Standard evolution, or complete the Design System Governance macro-domain.
+
+---
+
+## Exception Policy Experience Boundaries
+
+**Exception Policy Experience Boundaries** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Exception Policy Experience Boundaries define what exception policy experience can and cannot establish within the Design System Governance macro-domain.
+
+Exception Policy Experience can establish:
+
+- Whether authorized exception status remains legible as exception status
+- Whether exception status is being mistaken for Standard Compliance
+- Whether exception status is being normalized into default behavior
+- Whether exception status is being treated as local substitute authority
+- Whether exception pressure may be relevant to Chapter 58 consideration without creating candidacy automatically
+- Whether Chapter 5, Chapter 11, Chapter 56, Chapter 57, and Chapter 58 ownership remains preserved
+- Whether Product Review Checklist or Anti-Patterns Registry ownership is relevant without defining their content
+
+Exception Policy Experience cannot establish:
+
+- New Product Design Standard principles
+- New Exception Policy rules
+- New component lifecycle rules
+- Standard Compliance
+- Standards Enforcement
+- Evolution Candidate status
+- Evolution Candidate Evaluation
+- Product Design Standard Evolution Approval
+- Continuous Architectural Lineage requirements
+- Product Review Checklist content
+- Anti-Patterns Registry content
+- Implementation requirements
+- Delivery requirements
+- Platform governance execution authority
+- Accessibility, performance, or future evolution content
+
+---
+
+## Exception Policy Boundary Clarity
+
+**Exception Policy Boundary Clarity** is the shared legibility of what Exception Policy Experience owns, what Chapter 5 owns, what Chapter 11 owns, what Chapter 56 owns, what Chapter 57 owns, what Chapter 58 owns, and what future macro-domains own.
+
+Exception Policy Boundary Clarity requires:
+
+- **Chapter 5 clarity** — exception authorization remains Chapter 5 authority
+- **Chapter 11 clarity** — component lifecycle and component governance remain Chapter 11 authority
+- **Chapter 56 clarity** — DSG foundation remains inherited, not reopened
+- **Chapter 57 clarity** — Standard Compliance remains current-standard alignment; exception status is not compliance
+- **Chapter 58 clarity** — exception pressure may signal but does not create candidacy, evaluation, approval, or authority change
+- **Exception visibility clarity** — authorized exceptions remain visible as exceptions
+- **Normalization clarity** — visible exception status does not become default behavior
+- **Registry clarity** — checklist and registry ownership does not become content definition
+- **Forward macro-domain clarity** — Accessibility & Internationalization, Performance Experience, and Future Product Evolution remain separate blocks
+
+---
+
+## Exception Policy Integrity
+
+**Exception Policy Integrity** is the honesty of exception policy experience itself — no exception treated as Standard Compliance, no legitimate exception treated as standard authority, no hidden exception drift, no local substitute rule, no exception normalization, no exception pressure treated as automatic evolution, no component lifecycle duplication, no foundation rewrite, no implementation pressure, no workflow substitution, no registry content invention, and no future macro-domain absorption.
+
+Exception Policy Integrity specializes Design System Governance Integrity for the exception policy dimension.
+
+Exception Policy Integrity is preserved when:
+
+- Authorized exceptions remain bounded by Chapter 5 authority
+- Current Product Design Standard authority remains binding
+- Standard Compliance remains distinct from exception status
+- Exception status remains visible without becoming normalized
+- Exception pressure remains signal only
+- Evolution candidacy and approval remain Chapter 58 authority
+- Component lifecycle remains Chapter 11 scope
+- Registry content remains forward
+- The standard remains coherent rather than exception-shaped
+
+---
+
+## Exception Continuity
+
+**Exception Continuity** is an official product concept in the RENTO PRODUCT DESIGN STANDARD.
+
+Exception Continuity is the preservation of authorized exception status context across Product Design Standard governance attention so that teams understand that a deviation remains legitimate, bounded, visible, non-authoritative, and distinct from Standard Compliance or Standards Evolution.
+
+Exception Continuity specializes Standards Governance Continuity from Chapter 56 for the exception policy dimension. It is not an operational register, tracking workflow, tooling state, release process, or DesignOps practice.
+
+Exception Continuity preserves:
+
+- The fact that Chapter 5 authorization exists
+- The fact that current standard authority remains unchanged
+- The fact that the exception is not Standard Compliance
+- The fact that the exception is not approved evolution
+- The fact that repeated pressure may be relevant to Chapter 58 only as signal
+- The fact that ownership remains distributed across Chapters 5, 11, 56, 57, and 58
+
+Exception Continuity does not preserve exception permanence. A permanent exception would violate exception integrity unless resolved through Chapter 5 removal expectations or Chapter 58 approved evolution.
+
+---
+
+## 8. Governance Principles
+
+### 8.1 Exception Is Legitimate but Non-Authoritative
+
+Authorized exception status may be valid under Chapter 5. It does not create new Product Design Standard authority.
+
+### 8.2 Exception Is Visible but Not Normalized
+
+Authorized exception status must remain legible as a bounded deviation. It must not become ordinary Standard Compliance, accepted default behavior, or implicit permanent rule.
+
+### 8.3 Exception Pressure Is Signal, Not Decision
+
+Persistent or repeated exception pressure may indicate possible need for Chapter 58 attention. It never automatically creates an Evolution Candidate, evaluation, approval, or authority change.
+
+### 8.4 Current Standard Authority Remains Binding
+
+The currently approved Product Design Standard remains authoritative while an exception exists. Exception status does not suspend the standard.
+
+### 8.5 Ownership Is Preserved
+
+Exception Policy Experience preserves Chapter 5, Chapter 11, Chapter 56, Chapter 57, and Chapter 58 authority per §7.
+
+### 8.6 No Shadow Authority
+
+Exceptions must not become local rules, parallel standards, informal precedents, or team-specific substitute authority.
+
+### 8.7 Boundary Clarity Over Exception Accumulation
+
+The value of exception policy experience is not the number of exceptions accommodated. Its value is whether each exception remains legible, bounded, and non-authoritative.
+
+### 8.8 Principles Only
+
+Exception Policy Experience defines product-design architecture only. It never becomes workflow, tooling, automation, implementation, release management, DesignOps, or engineering standards.
+
+---
+
+## 9. Architectural Invariants
+
+The following invariants are mandatory across Exception Policy Experience. All inherit DSG-1 through DSG-10.
+
+| ID | Invariant | Statement |
+|----|-----------|-----------|
+| **EX-1** | **Status Legibility Only** | Exception Policy Experience governs authorized exception status legibility, not exception eligibility, approval, severity, justification, expiry, rollback, workflow, tooling, implementation, or evolution authority |
+| **EX-2** | **Chapter 5 Preservation** | Product Design Decision Framework and Exception Policy rules remain Chapter 5 authority |
+| **EX-3** | **Chapter 11 Preservation** | Component Lifecycle and Component Governance remain Chapter 11 authority |
+| **EX-4** | **Chapter 56 Inheritance** | Exception Policy Experience inherits Chapter 56 foundations, boundaries, continuity, registry ownership, and DSG invariants without reopening them |
+| **EX-5** | **Chapter 57 Preservation** | Standard Compliance remains alignment with the currently approved Product Design Standard; authorized exception is not Standard Compliance |
+| **EX-6** | **Chapter 58 Preservation** | Evolution Candidate, Evaluation, Approval, and Continuous Architectural Lineage remain Chapter 58 authority |
+| **EX-7** | **Non-Authority** | Authorized exceptions never become new standard rules, alternative authority, local standards, or Product Design Standard substitutes |
+| **EX-8** | **No Normalization** | Authorized exceptions remain visible as exceptions and never become accepted default behavior or implicit permanent rules |
+| **EX-9** | **Signal Not Decision** | Exception frequency, duration, recurrence, or persistence never automatically creates Evolution Candidate status, approval, or Product Design Standard authority change |
+| **EX-10** | **No Implementation Exception Governance** | Exception Policy Experience does not specify UI, code, APIs, databases, tooling, automation, tokens, Figma, workflow, release mechanics, or engineering standards |
+| **EX-11** | **No Registry Content** | Exception Policy Experience does not define Product Review Checklist or Anti-Patterns Registry content |
+| **EX-12** | **Forward Macro-Domain Separation** | Exception Policy Experience does not absorb Accessibility & Internationalization, Performance Experience, or Future Product Evolution |
+
+---
+
+## 10. Boundary Inheritance
+
+Exception Policy Experience inherits all Chapter 56 boundaries.
+
+It may extend within those boundaries by defining:
+
+- Exception Policy Experience
+- Authorized Exception Status
+- Exception Policy Experience Boundaries
+- Exception Policy Boundary Clarity
+- Exception Policy Integrity
+- Exception Continuity
+- Exception-specific principles and invariants
+- Exception relationship to standards enforcement, standards evolution, component lifecycle, registries, and future macro-domains
+
+It may never violate the exclusions in §6, redefine the ownership contracts in §7, treat exceptions as Standard Compliance, treat exceptions as new authority, treat exception pressure as automatic evolution, or define Product Review Checklist / Anti-Patterns Registry content.
+
+---
+
+## 11. Relationship With Future Design System Governance Chapters
+
+### 11.1 Product Review Checklist
+
+Product Review Checklist is owned by Design System Governance per Chapter 56 §10.5. Exception Policy Experience may establish that checklist content, when authored, must preserve distinction between Standard Compliance, non-compliance, authorized exception, and evolution states.
+
+This chapter does not define checklist items, format, sequence, tooling, operation, ship gates, review mechanics, or exception register behavior.
+
+### 11.2 Anti-Patterns Registry
+
+Anti-Patterns Registry is owned by Design System Governance per Chapter 56 §10.5. Exception Policy Experience may establish that exception normalization, shadow authority, and automatic-evolution assumptions can be anti-pattern candidates when a registry chapter is authorized.
+
+This chapter does not define registry entries, taxonomy, format, tooling, operation, or remediation mechanics.
+
+### 11.3 Additional Specialized Dimensions
+
+Additional specialized dimensions remain Design Council scoping only. Exception Policy Experience does not determine macro-domain completion, chapter count, registry closure, future chapter numbering, or Product Design Standard v1.0 completion.
+
+---
+
+## 12. Exception Policy Experience Attention Postures
+
+Exception Policy Experience is not a workflow, gate, or register. It governs ongoing exception-status attention within Product Design Standard Lifecycle.
+
+### 12.1 Orient
+
+Orient means a team or reviewer recognizes that an authorized exception status question is in scope, identifies the Chapter 5 authority involved, and preserves the distinction between Standard Compliance, non-compliance, exception status, and evolution states.
+
+### 12.2 Defer Attention
+
+Defer attention preserves an exception-status question honestly when the matter lacks sufficient clarity to distinguish non-compliance, authorized exception, or evolution signal. Defer attention does not imply approval, rejection, compliance, candidacy, evaluation, or standard change.
+
+### 12.3 Conclude Exception Policy Context
+
+Conclude means the exception-status question no longer requires active specialized attention because the matter has been made architecturally legible as Standard Compliance, non-compliance, Chapter 5 authorized exception, Chapter 58 evolution matter, approved Product Design Standard evolution, Chapter 11 component lifecycle matter, or out-of-scope matter.
+
+### 12.4 Pending Honesty
+
+Unresolved exception ambiguity remains honestly pending. It must not be hidden behind implementation progress, local convention, operational convenience, assumed compliance, or assumed future evolution.
+
+---
+
+## 13. Common Architectural Failures
+
+The following are chapter-local review risks. They do not populate the Anti-Patterns Registry.
+
+| Failure | Why it harms |
+|---------|--------------|
+| **Exception as Standard Compliance** | Treats legitimate deviation as normal alignment, violating Chapter 57 |
+| **Exception as New Authority** | Converts a bounded deviation into a local standard or substitute rule |
+| **Invisible Exception** | Hides deviation as ordinary product behavior, creating silent drift |
+| **Normalized Exception** | Lets repeated exception use become accepted default behavior without approved evolution |
+| **Automatic Evolution Candidate** | Treats exception recurrence as Chapter 58 candidacy without evaluation of candidacy rules |
+| **Exception Pressure as Approval** | Treats frequency or duration as if it approved Product Design Standard evolution |
+| **Chapter 5 Rewrite** | Changes exception criteria, approval, severity, justification, expiry, or rollback through this chapter |
+| **Chapter 11 Rewrite** | Uses exception status to govern component lifecycle or catalog stewardship |
+| **Chapter 56 Reopening** | Rewrites Product Design Standard Lifecycle, DSG invariants, or registry ownership |
+| **Chapter 57 Weakening** | Softens Standard Compliance by allowing exception status to count as compliance |
+| **Chapter 58 Weakening** | Bypasses Evolution Candidate, Evaluation, Approval, or Continuous Architectural Lineage |
+| **Operational Register Substitution** | Turns principles into workflow, tooling, or tracking design |
+| **Registry Content Prematurity** | Defines Product Review Checklist or Anti-Patterns Registry content before authorized chapter |
+| **Future Macro-Domain Absorption** | Lets accessibility, performance, or future product evolution pressure define exception scope |
+
+---
+
+## 14. Product Development Methodology Bridge
+
+When Product Development Methodology v1.0 is authored, exception policy experience initiatives must trace to this chapter and upstream contracts — demonstrating impact on **Exception Policy Experience**, **Authorized Exception Status**, **Exception Policy Experience Boundaries**, **Exception Policy Boundary Clarity**, **Exception Policy Integrity**, **Exception Continuity**, Chapter 5 preservation, Chapter 11 preservation, Chapter 56 inheritance, Chapter 57 Standard Compliance preservation, Chapter 58 evolution authority preservation, and EX-1 through EX-12.
+
+**Governance note:** No exception policy experience work may claim Product Design Standard authority without preserving Chapter 5 Exception Policy authority, current Standard Compliance semantics, Chapter 58 evolution authority, Chapter 56 inherited boundaries, and all upstream consumption contracts.
+
+---
+
+## 15. Chapter Summary
+
+Exception Policy Experience specializes Chapter 56 in one direction: authorized exception status legibility within Product Design Standard governance.
+
+This chapter establishes **Exception Policy Experience** as the product-design governance responsibility for keeping authorized exception status legible, bounded, visible, and non-authoritative within the Product Design Standard Lifecycle. It defines **Authorized Exception Status**, **Exception Policy Experience Boundaries**, **Exception Policy Boundary Clarity**, **Exception Policy Integrity**, and **Exception Continuity**.
+
+It preserves Chapter 5 as Product Design Decision Framework and Exception Policy authority; preserves Chapter 11 as Component Lifecycle and Component Governance authority; inherits Chapter 56 foundation and DSG-1 through DSG-10; preserves Chapter 57 Standard Compliance and Standards Enforcement; preserves Chapter 58 Standards Evolution, Evolution Candidate, Evaluation, Approval, and Continuous Architectural Lineage; introduces EX-1 through EX-12; and keeps Product Review Checklist content, Anti-Patterns Registry content, Accessibility & Internationalization, Performance Experience, and Future Product Evolution forward.
+
+**Design System Governance flow (non-sequential — authoring order shown, not operational mandate):**
+
+Design System Governance Foundation (Ch 56) → Standards Enforcement (Ch 57) + Standards Evolution (Ch 58) + **Exception Policy Experience (Ch 59)** + Product Review Checklist and Anti-Patterns Registry content (forward per Design Council scoping)
+
+**Macro-domain status upon this chapter's approval:** Exception policy experience is approved as the third specialized Design System Governance dimension. Product Review Checklist content, Anti-Patterns Registry content, and additional specialized dimensions remain subject to Design Council scoping. Design System Governance macro-domain remains **IN PROGRESS**. Product Design Standard v1.0 remains **IN PROGRESS**.
+
+---
+
+## 16. Design Director Review
+
+**Chapter:** 59 — Exception Policy Experience
+**Section:** LVI — Exception Policy
+**Review type:** Initial standard adoption
+
+### 16.1 Approval Statement
+
+- **Pre-Authoring Analysis** — APPROVED WITH CLARIFICATIONS
+- **Phase 1 Authoring** — COMPLETE
+- **Phase 2 Architecture Review** — COMPLETE
+- **Phase 3 Editorial Pass** — COMPLETE
+- **Final Review** — COMPLETE
+- **Approval Integration** — COMPLETE
+- **Final Design Council Review** — APPROVED
+- **Official Status** — APPROVED
+- **Ready for permanent inclusion** in RENTO PRODUCT DESIGN STANDARD v1.0
+
+This chapter is approved as the exception policy experience contract for Rento — third specialized dimension within the Design System Governance macro-domain. All exception policy experience product-design work must comply. Implementation patterns are subordinate to the principles herein.
+
+**Status:** APPROVED
+
+### 16.2 Relationship to Other Chapters
+
+| Chapter | Relationship |
+|---------|--------------|
+| Chapter 5 — Product Design Decision Framework | Decision Framework and Exception Policy authority — consumed, not redefined |
+| Chapter 11 — Component Philosophy & Component System | Component Governance and Component Lifecycle authority — consumed, not redefined |
+| Chapter 56 — Design System Governance Experience | Macro-domain foundation — inherited, not reopened |
+| Chapter 57 — Standards Enforcement Experience | Standard Compliance and Standards Enforcement authority — preserved |
+| Chapter 58 — Standards Evolution Experience | Evolution Candidate, Evaluation, Approval, and Continuous Architectural Lineage authority — preserved |
+| Chapters 51–55 — Admin Platform | Platform Governance execution — mandatory separation |
+| Forward DSG chapters | Product Review Checklist and Anti-Patterns Registry content remain forward |
+
+### 16.3 Review Criteria for Future Amendments
+
+Council should verify:
+
+1. Exception Policy Experience has genuine ownership distinct from Chapter 5
+2. Authorized exception is legitimate but non-authoritative
+3. Authorized exception is visible but not normalized
+4. Exception pressure is signal only, never automatic decision
+5. Standard Compliance remains Chapter 57 authority and is not weakened
+6. Evolution Candidate, Evaluation, Approval, and Continuous Architectural Lineage remain Chapter 58 authority
+7. Chapter 11 Component Lifecycle and Component Governance remain preserved
+8. Chapter 56 foundation, Product Design Standard Lifecycle, DSG invariants, Boundary Inheritance, and registry ownership remain inherited
+9. Mandatory semantic distinctions remain explicit and non-collapsing
+10. No implementation, UI, tooling, workflow, DesignOps, release management, operational register, or engineering standards are introduced
+11. Product Review Checklist and Anti-Patterns Registry content remain forward
+12. Accessibility & Internationalization, Performance Experience, and Future Product Evolution are not absorbed
+13. EX-1 through EX-12 remain intact
+
+### 16.4 Sign-Off Requirements
+
+| Role | Responsibility |
+|------|----------------|
+| Design Director | Final approval on exception policy experience philosophy |
+| Head of Product Design | Chapter 5 / Chapter 11 / Chapter 56 / Chapter 57 / Chapter 58 consumption integrity |
+| Design Council | Exception non-authority, normalization prevention, evolution-signal discipline, and dimension scoping |
+| Design System Architect | Standard-level vs decision-level vs component-level separation |
+| Senior Product Designer | Exception status boundary clarity |
+| Product Management | Marketplace posture honesty and no delivery governance creep |
+
+### 16.5 Effective Date
+
+Effective upon Design Council approval and publication in RENTO PRODUCT DESIGN STANDARD. Applies to all new exception policy experience product-design work immediately upon approval.
+
+### 16.6 Design Director Closing Note
+
+An exception is a pressure valve, not a second standard. Rento needs exceptions because real product work sometimes meets legitimate pressure the current standard cannot absorb without harm. But exceptions only protect the standard when they stay visible, bounded, and honest about their lack of authority. The moment an exception becomes invisible, normal, or self-justifying, it stops being governance and becomes drift. This chapter exists so exceptions can be handled with discipline while the Product Design Standard remains the authority.
+
+---
+
+**End of Chapter 59 — Exception Policy Experience**
