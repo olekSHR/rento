@@ -37,7 +37,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Approved chapters** | 1–61 |
 | **Latest approved** | Chapter 61 — Anti-Patterns Registry |
 | **Latest approved chapter checkpoint** | `a273f81` — approve chapter 61 anti-patterns registry |
-| **Latest repository continuity checkpoint / current HEAD** | `6d98dfc` — sync chapter 61 checkpoint continuity |
+| **Latest repository continuity checkpoint / current HEAD** | `fabfed2` — clarify approval and continuity checkpoint semantics |
 | **Pending checkpoint** | None — Chapter 61 checkpoint complete |
 | **Current chapter** | None — Chapter 61 approved and integrated; DSG macro-domain completion review not started |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |

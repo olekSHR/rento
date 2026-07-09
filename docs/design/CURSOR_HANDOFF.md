@@ -21,8 +21,8 @@ Project documentation is the single source of truth.
 Approved chapters: **1–61** (61 chapters total)
 Latest approved chapter: **Chapter 61 — Anti-Patterns Registry**
 Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
-Latest repository continuity checkpoint / current HEAD: `6d98dfc` — sync chapter 61 checkpoint continuity
-Repository status: **Chapter 61 Approval Integration checkpoint complete; repository continuity synchronized; local main, origin/main, and origin/HEAD synchronized at `6d98dfc`**
+Latest repository continuity checkpoint / current HEAD: `fabfed2` — clarify approval and continuity checkpoint semantics
+Repository status: **Chapter 61 Approval Integration checkpoint complete; repository continuity synchronized; local main, origin/main, and origin/HEAD synchronized at `fabfed2`**
 
 **Design System Governance block: IN PROGRESS** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.5 Anti-Patterns Registry forward object CLOSED by Chapter 61; DSG macro-domain completion review not started)
 
@@ -108,11 +108,11 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
 
-Latest repository continuity checkpoint / current HEAD: `6d98dfc` — sync chapter 61 checkpoint continuity
+Latest repository continuity checkpoint / current HEAD: `fabfed2` — clarify approval and continuity checkpoint semantics
 
 Pending checkpoint: None — Chapter 61 checkpoint complete
 
-Repository status: **Chapter 61 Approval Integration checkpoint complete; repository continuity synchronized; local main, origin/main, and origin/HEAD synchronized at `6d98dfc`; no tag or release created for Design System Governance**
+Repository status: **Chapter 61 Approval Integration checkpoint complete; repository continuity synchronized; local main, origin/main, and origin/HEAD synchronized at `fabfed2`; no tag or release created for Design System Governance**
 
 --------------------------------------------------
 
