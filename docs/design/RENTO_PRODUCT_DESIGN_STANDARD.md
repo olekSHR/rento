@@ -107,7 +107,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 
 ### Planned (not yet authored)
 
-No additional numbered Design System Governance chapter is currently assigned for authoring. See `MASTER_ROADMAP.md` for remaining forward macro-domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain (Chapters 56–61) is COMPLETE** per Governance Decision 010. **Accessibility & Internationalization macro-domain (Chapter 62) is COMPLETE** per Governance Decision 011; this does not complete Product Design Standard v1.0, authorize specialized Accessibility & Internationalization execution chapters, start Performance Experience, or start Future Product Evolution.
+No additional numbered Design System Governance chapter is currently assigned for authoring. See `MASTER_ROADMAP.md` for remaining forward macro-domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain (Chapters 56–61) is COMPLETE** per Governance Decision 010. **Accessibility & Internationalization macro-domain (Chapter 62) is COMPLETE** per Governance Decision 011. **Performance Experience Phase 0 is COMPLETE** per `PHASE_0_PERFORMANCE_EXPERIENCE`; one foundation authority is justified, no execution chapters are justified, no chapter number is assigned, and Phase 1 authoring has not started. This does not complete Product Design Standard v1.0, start Future Product Evolution, or authorize Performance Experience chapter authoring.
 
 ### Macro-domain Completion Status
 
@@ -119,7 +119,7 @@ No additional numbered Design System Governance chapter is currently assigned fo
 | Admin Platform | 51–55 | **COMPLETE (GD-009)** |
 | Design System Governance | 56–61 | **COMPLETE (GD-010)** |
 | Accessibility & Internationalization | 62 | **COMPLETE (GD-011)** |
-| Performance Experience | forward | not yet authored |
+| Performance Experience | forward | Phase 0 COMPLETE; not yet authored |
 | Future Product Evolution | forward | not yet authored |
 
 ---
@@ -178,6 +178,7 @@ No additional numbered Design System Governance chapter is currently assigned fo
 | 1.0 | 2026-07-10 | **Accessibility & Internationalization Phase 1 authorization integrated** — Phase 1 authoring authorized for one future foundation chapter only; authoring has not started; no chapter number is assigned; no specialized execution chapters are authorized |
 | 1.0 | 2026-07-10 | Chapter 62 — Accessibility & Internationalization Experience approved and added — Established foundation-only cross-product authority for inclusive and multilingual access to Rento product meaning with Inclusive Product Meaning Access, Multilingual Meaning Integrity, Locale-Sensitive Comprehension, Trust-Critical A&I Comprehension, Content Resilience, Cross-Journey A&I Inheritance, Localization Meaning Boundary, Translation Meaning Boundary, AI Translation Deferral, A&I Boundary Integrity, AIX-1 through AIX-15, Chapters 1–61 authority preservation, principles-only scope, no specialized execution chapters, Performance Experience / Future Product Evolution separation, Project Architecture & Standards boundary, and Product Development Methodology boundary — Status: APPROVED |
 | 1.0 | 2026-07-10 | **Accessibility & Internationalization Macro-domain Completion Sign-off (GD-011)** — Chapter 62 foundation chapter architecturally completes the Accessibility & Internationalization macro-domain; Phase 0 minimum architecture fully satisfied; no specialized execution chapters currently justified; Project Architecture & Standards / Product Development Methodology / Performance Experience / Future Product Evolution boundaries preserved; AI translation remains deferred post-v1.0; completion does **not** imply Product Design Standard v1.0 completion or start the next macro-domain |
+| 1.0 | 2026-07-10 | **Performance Experience Phase 0 integrated** — Phase 0 approved with clarifications in `PHASE_0_PERFORMANCE_EXPERIENCE`; repository continuity issue classified as Repository Continuity Clarification Required only; one foundation authority is justified for perceived performance as trust-preserving product experience; no execution chapters are currently justified; Phase 1 authoring has not started; chapter number is not assigned; Chapters 20, 24, 25, and 62 remain consumed without redefinition; engineering performance and development methodology remain outside Product Design Standard scope |
 
 ---
 

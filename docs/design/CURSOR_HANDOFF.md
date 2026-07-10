@@ -21,14 +21,14 @@ Project documentation is the single source of truth.
 Approved chapters: **1–62** (62 chapters total)
 Latest approved chapter: **Chapter 62 — Accessibility & Internationalization Experience**
 Latest approved chapter checkpoint: `1ddbefe` — approve chapter 62 accessibility internationalization experience
-Latest repository continuity checkpoint / current HEAD: `1ddbefe` — approve chapter 62 accessibility internationalization experience
-Repository status: **Accessibility & Internationalization macro-domain completion sign-off complete in working tree; commit checkpoint pending explicit authorization**
+Latest repository continuity checkpoint / current HEAD: `710d3ff` — complete accessibility internationalization macro-domain
+Repository status: **Performance Experience Phase 0 approval integration complete in documentation working tree; commit checkpoint pending explicit authorization**
 
 **Design System Governance block: COMPLETE (GD-010)** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.3 execution dimensions CLOSED by Ch 57–59; Ch 56 §10.5 forward objects CLOSED by Ch 60–61; additional specialized dimensions remain Design Council extension point only)
 
-**Product Design Standard v1.0: IN PROGRESS** — Accessibility & Internationalization completion does not complete the standard, start Performance Experience, or start Future Product Evolution
+**Product Design Standard v1.0: IN PROGRESS** — Performance Experience Phase 0 approval integration does not complete the standard, assign a chapter number, start Phase 1 authoring, authorize execution chapters, or start Future Product Evolution
 
-**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · GD-011 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE · PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION — COMPLETE
+**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · GD-011 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE · PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION — COMPLETE · PHASE_0_PERFORMANCE_EXPERIENCE — COMPLETE
 
 ```
 Housing Journey ✓ COMPLETE (Ch 13–40)
@@ -63,8 +63,16 @@ Accessibility & Internationalization ✓ COMPLETE (Ch 62; GD-011)
   Ch 62 — Accessibility & Internationalization Experience ✓ APPROVED (foundation)
   Macro-domain completion sign-off — COMPLETE; decision APPROVED (GD-011)
 
+Performance Experience Phase 0 ✓ COMPLETE
+  Phase 0 (entry) ✓ COMPLETE (PHASE_0_PERFORMANCE_EXPERIENCE)
+  Decision: APPROVED WITH CLARIFICATIONS
+  Architecture: one foundation authority justified; no execution chapters justified
+  Chapter number: NOT ASSIGNED
+  Phase 1 authoring: NOT STARTED
+  Repository continuity classification: Repository Continuity Clarification Required
+
 Forward macro-domains (MASTER_ROADMAP):
-  Performance Experience, Future Product Evolution
+  Performance Experience foundation authoring pending explicit authorization, Future Product Evolution
 ```
 
 --------------------------------------------------
@@ -100,7 +108,23 @@ Forward macro-domains (MASTER_ROADMAP):
 
 **Approved architecture:** one foundation chapter only — Chapter 62 — Accessibility & Internationalization Experience. No specialized execution chapters are currently justified.
 
-**Not authorized by this sign-off:** specialized execution chapters, AI translation for v1.0, Performance Experience start, Future Product Evolution start, Product Design Standard v1.0 completion declaration.
+**Not authorized by this sign-off:** specialized Accessibility & Internationalization execution chapters, AI translation for v1.0, Future Product Evolution start, Product Design Standard v1.0 completion declaration. Performance Experience Phase 0 is governed separately by `PHASE_0_PERFORMANCE_EXPERIENCE`.
+
+--------------------------------------------------
+
+## PERFORMANCE EXPERIENCE
+
+**Status:** Phase 0 COMPLETE — APPROVED WITH CLARIFICATIONS in `docs/design/PHASE_0_PERFORMANCE_EXPERIENCE.md`
+
+**Phase 0 decision:** Performance Experience remains a single Product Design Standard forward macro-domain. Existing Chapters 1–62 provide substantial local performance-related coverage, but no unified product-level authority for perceived performance as trust-preserving experience.
+
+**Approved architecture:** one foundation authority only. No specialized execution chapters are currently justified.
+
+**Required future Phase 1 focus:** define a single canonical Performance Experience invariant explaining what constitutes acceptable product responsiveness from the user's perspective regardless of technical implementation.
+
+**Boundary:** Performance Experience consumes Chapter 20 Trust, Chapter 24 State Architecture, Chapter 25 Communication, and Chapter 62 Accessibility & Internationalization without redefinition. Engineering performance, optimization, SLO/SLA, CI/CD, observability, profiling, load testing, and performance process remain outside Product Design Standard scope.
+
+**Not authorized by this Phase 0:** chapter number assignment, Phase 1 authoring, chapter outline creation, specialized execution chapters, modification of approved Chapters 1–62, Future Product Evolution start, Product Design Standard v1.0 completion declaration.
 
 --------------------------------------------------
 
@@ -117,6 +141,7 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 | Chapter approval | Ch 62 APPROVED — Accessibility & Internationalization foundation chapter |
 | Named registry closure | Ch 56 §10.3 placeholders **CLOSED** for standards enforcement, standards evolution, and exception policy; Product Review Checklist approved per Ch 56 §10.5; Anti-Patterns Registry forward object **CLOSED** by Ch 61 |
 | Macro-domain completion | Design System Governance **COMPLETE (GD-010)**; Accessibility & Internationalization **COMPLETE (GD-011)**; completion review and sign-off complete |
+| Phase 0 approval | Performance Experience Phase 0 **COMPLETE** — APPROVED WITH CLARIFICATIONS; no chapter number assigned |
 | Product Design Standard v1.0 | All macro-domains + Phase 2 audit — **≠ macro-domain completion** |
 
 --------------------------------------------------
@@ -125,23 +150,23 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 Latest approved chapter checkpoint: `1ddbefe` — approve chapter 62 accessibility internationalization experience
 
-Latest repository continuity checkpoint / current HEAD: `1ddbefe` — approve chapter 62 accessibility internationalization experience
+Latest repository continuity checkpoint / current HEAD: `710d3ff` — complete accessibility internationalization macro-domain
 
-Pending checkpoint: Accessibility & Internationalization macro-domain completion sign-off — commit checkpoint pending explicit authorization
+Pending checkpoint: Performance Experience Phase 0 approval integration — commit checkpoint pending explicit authorization
 
-Repository status: **Accessibility & Internationalization macro-domain completion sign-off complete in documentation working tree; no commit, push, tag, or release created for this sign-off integration**
+Repository status: **Performance Experience Phase 0 approval integration complete in documentation working tree; no commit, push, tag, or release created for this integration**
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Next required workflow step:** Git checkpoint for Accessibility & Internationalization macro-domain completion.
+**Next required workflow step:** Git checkpoint for Performance Experience Phase 0 approval integration.
 
 **Forward registries:** Product Review Checklist is approved as Chapter 60. Anti-Patterns Registry is approved as Chapter 61 and the Ch 56 §10.5 Anti-Patterns Registry forward object is closed. Additional specialized dimensions remain Design Council scoping only.
 
-**Accessibility & Internationalization macro-domain completion does not complete Product Design Standard v1.0.** It does not create specialized Accessibility & Internationalization execution chapters, start Performance Experience, start Future Product Evolution, or imply implementation readiness.
+**Performance Experience Phase 0 approval does not complete Product Design Standard v1.0.** It does not assign a chapter number, start Phase 1 authoring, create specialized execution chapters, start Future Product Evolution, or imply implementation readiness.
 
-**Ready for:** Git checkpoint for Accessibility & Internationalization macro-domain completion.
+**Ready for:** Git checkpoint for Performance Experience Phase 0 approval integration.
 
 --------------------------------------------------
 
