@@ -36,15 +36,15 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–62 |
 | **Latest approved** | Chapter 62 — Accessibility & Internationalization Experience |
-| **Latest approved chapter checkpoint** | Pending — Chapter 62 approval integration not checkpointed (previous: `a273f81` — approve chapter 61 anti-patterns registry) |
-| **Latest repository continuity checkpoint / current HEAD** | `560b43c` — integrate accessibility internationalization phase 0 |
-| **Pending checkpoint** | Chapter 62 approval integration complete in working tree — commit checkpoint pending explicit authorization |
-| **Current chapter** | None — Chapter 62 approved and integrated; Accessibility & Internationalization macro-domain completion not declared; Performance Experience not started; Future Product Evolution not started |
+| **Latest approved chapter checkpoint** | `1ddbefe` — approve chapter 62 accessibility internationalization experience |
+| **Latest repository continuity checkpoint / current HEAD** | `1ddbefe` — approve chapter 62 accessibility internationalization experience |
+| **Pending checkpoint** | Accessibility & Internationalization macro-domain completion sign-off complete in working tree — commit checkpoint pending explicit authorization |
+| **Current chapter** | None — Accessibility & Internationalization macro-domain COMPLETE (GD-011); Performance Experience not started; Future Product Evolution not started |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |
 | **Design System Governance** | **COMPLETE (GD-010)** (Ch 56 foundation ✓ + Ch 57 standards enforcement ✓ + Ch 58 standards evolution ✓ + Ch 59 exception policy experience ✓ + Ch 60 Product Review Checklist ✓ + Ch 61 Anti-Patterns Registry ✓; Ch 56 §10.3 named execution dimensions closed; Ch 56 §10.5 forward objects closed; additional specialized dimensions remain Design Council extension point only) |
 | **Design System Governance Phase 0** | **COMPLETE** (PHASE_0_DESIGN_SYSTEM_GOVERNANCE) |
-| **Accessibility & Internationalization** | Chapter 62 APPROVED as foundation chapter; macro-domain completion not declared; no specialized execution chapters authorized |
+| **Accessibility & Internationalization** | **COMPLETE (GD-011)** (Ch 62 foundation ✓; no specialized execution chapters justified; additional dimensions remain Design Council extension point only) |
 | **Accessibility & Internationalization Phase 0** | **COMPLETE** (PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION) — one foundation chapter justified and approved as Chapter 62 |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
@@ -92,8 +92,8 @@ Design System Governance (Ch 56–61) ✓ COMPLETE
     Ch 60 — Product Review Checklist ✓ APPROVED (fourth specialized Design System Governance dimension)
     Ch 61 — Anti-Patterns Registry ✓ APPROVED (fifth specialized Design System Governance dimension; closes Ch 56 §10.5 Anti-Patterns Registry forward object)
     ↓
-Accessibility & Internationalization
-    Ch 62 — Accessibility & Internationalization Experience ✓ APPROVED (foundation; macro-domain completion not declared)
+Accessibility & Internationalization ✓ COMPLETE
+    Ch 62 — Accessibility & Internationalization Experience ✓ APPROVED (foundation; closes A&I macro-domain content boundary)
     ↓
 Forward macro-domains
     Performance Experience, Future Product Evolution
@@ -125,6 +125,8 @@ These concepts must **never** be merged. Housing Journey does not extend into on
 **Design System Governance completion (GD-010):** Chapters 56–61 complete the **Design System Governance macro-domain**. Chapter 56 foundation is sufficient; standards enforcement, standards evolution, and exception policy execution dimensions are closed by Chapters 57–59; Product Review Checklist and Anti-Patterns Registry forward objects are closed by Chapters 60–61. Additional specialized dimensions remain an intentional Design Council extension point only. Design System Governance completion does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion, does **not** assign Chapter 62, and does **not** start the next macro-domain.
 
 **Accessibility & Internationalization chapter approval:** Chapter 62 approves the **Accessibility & Internationalization Experience** foundation chapter. It establishes inclusive and multilingual access to Rento product meaning as a principles-level Product Design Standard authority, preserves Chapters 1–61 without redefinition, excludes implementation and operational process, and keeps Performance Experience and Future Product Evolution separate. Chapter 62 approval does **not** declare Accessibility & Internationalization macro-domain completion, does **not** authorize specialized Accessibility & Internationalization execution chapters, does **not** complete RENTO PRODUCT DESIGN STANDARD v1.0, and does **not** start Performance Experience or Future Product Evolution.
+
+**Accessibility & Internationalization completion (GD-011):** Chapter 62 is sufficient to complete the **Accessibility & Internationalization macro-domain**. Phase 0 required one foundation chapter only; Chapter 62 satisfies the complete minimum architecture, covers all mandatory A&I subjects, preserves Chapters 1–61 without redefinition, and keeps implementation, operations, Performance Experience, and Future Product Evolution outside A&I scope. Additional specialized Accessibility & Internationalization execution chapters are not currently justified and require a future documented architectural gap plus explicit Design Council approval. Accessibility & Internationalization completion does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion and does **not** start Performance Experience or Future Product Evolution.
 
 ## Remaining work
 
@@ -506,6 +508,28 @@ Design System Governance Macro-domain Completion Sign-off
 8. Chapter 5, Chapter 11, Chapter 20, and Chapters 56–61 authority boundaries remain preserved.
 9. Anti-Patterns Registry population is not required for macro-domain completion; Chapter 61 establishes registry architecture without creating actual registry entries.
 10. Product Design Standard v1.0 completion requires separate repository-derived review, Phase 2 comprehensive audit, and final Design Council sign-off.
+
+---
+
+## Governance Decision 011
+
+**Status:** APPROVED
+
+**Title:**
+Accessibility & Internationalization Macro-domain Completion Sign-off
+
+**Decision:**
+
+1. Chapter 62 completes the **Accessibility & Internationalization macro-domain** — foundation chapter only, as authorized by `PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION`.
+2. Every Phase 0 minimum architecture requirement is satisfied by Chapter 62: macro-domain purpose, inclusive product access invariant, multilingual meaning integrity, locale-sensitive comprehension, localization and translation boundaries, AI translation deferral, content resilience, trust-critical comprehension, user-generated and realtor-generated multilingual content boundaries, admin and moderation language boundaries, Project Architecture & Standards separation, Product Development Methodology separation, and cross-macro-domain consumption without redefinition.
+3. **No documented architectural gap** remains inside Accessibility & Internationalization at this time.
+4. **Additional Accessibility & Internationalization specialized execution chapters are not currently justified.** Future dimensions require a documented architectural gap and explicit Design Council approval. Additional specialized dimensions remain an intentional Design Council extension point — not architectural debt.
+5. **Accessibility & Internationalization macro-domain status is COMPLETE.** This does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion.
+6. Performance Experience and Future Product Evolution remain separate forward macro-domains and are not started by this decision.
+7. Project Architecture & Standards and Product Development Methodology boundaries remain preserved; implementation standards and operational localization/accessibility process remain outside Product Design Standard scope.
+8. Chapters 1–62 authority boundaries remain preserved.
+9. AI translation remains deferred post-v1.0 unless future repository authority explicitly introduces it.
+10. Product Design Standard v1.0 completion requires remaining forward macro-domains, Phase 2 comprehensive audit, and final Design Council sign-off.
 
 ---
 
