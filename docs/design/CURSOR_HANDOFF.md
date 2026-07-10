@@ -21,8 +21,8 @@ Project documentation is the single source of truth.
 Approved chapters: **1–63** (63 chapters total)
 Latest approved chapter: **Chapter 63 — Performance Experience**
 Latest approved chapter checkpoint: `bf37a0e` — approve chapter 63 performance experience
-Latest repository continuity checkpoint / current HEAD: Performance Experience macro-domain completion sign-off governance integration
-Repository status: **Performance Experience macro-domain completion sign-off integrated; no Performance Experience continuity work remains pending**
+Latest repository continuity checkpoint / current HEAD: Performance Experience GitHub Release continuity checkpoint
+Repository status: **Performance Experience GitHub Release continuity integrated; no Performance Experience continuity work remains pending**
 
 **Design System Governance block: COMPLETE (GD-010)** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.3 execution dimensions CLOSED by Ch 57–59; Ch 56 §10.5 forward objects CLOSED by Ch 60–61; additional specialized dimensions remain Design Council extension point only)
 
@@ -64,6 +64,7 @@ Accessibility & Internationalization ✓ COMPLETE (Ch 62; GD-011)
   Macro-domain completion sign-off — COMPLETE; decision APPROVED (GD-011)
 
 Performance Experience ✓ COMPLETE (Ch 63; GD-013)
+  GitHub Release: v1.0-performance-experience ✓
   Phase 0 (entry) ✓ COMPLETE (PHASE_0_PERFORMANCE_EXPERIENCE)
   Decision: APPROVED WITH CLARIFICATIONS
   Phase 1 approval integration ✓ COMPLETE (PHASE_1_PERFORMANCE_EXPERIENCE)
@@ -160,11 +161,11 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 Latest approved chapter checkpoint: `bf37a0e` — approve chapter 63 performance experience
 
-Latest repository continuity checkpoint / current HEAD: Performance Experience macro-domain completion sign-off governance integration
+Latest repository continuity checkpoint / current HEAD: Performance Experience GitHub Release continuity checkpoint
 
 Pending checkpoint: None for Performance Experience macro-domain completion
 
-Repository status: **Performance Experience macro-domain completion sign-off complete; no commit, tag, release, or Future Product Evolution start is implied by this handoff**
+Repository status: **Performance Experience GitHub Release `v1.0-performance-experience` published and verified; no additional tag, release, or Future Product Evolution start is implied by this handoff**
 
 --------------------------------------------------
 

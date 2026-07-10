@@ -37,7 +37,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Approved chapters** | 1–63 |
 | **Latest approved** | Chapter 63 — Performance Experience |
 | **Latest approved chapter checkpoint** | `bf37a0e` — approve chapter 63 performance experience |
-| **Latest repository continuity checkpoint / current HEAD** | Performance Experience macro-domain completion sign-off governance integration |
+| **Latest repository continuity checkpoint / current HEAD** | Performance Experience GitHub Release continuity checkpoint |
 | **Pending checkpoint** | None for Performance Experience macro-domain completion |
 | **Current chapter** | Chapter 63 — Performance Experience approved; Performance Experience macro-domain COMPLETE (GD-013); Future Product Evolution not started |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
@@ -48,7 +48,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Accessibility & Internationalization Phase 0** | **COMPLETE** (PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION) — one foundation chapter justified and approved as Chapter 62 |
 | **Performance Experience Phase 0** | **COMPLETE** (PHASE_0_PERFORMANCE_EXPERIENCE) — APPROVED WITH CLARIFICATIONS; one foundation authority justified; no execution chapters justified; chapter number assigned later by repository governance as Chapter 63 |
 | **Performance Experience Phase 1** | **APPROVED WITH CLARIFICATIONS** (PHASE_1_PERFORMANCE_EXPERIENCE) — foundation-only architecture preserved; Performance Integrity and Future Feature Boundary clarifications integrated; no execution chapters justified; Chapter 63 assigned by repository governance |
-| **Performance Experience** | **COMPLETE (GD-013)** (Ch 63 foundation ✓; no specialized execution chapters justified; no registry remains open; Future Product Evolution remains separate) |
+| **Performance Experience** | **COMPLETE (GD-013)** (Ch 63 foundation ✓; no specialized execution chapters justified; no registry remains open; GitHub Release `v1.0-performance-experience` ✓; Future Product Evolution remains separate) |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
 | **Settled Tenancy** | **COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension) |
