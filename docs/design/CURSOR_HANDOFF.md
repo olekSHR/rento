@@ -21,14 +21,14 @@ Project documentation is the single source of truth.
 Approved chapters: **1–61** (61 chapters total)
 Latest approved chapter: **Chapter 61 — Anti-Patterns Registry**
 Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
-Latest repository continuity checkpoint / current HEAD: `71e469f` — sync current continuity checkpoint reference
-Repository status: **Design System Governance Macro-domain Completion Sign-off integrated in working tree; commit checkpoint pending explicit authorization; local main, origin/main, and origin/HEAD synchronized at `71e469f` before this uncommitted integration**
+Latest repository continuity checkpoint / current HEAD: `2b47464` — approve design system governance macro-domain completion
+Repository status: **Accessibility & Internationalization Phase 0 integration complete in working tree; commit checkpoint pending explicit authorization**
 
 **Design System Governance block: COMPLETE (GD-010)** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.3 execution dimensions CLOSED by Ch 57–59; Ch 56 §10.5 forward objects CLOSED by Ch 60–61; additional specialized dimensions remain Design Council extension point only)
 
 **Product Design Standard v1.0: IN PROGRESS** — Design System Governance completion does not complete the standard, assign Chapter 62, or start the next macro-domain
 
-**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE
+**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE · PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION — COMPLETE
 
 ```
 Housing Journey ✓ COMPLETE (Ch 13–40)
@@ -59,7 +59,7 @@ Design System Governance ✓ COMPLETE (Ch 56–61; GD-010)
   DSG macro-domain completion sign-off — COMPLETE; decision APPROVED (GD-010)
 
 Forward macro-domains (MASTER_ROADMAP):
-  Accessibility & Internationalization,
+  Accessibility & Internationalization — Phase 0 COMPLETE; one foundation chapter justified; Phase 1 not started; Chapter 62 not assigned,
   Performance Experience, Future Product Evolution
 ```
 
@@ -88,6 +88,18 @@ Forward macro-domains (MASTER_ROADMAP):
 
 --------------------------------------------------
 
+## ACCESSIBILITY & INTERNATIONALIZATION PHASE 0
+
+**Status:** COMPLETE — `docs/design/PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION.md`
+
+**Phase 0 decision:** Accessibility & Internationalization remains a single Product Design Standard forward macro-domain. Existing Chapters 1–61 provide distributed baseline coverage only; one cross-cutting foundation authority is justified for inclusive and multilingual access to product meaning.
+
+**Authorized architecture:** one foundation chapter only, pending explicit Phase 1 authorization.
+
+**Not authorized:** Chapter 62 assignment, Phase 1 authoring, chapter outline creation, specialized execution chapters, AI translation for v1.0, Performance Experience start, Future Product Evolution start, Product Design Standard v1.0 completion declaration.
+
+--------------------------------------------------
+
 ## GOVERNANCE — GD-007 MACRO-DOMAIN DEVELOPMENT LIFECYCLE
 
 **Status:** APPROVED
@@ -109,23 +121,23 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
 
-Latest repository continuity checkpoint / current HEAD: `71e469f` — sync current continuity checkpoint reference
+Latest repository continuity checkpoint / current HEAD: `2b47464` — approve design system governance macro-domain completion
 
-Pending checkpoint: Design System Governance Macro-domain Completion Sign-off integration — commit checkpoint pending explicit authorization
+Pending checkpoint: Accessibility & Internationalization Phase 0 integration — commit checkpoint pending explicit authorization
 
-Repository status: **Design System Governance completion state integrated in documentation working tree; local main, origin/main, and origin/HEAD synchronized at `71e469f` before this uncommitted integration; no commit, push, tag, or release created for Design System Governance in this sign-off**
+Repository status: **Accessibility & Internationalization Phase 0 integration complete in documentation working tree; no commit, push, tag, or release created for this Phase 0 integration**
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Next required workflow step:** Commit and push Design System Governance Macro-domain Completion Sign-off checkpoint only if explicitly authorized by the user. After that, any GitHub Release or next macro-domain authorization requires separate Design Council instruction.
+**Next required workflow step:** Design Council review of the integrated Accessibility & Internationalization Phase 0 artifact, followed by explicit authorization for Phase 1 authoring.
 
 **Forward registries:** Product Review Checklist is approved as Chapter 60. Anti-Patterns Registry is approved as Chapter 61 and the Ch 56 §10.5 Anti-Patterns Registry forward object is closed. Additional specialized dimensions remain Design Council scoping only.
 
 **Chapter 61 approval does not populate Anti-Patterns Registry.** GD-010 completes Design System Governance macro-domain only. It does not populate Anti-Patterns Registry, complete Product Design Standard v1.0, assign Chapter 62, start the next macro-domain, or imply implementation readiness.
 
-**Ready for:** Explicitly authorized DSG completion checkpoint commit/push, then separate Design Council authorization for any GitHub Release, Chapter 62 assignment, next macro-domain, or Product Design Standard v1.0 completion audit
+**Ready for:** Explicit Design Council review of `PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION`, then separate authorization for Phase 1 authoring. Chapter 62 remains unassigned until explicit authorization.
 
 --------------------------------------------------
 

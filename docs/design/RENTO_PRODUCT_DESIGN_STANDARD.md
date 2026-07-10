@@ -106,7 +106,7 @@ Do not begin authoring, reviewing, or modifying architecture until all three doc
 
 ### Planned (not yet authored)
 
-No additional numbered Design System Governance chapter is currently assigned for authoring. See `MASTER_ROADMAP.md` for remaining forward macro-domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain (Chapters 56–61) is COMPLETE** per Governance Decision 010; this does not complete Product Design Standard v1.0, assign Chapter 62, or start the next macro-domain.
+No additional numbered Design System Governance chapter is currently assigned for authoring. See `MASTER_ROADMAP.md` for remaining forward macro-domain order. **Admin Platform macro-domain (Chapters 51–55) is COMPLETE** per Governance Decision 009. **Design System Governance macro-domain (Chapters 56–61) is COMPLETE** per Governance Decision 010; this does not complete Product Design Standard v1.0, assign Chapter 62, or start the next macro-domain. **Accessibility & Internationalization Phase 0 is COMPLETE** per `PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION`; one foundation chapter is justified, Phase 1 authoring has not started, and no chapter number is assigned.
 
 ### Macro-domain Completion Status
 
@@ -117,7 +117,7 @@ No additional numbered Design System Governance chapter is currently assigned fo
 | Realtor Platform | 46–50 | COMPLETE (GD-006) |
 | Admin Platform | 51–55 | **COMPLETE (GD-009)** |
 | Design System Governance | 56–61 | **COMPLETE (GD-010)** |
-| Accessibility & Internationalization | forward | not yet authored |
+| Accessibility & Internationalization | forward | Phase 0 COMPLETE; not yet authored |
 | Performance Experience | forward | not yet authored |
 | Future Product Evolution | forward | not yet authored |
 
@@ -173,6 +173,7 @@ No additional numbered Design System Governance chapter is currently assigned fo
 | 1.0 | 2026-07-09 | Chapter 60 — Product Review Checklist approved and added — Established Design System Governance-owned standard-wide product design review artifact with Checklist Completion State, Architectural Finding, Governed Classification routing, critical semantic model, PRC-1 through PRC-15, Chapter 5 / Chapter 11 / Chapter 20 / Chapter 56 / Chapter 57 / Chapter 58 / Chapter 59 authority preservation, principles-only scope, and Chapter 61 separation — Status: APPROVED |
 | 1.0 | 2026-07-10 | Chapter 61 — Anti-Patterns Registry approved and added — Established Design System Governance-owned negative precedent governance object with Registry-Level Anti-Pattern, Anti-Pattern Evidence, Registry Eligibility, registry classification semantics, minimal lifecycle, registry-entry semantics, APR-1 through APR-17, Chapter 5 / Chapter 11 / Chapter 20 / Chapter 56 / Chapter 57 / Chapter 58 / Chapter 59 / Chapter 60 authority preservation, principles-only scope, no actual registry entries, and Chapter 56 §10.5 Anti-Patterns Registry forward-object closure — Status: APPROVED |
 | 1.0 | 2026-07-10 | **Design System Governance Macro-domain Completion Sign-off (GD-010)** — Chapters 56–61 architecturally complete; Chapter 56 §10.3 execution dimensions closed by Chapters 57–59; Chapter 56 §10.5 forward objects closed by Chapters 60–61; additional specialized dimensions remain Design Council extension point only; authority boundaries preserved — does **not** imply Product Design Standard v1.0 completion, assign Chapter 62, or start the next macro-domain |
+| 1.0 | 2026-07-10 | **Accessibility & Internationalization Phase 0 integrated** — Phase 0 approved with clarifications in `PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION`; one foundation chapter is justified; no specialized execution chapters are currently justified; Phase 1 authoring has not started; Chapter 62 is not assigned |
 
 ---
 
