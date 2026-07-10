@@ -34,17 +34,18 @@ This is **not** implementation documentation. It is the authoritative product de
 
 | Item | Status |
 |------|--------|
-| **Approved chapters** | 1–61 |
-| **Latest approved** | Chapter 61 — Anti-Patterns Registry |
-| **Latest approved chapter checkpoint** | `a273f81` — approve chapter 61 anti-patterns registry |
-| **Latest repository continuity checkpoint / current HEAD** | `2b47464` — approve design system governance macro-domain completion |
-| **Pending checkpoint** | Accessibility & Internationalization Phase 0 integration complete in working tree — commit checkpoint pending explicit authorization |
-| **Current chapter** | None — Accessibility & Internationalization Phase 0 integrated; Phase 1 authoring not started; Chapter 62 not assigned |
+| **Approved chapters** | 1–62 |
+| **Latest approved** | Chapter 62 — Accessibility & Internationalization Experience |
+| **Latest approved chapter checkpoint** | Pending — Chapter 62 approval integration not checkpointed (previous: `a273f81` — approve chapter 61 anti-patterns registry) |
+| **Latest repository continuity checkpoint / current HEAD** | `560b43c` — integrate accessibility internationalization phase 0 |
+| **Pending checkpoint** | Chapter 62 approval integration complete in working tree — commit checkpoint pending explicit authorization |
+| **Current chapter** | None — Chapter 62 approved and integrated; Accessibility & Internationalization macro-domain completion not declared; Performance Experience not started; Future Product Evolution not started |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
 | **Admin Platform Phase 0** | **COMPLETE** (GD-008) |
 | **Design System Governance** | **COMPLETE (GD-010)** (Ch 56 foundation ✓ + Ch 57 standards enforcement ✓ + Ch 58 standards evolution ✓ + Ch 59 exception policy experience ✓ + Ch 60 Product Review Checklist ✓ + Ch 61 Anti-Patterns Registry ✓; Ch 56 §10.3 named execution dimensions closed; Ch 56 §10.5 forward objects closed; additional specialized dimensions remain Design Council extension point only) |
 | **Design System Governance Phase 0** | **COMPLETE** (PHASE_0_DESIGN_SYSTEM_GOVERNANCE) |
-| **Accessibility & Internationalization Phase 0** | **COMPLETE** (PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION) — one foundation chapter justified; no chapter number assigned; Phase 1 not started |
+| **Accessibility & Internationalization** | Chapter 62 APPROVED as foundation chapter; macro-domain completion not declared; no specialized execution chapters authorized |
+| **Accessibility & Internationalization Phase 0** | **COMPLETE** (PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION) — one foundation chapter justified and approved as Chapter 62 |
 | **Decision Experience** | **COMPLETE** (Chapters 31–37 — judgment progression) |
 | **Housing Obligation** | **COMPLETE** (Chapters 38–40 — legal, financial, and occupancy execution readiness) |
 | **Settled Tenancy** | **COMPLETE** (Ch 41 foundation + Ch 42–45 specialized dimensions — Ch 45 terminal dimension) |
@@ -91,8 +92,10 @@ Design System Governance (Ch 56–61) ✓ COMPLETE
     Ch 60 — Product Review Checklist ✓ APPROVED (fourth specialized Design System Governance dimension)
     Ch 61 — Anti-Patterns Registry ✓ APPROVED (fifth specialized Design System Governance dimension; closes Ch 56 §10.5 Anti-Patterns Registry forward object)
     ↓
+Accessibility & Internationalization
+    Ch 62 — Accessibility & Internationalization Experience ✓ APPROVED (foundation; macro-domain completion not declared)
+    ↓
 Forward macro-domains
-    Accessibility & Internationalization (Phase 0 ✓ COMPLETE; Phase 1 not started; Chapter 62 not assigned),
     Performance Experience, Future Product Evolution
 ```
 
@@ -107,8 +110,9 @@ Forward macro-domains
 | **Realtor Professional Lifecycle** | Supply-side professional marketplace participation — foundation in Chapter 46; publication participation in Chapter 47; professional activation in Chapter 48; professional verification participation in Chapter 49; inquiry stewardship in Chapter 50 |
 | **Platform Governance Lifecycle** | Delegated marketplace governance execution — foundation in Chapter 51; moderation decision execution in Chapter 52; role grant and revocation execution in Chapter 53; verification program execution in Chapter 54; platform policy enforcement in Chapter 55 |
 | **Product Design Standard Lifecycle** | Governance of the Product Design Standard itself — foundation in Chapter 56; standards enforcement in Chapter 57; standards evolution in Chapter 58; exception policy experience in Chapter 59; product review checklist in Chapter 60; anti-patterns registry in Chapter 61 |
+| **Accessibility & Internationalization Experience** | Inclusive and multilingual access to Rento product meaning across abilities, languages, locales, roles, journeys, states, and trust-critical decisions — foundation in Chapter 62 |
 
-These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience. Realtor Professional Lifecycle does not subsume Housing Journey or Tenancy Lifecycle. Platform Governance Lifecycle does not subsume Housing Journey, Tenancy Lifecycle, or Realtor Professional Lifecycle. Product Design Standard Lifecycle does not subsume Platform Governance Lifecycle, component lifecycle (Chapter 11), or experience macro-domains.
+These concepts must **never** be merged. Housing Journey does not extend into ongoing tenancy. Tenancy Lifecycle does not subsume search or decision experience. Realtor Professional Lifecycle does not subsume Housing Journey or Tenancy Lifecycle. Platform Governance Lifecycle does not subsume Housing Journey, Tenancy Lifecycle, or Realtor Professional Lifecycle. Product Design Standard Lifecycle does not subsume Platform Governance Lifecycle, component lifecycle (Chapter 11), or experience macro-domains. Accessibility & Internationalization Experience does not subsume Performance Experience, Future Product Evolution, Project Architecture & Standards, Product Development Methodology, Design System Governance, or source-domain chapter authority.
 
 **Platform posture (Settled Tenancy block):** Rento remains a marketplace platform. Rento does **not** become a Property Management System.
 
@@ -120,11 +124,12 @@ These concepts must **never** be merged. Housing Journey does not extend into on
 
 **Design System Governance completion (GD-010):** Chapters 56–61 complete the **Design System Governance macro-domain**. Chapter 56 foundation is sufficient; standards enforcement, standards evolution, and exception policy execution dimensions are closed by Chapters 57–59; Product Review Checklist and Anti-Patterns Registry forward objects are closed by Chapters 60–61. Additional specialized dimensions remain an intentional Design Council extension point only. Design System Governance completion does **not** imply RENTO PRODUCT DESIGN STANDARD v1.0 completion, does **not** assign Chapter 62, and does **not** start the next macro-domain.
 
+**Accessibility & Internationalization chapter approval:** Chapter 62 approves the **Accessibility & Internationalization Experience** foundation chapter. It establishes inclusive and multilingual access to Rento product meaning as a principles-level Product Design Standard authority, preserves Chapters 1–61 without redefinition, excludes implementation and operational process, and keeps Performance Experience and Future Product Evolution separate. Chapter 62 approval does **not** declare Accessibility & Internationalization macro-domain completion, does **not** authorize specialized Accessibility & Internationalization execution chapters, does **not** complete RENTO PRODUCT DESIGN STANDARD v1.0, and does **not** start Performance Experience or Future Product Evolution.
+
 ## Remaining work
 
 The following chapter domains remain to be authored, reviewed, and approved:
 
-- **Accessibility & Internationalization** — inclusive and multilingual product experience; Phase 0 complete; one foundation chapter justified; Phase 1 not started; Chapter 62 not assigned
 - **Performance Experience** — perceived performance as a product trust dimension
 - **Future Product Evolution** — forward-looking product capability and evolution principles
 

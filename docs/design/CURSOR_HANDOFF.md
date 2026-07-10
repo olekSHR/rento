@@ -18,15 +18,15 @@ Project documentation is the single source of truth.
 
 ## CURRENT STATUS
 
-Approved chapters: **1–61** (61 chapters total)
-Latest approved chapter: **Chapter 61 — Anti-Patterns Registry**
-Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
-Latest repository continuity checkpoint / current HEAD: `2b47464` — approve design system governance macro-domain completion
-Repository status: **Accessibility & Internationalization Phase 0 integration complete in working tree; commit checkpoint pending explicit authorization**
+Approved chapters: **1–62** (62 chapters total)
+Latest approved chapter: **Chapter 62 — Accessibility & Internationalization Experience**
+Latest approved chapter checkpoint: Pending — Chapter 62 approval integration not checkpointed (previous: `a273f81` — approve chapter 61 anti-patterns registry)
+Latest repository continuity checkpoint / current HEAD: `560b43c` — integrate accessibility internationalization phase 0
+Repository status: **Chapter 62 approval integration complete in working tree; commit checkpoint pending explicit authorization**
 
 **Design System Governance block: COMPLETE (GD-010)** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.3 execution dimensions CLOSED by Ch 57–59; Ch 56 §10.5 forward objects CLOSED by Ch 60–61; additional specialized dimensions remain Design Council extension point only)
 
-**Product Design Standard v1.0: IN PROGRESS** — Design System Governance completion does not complete the standard, assign Chapter 62, or start the next macro-domain
+**Product Design Standard v1.0: IN PROGRESS** — Chapter 62 approval does not complete the standard, declare Accessibility & Internationalization macro-domain completion, start Performance Experience, or start Future Product Evolution
 
 **Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE · PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION — COMPLETE
 
@@ -59,21 +59,20 @@ Design System Governance ✓ COMPLETE (Ch 56–61; GD-010)
   DSG macro-domain completion sign-off — COMPLETE; decision APPROVED (GD-010)
 
 Forward macro-domains (MASTER_ROADMAP):
-  Accessibility & Internationalization — Phase 0 COMPLETE; one foundation chapter justified; Phase 1 not started; Chapter 62 not assigned,
   Performance Experience, Future Product Evolution
 ```
 
 --------------------------------------------------
 
-## LATEST APPROVED CHAPTER — CHAPTER 61
+## LATEST APPROVED CHAPTER — CHAPTER 62
 
-**Chapter 61 — Anti-Patterns Registry** (Section LVIII) — **APPROVED**
+**Chapter 62 — Accessibility & Internationalization Experience** (Section LIX) — **APPROVED**
 
-**Macro-domain:** Design System Governance — fifth specialized dimension
+**Macro-domain:** Accessibility & Internationalization — foundation chapter
 
-**Key invariants:** Negative Precedent Only (APR-1) · Pattern-Shaped Requirement (APR-2) · Evidence Is Not Authority (APR-3) · Registry Eligibility Discipline (APR-4) · Local Default (APR-5) · Taxonomy Restraint (APR-6) · Minimal Lifecycle (APR-7) · Entry Semantics Discipline (APR-8) · Chapter 57 Preservation (APR-9) · Chapter 5 / 59 Preservation (APR-10) · Chapter 58 Preservation (APR-11) · Chapter 60 Separation (APR-12) · Chapter 11 Preservation (APR-13) · Chapter 20 Preservation (APR-14) · Chapter 56 Inheritance (APR-15) · No Implementation Registry Governance (APR-16) · No Governance Inflation (APR-17)
+**Key invariants:** Accessibility & Internationalization Invariant (AIX-1) · Meaning-Reachability Invariant (AIX-2) · Translation Truth Invariant (AIX-3) · Locale Meaning Invariant (AIX-4) · Trust-Critical Burden Invariant (AIX-5) · Expansion Tolerance Invariant (AIX-6) · Inheritance Without Redefinition (AIX-7) · Localization Truth Boundary (AIX-8) · Human-Accountable Meaning (AIX-9) · Source Clarity Invariant (AIX-10) · Delegated Meaning Preservation (AIX-11) · AI Translation Deferral Invariant (AIX-12) · Foundation-Only Invariant (AIX-13) · Performance Separation (AIX-14) · Future Evolution Separation (AIX-15)
 
-**Official concepts introduced:** Anti-Patterns Registry · Registry-Level Anti-Pattern · Anti-Pattern Evidence · Registry Eligibility · Registry Classification Semantics · Registry Lifecycle Meaning · Registry-Entry Semantics · Anti-Patterns Registry Boundaries · Anti-Patterns Registry Boundary Clarity · Anti-Patterns Registry Integrity
+**Official concepts introduced:** Accessibility & Internationalization Experience · Inclusive Product Meaning Access · Multilingual Meaning Integrity · Locale-Sensitive Comprehension · Trust-Critical A&I Comprehension · Content Resilience · Cross-Journey A&I Inheritance · Localization Meaning Boundary · Translation Meaning Boundary · A&I Boundary Integrity
 
 --------------------------------------------------
 
@@ -88,15 +87,15 @@ Forward macro-domains (MASTER_ROADMAP):
 
 --------------------------------------------------
 
-## ACCESSIBILITY & INTERNATIONALIZATION PHASE 0
+## ACCESSIBILITY & INTERNATIONALIZATION
 
-**Status:** COMPLETE — `docs/design/PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION.md`
+**Status:** Chapter 62 APPROVED — foundation chapter integrated into `docs/design/RENTO_PRODUCT_DESIGN_STANDARD.md`
 
 **Phase 0 decision:** Accessibility & Internationalization remains a single Product Design Standard forward macro-domain. Existing Chapters 1–61 provide distributed baseline coverage only; one cross-cutting foundation authority is justified for inclusive and multilingual access to product meaning.
 
-**Authorized architecture:** one foundation chapter only, pending explicit Phase 1 authorization.
+**Approved architecture:** one foundation chapter only — Chapter 62 — Accessibility & Internationalization Experience.
 
-**Not authorized:** Chapter 62 assignment, Phase 1 authoring, chapter outline creation, specialized execution chapters, AI translation for v1.0, Performance Experience start, Future Product Evolution start, Product Design Standard v1.0 completion declaration.
+**Not authorized by this integration:** specialized execution chapters, AI translation for v1.0, Accessibility & Internationalization macro-domain completion declaration, Performance Experience start, Future Product Evolution start, Product Design Standard v1.0 completion declaration.
 
 --------------------------------------------------
 
@@ -110,7 +109,7 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 | Level | Status |
 |-------|--------|
-| Chapter approval | Ch 61 APPROVED — Anti-Patterns Registry specialized dimension |
+| Chapter approval | Ch 62 APPROVED — Accessibility & Internationalization foundation chapter |
 | Named registry closure | Ch 56 §10.3 placeholders **CLOSED** for standards enforcement, standards evolution, and exception policy; Product Review Checklist approved per Ch 56 §10.5; Anti-Patterns Registry forward object **CLOSED** by Ch 61 |
 | Macro-domain completion | Design System Governance **COMPLETE (GD-010)**; completion review and sign-off complete |
 | Product Design Standard v1.0 | All macro-domains + Phase 2 audit — **≠ macro-domain completion** |
@@ -119,25 +118,25 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 ## GIT STATUS
 
-Latest approved chapter checkpoint: `a273f81` — approve chapter 61 anti-patterns registry
+Latest approved chapter checkpoint: Pending — Chapter 62 approval integration not checkpointed (previous: `a273f81` — approve chapter 61 anti-patterns registry)
 
-Latest repository continuity checkpoint / current HEAD: `2b47464` — approve design system governance macro-domain completion
+Latest repository continuity checkpoint / current HEAD: `560b43c` — integrate accessibility internationalization phase 0
 
-Pending checkpoint: Accessibility & Internationalization Phase 0 integration — commit checkpoint pending explicit authorization
+Pending checkpoint: Chapter 62 approval integration — commit checkpoint pending explicit authorization
 
-Repository status: **Accessibility & Internationalization Phase 0 integration complete in documentation working tree; no commit, push, tag, or release created for this Phase 0 integration**
+Repository status: **Chapter 62 approval integration complete in documentation working tree; no commit, push, tag, or release created for this approval integration**
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Next required workflow step:** Design Council review of the integrated Accessibility & Internationalization Phase 0 artifact, followed by explicit authorization for Phase 1 authoring.
+**Next required workflow step:** Git checkpoint for Chapter 62 approval.
 
 **Forward registries:** Product Review Checklist is approved as Chapter 60. Anti-Patterns Registry is approved as Chapter 61 and the Ch 56 §10.5 Anti-Patterns Registry forward object is closed. Additional specialized dimensions remain Design Council scoping only.
 
-**Chapter 61 approval does not populate Anti-Patterns Registry.** GD-010 completes Design System Governance macro-domain only. It does not populate Anti-Patterns Registry, complete Product Design Standard v1.0, assign Chapter 62, start the next macro-domain, or imply implementation readiness.
+**Chapter 62 approval does not declare Accessibility & Internationalization macro-domain completion.** It does not create specialized Accessibility & Internationalization execution chapters, complete Product Design Standard v1.0, start Performance Experience, start Future Product Evolution, or imply implementation readiness.
 
-**Ready for:** Explicit Design Council review of `PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION`, then separate authorization for Phase 1 authoring. Chapter 62 remains unassigned until explicit authorization.
+**Ready for:** Git checkpoint for Chapter 62 approval.
 
 --------------------------------------------------
 
