@@ -21,14 +21,14 @@ Project documentation is the single source of truth.
 Approved chapters: **1–62** (62 chapters total)
 Latest approved chapter: **Chapter 62 — Accessibility & Internationalization Experience**
 Latest approved chapter checkpoint: `1ddbefe` — approve chapter 62 accessibility internationalization experience
-Latest repository continuity checkpoint / current HEAD: `6513d60` — approve performance experience phase 0
-Repository status: **Performance Experience Phase 1 approval integration complete in documentation working tree; commit checkpoint pending explicit authorization**
+Latest repository continuity checkpoint / current HEAD: `38af44a` — approve performance experience phase 1
+Repository status: **Performance Experience Chapter 63 assignment decision complete in documentation working tree; commit checkpoint pending explicit authorization**
 
 **Design System Governance block: COMPLETE (GD-010)** (Ch 56 foundation APPROVED + Ch 57 Standards Enforcement APPROVED + Ch 58 Standards Evolution APPROVED + Ch 59 Exception Policy Experience APPROVED + Ch 60 Product Review Checklist APPROVED + Ch 61 Anti-Patterns Registry APPROVED; Ch 56 §10.3 execution dimensions CLOSED by Ch 57–59; Ch 56 §10.5 forward objects CLOSED by Ch 60–61; additional specialized dimensions remain Design Council extension point only)
 
-**Product Design Standard v1.0: IN PROGRESS** — Performance Experience Phase 1 approval integration does not complete the standard, assign a chapter number, start chapter authoring, authorize execution chapters, begin Phase 2, or start Future Product Evolution
+**Product Design Standard v1.0: IN PROGRESS** — Performance Experience Chapter 63 assignment does not complete the standard, author Chapter 63, approve Chapter 63, authorize execution chapters, begin Phase 2, or start Future Product Evolution
 
-**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · GD-011 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE · PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION — COMPLETE · PHASE_0_PERFORMANCE_EXPERIENCE — COMPLETE
+**Governance:** GD-007 Macro-domain Development Lifecycle — APPROVED · GD-008 — COMPLETE · GD-009 — APPROVED · GD-010 — APPROVED · GD-011 — APPROVED · GD-012 — APPROVED · PHASE_0_DESIGN_SYSTEM_GOVERNANCE — COMPLETE · PHASE_0_ACCESSIBILITY_INTERNATIONALIZATION — COMPLETE · PHASE_0_PERFORMANCE_EXPERIENCE — COMPLETE
 
 ```
 Housing Journey ✓ COMPLETE (Ch 13–40)
@@ -67,21 +67,27 @@ Performance Experience Phase 0 ✓ COMPLETE
   Phase 0 (entry) ✓ COMPLETE (PHASE_0_PERFORMANCE_EXPERIENCE)
   Decision: APPROVED WITH CLARIFICATIONS
   Architecture: one foundation authority justified; no execution chapters justified
-  Chapter number: NOT ASSIGNED
+  Chapter number: assigned later by GD-012 as Chapter 63
   Chapter authoring: NOT STARTED
-  Repository continuity classification: Repository Continuity Clarification Required
+  Repository continuity classification: resolved by later continuity checkpoints
 
 Performance Experience Phase 1 ✓ APPROVED WITH CLARIFICATIONS
   Phase 1 approval integration ✓ COMPLETE (PHASE_1_PERFORMANCE_EXPERIENCE)
   Architecture: one future foundation authority only; no execution chapters justified
   Performance Integrity: perceived responsiveness must never create misleading completion or compromise product truth
   Future Feature Boundary: AI assistance, AI communication, maps, live updates, chat, push synchronization, real-time collaboration, and future interaction models require independent architectural evaluation
-  Chapter number: NOT ASSIGNED
+  Chapter number: Chapter 63 assigned by GD-012
   Chapter authoring: NOT STARTED
   Phase 2: NOT STARTED
 
+Performance Experience Chapter Assignment ✓ APPROVED
+  Governance Decision: GD-012
+  Assigned chapter: Chapter 63 — Performance Experience
+  Assignment scope: repository continuity only; no chapter content authored
+  Architecture: foundation-only; no execution chapters authorized
+
 Forward macro-domains (MASTER_ROADMAP):
-  Performance Experience foundation authoring pending explicit authorization, Future Product Evolution
+  Chapter 63 — Performance Experience foundation authoring pending explicit authorization, Future Product Evolution
 ```
 
 --------------------------------------------------
@@ -123,19 +129,19 @@ Forward macro-domains (MASTER_ROADMAP):
 
 ## PERFORMANCE EXPERIENCE
 
-**Status:** Phase 1 APPROVED WITH CLARIFICATIONS — approval integration complete in `docs/design/PHASE_1_PERFORMANCE_EXPERIENCE.md`
+**Status:** Chapter 63 assigned by repository governance — Phase 1 approval integration complete in `docs/design/PHASE_1_PERFORMANCE_EXPERIENCE.md`; assignment recorded in `MASTER_ROADMAP.md` GD-012
 
 **Phase 0 decision:** Performance Experience remains a single Product Design Standard forward macro-domain. Existing Chapters 1–62 provide substantial local performance-related coverage, but no unified product-level authority for perceived performance as trust-preserving experience.
 
 **Phase 1 decision:** independent Design Council review approved Performance Experience with clarifications. Foundation-only architecture is preserved. Performance Integrity is mandatory: the product must never create a misleading perception that an operation has completed merely to appear faster, and perceived responsiveness must never compromise product truth. Future Feature Boundary is mandatory: AI assistance, AI communication, maps, live updates, chat, push synchronization, real-time collaboration, and future interaction models do not automatically expand Performance Experience authority.
 
-**Approved architecture:** one future foundation authority only. No specialized execution chapters are currently justified.
+**Approved architecture:** one future foundation authority only — **Chapter 63 — Performance Experience**. No specialized execution chapters are currently justified.
 
 **Required future authoring focus:** define a single canonical Performance Experience invariant explaining what constitutes acceptable product responsiveness from the user's perspective regardless of technical implementation, including Performance Integrity and Future Feature Boundary.
 
 **Boundary:** Performance Experience consumes Chapter 20 Trust, Chapter 24 State Architecture, Chapter 25 Communication, Chapter 62 Accessibility & Internationalization, Search Experience, Housing Journey, Realtor Platform, and Admin Platform without redefinition or ownership transfer. Engineering performance, optimization, SLO/SLA, CI/CD, observability, profiling, benchmarking, load testing, engineering metrics, implementation guidance, and delivery methodology remain outside Product Design Standard scope.
 
-**Not authorized by this Phase 1 integration:** chapter number assignment, chapter authoring, chapter outline creation, specialized execution chapters, modification of approved Chapters 1–62, Phase 2 start, Future Product Evolution start, Product Design Standard v1.0 completion declaration.
+**Not authorized by this Phase 1 integration:** chapter authoring, chapter outline creation, specialized execution chapters, modification of approved Chapters 1–62, Phase 2 start, Future Product Evolution start, Product Design Standard v1.0 completion declaration. Chapter number assignment is now separately authorized by GD-012 as repository continuity only.
 
 --------------------------------------------------
 
@@ -152,8 +158,9 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 | Chapter approval | Ch 62 APPROVED — Accessibility & Internationalization foundation chapter |
 | Named registry closure | Ch 56 §10.3 placeholders **CLOSED** for standards enforcement, standards evolution, and exception policy; Product Review Checklist approved per Ch 56 §10.5; Anti-Patterns Registry forward object **CLOSED** by Ch 61 |
 | Macro-domain completion | Design System Governance **COMPLETE (GD-010)**; Accessibility & Internationalization **COMPLETE (GD-011)**; completion review and sign-off complete |
-| Phase 0 approval | Performance Experience Phase 0 **COMPLETE** — APPROVED WITH CLARIFICATIONS; no chapter number assigned |
-| Phase 1 approval integration | Performance Experience Phase 1 **APPROVED WITH CLARIFICATIONS**; one foundation authority only; no chapter number assigned; no authoring started |
+| Phase 0 approval | Performance Experience Phase 0 **COMPLETE** — APPROVED WITH CLARIFICATIONS; chapter assignment deferred until GD-012 |
+| Phase 1 approval integration | Performance Experience Phase 1 **APPROVED WITH CLARIFICATIONS**; one foundation authority only; no authoring started |
+| Chapter assignment | **Chapter 63 — Performance Experience** assigned by GD-012 for future foundation authoring; no chapter content authored |
 | Product Design Standard v1.0 | All macro-domains + Phase 2 audit — **≠ macro-domain completion** |
 
 --------------------------------------------------
@@ -162,23 +169,23 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006, `v1.0-realtor-
 
 Latest approved chapter checkpoint: `1ddbefe` — approve chapter 62 accessibility internationalization experience
 
-Latest repository continuity checkpoint / current HEAD: `710d3ff` — complete accessibility internationalization macro-domain
+Latest repository continuity checkpoint / current HEAD: `38af44a` — approve performance experience phase 1
 
-Pending checkpoint: Performance Experience Phase 1 approval integration — commit checkpoint pending explicit authorization
+Pending checkpoint: Performance Experience Chapter 63 assignment decision — commit checkpoint pending explicit authorization
 
-Repository status: **Performance Experience Phase 1 approval integration complete in documentation working tree; no commit, push, tag, or release created for this integration**
+Repository status: **Performance Experience Chapter 63 assignment decision complete in documentation working tree; no commit, push, tag, or release created for this assignment**
 
 --------------------------------------------------
 
 ## NEXT STEP
 
-**Next required workflow step:** Git checkpoint for Performance Experience Phase 1 approval integration.
+**Next required workflow step:** Git checkpoint for Performance Experience Chapter 63 assignment decision.
 
 **Forward registries:** Product Review Checklist is approved as Chapter 60. Anti-Patterns Registry is approved as Chapter 61 and the Ch 56 §10.5 Anti-Patterns Registry forward object is closed. Additional specialized dimensions remain Design Council scoping only.
 
-**Performance Experience Phase 1 approval integration does not complete Product Design Standard v1.0.** It does not assign a chapter number, start chapter authoring, create specialized execution chapters, begin Phase 2, start Future Product Evolution, or imply implementation readiness.
+**Performance Experience Chapter 63 assignment does not complete Product Design Standard v1.0.** It does not author Chapter 63, approve Chapter 63, create specialized execution chapters, begin Phase 2, start Future Product Evolution, or imply implementation readiness.
 
-**Ready for:** Git checkpoint for Performance Experience Phase 1 approval integration.
+**Ready for:** Git checkpoint for Performance Experience Chapter 63 assignment decision; after checkpoint, Phase 2 authoring initialization for Chapter 63 may begin from repository authority without assuming the chapter number.
 
 --------------------------------------------------
 
