@@ -4,7 +4,7 @@ This document is the **highest-level planning document** for the Rento project. 
 
 **Current active phase:** **Phase 3 — Project Architecture & Standards IN PROGRESS**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3.1–3.3 engineering foundation is **COMPLETE**. Next step: **Phase 3.4 — System Architecture**. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
+Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3.1–3.4 engineering foundation is **COMPLETE**. Phase 3.5 Repository Standards is **COMPLETE**. Next step: **Phase 3.6 — Backend Architecture**. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
 
 ### AI Session Initialization
 
@@ -244,7 +244,9 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Phase 3.1 — Project Constitution | **COMPLETE** |
 | Phase 3.2 — Architecture Principles | **COMPLETE** |
 | Phase 3.3 — Platform Architecture | **COMPLETE** |
-| Phase 3.4 — System Architecture | **NEXT** |
+| Phase 3.4 — System Architecture | **COMPLETE** |
+| Phase 3.5 — Repository Standards | **COMPLETE** |
+| Phase 3.6 — Backend Architecture | **NEXT** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
