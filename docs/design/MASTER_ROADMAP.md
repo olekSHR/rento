@@ -4,7 +4,7 @@ This document is the **highest-level planning document** for the Rento project. 
 
 **Current active phase:** **Phase 3 — Project Architecture & Standards IN PROGRESS**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
+Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Database Architecture (scope) is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
 
 ### AI Session Initialization
 
@@ -250,6 +250,7 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Product Architecture (scope) | **COMPLETE** |
 | Frontend Architecture (scope) | **COMPLETE** |
 | API Standards (scope) | **COMPLETE** |
+| Database Architecture (scope) | **COMPLETE** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
