@@ -4,7 +4,7 @@ This document is the **highest-level planning document** for the Rento project. 
 
 **Current active phase:** **Phase 3 — Project Architecture & Standards IN PROGRESS**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3 Evolution is **AUTHORIZED** (GD-017). Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Database Architecture (scope) is **COMPLETE**. Security Standards (scope) is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
+Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3 Evolution is **AUTHORIZED** (GD-017). Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Database Architecture (scope) is **COMPLETE**. Security Standards (scope) is **COMPLETE**. Database Standards (scope) is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
 
 ### AI Session Initialization
 
@@ -252,6 +252,7 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | API Standards (scope) | **COMPLETE** |
 | Database Architecture (scope) | **COMPLETE** |
 | Security Standards (scope) | **COMPLETE** |
+| Database Standards (scope) | **COMPLETE** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
@@ -772,7 +773,7 @@ Phase 3 Governance Amendment — Program Scope Extension
 7. `PHASE_3_EVOLUTION_AUTHORIZATION.md` records formal extension authorization.
 8. Execution order for nine remaining authorities is **binding** per `PHASE_3_EVOLUTION_AUTHORIZATION.md` §6.
 9. **Implementation remains NOT AUTHORIZED.** Phase 4 remains NOT STARTED.
-10. **Next required workflow step:** Database Standards authoring — execution order position 1.
+10. **Next required workflow step:** Infrastructure Standards authoring — execution order position 2 per `PHASE_3_EVOLUTION_AUTHORIZATION.md` §6.
 
 ---
 
