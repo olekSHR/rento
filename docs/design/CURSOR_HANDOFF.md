@@ -14,6 +14,7 @@ Before continuing work, always read the official project documentation in the fo
 6. `docs/engineering/PROJECT_CONSTITUTION.md`
 7. `docs/engineering/ARCHITECTURE_PRINCIPLES.md`
 8. `docs/engineering/PLATFORM_ARCHITECTURE.md`
+9. `docs/engineering/REPOSITORY_STANDARDS.md`
 
 Do not rely on previous chat memory.
 
@@ -26,10 +27,10 @@ Project documentation is the single source of truth.
 Approved chapters: **1–64** (64 chapters total)
 Latest approved chapter: **Chapter 64 — Future Product Evolution**
 Latest approved chapter checkpoint: `b81c239` — complete future product evolution macro-domain (Chapter 64)
-Latest repository continuity checkpoint / current HEAD: `2e4f0c6` — publish phase 3 engineering foundation
-Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 1 COMPLETE; Architectural Audit COMPLETE (GD-015); Phase 2.1–2.3 COMPLETE; Phase 3 AUTHORIZED; Phase 3.1–3.3 COMPLETE; Phase 3.4 NEXT; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; GitHub Release `v1.0-product-design-standard` ✓**
+Latest repository continuity checkpoint / current HEAD: `PLACEHOLDER` — publish phase 3.5 repository standards
+Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 1 COMPLETE; Architectural Audit COMPLETE (GD-015); Phase 2.1–2.3 COMPLETE; Phase 3 AUTHORIZED; Phase 3.1–3.3 COMPLETE; Phase 3.5 Repository Standards ✓; Phase 3.4 NEXT; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; GitHub Release `v1.0-product-design-standard` ✓**
 
-**Phase 3 — Project Architecture & Standards: IN PROGRESS** — Authorization AUTHORIZED; Phase 3.1 Constitution ✓; Phase 3.2 Architecture Principles ✓; Phase 3.3 Platform Architecture ✓; Phase 3.4 System Architecture — NEXT; Implementation NOT AUTHORIZED
+**Phase 3 — Project Architecture & Standards: IN PROGRESS** — Authorization AUTHORIZED; Phase 3.1 Constitution ✓; Phase 3.2 Architecture Principles ✓; Phase 3.3 Platform Architecture ✓; Phase 3.5 Repository Standards ✓; Phase 3.4 System Architecture — NEXT; Implementation NOT AUTHORIZED
 
 **Product Design Standard v1.0: COMPLETE (GD-016)** — frozen; not modified by Phase 3 engineering foundation publication
 
@@ -255,11 +256,11 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006 · Admin Platfo
 
 Latest approved chapter checkpoint: `b81c239` — complete future product evolution macro-domain (Chapter 64)
 
-Latest repository continuity checkpoint / current HEAD: `2e4f0c6` — publish phase 3 engineering foundation
+Latest repository continuity checkpoint / current HEAD: `PLACEHOLDER` — publish phase 3.5 repository standards
 
-Pending checkpoint: None — Phase 3.1–3.3 engineering foundation publication COMPLETE (`2e4f0c6`)
+Pending checkpoint: None — Phase 3.5 Repository Standards publication COMPLETE (`PLACEHOLDER`)
 
-Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 AUTHORIZED; Phase 3.1–3.3 COMPLETE; Phase 3.4 NEXT; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED**
+Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 AUTHORIZED; Phase 3.1–3.3 COMPLETE; Phase 3.5 Repository Standards ✓; Phase 3.4 NEXT; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED**
 
 --------------------------------------------------
 
@@ -273,16 +274,18 @@ Strategic governance (MASTER_ROADMAP.md)
         → PROJECT_CONSTITUTION.md (Phase 3.1 — PUBLISHED)
             → ARCHITECTURE_PRINCIPLES.md (Phase 3.2 — PUBLISHED)
                 → PLATFORM_ARCHITECTURE.md (Phase 3.3 — PUBLISHED)
-                    → SYSTEM_ARCHITECTURE.md (Phase 3.4 — NEXT)
+                    ├── SYSTEM_ARCHITECTURE.md (Phase 3.4 — NEXT)
+                    └── REPOSITORY_STANDARDS.md (Phase 3.5 — PUBLISHED)
 ```
 
-**Latest approved engineering document:** `docs/engineering/PLATFORM_ARCHITECTURE.md` — Phase 3.3 Platform Architecture
+**Latest published engineering document:** `docs/engineering/REPOSITORY_STANDARDS.md` — Phase 3.5 Repository Standards
 
 **Completed Phase 3 artifacts:**
 
 - `docs/engineering/PROJECT_CONSTITUTION.md` — Phase 3.1 COMPLETE
 - `docs/engineering/ARCHITECTURE_PRINCIPLES.md` — Phase 3.2 COMPLETE
 - `docs/engineering/PLATFORM_ARCHITECTURE.md` — Phase 3.3 COMPLETE
+- `docs/engineering/REPOSITORY_STANDARDS.md` — Phase 3.5 COMPLETE
 
 --------------------------------------------------
 
@@ -290,7 +293,7 @@ Strategic governance (MASTER_ROADMAP.md)
 
 **Next authorized task:** Phase 3.4 — System Architecture prerequisite check and authoring
 
-**Phase 3 status:** **IN PROGRESS** — Phase 3.1–3.3 COMPLETE; Phase 3.4 NEXT
+**Phase 3 status:** **IN PROGRESS** — Phase 3.1–3.3 COMPLETE; Phase 3.5 Repository Standards ✓; Phase 3.4 NEXT
 
 **Product Design Standard v1.0 status:** **COMPLETE (GD-016)** — frozen; unchanged
 
