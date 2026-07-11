@@ -4,7 +4,7 @@ This document is the **highest-level planning document** for the Rento project. 
 
 **Current active phase:** **Phase 3 — Project Architecture & Standards IN PROGRESS**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Database Architecture (scope) is **COMPLETE**. Security Standards (scope) is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
+Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3 Evolution is **AUTHORIZED** (GD-017). Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Database Architecture (scope) is **COMPLETE**. Security Standards (scope) is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
 
 ### AI Session Initialization
 
@@ -236,7 +236,7 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 
 **Prerequisite:** Phase 2 complete — RENTO PRODUCT DESIGN STANDARD v1.0 formally approved. **Prerequisite satisfied (GD-016).**
 
-**Status:** **IN PROGRESS** — Phase 3 Authorization **AUTHORIZED** (2026-07-11).
+**Status:** **IN PROGRESS** — Phase 3 Authorization **AUTHORIZED** (2026-07-11). Phase 3 Evolution **AUTHORIZED** (GD-017, 2026-07-11).
 
 | Step | Status |
 |------|--------|
@@ -263,6 +263,8 @@ This phase translates approved product architecture into engineering and platfor
 
 ## Scope
 
+### Original scope
+
 - Product Architecture
 - Platform Architecture
 - Frontend Architecture
@@ -275,6 +277,29 @@ This phase translates approved product architecture into engineering and platfor
 - Repository Standards
 - AI Collaboration Standards
 - Implementation Governance
+
+### Extension scope (GD-017)
+
+- Observability Architecture
+- Integration Architecture
+- Authentication Architecture
+- Authorization Architecture
+
+### Remaining execution order
+
+Phase 3 remaining authorities — dependency-ordered per `PHASE_3_EVOLUTION_AUTHORIZATION.md` §6:
+
+| Order | Authority | Scope class |
+|-------|-----------|-------------|
+| 1 | Database Standards | Original |
+| 2 | Infrastructure Standards | Original |
+| 3 | Observability Architecture | Extension (GD-017) |
+| 4 | Integration Architecture | Extension (GD-017) |
+| 5 | Authentication Architecture | Extension (GD-017) |
+| 6 | Authorization Architecture | Extension (GD-017) |
+| 7 | Development Standards | Original |
+| 8 | AI Collaboration Standards | Original |
+| 9 | Implementation Governance | Original |
 
 The Product Design Standard remains the **highest authority for product decisions**. Engineering standards implement and extend — they do not override approved product principles.
 
@@ -726,6 +751,28 @@ Product Design Standard v1.0 Final Design Council Sign-off
 8. Engineering implementation, delivery planning, and feature roadmaps remain outside Product Design Standard scope.
 9. **Next required workflow step:** Project Architecture & Standards authorization — then Phase 3 authoring per `MASTER_ROADMAP.md`.
 10. Git checkpoint for Product Design Standard v1.0 completion may be recorded separately.
+
+---
+
+## Governance Decision 017
+
+**Status:** APPROVED
+
+**Title:**
+Phase 3 Governance Amendment — Program Scope Extension
+
+**Decision:**
+
+1. **Phase 3 program scope is formally EXTENDED** as of 2026-07-11 per Design Council Resolution.
+2. Four extension authorities are **AUTHORIZED** for Phase 3 authoring: Observability Architecture, Integration Architecture, Authentication Architecture, Authorization Architecture.
+3. Five original remaining authorities remain **AUTHORIZED**: Database Standards, Infrastructure Standards, Development Standards, AI Collaboration Standards, Implementation Governance.
+4. All **eleven published engineering authorities** are **PRESERVED** without modification.
+5. `PHASE_3_AUTHORIZATION.md` remains valid — not superseded.
+6. `ENGINEERING_HANDOFF.md` remains unchanged.
+7. `PHASE_3_EVOLUTION_AUTHORIZATION.md` records formal extension authorization.
+8. Execution order for nine remaining authorities is **binding** per `PHASE_3_EVOLUTION_AUTHORIZATION.md` §6.
+9. **Implementation remains NOT AUTHORIZED.** Phase 4 remains NOT STARTED.
+10. **Next required workflow step:** Database Standards authoring — execution order position 1.
 
 ---
 
