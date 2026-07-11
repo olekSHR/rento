@@ -13,12 +13,12 @@
 |------|--------|
 | **Approved chapters** | 1–64 |
 | **Latest approved chapter** | Chapter 64 — Future Product Evolution |
-| **Latest approved chapter checkpoint** | `bf37a0e` — approve chapter 63 performance experience |
+| **Latest approved chapter checkpoint** | `b81c239` — complete future product evolution macro-domain (Chapter 64) |
 | **Latest macro-domain completion** | Future Product Evolution (GD-014) |
-| **Latest repository continuity checkpoint / current HEAD** | `b81c239` — complete future product evolution macro-domain |
+| **Latest repository continuity checkpoint / current HEAD** | `4f4a9b6` — add product design standard v1.0 release document (`v1.0-product-design-standard` tag) |
 | **Phase 1 chapter authoring** | COMPLETE — all Chapters 1–64 individually approved |
 | **All Product Design Standard macro-domains** | COMPLETE |
-| **Product Design Standard v1.0** | IN PROGRESS |
+| **Product Design Standard v1.0** | COMPLETE (GD-016) — Final Design Council Sign-off recorded (2026-07-11) |
 | **Architectural Audit Phase 0 artifact** | THIS DOCUMENT — continuity synchronized (2026-07-11) |
 | **Architectural Audit execution** | COMPLETE — Dimensions 1–7 executed; Audit Completion Sign-off COMPLETE (GD-015) |
 | **Project Architecture & Standards (Phase 3)** | NOT STARTED |
@@ -292,9 +292,9 @@ Architectural Audit completion alone does **not** complete Product Design Standa
 | **Audit findings register** | Record Architectural Findings and dispositions | COMPLETE — `AUDIT_FINDINGS_REGISTER.md` (18 findings; all RESOLVED) |
 | **Audit remediation record** | Resolved, routed, deferred, or evolution-signaled items | COMPLETE — Chapter 58 Evolution Wave 1 (17 findings) + Documentation Governance AF-D5-002 (2026-07-11) |
 | **Architectural Audit Completion Sign-off** | Design Council governance act for Phase 2 completion | COMPLETE (GD-015) |
-| **Product Design Standard v1.0 Final Sign-off** | Formal v1.0 completion | Not started |
+| **Product Design Standard v1.0 Final Sign-off** | Formal v1.0 completion | COMPLETE (GD-016) — 2026-07-11 |
 | **Continuity integration** | MASTER_ROADMAP, RENTO_PRODUCT_DESIGN_STANDARD metadata, CURSOR_HANDOFF | COMPLETE |
-| **Git checkpoint** | Audit completion repository record | Not started |
+| **Git checkpoint** | Audit completion and v1.0 release repository record | COMPLETE — `6c287af` (v1.0 completion); release tag `v1.0-product-design-standard` at `4f4a9b6` |
 
 ---
 
@@ -312,7 +312,7 @@ Product Design Standard v1.0 completion requires:
 - Phase 2 comprehensive audit passed;
 - Design Council final sign-off.
 
-Phase 1 is complete. Phase 2 Architectural Audit is **COMPLETE (GD-015)**. Product Design Standard v1.0 Final Sign-off is the remaining Product Design Standard work before v1.0 formal completion.
+Phase 1 is complete. Phase 2 Architectural Audit is **COMPLETE (GD-015)**. Product Design Standard v1.0 is **COMPLETE (GD-016)** — Final Design Council Sign-off recorded (2026-07-11).
 
 ### 11.3 Project Architecture & Standards
 
@@ -340,11 +340,12 @@ Product Development Methodology defines reusable delivery methodology beyond Ren
 | **Audit remediation** | COMPLETE — Chapter 58 Evolution Wave 1 (17 findings) + Documentation Governance AF-D5-002 |
 | **Continuity integration (PHASE_0)** | COMPLETE — §12 reconciled with MASTER_ROADMAP, CURSOR_HANDOFF, register |
 | **Audit completion sign-off** | COMPLETE (GD-015) — 2026-07-11 |
-| **Product Design Standard v1.0** | IN PROGRESS — Final Sign-off pending |
-| **Project Architecture & Standards** | NOT STARTED |
+| **Product Design Standard v1.0 Final Sign-off** | COMPLETE (GD-016) — 2026-07-11 |
+| **Product Design Standard v1.0** | COMPLETE (GD-016) |
+| **Project Architecture & Standards** | NOT STARTED — authorization required |
 | **Product Development Methodology** | NOT STARTED |
 
-Recommended next step: **Product Design Standard v1.0 Final Sign-off** — Design Council governance act on the complete audited standard as a single artifact.
+Recommended next step: **Project Architecture & Standards authorization** — separate Design Council governance act before Phase 3 authoring begins.
 
 ---
 

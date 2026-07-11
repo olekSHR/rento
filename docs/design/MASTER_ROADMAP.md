@@ -36,9 +36,9 @@ This is **not** implementation documentation. It is the authoritative product de
 |------|--------|
 | **Approved chapters** | 1–64 |
 | **Latest approved** | Chapter 64 — Future Product Evolution |
-| **Latest approved chapter checkpoint** | `bf37a0e` — approve chapter 63 performance experience |
-| **Latest repository continuity checkpoint / current HEAD** | Future Product Evolution Macro-domain Completion Sign-off continuity checkpoint |
-| **Pending checkpoint** | None for Future Product Evolution macro-domain completion sign-off |
+| **Latest approved chapter checkpoint** | `b81c239` — complete future product evolution macro-domain (Chapter 64) |
+| **Latest repository continuity checkpoint / current HEAD** | `4f4a9b6` — add product design standard v1.0 release document (`v1.0-product-design-standard` tag) |
+| **Pending checkpoint** | Phase 2.3 Transfer Closure — commit `ENGINEERING_HANDOFF.md` and continuity synchronization |
 | **Current chapter** | **Phase 1 COMPLETE (GD-016)** — Chapters 1–64 approved; Architectural Audit COMPLETE (GD-015); Product Design Standard v1.0 **COMPLETE (GD-016)** |
 | **Product Design Standard v1.0 Architectural Audit Phase 0** | **COMPLETE** (`PHASE_0_ARCHITECTURAL_AUDIT`) — audit charter authored; Design Council Review complete |
 | **Product Design Standard v1.0 Architectural Audit** | **COMPLETE (GD-015)** — execution COMPLETE; 18 findings all RESOLVED; Audit Completion Sign-off recorded |
