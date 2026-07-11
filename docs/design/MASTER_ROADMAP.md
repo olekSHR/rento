@@ -2,9 +2,9 @@
 
 This document is the **highest-level planning document** for the Rento project. It defines the strategic order of all future architectural phases — from product design through engineering standards to reusable methodology.
 
-**Current active phase:** **Phase 1 — Product Design Standard COMPLETE (GD-016)**
+**Current active phase:** **Phase 3 — Project Architecture & Standards IN PROGRESS**
 
-Phase 1 is formally complete. **Phase 3 — Project Architecture & Standards** is the next roadmap phase but remains **NOT STARTED** until separate Design Council authorization.
+Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3.1–3.3 engineering foundation is **COMPLETE**. Next step: **Phase 3.4 — System Architecture**. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
 
 ### AI Session Initialization
 
@@ -236,9 +236,19 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 
 **Prerequisite:** Phase 2 complete — RENTO PRODUCT DESIGN STANDARD v1.0 formally approved. **Prerequisite satisfied (GD-016).**
 
-**Status:** **NOT STARTED** — separate Design Council authorization required.
+**Status:** **IN PROGRESS** — Phase 3 Authorization **AUTHORIZED** (2026-07-11).
 
-This phase starts **only after** Product Design Standard v1.0 has been approved **and** Phase 3 is separately authorized. It translates approved product architecture into engineering and platform standards.
+| Step | Status |
+|------|--------|
+| Phase 3 Authorization | **AUTHORIZED** |
+| Phase 3.1 — Project Constitution | **COMPLETE** |
+| Phase 3.2 — Architecture Principles | **COMPLETE** |
+| Phase 3.3 — Platform Architecture | **COMPLETE** |
+| Phase 3.4 — System Architecture | **NEXT** |
+| Implementation | **NOT AUTHORIZED** |
+| Phase 4 | **NOT STARTED** |
+
+This phase translates approved product architecture into engineering and platform standards. Phase 3 completion requires separate Design Council approval of PROJECT ARCHITECTURE & STANDARDS as an approved artifact.
 
 ## Deliverable
 
