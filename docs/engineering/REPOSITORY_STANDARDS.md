@@ -657,6 +657,106 @@ Continuity synchronization is required after:
 - Release or freeze events;
 - Audit completion or remediation.
 
+### 11.6 Repository workflow controls
+
+Repository workflow controls define how much repository context and validation are required for a task. The governing objective is repository correctness. Token reduction, execution speed, and reduced repeated reading are benefits of correct workflow selection, not independent engineering objectives.
+
+#### 11.6.1 Incremental Context
+
+Incremental Context is the default repository execution mode when engineering continuity is preserved. It requires:
+
+1. Reuse of validated repository context from current repository authority and continuity metadata;
+2. Loading only directly affected authority documents;
+3. Excluding unrelated repository materials from the working set;
+4. Expanding context only when correctness requires it.
+
+A new prompt, chat, or task does not by itself require Full Repository Initialization.
+
+#### 11.6.2 Full Repository Initialization
+
+Full Repository Initialization is an exception. It is authorized only when at least one condition below applies:
+
+1. A new engineering phase begins;
+2. A new top-level authority document is created;
+3. Repository Authority changes;
+4. Repository structure changes;
+5. Engineering continuity is lost;
+6. Correctness cannot be guaranteed from the Minimum Working Set.
+
+Full Repository Initialization must not be performed merely because a new prompt, chat, or task begins.
+
+#### 11.6.3 Minimum Working Set
+
+The Minimum Working Set is the smallest repository context that guarantees correctness for the current task. It may contain only:
+
+1. The current governing authority;
+2. Directly affected authority documents;
+3. Required repository metadata;
+4. Active review or decision evidence;
+5. Directly required release or continuity metadata.
+
+Unrelated files and documents remain out of scope. The Minimum Working Set must not be reduced below the level needed for architectural correctness.
+
+#### 11.6.4 Working Set Escalation
+
+When the initial Working Set is insufficient:
+
+1. Stop the affected analysis or modification;
+2. Identify the exact missing document or evidence;
+3. Explain why it is required;
+4. Load only that source;
+5. Continue using the expanded Working Set.
+
+Targeted escalation must not be replaced by automatic Full Repository Initialization.
+
+#### 11.6.5 Validation levels
+
+Validation depth must match change scope.
+
+| Level | Use when | Validate |
+|-------|----------|----------|
+| **Targeted Validation** | Local amendments, isolated corrections, one or two directly related authority files, continuity synchronization, or closure validation of a resolved blocker | Affected terminology, references, semantics, Git evidence, and scope preservation |
+| **Scoped Validation** | Several related authority documents, cross-domain governance updates, multiple repository lifecycle surfaces, or package-level changes where full repository review is unnecessary | All affected boundaries and cross-references, excluding unrelated architecture |
+| **Full Verification** | New engineering phase, new top-level authority document, major architectural restructuring, Repository Authority changes, publication or release gates explicitly requiring independent full review, or lost continuity where correctness cannot otherwise be established | Full affected authority scope required by the gate or continuity recovery |
+
+Full Verification must not be used as the default response to every modification.
+
+#### 11.6.6 Validation selection
+
+Executors must select the smallest validation level that guarantees correctness. Selection is based on:
+
+1. Scope size;
+2. Authority level;
+3. Number of affected documents;
+4. Cross-reference impact;
+5. Governance impact;
+6. Publication or release consequences;
+7. Continuity state.
+
+Cost reduction must never justify insufficient validation.
+
+#### 11.6.7 Context continuity
+
+Engineering continuity is reusable validated knowledge of:
+
+1. Current repository phase;
+2. Active authority hierarchy;
+3. Verified repository checkpoint;
+4. Current task scope;
+5. Affected documents;
+6. Unresolved findings;
+7. Next authorized step.
+
+Continuity may be preserved across tasks and chats through repository authority and handoff metadata. Previous chat memory is not authority. A new chat reconstructs only the Minimum Working Set required by the current task unless Full Repository Initialization criteria apply.
+
+#### 11.6.8 Prompt and execution relationship
+
+Prompts define the current objective, authorized scope, expected output, and task-specific constraints. Repository Standards define the default execution process.
+
+Prompts should not repeat the complete workflow policy unless an exception is authorized, a narrower execution mode is required, the repository standard cannot be accessed, or ambiguity must be resolved.
+
+Task prompts may specify the Working Set and validation level, but they may not weaken Repository Standards.
+
 ---
 
 ## 12. Inheritance Rules
