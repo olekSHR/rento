@@ -585,8 +585,23 @@ Authoritative documents must include:
 | Product chapter approval | Commit per GD-007 |
 | Macro-domain completion | Commit + optional GitHub Release |
 | Engineering standard publication | Commit with phase reference |
-| Continuity synchronization | Commit when checkpoint state changes |
+| Continuity synchronization | Commit when durable checkpoint metadata changes |
 | Strategic governance decision | Commit integrating MASTER_ROADMAP decision (§5.4) |
+
+### 10.3.1 Repository checkpoint semantics
+
+Repository checkpoint terms are not interchangeable. Official definitions are recorded in §21.
+
+| Term | Repository role |
+|------|---------|
+| **Runtime Git HEAD** | Runtime state |
+| **Latest Verified Repository Checkpoint** | Verification metadata |
+| **Repository Baseline** | Durable repository metadata |
+| **Repository Synchronization Commit** | Continuity metadata |
+| **Latest Publication Commit** | Publication metadata |
+| **Continuity Synchronization** | Continuity process |
+
+Equality between Runtime Git HEAD and a stored checkpoint is an observed validation result, not a permanent repository invariant. Divergence must be interpreted according to repository lifecycle context; it may indicate in-progress authorized work, an uncommitted continuity update, branch movement, or a stale checkpoint, and does not by itself prove repository corruption.
 
 ### 10.4 Governance decision traceability
 
@@ -609,14 +624,20 @@ These documents must remain mutually consistent after governance acts:
 | Surface | Consistency requirement |
 |---------|------------------------|
 | `MASTER_ROADMAP.md` | Phase status, strategic governance decisions, current active phase |
-| `CURSOR_HANDOFF.md` | Latest checkpoint, HEAD reference, next authorized step |
+| `CURSOR_HANDOFF.md` | Latest verified checkpoint, repository baseline, latest completed continuity synchronization, next authorized step |
 | `RENTO_PRODUCT_DESIGN_STANDARD.md` | Frozen — consistency changes only via product evolution |
 | Engineering foundation chain | Hierarchy order and honest status blocks |
 | Release manifests | Tag, commit, scope, and completion claims |
 
-### 11.2 HEAD honesty
+### 11.2 Runtime and checkpoint honesty
 
-`CURSOR_HANDOFF.md` must reference the actual repository HEAD after continuity integration. Stale HEAD references are consistency defects.
+`CURSOR_HANDOFF.md` must separate runtime Git facts from durable repository metadata.
+
+Durable continuity metadata may store repository baselines, latest verified repository checkpoints, latest publication commits, latest completed continuity synchronization commits, and next authorized steps.
+
+Runtime Git HEAD must be obtained directly from Git tooling at validation time. If a runtime HEAD observation is recorded in a Git-tracked continuity document, it must be clearly labeled as an observed runtime fact from a specific validation moment, not as self-certifying checkpoint authority.
+
+A stored checkpoint not equaling the current Runtime Git HEAD is a validation result requiring lifecycle interpretation, not an automatic consistency defect.
 
 ### 11.3 Status honesty
 
@@ -870,7 +891,7 @@ Before this or any engineering authority document may complete the binding-autho
 | 3 | Update `CURSOR_HANDOFF.md` checkpoint and engineering authority section |
 | 4 | Update `MASTER_ROADMAP.md` only if §5.4 routing applies |
 | 5 | Record git checkpoint |
-| 6 | Verify HEAD honesty in continuity documents |
+| 6 | Verify runtime Git state against stored continuity checkpoints |
 
 ### 17.3 Publication does not imply
 
@@ -1008,6 +1029,12 @@ This document and repository governance **must not**:
 | **Governance act** | Explicit recorded decision authorizing a program transition |
 | **Governance artifact** | Durable evidence document supporting traceability |
 | **Checkpoint** | Git commit marking an approved governance state |
+| **Latest Verified Repository Checkpoint** | Most recent commit accepted as a verified repository baseline after required validation |
+| **Repository Baseline** | Stable initialization checkpoint from which subsequent authorized work proceeds |
+| **Repository Synchronization Commit** | Commit that records a completed continuity synchronization lifecycle event without requiring a tracked document to contain its own commit SHA |
+| **Runtime Git HEAD** | Live Git ref state obtained from Git tooling; validation evidence, not durable checkpoint authority |
+| **Latest Publication Commit** | Commit recording publication evidence for an authority or governance document |
+| **Continuity Synchronization** | Alignment of continuity surfaces with latest verified checkpoint, governance state, and next authorized step |
 | **Freeze** | Content lock against casual modification |
 | **Lineage** | Visible chain of authority from predecessor to successor |
 | **Publication** | Integration of approved content per §7.6 — confers active authority |
