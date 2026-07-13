@@ -384,17 +384,26 @@ Strategic governance (MASTER_ROADMAP.md)
 
 --------------------------------------------------
 
-## NEXT STEP
+## CURRENT AUTHORIZED ENGINEERING TASK
 
-**Phase 3 Stabilization Program:** **IN PROGRESS** — Package A COMPLETE (verified); Package B1 CLOSED
+This section records operational continuity only. It does not create repository authority, redefine workflow, authorize implementation, or replace `docs/engineering/REPOSITORY_STANDARDS.md`.
+
+| Field | Current continuity state |
+|-------|--------------------------|
+| **Status** | AUTHORIZED — governance continuation only; Phase 3 Stabilization Program — IN PROGRESS |
+| **Current Package** | Phase 3 Stabilization Package B — remediation continuing; Package A COMPLETE (verified); Package B1 CLOSED |
+| **Target Document** | `docs/engineering/INFRASTRUCTURE_STANDARDS.md` — current draft authority and stabilization gate before publication lifecycle resumes |
+| **Objective** | Continue Package B remediation needed before the Infrastructure Standards publication lifecycle may resume |
+| **Required Working Set** | `docs/design/CURSOR_HANDOFF.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md`; `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; directly required Package B evidence only if needed for correctness |
+| **Required Validation** | Targeted Validation by default: scope preservation, repository consistency, continuity preservation, affected references, Git evidence, and confirmation that no unauthorized publication, release, implementation, or authority expansion occurred |
+| **Expected Output** | Engineering Task Execution Report identifying the Package B remediation target, working set used, work performed, validation results, repository status, and the next required step |
+| **Stop Conditions** | Stop if the concrete Package B remediation target cannot be determined from repository authority; if required evidence is missing; if the work would modify published authorities without authorization; if publication, release execution, implementation, push, tag, or Phase 4 work would be required; or if Repository Standards require Working Set escalation before continuing |
+| **Explicitly Not Authorized** | Infrastructure Standards publication; engineering implementation; engineering release execution; Git tag; push; Phase 4; modification of published authorities; resumption of post-stabilization authority authoring before Package B completion |
+| **Authority Basis** | `docs/design/CURSOR_HANDOFF.md` continuity state; `docs/engineering/REPOSITORY_STANDARDS.md` §11.6; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md` §6-§9 |
 
 **Latest closed stabilization package:** **Package B1 — Continuity Surfaces** (`a224f53`–`bf55a2d`) — governance ambiguity resolved; closure validation complete
 
-**Current work item:** **Infrastructure Standards** — `docs/engineering/INFRASTRUCTURE_STANDARDS.md` (execution order position 2 per `PHASE_3_EVOLUTION_AUTHORIZATION.md` §6)
-
 **Current draft lifecycle:** DRAFT — Review Candidate · tracked · independent review COMPLETE · revision COMPLETE · re-review COMPLETE · publication NOT performed
-
-**Next authorized action:** Continue **Phase 3 Stabilization Package B** remediation before Infrastructure Standards publication lifecycle resumes
 
 **Remaining execution order (post-stabilization):** Infrastructure Standards publication → Observability Architecture → Integration Architecture → Authentication Architecture → Authorization Architecture → Development Standards → AI Collaboration Standards → Implementation Governance
 
@@ -407,8 +416,6 @@ Strategic governance (MASTER_ROADMAP.md)
 **Phase 4 status:** **NOT STARTED**
 
 **Engineering release execution:** **NOT AUTHORIZED** — no Git tag; no GitHub Release; no engineering release manifest created
-
-**Not authorized:** Infrastructure Standards publication; implementation; engineering release execution; resumption of authority authoring until stabilization Package B complete
 
 --------------------------------------------------
 
