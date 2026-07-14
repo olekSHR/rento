@@ -280,7 +280,7 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006 · Admin Platfo
 - Authentication Architecture — `docs/engineering/AUTHENTICATION_ARCHITECTURE.md`
 - Authorization Architecture — `docs/engineering/AUTHORIZATION_ARCHITECTURE.md`
 
-**Preserved:** all 12 published engineering authorities unchanged; `PHASE_3_AUTHORIZATION.md` valid; `ENGINEERING_HANDOFF.md` unchanged
+**Preserved:** published engineering authorities unchanged by GD-017; `PHASE_3_AUTHORIZATION.md` valid; `ENGINEERING_HANDOFF.md` unchanged; Infrastructure Standards later published at checkpoint `009f731`
 
 **Binding execution order** (7 remaining authorities per `PHASE_3_EVOLUTION_AUTHORIZATION.md` §6):
 
@@ -395,11 +395,12 @@ This section records operational continuity only. It does not create repository 
 | **Current Package** | Phase 3 Evolution execution order position 3 |
 | **Target Document** | `docs/engineering/OBSERVABILITY_ARCHITECTURE.md` — next authority in binding execution order; not started by Infrastructure publication |
 | **Objective** | Begin Observability Architecture authoring only under a separate authorized task, using repository authority and execution order |
-| **Required Working Set** | `docs/design/CURSOR_HANDOFF.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md`; upstream published authorities required by Observability Architecture scope |
+| **Required Working Set** | `docs/design/CURSOR_HANDOFF.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md`; `docs/engineering/PRODUCT_ARCHITECTURE.md`; upstream published authorities required by Observability Architecture scope |
 | **Required Validation** | Validation level to be selected by `REPOSITORY_STANDARDS.md` §11.6 for the future task; no release, implementation, push, tag, or Phase 4 work authorized |
 | **Expected Output** | Engineering Task Execution Report for the separately authorized Observability Architecture task |
 | **Stop Conditions** | Stop if authorization is missing; if required repository authority or review evidence is missing; if the work would require publication, release execution, implementation, push, tag, Phase 4, or modification of unrelated published authorities without explicit authorization |
 | **Explicitly Not Authorized** | Engineering implementation; engineering release execution; Git tag; push; Phase 4; modification of unrelated published authorities; starting any authority beyond Observability Architecture |
+| **Review Verdict Clarification** | `APPROVED FOR IMPLEMENTATION REVIEW` means only that the proposed engineering authority is ready to enter the document authoring and independent review lifecycle. It does not authorize software implementation, infrastructure implementation, deployment, or engineering execution. |
 | **Authority Basis** | `docs/design/CURSOR_HANDOFF.md` continuity state; `docs/engineering/REPOSITORY_STANDARDS.md` §11.6; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md` §6-§9 |
 
 **Latest closed stabilization package:** **Package B1 — Continuity Surfaces** (`a224f53`–`bf55a2d`) — governance ambiguity resolved; closure validation complete
