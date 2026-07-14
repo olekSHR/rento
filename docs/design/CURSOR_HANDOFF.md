@@ -38,12 +38,13 @@ Approved chapters: **1–64** (64 chapters total)
 Latest approved chapter: **Chapter 64 — Future Product Evolution**
 Latest approved chapter checkpoint: `b81c239` — complete future product evolution macro-domain (Chapter 64)
 Latest publication commit: `009f731` — publish Infrastructure Standards authority
+Latest repository workflow standard checkpoint: `7146f34` — publish standard engineering authoring prompt
 Repository baseline: `53c284d` — Repository Checkpoint Governance Amendment committed baseline
 Latest verified repository checkpoint: `53c284d` — Package B1 closure validation baseline
 Latest completed continuity synchronization: `53c284d` — Repository Checkpoint Governance Amendment
 Runtime Git HEAD observed at validation time: `53c284d` — workflow governance amendment starting observation; not durable checkpoint authority
 Repository workflow mode: **Incremental Context by default** per `REPOSITORY_STANDARDS.md`; Full Repository Initialization only when criteria apply
-Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 1 COMPLETE; Architectural Audit COMPLETE (GD-015); Phase 2.1–2.3 COMPLETE; Phase 3 AUTHORIZED; Phase 3 Evolution AUTHORIZED (GD-017); Phase 3.1–3.6 COMPLETE; Product Architecture (scope) ✓; Frontend Architecture (scope) ✓; API Standards (scope) ✓; Database Architecture (scope) ✓; Security Standards (scope) ✓; Database Standards (scope) ✓; Infrastructure Standards PUBLISHED; 13 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Phase 3 Stabilization Package B publication gate satisfied for Infrastructure Standards; 7 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; GitHub Release `v1.0-product-design-standard` ✓; no engineering release executed**
+Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 1 COMPLETE; Architectural Audit COMPLETE (GD-015); Phase 2.1–2.3 COMPLETE; Phase 3 AUTHORIZED; Phase 3 Evolution AUTHORIZED (GD-017); Phase 3.1–3.6 COMPLETE; Product Architecture (scope) ✓; Frontend Architecture (scope) ✓; API Standards (scope) ✓; Database Architecture (scope) ✓; Security Standards (scope) ✓; Database Standards (scope) ✓; Infrastructure Standards PUBLISHED; 13 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Standard Engineering Authoring Prompt PUBLISHED; Phase 3 Stabilization Package B publication gate satisfied for Infrastructure Standards; 7 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; GitHub Release `v1.0-product-design-standard` ✓; no engineering release executed**
 
 **Phase 3 — Project Architecture & Standards: IN PROGRESS** — Authorization AUTHORIZED; Evolution AUTHORIZED (GD-017); Phase 3.1 Constitution ✓; Phase 3.2 Architecture Principles ✓; Phase 3.3 Platform Architecture ✓; Phase 3.4 System Architecture ✓; Phase 3.5 Repository Standards ✓; Phase 3.6 Backend Architecture ✓; Product Architecture (scope) ✓; Frontend Architecture (scope) ✓; API Standards (scope) ✓; Database Architecture (scope) ✓; Security Standards (scope) ✓; Database Standards (scope) ✓; Infrastructure Standards ✓; Implementation NOT AUTHORIZED
 
@@ -306,6 +307,8 @@ Latest approved chapter checkpoint: `b81c239` — complete future product evolut
 
 Latest publication commit: `009f731` — publish Infrastructure Standards authority
 
+Latest repository workflow standard checkpoint: `7146f34` — publish standard engineering authoring prompt
+
 Repository baseline: `53c284d` — Repository Checkpoint Governance Amendment committed baseline
 
 Latest verified repository checkpoint: `53c284d` — Package B1 closure validation baseline
@@ -316,9 +319,9 @@ Runtime Git HEAD observed at validation time: `53c284d` — workflow governance 
 
 Repository workflow mode: **Incremental Context by default** per `REPOSITORY_STANDARDS.md`; Full Repository Initialization only when criteria apply
 
-Pending checkpoint: None — Infrastructure Standards publication COMPLETE (`009f731`); engineering release execution NOT AUTHORIZED
+Pending checkpoint: None — Infrastructure Standards publication COMPLETE (`009f731`); Standard Engineering Authoring Prompt publication COMPLETE (`7146f34`); engineering release execution NOT AUTHORIZED
 
-Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 AUTHORIZED; Phase 3 Evolution AUTHORIZED (GD-017); Phase 3.1–3.6 COMPLETE; 13 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Infrastructure Standards publication COMPLETE; 7 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; no engineering release executed**
+Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 AUTHORIZED; Phase 3 Evolution AUTHORIZED (GD-017); Phase 3.1–3.6 COMPLETE; 13 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Standard Engineering Authoring Prompt PUBLISHED; Infrastructure Standards publication COMPLETE; 7 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; no engineering release executed**
 
 --------------------------------------------------
 
@@ -349,6 +352,8 @@ Strategic governance (MASTER_ROADMAP.md)
 **Published engineering authorities:** **13**
 
 **Published engineering governance documents:** **1** — `ENGINEERING_RELEASE_STRATEGY.md`
+
+**Published engineering workflow standards:** **1** — `docs/engineering/templates/STANDARD_ENGINEERING_AUTHORING_PROMPT.md`
 
 **Latest published engineering authority:** `docs/engineering/INFRASTRUCTURE_STANDARDS.md`
 
