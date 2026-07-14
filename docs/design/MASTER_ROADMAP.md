@@ -4,7 +4,7 @@ This document is the **highest-level planning document** for the Rento project. 
 
 **Current active phase:** **Phase 3 — Project Architecture & Standards IN PROGRESS**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3 Evolution is **AUTHORIZED** (GD-017). Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Database Architecture (scope) is **COMPLETE**. Security Standards (scope) is **COMPLETE**. Database Standards (scope) is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
+Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3 Evolution is **AUTHORIZED** (GD-017). Phase 3.1–3.6 engineering foundation steps are **COMPLETE**. Product Architecture (scope) is **COMPLETE**. Frontend Architecture (scope) is **COMPLETE**. API Standards (scope) is **COMPLETE**. Database Architecture (scope) is **COMPLETE**. Security Standards (scope) is **COMPLETE**. Database Standards (scope) is **COMPLETE**. Infrastructure Standards is **COMPLETE**. Remaining Phase 3 scope per Phase 3 Scope section below. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
 
 ### AI Session Initialization
 
@@ -253,6 +253,7 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Database Architecture (scope) | **COMPLETE** |
 | Security Standards (scope) | **COMPLETE** |
 | Database Standards (scope) | **COMPLETE** |
+| Infrastructure Standards | **COMPLETE** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
@@ -292,8 +293,8 @@ Phase 3 remaining authorities — dependency-ordered per `PHASE_3_EVOLUTION_AUTH
 
 | Order | Authority | Scope class |
 |-------|-----------|-------------|
-| 1 | Database Standards | Original |
-| 2 | Infrastructure Standards | Original |
+| 1 | Database Standards | Original — COMPLETE |
+| 2 | Infrastructure Standards | Original — COMPLETE |
 | 3 | Observability Architecture | Extension (GD-017) |
 | 4 | Integration Architecture | Extension (GD-017) |
 | 5 | Authentication Architecture | Extension (GD-017) |

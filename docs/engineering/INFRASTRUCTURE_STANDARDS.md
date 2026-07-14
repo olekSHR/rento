@@ -1,9 +1,9 @@
 # Rento Infrastructure Standards
 
-**Status:** DRAFT — Review Candidate  
-**Authority class:** None — not yet published  
-**Binding authority:** None  
-**Publication:** Not performed  
+**Status:** PUBLISHED — Infrastructure Standards  
+**Authority class:** Authoritative infrastructure engineering standards  
+**Binding authority:** Active — per REPOSITORY_STANDARDS.md §7.6  
+**Publication:** COMPLETE  
 **Implementation:** NOT AUTHORIZED  
 **Program authorization:** Phase 3 authoring authorized (`PHASE_3_AUTHORIZATION.md`); Phase 3 evolution authorized (`PHASE_3_EVOLUTION_AUTHORIZATION.md` — execution order position 2)  
 **Audience:** Engineering Architecture Program, Standards Authors, Engineering Leadership, Infrastructure Reviewers, Design Council  
@@ -117,7 +117,7 @@ Strategic governance (MASTER_ROADMAP.md)
 
 ### 2.5 Amendment
 
-This document may be amended only through explicit governance review per REPOSITORY_STANDARDS.md after publication. While in draft status, amendments follow Phase 3 authoring discipline. Amendments must preserve product authority supremacy, constitutional compliance, extension-not-replacement discipline, and non-contradiction with SYSTEM_ARCHITECTURE.md Infrastructure Boundary and SECURITY_STANDARDS.md trust governance.
+This document may be amended only through explicit governance review per REPOSITORY_STANDARDS.md. Amendments must preserve product authority supremacy, constitutional compliance, extension-not-replacement discipline, and non-contradiction with SYSTEM_ARCHITECTURE.md Infrastructure Boundary and SECURITY_STANDARDS.md trust governance.
 
 ---
 
@@ -1346,18 +1346,18 @@ Terms defined in PROJECT_CONSTITUTION.md, ARCHITECTURE_PRINCIPLES.md, SYSTEM_ARC
 
 | Item | Value |
 |------|-------|
-| **Status** | DRAFT — Review Candidate |
-| **Authority class** | None — not yet published |
-| **Binding authority** | None |
-| **Publication** | Not performed |
+| **Status** | PUBLISHED — Infrastructure Standards |
+| **Authority class** | Authoritative infrastructure engineering standards |
+| **Binding authority** | Active — per REPOSITORY_STANDARDS.md §7.6 |
+| **Publication** | COMPLETE |
 | **Phase** | Infrastructure Standards — Phase 3 domain standard (MASTER_ROADMAP Scope; execution order position 2 per PHASE_3_EVOLUTION_AUTHORIZATION.md §6) |
-| **Independent review** | Pending |
-| **Publication checkpoint** | Not started |
+| **Independent review** | APPROVED |
+| **Publication checkpoint** | COMPLETE |
 | **Program authorization** | Phase 3 authoring authorized (`PHASE_3_AUTHORIZATION.md`); Phase 3 evolution authorized (`PHASE_3_EVOLUTION_AUTHORIZATION.md` — execution order position 2) |
 | **Implementation** | NOT AUTHORIZED |
-| **Supersedes** | None — upon publication: informal infrastructure convention |
+| **Supersedes** | Informal infrastructure convention |
 | **Subordinate to** | RENTO PRODUCT DESIGN STANDARD v1.0 · PROJECT_CONSTITUTION.md · ARCHITECTURE_PRINCIPLES.md · PLATFORM_ARCHITECTURE.md · SYSTEM_ARCHITECTURE.md · BACKEND_ARCHITECTURE.md · FRONTEND_ARCHITECTURE.md · PRODUCT_ARCHITECTURE.md · API_STANDARDS.md · DATABASE_ARCHITECTURE.md · SECURITY_STANDARDS.md · DATABASE_STANDARDS.md · REPOSITORY_STANDARDS.md · ENGINEERING_RELEASE_STRATEGY.md |
-| **Superior to** | Ad hoc infrastructure operations · Implementation artifacts · Subordinate infrastructure encodings (on infrastructure engineering matters — upon publication) |
+| **Superior to** | Ad hoc infrastructure operations · Implementation artifacts · Subordinate infrastructure encodings (on infrastructure engineering matters) |
 | **Does not authorize** | Implementation; cloud or product selection; engineering release execution; Phase 3 completion |
 | **Prerequisites** | DATABASE_STANDARDS.md published — satisfied; SECURITY_STANDARDS.md published — satisfied; Phase 3 Evolution AUTHORIZED — satisfied |
 
