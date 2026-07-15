@@ -274,12 +274,12 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006 · Admin Platfo
 
 **Design Council Resolution:** APPROVE PHASE 3 GOVERNANCE AMENDMENT
 
-**Extension authorities authorized (not yet authored):**
+**Extension authorities authorized:**
 
-- Observability Architecture — `docs/engineering/OBSERVABILITY_ARCHITECTURE.md`
-- Integration Architecture — `docs/engineering/INTEGRATION_ARCHITECTURE.md`
-- Authentication Architecture — `docs/engineering/AUTHENTICATION_ARCHITECTURE.md`
-- Authorization Architecture — `docs/engineering/AUTHORIZATION_ARCHITECTURE.md`
+- Observability Architecture — `docs/engineering/OBSERVABILITY_ARCHITECTURE.md` — **IN PROGRESS** (engineering authoring complete; targeted revision complete; targeted independent re-review pending)
+- Integration Architecture — `docs/engineering/INTEGRATION_ARCHITECTURE.md` — not started
+- Authentication Architecture — `docs/engineering/AUTHENTICATION_ARCHITECTURE.md` — not started
+- Authorization Architecture — `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` — not started
 
 **Preserved:** published engineering authorities unchanged by GD-017; `PHASE_3_AUTHORIZATION.md` valid; `ENGINEERING_HANDOFF.md` unchanged; Infrastructure Standards later published at checkpoint `009f731`
 
@@ -289,7 +289,7 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006 · Admin Platfo
 |-------|-----------|-------|
 | 1 | Database Standards | Original — **COMPLETE** |
 | 2 | Infrastructure Standards | Original — **COMPLETE** |
-| 3 | Observability Architecture | Extension — **NEXT AUTHORIZED** |
+| 3 | Observability Architecture | Extension — **IN PROGRESS** — targeted revision complete; targeted independent re-review pending |
 | 4 | Integration Architecture | Extension |
 | 5 | Authentication Architecture | Extension |
 | 6 | Authorization Architecture | Extension |
@@ -317,9 +317,11 @@ Latest completed continuity synchronization: `53c284d` — Repository Checkpoint
 
 Runtime Git HEAD observed at validation time: `53c284d` — workflow governance amendment starting observation; not durable checkpoint authority
 
+Pending checkpoint: **Observability Architecture engineering durability checkpoint** — prepared; staged; not committed — DRAFT only; binding authority inactive; publication not performed; does not authorize Targeted Independent Re-Review until checkpoint is recorded
+
 Repository workflow mode: **Incremental Context by default** per `REPOSITORY_STANDARDS.md`; Full Repository Initialization only when criteria apply
 
-Pending checkpoint: None — Infrastructure Standards publication COMPLETE (`009f731`); Standard Engineering Authoring Prompt publication COMPLETE (`7146f34`); engineering release execution NOT AUTHORIZED
+Previous checkpoints closed: Infrastructure Standards publication COMPLETE (`009f731`); Standard Engineering Authoring Prompt publication COMPLETE (`7146f34`); engineering release execution NOT AUTHORIZED
 
 Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 AUTHORIZED; Phase 3 Evolution AUTHORIZED (GD-017); Phase 3.1–3.6 COMPLETE; 13 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Standard Engineering Authoring Prompt PUBLISHED; Infrastructure Standards publication COMPLETE; 7 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; no engineering release executed**
 
@@ -396,23 +398,25 @@ This section records operational continuity only. It does not create repository 
 
 | Field | Current continuity state |
 |-------|--------------------------|
-| **Status** | AUTHORIZED — Phase 3 continuation only; Infrastructure Standards publication checkpoint COMPLETE |
+| **Status** | CHECKPOINT PREPARED — Observability Architecture engineering durability commit ready; not committed |
 | **Current Package** | Phase 3 Evolution execution order position 3 |
-| **Target Document** | `docs/engineering/OBSERVABILITY_ARCHITECTURE.md` — next authority in binding execution order; not started by Infrastructure publication |
-| **Objective** | Begin Observability Architecture authoring only under a separate authorized task, using repository authority and execution order |
-| **Required Working Set** | `docs/design/CURSOR_HANDOFF.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md`; `docs/engineering/PRODUCT_ARCHITECTURE.md`; upstream published authorities required by Observability Architecture scope |
-| **Required Validation** | Validation level to be selected by `REPOSITORY_STANDARDS.md` §11.6 for the future task; no release, implementation, push, tag, or Phase 4 work authorized |
-| **Expected Output** | Engineering Task Execution Report for the separately authorized Observability Architecture task |
-| **Stop Conditions** | Stop if authorization is missing; if required repository authority or review evidence is missing; if the work would require publication, release execution, implementation, push, tag, Phase 4, or modification of unrelated published authorities without explicit authorization |
-| **Explicitly Not Authorized** | Engineering implementation; engineering release execution; Git tag; push; Phase 4; modification of unrelated published authorities; starting any authority beyond Observability Architecture |
+| **Target Document** | `docs/engineering/OBSERVABILITY_ARCHITECTURE.md` — current authority in binding execution order |
+| **Objective** | Record engineering durability checkpoint only — make Observability Architecture DRAFT part of Repository Authority without publication or binding activation |
+| **Required Working Set** | Staged checkpoint scope: `docs/engineering/OBSERVABILITY_ARCHITECTURE.md`; `docs/design/CURSOR_HANDOFF.md`; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md` |
+| **Required Validation** | Verify staged scope excludes unrelated changes; verify DRAFT status, inactive binding authority, and not-published state preserved |
+| **Expected Output** | Engineering Git checkpoint commit — durability only |
+| **Stop Conditions** | Stop if staged scope includes unrelated files; if lifecycle metadata implies publication or binding activation; if commit would advance beyond repository-evidenced lifecycle state |
+| **Explicitly Not Authorized** | Publication; binding authority activation; Targeted Independent Re-Review before checkpoint commit; engineering implementation; engineering release execution; Git tag; push; Phase 4; modification of unrelated published authorities; starting Integration Architecture or any authority beyond Observability Architecture |
 | **Review Verdict Clarification** | `APPROVED FOR IMPLEMENTATION REVIEW` means only that the proposed engineering authority is ready to enter the document authoring and independent review lifecycle. It does not authorize software implementation, infrastructure implementation, deployment, or engineering execution. |
-| **Authority Basis** | `docs/design/CURSOR_HANDOFF.md` continuity state; `docs/engineering/REPOSITORY_STANDARDS.md` §11.6; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md` §6-§9 |
+| **Authority Basis** | `docs/design/CURSOR_HANDOFF.md` continuity state; `docs/engineering/REPOSITORY_STANDARDS.md` §7.4; `docs/design/PHASE_3_EVOLUTION_AUTHORIZATION.md` §6–§9 |
 
 **Latest closed stabilization package:** **Package B1 — Continuity Surfaces** (`a224f53`–`bf55a2d`) — governance ambiguity resolved; closure validation complete
 
 **Infrastructure Standards lifecycle:** PUBLISHED · binding authority ACTIVE · publication checkpoint COMPLETE (`009f731`)
 
-**Remaining execution order:** Observability Architecture → Integration Architecture → Authentication Architecture → Authorization Architecture → Development Standards → AI Collaboration Standards → Implementation Governance
+**Observability Architecture lifecycle:** DRAFT · engineering authoring COMPLETE · independent review REQUIRES REVISION · targeted revision COMPLETE · targeted independent re-review PENDING · publication NOT PERFORMED · binding authority INACTIVE · **engineering durability checkpoint PREPARED — not committed**
+
+**Remaining execution order:** Observability Architecture (durability checkpoint → re-review) → Integration Architecture → Authentication Architecture → Authorization Architecture → Development Standards → AI Collaboration Standards → Implementation Governance
 
 **Phase 3 status:** **IN PROGRESS** — Evolution AUTHORIZED (GD-017); 13 authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Implementation NOT AUTHORIZED
 

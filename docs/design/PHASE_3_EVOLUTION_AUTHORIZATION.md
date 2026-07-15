@@ -143,9 +143,9 @@ Phase 3 remaining authorities must be authored and published in the following **
 
 | Order | Authority | Scope class | Status |
 |-------|-----------|-------------|--------|
-| 1 | Database Standards | Original (A1) | **NEXT AUTHORIZED** |
-| 2 | Infrastructure Standards | Original (A2) | Pending |
-| 3 | Observability Architecture | Extension (E1) | Pending |
+| 1 | Database Standards | Original (A1) | **COMPLETE** |
+| 2 | Infrastructure Standards | Original (A2) | **COMPLETE** |
+| 3 | Observability Architecture | Extension (E1) | **IN PROGRESS** — engineering authoring complete; targeted revision complete; targeted independent re-review pending |
 | 4 | Integration Architecture | Extension (E2) | Pending |
 | 5 | Authentication Architecture | Extension (E3) | Pending |
 | 6 | Authorization Architecture | Extension (E4) | Pending |
