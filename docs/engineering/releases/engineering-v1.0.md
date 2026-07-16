@@ -40,10 +40,10 @@ The historical boundary is evidence of milestone completion. It is not evidence 
 | Field | Value |
 |-------|-------|
 | **Reconstruction publication date** | 2026-07-16 |
-| **Reconstruction manifest commit** | Recorded by the Git commit that adds this manifest; exact SHA is recorded in the GitHub Release and continuity synchronization after commit creation |
+| **Reconstruction manifest commit** | `c4855dccbb60e9e1a99c22acdcc8ea44eb01ad15` |
 | **Annotated tag** | `engineering-v1.0` |
 | **GitHub Release title** | `engineering-v1.0` |
-| **GitHub Release URL** | Recorded after GitHub Release publication |
+| **GitHub Release URL** | `https://github.com/olekSHR/rento/releases/tag/engineering-v1.0` |
 | **Repository synchronization status** | Required before tag creation: local `HEAD` equals `origin/main` |
 | **Validation result** | PASSED - historical boundary, final inventory, release order, previous release completion, and repository synchronization verified before manifest creation |
 
@@ -153,7 +153,7 @@ Completion means all four release positions in `ENGINEERING_RELEASE_STRATEGY.md`
 | `engineering-v0.1-foundation` | COMPLETE |
 | `engineering-v0.2-core-architecture` | COMPLETE |
 | `engineering-v0.3-operations` | COMPLETE |
-| `engineering-v1.0` | COMPLETE after this release is published and continuity synchronized |
+| `engineering-v1.0` | COMPLETE - final reconstructed release |
 
 Program completion does not authorize implementation, does not start Phase 4, and does not change current binding authority interpretation.
 

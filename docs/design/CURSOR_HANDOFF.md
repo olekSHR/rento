@@ -319,13 +319,13 @@ Runtime Git HEAD observed at validation time: `53c284d` — workflow governance 
 
 Latest engineering durability checkpoint: `be7c619` — Observability Architecture draft engineering checkpoint
 
-Pending checkpoint: None — Engineering Release `engineering-v0.3-operations` COMPLETE; next release position `engineering-v1.0` requires separate explicit release execution authorization
+Pending checkpoint: None — Engineering Release `engineering-v1.0` COMPLETE; retrospective Engineering Release reconstruction program COMPLETE
 
 Repository workflow mode: **Incremental Context by default** per `REPOSITORY_STANDARDS.md`; Full Repository Initialization only when criteria apply
 
-Previous checkpoints closed: Infrastructure Standards publication COMPLETE (`009f731`); Observability Architecture publication COMPLETE (`7d9f14e`); Integration Architecture publication COMPLETE (`edbe3a5`); Authentication Architecture publication COMPLETE (`64b3b36`); Authorization Architecture publication COMPLETE (`e1afa1d`); Development Standards publication COMPLETE (`5f95c08`); AI Collaboration Standards publication COMPLETE (`e323396`); Implementation Governance publication COMPLETE (`1af9f74`); Standard Engineering Authoring Prompt publication COMPLETE (`7146f34`); Repository Maintenance Lifecycle publication COMPLETE (`18b6b38`); Retrospective Engineering Release Reconstruction amendment publication COMPLETE (`219245a`); Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE
+Previous checkpoints closed: Infrastructure Standards publication COMPLETE (`009f731`); Observability Architecture publication COMPLETE (`7d9f14e`); Integration Architecture publication COMPLETE (`edbe3a5`); Authentication Architecture publication COMPLETE (`64b3b36`); Authorization Architecture publication COMPLETE (`e1afa1d`); Development Standards publication COMPLETE (`5f95c08`); AI Collaboration Standards publication COMPLETE (`e323396`); Implementation Governance publication COMPLETE (`1af9f74`); Standard Engineering Authoring Prompt publication COMPLETE (`7146f34`); Repository Maintenance Lifecycle publication COMPLETE (`18b6b38`); Retrospective Engineering Release Reconstruction amendment publication COMPLETE (`219245a`); Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE; Engineering Release `engineering-v1.0` COMPLETE
 
-Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 CLOSED; Project Architecture & Standards COMPLETE; Phase 3 Evolution COMPLETE (GD-017); Phase 3.1–3.6 COMPLETE; 20 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Retrospective Engineering Release Reconstruction amendment PUBLISHED; Repository Maintenance Lifecycle PUBLISHED; Standard Engineering Authoring Prompt PUBLISHED; Infrastructure Standards publication COMPLETE; Observability Architecture publication COMPLETE; Integration Architecture publication COMPLETE; Authentication Architecture publication COMPLETE; Authorization Architecture publication COMPLETE; Development Standards publication COMPLETE; AI Collaboration Standards publication COMPLETE; Implementation Governance publication COMPLETE; Repository Maintenance Lifecycle publication COMPLETE; Retrospective Engineering Release Reconstruction amendment publication COMPLETE; Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE; 0 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED**
+Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 CLOSED; Project Architecture & Standards COMPLETE; Phase 3 Evolution COMPLETE (GD-017); Phase 3.1–3.6 COMPLETE; 20 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Retrospective Engineering Release Reconstruction amendment PUBLISHED; Repository Maintenance Lifecycle PUBLISHED; Standard Engineering Authoring Prompt PUBLISHED; Infrastructure Standards publication COMPLETE; Observability Architecture publication COMPLETE; Integration Architecture publication COMPLETE; Authentication Architecture publication COMPLETE; Authorization Architecture publication COMPLETE; Development Standards publication COMPLETE; AI Collaboration Standards publication COMPLETE; Implementation Governance publication COMPLETE; Repository Maintenance Lifecycle publication COMPLETE; Retrospective Engineering Release Reconstruction amendment publication COMPLETE; Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE; Engineering Release `engineering-v1.0` COMPLETE; retrospective Engineering Release reconstruction program COMPLETE; 0 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED**
 
 --------------------------------------------------
 
@@ -405,7 +405,7 @@ Strategic governance (MASTER_ROADMAP.md)
 
 **Remaining Phase 3 authorities (0):** per `PHASE_3_EVOLUTION_AUTHORIZATION.md` §6 — none; Phase 3 formally CLOSED as Project Architecture & Standards
 
-**Engineering release status:** Release 1 (`engineering-v0.1-foundation`) — COMPLETE as retrospectively reconstructed Engineering Release; Release 2 (`engineering-v0.2-core-architecture`) — COMPLETE as retrospectively reconstructed Engineering Release; Release 3 (`engineering-v0.3-operations`) — COMPLETE as retrospectively reconstructed Engineering Release; Release 4 (`engineering-v1.0`) — next required release position and NOT EXECUTED; explicit release execution authorization required (§14.3 P-4)
+**Engineering release status:** Release 1 (`engineering-v0.1-foundation`) — COMPLETE as retrospectively reconstructed Engineering Release; Release 2 (`engineering-v0.2-core-architecture`) — COMPLETE as retrospectively reconstructed Engineering Release; Release 3 (`engineering-v0.3-operations`) — COMPLETE as retrospectively reconstructed Engineering Release; Release 4 (`engineering-v1.0`) — COMPLETE as retrospectively reconstructed Engineering Release; retrospective Engineering Release reconstruction program COMPLETE
 
 --------------------------------------------------
 
@@ -415,10 +415,10 @@ This section records operational continuity only. It does not create repository 
 
 | Field | Current continuity state |
 |-------|--------------------------|
-| **Status** | Phase 3 CLOSED; Project Architecture & Standards COMPLETE; all Phase 3 Evolution authorities published; Repository Maintenance Lifecycle PUBLISHED; Retrospective Engineering Release Reconstruction amendment PUBLISHED; Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE |
-| **Current Package** | Engineering Release `engineering-v0.3-operations` execution complete |
+| **Status** | Phase 3 CLOSED; Project Architecture & Standards COMPLETE; all Phase 3 Evolution authorities published; Repository Maintenance Lifecycle PUBLISHED; Retrospective Engineering Release Reconstruction amendment PUBLISHED; Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE; Engineering Release `engineering-v1.0` COMPLETE; retrospective Engineering Release reconstruction program COMPLETE |
+| **Current Package** | Engineering Release `engineering-v1.0` execution complete |
 | **Target Document** | None — no remaining Engineering Authority document is authorized for authoring by this continuity state |
-| **Objective** | No Engineering Authority authoring started; Engineering Release `engineering-v0.3-operations` complete; next engineering release position `engineering-v1.0` requires separate explicit release execution authorization; next program activity is Phase 4 authorization only when separately approved |
+| **Objective** | No Engineering Authority authoring started; Engineering Release `engineering-v1.0` complete; retrospective Engineering Release reconstruction program complete; next program activity is Phase 4 authorization only when separately approved |
 | **Required Working Set** | Future Phase 4 authorization review must construct its own Minimum Working Set from repository authority |
 | **Required Validation** | Validation level to be selected by `REPOSITORY_STANDARDS.md` §11.6 and §7.8 for any future task; no additional release, implementation, tag, or Phase 4 work authorized by this completed release |
 | **Expected Output** | None for this completed release beyond execution report; future Engineering Release or Phase 4 authorization requires separate task output |
@@ -455,9 +455,11 @@ This section records operational continuity only. It does not create repository 
 
 **Engineering Release `engineering-v0.3-operations`:** COMPLETE · retrospectively reconstructed · manifest commit `9c58911` · historical boundary `e1afa1d` · tag `engineering-v0.3-operations` · GitHub Release `https://github.com/olekSHR/rento/releases/tag/engineering-v0.3-operations`
 
+**Engineering Release `engineering-v1.0`:** COMPLETE · retrospectively reconstructed · manifest commit `c4855dc` · historical boundary `5900fc0` · tag `engineering-v1.0` · GitHub Release `https://github.com/olekSHR/rento/releases/tag/engineering-v1.0`
+
 **Remaining execution order:** None — all Phase 3 Evolution authorities published; Phase 3 formally CLOSED
 
-**Phase 3 status:** **CLOSED** — Project Architecture & Standards COMPLETE; Evolution COMPLETE (GD-017); 20 authorities PUBLISHED; all Phase 3 Evolution authorities published; Engineering Release Strategy governance PUBLISHED; Retrospective Engineering Release Reconstruction amendment PUBLISHED; Repository Maintenance Lifecycle PUBLISHED; Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED
+**Phase 3 status:** **CLOSED** — Project Architecture & Standards COMPLETE; Evolution COMPLETE (GD-017); 20 authorities PUBLISHED; all Phase 3 Evolution authorities published; Engineering Release Strategy governance PUBLISHED; Retrospective Engineering Release Reconstruction amendment PUBLISHED; Repository Maintenance Lifecycle PUBLISHED; Engineering Release `engineering-v0.1-foundation` COMPLETE; Engineering Release `engineering-v0.2-core-architecture` COMPLETE; Engineering Release `engineering-v0.3-operations` COMPLETE; Engineering Release `engineering-v1.0` COMPLETE; retrospective Engineering Release reconstruction program COMPLETE; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED
 
 **Product Design Standard v1.0 status:** **COMPLETE (GD-016)** — frozen; unchanged
 
@@ -465,7 +467,7 @@ This section records operational continuity only. It does not create repository 
 
 **Phase 4 status:** **NOT STARTED**
 
-**Engineering release execution:** `engineering-v0.1-foundation` COMPLETE; `engineering-v0.2-core-architecture` COMPLETE; `engineering-v0.3-operations` COMPLETE; further Engineering Release execution NOT AUTHORIZED without separate explicit authorization
+**Engineering release execution:** `engineering-v0.1-foundation` COMPLETE; `engineering-v0.2-core-architecture` COMPLETE; `engineering-v0.3-operations` COMPLETE; `engineering-v1.0` COMPLETE; retrospective Engineering Release reconstruction program COMPLETE; further Engineering Release execution NOT AUTHORIZED without separate explicit authorization
 
 --------------------------------------------------
 
