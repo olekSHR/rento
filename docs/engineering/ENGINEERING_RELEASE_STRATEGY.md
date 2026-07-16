@@ -1,11 +1,12 @@
 # Rento Engineering Release Strategy
 
-**Status:** PUBLISHED — Engineering Release Strategy  
+**Status:** PUBLISHED — Engineering Release Strategy; Retrospective Engineering Release Reconstruction amendment active
 **Document class:** Engineering Governance Document — **not** Engineering Architecture Authority  
 **Authority class:** Authoritative engineering release governance  
-**Binding authority:** Active — per REPOSITORY_STANDARDS.md §7.6  
-**Publication:** COMPLETE  
+**Binding authority:** Active — Retrospective Engineering Release Reconstruction amendment published as release governance
+**Publication:** COMPLETE — Retrospective Engineering Release Reconstruction amendment published
 **Implementation:** NOT AUTHORIZED  
+**Maintenance classification:** Repository Maintenance → Release Maintenance (`REPOSITORY_STANDARDS.md` §7.8)
 **Program authorization:** Phase 3 authoring authorized (`PHASE_3_AUTHORIZATION.md`); Phase 3 evolution authorized (`PHASE_3_EVOLUTION_AUTHORIZATION.md`)  
 **Audience:** Engineering Architecture Program, Documentation Governance Board, Design Council, Engineering Leadership  
 **Governance basis:** MASTER_ROADMAP.md · REPOSITORY_STANDARDS.md · ENGINEERING_HANDOFF.md · PHASE_3_AUTHORIZATION.md · PHASE_3_EVOLUTION_AUTHORIZATION.md · PROJECT_CONSTITUTION.md · RENTO PRODUCT DESIGN STANDARD v1.0 (GD-016)  
@@ -284,6 +285,265 @@ Creating a Git tag or GitHub Release is an **execution act** governed by this st
 
 This strategy document **does not execute** releases.
 
+### 7.4 Retrospective Engineering Release reconstruction
+
+This section defines a bounded exception for reconstructing missed Engineering Architecture releases. It applies only when a previously required Engineering Architecture milestone was achieved in repository history but the required Engineering Release was not executed at that time.
+
+This draft amendment is classified as **Repository Maintenance → Release Maintenance** under `REPOSITORY_STANDARDS.md` §7.8. It does not reopen Phase 3, does not belong to Phase 4, does not authorize implementation, and does not authorize release reconstruction execution.
+
+Release Maintenance may define and amend release governance. It may not itself create release manifests, Git tags, or GitHub Releases. Retrospective release reconstruction remains a separate Release Lifecycle requiring explicit release execution authorization.
+
+The retrospective reconstruction amendment becomes binding only after independent review, publication, and required continuity synchronization. Draft and review-candidate text remains non-binding. Routing, STOP conditions, authority ownership, and current binding authority interpretation are governed by `REPOSITORY_STANDARDS.md` §7.8; current binding authority remains the latest published Repository Authority on `main`.
+
+Normal forward Engineering Releases are unchanged:
+
+1. The manifest exists in the release checkpoint.
+2. The tag points to that release checkpoint.
+3. The GitHub Release follows the tag.
+
+Retrospective reconstructed Engineering Releases use a separate contract:
+
+1. The manifest is committed and pushed on current synchronized `main`.
+2. The tag points to the verified historical milestone boundary.
+3. The GitHub Release is published at the actual reconstruction date.
+4. Current binding authority remains the latest published Repository Authority on `main`.
+
+#### 7.4.1 Definition
+
+A **Retrospective Engineering Release** is a current, explicitly authorized publication act that reconstructs a previously achieved Engineering Architecture milestone whose required release was not executed at the time.
+
+Retrospective reconstruction:
+
+- Does not claim the release was historically published;
+- Does not create Engineering Authority;
+- Does not amend the historical milestone;
+- Does not authorize implementation;
+- Does not authorize the next engineering phase.
+
+#### 7.4.2 Applicability
+
+Retrospective reconstruction is permitted only when all conditions below are satisfied:
+
+- The release was required by Repository Authority;
+- The milestone scope is known;
+- A deterministic historical milestone boundary can be proven;
+- The release identifier is unambiguous;
+- Reconstruction is explicitly authorized;
+- All earlier release positions are complete or reconstructed;
+- The working tree is clean at every execution checkpoint;
+- Local and remote repository state are synchronized.
+
+If any condition fails: **STOP. Do not guess.**
+
+#### 7.4.3 Historical Milestone Boundary
+
+A **Historical Milestone Boundary** is the exact Git commit that proves the repository state where the Engineering Architecture milestone scope was achieved.
+
+Every reconstructed release must identify:
+
+- Exact historical milestone boundary commit;
+- Historical milestone date;
+- Milestone scope;
+- Authority inventory publication-complete at that boundary;
+- Git evidence supporting the boundary.
+
+The historical boundary is evidence of milestone completion. It is not evidence that the GitHub Release was published at that time.
+
+#### 7.4.4 Tag semantic contract
+
+The reconstructed engineering release tag:
+
+- Points to the verified historical milestone boundary commit;
+- Identifies the released historical repository content state;
+- Must be annotated;
+- Must use the authoritative release identifier;
+- Must not be moved, recreated, overwritten, or force-pushed.
+
+`git checkout <engineering-release-tag>` returns the historical milestone snapshot.
+
+The tag is lineage and audit evidence. It does not reactivate obsolete authority and does not become the current source of truth.
+
+#### 7.4.5 Manifest timing exception
+
+The normal rule remains: Release Manifests exist before or with tag creation.
+
+For an explicitly authorized retrospective Engineering Release reconstruction, the manifest must be committed and pushed to synchronized `main` before the tag is created, but the tag may point to the verified historical milestone boundary commit rather than the manifest commit.
+
+This exception applies only to formally authorized retrospective reconstruction. It must not be used for normal forward release execution.
+
+#### 7.4.6 Manifest classification
+
+A retrospective release manifest is:
+
+- Release evidence;
+- Milestone governance metadata;
+- Continuity evidence;
+- Not Engineering Architecture Authority.
+
+The manifest must not create, modify, replace, reinterpret, or supersede Engineering Authority.
+
+#### 7.4.7 Mandatory retrospective manifest fields
+
+Each retrospective release manifest must record at minimum:
+
+- Release identifier;
+- Release title;
+- Release classification;
+- Explicit `RETROSPECTIVELY RECONSTRUCTED` status;
+- Milestone name;
+- Milestone scope;
+- Historical milestone boundary commit;
+- Historical milestone date;
+- Reconstruction manifest commit;
+- Reconstruction publication date;
+- Annotated tag;
+- GitHub Release title;
+- GitHub Release URL after publication;
+- Included authority inventory;
+- Publication status at historical boundary;
+- Later corrections and amendments;
+- Continuity-only changes;
+- Current binding authority paths;
+- Latest relevant current binding checkpoints;
+- Repository branch;
+- Repository synchronization status;
+- Validation result;
+- Supersession warning;
+- Implementation status;
+- Phase 4 status;
+- Next required release position.
+
+#### 7.4.8 Date semantics
+
+Retrospective release records must distinguish:
+
+- Historical milestone date;
+- Manifest commit date;
+- Annotated tag creation date;
+- GitHub Release publication date;
+- Continuity synchronization date.
+
+Backdating is prohibited. The official release publication date is the actual GitHub Release publication date. The historical milestone date must be recorded separately.
+
+#### 7.4.9 GitHub Release semantics
+
+The GitHub Release for a retrospective reconstructed release must:
+
+- Attach to the historical milestone tag;
+- Be published on the actual reconstruction date;
+- Be explicitly labeled `Retrospectively reconstructed release`;
+- Reference the manifest commit;
+- Disclose the historical boundary commit;
+- Disclose later corrections;
+- Reference current binding authorities;
+- Warn that source archives represent historical lineage snapshots and may contain superseded authority;
+- Contain no implementation binaries or deployment assets unless separately authorized.
+
+#### 7.4.10 Current Binding Authority protection
+
+Historical release tags are lineage and audit evidence. They do not reactivate obsolete authority and do not become the current source of truth.
+
+Current binding authority is always determined from the latest published Repository Authority on `main`. Release manifests and GitHub Release notes must reference current binding authority paths and explicitly disclose later corrections and amendments.
+
+#### 7.4.11 Release order
+
+Retrospective reconstruction must preserve both semantic roadmap order and reconstruction publication order.
+
+Mandatory sequence:
+
+1. `engineering-v0.1-foundation`
+2. `engineering-v0.2-core-architecture`
+3. `engineering-v0.3-operations`
+4. `engineering-v1.0`
+
+Skipping, bundling, or parallel publication is prohibited.
+
+#### 7.4.12 Independent checkpoints
+
+Each reconstructed release is an independent checkpoint. Required lifecycle:
+
+1. Repository initialization.
+2. Clean working-tree verification.
+3. Branch and remote synchronization verification.
+4. Historical boundary verification.
+5. Authority inventory verification.
+6. Manifest authoring.
+7. Independent manifest validation.
+8. Manifest commit.
+9. Push and synchronization verification.
+10. Annotated historical tag creation.
+11. Explicit tag push.
+12. GitHub Release creation.
+13. Release verification.
+14. Continuity synchronization.
+15. Authorization to proceed to the next release position.
+
+#### 7.4.13 Continuity synchronization
+
+Continuity synchronization is required after each GitHub Release is verified and before the next release begins.
+
+Continuity must record:
+
+- Release identifier;
+- Tag;
+- Historical boundary commit;
+- Manifest commit;
+- GitHub Release URL;
+- Verification result;
+- Next permitted release position.
+
+A separate continuity synchronization commit is preferred unless existing Repository Authority requires another model.
+
+#### 7.4.14 Failure and stop conditions
+
+Retrospective reconstruction must stop immediately when:
+
+- Historical boundary cannot be proven;
+- Authority inventory does not match the proposed milestone;
+- Manifest and Git evidence disagree;
+- Working tree is not clean;
+- Unrelated changes exist during execution;
+- Local and remote branches diverge;
+- Tag already exists;
+- GitHub Release already exists;
+- Prior release verification failed;
+- Later corrections cannot be classified;
+- Release order would be violated;
+- Current binding authority cannot be identified.
+
+Default: **STOP. Do not guess.**
+
+#### 7.4.15 Prohibited actions
+
+Retrospective reconstruction explicitly prohibits:
+
+- Rewriting historical commits;
+- Synthetic reconstruction of historical trees;
+- Backdating;
+- Tagging the current completion commit as every earlier release;
+- Moving or overwriting tags;
+- Force-pushing;
+- Presenting a reconstructed release as historically published;
+- Using historical tagged snapshots as current binding authority;
+- Creating releases out of order;
+- Creating manifests after tag creation;
+- Modifying Engineering Authority during release reconstruction;
+- Authorizing implementation or Phase 4 through a release.
+
+#### 7.4.16 Scope limitation
+
+This policy applies only to explicitly authorized retrospective Engineering Architecture release reconstruction.
+
+It does not automatically apply to:
+
+- Product Design releases;
+- Implementation releases;
+- Deployment releases;
+- Future forward engineering releases;
+- Post-v1.0 architecture evolution.
+
+Broader application requires separate authorization or amendment.
+
 ---
 
 ## 8. Release Eligibility
@@ -306,8 +566,8 @@ A release may be created only when **all** eligibility conditions are satisfied.
 |---|-----------|
 | E-6 | Publication commits for all bundled authorities are present in `main` history |
 | E-7 | Local repository HEAD **equals** remote `origin/main` at release checkpoint — no divergence |
-| E-8 | Repository **working tree is clean** at tag target commit — no uncommitted changes |
-| E-9 | Release manifest is prepared and committed before or with tag creation |
+| E-8 | Repository **working tree is clean** at release execution checkpoint — no uncommitted changes |
+| E-9 | Release manifest is prepared and committed before or with tag creation; retrospective reconstruction may use the bounded manifest timing exception in §7.4.5 |
 
 ### 8.3 Governance eligibility
 
@@ -316,7 +576,7 @@ A release may be created only when **all** eligibility conditions are satisfied.
 | E-10 | Release scope matches an approved position in the official release roadmap (§15) |
 | E-11 | Release does not bundle authorities from a future roadmap position |
 | E-12 | **Roadmap synchronized** — `MASTER_ROADMAP.md` reflects current program status for the release milestone |
-| E-13 | **Continuity synchronized** — `CURSOR_HANDOFF.md` reflects tag target commit, bundled authorities, and next authorized step |
+| E-13 | **Continuity synchronized** — `CURSOR_HANDOFF.md` reflects release checkpoint state, bundled authorities, and next authorized step; retrospective reconstruction records verified release results after GitHub Release publication per §7.4.13 |
 | E-14 | Product Design Standard v1.0 remains frozen — engineering release does not modify product authority |
 | E-15 | **Implementation remains NOT AUTHORIZED** — release does not imply implementation readiness |
 
@@ -345,7 +605,7 @@ Release integrity requires that milestone packaging reflects **exact repository 
 | I-7 | **Release scope inconsistent** with official roadmap position or manifest declaration | Release blocked |
 | I-8 | **Roadmap inconsistent** — `MASTER_ROADMAP.md` contradicts release milestone claims | Release blocked |
 | I-9 | **Continuity inconsistent** — `CURSOR_HANDOFF.md` stale, missing checkpoint, or contradicts repository state | Release blocked |
-| I-10 | Tag target commit precedes publication commit for any bundled authority | Release blocked |
+| I-10 | Tag target commit precedes publication commit for any bundled authority, except where a formally authorized retrospective release uses a verified historical milestone boundary under §7.4 | Release blocked |
 | I-11 | Multiple release manifests for one engineering release identifier | Release blocked |
 | I-12 | Release manifest missing for an executed engineering release | Release blocked |
 
@@ -393,8 +653,8 @@ Each engineering release identifier maps to **exactly one** manifest file at thi
 | Aspect | Rule |
 |--------|------|
 | **Identity binding** | Manifest release identifier **must equal** Git tag name |
-| **Commit binding** | Manifest records commit SHA that tag will reference |
-| **Precedence** | Manifest is prepared **before or with** tag creation — tag without manifest is prohibited |
+| **Commit binding** | Manifest records commit SHA that tag will reference; retrospective manifests also record the reconstruction manifest commit (§7.4.7) |
+| **Precedence** | Manifest is prepared **before or with** tag creation; retrospective reconstruction requires the manifest to be committed and pushed to synchronized `main` before historical tag creation (§7.4.5) |
 | **Authority effect** | Git tag provides immutable checkpoint evidence — manifest provides scope and attestation context |
 
 Git tag alone does not satisfy release governance. Tag plus manifest together satisfy checkpoint packaging requirements.
@@ -513,6 +773,8 @@ Every engineering release — in manifest and aligned GitHub Release notes — *
 
 Missing mandatory evidence invalidates release integrity. Release execution must not proceed until all elements R-1 through R-9 are prepared.
 
+Retrospective reconstructed releases must also record the additional evidence required by §7.4.7, including `RETROSPECTIVELY RECONSTRUCTED` status, historical milestone boundary, reconstruction manifest commit, reconstruction publication date, later corrections, current binding authority paths, supersession warning, implementation status, Phase 4 status, and next required release position.
+
 ### 11.3 Release manifest minimum structure
 
 Each manifest must contain information satisfying §11.2. At minimum:
@@ -588,6 +850,8 @@ Publication commits for each bundled authority.
 | No authority restatement | Notes reference documents — do not reproduce authority content |
 | Explicit boundary | "What This Release Is Not" section is mandatory |
 | Checkpoint precision | Commit SHA must be exact |
+
+For retrospective reconstructed releases, GitHub Release notes must also satisfy §7.4.9 and explicitly disclose that the release is reconstructed, that its source archives represent the historical milestone snapshot, and that current binding authority is determined from latest published Repository Authority on `main`.
 
 ---
 
@@ -666,6 +930,8 @@ Before tag creation, release executor must verify:
 4. No bundled authority was modified after its publication commit without governance approval;
 5. `CURSOR_HANDOFF.md` reflects tag target and release milestone;
 6. `MASTER_ROADMAP.md` is consistent with release roadmap position (§15).
+
+For retrospective reconstructed releases, the executor must additionally verify the historical milestone boundary, reconstruction manifest commit, date separation, later correction classification, current binding authority references, and release order requirements defined in §7.4 before tag creation.
 
 ### 13.5 Authority preservation rule
 
@@ -880,21 +1146,22 @@ When implementation is authorized in a future phase, application deployment rele
 
 | Item | Value |
 |------|-------|
-| **Status** | PUBLISHED — Engineering Release Strategy |
+| **Status** | PUBLISHED — Engineering Release Strategy; Retrospective Engineering Release Reconstruction amendment active |
 | **Document class** | Engineering Governance Document — not Engineering Architecture Authority |
 | **Authority class** | Authoritative engineering release governance |
-| **Binding authority** | Active — per REPOSITORY_STANDARDS.md §7.6 |
-| **Publication** | COMPLETE |
+| **Binding authority** | Active — Retrospective Engineering Release Reconstruction amendment published as release governance |
+| **Publication** | COMPLETE — Retrospective Engineering Release Reconstruction amendment published |
 | **Phase** | Engineering Release Strategy — Phase 3 governance artifact |
-| **Independent review** | APPROVED |
-| **Publication checkpoint** | COMPLETE |
+| **Maintenance classification** | Repository Maintenance → Release Maintenance (`REPOSITORY_STANDARDS.md` §7.8) |
+| **Independent review** | APPROVED — Retrospective Engineering Release Reconstruction amendment governance review and publication review complete |
+| **Publication checkpoint** | COMPLETE — Retrospective Engineering Release Reconstruction amendment publication checkpoint recorded |
 | **Program authorization** | Phase 3 authoring authorized (`PHASE_3_AUTHORIZATION.md`); Phase 3 evolution authorized (`PHASE_3_EVOLUTION_AUTHORIZATION.md`) |
 | **Implementation** | NOT AUTHORIZED |
 | **Supersedes** | Informal engineering release convention |
 | **Subordinate to** | MASTER_ROADMAP.md · REPOSITORY_STANDARDS.md · ENGINEERING_HANDOFF.md · PHASE_3_AUTHORIZATION.md · PHASE_3_EVOLUTION_AUTHORIZATION.md |
 | **Superior to** | Ad hoc release operations |
-| **Does not authorize** | Git tag creation; GitHub Release creation; engineering release execution; implementation; Phase 3 completion |
-| **Prerequisites** | REPOSITORY_STANDARDS.md published — satisfied |
+| **Does not authorize** | Git tag creation; GitHub Release creation; release manifest creation; engineering release execution; retrospective reconstruction execution; implementation; Phase 3 reopening; Phase 4 |
+| **Prerequisites** | REPOSITORY_STANDARDS.md published, including Repository Maintenance Lifecycle §7.8 — satisfied |
 
 ---
 
