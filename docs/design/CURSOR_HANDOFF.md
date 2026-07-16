@@ -37,7 +37,7 @@ Project documentation is the single source of truth.
 Approved chapters: **1–64** (64 chapters total)
 Latest approved chapter: **Chapter 64 — Future Product Evolution**
 Latest approved chapter checkpoint: `b81c239` — complete future product evolution macro-domain (Chapter 64)
-Latest publication commit: Pending current publication commit — publish Authorization Architecture authority
+Latest publication commit: `e1afa1d` — publish Authorization Architecture authority
 Latest repository workflow standard checkpoint: `7146f34` — publish standard engineering authoring prompt
 Repository baseline: `53c284d` — Repository Checkpoint Governance Amendment committed baseline
 Latest verified repository checkpoint: `53c284d` — Package B1 closure validation baseline
@@ -305,7 +305,7 @@ Reference implementations: Realtor Platform (Ch 46–50), GD-006 · Admin Platfo
 
 Latest approved chapter checkpoint: `b81c239` — complete future product evolution macro-domain (Chapter 64)
 
-Latest publication commit: Pending current publication commit — publish Authorization Architecture authority
+Latest publication commit: `e1afa1d` — publish Authorization Architecture authority
 
 Latest repository workflow standard checkpoint: `7146f34` — publish standard engineering authoring prompt
 
@@ -319,11 +319,11 @@ Runtime Git HEAD observed at validation time: `53c284d` — workflow governance 
 
 Latest engineering durability checkpoint: `be7c619` — Observability Architecture draft engineering checkpoint
 
-Pending checkpoint: None — Authorization Architecture publication COMPLETE; publication commit pending current commit SHA; binding authority ACTIVE
+Pending checkpoint: None — Authorization Architecture publication COMPLETE (`e1afa1d`); binding authority ACTIVE
 
 Repository workflow mode: **Incremental Context by default** per `REPOSITORY_STANDARDS.md`; Full Repository Initialization only when criteria apply
 
-Previous checkpoints closed: Infrastructure Standards publication COMPLETE (`009f731`); Observability Architecture publication COMPLETE (`7d9f14e`); Integration Architecture publication COMPLETE (`edbe3a5`); Authentication Architecture publication COMPLETE (`64b3b36`); Authorization Architecture publication COMPLETE (current publication commit pending SHA); Standard Engineering Authoring Prompt publication COMPLETE (`7146f34`); engineering release execution NOT AUTHORIZED
+Previous checkpoints closed: Infrastructure Standards publication COMPLETE (`009f731`); Observability Architecture publication COMPLETE (`7d9f14e`); Integration Architecture publication COMPLETE (`edbe3a5`); Authentication Architecture publication COMPLETE (`64b3b36`); Authorization Architecture publication COMPLETE (`e1afa1d`); Standard Engineering Authoring Prompt publication COMPLETE (`7146f34`); engineering release execution NOT AUTHORIZED
 
 Repository status: **Product Design Standard v1.0 COMPLETE (GD-016); Phase 3 AUTHORIZED; Phase 3 Evolution AUTHORIZED (GD-017); Phase 3.1–3.6 COMPLETE; 17 engineering authorities PUBLISHED; Engineering Release Strategy governance PUBLISHED; Standard Engineering Authoring Prompt PUBLISHED; Infrastructure Standards publication COMPLETE; Observability Architecture publication COMPLETE; Integration Architecture publication COMPLETE; Authentication Architecture publication COMPLETE; Authorization Architecture publication COMPLETE; 3 remaining per PHASE_3_EVOLUTION_AUTHORIZATION.md §6; Implementation NOT AUTHORIZED; Phase 4 NOT STARTED; no engineering release executed**
 
@@ -368,7 +368,7 @@ Strategic governance (MASTER_ROADMAP.md)
 | Item | Value |
 |------|-------|
 | **Status** | PUBLISHED — Authorization Architecture |
-| **Publication commit** | Pending current publication commit SHA |
+| **Publication commit** | `e1afa1d` — publish Authorization Architecture authority |
 | **Independent review** | APPROVED |
 | **Publication review** | APPROVED FOR PUBLICATION |
 | **Publication** | COMPLETE |
