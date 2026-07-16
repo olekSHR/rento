@@ -2,9 +2,9 @@
 
 This document is the **highest-level planning document** for the Rento project. It defines the strategic order of all future architectural phases — from product design through engineering standards to reusable methodology.
 
-**Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Phase 4 NOT STARTED; Repository Maintenance Lifecycle ACTIVE**
+**Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Implementation Program Stage I0 Governance PUBLISHED; Phase 4 NOT STARTED; Repository Maintenance Lifecycle ACTIVE**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Repository Maintenance Lifecycle is **ACTIVE** as a permanent non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is **PUBLISHED** as release governance only. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
+Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Repository Maintenance Lifecycle is **ACTIVE** as a permanent non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is **PUBLISHED** as release governance only. Implementation Program Stage I0 governance is **PUBLISHED** as the governance foundation for the Implementation, Stabilization & Launch Program. Implementation remains **NOT AUTHORIZED**. Stage I1 remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
 
 ### AI Session Initialization
 
@@ -46,6 +46,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Project Architecture & Standards** | **CLOSED** — all currently authorized Engineering Authority documents PUBLISHED; formal Phase 3 closure recorded |
 | **Repository Maintenance Lifecycle** | **ACTIVE** — permanent non-phase repository governance lifecycle published in `REPOSITORY_STANDARDS.md` |
 | **Retrospective Engineering Release Reconstruction amendment** | **PUBLISHED** — release governance only; release reconstruction execution NOT AUTHORIZED |
+| **Implementation Program Stage I0 governance** | **PUBLISHED** — governance foundation only; next action is Stage I0 completion verification; implementation and Stage I1 NOT AUTHORIZED |
 | **Product Development Methodology** | **NOT STARTED** |
 | **Latest completed macro-domain** | Future Product Evolution (GD-014) |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
@@ -272,10 +273,13 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Retrospective Engineering Release `engineering-v0.3-operations` | **COMPLETE** |
 | Retrospective Engineering Release `engineering-v1.0` | **COMPLETE** |
 | Retrospective Engineering Release Reconstruction Program | **COMPLETE** |
+| Implementation Program Stage I0 Governance | **PUBLISHED** |
+| Stage I0 Completion Verification | **NOT STARTED** |
+| Stage I1 | **NOT AUTHORIZED** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
-This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is published as release governance only. Retrospective Engineering Releases `engineering-v0.1-foundation`, `engineering-v0.2-core-architecture`, `engineering-v0.3-operations`, and `engineering-v1.0` are complete. The retrospective Engineering Release reconstruction program is complete. Implementation remains separately unauthorized, and Phase 4 remains not started.
+This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is published as release governance only. Retrospective Engineering Releases `engineering-v0.1-foundation`, `engineering-v0.2-core-architecture`, `engineering-v0.3-operations`, and `engineering-v1.0` are complete. The retrospective Engineering Release reconstruction program is complete. Implementation Program Stage I0 governance is published as governance foundation only. The exact next authorized lifecycle action is Stage I0 completion verification. Implementation remains separately unauthorized, Stage I1 remains not authorized, and Phase 4 remains not started.
 
 ## Deliverable
 
