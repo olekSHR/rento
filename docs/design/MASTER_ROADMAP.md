@@ -269,10 +269,11 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Retrospective Engineering Release Reconstruction amendment | **PUBLISHED — release governance only; release reconstruction execution NOT AUTHORIZED** |
 | Retrospective Engineering Release `engineering-v0.1-foundation` | **COMPLETE** |
 | Retrospective Engineering Release `engineering-v0.2-core-architecture` | **COMPLETE** |
+| Retrospective Engineering Release `engineering-v0.3-operations` | **COMPLETE** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
-This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is published as release governance only. Retrospective Engineering Releases `engineering-v0.1-foundation` and `engineering-v0.2-core-architecture` are complete. Further release reconstruction execution remains unauthorized without separate explicit authorization. Implementation remains separately unauthorized, and Phase 4 remains not started.
+This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is published as release governance only. Retrospective Engineering Releases `engineering-v0.1-foundation`, `engineering-v0.2-core-architecture`, and `engineering-v0.3-operations` are complete. Further release reconstruction execution remains unauthorized without separate explicit authorization. Implementation remains separately unauthorized, and Phase 4 remains not started.
 
 ## Deliverable
 
