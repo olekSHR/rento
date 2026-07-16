@@ -2,9 +2,9 @@
 
 This document is the **highest-level planning document** for the Rento project. It defines the strategic order of all future architectural phases — from product design through engineering standards to reusable methodology.
 
-**Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Phase 4 NOT STARTED**
+**Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Phase 4 NOT STARTED; Repository Maintenance Lifecycle ACTIVE**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
+Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Repository Maintenance Lifecycle is **ACTIVE** as a permanent non-phase governance lifecycle. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
 
 ### AI Session Initialization
 
@@ -44,6 +44,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Product Design Standard v1.0 Architectural Audit** | **COMPLETE (GD-015)** — execution COMPLETE; 18 findings all RESOLVED; Audit Completion Sign-off recorded |
 | **Product Design Standard v1.0** | **COMPLETE (GD-016)** — Final Design Council Sign-off recorded |
 | **Project Architecture & Standards** | **CLOSED** — all currently authorized Engineering Authority documents PUBLISHED; formal Phase 3 closure recorded |
+| **Repository Maintenance Lifecycle** | **ACTIVE** — permanent non-phase repository governance lifecycle published in `REPOSITORY_STANDARDS.md` |
 | **Product Development Methodology** | **NOT STARTED** |
 | **Latest completed macro-domain** | Future Product Evolution (GD-014) |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
@@ -263,10 +264,11 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Implementation Governance | **COMPLETE** |
 | Remaining Engineering Authorities | **0** |
 | Formal Phase 3 Closure | **COMPLETE** |
+| Repository Maintenance Lifecycle | **ACTIVE — non-phase governance lifecycle** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
-This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Implementation remains separately unauthorized, and Phase 4 remains not started.
+This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Implementation remains separately unauthorized, and Phase 4 remains not started.
 
 ## Deliverable
 
@@ -312,7 +314,7 @@ Phase 3 Evolution authorities — dependency-ordered per `PHASE_3_EVOLUTION_AUTH
 | 8 | AI Collaboration Standards | Original — COMPLETE |
 | 9 | Implementation Governance | Original — COMPLETE |
 
-**Remaining Engineering Authorities:** **0**. Formal Phase 3 closure is complete. The next program activity is Phase 4 authorization when separately approved.
+**Remaining Engineering Authorities:** **0**. Formal Phase 3 closure is complete. Repository Maintenance may preserve and publish Repository Authority through its own non-phase lifecycle. The next program activity is Phase 4 authorization when separately approved.
 
 The Product Design Standard remains the **highest authority for product decisions**. Engineering standards implement and extend — they do not override approved product principles.
 
