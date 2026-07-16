@@ -1,13 +1,14 @@
 # Rento Observability Architecture
 
-**Status:** DRAFT — Targeted Revision Complete; Targeted Independent Re-Review Pending  
-**Authority class:** Intended authoritative observability engineering architecture — not yet active  
-**Binding authority:** None — publication not performed  
-**Publication:** Not performed  
+**Status:** PUBLISHED — Observability Architecture  
+**Authority class:** Authoritative observability engineering architecture  
+**Binding authority:** Active — per REPOSITORY_STANDARDS.md §7.6  
+**Publication:** COMPLETE  
 **Engineering authoring:** COMPLETE  
 **Independent review:** REQUIRES REVISION — targeted findings addressed  
 **Targeted revision:** COMPLETE  
-**Targeted independent re-review:** Pending  
+**Targeted independent re-review:** APPROVED FOR PUBLICATION REVIEW  
+**Publication review:** APPROVED FOR PUBLICATION  
 **Implementation:** NOT AUTHORIZED  
 **Program authorization:** Phase 3 evolution authoring authorized (`PHASE_3_EVOLUTION_AUTHORIZATION.md` — extension E1, execution order position 3)  
 **Audience:** Engineering Architecture Program, Standards Authors, Engineering Leadership, Observability Reviewers, Security Reviewers, Design Council  
@@ -785,21 +786,23 @@ Terms defined in upstream authorities retain upstream meaning.
 
 | Item | Value |
 |------|-------|
-| **Status** | DRAFT — Targeted Revision Complete; Targeted Independent Re-Review Pending |
-| **Authority class** | Intended authoritative observability engineering architecture — not yet active |
-| **Binding authority** | None — publication not performed |
-| **Publication** | Not performed |
+| **Status** | PUBLISHED — Observability Architecture |
+| **Authority class** | Authoritative observability engineering architecture |
+| **Binding authority** | Active — per REPOSITORY_STANDARDS.md §7.6 |
+| **Publication** | COMPLETE |
 | **Phase** | Observability Architecture — Phase 3 extension authority (E1; execution order position 3 per PHASE_3_EVOLUTION_AUTHORIZATION.md §6) |
 | **Engineering authoring** | COMPLETE |
 | **Independent review** | REQUIRES REVISION — targeted findings addressed |
 | **Targeted revision** | COMPLETE |
-| **Targeted independent re-review** | Pending |
-| **Publication checkpoint** | Not started |
+| **Targeted independent re-review** | APPROVED FOR PUBLICATION REVIEW |
+| **Publication review** | APPROVED FOR PUBLICATION |
+| **Publication checkpoint** | COMPLETE |
+| **Engineering checkpoint** | COMPLETE (`be7c619`) |
 | **Program authorization** | Phase 3 evolution authoring authorized (`PHASE_3_EVOLUTION_AUTHORIZATION.md` — extension E1, execution order position 3) |
 | **Implementation** | NOT AUTHORIZED |
-| **Supersedes** | `docs/engineering/design-notes/OBSERVABILITY_ARCHITECTURE_VISION.md` — the vision document remained non-authoritative throughout; upon publication this document replaces it **only as architectural orientation**; binding observability authority begins solely with the published Observability Architecture |
+| **Supersedes** | `docs/engineering/design-notes/OBSERVABILITY_ARCHITECTURE_VISION.md` — the vision document remained non-authoritative throughout; this document replaces it **only as architectural orientation**; binding observability authority begins with this published Observability Architecture |
 | **Subordinate to** | RENTO PRODUCT DESIGN STANDARD v1.0 · PROJECT_CONSTITUTION.md · ARCHITECTURE_PRINCIPLES.md · PLATFORM_ARCHITECTURE.md · SYSTEM_ARCHITECTURE.md · PRODUCT_ARCHITECTURE.md · BACKEND_ARCHITECTURE.md · FRONTEND_ARCHITECTURE.md · API_STANDARDS.md · DATABASE_ARCHITECTURE.md · SECURITY_STANDARDS.md · DATABASE_STANDARDS.md · INFRASTRUCTURE_STANDARDS.md · REPOSITORY_STANDARDS.md |
-| **Superior to** | Logging standards · monitoring standards · alerting standards · Development Standards and Implementation Governance on observability matters (upon publication) |
+| **Superior to** | Logging standards · monitoring standards · alerting standards · Development Standards and Implementation Governance on observability matters |
 | **Does not authorize** | Implementation; tooling selection; infrastructure implementation; engineering release execution; Phase 3 completion; Phase 4 |
 | **Prerequisites** | Infrastructure Standards published — satisfied; Security Standards published — satisfied; System Architecture published — satisfied; Phase 3 Evolution AUTHORIZED — satisfied |
 
