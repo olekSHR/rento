@@ -993,7 +993,7 @@ This section defines the **binding engineering release roadmap**. Release scope 
 |-----------|-------|
 | **Identifier** | `engineering-v0.1-foundation` |
 | **Milestone** | Engineering foundation authorities |
-| **Roadmap status** | ELIGIBLE — all bundled authorities published; release not executed |
+| **Roadmap status** | COMPLETE — retrospectively reconstructed Engineering Release |
 | **Implementation implication** | None — NOT AUTHORIZED |
 
 **Bundled authorities:**
@@ -1014,7 +1014,7 @@ This section defines the **binding engineering release roadmap**. Release scope 
 |-----------|-------|
 | **Identifier** | `engineering-v0.2-core-architecture` |
 | **Milestone** | Core domain architecture and standards |
-| **Roadmap status** | ELIGIBLE — all bundled authorities published; release not executed |
+| **Roadmap status** | COMPLETE — retrospectively reconstructed Engineering Release |
 | **Implementation implication** | None — NOT AUTHORIZED |
 
 **Bundled authorities:**
@@ -1037,7 +1037,7 @@ This section defines the **binding engineering release roadmap**. Release scope 
 |-----------|-------|
 | **Identifier** | `engineering-v0.3-operations` |
 | **Milestone** | Operations and cross-cutting mechanism architecture |
-| **Roadmap status** | **PLANNED** |
+| **Roadmap status** | **COMPLETE — retrospectively reconstructed Engineering Release** |
 | **Implementation implication** | None — NOT AUTHORIZED |
 
 **Planned bundled authorities:**
@@ -1060,7 +1060,7 @@ Release 3 eligibility requires all five authorities to be published per `PHASE_3
 |-----------|-------|
 | **Identifier** | `engineering-v1.0` |
 | **Milestone** | Engineering Architecture Program completion |
-| **Roadmap status** | **PLANNED** |
+| **Roadmap status** | **COMPLETE — retrospectively reconstructed Engineering Release** |
 | **Implementation implication** | None — NOT AUTHORIZED; Phase 4 remains separate |
 
 **Planned bundled authorities:**
