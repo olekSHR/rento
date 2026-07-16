@@ -1,6 +1,6 @@
 # Rento Repository Standards
 
-**Status:** PUBLISHED — Phase 3.5 Repository Standards  
+**Status:** PUBLISHED — Repository Standards; Repository Maintenance Lifecycle active
 **Authority class:** Authoritative repository governance  
 **Audience:** Engineering Architecture Program, Documentation Governance Board, Design Council, Contributors  
 **Governance basis:** PROJECT_CONSTITUTION.md · ARCHITECTURE_PRINCIPLES.md · PLATFORM_ARCHITECTURE.md · ENGINEERING_HANDOFF.md · PHASE_3_AUTHORIZATION.md · RENTO PRODUCT DESIGN STANDARD v1.0 (GD-016)  
@@ -60,6 +60,7 @@ System Architecture retains full authority over system structure. This document 
 - Directory ownership for governance surfaces;
 - Repository-level authority hierarchy representation;
 - Document lifecycle, naming, versioning, and traceability discipline;
+- Repository Maintenance Lifecycle for post-program authority maintenance;
 - Publication, review, deprecation, and evolution rules for repository documents;
 - Integration rules for future engineering standards.
 
@@ -443,6 +444,304 @@ When an engineering document completes publication:
 4. Git checkpoint recorded with traceable message;
 5. Upstream documents referenced — not duplicated.
 
+### 7.8 Repository Maintenance Lifecycle
+
+Repository Maintenance is a permanent, top-level repository governance lifecycle for preserving, correcting, extending, reviewing, publishing, and synchronizing Repository Authority after finite programs, phases, releases, or audits have completed.
+
+Repository Maintenance exists because programs are finite, while Repository Authority remains active. Governance defects, metadata errors, release lifecycle gaps, continuity inconsistencies, audit evidence gaps, or repository hygiene needs may be discovered after closure. These needs must be handled without reopening completed programs, starting the next phase, or misclassifying maintenance as implementation work.
+
+#### 7.8.1 Authority classification
+
+Repository Maintenance is:
+
+- A repository governance lifecycle;
+- Permanent;
+- Top-level and non-phase;
+- Review-bound;
+- Publication-bound;
+- Continuity-bound;
+- Subordinate to the repository authority hierarchy in §6.
+
+The lifecycle itself becomes binding only when published in Repository Authority. Maintenance work does not automatically become authority. Drafts, review candidates, continuity notes, and maintenance proposals are not binding. Only published amendments become active authority per §7.6.
+
+Continuity documents may record active Repository Maintenance state, but they remain non-normative (§4.5, §11.2).
+
+#### 7.8.2 Lifecycle independence
+
+Repository Maintenance:
+
+- Does not reopen a closed program;
+- Does not become unfinished work of a closed phase;
+- Does not belong automatically to the next phase;
+- May operate while no Engineering Program is active;
+- May operate while Phase 4 is `NOT STARTED`;
+- May continue after implementation begins;
+- Remains governance-only unless separately routed to another lifecycle.
+
+A closed program may reopen only through an explicit governance act that determines the closure invalid or authorizes reopening. Maintenance discovery alone is insufficient.
+
+#### 7.8.3 Entry conditions
+
+Repository Maintenance begins only when all entry conditions below are satisfied:
+
+1. A repository governance need is identified;
+2. The issue is classified;
+3. The appropriate maintenance subtype is selected;
+4. Scope is explicitly authorized;
+5. Affected authority and ownership are identified;
+6. Required review and publication path are determined.
+
+No Repository Maintenance starts from assumption, convenience, or desire to group unrelated changes.
+
+#### 7.8.4 Lifecycle states
+
+Repository Maintenance uses the following state model:
+
+| State | Meaning | Exit condition |
+|-------|---------|----------------|
+| `IDENTIFIED` | A possible maintenance need is recorded | Classification determines whether maintenance is the correct lifecycle |
+| `CLASSIFIED` | Maintenance subtype, owner, and affected authority are identified | Scope is explicitly authorized or routed elsewhere |
+| `AUTHORIZED FOR MAINTENANCE` | Scope is approved for maintenance authoring | Draft work begins inside the authorized scope |
+| `DRAFT` | Maintenance amendment or correction is authored | Submitted for independent review |
+| `INDEPENDENT REVIEW` | Review evaluates authority placement, scope, and lifecycle integrity | Review returns approved-for-publication or requires revision |
+| `APPROVED FOR PUBLICATION` | Maintenance content is approved but not yet binding | Publication integration begins |
+| `PUBLISHED` | Maintenance change is integrated as Repository Authority where applicable | Continuity synchronization is performed when required |
+| `CONTINUITY SYNCHRONIZED` | Required continuity surfaces reflect the published maintenance result | Final verification completes |
+| `COMPLETE` | Authorized scope is resolved and restrictions are recorded | Lifecycle closes |
+
+Stop and routing states:
+
+| State | Meaning |
+|-------|---------|
+| `REJECTED` | Maintenance is not accepted as valid or required |
+| `DEFERRED` | Maintenance is valid but not authorized for current execution |
+| `ESCALATED` | Work belongs to another lifecycle or higher authority |
+| `BLOCKED` | Required evidence, authority, or repository state is unavailable |
+
+No lifecycle state may be skipped unless Repository Authority explicitly permits a reduced lifecycle for a non-semantic change.
+
+#### 7.8.5 Completion conditions
+
+Repository Maintenance becomes `COMPLETE` only when:
+
+1. The authorized scope is resolved;
+2. Required independent review is complete;
+3. Publication is complete when authority changed;
+4. Continuity is synchronized when required;
+5. Repository state is verified;
+6. Remaining restrictions are recorded.
+
+Maintenance may also terminate as `REJECTED`, `DEFERRED`, `ESCALATED`, `BLOCKED`, or formally closed as unnecessary.
+
+#### 7.8.6 Ownership
+
+Primary ownership belongs to the Documentation Governance Board or repository governance owner.
+
+Subject-matter co-ownership applies as follows:
+
+| Area | Co-owner |
+|------|----------|
+| Engineering governance documents | Engineering Architecture leadership |
+| Product Authority effects | Product Design owner or Design Council |
+| Release governance | Release governance owner |
+| Continuity surfaces | Continuity owner |
+| Audit records | Audit owner |
+
+Design Council or equivalent strategic approval is required when maintenance affects phase order, phase status, program authorization, repository-wide hierarchy, major governance transitions, Product Authority, or implementation authorization boundaries.
+
+#### 7.8.7 Permanent maintenance subtypes
+
+| Subtype | Owns |
+|---------|------|
+| Governance Maintenance | Lifecycle rules, authority rules, repository taxonomy, publication governance, workflow governance, amendment governance |
+| Release Maintenance | Release strategy, manifest governance, tag semantics, GitHub Release evidence rules, release metadata corrections |
+| Continuity Maintenance | Continuity synchronization, handoff corrections, repository checkpoint metadata, active lifecycle recording |
+| Metadata Maintenance | Lifecycle status metadata, publication status, release metadata, authority labels, dates, identifiers |
+| Audit Maintenance | Audit evidence, findings classification, review traceability, correction of audit records, audit metadata |
+| Repository Hygiene Maintenance | Non-semantic cleanup, line-ending normalization, formatting-only corrections, obsolete temporary artifacts, deterministic repository cleanliness, non-semantic file organization permitted by authority |
+| Deprecation and Supersession Maintenance | Deprecation records, supersession lineage, replacement references, current binding authority identification, obsolete authority warnings |
+| Cross-Reference Maintenance | Broken references, stale references, moved-document references, incorrect section references |
+
+Release Maintenance may define or correct release governance, but release execution still requires separate authorization. Continuity Maintenance may record state, but continuity documents remain non-authoritative. Metadata Maintenance and Repository Hygiene Maintenance must not silently change substantive meaning.
+
+#### 7.8.8 Subtype extension policy
+
+New Repository Maintenance subtypes may be introduced only through Repository Authority amendment. A new subtype requires:
+
+1. Recurring repository problem;
+2. Distinct ownership;
+3. Non-duplicative scope;
+4. Entry conditions;
+5. Stop conditions;
+6. Required validation;
+7. Interaction rules with existing lifecycles.
+
+Default rule: use an existing subtype whenever it can preserve correctness.
+
+#### 7.8.9 Allowed activities
+
+Repository Maintenance may perform:
+
+- Bounded governance amendments;
+- Release governance improvements;
+- Continuity corrections;
+- Lifecycle and publication metadata corrections;
+- Audit record maintenance;
+- Repository hygiene;
+- Deprecation and supersession metadata;
+- Cross-reference repair;
+- Taxonomy clarification;
+- Workflow clarification;
+- Publication of reviewed maintenance amendments.
+
+#### 7.8.10 Prohibited activities
+
+Repository Maintenance must not:
+
+- Implicitly reopen closed phases or programs;
+- Authorize or start Phase 4;
+- Authorize implementation;
+- Change Product Design substance;
+- Create new Engineering Program scope;
+- Redesign published architecture;
+- Bypass independent review;
+- Bypass publication;
+- Rewrite Git history;
+- Force-push;
+- Move published tags;
+- Create releases without release execution authorization;
+- Use continuity documents as normative authority;
+- Combine unrelated maintenance scopes;
+- Hide semantic changes as metadata or hygiene changes.
+
+#### 7.8.11 Routing and escalation
+
+Repository Maintenance must stop and route work to the owning lifecycle when the work materially changes:
+
+- Product Design meaning;
+- Engineering Architecture meaning;
+- Phase authorization;
+- Implementation scope;
+- Runtime behavior;
+- Deployment policy;
+- A new engineering program;
+- A new product evolution program.
+
+Escalated work may proceed only under the owning lifecycle's authorization, review, and publication rules.
+
+#### 7.8.12 Review policy
+
+All material maintenance amendments require independent review before publication.
+
+Maintenance validation levels are:
+
+| Level | Use |
+|-------|-----|
+| Targeted Validation | Isolated corrections or a single directly affected authority surface |
+| Scoped Validation | Multiple related governance surfaces, cross-reference impact, or release/continuity interaction |
+| Full Verification | New top-level authority, major governance restructuring, Repository Authority changes with broad impact, publication gates requiring full review, or lost continuity |
+
+At minimum, maintenance review verifies terminology, authority ownership, scope, affected cross-references, lifecycle consistency, and non-authorization boundaries.
+
+#### 7.8.13 Publication policy
+
+A maintenance change becomes binding only after its required publication lifecycle completes per §7.6.
+
+Maintenance publication must preserve the maintenance subtype, authorized scope, non-authorization boundaries, and any required maintenance-specific audit or continuity evidence. Generic publication integration remains governed by §7.6 and §17.
+
+Draft and review-candidate maintenance changes are not binding.
+
+#### 7.8.14 Continuity policy
+
+`CURSOR_HANDOFF.md` or its future successor should record active Repository Maintenance separately from program execution.
+
+Required continuity metadata:
+
+- Maintenance subtype;
+- Target authority;
+- Lifecycle state;
+- Authorized objective;
+- Authorized scope;
+- Prohibited scope;
+- Review status;
+- Publication status;
+- Checkpoint;
+- Next permitted action.
+
+Continuity records must reference authority rather than duplicate it.
+
+#### 7.8.15 Roadmap representation
+
+Repository Maintenance is a permanent non-phase governance lane. It must not be numbered as a Product or Engineering phase.
+
+Recommended representation:
+
+```
+Repository Maintenance: INACTIVE / ACTIVE / IN REVIEW / PUBLISHED / COMPLETE
+```
+
+When Repository Maintenance is active, roadmap metadata must preserve closed and unauthorized lifecycle states unless separately changed by authorized strategic governance:
+
+- Phase 3 remains `CLOSED`;
+- Phase 4 remains `NOT STARTED`;
+- Implementation remains `NOT AUTHORIZED`.
+
+`MASTER_ROADMAP.md` records only material repository-wide maintenance, not every minor correction.
+
+#### 7.8.16 Audit representation
+
+Repository audits must classify findings separately as:
+
+- Closed program defect;
+- Repository Maintenance item;
+- Release reconstruction item;
+- Continuity inconsistency;
+- Metadata correction;
+- Product Authority issue;
+- Engineering Authority issue;
+- Implementation defect.
+
+Audit findings must not reopen completed programs automatically.
+
+#### 7.8.17 Lifecycle interactions
+
+| Lifecycle | Interaction rule |
+|-----------|------------------|
+| Product Lifecycle | Repository Maintenance may maintain surrounding metadata and references but cannot change Product Design Authority substance; substantive Product Design changes route to Product Lifecycle |
+| Engineering Program Lifecycle | Repository Maintenance may amend governance documents created during an Engineering Program without reopening that program; substantive architecture changes route to authorized Engineering Architecture amendment, evolution, or new program lifecycle |
+| Release Lifecycle | Repository Maintenance may define or correct release governance; manifest publication, tag creation, and GitHub Release creation require separate release execution authorization |
+| Audit Lifecycle | Repository Maintenance may correct audit evidence or metadata after audit completion; it does not replace an active audit lifecycle |
+| Implementation Lifecycle | Repository Maintenance may coexist with implementation but cannot change source code, authorize development, approve runtime behavior, authorize deployment, or replace implementation governance |
+
+#### 7.8.18 Working Set policy
+
+Repository Maintenance uses the smallest Working Set that guarantees correctness. The Working Set may include only:
+
+- Owning authority;
+- Directly affected authority;
+- Required continuity record;
+- Required roadmap metadata;
+- Active review report;
+- Publication metadata.
+
+Unrelated repository content remains out of scope.
+
+#### 7.8.19 Failure and STOP conditions
+
+Repository Maintenance must stop immediately when:
+
+- Authority ownership is unclear;
+- Scope crosses lifecycle boundaries;
+- Product or Engineering meaning would change;
+- Repository state cannot be verified;
+- Unrelated changes cannot be isolated;
+- Required review evidence is unavailable;
+- Publication state is ambiguous;
+- Continuity conflicts with authority;
+- Maintenance would implicitly authorize another lifecycle.
+
+Default rule: **STOP. Do not guess.**
+
 ---
 
 ## 8. Naming Conventions
@@ -654,6 +953,7 @@ Continuity synchronization is required after:
 - Phase step completion;
 - Strategic governance decision publication (§5.4);
 - Engineering standard publication;
+- Repository Maintenance publication or completion when continuity metadata changes;
 - Release or freeze events;
 - Audit completion or remediation.
 
@@ -970,6 +1270,8 @@ Before this or any engineering authority document may complete the binding-autho
 4. Document metadata is complete and honest;
 5. No conflict with frozen product authority.
 
+For Repository Maintenance amendments after program closure, explicit `AUTHORIZED FOR MAINTENANCE` scope under §7.8 satisfies the governance authorization requirement for the maintenance amendment. It does not reopen the closed program, start the next phase, or authorize implementation.
+
 **Repository Standards prerequisites (this document):**
 
 | Prerequisite | Status |
@@ -1135,6 +1437,8 @@ This document and repository governance **must not**:
 | **Runtime Git HEAD** | Live Git ref state obtained from Git tooling; validation evidence, not durable checkpoint authority |
 | **Latest Publication Commit** | Commit recording publication evidence for an authority or governance document |
 | **Continuity Synchronization** | Alignment of continuity surfaces with latest verified checkpoint, governance state, and next authorized step |
+| **Repository Maintenance** | Permanent top-level repository governance lifecycle for maintaining Repository Authority after finite programs, phases, releases, or audits complete |
+| **Maintenance subtype** | Classified category of Repository Maintenance with distinct ownership and scope |
 | **Freeze** | Content lock against casual modification |
 | **Lineage** | Visible chain of authority from predecessor to successor |
 | **Publication** | Integration of approved content per §7.6 — confers active authority |
@@ -1151,14 +1455,19 @@ Terms defined in PROJECT_CONSTITUTION.md, ARCHITECTURE_PRINCIPLES.md, or Product
 | Item | Status |
 |------|--------|
 | **Authority class** | Authoritative repository governance |
-| **Phase** | 3.5 — Repository Standards |
+| **Status** | PUBLISHED — Repository Standards; Repository Maintenance Lifecycle active |
+| **Binding authority** | Active — Repository Maintenance Lifecycle published as repository governance |
+| **Publication** | COMPLETE — Repository Maintenance Lifecycle amendment published |
+| **Phase** | 3.5 — Repository Standards; Repository Maintenance is top-level non-phase governance lifecycle |
 | **Supersedes** | Informal repository convention; undocumented placement practice |
 | **Subordinate to** | PROJECT_CONSTITUTION.md · ARCHITECTURE_PRINCIPLES.md · PLATFORM_ARCHITECTURE.md · Product Design Standard |
 | **Peer to** | SYSTEM_ARCHITECTURE.md (system structure — separate responsibility) |
 | **Superior to** | Domain engineering standards (on repository organization matters) · Legacy docs · Operational encoding |
-| **Does not authorize** | Implementation; domain technology choices; Phase 3 completion |
+| **Does not authorize** | Implementation; domain technology choices; Phase 3 reopening; Phase 4; release execution |
 | **Prerequisites** | Phase 3 Authorization; Constitution; Principles; Platform Architecture published |
-| **Amendment** | Explicit governance review required; document-local amendments in version history unless §5.4 applies |
+| **Independent review** | APPROVED — Repository Maintenance Lifecycle independent review, targeted re-review, and publication review complete |
+| **Publication checkpoint** | COMPLETE — Repository Maintenance Lifecycle publication checkpoint recorded |
+| **Amendment** | Explicit governance review required; document-local amendments in version history unless §5.4 applies; Repository Maintenance amendments follow §7.8 |
 
 ---
 
