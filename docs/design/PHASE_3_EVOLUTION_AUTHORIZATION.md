@@ -146,8 +146,8 @@ Phase 3 remaining authorities must be authored and published in the following **
 | 1 | Database Standards | Original (A1) | **COMPLETE** |
 | 2 | Infrastructure Standards | Original (A2) | **COMPLETE** |
 | 3 | Observability Architecture | Extension (E1) | **COMPLETE** |
-| 4 | Integration Architecture | Extension (E2) | **NEXT AUTHORIZED** |
-| 5 | Authentication Architecture | Extension (E3) | Pending |
+| 4 | Integration Architecture | Extension (E2) | **COMPLETE** |
+| 5 | Authentication Architecture | Extension (E3) | **NEXT AUTHORIZED** |
 | 6 | Authorization Architecture | Extension (E4) | Pending |
 | 7 | Development Standards | Original (A3) | Pending |
 | 8 | AI Collaboration Standards | Original (A4) | Pending |
@@ -211,7 +211,7 @@ Extension authorities must **consume** upstream published authorities without re
 7. Execution order (§6) is **binding** on forward Phase 3 work.
 8. **Implementation is NOT AUTHORIZED** by this evolution authorization.
 9. **Phase 4 is NOT STARTED** by this evolution authorization.
-10. **Next required workflow step:** Integration Architecture authoring per execution order position 4.
+10. **Next required workflow step:** Authentication Architecture authoring per execution order position 5.
 
 ---
 
