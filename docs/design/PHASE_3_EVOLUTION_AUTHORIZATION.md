@@ -101,7 +101,7 @@ This evolution authorization **extends** program scope. It does **not** replace 
 
 ### 5.1 Original approved scope (remaining)
 
-The following items from `PHASE_3_AUTHORIZATION.md` §5 remain authorized and **not yet published**:
+The following items from `PHASE_3_AUTHORIZATION.md` §5 remained authorized by this governance act and are now published per repository continuity:
 
 | # | Authority | Path |
 |---|-----------|------|
@@ -147,11 +147,11 @@ Phase 3 remaining authorities must be authored and published in the following **
 | 2 | Infrastructure Standards | Original (A2) | **COMPLETE** |
 | 3 | Observability Architecture | Extension (E1) | **COMPLETE** |
 | 4 | Integration Architecture | Extension (E2) | **COMPLETE** |
-| 5 | Authentication Architecture | Extension (E3) | **NEXT AUTHORIZED** |
-| 6 | Authorization Architecture | Extension (E4) | Pending |
-| 7 | Development Standards | Original (A3) | Pending |
-| 8 | AI Collaboration Standards | Original (A4) | Pending |
-| 9 | Implementation Governance | Original (A5) | Pending |
+| 5 | Authentication Architecture | Extension (E3) | **COMPLETE** |
+| 6 | Authorization Architecture | Extension (E4) | **COMPLETE** |
+| 7 | Development Standards | Original (A3) | **COMPLETE** |
+| 8 | AI Collaboration Standards | Original (A4) | **COMPLETE** |
+| 9 | Implementation Governance | Original (A5) | **COMPLETE** |
 
 **Phase 3 program completion** requires all nine authorities published plus separate Design Council approval of PROJECT ARCHITECTURE & STANDARDS as a unified artifact.
 
@@ -211,7 +211,7 @@ Extension authorities must **consume** upstream published authorities without re
 7. Execution order (§6) is **binding** on forward Phase 3 work.
 8. **Implementation is NOT AUTHORIZED** by this evolution authorization.
 9. **Phase 4 is NOT STARTED** by this evolution authorization.
-10. **Next required workflow step:** Authentication Architecture authoring per execution order position 5.
+10. **Historical next required workflow step at GD-017 approval:** Authentication Architecture authoring per execution order position 5. **Current continuity state:** all nine authorities in §6 are published; Phase 3 program completion still requires separate Design Council approval.
 
 ---
 
