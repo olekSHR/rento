@@ -4,7 +4,7 @@ This document is the **highest-level planning document** for the Rento project. 
 
 **Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Phase 4 NOT STARTED; Repository Maintenance Lifecycle ACTIVE**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Repository Maintenance Lifecycle is **ACTIVE** as a permanent non-phase governance lifecycle. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
+Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Repository Maintenance Lifecycle is **ACTIVE** as a permanent non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is **PUBLISHED** as release governance only. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
 
 ### AI Session Initialization
 
@@ -45,6 +45,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Product Design Standard v1.0** | **COMPLETE (GD-016)** — Final Design Council Sign-off recorded |
 | **Project Architecture & Standards** | **CLOSED** — all currently authorized Engineering Authority documents PUBLISHED; formal Phase 3 closure recorded |
 | **Repository Maintenance Lifecycle** | **ACTIVE** — permanent non-phase repository governance lifecycle published in `REPOSITORY_STANDARDS.md` |
+| **Retrospective Engineering Release Reconstruction amendment** | **PUBLISHED** — release governance only; release reconstruction execution NOT AUTHORIZED |
 | **Product Development Methodology** | **NOT STARTED** |
 | **Latest completed macro-domain** | Future Product Evolution (GD-014) |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
@@ -265,10 +266,11 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Remaining Engineering Authorities | **0** |
 | Formal Phase 3 Closure | **COMPLETE** |
 | Repository Maintenance Lifecycle | **ACTIVE — non-phase governance lifecycle** |
+| Retrospective Engineering Release Reconstruction amendment | **PUBLISHED — release governance only; release reconstruction execution NOT AUTHORIZED** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
-This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Implementation remains separately unauthorized, and Phase 4 remains not started.
+This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is published as release governance only. Implementation remains separately unauthorized, release reconstruction execution remains unauthorized, and Phase 4 remains not started.
 
 ## Deliverable
 
