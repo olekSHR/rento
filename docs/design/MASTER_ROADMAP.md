@@ -2,9 +2,9 @@
 
 This document is the **highest-level planning document** for the Rento project. It defines the strategic order of all future architectural phases — from product design through engineering standards to reusable methodology.
 
-**Current active phase:** **Phase 3 — Project Architecture & Standards IN PROGRESS**
+**Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Phase 4 NOT STARTED**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **AUTHORIZED** and in progress. Phase 3 Evolution is **AUTHORIZED** (GD-017). All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. Phase 3 program completion still requires separate Design Council approval of PROJECT ARCHITECTURE & STANDARDS as a unified artifact. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
+Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
 
 ### AI Session Initialization
 
@@ -43,7 +43,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Product Design Standard v1.0 Architectural Audit Phase 0** | **COMPLETE** (`PHASE_0_ARCHITECTURAL_AUDIT`) — audit charter authored; Design Council Review complete |
 | **Product Design Standard v1.0 Architectural Audit** | **COMPLETE (GD-015)** — execution COMPLETE; 18 findings all RESOLVED; Audit Completion Sign-off recorded |
 | **Product Design Standard v1.0** | **COMPLETE (GD-016)** — Final Design Council Sign-off recorded |
-| **Project Architecture & Standards** | **IN PROGRESS** — all currently authorized Engineering Authority documents PUBLISHED; formal Phase 3 closure pending separate Design Council approval |
+| **Project Architecture & Standards** | **CLOSED** — all currently authorized Engineering Authority documents PUBLISHED; formal Phase 3 closure recorded |
 | **Product Development Methodology** | **NOT STARTED** |
 | **Latest completed macro-domain** | Future Product Evolution (GD-014) |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
@@ -123,7 +123,7 @@ Product Design Standard v1.0 Architectural Audit ✓ COMPLETE (GD-015)
     ↓
 Product Design Standard v1.0 ✓ COMPLETE (GD-016)
     ↓
-Project Architecture & Standards — IN PROGRESS (all currently authorized Engineering Authority documents PUBLISHED; formal closure pending)
+Project Architecture & Standards — CLOSED (all currently authorized Engineering Authority documents PUBLISHED; formal closure recorded)
 ```
 
 **Architectural transition (Design Council approved):** Chapter 41 opens the Settled Tenancy macro-domain. Chapter 42 establishes the **first specialized dimension** — Rent Lifecycle Experience — governing recurring rent obligation experience during Active Tenancy. Chapter 43 establishes the **second specialized dimension** — Maintenance and Repair Experience — governing maintenance and repair context during Active Tenancy. Chapter 44 establishes the **third specialized dimension** — Tenancy Dispute and Escalation Experience — governing dispute and escalation context during Active Tenancy. Chapter 45 establishes the **terminal specialized dimension** — Tenancy Conclusion Experience — governing normal and expected tenancy conclusion during Active Tenancy. **Settled Tenancy macro-domain (Chapters 41–45) is architecturally complete** for Tenancy Lifecycle specialized dimension coverage. Chapter 46 opens the **Realtor Platform macro-domain** — macro-domain foundation consuming Chapters 18–19 antecedent layers. Chapter 47 establishes the **first specialized dimension** — Listing Publication and Moderation Participation Experience — governing the realtor's architectural relationship with Publication Integrity inside the marketplace. Chapter 48 establishes the **second specialized dimension** — Professional Activation Experience — governing orientation into legitimate marketplace professional participation. Chapter 49 establishes the **third specialized dimension** — Professional Verification Participation Experience — governing participation in platform attestation of professional standing. Chapter 50 establishes the **fourth specialized dimension** — Inquiry Stewardship Experience — governing professional responsibility toward consumer inquiries beyond contact initiation. **Realtor Platform macro-domain (Chapters 46–50) is architecturally complete** for named Ch 46 §13.3 specialized dimension coverage. Chapter 51 opens the **Admin Platform macro-domain** — macro-domain foundation consuming Chapter 20 as antecedent trust meaning layer, with Platform Governance Lifecycle, participation-execution separation from Chapters 46–50, and governance-execution-honors-delegated-authority-only posture per GD-008. Chapter 52 establishes the **first specialized dimension** — Listing Moderation Decision Execution Experience — governing execution of delegated listing moderation decisions. Chapter 53 establishes the **second specialized dimension** — Role Grant and Revocation Execution Experience — governing execution of delegated realtor role scope changes. Chapter 54 establishes the **third specialized dimension** — Verification Program Execution Experience — governing execution of delegated verification program adjudication. Chapter 55 establishes the **fourth named specialized dimension** — Platform Policy Enforcement Experience — governing residual delegated marketplace policy enforcement execution. **Admin Platform macro-domain (Chapters 51–55) is architecturally complete** for named Ch 51 §13.3 specialized dimension coverage. Additional Admin Platform specialized dimensions are not currently justified; future dimensions require a documented architectural gap and Design Council approval. Admin Platform completion does **not** imply Product Design Standard v1.0 completion. Chapter 56 opens the **Design System Governance macro-domain** — macro-domain foundation consuming Chapters 5 and 11 as antecedent layers, with Governance Subject Principle, Product Design Standard Lifecycle, architectural ownership levels (Product Experience / Platform Governance / Design System Governance), and standards governance-honors-product-design-standard-only posture per PHASE_0_DESIGN_SYSTEM_GOVERNANCE. Chapter 57 establishes the **first specialized dimension** — Standards Enforcement Experience — governing Standard Compliance as architectural state and protecting Product Design Standard authority without implementation, registry content, Chapter 5 redefinition, Chapter 11 redefinition, or Chapter 56 foundation rewrite. Chapter 58 establishes the **second specialized dimension** — Standards Evolution Experience — governing controlled Product Design Standard evolution with Evolution Candidate separation, Product Design Standard Evolution Approval discipline, Continuous Architectural Lineage, Chapter 5 / Chapter 11 / Chapter 56 / Chapter 57 ownership preservation, no implementation scope, and no registry content. Chapter 59 establishes the **third specialized dimension** — Exception Policy Experience — governing standard-level authorized exception status legibility with Chapter 5 / Chapter 11 / Chapter 56 / Chapter 57 / Chapter 58 authority preservation, no implementation scope, and no registry content. Design Council governance reconciliation assigns **Chapter 60 — Product Review Checklist** and **Chapter 61 — Anti-Patterns Registry** as forward Design System Governance registry objects. Chapter 60 establishes the **fourth specialized dimension** — Product Review Checklist — governing standard-wide product design review attention with Checklist Completion State, Architectural Finding, Governed Classification routing, PRC-1 through PRC-15, Chapter 5 / Chapter 11 / Chapter 20 / Chapter 56 / Chapter 57 / Chapter 58 / Chapter 59 authority preservation, principles-only scope, and Chapter 61 separation. Chapter 61 establishes the **fifth specialized dimension** — Anti-Patterns Registry — governing durable registry-level negative precedent for recurring or structurally repeatable product-design failure patterns, with Evidence-is-not-authority discipline, mandatory Registry Eligibility criteria, minimal lifecycle, APR-1 through APR-17, principles-only scope, no actual registry entries, and Chapter 5 / Chapter 11 / Chapter 20 / Chapter 56 / Chapter 57 / Chapter 58 / Chapter 59 / Chapter 60 authority preservation. Chapter 61 approval closes the Chapter 56 §10.5 Anti-Patterns Registry forward object. Chapter 61 approval does **not** populate Anti-Patterns Registry, does **not** close Design System Governance macro-domain, does **not** start Design System Governance macro-domain completion review, does **not** authorize additional specialized dimensions, and does **not** imply Product Design Standard v1.0 completion.
@@ -179,11 +179,11 @@ These concepts must **never** be merged. Housing Journey does not extend into on
 
 **Phase 1 — Product Design Standard is COMPLETE (GD-016).** Phase 2 Architectural Audit is **COMPLETE (GD-015).** RENTO PRODUCT DESIGN STANDARD v1.0 is formally complete as a single audited artifact (Chapters 1–64).
 
-The following governance work remains **next on the roadmap** but is **NOT COMPLETE**:
+The following governance work is **next on the roadmap** but is **NOT STARTED**:
 
-- **Project Architecture & Standards (Phase 3) formal closure** — all currently authorized Engineering Authority documents are published; separate Design Council approval is required before Phase 3 is complete.
+- **Product Development Methodology (Phase 4) authorization** — separate Design Council governance act required before Phase 4 begins.
 
-Phase 3 publication completion does **not** authorize implementation and does **not** start Phase 4.
+Phase 3 formal closure does **not** authorize implementation and does **not** start Phase 4.
 
 ## End goal
 
@@ -236,11 +236,11 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 
 **Prerequisite:** Phase 2 complete — RENTO PRODUCT DESIGN STANDARD v1.0 formally approved. **Prerequisite satisfied (GD-016).**
 
-**Status:** **IN PROGRESS** — Phase 3 Authorization **AUTHORIZED** (2026-07-11). Phase 3 Evolution **AUTHORIZED** (GD-017, 2026-07-11).
+**Status:** **CLOSED** — PROJECT ARCHITECTURE & STANDARDS formally complete. Phase 3 Authorization and Phase 3 Evolution are complete. Implementation remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED**.
 
 | Step | Status |
 |------|--------|
-| Phase 3 Authorization | **AUTHORIZED** |
+| Phase 3 Authorization | **CLOSED** |
 | Phase 3.1 — Project Constitution | **COMPLETE** |
 | Phase 3.2 — Architecture Principles | **COMPLETE** |
 | Phase 3.3 — Platform Architecture | **COMPLETE** |
@@ -262,11 +262,11 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | AI Collaboration Standards | **COMPLETE** |
 | Implementation Governance | **COMPLETE** |
 | Remaining Engineering Authorities | **0** |
-| Formal Phase 3 Closure | **PENDING SEPARATE DESIGN COUNCIL APPROVAL** |
+| Formal Phase 3 Closure | **COMPLETE** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
-This phase translates approved product architecture into engineering and platform standards. Phase 3 completion requires separate Design Council approval of PROJECT ARCHITECTURE & STANDARDS as an approved artifact.
+This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Implementation remains separately unauthorized, and Phase 4 remains not started.
 
 ## Deliverable
 
@@ -312,7 +312,7 @@ Phase 3 Evolution authorities — dependency-ordered per `PHASE_3_EVOLUTION_AUTH
 | 8 | AI Collaboration Standards | Original — COMPLETE |
 | 9 | Implementation Governance | Original — COMPLETE |
 
-**Remaining Engineering Authorities:** **0**. Formal Phase 3 closure still requires separate Design Council approval of PROJECT ARCHITECTURE & STANDARDS as an approved artifact.
+**Remaining Engineering Authorities:** **0**. Formal Phase 3 closure is complete. The next program activity is Phase 4 authorization when separately approved.
 
 The Product Design Standard remains the **highest authority for product decisions**. Engineering standards implement and extend — they do not override approved product principles.
 
@@ -320,7 +320,7 @@ The Product Design Standard remains the **highest authority for product decision
 
 # Phase 4 — Product Development Methodology
 
-**Prerequisite:** Phase 3 complete — PROJECT ARCHITECTURE & STANDARDS approved.
+**Prerequisite:** Phase 3 complete — PROJECT ARCHITECTURE & STANDARDS approved. **Prerequisite satisfied. Phase 4 remains NOT STARTED and requires separate authorization.**
 
 This phase transforms all prior work — product design standard and engineering standards — into a **reusable methodology** applicable to future products beyond Rento.
 
