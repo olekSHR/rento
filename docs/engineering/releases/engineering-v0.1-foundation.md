@@ -37,10 +37,10 @@ The historical boundary is evidence of milestone completion. It is not evidence 
 | Field | Value |
 |-------|-------|
 | **Reconstruction publication date** | 2026-07-16 |
-| **Reconstruction manifest commit** | Recorded by the Git commit that adds this manifest; exact SHA is recorded in the GitHub Release and continuity synchronization after commit creation |
+| **Reconstruction manifest commit** | `7a5b2bd23c0abbe856d69c7a96b484a49adf5dbc` |
 | **Annotated tag** | `engineering-v0.1-foundation` |
 | **GitHub Release title** | `engineering-v0.1-foundation` |
-| **GitHub Release URL** | Recorded after GitHub Release publication |
+| **GitHub Release URL** | `https://github.com/olekSHR/rento/releases/tag/engineering-v0.1-foundation` |
 | **Repository synchronization status** | Required before tag creation: local `HEAD` equals `origin/main` |
 | **Validation result** | PASSED — historical boundary, inventory, release order, and repository synchronization verified before manifest creation |
 
