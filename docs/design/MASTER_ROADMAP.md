@@ -2,9 +2,9 @@
 
 This document is the **highest-level planning document** for the Rento project. It defines the strategic order of all future architectural phases — from product design through engineering standards to reusable methodology.
 
-**Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Implementation Program Stage I0 CLOSED; Stage I0 Replacement Governance Lifecycle PUBLISHED; Phase 4 NOT STARTED; Repository Maintenance Lifecycle ACTIVE**
+**Current active phase:** **Phase 3 — Project Architecture & Standards CLOSED; Implementation Program Stage I0 CLOSED; Stage I1 Authorization Instrument PUBLISHED; Phase 4 NOT STARTED; Repository Maintenance Lifecycle ACTIVE**
 
-Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Repository Maintenance Lifecycle is **ACTIVE** as a permanent non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is **PUBLISHED** as release governance only. Implementation Program Stage I0 governance is **PUBLISHED** and Stage I0 is **CLOSED** after Final Stage I0 Closure Review completed with verdict APPROVED FOR STAGE I0 CLOSURE. Stage I0 Replacement Governance Lifecycle is **PUBLISHED** as replacement governance definition only. Implementation remains **NOT AUTHORIZED**. Stage I1 remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
+Phase 1 is formally complete (GD-016). Phase 3 is **CLOSED**. Phase 3 Evolution is **COMPLETE**. All currently authorized Phase 3 Engineering Authority documents are **PUBLISHED**. PROJECT ARCHITECTURE & STANDARDS is formally complete as the Engineering Architecture artifact. Repository Maintenance Lifecycle is **ACTIVE** as a permanent non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is **PUBLISHED** as release governance only. Implementation Program Stage I0 governance is **PUBLISHED** and Stage I0 is **CLOSED** after Final Stage I0 Closure Review completed with verdict APPROVED FOR STAGE I0 CLOSURE. Stage I1 Authorization Instrument is **PUBLISHED** as an authorization definition only. Implementation remains **NOT AUTHORIZED**. Stage I1 remains **NOT AUTHORIZED**. Phase 4 remains **NOT STARTED** and requires separate authorization before any Phase 4 activity begins.
 
 ### AI Session Initialization
 
@@ -48,6 +48,7 @@ This is **not** implementation documentation. It is the authoritative product de
 | **Retrospective Engineering Release Reconstruction amendment** | **PUBLISHED** — release governance only; release reconstruction execution NOT AUTHORIZED |
 | **Implementation Program Stage I0 governance** | **CLOSED** — governance foundation complete; implementation and Stage I1 NOT AUTHORIZED |
 | **Stage I0 Replacement Governance Lifecycle** | **PUBLISHED** — replacement governance definition only; Stage I0 CLOSED; implementation and Stage I1 NOT AUTHORIZED |
+| **Stage I1 Authorization Instrument** | **PUBLISHED** — definition only; Stage I1, implementation, work packages, audit/gap work, and Phase 4 NOT AUTHORIZED |
 | **Product Development Methodology** | **NOT STARTED** |
 | **Latest completed macro-domain** | Future Product Evolution (GD-014) |
 | **Admin Platform** | **COMPLETE** (Ch 51 foundation ✓ + Ch 52–55 named execution dimensions ✓ — **named Ch 51 §13.3 registry closed**) |
@@ -277,11 +278,12 @@ Official approval of **RENTO PRODUCT DESIGN STANDARD v1.0** as the completed, au
 | Implementation Program Stage I0 Governance | **CLOSED** |
 | Stage I0 Replacement Governance Lifecycle | **PUBLISHED** |
 | Stage I0 Formal Closure | **COMPLETE** |
+| Stage I1 Authorization Instrument | **PUBLISHED** |
 | Stage I1 | **NOT AUTHORIZED** |
 | Implementation | **NOT AUTHORIZED** |
 | Phase 4 | **NOT STARTED** |
 
-This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is published as release governance only. Retrospective Engineering Releases `engineering-v0.1-foundation`, `engineering-v0.2-core-architecture`, `engineering-v0.3-operations`, and `engineering-v1.0` are complete. The retrospective Engineering Release reconstruction program is complete. Implementation Program Stage I0 governance is closed as governance foundation only after Final Stage I0 Closure Review completed with verdict APPROVED FOR STAGE I0 CLOSURE. Stage I0 Replacement Governance Lifecycle is published as replacement governance definition only. The exact next authorized lifecycle action requires separate authorization and must not be inferred from Stage I0 closure. Implementation remains separately unauthorized, Stage I1 remains not authorized, and Phase 4 remains not started.
+This phase translated approved product architecture into engineering and platform standards. Phase 3 is formally closed as PROJECT ARCHITECTURE & STANDARDS. Repository Maintenance is active as a separate non-phase governance lifecycle. Retrospective Engineering Release Reconstruction amendment is published as release governance only. Retrospective Engineering Releases `engineering-v0.1-foundation`, `engineering-v0.2-core-architecture`, `engineering-v0.3-operations`, and `engineering-v1.0` are complete. The retrospective Engineering Release reconstruction program is complete. Implementation Program Stage I0 governance is closed as governance foundation only after Final Stage I0 Closure Review completed with verdict APPROVED FOR STAGE I0 CLOSURE. Stage I1 Authorization Instrument is published as authorization definition only. The exact next authorized lifecycle action requires separate authorization and must not be inferred from Stage I0 closure or Stage I1 Authorization Instrument publication. Implementation remains separately unauthorized, Stage I1 remains not authorized, and Phase 4 remains not started.
 
 ## Deliverable
 

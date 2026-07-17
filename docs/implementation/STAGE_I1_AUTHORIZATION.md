@@ -1,8 +1,11 @@
 # Stage I1 Authorization Instrument
 
-**Status:** DRAFT - NOT PUBLISHED
+**Status:** PUBLISHED - Stage I1 Authorization Instrument
 **Authority class:** Implementation program authorization instrument definition
-**Binding authority:** Not active - draft only
+**Binding authority:** Active - per REPOSITORY_STANDARDS.md section 7.6
+**Publication:** COMPLETE
+**Independent Governance Review:** COMPLETED - APPROVED FOR PUBLICATION
+**Independent Publication Review:** COMPLETED - APPROVED FOR PUBLICATION
 **Program:** Implementation, Stabilization & Launch
 **Stage defined:** I1 - Repository Readiness Authorization
 **Stage I0:** CLOSED
