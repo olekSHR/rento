@@ -153,7 +153,7 @@ Every proposed work package definition must include:
 
 | Field | Required Stage I2 content |
 |-------|---------------------------|
-| Work Package ID | `IWP-###` only if ID assignment is explicitly permitted; otherwise `AUTHORIZATION REQUIRED` or `TBD` without reserving an ID |
+| Work Package ID | Stable identifier in canonical `IWP-###` format |
 | Title | Concise package title |
 | Owner Authority | Published product, engineering, repository, security, or implementation authority owning the proposed work |
 | Stage | Intended implementation program stage, as proposed metadata only |
@@ -171,7 +171,9 @@ Every proposed work package definition must include:
 | Stop Conditions | Package-specific conditions requiring halt or escalation |
 | Release Posture | Release deferred unless separately authorized |
 
-Entries missing required fields are not register-ready. Register readiness does not authorize implementation.
+`PROPOSED` and `AUTHORIZATION REQUIRED` are lifecycle status values and may appear only in the `Status` field. `TBD`, `AUTHORIZATION REQUIRED`, `PROPOSED`, or any other non-`IWP-###` value is not a valid Work Package ID.
+
+Entries missing required fields are not register-ready. A proposal without a valid stable `IWP-###` Work Package ID is not register-ready. Register readiness and stable ID assignment do not authorize, activate, or execute a work package and do not authorize implementation.
 
 ---
 
@@ -189,7 +191,7 @@ A proposed work package is register-ready only when all requirements below are s
 8. It records stop conditions.
 9. It preserves release, deployment, and Phase 4 separation.
 10. It uses only `PROPOSED` or `AUTHORIZATION REQUIRED` status unless later authority explicitly permits another pre-execution status.
-11. It does not reserve, authorize, activate, or begin work unless separately authorized.
+11. It treats stable ID assignment as identity only and does not authorize, activate, execute, or begin work unless separately authorized.
 12. It records that implementation remains NOT AUTHORIZED.
 
 Register readiness is an intake quality state, not an execution state.
