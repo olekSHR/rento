@@ -1,6 +1,6 @@
 # Stage I2 Authorization Instrument
 
-**Status:** DRAFT - NOT PUBLISHED
+**Status:** DRAFT - AUTHORED - NOT REVIEWED - NOT PUBLISHED
 **Authority class:** Implementation program authorization instrument definition
 **Binding authority:** Not active - draft authoring only
 **Publication:** NOT STARTED
@@ -66,6 +66,10 @@ This draft does not authorize Stage I2 execution.
 After this document completes independent governance review, independent publication review, and publication as Repository Authority, it may authorize only the definition of Stage I2 Work Package Definition scope and rules. It still will not authorize execution of Stage I2 by itself unless a separate execution authorization explicitly does so.
 
 Stage I2 definition may permit future register-ready proposed package metadata only after explicit Stage I2 execution authorization exists.
+
+Every Stage I2 output remains proposed and non-active. No package receives `AUTHORIZED` status during Stage I2, no package is activated during Stage I2, and no package execution is authorized during Stage I2.
+
+Package authorization requires a later separate governance decision. Package execution requires later explicit execution authority.
 
 Stage I2 definition must not authorize implementation work, package execution, package activation, package status `AUTHORIZED`, Code-to-Architecture Audit, Implementation Gap Register creation, migrations, deployment, release, Git tags, GitHub Releases, production operations, or Phase 4.
 
@@ -247,9 +251,9 @@ Stage I2 Work Package Definition may be accepted only if all criteria below are 
 5. Working Set inventory is complete.
 6. Validation results are recorded.
 7. Work Package Register schema and status rules are preserved.
-8. Any proposed package metadata is register-ready but non-executable.
+8. Any proposed package metadata is register-ready, proposed, non-active, and non-executable.
 9. No work package is activated.
-10. No work package is marked `AUTHORIZED` unless separate package authorization exists outside Stage I2 definition.
+10. No work package is marked `AUTHORIZED` during Stage I2.
 11. Owner authority is identified for each proposed package metadata item.
 12. Repository areas are identified as proposed metadata only.
 13. Evidence requirements are defined for later package authorization.
@@ -309,7 +313,7 @@ Required evidence includes:
 5. Stage I1 completion evidence.
 6. Stage I2 execution authorization evidence.
 7. Work Package Register schema and status vocabulary evidence.
-8. Proposed package metadata completeness evidence, if proposed metadata is authorized.
+8. Proposed package metadata completeness evidence, if proposed metadata authoring is permitted by Stage I2 execution authorization.
 9. Evidence requirements selected for later package authorization decisions.
 10. Stop condition evaluation.
 11. Final changed-file inventory.
@@ -354,7 +358,7 @@ Stage I2 completion does not authorize implementation. It may only identify a la
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/STAGE_I2_AUTHORIZATION.md` |
-| Status | DRAFT - NOT PUBLISHED |
+| Status | DRAFT - AUTHORED - NOT REVIEWED - NOT PUBLISHED |
 | Binding authority | Not active - draft authoring only |
 | Publication | NOT STARTED |
 | Independent Governance Review | NOT STARTED |
