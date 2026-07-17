@@ -359,7 +359,10 @@ Corrective execution must stop immediately when:
 10. Product Authority or published Engineering Authority would need amendment;
 11. more files must be modified than this instrument permits;
 12. unrelated local items cannot be isolated;
-13. prior prohibited inspection would be retroactively normalized.
+13. prior prohibited inspection would be retroactively normalized;
+14. lawful evidence required for a Stage I2 claim cannot be regenerated from permitted sources within the published evidence boundary;
+15. evidence provenance is ambiguous, incomplete, conflicting, or cannot be attributed reproducibly to an authorized source and permitted inspection operation;
+16. preserved proposal identity information cannot be reliably separated from invalid evidence-dependent content derived from prohibited inspection.
 
 Default rule: stop, preserve repository state, and report the blocker.
 
