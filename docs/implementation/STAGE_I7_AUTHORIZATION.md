@@ -1,11 +1,11 @@
 # Stage I7 Authorization Instrument
 
-**Status:** DRAFT - AUTHORED - NOT REVIEWED - NOT PUBLISHED
+**Status:** PUBLISHED - Stage I7 Authorization Instrument
 **Authority class:** Implementation program authorization instrument definition
-**Binding authority:** Not active - draft authoring only
-**Publication:** NOT STARTED
-**Independent Governance Review:** NOT STARTED
-**Independent Publication Review:** NOT STARTED
+**Binding authority:** Active - per REPOSITORY_STANDARDS.md section 7.6
+**Publication:** COMPLETE
+**Independent Governance Review:** COMPLETED - PASS
+**Independent Publication Review:** COMPLETED - PASS
 **Program:** Implementation, Stabilization & Launch
 **Stage defined:** I7 - Launch Execution
 **Stage I0:** CLOSED
@@ -233,8 +233,11 @@ If Stage I7 is later completed under valid authority, the next governance gate i
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/STAGE_I7_AUTHORIZATION.md` |
-| Status | DRAFT - AUTHORED - NOT REVIEWED - NOT PUBLISHED |
-| Binding authority | Not active - draft authoring only |
+| Status | PUBLISHED - Stage I7 Authorization Instrument |
+| Binding authority | Active - per REPOSITORY_STANDARDS.md section 7.6 |
+| Publication | COMPLETE |
+| Independent Governance Review | COMPLETED - PASS |
+| Independent Publication Review | COMPLETED - PASS |
 | Stage defined | I7 - Launch Execution |
 | Implementation | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
