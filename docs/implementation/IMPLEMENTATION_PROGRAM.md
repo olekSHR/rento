@@ -8,7 +8,9 @@
 **Independent Publication Review:** COMPLETED - APPROVED
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I0 - Program Initialization
+**Stage I0 closure:** CLOSED - Final Stage I0 Closure Review APPROVED FOR STAGE I0 CLOSURE
 **Implementation:** NOT AUTHORIZED
+**Stage I1:** NOT AUTHORIZED
 **Phase 4 Product Development Methodology:** NOT STARTED
 **Repository Maintenance Lifecycle:** ACTIVE
 **Runtime Git HEAD at initialization:** `84c51da42f504c390720523c4b1868c52eeda28d`
@@ -128,7 +130,7 @@ Additional repository evidence used only to document the technology stack in `IM
 
 | Stage | Name | Purpose | Status at I0 |
 |-------|------|---------|--------------|
-| I0 | Program Initialization | Establish program authority, transition handoff, immutable baseline, and work package register | ACTIVE for authoring only |
+| I0 | Program Initialization | Establish program authority, transition handoff, immutable baseline, and work package register | CLOSED |
 | I1 | Repository Readiness Authorization | Verify whether implementation readiness work may begin and define exact authorized package intake | NOT AUTHORIZED |
 | I2 | Work Package Definition | Register authorized implementation work packages with scope, gates, evidence, and dependencies | NOT AUTHORIZED |
 | I3 | Foundation Implementation | Execute authorized foundation implementation packages only after gates pass | NOT AUTHORIZED |
@@ -207,6 +209,8 @@ Stage I0 may exit only when:
 7. The work package register records that no implementation work is authorized outside registered packages.
 8. No application code, architecture authority, product authority, release, tag, deployment, or implementation artifact is modified by Stage I0.
 
+Stage I0 exit is recorded as CLOSED after Final Stage I0 Closure Review completed with verdict APPROVED FOR STAGE I0 CLOSURE.
+
 ---
 
 ## 11. Escalation Rules
@@ -236,6 +240,7 @@ Default rule: stop, preserve repository state, and route to the owning authority
 | Publication | COMPLETE |
 | Independent Governance Review | COMPLETED - APPROVED FOR PUBLICATION REVIEW |
 | Independent Publication Review | COMPLETED - APPROVED |
+| Stage I0 closure | CLOSED - Final Stage I0 Closure Review APPROVED FOR STAGE I0 CLOSURE |
 | Implementation | NOT AUTHORIZED |
 | Phase 4 | NOT STARTED |
 | Stage I1 | NOT AUTHORIZED |
