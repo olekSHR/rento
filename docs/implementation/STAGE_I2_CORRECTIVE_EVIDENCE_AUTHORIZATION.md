@@ -1,11 +1,11 @@
 # Stage I2 Corrective Evidence Authorization
 
-**Status:** AUTHORED - NOT REVIEWED - NOT PUBLISHED - NOT ACTIVE
-**Authority class:** Draft implementation program corrective authorization instrument
-**Binding authority:** None - draft only
+**Status:** PUBLISHED - OWNER-DIRECTED CONSOLIDATED CORRECTIVE EVIDENCE AUTHORIZATION
+**Authority class:** Implementation program corrective authorization instrument
+**Binding authority:** Active for consolidated Stage I2 corrective execution only
 **Program:** Implementation, Stabilization & Launch
 **Corrective lifecycle:** Stage I2 Corrective Evidence
-**Corrective execution:** NOT AUTHORIZED
+**Corrective execution:** AUTHORIZED FOR CONSOLIDATED EXECUTION ONLY - NOT YET COMPLETED
 **Stage I0:** CLOSED
 **Stage I1:** COMPLETED - INDEPENDENT REVIEW PASS - CONTINUITY SYNCHRONIZED
 **Stage I2:** PROVISIONAL - NOT ACCEPTED
@@ -20,22 +20,22 @@
 
 ## 1. Authorization Purpose
 
-This draft defines a prospective authorization instrument for a future bounded Stage I2 corrective evidence lifecycle.
+This instrument defines a prospective authorization for a bounded Stage I2 corrective evidence lifecycle.
 
-The purpose of that future lifecycle is to correct the governance evidence defects that prevent acceptance of the existing Stage I2 Work Package Definition outputs while preserving repository audit history and all downstream non-authorization boundaries.
+The purpose of this lifecycle is to correct the governance evidence defects that prevent acceptance of the existing Stage I2 Work Package Definition outputs while preserving repository audit history and all downstream non-authorization boundaries.
 
-This document authors the proposed authorization only. It does not publish active authority, execute corrective evidence collection, amend Stage I2 outputs, modify the Work Package Register, validate prior prohibited inspection, authorize any Work Package, authorize Stage I3, authorize implementation, deploy, release, or start Phase 4.
+Program owner direction authorizes publication and activation of this instrument for one consolidated corrective execution lifecycle with intermediate independent reviews deferred. This instrument does not validate prior prohibited inspection, authorize any Work Package, authorize Stage I3, authorize implementation, deploy, release, or start Phase 4.
 
 ---
 
 ## 2. Authority Basis
 
-This draft is subordinate to published Repository Authority:
+This instrument is subordinate to published Repository Authority:
 
 | Authority | Required interpretation |
 |-----------|-------------------------|
 | `docs/design/MASTER_ROADMAP.md` | Stage I1 is completed and synchronized; Stage I2 remains provisional, not accepted, and requires corrective lifecycle |
-| `docs/design/CURSOR_HANDOFF.md` | Operational continuity routes the next lifecycle to prospective Stage I2 corrective evidence authorization authoring |
+| `docs/design/CURSOR_HANDOFF.md` | Operational continuity records Stage I1 synchronization and current lifecycle restrictions; completion continuity will be synchronized after corrective execution |
 | `docs/engineering/REPOSITORY_STANDARDS.md` | Document lifecycle, publication, status honesty, validation, checkpoint, working set, and continuity rules govern this instrument |
 | `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` | Work package authorization separation, evidence, review gates, release separation, and stop conditions govern corrective package metadata |
 | `docs/implementation/IMPLEMENTATION_PROGRAM.md` | I0-I8 stage gates and escalation rules remain active; Stage I3 cannot begin without accepted prerequisite evidence |
@@ -47,11 +47,13 @@ This draft is subordinate to published Repository Authority:
 
 If any required authority is missing, unpublished, conflicting, or insufficient at corrective execution time, corrective execution must stop.
 
+Owner-directed activation is prospective only. It does not create independent review evidence, retroactively validate prior prohibited inspection, or accept Stage I2.
+
 ---
 
 ## 3. Corrective Objective
 
-The future corrective lifecycle, if this instrument is reviewed, published, and active, may only:
+The corrective lifecycle authorized by this instrument may only:
 
 1. correct Stage I2 evidence mappings using permitted evidence sources;
 2. segregate or mark prior prohibited evidence as invalid for acceptance;
@@ -61,9 +63,9 @@ The future corrective lifecycle, if this instrument is reviewed, published, and 
 6. revalidate owner authority mappings using only permitted evidence;
 7. preserve every Work Package as provisional and non-executable;
 8. produce a corrective execution report and validation matrix;
-9. recommend independent corrective re-review.
+9. recommend comprehensive final independent completion and acceptance review.
 
-The future corrective lifecycle must not remediate implementation defects, perform Code-to-Architecture Audit, inspect prohibited runtime surfaces, modify runtime artifacts, authorize Work Packages, authorize Stage I3, or accept Stage I2 by itself.
+The corrective lifecycle must not remediate implementation defects, perform Code-to-Architecture Audit, inspect prohibited runtime surfaces, modify runtime artifacts, authorize Work Packages, authorize Stage I3, or accept Stage I2 by itself.
 
 ---
 
@@ -71,9 +73,9 @@ The future corrective lifecycle must not remediate implementation defects, perfo
 
 Corrective execution may begin only after all prerequisites are satisfied:
 
-1. This document has completed independent governance review.
-2. Any required targeted revision and independent re-review are complete.
-3. This document has completed publication and is active authority.
+1. Program owner direction authorizes one consolidated Stage I2 corrective execution lifecycle.
+2. Intermediate independent governance review, publication readiness review, targeted re-review, and separate acceptance review are deferred until the complete corrective working set is produced.
+3. This document records owner-directed publication and activation for consolidated corrective execution only.
 4. Repository branch, HEAD, `origin/main`, ahead/behind, and working tree are verified.
 5. Stage I0 is confirmed CLOSED.
 6. Stage I1 completion evidence is confirmed from `docs/implementation/STAGE_I1_REPOSITORY_READINESS_EXECUTION_REPORT.md`.
@@ -223,7 +225,7 @@ Corrective execution must not re-open prohibited surfaces merely to confirm that
 
 ## 10. Permitted Corrective Operations
 
-If this instrument is published, corrective execution may perform only:
+Corrective execution may perform only:
 
 1. read published governance and authority documents;
 2. read accepted Stage I1 evidence and continuity surfaces;
@@ -234,7 +236,7 @@ If this instrument is published, corrective execution may perform only:
 7. author bounded corrections to Stage I2 report/register proposal metadata;
 8. create a new corrective execution report;
 9. run Markdown diagnostics and `git diff --check` for changed governance files;
-10. produce a recommendation for independent corrective re-review.
+10. produce a recommendation for comprehensive final independent completion and acceptance review.
 
 Corrective execution may not perform implementation verification, Code-to-Architecture Audit, runtime behavior checks, source review, migration review, infrastructure review, deployment review, release review, secret scan of prohibited content, or package execution.
 
@@ -269,9 +271,11 @@ Corrective execution may modify only:
 
 1. `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md`;
 2. `docs/implementation/STAGE_I2_WORK_PACKAGE_DEFINITION_REPORT.md`;
-3. a new canonical Stage I2 corrective execution report under `docs/implementation/`.
+3. `docs/implementation/STAGE_I2_CORRECTIVE_EXECUTION_REPORT.md`;
+4. `docs/design/CURSOR_HANDOFF.md`;
+5. `docs/design/MASTER_ROADMAP.md`.
 
-Continuity surfaces may be updated only after independent corrective review accepts the corrected Stage I2 outputs.
+Continuity surfaces may be updated only after corrective outputs are complete and validation confirms the maximum lifecycle status remains corrective execution completed, ready for final independent completion review, not yet accepted, and not yet closed.
 
 Corrective execution must not modify:
 
@@ -285,7 +289,7 @@ Corrective execution must not modify:
 8. deployment files;
 9. release files;
 10. Stage I1 artifacts;
-11. Stage I2 authorization instruments;
+11. Stage I2 authorization instruments other than this owner-directed activation update;
 12. unrelated local items.
 
 If correction cannot be completed within this scope, corrective execution must stop and report BLOCKED.
@@ -294,26 +298,28 @@ If correction cannot be completed within this scope, corrective execution must s
 
 ## 13. Review, Publication, And Acceptance Gates
 
-The required order is:
+The owner-directed consolidated order is:
 
 1. Corrective authorization authoring.
-2. Independent governance review.
-3. Targeted revision if required.
-4. Independent re-review if required.
-5. Publication of the corrective authorization.
-6. Bounded Stage I2 corrective evidence execution.
-7. Independent Stage I2 corrective output review.
-8. Stage I2 completion acceptance review.
-9. Continuity synchronization only after acceptance.
+2. Targeted revision of known stop-condition finding.
+3. Owner-directed publication and activation for consolidated corrective execution.
+4. Bounded Stage I2 corrective evidence execution.
+5. Work Package Register correction.
+6. Stage I2 report correction.
+7. Corrective execution report creation.
+8. Continuity synchronization recording corrective execution completed and final independent review pending.
+9. Comprehensive final independent Stage I2 completion and acceptance review.
 10. Separate Stage I3 authorization review, if later requested.
 
 Authoring does not authorize execution.
 
-Independent review approval does not publish the authorization.
+Owner-directed activation does not create independent review approval.
 
 Publication authorizes only the bounded corrective evidence execution described in this document.
 
 Stage I2 acceptance remains separate from corrective execution.
+
+Formal Stage I2 acceptance and closure remain prohibited until the comprehensive final independent completion and acceptance review returns PASS.
 
 ---
 
@@ -348,7 +354,7 @@ Unavailable checks must be recorded honestly.
 Corrective execution must stop immediately when:
 
 1. repository state cannot be verified;
-2. this document is not published and active;
+2. this document is not published and active for the owner-directed consolidated corrective lifecycle;
 3. Stage I1 completion evidence is missing or conflicting;
 4. continuity surfaces do not record Stage I1 completion synchronization;
 5. required authority is missing, unpublished, or conflicting;
@@ -383,7 +389,7 @@ Corrective execution may be submitted for independent corrective review only if:
 9. no runtime, migration, configuration, infrastructure, tests, CI, dependency, deployment, or release file was modified;
 10. validation results are recorded;
 11. remaining restrictions are recorded;
-12. continuity synchronization need is identified but not performed before independent acceptance;
+12. continuity synchronization records corrective execution completed and final independent review pending without claiming acceptance or closure;
 13. exact next review action is stated.
 
 Failure of any criterion blocks Stage I2 corrective acceptance.
@@ -392,16 +398,18 @@ Failure of any criterion blocks Stage I2 corrective acceptance.
 
 ## 17. Continuity Requirements
 
-This authoring task does not update continuity surfaces.
+This activation permits continuity synchronization only after corrective outputs are complete and validation is recorded.
 
-Future corrective execution may recommend continuity synchronization but must not perform completion continuity synchronization.
+Corrective execution may record completion continuity only as:
 
-Continuity synchronization may occur only after:
+```text
+STAGE I2 CORRECTIVE EXECUTION COMPLETED
+READY FOR FINAL INDEPENDENT COMPLETION REVIEW
+NOT YET ACCEPTED
+NOT YET CLOSED
+```
 
-1. corrective execution completes under published authority;
-2. independent Stage I2 corrective output review passes;
-3. Stage I2 completion acceptance review passes;
-4. the accepted checkpoint is known.
+Continuity synchronization may occur only after corrective execution completes under this owner-directed published authority and must record the corrective execution report path and relevant checkpoint evidence.
 
 Continuity updates must preserve that Work Package authorization, Work Package activation, Work Package execution, Stage I3, implementation, deployment, release, and Phase 4 remain separately unauthorized unless later authority explicitly changes them.
 
@@ -409,7 +417,7 @@ Continuity updates must preserve that Work Package authorization, Work Package a
 
 ## 18. Downstream Restrictions
 
-This draft and any future published version of this authorization do not authorize:
+This authorization does not authorize:
 
 1. Work Package authorization;
 2. Work Package activation;
@@ -463,11 +471,11 @@ All downstream work requires later separate governance authorization.
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/STAGE_I2_CORRECTIVE_EVIDENCE_AUTHORIZATION.md` |
-| Status | AUTHORED - NOT REVIEWED - NOT PUBLISHED - NOT ACTIVE |
-| Binding authority | None - draft only |
-| Publication | NOT PUBLISHED |
-| Independent Governance Review | NOT RUN |
-| Corrective execution | NOT AUTHORIZED |
+| Status | PUBLISHED - OWNER-DIRECTED CONSOLIDATED CORRECTIVE EVIDENCE AUTHORIZATION |
+| Binding authority | Active for consolidated Stage I2 corrective execution only |
+| Publication | COMPLETE - OWNER-DIRECTED PROSPECTIVE ACTIVATION |
+| Independent Governance Review | DEFERRED - comprehensive final independent review required after corrective execution |
+| Corrective execution | AUTHORIZED FOR CONSOLIDATED EXECUTION ONLY - NOT YET COMPLETED |
 | Stage I1 | COMPLETED - INDEPENDENT REVIEW PASS - CONTINUITY SYNCHRONIZED |
 | Stage I2 | PROVISIONAL - NOT ACCEPTED |
 | IWP-001 through IWP-012 | PROPOSED - RESERVED IDENTIFIERS ONLY - NOT AUTHORIZED - NOT ACTIVATED - NOT EXECUTABLE |
@@ -476,4 +484,4 @@ All downstream work requires later separate governance authorization.
 | Deployment | NOT AUTHORIZED |
 | Release | NOT AUTHORIZED |
 | Phase 4 | NOT STARTED |
-| Exact next lifecycle action | Independent Stage I2 Corrective Evidence Authorization Governance Review |
+| Exact next lifecycle action | Consolidated Stage I2 corrective execution |
