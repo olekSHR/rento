@@ -60,7 +60,7 @@ Publication of this document would make its governance binding for downstream im
 | Upstream document | Defines | This document |
 |-------------------|---------|---------------|
 | PROJECT_CONSTITUTION.md | Product authority supremacy, phase discipline, repository truth, implementation separation | Converts constitutional constraints into implementation governance controls |
-| REPOSITORY_STANDARDS.md | Document lifecycle, publication, status honesty, working set, continuity | Defines how implementation work preserves repository workflow without changing it |
+| REPOSITORY_STANDARDS.md | Document lifecycle, publication, status honesty, working set, continuity, Review Type, and Validation Scope | Defines how implementation work preserves repository workflow and consumes validation-scope rules without changing them |
 | DEVELOPMENT_STANDARDS.md | Development gates, code discipline, testing, review, dependency, configuration, evidence | Consumes DEV-GATE and DEV-INV obligations as implementation governance gates |
 | AI_COLLABORATION_STANDARDS.md | AI-assisted work, AI output classification, tool use, review and safety obligations | Requires AI-assisted implementation to follow AIC gates and invariants |
 | ENGINEERING_RELEASE_STRATEGY.md | Engineering release packaging and release execution boundary | Separates implementation acceptance from engineering release execution |
@@ -360,6 +360,7 @@ Implementation review verifies that realization preserves authority. Review is n
 Review must record:
 
 - Scope reviewed;
+- Review Type and Validation Scope selected under `REPOSITORY_STANDARDS.md`;
 - Authorities consumed;
 - Findings or explicit no-finding result;
 - Tests/checks reviewed;
@@ -412,6 +413,7 @@ Before future implementation acceptance, every package must provide:
 - Authority trace;
 - Gate checklist result;
 - Review result;
+- Selected Validation Scope per `REPOSITORY_STANDARDS.md`;
 - Verification commands or check evidence;
 - Unrun checks and residual risk;
 - Confirmation that release execution was not performed unless separately authorized.

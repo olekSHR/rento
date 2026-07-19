@@ -85,7 +85,7 @@ Development Standards sit below published architecture and standards authorities
 | AUTHENTICATION_ARCHITECTURE.md | Identity context establishment, session authority, authentication boundary governance | Requires authentication implementation changes to preserve identity-context boundaries |
 | AUTHORIZATION_ARCHITECTURE.md | Authorization decision lifecycle, boundary classes, delegated scope, domain-final authority | Requires authorization implementation changes to preserve decision boundaries |
 | ENGINEERING_RELEASE_STRATEGY.md | Engineering release packaging and release execution boundary | Prevents development authoring from implying release execution |
-| REPOSITORY_STANDARDS.md | Repository lifecycle, publication, traceability, working set discipline | Governs document lifecycle and repository workflow |
+| REPOSITORY_STANDARDS.md | Repository lifecycle, publication, traceability, working set discipline, Review Type, and Validation Scope | Governs document lifecycle, repository workflow, and validation-scope selection |
 
 ### 2.3 What this document owns
 
@@ -625,6 +625,7 @@ Development review verifies that a future implementation change preserves author
 | **DEV-REV-4** | Review must verify tests match risk and authority impact |
 | **DEV-REV-5** | Review must record unresolved risk before acceptance |
 | **DEV-REV-6** | Review cannot waive Product Authority, Security Standards, or immutable domain rules |
+| **DEV-REV-7** | Review Type and Validation Scope follow `REPOSITORY_STANDARDS.md` and cannot weaken required development gates |
 
 ---
 
@@ -709,6 +710,8 @@ Development Standards prohibit future implementation patterns that undermine pub
 ### 21.1 Validation purpose
 
 Development validation verifies that future implementation plans and code changes preserve published authority before acceptance. Validation does not authorize implementation.
+
+Validation Scope for development review is selected under `REPOSITORY_STANDARDS.md`. Development Standards define development gates and evidence obligations; they do not redefine repository validation-scope governance.
 
 ### 21.2 Validation dimensions
 

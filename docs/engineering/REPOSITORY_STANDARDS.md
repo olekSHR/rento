@@ -633,7 +633,9 @@ Escalated work may proceed only under the owning lifecycle's authorization, revi
 
 All material maintenance amendments require independent review before publication.
 
-Maintenance validation levels are:
+Maintenance validation scopes are selected under §11.6. Review type and validation scope are separate dimensions; maintenance review does not automatically require broader validation merely because the review type changes.
+
+Maintenance validation scopes are:
 
 | Level | Use |
 |-------|-----|
@@ -1009,9 +1011,9 @@ When the initial Working Set is insufficient:
 
 Targeted escalation must not be replaced by automatic Full Repository Initialization.
 
-#### 11.6.5 Validation levels
+#### 11.6.5 Validation scopes
 
-Validation depth must match change scope.
+Validation breadth must match change scope.
 
 | Level | Use when | Validate |
 |-------|----------|----------|
@@ -1021,9 +1023,32 @@ Validation depth must match change scope.
 
 Full Verification must not be used as the default response to every modification.
 
-#### 11.6.6 Validation selection
+#### 11.6.6 Review type and validation scope
 
-Executors must select the smallest validation level that guarantees correctness. Selection is based on:
+Review Type and Validation Scope are independent governance dimensions.
+
+Review Type defines why validation occurs:
+
+| Review Type | Purpose |
+|-------------|---------|
+| Independent Review | Evaluate authored or modified authority before approval, acceptance, or publication routing |
+| Re-Review | Verify that prior findings were corrected and no new blockers were introduced |
+| Publication Review | Verify that approved content is ready for publication integration without lifecycle or authority drift |
+| Completion Review | Verify that an authorized lifecycle, stage, package, or maintenance scope satisfies completion conditions |
+
+Validation Scope defines how broadly the repository must be validated:
+
+| Validation Scope | Breadth |
+|------------------|---------|
+| Targeted Validation | Directly affected authority surface, correction, reference, metadata, or resolved blocker |
+| Scoped Validation | Multiple related authority surfaces, lifecycle boundaries, cross-references, package-level evidence, or stage-level evidence |
+| Full Verification | Full affected authority scope required by explicit gate, lost continuity, broad Repository Authority impact, or correctness recovery |
+
+Review Type does not automatically determine Validation Scope unless published Repository Authority explicitly requires a scope. A Publication Review, Completion Review, Independent Review, or Re-Review may use Targeted Validation, Scoped Validation, or Full Verification when that scope is sufficient and permitted by Repository Authority.
+
+#### 11.6.7 Validation selection
+
+Executors must select the smallest Validation Scope that guarantees correctness. Selection is based on:
 
 1. Scope size;
 2. Authority level;
@@ -1035,7 +1060,80 @@ Executors must select the smallest validation level that guarantees correctness.
 
 Cost reduction must never justify insufficient validation.
 
-#### 11.6.7 Context continuity
+#### 11.6.8 Validation cost and efficiency
+
+Validation planning must consider:
+
+1. Working Set size;
+2. Number of authority documents loaded;
+3. Number of affected documents;
+4. Cross-reference impact;
+5. Expected review iterations;
+6. Relative API and token consumption;
+7. Whether broader validation provides material additional governance value.
+
+Validation cost is an efficiency consideration only. It must never override repository correctness, governance requirements, architectural integrity, security or operational risk, or an explicit requirement for Full Verification. Exact monetary API cost must not be claimed without billing evidence.
+
+#### 11.6.9 Corrective validation
+
+Corrective validation follows the scope of the finding impact, not automatically the scope of the original review.
+
+Every corrective validation must cover:
+
+1. The original finding;
+2. Every file changed by the correction;
+3. Directly affected authorities;
+4. Stale references created by the correction;
+5. Gates or evidence invalidated by the correction.
+
+A bounded correction may use Targeted Validation or Scoped Validation even when the original review used Full Verification, provided repository risk has not expanded and published Repository Authority does not require broader validation.
+
+Corrective validation must escalate when:
+
+1. Correction scope expands;
+2. Authority ownership is unclear;
+3. Cross-authority meaning changes;
+4. Lifecycle or stage boundaries may be affected;
+5. Required evidence is unavailable;
+6. Repository correctness cannot be guaranteed;
+7. Architectural, security, operational, release, or deployment risk increases;
+8. Published Repository Authority explicitly requires broader validation.
+
+Uncertainty requires escalation. Silent scope reduction is prohibited.
+
+#### 11.6.10 Work-result-correction-final validation cycle
+
+Governed work follows this validation cycle:
+
+```text
+Work
+    -> Result Validation
+        -> Corrective Action if required
+            -> Final Validation
+```
+
+Result Validation selects the smallest Validation Scope that proves the result satisfies the governing authority. Corrective Action remains bounded to the finding being corrected unless explicit authority expands the scope. Final Validation verifies the correction, affected files, affected authorities, stale references, invalidated gates or evidence, and any required escalation result.
+
+#### 11.6.11 Full Verification triggers
+
+Full Verification is mandatory when:
+
+1. Full Repository Initialization criteria in §11.6.2 apply;
+2. Published Repository Authority explicitly requires Full Verification;
+3. A new engineering phase begins;
+4. A new top-level authority document is created;
+5. Repository Authority changes with broad impact;
+6. Repository structure changes;
+7. Engineering continuity is lost;
+8. Correctness cannot be guaranteed from the Minimum Working Set;
+9. Publication, release, stage, maintenance, or completion gates explicitly require full review;
+10. Product Authority or published Engineering Authority may change;
+11. Code-to-Architecture Audit or Implementation Gap Register creation becomes necessary;
+12. Security-critical, production-impacting, release, deployment, operations, migration, rollback, or launch evidence is disputed or insufficient.
+
+Full Verification must not be repeated automatically after bounded corrections when repository risk has not expanded.
+
+#### 11.6.12 Context continuity
 
 Engineering continuity is reusable validated knowledge of:
 
@@ -1049,7 +1147,7 @@ Engineering continuity is reusable validated knowledge of:
 
 Continuity may be preserved across tasks and chats through repository authority and handoff metadata. Previous chat memory is not authority. A new chat reconstructs only the Minimum Working Set required by the current task unless Full Repository Initialization criteria apply.
 
-#### 11.6.8 Prompt and execution relationship
+#### 11.6.13 Prompt and execution relationship
 
 Prompts define the current objective, authorized scope, expected output, and task-specific constraints. Repository Standards define the default execution process.
 
@@ -1439,6 +1537,8 @@ This document and repository governance **must not**:
 | **Continuity Synchronization** | Alignment of continuity surfaces with latest verified checkpoint, governance state, and next authorized step |
 | **Repository Maintenance** | Permanent top-level repository governance lifecycle for maintaining Repository Authority after finite programs, phases, releases, or audits complete |
 | **Maintenance subtype** | Classified category of Repository Maintenance with distinct ownership and scope |
+| **Review Type** | Governance purpose for validation, such as Independent Review, Re-Review, Publication Review, or Completion Review |
+| **Validation Scope** | Required validation breadth selected under §11.6; one of Targeted Validation, Scoped Validation, or Full Verification |
 | **Freeze** | Content lock against casual modification |
 | **Lineage** | Visible chain of authority from predecessor to successor |
 | **Publication** | Integration of approved content per §7.6 — confers active authority |
@@ -1455,9 +1555,9 @@ Terms defined in PROJECT_CONSTITUTION.md, ARCHITECTURE_PRINCIPLES.md, or Product
 | Item | Status |
 |------|--------|
 | **Authority class** | Authoritative repository governance |
-| **Status** | PUBLISHED — Repository Standards; Repository Maintenance Lifecycle active |
-| **Binding authority** | Active — Repository Maintenance Lifecycle published as repository governance |
-| **Publication** | COMPLETE — Repository Maintenance Lifecycle amendment published |
+| **Status** | PUBLISHED — Repository Standards; Repository Maintenance Lifecycle active; Repository Validation Strategy published |
+| **Binding authority** | Active — Repository Maintenance Lifecycle and Repository Validation Strategy published as repository governance |
+| **Publication** | COMPLETE — Repository Maintenance Lifecycle amendment and Repository Validation Strategy amendment published |
 | **Phase** | 3.5 — Repository Standards; Repository Maintenance is top-level non-phase governance lifecycle |
 | **Supersedes** | Informal repository convention; undocumented placement practice |
 | **Subordinate to** | PROJECT_CONSTITUTION.md · ARCHITECTURE_PRINCIPLES.md · PLATFORM_ARCHITECTURE.md · Product Design Standard |
@@ -1465,8 +1565,8 @@ Terms defined in PROJECT_CONSTITUTION.md, ARCHITECTURE_PRINCIPLES.md, or Product
 | **Superior to** | Domain engineering standards (on repository organization matters) · Legacy docs · Operational encoding |
 | **Does not authorize** | Implementation; domain technology choices; Phase 3 reopening; Phase 4; release execution |
 | **Prerequisites** | Phase 3 Authorization; Constitution; Principles; Platform Architecture published |
-| **Independent review** | APPROVED — Repository Maintenance Lifecycle independent review, targeted re-review, and publication review complete |
-| **Publication checkpoint** | COMPLETE — Repository Maintenance Lifecycle publication checkpoint recorded |
+| **Independent review** | APPROVED — Repository Maintenance Lifecycle independent review, targeted re-review, publication review, and Repository Validation Strategy final verification complete |
+| **Publication checkpoint** | COMPLETE — Repository Maintenance Lifecycle and Repository Validation Strategy publication checkpoints recorded |
 | **Amendment** | Explicit governance review required; document-local amendments in version history unless §5.4 applies; Repository Maintenance amendments follow §7.8 |
 
 ---

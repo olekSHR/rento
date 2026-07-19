@@ -109,7 +109,7 @@ Stage I0 initialization consumes only the authorized working set:
 |-----------|---------------------|
 | `docs/design/MASTER_ROADMAP.md` | Strategic phase state, Phase 3 closure, Phase 4 not started, implementation not authorized |
 | `docs/design/CURSOR_HANDOFF.md` | Continuity state, published authority inventory, completed releases, checkpoint history |
-| `docs/engineering/REPOSITORY_STANDARDS.md` | Repository Maintenance Lifecycle, authority taxonomy, working set, validation, lifecycle honesty |
+| `docs/engineering/REPOSITORY_STANDARDS.md` | Repository Maintenance Lifecycle, authority taxonomy, working set, Review Type, Validation Scope, validation, lifecycle honesty |
 | `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` | Future implementation authorization, work package model, gates, evidence, stop conditions |
 | `docs/engineering/DEVELOPMENT_STANDARDS.md` | Development gates, traceability, review, test, security, repository hygiene |
 | `docs/engineering/AI_COLLABORATION_STANDARDS.md` | AI context, scope, tool, evidence, no-shadow-authority controls |
@@ -149,7 +149,7 @@ Stage definitions are governance definitions only. A later stage may begin only 
 | Gate | Required before exit |
 |------|----------------------|
 | I0-GATE | Four Stage I0 documents authored; cross-references internally consistent; no implementation authorized |
-| I1-GATE | Separate authorization exists for readiness work; working set and validation level selected |
+| I1-GATE | Separate authorization exists for readiness work; working set, Review Type, and Validation Scope selected under Repository Standards |
 | I2-GATE | Work packages registered with owner authority, scope, repository areas, acceptance criteria, evidence, dependencies, status, and verification |
 | I3-GATE | Foundation implementation packages accepted with required Development and Implementation Governance gates |
 | I4-GATE | Domain implementation packages accepted with product, security, auth, ownership, persistence, API, frontend, backend, and observability evidence |

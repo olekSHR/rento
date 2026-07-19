@@ -59,7 +59,7 @@ AI Collaboration Standards sit below published product, constitutional, architec
 |-------------------|---------|---------------|
 | PROJECT_CONSTITUTION.md | Repository truth, product authority supremacy, phase discipline, AI-assisted development as engineering scope only where authorized | Converts constitutional constraints into AI collaboration rules |
 | ARCHITECTURE_PRINCIPLES.md | Traceability, reviewability, security by design, authority inheritance, documentation as architecture | Applies principles to AI-assisted work and generated outputs |
-| REPOSITORY_STANDARDS.md | Repository lifecycle, working set construction, status honesty, publication workflow, non-authoritative sources | Governs AI context initialization and repository truth discipline |
+| REPOSITORY_STANDARDS.md | Repository lifecycle, working set construction, status honesty, publication workflow, non-authoritative sources, Review Type, and Validation Scope | Governs AI context initialization, repository truth discipline, and validation-scope selection |
 | DEVELOPMENT_STANDARDS.md | Development gates, change classification, traceability, testing, review, repository hygiene | Specializes development discipline for AI-assisted collaboration |
 | SECURITY_STANDARDS.md | Secrets, credentials, classification, security events, trust boundaries, least privilege | Governs AI tool use, context sharing, generated output, and data exposure |
 | PRODUCT_ARCHITECTURE.md | Product meaning, immutable domain rules, future capability restraint, Performance Integrity | Prevents AI assistance from redefining product behavior or authorizing AI product features |
@@ -448,6 +448,7 @@ AI may assist review by identifying possible issues, summarizing diffs, mapping 
 | **AIC-REV-4** | AI review must not approve publication or implementation by itself |
 | **AIC-REV-5** | AI review must not fabricate test results or repository evidence |
 | **AIC-REV-6** | AI review must identify when required evidence is unavailable |
+| **AIC-REV-7** | AI-assisted review must use Validation Scope selected under `REPOSITORY_STANDARDS.md` and must escalate uncertainty rather than silently narrow scope |
 
 ### 12.3 Review result classification
 
@@ -572,6 +573,8 @@ AI-assisted work must leave enough evidence for independent reviewers to verify 
 AI collaboration validation verifies that AI-assisted work preserves repository authority, product meaning, security, architecture boundaries, implementation separation, and reviewability.
 
 Validation does not authorize implementation.
+
+Validation Scope for AI-assisted review follows `REPOSITORY_STANDARDS.md`. AI Collaboration Standards govern AI-specific evidence, tool safety, and lifecycle honesty; they do not redefine repository validation-scope governance.
 
 ### 17.2 Validation dimensions
 
