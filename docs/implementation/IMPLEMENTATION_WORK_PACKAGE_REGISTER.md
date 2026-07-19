@@ -53,10 +53,10 @@ The register is subordinate to published Repository Authority and cannot overrid
 | Completed implementation packages | 0 |
 | Cancelled implementation packages | 0 |
 | Stage I1 packages | None authorized |
-| Stage I2 package definition | COMPLETE - proposed packages only |
+| Stage I2 package definition | CORRECTIVE EXECUTION COMPLETED - proposed packages only - final independent completion review pending |
 | Implementation status | NOT AUTHORIZED |
 
-Stage I2 has defined proposed, non-executable implementation work packages. No proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
+Stage I2 corrective execution has produced corrected proposed, non-executable implementation work package metadata. No proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
 
 ---
 
@@ -67,12 +67,22 @@ Every future implementation work package must include all fields below before it
 | Field | Required content |
 |-------|------------------|
 | Work Package ID | Stable identifier in `IWP-###` format |
+| Title | Concise package title |
+| Objective | Concrete future implementation outcome, not execution authority |
 | Owner Authority | Published product, engineering, repository, security, or implementation authority owning the work |
 | Scope | Exact authorized objective and artifact classes |
+| Out of Scope | Adjacent work, implementation authority, release authority, and forbidden activity excluded from the proposal |
 | Repository Areas | Paths or areas permitted for modification |
+| Change Classes | Classification per `IMPLEMENTATION_GOVERNANCE.md` |
+| Deliverables | Future artifacts or evidence expected if separately authorized |
+| Validation Requirements | Checks, reviews, unavailable evidence, or proof obligations required later |
 | Acceptance Criteria | Concrete conditions required for package acceptance |
 | Required Evidence | Tests, checks, review, security, migration, observability, or unavailable evidence report |
 | Dependencies | Prior work packages, authorities, reviews, data, environment, or release prerequisites |
+| Required Authorities | Published authorities required for later authorization |
+| Evidence Basis | Permitted Stage I2 evidence supporting the proposal metadata |
+| Stop Conditions | Package-specific conditions requiring halt or escalation |
+| Release Posture | Release deferred or separately authorized |
 | Status | Lifecycle state from this register |
 | Completion Verification | Final evidence proving acceptance, cancellation, split, or escalation outcome |
 
@@ -122,16 +132,23 @@ Future package entries must use this schema:
 |-------|-------|
 | Work Package ID | `IWP-###` |
 | Title | TBD |
+| Objective | TBD |
 | Owner Authority | TBD |
 | Stage | I1-I8, as authorized |
 | Scope | TBD |
-| Non-Goals | TBD |
+| Out of Scope | TBD |
 | Repository Areas | TBD |
 | Change Classes | TBD |
+| Deliverables | TBD |
+| Validation Requirements | TBD |
 | Acceptance Criteria | TBD |
 | Required Evidence | TBD |
 | Dependencies | TBD |
+| Required Authorities | TBD |
+| Evidence Basis | TBD |
 | Required Review Routes | TBD |
+| Stop Conditions | TBD |
+| Release Posture | Release deferred unless separately authorized |
 | Status | `PROPOSED` / `AUTHORIZATION REQUIRED` / other allowed status |
 | Completion Verification | TBD |
 | Residual Risk | TBD |
@@ -154,20 +171,336 @@ These entries are proposed metadata only. Stable `IWP-###` identifiers provide i
 
 All proposed packages require later independent governance authorization before any work may begin.
 
-| Work Package ID | Title | Owner Authority | Stage | Scope | Non-Goals | Repository Areas | Change Classes | Acceptance Criteria | Required Evidence | Dependencies | Required Review Routes | Status | Completion Verification | Residual Risk |
-|-----------------|-------|-----------------|-------|-------|-----------|------------------|----------------|---------------------|-------------------|--------------|------------------------|--------|-------------------------|---------------|
-| IWP-001 | Code-to-Architecture Assessment Preparation | `docs/implementation/STAGE_I2_EXECUTION_AUTHORIZATION.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` | I2/I5 prerequisite | Define future formal Code-to-Architecture assessment scope, evidence boundaries, and gap-routing rules without executing the audit | No audit execution; no gap register population; no runtime changes | `docs/implementation/`; `docs/engineering/`; repository evidence surfaces read-only | Repository/governance; AI-assisted if used | Assessment scope, authority map, evidence checklist, stop conditions, and unavailable-evidence policy are approved by later authority | Git state, authority inventory, source-surface inventory, unavailable evidence report | None | Repository Standards; Implementation Governance; relevant owner authority review | PROPOSED | Later authorization must record scope, reviewed evidence, and confirmation that audit execution was separately authorized | Formal audit may reveal package split requirements |
-| IWP-002 | Configuration And Secrets Hygiene | `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; `docs/engineering/DEVELOPMENT_STANDARDS.md` | I3 Foundation | Remove hard-coded secret/config risk, define env examples, align runtime config, and preserve secret exclusion | No deployment; no credential rotation execution; no production operations | `backend/alembic.ini`; `backend/app/core/config.py`; `docker-compose.yml`; environment documentation | Infrastructure/configuration; Security; Repository/governance | Runtime config uses environment-owned values, secret placeholders are documented, and no secrets are committed | Static diff review, secret scan result or unavailable evidence, config startup check, documentation review | IWP-001 recommended | Security Standards; Infrastructure Standards; Development Standards | PROPOSED | Later package evidence must confirm changed files, secret handling, and unrun checks | Secret history may require separate security review |
-| IWP-003 | Backend Domain And Authorization Hardening | `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/AUTHORIZATION_ARCHITECTURE.md`; `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/PRODUCT_ARCHITECTURE.md` | I4 Domain | Align property, realtor, admin, ownership, moderation, and contact-source behavior with domain authority | No frontend redesign; no deployment; no package execution beyond authorized backend scope | `backend/app/routers/`; `backend/app/services/`; `backend/app/repositories/`; `backend/app/models/`; `backend/app/schemas/` | Domain logic; Authorization; Access/API; Security | Owner validation, status transitions, realtor-only mutation rules, admin moderation scope, and contact sourcing preserve authority | Unit/integration tests, authorization denial tests, manual authority trace, unavailable evidence report | IWP-001; IWP-005 | Backend Architecture; Authorization Architecture; Security Standards; Product Architecture | PROPOSED | Later evidence must prove no unauthorized owner/status/contact mutation path remains in scope | Scope may split if audit identifies unrelated domain areas |
-| IWP-004 | Backend API Contract Stabilization | `docs/engineering/API_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/DEVELOPMENT_STANDARDS.md` | I4 Domain | Stabilize API contract discipline, errors, pagination, filtering, idempotency posture, and router/service boundaries | No domain redesign; no frontend implementation unless separately authorized | `backend/app/routers/`; `backend/app/schemas/`; `backend/app/core/handlers.py`; `backend/app/services/` | Access/API; Domain logic; Local mechanical where isolated | API responses and errors are honest, paginated reads are bounded, and mutations route through owning services | Contract tests or unavailable report, OpenAPI/schema review, static checks, manual diff review | IWP-001; IWP-003 | API Standards; Backend Architecture; Development Standards | PROPOSED | Later package must record contract changes and compatibility evidence | May depend on frontend package for consumer alignment |
-| IWP-005 | Persistence And Migration Integrity | `docs/engineering/DATABASE_ARCHITECTURE.md`; `docs/engineering/DATABASE_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/SECURITY_STANDARDS.md` | I3 Foundation | Verify and harden model registration, migration lineage, schema ownership, rollback posture, and persistence constraints | No migration execution in Stage I2; no production data changes | `backend/alembic.ini`; `backend/alembic/env.py`; `backend/alembic/versions/`; `backend/app/models/`; `backend/app/repositories/` | Persistence; Security; Repository/governance | Migration graph is coherent, models are included intentionally, rollback posture is documented, and constraints preserve owner authority | Alembic history/current checks, migration dry-run or unavailable report, model/schema diff review, rollback plan | IWP-001; IWP-002 recommended | Database Architecture; Database Standards; Backend Architecture; Security Standards | PROPOSED | Later evidence must include migration verification results or explicit unavailable evidence | Existing migration backup files may require separate repository hygiene classification |
-| IWP-006 | Frontend Auth And API Client Stabilization | `docs/engineering/FRONTEND_ARCHITECTURE.md`; `docs/engineering/API_STANDARDS.md`; `docs/engineering/AUTHENTICATION_ARCHITECTURE.md`; `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` | I4 Domain | Align client auth state, route guards, token handling, API client boundaries, and denial handling with published authority | No backend mutation; no UX redesign beyond authorized flow correctness | `frontend/context/`; `frontend/lib/`; `frontend/services/`; `frontend/components/*Route.tsx`; `frontend/types/` | Frontend/presentation; Authentication; Authorization; Access/API | Client remains non-authoritative, protected routes preserve role reachability, and API clients report failures honestly | Frontend lint/build, route guard tests or unavailable report, manual authority trace | IWP-004 | Frontend Architecture; API Standards; Authentication Architecture; Authorization Architecture | PROPOSED | Later evidence must record changed client surfaces and auth/denial verification | Browser/session storage posture may require security review |
-| IWP-007 | Frontend Property And Realtor Workflow Stabilization | `docs/engineering/FRONTEND_ARCHITECTURE.md`; `docs/engineering/PRODUCT_ARCHITECTURE.md`; `docs/engineering/API_STANDARDS.md`; `docs/engineering/DEVELOPMENT_STANDARDS.md` | I4 Domain | Stabilize public, realtor, and admin property workflows, including moderation-state presentation and contact-source honesty | No product redesign; no backend execution unless separately authorized | `frontend/app/`; `frontend/components/`; `frontend/services/api.ts`; `frontend/types/` | Frontend/presentation; Product-impacting; Access/API | UI states preserve pending/available/archived meaning, realtor contact sourcing is honest, and admin actions remain governance presentation only | Frontend lint/build, flow tests or unavailable report, manual UX authority trace | IWP-003; IWP-004; IWP-006 | Frontend Architecture; Product Architecture; API Standards; Development Standards | PROPOSED | Later package must prove role-specific flows and no client-side authority drift | May split if admin and realtor workflow changes are independently large |
-| IWP-008 | Uploads And Media Storage Hardening | `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/FRONTEND_ARCHITECTURE.md` | I4 Domain | Harden upload validation, media persistence, gallery consistency, file serving, and image URL handling | No external storage provider selection unless separately authorized; no deployment | `backend/app/routers/uploads.py`; `backend/uploads/`; `backend/app/models/property.py`; `frontend/lib/getImageUrl.ts`; gallery components | Security; Infrastructure/configuration; Domain logic; Frontend/presentation | Uploads enforce type/size/path controls, gallery state remains consistent, and file serving boundaries are documented | Upload security tests, file handling tests, manual storage review, unavailable evidence report | IWP-002; IWP-003; IWP-005; IWP-007 | Security Standards; Infrastructure Standards; Backend Architecture; Frontend Architecture | PROPOSED | Later evidence must include upload denial and cleanup behavior | Storage durability may require future infrastructure decision |
-| IWP-009 | Test And Quality Gate Foundation | `docs/engineering/DEVELOPMENT_STANDARDS.md`; `docs/engineering/IMPLEMENTATION_GOVERNANCE.md`; `docs/engineering/AI_COLLABORATION_STANDARDS.md` | I3 Foundation | Establish backend and frontend test/quality commands, coverage targets, fixtures, and CI-ready verification gates | No feature implementation; no CI vendor selection unless authorized | `backend/`; `frontend/package.json`; `frontend/eslint.config.mjs`; future test directories | Repository/governance; Local mechanical; AI-assisted if used | Required commands are documented, tests cover authority-sensitive paths, and unrun checks are reported honestly | Backend test command evidence, frontend lint/build, coverage or unavailable evidence, generated-output review if AI used | IWP-001; supports all implementation packages | Development Standards; Implementation Governance; AI Collaboration Standards | PROPOSED | Later evidence must list commands run and failures/unavailable checks | Test tool selection may require dependency authorization |
-| IWP-010 | Observability And Audit Evidence Foundation | `docs/engineering/OBSERVABILITY_ARCHITECTURE.md`; `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/API_STANDARDS.md` | I5 Stabilization | Define and implement proof obligations for domain transitions, auth decisions, failures, uploads, and admin actions | No analytics product feature; no monitoring vendor selection unless separately authorized | `backend/app/`; `frontend/app/`; logging/error surfaces; documentation | Observability; Security; Access/API; Domain logic | Material state transitions and privileged decisions produce classified, secret-free evidence without replacing domain truth | Logging/signal review, security event classification, tests or unavailable report, manual proof-chain review | IWP-003; IWP-004; IWP-008; IWP-009 | Observability Architecture; Security Standards; Backend Architecture; API Standards | PROPOSED | Later evidence must show proof chain and secret-free signal review | May need separate infrastructure support for durable signal storage |
-| IWP-011 | Infrastructure Backup And Recovery Readiness | `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; `docs/engineering/DATABASE_STANDARDS.md`; `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/OBSERVABILITY_ARCHITECTURE.md` | I6 Launch Readiness | Prepare environment parity, container hygiene, backup/recovery posture, runtime config, and operational readiness evidence | No deployment execution; no production operation; no release | `Dockerfile` files; `docker-compose.yml`; env/config documentation; backup/recovery docs | Infrastructure/configuration; Persistence; Security; Observability | Runtime configuration is classified, backup/recovery procedure is documented, and deployment remains separately authorized | Docker build checks or unavailable report, backup/restore dry-run plan, config review, security review | IWP-002; IWP-005; IWP-008; IWP-010 | Infrastructure Standards; Database Standards; Security Standards; Observability Architecture | PROPOSED | Later evidence must distinguish readiness from deployment execution | Real environment evidence may be unavailable until operations authority exists |
-| IWP-012 | Launch Readiness Release And Rollback Evidence | `docs/implementation/IMPLEMENTATION_PROGRAM.md`; `docs/engineering/ENGINEERING_RELEASE_STRATEGY.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/engineering/INFRASTRUCTURE_STANDARDS.md` | I6 Launch Readiness | Assemble launch-readiness checklist, release posture, rollback posture, residual risks, and handoff evidence after accepted packages | No release execution; no tag; no deployment; no Phase 4 transition | `docs/implementation/`; release/operations documentation; validation evidence from accepted packages | Release-adjacent; Repository/governance; Infrastructure/configuration | All prerequisite package evidence is accepted or risk-accepted, rollback/readiness evidence is complete, and release remains separately authorized | Package acceptance evidence, release-readiness checklist, rollback plan, unavailable evidence report | IWP-001 through IWP-011 | Repository Standards; Engineering Release Strategy; Infrastructure Standards; Implementation Governance | PROPOSED | Later evidence must record readiness verdict and exact separate release/deployment authorization route | Cannot complete until prior packages have accepted evidence |
+Corrective evidence basis for all entries:
+
+1. proposal identity is preserved from existing Stage I2 outputs as ID, title, and sequencing only;
+2. corrective content is regenerated from published Repository Authority, tracked authority path state, and metadata-only tracked path inventories;
+3. prior source-content, runtime-content, migration-content, configuration-content, infrastructure-content, dependency-content, and CI-content observations from the original Stage I2 execution are invalid for acceptance;
+4. repository areas below are proposed metadata only and do not authorize inspection, modification, implementation, deployment, or release.
+
+### IWP-001 - Code-to-Architecture Assessment Preparation
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-001 |
+| Title | Code-to-Architecture Assessment Preparation |
+| Objective | Define a future formal Code-to-Architecture assessment scope, evidence boundary, and gap-routing process without executing the audit |
+| Owner Authority | `docs/implementation/STAGE_I2_EXECUTION_AUTHORIZATION.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` |
+| Stage | I2/I5 prerequisite metadata |
+| Scope | Governance preparation for a later separately authorized audit lifecycle |
+| Out of Scope | Audit execution; source review; gap creation; remediation; runtime, migration, configuration, infrastructure, deployment, release, or Phase 4 work |
+| Repository Areas | `docs/implementation/`; `docs/engineering/`; metadata-only repository inventories authorized by later audit authority |
+| Change Classes | Repository/governance; AI-assisted if used |
+| Dependencies | None |
+| Required Authorities | Repository Standards; Implementation Governance; later Code-to-Architecture Audit execution authorization |
+| Evidence Basis | Published Stage I2 authorities, Implementation Governance, Repository Standards, and Git metadata only |
+| Deliverables | Audit charter, evidence boundary, authority map, unavailable-evidence policy, stop-condition checklist |
+| Validation Requirements | Git state verification, authority inventory, changed-file inventory, unavailable-evidence report |
+| Acceptance Criteria | Later authority approves a bounded audit scope and confirms the audit itself remains separately authorized |
+| Required Evidence | Repository state evidence, authority inventory, scope review, unavailable-evidence report |
+| Required Review Routes | Repository Standards; Implementation Governance; owner authority review |
+| Stop Conditions | Stop if audit execution, source inspection, gap findings, remediation, implementation, deployment, release, or Phase 4 is requested without separate authority |
+| Release Posture | Release deferred; no deployment, tag, GitHub Release, production operation, or release authority is created by this proposal |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later authorization must record approved scope, reviewed evidence, and confirmation that audit execution was separately authorized |
+| Residual Risk | Formal audit may require package splits after evidence is reviewed |
+
+### IWP-002 - Configuration And Secrets Hygiene
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-002 |
+| Title | Configuration And Secrets Hygiene |
+| Objective | Align future configuration and secret-handling surfaces with published security and infrastructure authority |
+| Owner Authority | `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; `docs/engineering/DEVELOPMENT_STANDARDS.md` |
+| Stage | I3 Foundation metadata |
+| Scope | Secret-free configuration, environment documentation, placeholder classification, and startup/config verification if separately authorized |
+| Out of Scope | Credential rotation; production operations; deployment; release; runtime configuration change without later package authority |
+| Repository Areas | `backend/alembic.ini`; `backend/app/core/config.py`; `docker-compose.yml`; environment documentation |
+| Change Classes | Infrastructure/configuration; Security; Repository/governance |
+| Dependencies | IWP-001 recommended |
+| Required Authorities | Security Standards; Infrastructure Standards; Development Standards; later package authorization |
+| Evidence Basis | Published authority docs, Stage I0 baseline declarations, and metadata-only tracked path inventory |
+| Deliverables | Secret-free config posture, environment example or documentation, config classification, unavailable-evidence report |
+| Validation Requirements | Secret scan or unavailable evidence, config/startup check or unavailable evidence, documentation review |
+| Acceptance Criteria | Authorized scope contains no committed secret values and runtime configuration is environment-owned |
+| Required Evidence | Static diff review, secret scan or unavailable evidence, config check or unavailable evidence, security review |
+| Required Review Routes | Security Standards; Infrastructure Standards; Development Standards |
+| Stop Conditions | Stop if real secrets, production credentials, deployment operations, runtime config execution, or broader source inspection are required without separate authority |
+| Release Posture | Release deferred; configuration readiness is not deployment or release authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later package evidence must confirm changed files, secret handling, checks run, and unavailable checks |
+| Residual Risk | Historical secret exposure may require separate security review |
+
+### IWP-003 - Backend Domain And Authorization Hardening
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-003 |
+| Title | Backend Domain And Authorization Hardening |
+| Objective | Align future backend domain, ownership, moderation, realtor, admin, and contact-source behavior with domain and authorization authority |
+| Owner Authority | `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/AUTHORIZATION_ARCHITECTURE.md`; `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/PRODUCT_ARCHITECTURE.md` |
+| Stage | I4 Domain metadata |
+| Scope | Backend domain/API code and focused tests for property, realtor, admin, ownership, status, and contact-source behavior if separately authorized |
+| Out of Scope | Frontend redesign; deployment; release; product meaning changes; implementation outside later package scope |
+| Repository Areas | `backend/app/routers/`; `backend/app/services/`; `backend/app/repositories/`; `backend/app/models/`; `backend/app/schemas/` |
+| Change Classes | Domain logic; Authorization; Access/API; Security |
+| Dependencies | IWP-001; IWP-005 |
+| Required Authorities | Backend Architecture; Authorization Architecture; Security Standards; Product Architecture; Implementation Governance |
+| Evidence Basis | Published authority docs and metadata-only tracked path inventory; no backend source content inspection used for acceptance |
+| Deliverables | Hardened domain rules, owner/status/contact-source tests, authority trace, unavailable-evidence report |
+| Validation Requirements | Unit/integration tests, authorization denial tests, static checks, manual authority trace, unavailable evidence |
+| Acceptance Criteria | Realtor mutation, owner validation, admin moderation, status transitions, and contact sourcing preserve published authority |
+| Required Evidence | Test results or unavailable evidence, security/authorization review, authority trace |
+| Required Review Routes | Backend Architecture; Authorization Architecture; Security Standards; Product Architecture |
+| Stop Conditions | Stop if role taxonomy, owner authority, status control, product meaning, source scope, or security boundary conflicts require broader authority |
+| Release Posture | Release deferred; domain hardening does not authorize release, deployment, tag, or production operation |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must prove no unauthorized owner/status/contact mutation path remains in authorized scope |
+| Residual Risk | Scope may split if later audit identifies unrelated backend domain areas |
+
+### IWP-004 - Backend API Contract Stabilization
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-004 |
+| Title | Backend API Contract Stabilization |
+| Objective | Stabilize future API contract discipline, errors, pagination, filtering, idempotency posture, and router/service boundaries |
+| Owner Authority | `docs/engineering/API_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/DEVELOPMENT_STANDARDS.md` |
+| Stage | I4 Domain metadata |
+| Scope | Backend routers, schemas, exception handling, service boundary adaptation, and API tests if separately authorized |
+| Out of Scope | Domain redesign; frontend implementation unless separately authorized; release or deployment |
+| Repository Areas | `backend/app/routers/`; `backend/app/schemas/`; `backend/app/core/handlers.py`; `backend/app/services/` |
+| Change Classes | Access/API; Domain logic; Local mechanical where isolated |
+| Dependencies | IWP-001; IWP-003 |
+| Required Authorities | API Standards; Backend Architecture; Development Standards; Implementation Governance |
+| Evidence Basis | Published authority docs and metadata-only tracked path inventory; no API source content inspection used for acceptance |
+| Deliverables | Contract/error consistency, bounded reads, command/query separation evidence, unavailable-evidence report |
+| Validation Requirements | Contract tests or unavailable evidence, OpenAPI/schema review, static checks, manual diff review |
+| Acceptance Criteria | Errors, denials, pagination, filtering, sorting, and mutations remain honest, bounded, and service-owned |
+| Required Evidence | Contract test evidence, schema review, static checks, unavailable evidence |
+| Required Review Routes | API Standards; Backend Architecture; Development Standards |
+| Stop Conditions | Stop if product meaning, domain truth, compatibility, frontend scope, or source inspection exceeds later package authority |
+| Release Posture | Release deferred; API stabilization is not release or deployment authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later package must record contract changes, compatibility evidence, checks, and review result |
+| Residual Risk | Frontend consumers may require coordinated future package work |
+
+### IWP-005 - Persistence And Migration Integrity
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-005 |
+| Title | Persistence And Migration Integrity |
+| Objective | Verify and harden future model registration, migration lineage, schema ownership, rollback posture, and persistence constraints |
+| Owner Authority | `docs/engineering/DATABASE_ARCHITECTURE.md`; `docs/engineering/DATABASE_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/SECURITY_STANDARDS.md` |
+| Stage | I3 Foundation metadata |
+| Scope | Alembic configuration, migration lineage, models, repositories, persistence tests, and rollback documentation if separately authorized |
+| Out of Scope | Stage I2 migration execution; production data changes; schema change without later package authority |
+| Repository Areas | `backend/alembic.ini`; `backend/alembic/env.py`; `backend/alembic/versions/`; `backend/alembic/versions_backup/`; `backend/app/models/`; `backend/app/repositories/` |
+| Change Classes | Persistence; Security; Repository/governance |
+| Dependencies | IWP-001; IWP-002 recommended |
+| Required Authorities | Database Architecture; Database Standards; Backend Architecture; Security Standards |
+| Evidence Basis | Published authority docs, Stage I0 baseline declarations, and metadata-only tracked path inventory |
+| Deliverables | Migration graph review, model inclusion review, rollback notes, persistence checks, unavailable-evidence report |
+| Validation Requirements | Alembic history/current or unavailable evidence, migration dry-run plan, model/schema review, rollback plan |
+| Acceptance Criteria | Migration lineage is reviewable, persistence ownership is preserved, and rollback posture is documented |
+| Required Evidence | Migration verification evidence or unavailable report, persistence review, security review where required |
+| Required Review Routes | Database Architecture; Database Standards; Backend Architecture; Security Standards |
+| Stop Conditions | Stop if production migration, data backfill, secret-bearing DB evidence, schema authority conflict, or runtime inspection is required without separate authority |
+| Release Posture | Release deferred; migration readiness is not deployment or production migration authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must include migration verification results or explicit unavailable evidence |
+| Residual Risk | Backup migration files may require separate repository hygiene classification |
+
+### IWP-006 - Frontend Auth And API Client Stabilization
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-006 |
+| Title | Frontend Auth And API Client Stabilization |
+| Objective | Align future client auth state, route guards, token handling, API clients, and denial handling with frontend/auth/API authority |
+| Owner Authority | `docs/engineering/FRONTEND_ARCHITECTURE.md`; `docs/engineering/API_STANDARDS.md`; `docs/engineering/AUTHENTICATION_ARCHITECTURE.md`; `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` |
+| Stage | I4 Domain metadata |
+| Scope | Frontend auth context, API clients, route guards, types, and tests if separately authorized |
+| Out of Scope | Backend implementation; role taxonomy changes; client-side authorization authority; release or deployment |
+| Repository Areas | `frontend/context/`; `frontend/lib/`; `frontend/services/`; `frontend/components/*Route.tsx`; `frontend/types/` |
+| Change Classes | Frontend/presentation; Authentication; Authorization; Access/API |
+| Dependencies | IWP-004 |
+| Required Authorities | Frontend Architecture; API Standards; Authentication Architecture; Authorization Architecture |
+| Evidence Basis | Published authority docs and metadata-only tracked path inventory; no frontend source content inspection used for acceptance |
+| Deliverables | Token/API handling consistency, protected route behavior, denial/failure presentation, unavailable-evidence report |
+| Validation Requirements | Frontend lint/build, route guard tests or unavailable evidence, manual auth flow review |
+| Acceptance Criteria | Client remains non-authoritative and route reachability matches backend/domain authority |
+| Required Evidence | Lint/build/test evidence or unavailable report, authority trace, security review where required |
+| Required Review Routes | Frontend Architecture; API Standards; Authentication Architecture; Authorization Architecture |
+| Stop Conditions | Stop if client state becomes authority, auth boundary conflicts, token storage risk lacks review, or backend scope is required without authority |
+| Release Posture | Release deferred; client stabilization is not release, deployment, or production authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must record changed client surfaces and auth/denial verification |
+| Residual Risk | Browser/session storage posture may require security review |
+
+### IWP-007 - Frontend Property And Realtor Workflow Stabilization
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-007 |
+| Title | Frontend Property And Realtor Workflow Stabilization |
+| Objective | Stabilize future public, realtor, and admin property workflows while preserving moderation and contact-source truth |
+| Owner Authority | `docs/engineering/FRONTEND_ARCHITECTURE.md`; `docs/engineering/PRODUCT_ARCHITECTURE.md`; `docs/engineering/API_STANDARDS.md`; `docs/engineering/DEVELOPMENT_STANDARDS.md` |
+| Stage | I4 Domain metadata |
+| Scope | Frontend app/pages/components/services/types for property, realtor, and admin flows if separately authorized |
+| Out of Scope | Product redesign; backend mutation changes unless separately authorized; client-side authority; release or deployment |
+| Repository Areas | `frontend/app/`; `frontend/components/`; `frontend/services/api.ts`; `frontend/types/` |
+| Change Classes | Frontend/presentation; Product-impacting; Access/API |
+| Dependencies | IWP-003; IWP-004; IWP-006; IWP-008 coordination |
+| Required Authorities | Frontend Architecture; Product Architecture; API Standards; Development Standards |
+| Evidence Basis | Published authority docs and metadata-only tracked path inventory; no frontend workflow source content inspection used for acceptance |
+| Deliverables | Honest pending/success/failure states, role-specific UX, contact-source fidelity, unavailable-evidence report |
+| Validation Requirements | Frontend lint/build, workflow tests or unavailable evidence, manual product authority trace |
+| Acceptance Criteria | Public, professional, and governance surfaces preserve role, visibility, and moderation boundaries |
+| Required Evidence | Lint/build/test evidence or unavailable report, product authority trace, route/flow review |
+| Required Review Routes | Frontend Architecture; Product Architecture; API Standards; Development Standards |
+| Stop Conditions | Stop if product meaning changes, backend implementation is required, client authority emerges, or admin/realtor scope must split |
+| Release Posture | Release deferred; workflow stabilization is not release or deployment authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later package must prove role-specific flows and no client-side authority drift |
+| Residual Risk | Admin and realtor surfaces may require split if review scope grows |
+
+### IWP-008 - Uploads And Media Storage Hardening
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-008 |
+| Title | Uploads And Media Storage Hardening |
+| Objective | Harden future upload validation, media persistence, gallery consistency, file serving, and image URL handling |
+| Owner Authority | `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/FRONTEND_ARCHITECTURE.md` |
+| Stage | I4 Domain metadata |
+| Scope | Upload router, media config/docs, gallery components, image helpers, and tests if separately authorized |
+| Out of Scope | External storage provider selection; deployment; production file migration; broader backend/frontend redesign |
+| Repository Areas | `backend/app/routers/uploads.py`; `backend/uploads/`; `backend/app/models/property.py`; `frontend/lib/getImageUrl.ts`; `frontend/components/gallery/`; `frontend/components/realtor/RealtorPropertyGallery.tsx`; `frontend/services/api.ts` |
+| Change Classes | Security; Infrastructure/configuration; Domain logic; Frontend/presentation |
+| Dependencies | IWP-002; IWP-003; IWP-005; IWP-007 coordination |
+| Required Authorities | Security Standards; Infrastructure Standards; Backend Architecture; Frontend Architecture |
+| Evidence Basis | Published authority docs, Stage I0 upload-storage declaration, and metadata-only tracked path inventory |
+| Deliverables | File validation, storage boundary documentation, gallery consistency checks, unavailable-evidence report |
+| Validation Requirements | Upload denial tests, size/type tests, cleanup tests or unavailable evidence, storage review |
+| Acceptance Criteria | Uploads preserve security, path, size, type, ownership, gallery truth, and file-serving boundaries |
+| Required Evidence | Security tests/checks, manual storage review, unavailable evidence, security review |
+| Required Review Routes | Security Standards; Infrastructure Standards; Backend Architecture; Frontend Architecture |
+| Stop Conditions | Stop if secret exposure, path traversal risk, external storage decision, production file migration, or deployment authority is required |
+| Release Posture | Release deferred; upload hardening is not storage provider, deployment, or release authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must include upload denial and cleanup behavior |
+| Residual Risk | Durable storage choice may require future infrastructure decision |
+
+### IWP-009 - Test And Quality Gate Foundation
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-009 |
+| Title | Test And Quality Gate Foundation |
+| Objective | Establish future backend and frontend test/quality commands, fixtures, coverage targets, and CI-ready verification gates |
+| Owner Authority | `docs/engineering/DEVELOPMENT_STANDARDS.md`; `docs/engineering/IMPLEMENTATION_GOVERNANCE.md`; `docs/engineering/AI_COLLABORATION_STANDARDS.md` |
+| Stage | I3 Foundation metadata |
+| Scope | Test configuration, test files, package scripts, verification documentation, and optional CI config only if separately authorized |
+| Out of Scope | Feature implementation; dependency addition without authority; CI vendor commitment unless authorized |
+| Repository Areas | `backend/`; `frontend/package.json`; future test directories; future CI configuration only if separately authorized |
+| Change Classes | Repository/governance; Local mechanical; AI-assisted if used |
+| Dependencies | IWP-001; supports all later implementation packages |
+| Required Authorities | Development Standards; Implementation Governance; AI Collaboration Standards |
+| Evidence Basis | Published authority docs, metadata-only tracked path inventory, and absence of tracked `.github` path in metadata inventory |
+| Deliverables | Backend test command, frontend verification commands, quality gate documentation, unavailable-evidence report |
+| Validation Requirements | Backend test command evidence, frontend lint/build, coverage or unavailable evidence, generated-output review if AI is used |
+| Acceptance Criteria | Authority-sensitive paths have planned or implemented checks and unrun checks are reported honestly |
+| Required Evidence | Command outputs, coverage or unavailable evidence, generated-output review, residual risk |
+| Required Review Routes | Development Standards; Implementation Governance; AI Collaboration Standards |
+| Stop Conditions | Stop if dependencies, CI changes, generated output, or test scope require authority not granted by the later package |
+| Release Posture | Release deferred; quality gates are prerequisite evidence, not release authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must list commands run, failures, unavailable checks, and review results |
+| Residual Risk | Test tool selection may require dependency authorization |
+
+### IWP-010 - Observability And Audit Evidence Foundation
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-010 |
+| Title | Observability And Audit Evidence Foundation |
+| Objective | Define and implement future proof obligations for domain transitions, auth decisions, failures, uploads, and admin actions |
+| Owner Authority | `docs/engineering/OBSERVABILITY_ARCHITECTURE.md`; `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/BACKEND_ARCHITECTURE.md`; `docs/engineering/API_STANDARDS.md` |
+| Stage | I5 Stabilization metadata |
+| Scope | Logging/signal surfaces, error handlers, documentation, tests, and signal classification if separately authorized |
+| Out of Scope | Analytics product feature; monitoring vendor selection; treating observability as domain truth; release or deployment |
+| Repository Areas | `backend/app/`; `frontend/app/`; logging/error surfaces; documentation |
+| Change Classes | Observability; Security; Access/API; Domain logic |
+| Dependencies | IWP-003; IWP-004; IWP-008; IWP-009 |
+| Required Authorities | Observability Architecture; Security Standards; Backend Architecture; API Standards |
+| Evidence Basis | Published authority docs and metadata-only tracked path inventory; no runtime behavior inspection used for acceptance |
+| Deliverables | Classified signal plan, failure visibility, proof-chain evidence, unavailable-evidence report |
+| Validation Requirements | Signal classification review, secret-free log review, tests or unavailable evidence, manual proof-chain review |
+| Acceptance Criteria | Material transitions and privileged decisions are legible without leaking secrets or replacing domain truth |
+| Required Evidence | Signal review, security event classification, tests or unavailable evidence, proof-chain review |
+| Required Review Routes | Observability Architecture; Security Standards; Backend Architecture; API Standards |
+| Stop Conditions | Stop if secret-bearing logs, analytics scope, durable storage, vendor choice, or production monitoring authority is required |
+| Release Posture | Release deferred; observability readiness is not monitoring vendor, deployment, or release authority |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must show proof chain and secret-free signal review |
+| Residual Risk | Durable observability storage may need separate infrastructure support |
+
+### IWP-011 - Infrastructure Backup And Recovery Readiness
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-011 |
+| Title | Infrastructure Backup And Recovery Readiness |
+| Objective | Prepare future environment parity, container hygiene, backup/recovery posture, runtime config, and operational readiness evidence |
+| Owner Authority | `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; `docs/engineering/DATABASE_STANDARDS.md`; `docs/engineering/SECURITY_STANDARDS.md`; `docs/engineering/OBSERVABILITY_ARCHITECTURE.md` |
+| Stage | I6 Launch Readiness metadata |
+| Scope | Docker/compose config, environment docs, backup/recovery docs, readiness checks, and rollback posture if separately authorized |
+| Out of Scope | Deployment execution; production operation; release; DNS/TLS/cloud provider selection unless authorized |
+| Repository Areas | `backend/Dockerfile`; `frontend/Dockerfile`; `docker-compose.yml`; `frontend/next.config.ts`; `backend/alembic.ini`; `frontend/README.md`; backup/recovery docs |
+| Change Classes | Infrastructure/configuration; Persistence; Security; Observability |
+| Dependencies | IWP-002; IWP-005; IWP-008; IWP-010 |
+| Required Authorities | Infrastructure Standards; Database Standards; Security Standards; Observability Architecture |
+| Evidence Basis | Published authority docs, Stage I0 baseline declarations, and metadata-only tracked path inventory |
+| Deliverables | Runtime parity notes, backup/restore plan, config classification, readiness checklist, unavailable-evidence report |
+| Validation Requirements | Docker build checks or unavailable evidence, backup/restore dry-run plan, config review, security review |
+| Acceptance Criteria | Infrastructure readiness is evidenced and deployment remains separately authorized |
+| Required Evidence | Readiness checklist, backup/restore plan, config review, security review, unavailable evidence |
+| Required Review Routes | Infrastructure Standards; Database Standards; Security Standards; Observability Architecture |
+| Stop Conditions | Stop if deployment execution, production operation, release, secret exposure, provider selection, or environment authority is required |
+| Release Posture | Release deferred; readiness evidence does not authorize deployment, production operation, tag, or release |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must distinguish readiness from deployment execution |
+| Residual Risk | Real environment evidence may be unavailable until operations authority exists |
+
+### IWP-012 - Launch Readiness Release And Rollback Evidence
+
+| Field | Value |
+|-------|-------|
+| Identifier | IWP-012 |
+| Title | Launch Readiness Release And Rollback Evidence |
+| Objective | Assemble future launch-readiness checklist, release posture, rollback posture, residual risks, and handoff evidence after accepted packages |
+| Owner Authority | `docs/implementation/IMPLEMENTATION_PROGRAM.md`; `docs/engineering/ENGINEERING_RELEASE_STRATEGY.md`; `docs/engineering/REPOSITORY_STANDARDS.md`; `docs/engineering/INFRASTRUCTURE_STANDARDS.md` |
+| Stage | I6 Launch Readiness metadata |
+| Scope | Launch-readiness docs, release-readiness evidence, rollback docs, residual-risk register, and handoff evidence if separately authorized |
+| Out of Scope | Git tag; GitHub Release; deployment; production operation; Phase 4; launch execution |
+| Repository Areas | `docs/implementation/`; release/operations documentation; accepted package evidence from IWP-001 through IWP-011 |
+| Change Classes | Release-adjacent; Repository/governance; Infrastructure/configuration |
+| Dependencies | IWP-001 through IWP-011 |
+| Required Authorities | Implementation Program; Engineering Release Strategy; Repository Standards; Infrastructure Standards; Implementation Governance |
+| Evidence Basis | Published authority docs, continuity surfaces, package metadata, and later accepted package evidence only |
+| Deliverables | Launch readiness checklist, rollback posture, residual risk, handoff evidence, exact next lifecycle route |
+| Validation Requirements | Package acceptance evidence inventory, release posture review, rollback plan review, unavailable evidence report |
+| Acceptance Criteria | Readiness evidence is complete, prerequisite packages are accepted or risk-accepted, and release/deployment remain separate |
+| Required Evidence | Package acceptance evidence, release-readiness checklist, rollback plan, unavailable evidence report |
+| Required Review Routes | Repository Standards; Engineering Release Strategy; Infrastructure Standards; Implementation Governance |
+| Stop Conditions | Stop if any prerequisite package lacks accepted evidence, release/deployment is requested, tag/GitHub Release is requested, or Phase 4 is implied |
+| Release Posture | Release explicitly separate and deferred; this proposal may prepare release-readiness evidence only and cannot execute release |
+| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Completion Verification | Later evidence must record readiness verdict and exact separate release/deployment authorization route |
+| Residual Risk | Cannot complete until prior packages have accepted evidence |
 
 ---
 

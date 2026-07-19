@@ -1,13 +1,14 @@
 # Stage I2 Work Package Definition Report
 
-**Status:** COMPLETE - Stage I2 Work Package Definition evidence
+**Status:** CORRECTIVE EXECUTION COMPLETED - READY FOR FINAL INDEPENDENT COMPLETION REVIEW - NOT ACCEPTED - NOT CLOSED
 **Authority class:** Implementation program stage execution evidence
 **Binding authority:** Evidence only - not work package authorization
 **Program:** Implementation, Stabilization & Launch
 **Stage executed:** I2 - Work Package Definition
 **Execution authority:** `docs/implementation/STAGE_I2_EXECUTION_AUTHORIZATION.md`
-**Stage I2 execution:** COMPLETE - Work Package Definition only
-**Work Package proposals:** DEFINED - NON-EXECUTABLE
+**Original Stage I2 execution:** COMPLETE - PROVISIONAL - NOT ACCEPTED
+**Corrective execution:** COMPLETED - pending final independent completion review
+**Work Package proposals:** CORRECTED - 12 PROPOSED - RESERVED IDENTIFIERS ONLY - NON-EXECUTABLE
 **Work Package authorization:** NOT AUTHORIZED
 **Work Package activation:** NOT AUTHORIZED
 **Work Package execution:** NOT AUTHORIZED
@@ -22,9 +23,11 @@
 
 ## 1. Execution Purpose
 
-This report records Stage I2 Work Package Definition execution.
+This report records original Stage I2 Work Package Definition execution and the later consolidated corrective execution.
 
-Stage I2 produced register-ready proposed work package metadata only. It did not authorize, activate, or execute any work package. It did not implement code, run migrations, change infrastructure, perform Code-to-Architecture Audit, create an Implementation Gap Register, deploy, release, push, or start Phase 4.
+The original Stage I2 execution produced provisional package metadata only and is preserved as audit history. The corrective execution regenerated required Stage I2 evidence prospectively from permitted sources, corrected the Work Package Register, and left final independent completion review pending.
+
+Neither original execution nor corrective execution authorizes, activates, or executes any work package. Neither execution implements code, runs migrations, changes infrastructure, performs Code-to-Architecture Audit, creates an Implementation Gap Register, deploys, releases, pushes, or starts Phase 4.
 
 ---
 
@@ -58,9 +61,17 @@ Unrelated local items were not used as Repository Authority, modified for Stage 
 
 ---
 
-## 4. Working Set Escalations
+## 4. Original Working Set Escalations - Invalid For Acceptance
 
-Escalations were limited to Stage I2 definition evidence and owner-authority mapping for proposed packages.
+The table below is retained as audit history from original Stage I2 execution. It includes prohibited source, migration, configuration, infrastructure, dependency, and manifest inspection surfaces that are invalid for Stage I2 acceptance.
+
+Only the following identity data may be preserved from the original execution:
+
+1. IWP identifier;
+2. title;
+3. sequencing position.
+
+All evidence-dependent claims in this section are superseded by the corrective evidence regeneration recorded in section 5A and by the corrected register entries in `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md`.
 
 | Path | Publication or authority status | Why needed | Supports proposed package |
 |------|---------------------------------|------------|---------------------------|
@@ -89,13 +100,13 @@ Escalations were limited to Stage I2 definition evidence and owner-authority map
 | `frontend/app/`, `frontend/components/`, `frontend/context/`, `frontend/lib/`, `frontend/services/`, `frontend/types/` | Source evidence only | Frontend routing, API client, auth, realtor/admin/user workflow evidence | IWP-006, IWP-007 |
 | `backend/Dockerfile`; `frontend/Dockerfile`; `frontend/next.config.ts`; `frontend/README.md` | Configuration/documentation evidence only | Container, build, runtime image, image URL, and operational documentation evidence | IWP-011, IWP-012 |
 
-No drafts, review reports, untracked files, deprecated root docs, or unrelated local items were used as binding authority.
+No drafts, review reports, untracked files, deprecated root docs, or unrelated local items were used as binding authority. This sentence remains audit history only and does not validate the prohibited inspection surfaces listed above.
 
 ---
 
-## 5. Repository Evidence Inspected
+## 5. Original Repository Evidence Inspected - Invalid For Acceptance
 
-Stage I2 inspected the following repository evidence categories:
+The original Stage I2 execution recorded the following repository evidence categories. Items 5 through 10 below are invalid for Stage I2 acceptance because they required prohibited inspection or prohibited source/configuration/manifest evidence use under the Stage I2 execution boundary.
 
 1. Git state and unrelated local item isolation.
 2. Published Stage I2 authority and execution authority.
@@ -108,7 +119,46 @@ Stage I2 inspected the following repository evidence categories:
 9. Absence of tracked `.github` CI workflow files by glob search.
 10. Absence of tracked `.env*` files by glob search.
 
-This evidence was used only to define package proposals and evidence boundaries. It was not a formal Code-to-Architecture Audit.
+This evidence was not retroactively authorized by the corrective lifecycle. It must not be used as acceptance evidence, implementation evidence, package authorization evidence, or proof that Stage I2 is complete.
+
+---
+
+## 5A. Corrective Evidence Regeneration Results
+
+Corrective execution regenerated required Stage I2 evidence using only permitted sources and operations authorized by `docs/implementation/STAGE_I2_CORRECTIVE_EVIDENCE_AUTHORIZATION.md`.
+
+| Evidence item | Authoritative source | Repository path | Tracked state | Evidence purpose | Permitted inspection basis | Affected IWP identifiers | Evidence role |
+|---------------|----------------------|-----------------|---------------|------------------|----------------------------|--------------------------|---------------|
+| Repository state | Git metadata | Repository root | Tracked repository | Confirm branch, HEAD, origin, ahead/behind, working tree, and unrelated item isolation | Repository metadata operation | IWP-001 through IWP-012 | Corrective content |
+| Corrective authority | Corrective authorization | `docs/implementation/STAGE_I2_CORRECTIVE_EVIDENCE_AUTHORIZATION.md` | Tracked | Confirm owner-directed prospective activation, permitted evidence model, stop conditions, and file scope | Published governance document read | IWP-001 through IWP-012 | Corrective content |
+| Stage I2 authorization | Published Stage I2 authority | `docs/implementation/STAGE_I2_AUTHORIZATION.md` | Tracked | Confirm Stage I2 purpose, evidence requirements, stop conditions, and non-authorization boundaries | Published governance document read | IWP-001 through IWP-012 | Corrective content |
+| Stage I2 execution authority | Published Stage I2 execution authority | `docs/implementation/STAGE_I2_EXECUTION_AUTHORIZATION.md` | Tracked | Confirm required proposal schema, prohibited source inspection boundary, and proposal status rules | Published governance document read | IWP-001 through IWP-012 | Corrective content |
+| Work Package Register | Register under correction | `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` | Tracked | Preserve IWP identifiers and correct required fields, Stop Conditions, Release Posture, and status | Existing Stage I2 output under correction | IWP-001 through IWP-012 | Identity and corrective content |
+| Original Stage I2 report | Report under correction | `docs/implementation/STAGE_I2_WORK_PACKAGE_DEFINITION_REPORT.md` | Tracked | Preserve identity data and invalidate evidence-dependent prohibited content | Existing Stage I2 output under correction | IWP-001 through IWP-012 | Identity and invalidation |
+| Stage I1 completion evidence | Stage I1 execution evidence and continuity state | `docs/implementation/STAGE_I1_REPOSITORY_READINESS_EXECUTION_REPORT.md`; `docs/design/CURSOR_HANDOFF.md`; `docs/design/MASTER_ROADMAP.md` | Tracked | Confirm Stage I1 prerequisite was prospectively resolved and continuity synchronized | Existing approved report and continuity surfaces | IWP-001 through IWP-012 | Corrective content |
+| Implementation program authority | Published implementation program documents | `docs/implementation/IMPLEMENTATION_PROGRAM.md`; `docs/implementation/PROGRAM_TRANSITION_HANDOFF.md`; `docs/implementation/IMPLEMENTATION_BASELINE.md` | Tracked | Confirm I0-I8 lifecycle, gate separation, baseline constraints, and non-authorization boundaries | Published governance document read | IWP-001 through IWP-012 | Corrective content |
+| Engineering governance authority | Published engineering governance | `docs/engineering/IMPLEMENTATION_GOVERNANCE.md`; `docs/engineering/REPOSITORY_STANDARDS.md` | Tracked | Confirm work package model, required metadata, stop-beats-drift rule, status honesty, publication, validation, and continuity rules | Published governance document read | IWP-001 through IWP-012 | Corrective content |
+| Owner authority path state | Published engineering authority paths cited by proposals | `docs/engineering/*.md` cited in corrected register entries | Tracked | Confirm cited owner authorities exist as tracked repository authority paths | Tracked file metadata plus permitted authority reads where needed | IWP-001 through IWP-012 | Corrective content |
+| Repository area path inventory | Future proposed repository areas | Runtime/source/config/migration/infra paths listed as metadata in corrected register | Tracked path metadata only | Confirm proposed repository areas exist as path names without opening prohibited content | Metadata-only `git ls-files` operation | IWP-002 through IWP-011 | Corrective content |
+
+Prohibited source, migration, configuration, infrastructure, dependency, test, CI, deployment, secret, and release content was not inspected during corrective execution.
+
+---
+
+## 5B. Corrective Evidence Boundary
+
+Corrective execution used only:
+
+1. published governance documents;
+2. published architecture and engineering authority documents;
+3. repository metadata;
+4. Git history and changed-file metadata;
+5. tracked file inventories as path names only;
+6. existing approved reports and continuity surfaces;
+7. existing Stage I2 report/register content under correction;
+8. explicit declarations already contained in binding authority.
+
+Corrective execution did not infer missing evidence, reuse invalid prohibited-derived evidence, broaden inspection authority, silently retain mixed evidence, invalidate or renumber IWP identifiers, or continue provisionally where stop-and-report behavior was required.
 
 ---
 
@@ -133,7 +183,11 @@ All package statuses are non-executable and compatible with the canonical regist
 
 ---
 
-## 7. Work Package Details
+## 7. Original Work Package Details - Identity Preserved, Evidence-Dependent Content Superseded
+
+The subsections below are retained as audit history from original Stage I2 execution. Only each IWP identifier, title, and sequence position remain valid proposal identity data.
+
+All evidence-dependent fields in these original detail tables are invalid for Stage I2 acceptance to the extent they depend on prohibited source, migration, configuration, infrastructure, dependency, test, CI, deployment, or release inspection. Corrected required fields, Stop Conditions, Release Posture, status, evidence basis, and non-executable posture are now defined in `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` section 8A.
 
 ### IWP-001 - Code-to-Architecture Assessment Preparation
 
@@ -485,18 +539,22 @@ All package statuses are non-executable and compatible with the canonical regist
 
 ---
 
-## 8. Register Updates Completed
+## 8. Register Corrections Completed
 
-`docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` was updated to record:
+`docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` was corrected to record:
 
 1. proposed implementation package count: 12;
-2. Stage I2 package definition state: complete for proposed packages only;
+2. Stage I2 package definition state: corrective execution completed for proposed packages only;
 3. a non-executable Stage I2 proposed package inventory;
 4. stable `IWP-###` identifiers for IWP-001 through IWP-012;
 5. status `PROPOSED` for every package;
-6. dependencies, owner authorities, evidence requirements, review routes, acceptance criteria, completion evidence, and residual risk for every package.
+6. all required Stage I2 proposal fields for every package;
+7. explicit package-level Stop Conditions for every package;
+8. explicit package-level Release Posture for every package;
+9. permitted evidence basis and invalid prior evidence disposition;
+10. dependencies, owner authorities, required authorities, evidence requirements, review routes, acceptance criteria, validation requirements, completion evidence, and residual risk for every package.
 
-No active or authorized package entry was created.
+No active or authorized package entry was created. No IWP identifier was invalidated, renumbered, activated, authorized, or made executable.
 
 ---
 
@@ -528,13 +586,16 @@ Stage I2 preserved the following boundaries:
 
 | Check | Result |
 |-------|--------|
-| Live repository state verified before Stage I2 execution | PASS |
+| Live repository state verified before corrective execution | PASS |
 | Required primary authority working set tracked | PASS |
 | Published Stage I2 authorization verified | PASS |
 | Published Stage I2 execution authorization verified | PASS |
-| Register schema used | PASS |
-| Unique stable `IWP-###` IDs assigned | PASS |
+| Corrective evidence authorization active for consolidated execution | PASS |
+| Register schema corrected for required Stage I2 fields | PASS |
+| Unique stable `IWP-###` IDs preserved | PASS |
 | All package statuses non-executable | PASS - all `PROPOSED` |
+| Every IWP has Stop Conditions | PASS |
+| Every IWP has Release Posture | PASS |
 | Package dependencies recorded | PASS |
 | Package owner authorities recorded | PASS |
 | No package grants authorization, activation, execution, deployment, release, or Phase 4 authority | PASS |
@@ -544,36 +605,46 @@ Stage I2 preserved the following boundaries:
 | Formal Code-to-Architecture Audit performed | NOT PERFORMED |
 | Implementation Gap Register created or populated | NOT PERFORMED |
 | Unrelated local items touched | NOT PERFORMED |
+| Prohibited source content inspected during corrective execution | NOT PERFORMED |
+| Corrective execution report created | PASS |
+| Final independent completion review | NOT RUN |
 
-Final command evidence is recorded in the Stage I2 execution response and Git history for the Stage I2 execution checkpoint.
+Final command evidence is recorded in the Stage I2 corrective execution report and Git history for the corrective execution checkpoint.
 
 ---
 
-## 11. Stage I2 Completion Evidence
+## 11. Stage I2 Corrective Completion Evidence
 
-Stage I2 Work Package Definition is complete because:
+Stage I2 corrective execution is complete because:
 
-1. the full proposed package inventory is defined;
-2. all packages have stable `IWP-###` IDs;
-3. all packages use canonical register fields;
-4. all statuses are `PROPOSED`;
-5. no proposal is active, authorized, in progress, accepted, deployed, released, or executable;
-6. dependency ordering is recorded;
-7. authority and repository evidence are recorded;
-8. validation requirements and evidence requirements are recorded;
-9. downstream authorization requirements are explicit;
-10. no Stage I3 or implementation work began.
+1. the original prohibited evidence class is identified and invalidated for acceptance;
+2. required Stage I2 evidence was regenerated from permitted sources only;
+3. the full proposed package inventory is corrected;
+4. all packages preserve stable `IWP-###` IDs;
+5. all packages include the required Stage I2 proposal fields;
+6. all packages include explicit Stop Conditions;
+7. all packages include explicit Release Posture;
+8. all statuses remain `PROPOSED`;
+9. no proposal is active, authorized, in progress, accepted, deployed, released, or executable;
+10. dependency ordering is recorded;
+11. authority and repository evidence are recorded;
+12. validation requirements and evidence requirements are recorded;
+13. downstream authorization requirements are explicit;
+14. no Stage I3 or implementation work began.
+
+This is not formal Stage I2 acceptance or closure. Stage I2 remains ready for final independent completion review, not yet accepted, and not yet closed.
 
 ---
 
 ## 12. Exact Next Authorized Lifecycle Action
 
-Independent review of the Stage I2 outputs and proposed Work Package inventory.
+Comprehensive Final Independent Stage I2 Completion and Acceptance Review.
 
 The review scope is:
 
 - `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md`;
 - `docs/implementation/STAGE_I2_WORK_PACKAGE_DEFINITION_REPORT.md`;
+- `docs/implementation/STAGE_I2_CORRECTIVE_EXECUTION_REPORT.md`;
 - applicable published authorities cited by the proposed packages.
 
 No proposed work package may be authorized, activated, or executed until a later separate governance authorization approves exact package scope.
