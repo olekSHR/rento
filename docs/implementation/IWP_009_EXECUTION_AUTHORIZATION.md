@@ -1,8 +1,8 @@
-# IWP-009 Execution Authorization Artifact
+# IWP-009 Selection, Activation, And Execution Authorization
 
-**Status:** PUBLISHED - IWP-009 EXECUTION AUTHORIZATION ARTIFACT
-**Authority class:** Candidate IWP selection, activation, and execution authority
-**Binding authority:** ACTIVE - PUBLICATION ARTIFACT ONLY
+**Status:** PUBLISHED - IWP-009 SELECTION, ACTIVATION, AND EXECUTION AUTHORIZATION
+**Authority class:** IWP selection, activation, and execution decision
+**Binding authority:** ACTIVE
 **Publication:** COMPLETE - 2026-07-20
 **Targeted Final Review:** COMPLETED - PASS
 **Publication evidence:** Targeted Final Review PASS - APPROVED FOR BOUNDED PUBLICATION
@@ -10,13 +10,15 @@
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I3 - Foundation Implementation
 **Target package:** IWP-009 - Test And Quality Gate Foundation
-**IWP-009 lifecycle posture:** PROPOSED — INACTIVE — NOT EXECUTABLE — NOT SELECTED — NOT AUTHORIZED
-**IWP-009 selection:** NOT GRANTED
-**IWP-009 activation:** NOT GRANTED
-**IWP-009 execution:** NOT AUTHORIZED
+**IWP-009 lifecycle posture:** SELECTED — ACTIVE — AUTHORIZED — EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY
+**IWP-009 selection:** SELECTED
+**IWP-009 activation:** ACTIVE
+**IWP-009 authorization:** AUTHORIZED
+**IWP-009 execution:** AUTHORIZED - NOT STARTED
+**IWP-009 executability:** EXECUTABLE ONLY WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY
 **IWP-009 acceptance:** NOT GRANTED
-**Implementation:** NOT AUTHORIZED
-**Commit:** NOT AUTHORIZED BY THIS ARTIFACT
+**Implementation:** AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED
+**Commit:** AUTHORIZED AFTER REQUIRED IWP-009 LIFECYCLE VALIDATION ONLY
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
@@ -26,9 +28,9 @@
 
 ---
 
-## 1. Publication Status And Non-Authority Effect
+## 1. Publication Status And Authority Effect
 
-This document is the published candidate authority artifact for IWP-009 only.
+This document is the published authority artifact for IWP-009 selection, activation, and execution authorization.
 
 It completed one Targeted Final Review with:
 
@@ -36,22 +38,26 @@ It completed one Targeted Final Review with:
 PASS - APPROVED FOR BOUNDED PUBLICATION
 ```
 
-Publication on 2026-07-20 makes this artifact active Repository Authority for the IWP-009 publication boundary only.
+Publication on 2026-07-20 made this artifact active Repository Authority for the IWP-009 publication boundary only.
 
-This publication does not:
+This lifecycle transition records three separate explicit decisions in order:
 
-1. select IWP-009;
-2. activate IWP-009;
-3. authorize IWP-009 execution;
-4. make IWP-009 executable;
-5. authorize implementation;
-6. authorize tests, package changes, dependency changes, CI changes, or generated artifacts;
-7. authorize acceptance;
-8. authorize continuity synchronization;
-9. authorize commit or push;
-10. authorize deployment, release, launch, scaling, or Phase 4.
+1. IWP-009 selection is SELECTED;
+2. IWP-009 activation is ACTIVE;
+3. IWP-009 execution authorization is AUTHORIZED within the exact published IWP-009 boundary.
 
-Any future IWP-009 selection, activation, execution authorization, implementation execution, completion review, acceptance, continuity synchronization, commit, push, release, deployment, launch, scaling, production access, or Phase 4 action requires separate explicit lifecycle transition by Repository Authority.
+This lifecycle transition:
+
+1. makes IWP-009 executable only within the exact published IWP-009 boundary;
+2. authorizes implementation only within the exact published IWP-009 boundary;
+3. leaves implementation NOT STARTED;
+4. leaves IWP-009 completion review NOT STARTED;
+5. leaves IWP-009 acceptance NOT GRANTED;
+6. leaves every other non-accepted Work Package unselected, inactive, non-executable, and not authorized;
+7. grants no production access, production migration, push, deployment, release, launch, scaling, or Phase 4 authority;
+8. leaves continuity synchronization as the next separate lifecycle action.
+
+Publication, selection, activation, execution authorization, implementation execution, completion review, acceptance, continuity synchronization, commit, push, release, and deployment remain distinct lifecycle acts. No act implies another.
 
 ---
 
@@ -94,7 +100,7 @@ Chat memory, model memory, generated summaries, implementation code, package man
 | Registered dependency | IWP-001 SATISFIED for future authorization consideration |
 | Registered downstream role | Supports all later implementation packages |
 | Registered release posture | Release deferred; quality gates are prerequisite evidence, not release authority |
-| Current status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Current status | SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY - IMPLEMENTATION NOT STARTED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED |
 
 ---
 
@@ -108,8 +114,8 @@ Current repository lifecycle posture for this artifact:
 | IWP-001 | ACCEPTED |
 | IWP-002 | ACCEPTED |
 | IWP-005 | ACCEPTED |
-| IWP-009 | PROPOSED - INACTIVE - NOT EXECUTABLE - NOT SELECTED - NOT AUTHORIZED |
-| Active implementation package | None |
+| IWP-009 | SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY |
+| Active implementation package | IWP-009 - implementation NOT STARTED |
 | Production migration | NOT AUTHORIZED |
 | Push | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
@@ -118,7 +124,7 @@ Current repository lifecycle posture for this artifact:
 | Scaling | NOT AUTHORIZED |
 | Phase 4 | NOT STARTED |
 
-IWP-009 is the only remaining Stage I3 Foundation candidate by the current register state, but candidate status does not select, activate, authorize, execute, or accept it.
+IWP-009 is the only active Stage I3 Foundation package. This lifecycle posture does not start implementation and does not accept the package.
 
 ---
 
@@ -160,20 +166,20 @@ Future IWP-009 execution may be considered complete only if the later effective 
 
 ## 7. Proposed Future Read Boundary
 
-This artifact does not authorize inspection. If later selected, activated, and execution-authorized, future IWP-009 execution may inspect only the minimum content required to confirm exact test and quality scope.
+This artifact authorizes future inspection only within the exact published IWP-009 execution boundary. No inspection or implementation discovery is performed by this lifecycle transition.
 
 Candidate read boundary:
 
-| Path or class | Candidate purpose | Current draft posture |
+| Path or class | Candidate purpose | Current artifact posture |
 |---------------|-------------------|-----------------------|
 | `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` | Canonical IWP-009 metadata and status | Draft reference only |
-| `docs/implementation/IWP_009_EXECUTION_AUTHORIZATION.md` | Future governing authority after separate selection and activation | Artifact reference only |
+| `docs/implementation/IWP_009_EXECUTION_AUTHORIZATION.md` | Governing IWP-009 authority after selection, activation, and execution authorization | Artifact reference only |
 | `docs/engineering/DEVELOPMENT_STANDARDS.md` | Test, dependency, review, and development gate obligations | Artifact reference only |
 | `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` | Implementation gates, evidence, review routing, and acceptance model | Artifact reference only |
 | `docs/engineering/AI_COLLABORATION_STANDARDS.md` | AI-generated output and tool-use controls | Artifact reference only |
 | `docs/engineering/REPOSITORY_STANDARDS.md` | Validation scope, review type, publication lifecycle, and checkpoint discipline | Artifact reference only |
-| `backend/` | Registered backend test/quality area | Future content inspection only after publication and exact execution authorization |
-| `frontend/package.json` | Registered frontend package-script area | Future content inspection only after publication and exact execution authorization |
+| `backend/` | Registered backend test/quality area | Future content inspection only during later execution within the exact IWP-009 boundary |
+| `frontend/package.json` | Registered frontend package-script area | Future content inspection only during later execution within the exact IWP-009 boundary |
 | Future test directories | Registered future test area | Exact paths must be discovered and recorded before write authorization |
 | Future CI configuration | Optional registered CI area | Not inspectable or writable unless separately authorized |
 
@@ -183,17 +189,17 @@ The future execution authority must stop if exact test or quality paths cannot b
 
 ## 8. Proposed Future Write Boundary
 
-This artifact does not authorize writes. If later selected, activated, and execution-authorized, future IWP-009 write authority must be closed and exact.
+This artifact authorizes future writes only within the exact published IWP-009 execution boundary. No write or implementation execution is performed by this lifecycle transition.
 
 Candidate write classes:
 
-| Path or class | Candidate purpose | Current draft posture |
+| Path or class | Candidate purpose | Current artifact posture |
 |---------------|-------------------|-----------------------|
-| `docs/implementation/IWP_009_EXECUTION_EVIDENCE.md` | Required future execution evidence | Candidate only; not authorized by this artifact |
-| `docs/implementation/IWP_009_TEST_AND_QUALITY_GATE_REVIEW.md` | Candidate quality-gate review and unavailable-evidence report | Candidate only; not authorized by this artifact |
-| `backend/` test or test-configuration paths | Backend test command, fixture, or quality-gate foundation if exact paths are confirmed | Candidate only; exact paths must be confirmed before write authorization |
-| `frontend/package.json` | Frontend scripts only if existing package-script posture requires bounded update | Candidate only; dependency additions require separate authority |
-| Future test directories | Test foundation only if exact directory paths are established | Candidate only; no guessed path is authorized |
+| `docs/implementation/IWP_009_EXECUTION_EVIDENCE.md` | Required future execution evidence | Authorized only during later execution within the exact IWP-009 boundary |
+| `docs/implementation/IWP_009_TEST_AND_QUALITY_GATE_REVIEW.md` | Candidate quality-gate review and unavailable-evidence report | Authorized only during later execution within the exact IWP-009 boundary |
+| `backend/` test or test-configuration paths | Backend test command, fixture, or quality-gate foundation if exact paths are confirmed | Authorized only during later execution after exact paths are confirmed |
+| `frontend/package.json` | Frontend scripts only if existing package-script posture requires bounded update | Authorized only during later execution; dependency additions require separate authority |
+| Future test directories | Test foundation only if exact directory paths are established | Authorized only during later execution; no guessed path is authorized |
 | Future CI configuration | Optional CI-readiness only if separately authorized | Not authorized by default |
 
 No vague paths such as related files, necessary code, package files, CI files, or test folders are authorized without exact future path confirmation.
@@ -227,9 +233,9 @@ Future IWP-009 must exclude:
 
 ---
 
-## 10. Candidate Selection Prerequisites
+## 10. Selection Decision
 
-A future selection action may select IWP-009 only after verifying:
+Selection prerequisites verified before this transition:
 
 1. this artifact has completed targeted final review with PASS;
 2. publication is complete and preserves all non-authorization boundaries;
@@ -237,18 +243,22 @@ A future selection action may select IWP-009 only after verifying:
 4. IWP-001 remains ACCEPTED;
 5. IWP-002 remains ACCEPTED;
 6. IWP-005 remains ACCEPTED;
-7. IWP-009 remains PROPOSED - INACTIVE - NOT EXECUTABLE before selection;
+7. IWP-009 remained PROPOSED - INACTIVE - NOT EXECUTABLE before selection;
 8. no other IWP is being bundled into the selection action;
 9. exact candidate scope can be bounded without implementation inspection beyond the authorized future read boundary;
 10. unrelated working-tree items are isolated.
+
+```text
+IWP-009 SELECTION: SELECTED
+```
 
 Selection alone must not imply activation, execution, acceptance, commit, push, deployment, release, launch, scaling, or Phase 4.
 
 ---
 
-## 11. Activation Prerequisites
+## 11. Activation Decision
 
-A future activation action may activate IWP-009 only after verifying:
+Activation prerequisites verified before this transition:
 
 1. IWP-009 has been validly selected by Repository Authority;
 2. a published IWP-009 authority artifact exists;
@@ -259,13 +269,17 @@ A future activation action may activate IWP-009 only after verifying:
 7. stop conditions are complete;
 8. no push, release, deployment, launch, scaling, Phase 4, or adjacent IWP authority is implied.
 
+```text
+IWP-009 ACTIVATION: ACTIVE
+```
+
 Activation alone must not execute implementation or grant acceptance.
 
 ---
 
-## 12. Execution Prerequisites
+## 12. Execution-Authorization Decision
 
-Future IWP-009 execution may begin only after:
+Execution authorization is granted only after:
 
 1. selection is granted;
 2. activation is granted;
@@ -278,7 +292,13 @@ Future IWP-009 execution may begin only after:
 9. expected commands and unavailable-evidence routes are documented;
 10. staged scope can be isolated exactly.
 
-No implementation file may be changed before all prerequisites pass.
+```text
+IWP-009 EXECUTION AUTHORIZATION: AUTHORIZED
+IWP-009 EXECUTABILITY: EXECUTABLE ONLY WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY
+IMPLEMENTATION: AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED
+```
+
+No implementation file may be changed before the later implementation-discovery or implementation-execution action begins under this published boundary.
 
 ---
 
@@ -374,14 +394,14 @@ The following acts are separate:
 | Draft authoring | COMPLETED |
 | Targeted final review | COMPLETED - PASS |
 | Publication | COMPLETE - 2026-07-20 |
-| IWP-009 selection | NOT GRANTED |
-| IWP-009 activation | NOT GRANTED |
-| IWP-009 execution authorization | NOT GRANTED |
-| IWP-009 implementation execution | NOT AUTHORIZED |
+| IWP-009 selection | SELECTED |
+| IWP-009 activation | ACTIVE |
+| IWP-009 execution authorization | AUTHORIZED |
+| IWP-009 implementation execution | AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED |
 | IWP-009 completion review | NOT STARTED |
 | IWP-009 acceptance | NOT GRANTED |
 | Continuity synchronization | NOT AUTHORIZED BY THIS ARTIFACT |
-| Commit | NOT AUTHORIZED BY THIS ARTIFACT |
+| Commit | AUTHORIZED AFTER REQUIRED IWP-009 LIFECYCLE VALIDATION ONLY |
 | Push | NOT AUTHORIZED |
 | Release/deployment/launch/scaling | NOT AUTHORIZED |
 | Phase 4 | NOT STARTED |
@@ -395,7 +415,7 @@ No act above implies another.
 Future IWP-009 work must stop if:
 
 1. repository baseline or unrelated-change isolation does not match expected state;
-2. IWP-009 status cannot be verified as proposed, inactive, non-executable, not selected, and not authorized before future selection;
+2. IWP-009 selection, activation, authorization, executability, implementation-not-started posture, or acceptance-not-granted posture cannot be verified;
 3. scope ambiguity cannot be resolved from Repository Authority;
 4. exact future read/write paths cannot be established before implementation inspection;
 5. dependency or tooling changes are required without separate authority;
@@ -458,19 +478,20 @@ Future IWP-009 execution evidence must record:
 ## 21. Final Non-Authorization Declaration
 
 ```text
-THIS DOCUMENT IS A PUBLISHED IWP-009 EXECUTION AUTHORIZATION ARTIFACT.
+THIS DOCUMENT IS A PUBLISHED IWP-009 SELECTION, ACTIVATION, AND EXECUTION AUTHORIZATION.
 
-STATUS: PUBLISHED - IWP-009 EXECUTION AUTHORIZATION ARTIFACT.
-BINDING AUTHORITY: ACTIVE - PUBLICATION ARTIFACT ONLY.
-IWP-009: PROPOSED — INACTIVE — NOT EXECUTABLE — NOT SELECTED — NOT AUTHORIZED.
-IWP-009 SELECTION: NOT GRANTED.
-IWP-009 ACTIVATION: NOT GRANTED.
-IWP-009 EXECUTION: NOT AUTHORIZED.
-IMPLEMENTATION: NOT AUTHORIZED.
-TEST MODIFICATION: NOT AUTHORIZED.
-DEPENDENCY MODIFICATION: NOT AUTHORIZED.
-CI MODIFICATION: NOT AUTHORIZED.
-COMMIT: NOT AUTHORIZED BY THIS ARTIFACT.
+STATUS: PUBLISHED - IWP-009 SELECTION, ACTIVATION, AND EXECUTION AUTHORIZATION.
+BINDING AUTHORITY: ACTIVE.
+IWP-009: SELECTED — ACTIVE — AUTHORIZED — EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY.
+IWP-009 SELECTION: SELECTED.
+IWP-009 ACTIVATION: ACTIVE.
+IWP-009 EXECUTION: AUTHORIZED - NOT STARTED.
+IMPLEMENTATION: AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED.
+TEST MODIFICATION: AUTHORIZED ONLY DURING LATER EXECUTION WITHIN THE EXACT IWP-009 BOUNDARY.
+DEPENDENCY MODIFICATION: NOT AUTHORIZED WITHOUT SEPARATE AUTHORITY.
+CI MODIFICATION: NOT AUTHORIZED WITHOUT SEPARATE AUTHORITY.
+ACCEPTANCE: NOT GRANTED.
+COMMIT: AUTHORIZED AFTER REQUIRED IWP-009 LIFECYCLE VALIDATION ONLY.
 PUSH: NOT AUTHORIZED.
 DEPLOYMENT: NOT AUTHORIZED.
 RELEASE: NOT AUTHORIZED.
@@ -486,16 +507,17 @@ PHASE 4: NOT STARTED.
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/IWP_009_EXECUTION_AUTHORIZATION.md` |
-| Status | PUBLISHED - IWP-009 EXECUTION AUTHORIZATION ARTIFACT |
-| Authority class | Candidate IWP selection, activation, and execution authority |
-| Binding authority | ACTIVE - PUBLICATION ARTIFACT ONLY |
+| Status | PUBLISHED - IWP-009 SELECTION, ACTIVATION, AND EXECUTION AUTHORIZATION |
+| Authority class | IWP selection, activation, and execution decision |
+| Binding authority | ACTIVE |
 | Program | Implementation, Stabilization & Launch |
 | Stage | I3 - Foundation Implementation |
 | Target package | IWP-009 - Test And Quality Gate Foundation |
 | Review | COMPLETED - PASS |
 | Publication | COMPLETE - 2026-07-20 |
-| IWP-009 lifecycle posture | PROPOSED — INACTIVE — NOT EXECUTABLE — NOT SELECTED — NOT AUTHORIZED |
-| Implementation | NOT AUTHORIZED |
-| Commit | NOT AUTHORIZED BY THIS ARTIFACT |
+| IWP-009 lifecycle posture | SELECTED — ACTIVE — AUTHORIZED — EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY |
+| Implementation | AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED |
+| IWP-009 acceptance | NOT GRANTED |
+| Commit | AUTHORIZED AFTER REQUIRED IWP-009 LIFECYCLE VALIDATION ONLY |
 | Push | NOT AUTHORIZED |
-| Exact next authorized action | Perform a separate read-only determination of the exact IWP-009 selection and activation authority required after publication |
+| Exact next authorized action | Synchronize only the existing continuity surfaces with the completed IWP-009 lifecycle transition before beginning implementation discovery |
