@@ -1,7 +1,7 @@
 # Stage I3 Execution Authorization
 
 **Status:** PUBLISHED - STAGE I3 EXECUTION AUTHORIZATION
-**Authority class:** Implementation program execution authorization instrumen
+**Authority class:** Implementation program execution authorization instrument
 **Binding authority:** Active - per REPOSITORY_STANDARDS.md section 7.6
 **Publication:** COMPLETE - 2026-07-20
 **Independent review:** COMPLETED - PASS
@@ -128,9 +128,9 @@ The lifecycle baseline consumed by this document is:
 
 The Independent Stage I3 Authorization Readiness Review supplied with this task returned:
 
-```tex
+```text
 PASS - READY FOR THE SPECIFIED NEXT AUTHORITY ACTION
-
+```
 
 That PASS authorized draft authoring only. Subsequent independent review and publication review authorized bounded publication only. Publication does not authorize IWP selection, IWP activation, implementation, deployment, release, public launch, scaling, or Phase 4.
 
@@ -598,7 +598,7 @@ Publication review result did not itself execute Stage I3 or implementation.
 
 ## 28. Final Non-Authorization Declaration
 
-```tex
+```text
 THIS DOCUMENT IS PUBLISHED STAGE I3 EXECUTION AUTHORIZATION.
 
 DRAFT AUTHORING: COMPLETE.
@@ -619,7 +619,7 @@ RELEASE: NOT AUTHORIZED.
 PUBLIC LAUNCH: NOT AUTHORIZED.
 SCALING: NOT AUTHORIZED.
 PHASE 4: NOT STARTED.
-
+```
 
 ---
 
