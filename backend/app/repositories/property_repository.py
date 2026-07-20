@@ -6,6 +6,9 @@ from sqlalchemy import func
 
 from datetime import datetime, UTC
 
+
+PUBLIC_PROPERTY_STATUS = "available"
+
 def get_all_properties(
     db: Session,
     limit: int = 10,
@@ -19,14 +22,7 @@ def get_all_properties(
 ):
 
     query = db.query(models.Property)
-    query = query.filter(
-        models.Property.status.in_(
-            [
-                "available",
-                "reserved",
-            ]
-        )
-    )
+    query = query.filter(models.Property.status == PUBLIC_PROPERTY_STATUS)
 
     if city:
 
@@ -203,10 +199,6 @@ def update_property(
     city: str,
     rooms: int,
     image_url: str | None = None,
-    status: str = "available",
-    contact_name: str | None = None,
-    phone: str | None = None,
-    whatsapp: str | None = None,
 ):
 
     property_item.title = title
@@ -214,14 +206,29 @@ def update_property(
     property_item.price = price
     property_item.city = city
     property_item.rooms = rooms
-    property_item.status = status
-    property_item.contact_name = contact_name
-    property_item.phone = phone
-    property_item.whatsapp = whatsapp
-    property_item.last_verified_at = datetime.now(UTC)
 
     if image_url is not None:
         property_item.image_url = image_url
+
+    db.commit()
+
+    db.refresh(property_item)
+
+    return property_item
+
+
+def update_property_status(
+    db: Session,
+    property_item,
+    status: str,
+    *,
+    update_verified_at: bool = False,
+):
+
+    property_item.status = status
+
+    if update_verified_at:
+        property_item.last_verified_at = datetime.now(UTC)
 
     db.commit()
 

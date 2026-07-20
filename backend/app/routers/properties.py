@@ -14,7 +14,6 @@ from app.schemas.property import (
 )
 
 from app.services import property_service
-from app.services import realtor_profile_service
 from app.models.property import Property
 
 from app.core.security.dependencies import (
@@ -27,20 +26,6 @@ router = APIRouter(
     prefix="/properties",
     tags=["Properties"]
 )
-
-def ensure_property_access(
-    property_item,
-    current_user
-):
-
-    if current_user.role == "admin":
-        return
-
-    if property_item.owner_id != current_user.id:
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied"
-        )
 
 @router.get(
     "/admin/all",
@@ -169,46 +154,11 @@ def create_property(
     current_user=Depends(require_admin_or_realtor)
 ):
 
-    owner_id = None
-    status = property.status
-    contact_name = property.contact_name
-    phone = property.phone
-    whatsapp = property.whatsapp
-
-    if current_user.role == "realtor":
-        profile = realtor_profile_service.get_or_create_profile(
-            db,
-            current_user.id,
-        )
-
-        if not profile.is_completed:
-            raise HTTPException(
-                status_code=400,
-                detail="Complete realtor profile before creating property",
-            )
-
-        owner_id = current_user.id
-        status = "pending"
-        contact_name = profile.full_name
-        phone = profile.phone
-        whatsapp = profile.whatsapp
-
-    new_property = property_service.create_property(
+    return property_service.create_property(
         db,
-        property.title,
-        property.description,
-        property.price,
-        property.city,
-        property.rooms,
-        owner_id,
-        property.image_url,
-        status,
-        contact_name,
-        phone,
-        whatsapp,
+        property,
+        current_user,
     )
-
-    return new_property
 
 @router.put("/{property_id}", response_model=PropertyResponse)
 def update_property(
@@ -223,40 +173,11 @@ def update_property(
         property_id
     )
 
-    ensure_property_access(
-        property_item,
-        current_user
-    )
-
-    if current_user.role == "realtor":
-        return property_service.update_property(
-            db,
-            property_item,
-            property.title,
-            property.description,
-            property.price,
-            property.city,
-            property.rooms,
-            property.image_url,
-            property_item.status,
-            property_item.contact_name,
-            property_item.phone,
-            property_item.whatsapp,
-        )
-
     return property_service.update_property(
         db,
         property_item,
-        property.title,
-        property.description,
-        property.price,
-        property.city,
-        property.rooms,
-        property.image_url,
-        property.status,
-        property.contact_name,
-        property.phone,
-        property.whatsapp,
+        property,
+        current_user,
     )
 
 @router.delete(
@@ -325,7 +246,7 @@ def add_property_image(
         property_id
     )
 
-    ensure_property_access(
+    property_service.ensure_property_mutation_allowed(
         property_item,
         current_user
     )
@@ -363,7 +284,7 @@ def update_property_image_sort_order(
         property_id
     )
 
-    ensure_property_access(
+    property_service.ensure_property_mutation_allowed(
         property_item,
         current_user
     )
@@ -402,7 +323,7 @@ def set_cover_image(
         property_id
     )
 
-    ensure_property_access(
+    property_service.ensure_property_mutation_allowed(
         property_item,
         current_user
     )
@@ -461,7 +382,7 @@ def delete_property_image(
         property_id
     )
 
-    ensure_property_access(
+    property_service.ensure_property_mutation_allowed(
         property_item,
         current_user
     )

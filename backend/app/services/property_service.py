@@ -1,10 +1,21 @@
 from sqlalchemy.orm import Session
 
 from app.repositories import property_repository, realtor_profile_repository
-from app.core.exceptions import BadRequestException, NotFoundException
+from app.core.exceptions import BadRequestException, ForbiddenException, NotFoundException
 
 
-PUBLIC_PROPERTY_STATUSES = ("available", "reserved")
+PROPERTY_STATUS_AVAILABLE = "available"
+PROPERTY_STATUS_ARCHIVED = "archived"
+PROPERTY_STATUS_PENDING = "pending"
+
+PUBLIC_PROPERTY_STATUSES = (PROPERTY_STATUS_AVAILABLE,)
+VALID_PROPERTY_STATUSES = frozenset(
+    {
+        PROPERTY_STATUS_AVAILABLE,
+        PROPERTY_STATUS_ARCHIVED,
+        PROPERTY_STATUS_PENDING,
+    }
+)
 
 
 def _apply_profile_contacts(property_item, profile):
@@ -52,6 +63,35 @@ def _resolve_properties_contacts_batch(db: Session, items):
             _apply_profile_contacts(property_item, profile)
 
     return items
+
+
+def _get_required_realtor_profile(db: Session, user_id: int):
+    profile = realtor_profile_repository.get_by_user_id(db, user_id)
+
+    if not profile:
+        profile = realtor_profile_repository.create_empty_profile(db, user_id)
+
+    if not profile.is_completed:
+        raise BadRequestException(
+            "Complete realtor profile before creating property"
+        )
+
+    return profile
+
+
+def ensure_property_mutation_allowed(property_item, current_user) -> None:
+    if current_user.role == "admin":
+        return
+
+    if current_user.role != "realtor":
+        raise ForbiddenException(
+            "Access denied"
+        )
+
+    if property_item.owner_id != current_user.id:
+        raise ForbiddenException(
+            "Access denied"
+        )
 
 
 def get_all_properties(
@@ -182,28 +222,40 @@ def get_property_by_id_for_viewer(
 
 def create_property(
     db: Session,
-    title: str,
-    description: str,
-    price: int,
-    city: str,
-    rooms: int,
-    owner_id: int | None = None,
-    image_url: str | None = None,
-    status: str = "available",
-    contact_name: str | None = None,
-    phone: str | None = None,
-    whatsapp: str | None = None,
+    property_data,
+    current_user,
 ):
+    owner_id = None
+    status = PROPERTY_STATUS_AVAILABLE
+    contact_name = None
+    phone = None
+    whatsapp = None
+
+    if current_user.role == "realtor":
+        profile = _get_required_realtor_profile(
+            db,
+            current_user.id,
+        )
+        owner_id = current_user.id
+        status = PROPERTY_STATUS_PENDING
+        contact_name = profile.full_name
+        phone = profile.phone
+        whatsapp = profile.whatsapp
+
+    elif current_user.role != "admin":
+        raise ForbiddenException(
+            "Access denied"
+        )
 
     return property_repository.create_property(
         db,
-        title,
-        description,
-        price,
-        city,
-        rooms,
+        property_data.title,
+        property_data.description,
+        property_data.price,
+        property_data.city,
+        property_data.rooms,
         owner_id,
-        image_url,
+        property_data.image_url,
         status,
         contact_name,
         phone,
@@ -214,31 +266,23 @@ def create_property(
 def update_property(
     db: Session,
     property_item,
-    title: str,
-    description: str,
-    price: int,
-    city: str,
-    rooms: int,
-    image_url: str | None = None,
-    status: str = "available",
-    contact_name: str | None = None,
-    phone: str | None = None,
-    whatsapp: str | None = None,
+    property_data,
+    current_user,
 ):
+    ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
 
     return property_repository.update_property(
         db,
         property_item,
-        title,
-        description,
-        price,
-        city,
-        rooms,
-        image_url,
-        status,
-        contact_name,
-        phone,
-        whatsapp,
+        property_data.title,
+        property_data.description,
+        property_data.price,
+        property_data.city,
+        property_data.rooms,
+        property_data.image_url,
     )
 
 
@@ -279,24 +323,16 @@ def verify_property(
             "Property not found"
         )
 
-    if property_item.status != "pending":
+    if property_item.status != PROPERTY_STATUS_PENDING:
         raise BadRequestException(
             "Only pending listings can be verified"
         )
 
-    return property_repository.update_property(
+    return property_repository.update_property_status(
         db,
         property_item,
-        property_item.title,
-        property_item.description,
-        property_item.price,
-        property_item.city,
-        property_item.rooms,
-        property_item.image_url,
-        "available",
-        property_item.contact_name,
-        property_item.phone,
-        property_item.whatsapp,
+        PROPERTY_STATUS_AVAILABLE,
+        update_verified_at=True,
     )
 
 def archive_property(
@@ -315,19 +351,15 @@ def archive_property(
             "Property not found"
         )
 
-    return property_repository.update_property(
+    if property_item.status != PROPERTY_STATUS_AVAILABLE:
+        raise BadRequestException(
+            "Only available listings can be archived"
+        )
+
+    return property_repository.update_property_status(
         db,
         property_item,
-        property_item.title,
-        property_item.description,
-        property_item.price,
-        property_item.city,
-        property_item.rooms,
-        property_item.image_url,
-        "archived",
-        property_item.contact_name,
-        property_item.phone,
-        property_item.whatsapp,
+        PROPERTY_STATUS_ARCHIVED,
     )
 
 
@@ -347,19 +379,16 @@ def activate_property(
             "Property not found"
         )
 
-    return property_repository.update_property(
+    if property_item.status != PROPERTY_STATUS_ARCHIVED:
+        raise BadRequestException(
+            "Only archived listings can be activated"
+        )
+
+    return property_repository.update_property_status(
         db,
         property_item,
-        property_item.title,
-        property_item.description,
-        property_item.price,
-        property_item.city,
-        property_item.rooms,
-        property_item.image_url,
-        "available",
-        property_item.contact_name,
-        property_item.phone,
-        property_item.whatsapp,
+        PROPERTY_STATUS_AVAILABLE,
+        update_verified_at=True,
     )
 
 def report_property(

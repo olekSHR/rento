@@ -29,10 +29,6 @@ class PropertyCreate(BaseModel):
     )
 
     image_url: str | None = None
-    status: str = "available"
-    contact_name: str | None = None
-    phone: str | None = None
-    whatsapp: str | None = None
 
 
 class PropertyUpdate(BaseModel):
@@ -61,10 +57,6 @@ class PropertyUpdate(BaseModel):
     )
 
     image_url: str | None = None
-    status: str = "available"
-    contact_name: str | None = None
-    phone: str | None = None
-    whatsapp: str | None = None
 
 
 class PropertyImageResponse(BaseModel):

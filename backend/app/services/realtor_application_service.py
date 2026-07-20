@@ -10,6 +10,17 @@ from app.schemas.realtor_application import RealtorApplicationCreate
 from app.services import user_service
 
 
+REVIEW_STATUS_APPROVED = "approved"
+REVIEW_STATUS_REJECTED = "rejected"
+REVIEW_STATUS_PENDING = "pending"
+ALLOWED_REVIEW_STATUSES = frozenset(
+    {
+        REVIEW_STATUS_APPROVED,
+        REVIEW_STATUS_REJECTED,
+    }
+)
+
+
 def create_application(
     db: Session,
     current_user: User,
@@ -92,14 +103,19 @@ def review_application(
             "Application not found"
         )
 
-    if application.status != "pending":
+    if status not in ALLOWED_REVIEW_STATUSES:
+        raise BadRequestException(
+            "Invalid application review status"
+        )
+
+    if application.status != REVIEW_STATUS_PENDING:
         raise BadRequestException(
             "Application has already been reviewed"
         )
 
     reviewed_at = datetime.now(timezone.utc)
 
-    if status == "approved":
+    if status == REVIEW_STATUS_APPROVED:
         try:
             realtor_application_repository.update_review(
                 db,
