@@ -48,15 +48,15 @@ The register is subordinate to published Repository Authority and cannot overrid
 |-------|-------|
 | Active implementation packages | 0 |
 | Authorized implementation packages | 0 |
-| Proposed implementation packages | 10 |
+| Proposed implementation packages | 9 |
 | Pending implementation packages | 0 |
-| Completed implementation packages | 2 |
+| Completed implementation packages | 3 |
 | Cancelled implementation packages | 0 |
 | Stage I1 packages | None authorized |
-| Stage I2 package definition | CLOSED - 10 proposed packages remain reserved only after IWP-001 and IWP-002 acceptance |
-| Implementation status | IWP-001 ACCEPTED; IWP-002 ACCEPTED - no other package authorized |
+| Stage I2 package definition | CLOSED - 9 proposed packages remain reserved only after IWP-001, IWP-002, and IWP-005 acceptance |
+| Implementation status | IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED - no other package authorized |
 
-Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-001 acceptance satisfies the registered IWP-001 dependency for future IWP-005 and IWP-009 authorization consideration only. No other proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-005 acceptance does not activate IWP-009 or any other proposed package. No other proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
 
 ---
 
@@ -169,7 +169,7 @@ No active implementation work packages exist.
 
 These entries are proposed metadata only except where a package entry explicitly records later accepted evidence. Stable `IWP-###` identifiers provide identity for later review; they do not grant governance approval, activation, execution, implementation authority, merge authority, deployment authority, release authority, or Phase 4 authority.
 
-All proposed packages require later independent governance authorization before any work may begin. IWP-001 and IWP-002 are no longer proposed-only; their accepted statuses are recorded in their entries below and do not activate any other IWP.
+All proposed packages require later independent governance authorization before any work may begin. IWP-001, IWP-002, and IWP-005 are no longer proposed-only; their accepted statuses are recorded in their entries below and do not activate any other IWP.
 
 Corrective evidence basis for all entries:
 
@@ -309,9 +309,9 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Database Architecture; Database Standards; Backend Architecture; Security Standards |
 | Stop Conditions | Stop if production migration, data backfill, secret-bearing DB evidence, schema authority conflict, or runtime inspection is required without separate authority |
 | Release Posture | Release deferred; migration readiness is not deployment or production migration authority |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
-| Completion Verification | Later evidence must include migration verification results or explicit unavailable evidence |
-| Residual Risk | Backup migration files may require separate repository hygiene classification |
+| Status | ACCEPTED - IMPLEMENTATION EXECUTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - RELEASE DEFERRED |
+| Completion Verification | Accepted by `docs/implementation/IWP_005_FINAL_ACCEPTANCE_REPORT.md`; implementation commit `8850b8873a5de1f888b25436fd936981efdf72e8`; corrective commits `5f36cca744910f1c22f7f95510a4a5febf8c5359` and `a585db1d89f849b80878a0d21ffefa5e2abe2df9`; final corrective delta validation PASS |
+| Residual Risk | Live PostgreSQL upgrade/current/rollback evidence remains unavailable; existing hardening migration destructive cleanup requires separate production migration authority, backup/restore planning, and disposable PostgreSQL rehearsal before real execution; no push, deployment, release, launch, scaling, Phase 4, IWP-009, or adjacent IWP authority |
 
 ### IWP-006 - Frontend Auth And API Client Stabilization
 
@@ -598,7 +598,7 @@ The register must stop intake or package progression when:
 | Independent Publication Review | COMPLETED - APPROVED |
 | Active implementation packages | 0 |
 | Authorized implementation packages | 0 |
-| Accepted implementation packages | 2 - IWP-001, IWP-002 |
-| Implementation | IWP-001 ACCEPTED; IWP-002 ACCEPTED; no other package authorized |
+| Accepted implementation packages | 3 - IWP-001, IWP-002, IWP-005 |
+| Implementation | IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; no other package authorized |
 | Stage I1 | NOT AUTHORIZED |
 | Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md` |
