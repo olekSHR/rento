@@ -39,7 +39,9 @@ Configuration parsing through Alembic `Config` and `ScriptDirectory` succeeded.
 
 Final block review reproduced normal repository-config offline SQL preview and found that the original IWP-005 implementation did not resolve `${DATABASE_URL}` when Alembic was invoked through `python -m alembic -c backend/alembic.ini ...`.
 
-Targeted correction updates `backend/alembic/env.py` to read `DATABASE_URL` from the process environment and apply it to Alembic configuration before offline or online migration setup parses the URL or creates an engine. Corrective validation confirmed normal repository-config offline SQL preview succeeds with a safe placeholder process environment value and without `cfg.set_main_option(...)`.
+Targeted correction `5f36cca744910f1c22f7f95510a4a5febf8c5359` updated `backend/alembic/env.py` to read `DATABASE_URL` from the process environment and apply it to Alembic configuration before offline or online migration setup parses the URL or creates an engine. Corrective validation confirmed normal repository-config offline SQL preview succeeds with a safe placeholder process environment value and without `cfg.set_main_option(...)`.
+
+Read-only delta validation then found the missing-`DATABASE_URL` guard still executed too late because application database/model imports could trigger settings validation first. The follow-up correction moves the guard before those application imports, and focused validation confirmed the missing-value path now fails through the Alembic-specific guard before application settings validation.
 
 ---
 
@@ -52,7 +54,7 @@ Corrected posture:
 1. `backend/alembic/env.py` imports all current model classes from `app.models`.
 2. The imports are bound in `_registered_models` to make the metadata registration explicit.
 3. `target_metadata` remains `Base.metadata`.
-4. `DATABASE_URL` is resolved from the process environment for normal Alembic CLI operation.
+4. `DATABASE_URL` is resolved from the process environment before application database/model imports.
 5. `%` characters are escaped before applying the value to Alembic `ConfigParser`.
 6. No runtime startup, domain behavior, authentication behavior, or API contract changed.
 
@@ -284,7 +286,8 @@ Security posture:
 | Finding | Severity | Disposition |
 |---------|----------|-------------|
 | Partial Alembic model registration in `env.py` | Material within IWP-005 | Corrected by centralized model import from `app.models`. |
-| Normal Alembic CLI did not resolve `${DATABASE_URL}` from process environment | MAJOR in final block review | Targeted correction implemented in `backend/alembic/env.py`; corrective validation completed successfully. |
+| Normal Alembic CLI did not resolve `${DATABASE_URL}` from process environment | MAJOR in final block review | Targeted correction `5f36cca744910f1c22f7f95510a4a5febf8c5359` implemented environment injection; supplied-URL validation passed. |
+| Missing `DATABASE_URL` guard ran after application imports | MAJOR in delta validation | Follow-up correction moves the guard before application database/model imports; focused validation completed successfully. |
 | SQLite cannot validate full active chain because FK constraint alter is unsupported | Limitation | Recorded as unavailable database evidence. |
 | Existing hardening migration performs destructive cleanup | Residual risk | Classified; not executed; production migration remains unauthorized. |
 

@@ -7,7 +7,7 @@
 **Activation commit:** `4647eff3bd9d8395ef03346cbad00b0e8e40fda0`
 **Activation continuity commit:** `bfbca122b9b2d71cb9611ed9d1283c130098eaa3`
 **Implementation verdict:** EXECUTED WITH UNAVAILABLE DATABASE EVIDENCE
-**Corrective status:** DATABASE_URL INJECTION CORRECTION IMPLEMENTED - CORRECTIVE VALIDATION COMPLETED
+**Corrective status:** DATABASE_URL INJECTION CORRECTION IMPLEMENTED - FOLLOW-UP MISSING-GUARD CORRECTION VALIDATION COMPLETED
 **Completion review:** NOT YET COMPLETED
 **Acceptance:** NOT GRANTED
 **Push:** NOT AUTHORIZED
@@ -217,6 +217,32 @@ Targeted corrective validation must verify the single MAJOR finding only.
 | Alembic heads | active migrations | PASS | no | Normal Alembic heads command reported single head `b8c4e2f91a06`. |
 | Normal repository-config offline SQL preview | `python -m alembic -c backend/alembic.ini upgrade head --sql` with safe placeholder `DATABASE_URL` | PASS | no | Command exited 0 and generated non-empty SQL through committed repository configuration without `cfg.set_main_option(...)`; Alembic INFO logging appeared on stderr but did not indicate failure. |
 | Whitespace, Markdown, lints, count-only secret scan | three corrective files | PASS | no | LF-only, final newline, no trailing whitespace, balanced Markdown tables/fences, no linter errors, count-only scan only. |
+
+Read-only delta validation of corrective commit `5f36cca744910f1c22f7f95510a4a5febf8c5359` later confirmed supplied-`DATABASE_URL` behavior but returned FAIL for missing-`DATABASE_URL` behavior. The guard was placed after imports from `app.database.database` and `app.models`, allowing application settings validation to fail before the Alembic-specific guard.
+
+---
+
+## 7C. Follow-Up Missing-DATABASE_URL Guard Correction
+
+The follow-up correction moves `DATABASE_URL` validation and Alembic config application before imports that can trigger application settings validation.
+
+Follow-up correction properties:
+
+1. validates `DATABASE_URL` before importing `app.database.database` or `app.models`;
+2. preserves process-environment-only resolution;
+3. preserves ConfigParser percent escaping;
+4. preserves complete model registration and metadata coverage;
+5. preserves supplied-`DATABASE_URL` normal Alembic CLI behavior;
+6. does not read `.env`, access secret stores, print the URL, connect to a live database, or modify migrations/models/repositories.
+
+| Check | Scope | Result | Mutates database | Evidence |
+|-------|-------|--------|------------------|----------|
+| Python syntax compile | `backend/alembic/env.py` | PASS | no | In-memory compile succeeded. |
+| Missing `DATABASE_URL` behavior | normal Alembic CLI | PASS | no | Command failed before application settings validation, returned the Alembic-specific missing environment message, and produced no URL-like text. |
+| Supplied `DATABASE_URL` offline SQL preview | normal Alembic CLI with safe placeholder env | PASS | no | Command exited 0 and generated non-empty SQL without `cfg.set_main_option(...)`. |
+| Alembic history and heads | active migrations | PASS | no | Head remained `b8c4e2f91a06`; active revision count remained 11. |
+| Metadata coverage | model registration | PASS | no | Seven metadata tables remained present. |
+| Scope and hygiene | three authorized files | PASS | no | Diff check, whitespace, lints, count-only secret scan, and staged scope passed. |
 
 ---
 
