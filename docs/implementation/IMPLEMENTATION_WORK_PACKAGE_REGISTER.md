@@ -46,19 +46,19 @@ The register is subordinate to published Repository Authority and cannot overrid
 
 | Field | Value |
 |-------|-------|
-| Active implementation packages | 1 - IWP-009 |
-| Authorized implementation packages | 1 - IWP-009 |
+| Active implementation packages | 0 |
+| Authorized implementation packages | 0 |
 | Proposed implementation packages | 8 |
 | Pending implementation packages | 0 |
-| Completed implementation packages | 3 |
+| Completed implementation packages | 4 |
 | Cancelled implementation packages | 0 |
 | Stage I1 packages | None authorized |
-| Stage I2 package definition | CLOSED - 8 proposed packages remain reserved only after IWP-001, IWP-002, IWP-005 acceptance and IWP-009 selection/activation/authorization |
-| Implementation status | IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY - IMPLEMENTATION AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED |
+| Stage I2 package definition | CLOSED - 8 proposed packages remain reserved only after IWP-001, IWP-002, IWP-005, and IWP-009 acceptance |
+| Implementation status | IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
 
-Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, and authorized for execution within the exact published IWP-009 boundary as updated for the minimum test foundation, but implementation is NOT STARTED and acceptance is NOT GRANTED. No other proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, authorized, executed, corrected, delta-validated, and accepted under published IWP-009 authority. No proposed package is authorized, active, in progress, accepted, deployed, released, or executable beyond its explicit register status.
 
-The exact next authorized action for IWP-009 is to execute the minimum meaningful IWP-009 implementation within the updated exact write set, including pytest, pytest-cov, backend smoke tests, frontend typecheck, focused validation, and the two mandatory evidence artifacts.
+The exact next authorized action is a separate read-only Stage I3 completion readiness determination. That determination must not close Stage I3.
 
 ---
 
@@ -159,19 +159,19 @@ Future package entries must use this schema:
 
 ## 8. Active Work Packages
 
-One active implementation work package exists. Implementation has not started.
+No active implementation work package exists. No implementation package is currently authorized or executing.
 
 | Work Package ID | Owner Authority | Scope | Repository Areas | Acceptance Criteria | Required Evidence | Dependencies | Status | Completion Verification |
 |-----------------|-----------------|-------|------------------|---------------------|-------------------|--------------|--------|-------------------------|
-| IWP-009 | Development Standards; Implementation Governance; AI Collaboration Standards | Minimum test foundation: backend pytest path, backend test configuration, minimal backend smoke/unit test, frontend typecheck script, verification documentation, and CI deferred unless separately authorized | `backend/requirements.txt`; `backend/pytest.ini`; `backend/tests/conftest.py`; `backend/tests/test_backend_smoke.py`; `frontend/package.json`; `docs/implementation/IWP_009_EXECUTION_EVIDENCE.md`; `docs/implementation/IWP_009_TEST_AND_QUALITY_GATE_REVIEW.md` | Backend pytest and coverage measurement execute without production services, secrets, migrations, external services, containers, or persistent database; frontend lint/typecheck execute; unrun checks are reported honestly | Backend pytest output, backend coverage measurement without invented threshold, frontend lint/typecheck output, dependency/tooling posture, unavailable evidence, generated-output review, residual risk | IWP-001 SATISFIED for future authorization consideration; supports all later implementation packages | SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY - IMPLEMENTATION AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED | Later evidence must list commands run, failures, unavailable checks, review results, exact changed files, and confirmation that only `pytest` and `pytest-cov` were added to `backend/requirements.txt` |
+| None | None | No active implementation package | None | None | None | None | NOT APPLICABLE | IWP-009 accepted; no active package remains |
 
 ---
 
 ## 8A. Stage I2 Proposed Work Package Inventory
 
-These entries are proposed metadata only except where a package entry explicitly records later accepted evidence or the current IWP-009 lifecycle transition. Stable `IWP-###` identifiers provide identity for later review; they do not grant governance approval, activation, execution, implementation authority, merge authority, deployment authority, release authority, or Phase 4 authority unless a package entry explicitly records later Repository Authority.
+These entries are proposed metadata only except where a package entry explicitly records later accepted evidence. Stable `IWP-###` identifiers provide identity for later review; they do not grant governance approval, activation, execution, implementation authority, merge authority, deployment authority, release authority, or Phase 4 authority unless a package entry explicitly records later Repository Authority.
 
-All proposed packages require later independent governance authorization before any work may begin. IWP-001, IWP-002, and IWP-005 are no longer proposed-only; their accepted statuses are recorded in their entries below and do not activate any other IWP. IWP-009 is no longer proposed-only; it is selected, active, authorized, and executable within its exact published boundary as updated for the minimum test foundation, but implementation is NOT STARTED and acceptance is NOT GRANTED.
+All proposed packages require later independent governance authorization before any work may begin. IWP-001, IWP-002, IWP-005, and IWP-009 are no longer proposed-only; their accepted statuses are recorded in their entries below and do not activate any other IWP.
 
 Corrective evidence basis for all entries:
 
@@ -419,9 +419,9 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Development Standards; Implementation Governance; AI Collaboration Standards |
 | Stop Conditions | Stop if `pytest` or `pytest-cov` requires changes outside `backend/requirements.txt`; a backend lockfile or another dependency manifest must be created or modified; tests require application feature changes, live or persistent database, secrets, `.env`, production access, containers, or external services; `frontend/package-lock.json` changes; CI becomes mandatory; another test file or configuration surface outside the exact write set becomes necessary; or another Work Package must be combined |
 | Release Posture | Release deferred; quality gates are prerequisite evidence, not release authority |
-| Status | SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY - IMPLEMENTATION AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED |
-| Completion Verification | Later evidence must list commands run, failures, unavailable checks, review results, exact changed files, and confirmation that only `pytest` and `pytest-cov` were added to `backend/requirements.txt` |
-| Residual Risk | Frontend test tooling and CI remain deferred and unavailable in the minimum foundation; coverage measurement has no invented threshold; no push, deployment, release, launch, scaling, Phase 4, or adjacent IWP authority |
+| Status | ACCEPTED - IMPLEMENTATION EXECUTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - RELEASE DEFERRED |
+| Completion Verification | Accepted by `docs/implementation/IWP_009_FINAL_ACCEPTANCE_REPORT.md`; authority update commit `9ea460e592d657b001a89601099fe9f4b10d250f`; implementation commit `be7a8ade5bd971e795d9ead4e49873135ed7ecfa`; corrective commit `cde3e66fb6238361b38296efec46598ba79250c5`; corrective delta validation PASS |
+| Residual Risk | Frontend unit/component/e2e tooling and CI remain deferred and unavailable in the accepted minimum foundation; coverage measurement has no invented threshold; root-context app import remains relative-upload-path sensitive; no push, deployment, release, launch, scaling, Phase 4, or adjacent IWP authority |
 
 ### IWP-010 - Observability And Audit Evidence Foundation
 
@@ -598,9 +598,9 @@ The register must stop intake or package progression when:
 | Publication | COMPLETE |
 | Independent Governance Review | COMPLETED - APPROVED FOR PUBLICATION REVIEW |
 | Independent Publication Review | COMPLETED - APPROVED |
-| Active implementation packages | 1 - IWP-009 |
-| Authorized implementation packages | 1 - IWP-009 |
-| Accepted implementation packages | 3 - IWP-001, IWP-002, IWP-005 |
-| Implementation | IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY - IMPLEMENTATION AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED |
+| Active implementation packages | 0 |
+| Authorized implementation packages | 0 |
+| Accepted implementation packages | 4 - IWP-001, IWP-002, IWP-005, IWP-009 |
+| Implementation | IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
 | Stage I1 | NOT AUTHORIZED |
 | Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md` |
