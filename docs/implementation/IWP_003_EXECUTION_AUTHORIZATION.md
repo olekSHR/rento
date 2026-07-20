@@ -2,7 +2,7 @@
 
 **Status:** PUBLISHED — EFFECTIVE
 **Authority class:** IWP package authority artifact
-**Binding authority:** Active — IWP-003 selection, activation, and read-only discovery authority only
+**Binding authority:** Active — IWP-003 selection, activation, completed read-only discovery, and exact technical implementation scope authorization only
 **Independent review:** COMPLETED — PASS
 **Review findings:** BLOCKING 0; MAJOR 0; MINOR 0; EDITORIAL 0
 **Approval integration:** COMPLETED — APPROVED FOR PUBLICATION CHECKPOINT
@@ -17,17 +17,19 @@
 **Selection:** SELECTED — EFFECTIVE
 **Activation:** ACTIVE — EFFECTIVE
 **Package authority:** PUBLISHED — EFFECTIVE
-**Read-only discovery authorization:** AUTHORIZED — NOT STARTED — EFFECTIVE
-**Technical implementation:** NOT STARTED
-**Implementation write authority:** NOT EFFECTIVE FOR TECHNICAL MODIFICATION UNTIL DISCOVERY COMPLETES AND A LATER SEPARATE IMPLEMENTATION ACTION AUTHORIZES AN EXACT WRITE SET
-**Execution authorization:** NOT EFFECTIVE FOR TECHNICAL MODIFICATION
+**Read-only discovery authorization:** AUTHORIZED — COMPLETED — PASS — EFFECTIVE
+**Technical implementation:** AUTHORIZED WITHIN THE EXACT EIGHT-FILE BOUNDARY — NOT STARTED
+**Implementation write authority:** AUTHORIZED ONLY FOR THE EXACT EIGHT-FILE BOUNDARY CONFIRMED BY COMPLETED READ-ONLY DISCOVERY
+**Execution authorization:** AUTHORIZED FOR A LATER SEPARATE BOUNDED IWP-003 TECHNICAL IMPLEMENTATION ACTION ONLY
 **Acceptance:** NOT GRANTED
-**Current effective IWP-003 status:** SELECTED — ACTIVE — READ-ONLY DISCOVERY AUTHORIZED — NOT STARTED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED
+**Current effective IWP-003 status:** SELECTED — ACTIVE — READ-ONLY DISCOVERY COMPLETED — DISCOVERY VERDICT PASS — EXACT TECHNICAL WRITE SET AUTHORIZED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED
 **Stage I4 execution authorization boundary:** PUBLISHED — EFFECTIVE AS BOUNDARY ONLY
 **Stage I4 implementation:** NOT STARTED
 **Active implementation packages:** 1 — IWP-003
-**Authorized technical implementation packages:** 0
-**Exact technical write set:** NOT YET AUTHORIZED
+**Authorized technical implementation packages:** 1 — IWP-003 ONLY
+**Exact technical write set:** AUTHORIZED — EXACT EIGHT-FILE BOUNDARY
+**Migration authority:** NOT GRANTED
+**Dependency authority:** NOT GRANTED
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
@@ -39,12 +41,12 @@
 
 This draft defines a proposed package authority artifact for IWP-003.
 
-This artifact is published and continuity-synchronized. It selects IWP-003, activates IWP-003, and authorizes bounded read-only IWP-003 discovery only.
+This artifact is published and continuity-synchronized. It selects IWP-003, activates IWP-003, records bounded read-only IWP-003 discovery as completed with PASS verdict, and authorizes the exact technical implementation scope for a later separate bounded IWP-003 implementation action.
 
-It does not authorize technical implementation modification, an exact technical write set, migration changes, dependency changes, execution against implementation files, acceptance, push, release, deployment, production access, launch, scaling, or Phase 4. Until a later separate implementation action authorizes an exact write set after discovery, IWP-003 remains:
+It does not authorize implementation work outside the exact eight-file technical boundary, migration changes, dependency changes, acceptance, push, release, deployment, production access, launch, scaling, or Phase 4. Until the later separate implementation action executes the authorized scope, IWP-003 remains:
 
 ```text
-SELECTED — ACTIVE — READ-ONLY DISCOVERY AUTHORIZED — NOT STARTED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED
+SELECTED — ACTIVE — READ-ONLY DISCOVERY COMPLETED — DISCOVERY VERDICT PASS — EXACT TECHNICAL WRITE SET AUTHORIZED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED
 ```
 
 This artifact does not change Stage I4 implementation status, does not activate IWP-004 or any other package, and does not authorize push, tag creation, GitHub Release creation, deployment, launch, scaling, production access, production migration, or Phase 4.
@@ -134,7 +136,7 @@ This draft does not identify exact implementation files. Exact implementation fi
 
 IWP-003 is selected and active because IWP-001 and IWP-005 are accepted and this artifact has completed publication checkpoint and continuity synchronization.
 
-Effective package posture authorizes read-only discovery only. It does not authorize technical implementation modification, execution against implementation files, acceptance, or dependent package satisfaction.
+Effective package posture now authorizes a later separate bounded technical implementation action only within the exact eight-file write set confirmed by completed read-only discovery. Technical implementation remains not started. This posture does not authorize acceptance, dependent package satisfaction, migration/model/dependency changes, frontend work, uploads/media work, release, deployment, production access, launch, scaling, or Phase 4.
 
 IWP-004, IWP-006, IWP-007, IWP-008, Stage I5 packages, and Stage I6 packages remain inactive and non-executable.
 
@@ -179,9 +181,9 @@ Activation opens the IWP-003 package lifecycle and permits the separately author
 
 ## 9. Proposed Implementation Authorization Decision
 
-**Decision:** package authority PUBLISHED — EFFECTIVE FOR READ-ONLY DISCOVERY ONLY.
+**Decision:** package authority PUBLISHED — EFFECTIVE FOR COMPLETED READ-ONLY DISCOVERY AND EXACT TECHNICAL IMPLEMENTATION SCOPE AUTHORIZATION ONLY.
 
-Publication and continuity synchronization make IWP-003 package authority effective only for selection, activation, and bounded read-only discovery.
+Publication and continuity synchronization made IWP-003 package authority effective for selection, activation, and bounded read-only discovery. This post-discovery authority update records discovery completion and authorizes the exact technical implementation scope for a later separate bounded IWP-003 implementation action.
 
 Implementation authorization remains limited by:
 
@@ -195,7 +197,7 @@ Implementation authorization remains limited by:
 8. the candidate repository areas listed in the Work Package Register;
 9. the future exact write set established by authorized discovery and separately confirmed before implementation modification.
 
-This package authority does not make technical implementation modification effective. Technical implementation write authority remains not effective until authorized discovery completes, exact implementation files are identified, exact write set is bounded, migration/dependency/security impacts are classified, and a later separate implementation action explicitly authorizes the exact write set.
+Technical implementation remains not started. The exact write set is now authorized only for the later separate implementation action and only for the files named in Section 13. Migration, model, dependency, frontend, uploads/media, CI, infrastructure, production, release, deployment, launch, scaling, and Phase 4 authority remain not granted.
 
 ---
 
@@ -207,11 +209,11 @@ The following decisions are separate and must not be conflated:
 |----------|------------------|--------------------|
 | Selection | Identifies IWP-003 as the chosen package | Technical implementation, execution against implementation files, acceptance |
 | Activation | Opens the IWP-003 lifecycle | Technical implementation without a later exact write-set action |
-| Package authority | Makes selection, activation, and read-only discovery effective | Adjacent packages, migration without separate authority, dependency changes, release, deployment, Phase 4 |
-| Discovery authorization | Allows read-only inspection of authorized surfaces | Modification, execution, acceptance |
-| Technical implementation action | Later separate action after exact write-set confirmation | Acceptance, release, deployment, push |
+| Package authority | Makes selection, activation, read-only discovery completion, and exact write-set authorization effective | Adjacent packages, migration without separate authority, dependency changes, release, deployment, Phase 4 |
+| Discovery authorization | Allowed read-only inspection of authorized surfaces and is now completed with PASS verdict | Modification during discovery, acceptance |
+| Technical implementation action | Later separate action within the exact eight-file write set | Acceptance, release, deployment, push |
 
-Only selection, activation, package authority, and read-only discovery are effective now. Technical implementation modification remains not effective.
+Selection, activation, package authority, read-only discovery completion, and exact write-set authorization are effective now. Technical implementation remains not started and may occur only in the later separate bounded implementation action.
 
 ---
 
@@ -235,7 +237,7 @@ Parallel package execution is prohibited. Any need to combine IWP-003 with anoth
 
 ## 12. Proposed Discovery Boundary
 
-**Decision:** read-only discovery authorization AUTHORIZED — NOT STARTED — EFFECTIVE.
+**Decision:** read-only discovery authorization AUTHORIZED — COMPLETED — PASS — EFFECTIVE.
 
 Discovery may perform read-only inspection only to establish:
 
@@ -263,34 +265,42 @@ Discovery may inspect only surfaces later named by the effective package authori
 - `backend/app/models/`
 - `backend/app/schemas/`
 
-No exact implementation filename is authorized by this draft.
+Discovery completed with PASS verdict and identified the exact future implementation write set recorded in Section 13.
 
 ---
 
 ## 13. Proposed Implementation Boundary
 
-**Decision:** technical execution authorization NOT EFFECTIVE FOR TECHNICAL MODIFICATION.
+**Decision:** technical execution authorization AUTHORIZED FOR A LATER SEPARATE BOUNDED IWP-003 IMPLEMENTATION ACTION ONLY.
 
-Future implementation may become usable only after:
+Future implementation may proceed only after this authority update is locally checkpointed and only within the exact write set below.
 
-1. bounded discovery establishes an exact write set;
-2. exact implementation files are identified;
-3. migration, dependency, and security impacts are classified;
-4. a later separately authorized implementation action confirms that exact write set;
-5. no stop condition applies.
+Implementation write set:
 
-In-scope behavior, if later confirmed by discovery and separately authorized for implementation, is limited to:
+1. `backend/app/routers/properties.py`
+2. `backend/app/services/property_service.py`
+3. `backend/app/repositories/property_repository.py`
+4. `backend/app/schemas/property.py`
+5. `backend/app/services/realtor_application_service.py`
+6. `backend/tests/test_iwp_003_domain_authorization.py`
+7. `docs/implementation/IWP_003_EXECUTION_EVIDENCE.md`
+8. `docs/implementation/IWP_003_DOMAIN_AND_AUTHORIZATION_REVIEW.md`
 
-1. domain rules;
-2. authorization enforcement;
-3. owner validation;
-4. realtor mutation boundaries;
-5. admin moderation;
-6. status transitions;
-7. contact-source behavior;
-8. directly required schemas, services, repositories, routers, and models only when confirmed by discovery.
+Authorized technical behavior is limited to:
 
-Out-of-scope behavior:
+1. service-owned property ownership validation;
+2. service-owned realtor mutation rules;
+3. denial of cross-owner mutation before persistence;
+4. explicit admin moderation transition rules;
+5. valid property status transitions with invalid-transition denial;
+6. public property visibility restricted to the authority-defined public state;
+7. contact-source enforcement from canonical realtor-profile data;
+8. removal or separation of client-writable property `status`, `contact_name`, `phone`, and `whatsapp` from general create/update request paths where Repository Authority prohibits client control;
+9. repository persistence behavior that avoids unrelated `last_verified_at` mutation;
+10. service-level realtor-application review validation limited to canonical review outcomes and pending-source state;
+11. focused tests for role allow/deny, directly exercised inactive-account denial, ownership, mutation boundary, moderation, status transition, contact-source, public visibility, realtor-application transition, and denial of client-supplied owner/role/status/contact authority.
+
+Out-of-scope behavior and files:
 
 1. frontend redesign or implementation;
 2. API contract work belonging to IWP-004;
@@ -298,16 +308,21 @@ Out-of-scope behavior:
 4. unrelated refactoring;
 5. product meaning changes;
 6. deployment and release;
-7. implementation outside the confirmed package boundary;
-8. any exact file not established through authorized discovery and later confirmed by separate implementation action.
+7. implementation outside the exact eight-file boundary;
+8. `backend/tests/test_backend_smoke.py`;
+9. `backend/tests/conftest.py`;
+10. backend models;
+11. Alembic revisions;
+12. dependency manifests or lockfiles;
+13. frontend, uploads/media, CI, infrastructure, production, release, deployment, launch, scaling, and Phase 4 surfaces.
 
 ---
 
 ## 14. Migration And Persistence Rule
 
-Migration, model, and schema mutation authority is not granted by this draft.
+Migration, backend model, and database-schema authority is not granted by this artifact. The authorized `backend/app/schemas/property.py` change is limited to API request/response schema hardening inside the exact IWP-003 boundary.
 
-If discovery identifies a schema change, migration change, persistence mutation, data backfill, destructive cleanup, rollback requirement, or production database need, execution must stop and route to separate bounded authority before any modification.
+If implementation identifies a database schema change, migration change, backend model change, data backfill, destructive cleanup, rollback requirement, or production database need, execution must stop and route to separate bounded authority before any modification.
 
 No production migration, production rollback, production database access, or production data access is authorized.
 
@@ -315,9 +330,9 @@ No production migration, production rollback, production database access, or pro
 
 ## 15. Dependency And Configuration Rule
 
-Dependency, manifest, lockfile, package manager, runtime configuration, CI, or infrastructure changes are not granted by this draft.
+Dependency, manifest, lockfile, package manager, runtime configuration, CI, or infrastructure changes are not granted by this artifact.
 
-If discovery identifies a dependency, manifest, lockfile, runtime configuration, CI, or infrastructure change as required, execution must stop and route to separate authority before any modification.
+If implementation identifies a dependency, manifest, lockfile, runtime configuration, CI, or infrastructure change as required, execution must stop and route to separate authority before any modification.
 
 ---
 
@@ -363,6 +378,8 @@ Future IWP-003 implementation evidence must include, where applicable and author
 13. commit evidence only if commit is separately authorized;
 14. release separation;
 15. deployment, tag, GitHub Release, launch, scaling, production, and Phase 4 non-execution confirmations.
+
+The later implementation action must create `docs/implementation/IWP_003_EXECUTION_EVIDENCE.md` and `docs/implementation/IWP_003_DOMAIN_AND_AUTHORIZATION_REVIEW.md`. It must run Python compilation for changed Python files, the full currently configured backend pytest suite, the focused IWP-003 test module, pytest coverage measurement without inventing a threshold, authorization/ownership/mutation/moderation/status/contact/public-visibility/realtor-application transition tests, security and secret-safety checks, Markdown diagnostics for evidence files, `git diff --check`, and exact changed/staged scope verification.
 
 Evidence must report unrun checks honestly as NOT RUN or unavailable. Future acceptance must not infer PASS from unavailable evidence.
 
@@ -418,18 +435,18 @@ Default action is to stop, preserve repository state, and route to the owning au
 
 ## 20. Explicit Non-Authority Statements
 
-This draft does not:
+This artifact does not:
 
-1. select IWP-003;
-2. activate IWP-003;
-3. authorize IWP-003 implementation;
-4. authorize IWP-003 discovery;
-5. authorize IWP-003 execution;
-6. authorize backend source inspection;
+1. authorize implementation outside the exact eight-file write set;
+2. mark technical implementation as started;
+3. grant acceptance;
+4. authorize backend model changes;
+5. authorize Alembic revision changes;
+6. authorize dependency, manifest, lockfile, CI, runtime configuration, infrastructure, or deployment changes;
 7. modify Stage I4 implementation status;
 8. activate IWP-004 or another package;
-9. authorize migration, model, or schema mutation;
-10. authorize dependency, manifest, lockfile, CI, runtime configuration, infrastructure, or deployment changes;
+9. authorize migration or database-schema mutation;
+10. authorize frontend or uploads/media changes;
 11. authorize push;
 12. authorize tag creation;
 13. authorize GitHub Release creation;
@@ -442,9 +459,9 @@ This draft does not:
 
 ---
 
-## 21. Required Lifecycle After Draft
+## 21. Lifecycle Record And Next Action
 
-This draft may become effective only through the mandatory lifecycle:
+This artifact became effective through the mandatory lifecycle:
 
 1. independent targeted read-only review of the unchanged draft;
 2. targeted correction and delta review if required;
@@ -454,37 +471,37 @@ This draft may become effective only through the mandatory lifecycle:
 6. continuity synchronization in the required continuity surfaces;
 7. exact next authorized step recorded.
 
-Only after that lifecycle completes may effective package authority permit bounded discovery. Git commit and push are separate acts; no lifecycle step in this draft authorizes push.
+That lifecycle is complete. This post-discovery authority update records the completed discovery result and exact technical implementation boundary. Git commit and push are separate acts; no lifecycle step in this artifact authorizes push.
 
 ---
 
-## 22. Draft Review Expectations
+## 22. Focused Authority Validation Expectations
 
-The independent review of this draft should verify:
+Focused authority validation for this post-discovery update should verify:
 
-1. draft status is honest and non-effective;
+1. document status is honest and effective only for the stated IWP-003 scope;
 2. IWP-003 metadata matches the Work Package Register;
 3. owner authorities and required authorities are separate and exact;
 4. dependencies are accepted;
-5. candidate repository areas match the register;
-6. no exact implementation filename is guessed;
+5. discovery result is represented accurately;
+6. exact implementation filenames match the eight-file boundary;
 7. selection, activation, implementation authorization, discovery, and execution are separate decisions;
 8. single-package execution is preserved;
 9. IWP-004 and all other packages remain inactive;
-10. migration and dependency authority remain conditional;
+10. migration, model, dependency, frontend, uploads/media, CI, infrastructure, and production authority remain excluded;
 11. security requirements are sufficient for backend domain and authorization hardening;
-12. review, publication, Git, and continuity lifecycle is explicit;
+12. technical implementation remains not started and acceptance remains not granted;
 13. push, release, deployment, launch, scaling, production, and Phase 4 prohibitions are explicit.
 
 ---
 
-## 23. Draft Document Status
+## 23. Document Status
 
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/IWP_003_EXECUTION_AUTHORIZATION.md` |
 | Status | PUBLISHED — EFFECTIVE |
-| Binding authority | Active — IWP-003 selection, activation, and read-only discovery authority only |
+| Binding authority | Active — IWP-003 selection, activation, completed read-only discovery, and exact technical implementation scope authorization only |
 | Independent review | COMPLETED — PASS |
 | Review findings | BLOCKING 0; MAJOR 0; MINOR 0; EDITORIAL 0 |
 | Approval integration | COMPLETED — APPROVED FOR PUBLICATION CHECKPOINT |
@@ -494,19 +511,21 @@ The independent review of this draft should verify:
 | Git checkpoint | COMPLETED |
 | Continuity synchronization | COMPLETED |
 | Target package | IWP-003 - Backend Domain And Authorization Hardening |
-| Current effective IWP-003 status | SELECTED — ACTIVE — READ-ONLY DISCOVERY AUTHORIZED — NOT STARTED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED |
+| Current effective IWP-003 status | SELECTED — ACTIVE — READ-ONLY DISCOVERY COMPLETED — DISCOVERY VERDICT PASS — EXACT TECHNICAL WRITE SET AUTHORIZED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED |
 | Selection | SELECTED — EFFECTIVE |
 | Activation | ACTIVE — EFFECTIVE |
 | Package authority | PUBLISHED — EFFECTIVE |
-| Read-only discovery authorization | AUTHORIZED — NOT STARTED — EFFECTIVE |
-| Technical implementation | NOT STARTED |
-| Implementation write authority | NOT EFFECTIVE FOR TECHNICAL MODIFICATION UNTIL DISCOVERY COMPLETES AND A LATER SEPARATE IMPLEMENTATION ACTION AUTHORIZES AN EXACT WRITE SET |
-| Execution authorization | NOT EFFECTIVE FOR TECHNICAL MODIFICATION |
-| Exact technical write set | NOT YET AUTHORIZED |
+| Read-only discovery authorization | AUTHORIZED — COMPLETED — PASS — EFFECTIVE |
+| Technical implementation | AUTHORIZED WITHIN THE EXACT EIGHT-FILE BOUNDARY — NOT STARTED |
+| Implementation write authority | AUTHORIZED ONLY FOR THE EXACT EIGHT-FILE BOUNDARY CONFIRMED BY COMPLETED READ-ONLY DISCOVERY |
+| Execution authorization | AUTHORIZED FOR A LATER SEPARATE BOUNDED IWP-003 TECHNICAL IMPLEMENTATION ACTION ONLY |
+| Exact technical write set | AUTHORIZED — EXACT EIGHT-FILE BOUNDARY |
 | Acceptance | NOT GRANTED |
 | Stage I4 implementation | NOT STARTED |
 | Active implementation packages | 1 — IWP-003 |
-| Authorized technical implementation packages | 0 |
+| Authorized technical implementation packages | 1 — IWP-003 ONLY |
+| Migration authority | NOT GRANTED |
+| Dependency authority | NOT GRANTED |
 | Release posture | Deferred |
 | Push | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
