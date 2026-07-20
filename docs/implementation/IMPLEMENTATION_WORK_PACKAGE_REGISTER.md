@@ -55,11 +55,13 @@ The register is subordinate to published Repository Authority and cannot overrid
 | Stage I1 packages | None authorized |
 | Stage I2 package definition | CLOSED - 8 proposed packages remain reserved only after IWP-001, IWP-002, IWP-005, and IWP-009 acceptance |
 | Stage I3 | COMPLETED - COMPLETION REVIEW PASS - ACCEPTED |
-| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
+| Stage I4 execution authorization boundary | PUBLISHED - EFFECTIVE AS BOUNDARY ONLY - publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5` |
+| Stage I4 implementation | NOT STARTED |
+| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
 
-Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, authorized, executed, corrected, delta-validated, and accepted under published IWP-009 authority. Stage I3 is now completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. No proposed package is authorized, active, in progress, accepted, deployed, released, or executable beyond its explicit register status.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, authorized, executed, corrected, delta-validated, and accepted under published IWP-009 authority. Stage I3 is now completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. `docs/implementation/STAGE_I4_EXECUTION_AUTHORIZATION.md` is published and effective only as the Stage I4 execution authorization boundary at publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5`. Stage I4 implementation is NOT STARTED. No proposed package is selected, authorized, active, in progress, accepted, deployed, released, or executable beyond its explicit register status.
 
-The exact next authorized action is a separate read-only Stage I4 authorization and readiness determination. That determination must not authorize or begin Stage I4.
+The exact next authorized action is a separate read-only determination of the minimum IWP-003 selection, activation, and implementation-authorization path. That determination must not select, activate, authorize, execute, or begin IWP-003.
 
 ---
 
@@ -603,6 +605,8 @@ The register must stop intake or package progression when:
 | Authorized implementation packages | 0 |
 | Accepted implementation packages | 4 - IWP-001, IWP-002, IWP-005, IWP-009 |
 | Stage I3 | COMPLETED - COMPLETION REVIEW PASS - ACCEPTED |
-| Implementation | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
+| Stage I4 execution authorization boundary | PUBLISHED - EFFECTIVE AS BOUNDARY ONLY - publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5` |
+| Stage I4 implementation | NOT STARTED |
+| Implementation | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
 | Stage I1 | NOT AUTHORIZED |
-| Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `STAGE_I3_FINAL_COMPLETION_REPORT.md` |
+| Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `STAGE_I3_FINAL_COMPLETION_REPORT.md`, `STAGE_I4_EXECUTION_AUTHORIZATION.md` |
