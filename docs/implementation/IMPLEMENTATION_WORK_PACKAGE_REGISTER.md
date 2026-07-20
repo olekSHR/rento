@@ -46,9 +46,9 @@ The register is subordinate to published Repository Authority and cannot overrid
 
 | Field | Value |
 |-------|-------|
-| Active implementation packages | 0 |
-| Authorized implementation packages | 0 |
-| Proposed implementation packages | 8 |
+| Active implementation packages | 1 - IWP-003 |
+| Authorized implementation packages | 0 - technical implementation write authority not yet effective |
+| Proposed implementation packages | 7 |
 | Pending implementation packages | 0 |
 | Completed implementation packages | 4 |
 | Cancelled implementation packages | 0 |
@@ -57,11 +57,13 @@ The register is subordinate to published Repository Authority and cannot overrid
 | Stage I3 | COMPLETED - COMPLETION REVIEW PASS - ACCEPTED |
 | Stage I4 execution authorization boundary | PUBLISHED - EFFECTIVE AS BOUNDARY ONLY - publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5` |
 | Stage I4 implementation | NOT STARTED |
-| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
+| IWP-003 authority | PUBLISHED - EFFECTIVE - publication commit `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4` |
+| IWP-003 lifecycle | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - NOT STARTED - TECHNICAL IMPLEMENTATION NOT STARTED - TECHNICAL WRITE SET NOT YET AUTHORIZED - ACCEPTANCE NOT GRANTED |
+| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; IWP-003 SELECTED and ACTIVE for read-only discovery only; IWP-003 technical implementation NOT STARTED; IWP-003 technical write set NOT YET AUTHORIZED; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 1 - IWP-003; authorized technical implementation packages 0 |
 
-Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, authorized, executed, corrected, delta-validated, and accepted under published IWP-009 authority. Stage I3 is now completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. `docs/implementation/STAGE_I4_EXECUTION_AUTHORIZATION.md` is published and effective only as the Stage I4 execution authorization boundary at publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5`. Stage I4 implementation is NOT STARTED. No proposed package is selected, authorized, active, in progress, accepted, deployed, released, or executable beyond its explicit register status.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, authorized, executed, corrected, delta-validated, and accepted under published IWP-009 authority. Stage I3 is now completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. `docs/implementation/STAGE_I4_EXECUTION_AUTHORIZATION.md` is published and effective only as the Stage I4 execution authorization boundary at publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5`. `docs/implementation/IWP_003_EXECUTION_AUTHORIZATION.md` is published and effective for IWP-003 selection, activation, and read-only discovery only at publication commit `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4`. Stage I4 implementation is NOT STARTED. IWP-003 technical implementation is NOT STARTED, the exact technical write set is NOT YET AUTHORIZED, and IWP-003 acceptance is NOT GRANTED. Every other non-accepted package remains proposed, inactive, non-executable, unselected, and unauthorized beyond its explicit register status.
 
-The exact next authorized action is a separate read-only determination of the minimum IWP-003 selection, activation, and implementation-authorization path. That determination must not select, activate, authorize, execute, or begin IWP-003.
+The exact next authorized action is bounded read-only IWP-003 implementation discovery. Discovery must not modify implementation and must identify the exact future write set and impact classification before any later separate implementation action may authorize technical modification.
 
 ---
 
@@ -260,7 +262,11 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Backend Architecture; Authorization Architecture; Security Standards; Product Architecture |
 | Stop Conditions | Stop if role taxonomy, owner authority, status control, product meaning, source scope, or security boundary conflicts require broader authority |
 | Release Posture | Release deferred; domain hardening does not authorize release, deployment, tag, or production operation |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Status | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - NOT STARTED - TECHNICAL IMPLEMENTATION NOT STARTED - TECHNICAL WRITE SET NOT YET AUTHORIZED - ACCEPTANCE NOT GRANTED - NOT RELEASE AUTHORITY |
+| Authority | PUBLISHED - EFFECTIVE - `docs/implementation/IWP_003_EXECUTION_AUTHORIZATION.md` at `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4` |
+| Discovery | AUTHORIZED - READ-ONLY - NOT STARTED |
+| Implementation | NOT STARTED - TECHNICAL WRITE SET NOT YET AUTHORIZED |
+| Acceptance | NOT GRANTED |
 | Completion Verification | Later evidence must prove no unauthorized owner/status/contact mutation path remains in authorized scope |
 | Residual Risk | Scope may split if later audit identifies unrelated backend domain areas |
 
@@ -601,12 +607,14 @@ The register must stop intake or package progression when:
 | Publication | COMPLETE |
 | Independent Governance Review | COMPLETED - APPROVED FOR PUBLICATION REVIEW |
 | Independent Publication Review | COMPLETED - APPROVED |
-| Active implementation packages | 0 |
-| Authorized implementation packages | 0 |
+| Active implementation packages | 1 - IWP-003 |
+| Authorized implementation packages | 0 - technical implementation write authority not yet effective |
 | Accepted implementation packages | 4 - IWP-001, IWP-002, IWP-005, IWP-009 |
 | Stage I3 | COMPLETED - COMPLETION REVIEW PASS - ACCEPTED |
 | Stage I4 execution authorization boundary | PUBLISHED - EFFECTIVE AS BOUNDARY ONLY - publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5` |
 | Stage I4 implementation | NOT STARTED |
-| Implementation | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0 |
+| IWP-003 authority | PUBLISHED - EFFECTIVE - publication commit `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4` |
+| IWP-003 lifecycle | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - NOT STARTED - TECHNICAL IMPLEMENTATION NOT STARTED - TECHNICAL WRITE SET NOT YET AUTHORIZED - ACCEPTANCE NOT GRANTED |
+| Implementation | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; IWP-003 SELECTED and ACTIVE for read-only discovery only; IWP-003 technical implementation NOT STARTED; IWP-003 technical write set NOT YET AUTHORIZED; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 1 - IWP-003; authorized technical implementation packages 0 |
 | Stage I1 | NOT AUTHORIZED |
-| Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `STAGE_I3_FINAL_COMPLETION_REPORT.md`, `STAGE_I4_EXECUTION_AUTHORIZATION.md` |
+| Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `STAGE_I3_FINAL_COMPLETION_REPORT.md`, `STAGE_I4_EXECUTION_AUTHORIZATION.md`, `IWP_003_EXECUTION_AUTHORIZATION.md` |

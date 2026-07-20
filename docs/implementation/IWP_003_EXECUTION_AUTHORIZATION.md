@@ -1,28 +1,33 @@
-# IWP-003 Execution Authorization Draft
+# IWP-003 Execution Authorization
 
-**Status:** PUBLISHED — AWAITING CONTINUITY SYNCHRONIZATION — NOT EFFECTIVE
-**Authority class:** Draft IWP package authority artifact
-**Binding authority:** NONE — APPROVED DRAFT ONLY
+**Status:** PUBLISHED — EFFECTIVE
+**Authority class:** IWP package authority artifact
+**Binding authority:** Active — IWP-003 selection, activation, and read-only discovery authority only
 **Independent review:** COMPLETED — PASS
 **Review findings:** BLOCKING 0; MAJOR 0; MINOR 0; EDITORIAL 0
 **Approval integration:** COMPLETED — APPROVED FOR PUBLICATION CHECKPOINT
 **Publication integration:** COMPLETED
 **Publication checkpoint:** COMPLETED
-**Git checkpoint:** PENDING — THIS PUBLICATION COMMIT
-**Continuity synchronization:** NOT RUN — REQUIRED
+**Publication commit:** `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4`
+**Git checkpoint:** COMPLETED
+**Continuity synchronization:** COMPLETED
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 - Domain Implementation
 **Target package:** IWP-003 - Backend Domain And Authorization Hardening
-**Selection:** PROPOSED — NOT EFFECTIVE
-**Activation:** PROPOSED — NOT EFFECTIVE
-**Implementation authorization:** PROPOSED — NOT EFFECTIVE
-**Discovery authorization:** PROPOSED — NOT EFFECTIVE
-**Execution authorization:** PROPOSED — NOT EFFECTIVE
-**Current effective IWP-003 status:** PROPOSED — INACTIVE — NOT EXECUTABLE — NOT SELECTED — NOT IMPLEMENTATION-AUTHORIZED
+**Selection:** SELECTED — EFFECTIVE
+**Activation:** ACTIVE — EFFECTIVE
+**Package authority:** PUBLISHED — EFFECTIVE
+**Read-only discovery authorization:** AUTHORIZED — NOT STARTED — EFFECTIVE
+**Technical implementation:** NOT STARTED
+**Implementation write authority:** NOT EFFECTIVE FOR TECHNICAL MODIFICATION UNTIL DISCOVERY COMPLETES AND A LATER SEPARATE IMPLEMENTATION ACTION AUTHORIZES AN EXACT WRITE SET
+**Execution authorization:** NOT EFFECTIVE FOR TECHNICAL MODIFICATION
+**Acceptance:** NOT GRANTED
+**Current effective IWP-003 status:** SELECTED — ACTIVE — READ-ONLY DISCOVERY AUTHORIZED — NOT STARTED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED
 **Stage I4 execution authorization boundary:** PUBLISHED — EFFECTIVE AS BOUNDARY ONLY
 **Stage I4 implementation:** NOT STARTED
-**Active implementation packages:** 0
-**Authorized implementation packages:** 0
+**Active implementation packages:** 1 — IWP-003
+**Authorized technical implementation packages:** 0
+**Exact technical write set:** NOT YET AUTHORIZED
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
@@ -34,15 +39,15 @@
 
 This draft defines a proposed package authority artifact for IWP-003.
 
-This artifact is published and awaiting continuity synchronization, but it is not effective. It does not select, activate, implementation-authorize, discovery-authorize, execute, or accept IWP-003.
+This artifact is published and continuity-synchronized. It selects IWP-003, activates IWP-003, and authorizes bounded read-only IWP-003 discovery only.
 
-If a later lifecycle publishes an approved version, that publication may make the separately stated decisions effective only within the exact published IWP-003 boundary. Until then, IWP-003 remains:
+It does not authorize technical implementation modification, an exact technical write set, migration changes, dependency changes, execution against implementation files, acceptance, push, release, deployment, production access, launch, scaling, or Phase 4. Until a later separate implementation action authorizes an exact write set after discovery, IWP-003 remains:
 
 ```text
-PROPOSED — INACTIVE — NOT EXECUTABLE — NOT SELECTED — NOT IMPLEMENTATION-AUTHORIZED
+SELECTED — ACTIVE — READ-ONLY DISCOVERY AUTHORIZED — NOT STARTED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED
 ```
 
-This draft does not change Stage I4 implementation status, does not activate IWP-004 or any other package, and does not authorize push, tag creation, GitHub Release creation, deployment, launch, scaling, production access, production migration, or Phase 4.
+This artifact does not change Stage I4 implementation status, does not activate IWP-004 or any other package, and does not authorize push, tag creation, GitHub Release creation, deployment, launch, scaling, production access, production migration, or Phase 4.
 
 ---
 
@@ -125,11 +130,11 @@ This draft does not identify exact implementation files. Exact implementation fi
 
 ---
 
-## 6. Candidate-Only Posture Before Publication
+## 6. Effective Package Posture After Continuity Synchronization
 
-IWP-003 is the first eligible future candidate because IWP-001 and IWP-005 are accepted.
+IWP-003 is selected and active because IWP-001 and IWP-005 are accepted and this artifact has completed publication checkpoint and continuity synchronization.
 
-Candidate posture is not selection. Candidate posture does not activate IWP-003, does not authorize implementation, does not authorize discovery, does not authorize execution, and does not satisfy IWP-003 for dependent packages.
+Effective package posture authorizes read-only discovery only. It does not authorize technical implementation modification, execution against implementation files, acceptance, or dependent package satisfaction.
 
 IWP-004, IWP-006, IWP-007, IWP-008, Stage I5 packages, and Stage I6 packages remain inactive and non-executable.
 
@@ -137,9 +142,9 @@ IWP-004, IWP-006, IWP-007, IWP-008, Stage I5 packages, and Stage I6 packages rem
 
 ## 7. Proposed Selection Decision
 
-**Decision:** selection PROPOSED — NOT EFFECTIVE.
+**Decision:** selection SELECTED — EFFECTIVE.
 
-If this draft is later reviewed, approved, integrated, published, checkpointed, and continuity-synchronized, publication may select IWP-003 only.
+Publication and continuity synchronization select IWP-003 only.
 
 Selection basis:
 
@@ -151,15 +156,15 @@ Selection basis:
 6. IWP-003 is the only first eligible future Stage I4 candidate;
 7. no other package selection is bundled.
 
-Selection does not activate IWP-003, authorize discovery, authorize implementation, authorize execution, or imply acceptance.
+Selection does not authorize technical implementation, execution against implementation files, or imply acceptance.
 
 ---
 
 ## 8. Proposed Activation Decision
 
-**Decision:** activation PROPOSED — NOT EFFECTIVE.
+**Decision:** activation ACTIVE — EFFECTIVE.
 
-If this draft is later reviewed, approved, integrated, published, checkpointed, and continuity-synchronized, publication may activate IWP-003 only after verification that:
+Continuity synchronization activates IWP-003 only after verification that:
 
 1. IWP-003 selection is effective;
 2. active implementation packages remain 0 immediately before activation;
@@ -168,15 +173,15 @@ If this draft is later reviewed, approved, integrated, published, checkpointed, 
 5. unrelated working-tree changes are isolated;
 6. no IWP-004, IWP-006, IWP-007, IWP-008, Stage I5, or Stage I6 activation is bundled.
 
-Activation opens the IWP-003 package lifecycle only. Activation does not authorize discovery, implementation, execution, acceptance, push, release, deployment, production access, launch, scaling, or Phase 4.
+Activation opens the IWP-003 package lifecycle and permits the separately authorized read-only discovery step. Activation does not authorize technical implementation, execution against implementation files, acceptance, push, release, deployment, production access, launch, scaling, or Phase 4.
 
 ---
 
 ## 9. Proposed Implementation Authorization Decision
 
-**Decision:** implementation authorization PROPOSED — NOT EFFECTIVE.
+**Decision:** package authority PUBLISHED — EFFECTIVE FOR READ-ONLY DISCOVERY ONLY.
 
-If this draft is later reviewed, approved, integrated, published, checkpointed, and continuity-synchronized, publication may authorize IWP-003 implementation planning only inside the exact IWP-003 package boundary.
+Publication and continuity synchronization make IWP-003 package authority effective only for selection, activation, and bounded read-only discovery.
 
 Implementation authorization remains limited by:
 
@@ -190,7 +195,7 @@ Implementation authorization remains limited by:
 8. the candidate repository areas listed in the Work Package Register;
 9. the future exact write set established by authorized discovery and separately confirmed before implementation modification.
 
-This proposed implementation authorization does not itself make discovery or execution effective while the artifact remains a draft.
+This package authority does not make technical implementation modification effective. Technical implementation write authority remains not effective until authorized discovery completes, exact implementation files are identified, exact write set is bounded, migration/dependency/security impacts are classified, and a later separate implementation action explicitly authorizes the exact write set.
 
 ---
 
@@ -200,13 +205,13 @@ The following decisions are separate and must not be conflated:
 
 | Decision | Proposed meaning | Does not authorize |
 |----------|------------------|--------------------|
-| Selection | Identifies IWP-003 as the chosen package | Activation, discovery, implementation, execution, acceptance |
-| Activation | Opens the IWP-003 lifecycle | Discovery or implementation without effective implementation and discovery authority |
-| Implementation authorization | Defines package scope and artifact classes | Adjacent packages, migration without separate authority, dependency changes, release, deployment, Phase 4 |
+| Selection | Identifies IWP-003 as the chosen package | Technical implementation, execution against implementation files, acceptance |
+| Activation | Opens the IWP-003 lifecycle | Technical implementation without a later exact write-set action |
+| Package authority | Makes selection, activation, and read-only discovery effective | Adjacent packages, migration without separate authority, dependency changes, release, deployment, Phase 4 |
 | Discovery authorization | Allows read-only inspection of authorized surfaces | Modification, execution, acceptance |
-| Execution authorization | Allows later bounded implementation after exact write set confirmation | Acceptance, release, deployment, push |
+| Technical implementation action | Later separate action after exact write-set confirmation | Acceptance, release, deployment, push |
 
-No decision becomes effective during draft authoring.
+Only selection, activation, package authority, and read-only discovery are effective now. Technical implementation modification remains not effective.
 
 ---
 
@@ -230,9 +235,9 @@ Parallel package execution is prohibited. Any need to combine IWP-003 with anoth
 
 ## 12. Proposed Discovery Boundary
 
-**Decision:** discovery authorization PROPOSED — NOT EFFECTIVE.
+**Decision:** read-only discovery authorization AUTHORIZED — NOT STARTED — EFFECTIVE.
 
-If this draft is later reviewed, approved, integrated, published, checkpointed, continuity-synchronized, and discovery becomes effective, discovery may perform read-only inspection only to establish:
+Discovery may perform read-only inspection only to establish:
 
 1. exact backend code surfaces;
 2. exact future write set;
@@ -264,14 +269,14 @@ No exact implementation filename is authorized by this draft.
 
 ## 13. Proposed Implementation Boundary
 
-**Decision:** execution authorization PROPOSED — NOT EFFECTIVE.
+**Decision:** technical execution authorization NOT EFFECTIVE FOR TECHNICAL MODIFICATION.
 
 Future implementation may become usable only after:
 
-1. this artifact or a corrected successor is reviewed, approved, published, checkpointed, and continuity-synchronized;
-2. bounded discovery establishes an exact write set;
-3. a later separately authorized implementation action confirms that exact write set;
-4. migration, dependency, security, and testing implications are resolved or explicitly routed;
+1. bounded discovery establishes an exact write set;
+2. exact implementation files are identified;
+3. migration, dependency, and security impacts are classified;
+4. a later separately authorized implementation action confirms that exact write set;
 5. no stop condition applies.
 
 In-scope behavior, if later confirmed by discovery and separately authorized for implementation, is limited to:
@@ -478,25 +483,30 @@ The independent review of this draft should verify:
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/IWP_003_EXECUTION_AUTHORIZATION.md` |
-| Status | PUBLISHED — AWAITING CONTINUITY SYNCHRONIZATION — NOT EFFECTIVE |
-| Binding authority | NONE — APPROVED DRAFT ONLY |
+| Status | PUBLISHED — EFFECTIVE |
+| Binding authority | Active — IWP-003 selection, activation, and read-only discovery authority only |
 | Independent review | COMPLETED — PASS |
 | Review findings | BLOCKING 0; MAJOR 0; MINOR 0; EDITORIAL 0 |
 | Approval integration | COMPLETED — APPROVED FOR PUBLICATION CHECKPOINT |
 | Publication integration | COMPLETED |
 | Publication checkpoint | COMPLETED |
-| Git checkpoint | PENDING — THIS PUBLICATION COMMIT |
-| Continuity synchronization | NOT RUN — REQUIRED |
+| Publication commit | `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4` |
+| Git checkpoint | COMPLETED |
+| Continuity synchronization | COMPLETED |
 | Target package | IWP-003 - Backend Domain And Authorization Hardening |
-| Current effective IWP-003 status | PROPOSED — INACTIVE — NOT EXECUTABLE — NOT SELECTED — NOT IMPLEMENTATION-AUTHORIZED |
-| Selection | PROPOSED — NOT EFFECTIVE |
-| Activation | PROPOSED — NOT EFFECTIVE |
-| Implementation authorization | PROPOSED — NOT EFFECTIVE |
-| Discovery authorization | PROPOSED — NOT EFFECTIVE |
-| Execution authorization | PROPOSED — NOT EFFECTIVE |
+| Current effective IWP-003 status | SELECTED — ACTIVE — READ-ONLY DISCOVERY AUTHORIZED — NOT STARTED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED |
+| Selection | SELECTED — EFFECTIVE |
+| Activation | ACTIVE — EFFECTIVE |
+| Package authority | PUBLISHED — EFFECTIVE |
+| Read-only discovery authorization | AUTHORIZED — NOT STARTED — EFFECTIVE |
+| Technical implementation | NOT STARTED |
+| Implementation write authority | NOT EFFECTIVE FOR TECHNICAL MODIFICATION UNTIL DISCOVERY COMPLETES AND A LATER SEPARATE IMPLEMENTATION ACTION AUTHORIZES AN EXACT WRITE SET |
+| Execution authorization | NOT EFFECTIVE FOR TECHNICAL MODIFICATION |
+| Exact technical write set | NOT YET AUTHORIZED |
+| Acceptance | NOT GRANTED |
 | Stage I4 implementation | NOT STARTED |
-| Active implementation packages | 0 |
-| Authorized implementation packages | 0 |
+| Active implementation packages | 1 — IWP-003 |
+| Authorized technical implementation packages | 0 |
 | Release posture | Deferred |
 | Push | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
