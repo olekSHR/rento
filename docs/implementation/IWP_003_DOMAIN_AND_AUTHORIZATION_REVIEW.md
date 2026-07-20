@@ -238,7 +238,9 @@ Current evidence posture:
 - exact write-set scope verification: PASS;
 - global working-tree whitespace check: FAIL due pre-existing unrelated release file left untouched and unstaged;
 - root-cwd full backend suite: FAIL because existing static uploads directory expectation is cwd-sensitive and out of IWP-003 scope;
-- final staged-file validation: to be recorded after staging.
+- implementation was staged within the authorized eight-file scope before commit `50286ca3042cb0aabd74f28f072557afd01773c5` (`docs(implementation): execute IWP-003 domain authorization hardening`);
+- current targeted correction remains a separate later commit;
+- acceptance remains NOT GRANTED.
 
 ---
 
@@ -255,3 +257,45 @@ It does not:
 - authorize push, release, deployment, production, launch, scaling, or Phase 4.
 
 Exact next action after a passing implementation commit is one independent final block review of the committed IWP-003 implementation. Acceptance must not be granted during that review.
+
+---
+
+## 14. Targeted Final-Review Correction Record
+
+Targeted findings under correction:
+
+- `MAJOR-IWP003-FBR-001` - generic `create_property` verification timestamp initialization;
+- `MINOR-IWP003-FBR-002` - focused role allow/deny and inactive-account denial evidence;
+- `EDITORIAL-IWP003-FBR-003` - stale staged-validation wording in Section 12.
+
+Targeted correction status:
+
+- `MAJOR-IWP003-FBR-001`: CORRECTED - generic create no longer initializes `last_verified_at`; explicit verification transition remains the timestamp-setting path.
+- `MINOR-IWP003-FBR-002`: CORRECTED - focused tests now cover role allow/deny, active/suspended/blocked account behavior, and denial before property mutation.
+- `EDITORIAL-IWP003-FBR-003`: CORRECTED - Section 12 now records the existing implementation commit and correction separation.
+
+Correction validation:
+
+- Python compilation: PASS - `property_repository.py` and `test_iwp_003_domain_authorization.py`.
+- Backend test collection from canonical backend context: PASS - 32 collected, 2 warnings.
+- Focused IWP-003 tests: PASS - 29 passed, 2 warnings.
+- Full backend tests from canonical backend context: PASS - 32 passed, 6 warnings.
+- Coverage without threshold: PASS - 29 passed, 2 warnings, total coverage 38%.
+- Static timestamp checks: PASS - generic create/update no longer set `last_verified_at`; explicit moderation status update remains the timestamp-setting path; verification and activation request timestamp updates through service-owned transitions.
+- Markdown diagnostics: PASS - no linter diagnostics for this document.
+- Scoped diff whitespace check: PASS - `git diff --check -- backend/app/repositories/property_repository.py backend/tests/test_iwp_003_domain_authorization.py docs/implementation/IWP_003_DOMAIN_AND_AUTHORIZATION_REVIEW.md`.
+- Scope verification: PASS - changed correction files are the three authorized files, with the pre-existing unrelated release file and reviews directory remaining unstaged and excluded.
+
+Corrected test evidence:
+
+- pending property creation leaves `last_verified_at` absent;
+- explicit valid verification sets `last_verified_at`;
+- generic unrelated update preserves `last_verified_at`;
+- ordinary user role is denied before property mutation;
+- realtor/admin role guards allow only the applicable authority boundaries;
+- active account remains eligible;
+- suspended and blocked accounts are denied before property mutation.
+
+Correction commit: UNAVAILABLE UNTIL LOCAL CORRECTIVE COMMIT IS CREATED.
+
+Acceptance remains NOT GRANTED.

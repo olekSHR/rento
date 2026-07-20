@@ -3,16 +3,25 @@ from types import SimpleNamespace
 import pytest
 
 from app.core.exceptions import BadRequestException, ForbiddenException, NotFoundException
+from app.core.security import dependencies
 from app.repositories import property_repository
 from app.schemas.property import PropertyCreate, PropertyUpdate
-from app.services import property_service, realtor_application_service
+from app.services import (
+    account_status_service,
+    property_service,
+    realtor_application_service,
+)
 
 
 class FakeDb:
     def __init__(self):
+        self.adds = []
         self.commits = 0
         self.refreshes = []
         self.rollbacks = 0
+
+    def add(self, item):
+        self.adds.append(item)
 
     def commit(self):
         self.commits += 1
@@ -63,9 +72,111 @@ def make_user(**overrides):
     data = {
         "id": 10,
         "role": "realtor",
+        "account_status": "active",
     }
     data.update(overrides)
     return SimpleNamespace(**data)
+
+
+def test_role_guards_allow_realtor_boundary_and_admin_boundary():
+    realtor = make_user(role="realtor")
+    admin = make_user(id=1, role="admin")
+
+    assert dependencies.require_admin_or_realtor(realtor) is realtor
+    assert dependencies.require_admin(admin) is admin
+    assert dependencies.require_admin_or_realtor(admin) is admin
+
+
+def test_role_guard_denies_ordinary_user():
+    ordinary_user = make_user(role="user")
+
+    with pytest.raises(BadRequestException):
+        dependencies.require_admin_or_realtor(ordinary_user)
+
+    with pytest.raises(BadRequestException):
+        dependencies.require_admin(ordinary_user)
+
+
+def test_user_role_denied_before_property_mutation(monkeypatch):
+    calls = []
+    property_item = make_property(owner_id=10, status="pending")
+    property_data = make_property_data()
+    ordinary_user = make_user(id=10, role="user")
+
+    monkeypatch.setattr(
+        property_service.property_repository,
+        "update_property",
+        lambda *args, **kwargs: calls.append((args, kwargs)),
+    )
+
+    with pytest.raises(ForbiddenException):
+        property_service.update_property(
+            FakeDb(),
+            property_item,
+            property_data,
+            ordinary_user,
+        )
+
+    assert calls == []
+
+
+def test_active_account_remains_eligible_for_authorized_property_mutation(monkeypatch):
+    calls = []
+    property_item = make_property(owner_id=10, status="pending")
+    property_data = make_property_data()
+    realtor = make_user(id=10, role="realtor", account_status="active")
+
+    def fake_update_property(db, item, title, description, price, city, rooms, image_url):
+        calls.append((item, title, description, price, city, rooms, image_url))
+        return item
+
+    monkeypatch.setattr(
+        property_service.property_repository,
+        "update_property",
+        fake_update_property,
+    )
+
+    account_status_service.assert_can_authenticate(realtor)
+    property_service.update_property(
+        FakeDb(),
+        property_item,
+        property_data,
+        realtor,
+    )
+
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize("account_status", ["suspended", "blocked"])
+def test_inactive_account_denied_before_property_mutation(
+    monkeypatch,
+    account_status,
+):
+    calls = []
+    property_item = make_property(owner_id=10, status="pending")
+    property_data = make_property_data()
+    realtor = make_user(
+        id=10,
+        role="realtor",
+        account_status=account_status,
+    )
+
+    monkeypatch.setattr(
+        property_service.property_repository,
+        "update_property",
+        lambda *args, **kwargs: calls.append((args, kwargs)),
+    )
+
+    with pytest.raises(ForbiddenException):
+        account_status_service.assert_can_authenticate(realtor)
+        property_service.update_property(
+            FakeDb(),
+            property_item,
+            property_data,
+            realtor,
+        )
+
+    assert calls == []
 
 
 def test_realtor_own_property_mutation_is_allowed(monkeypatch):
@@ -277,6 +388,44 @@ def test_realtor_create_uses_current_user_profile_not_client_protected_fields(mo
             "whatsapp": "+200",
         }
     ]
+
+
+def test_pending_property_create_does_not_set_last_verified_at():
+    db = FakeDb()
+
+    result = property_repository.create_property(
+        db,
+        "Pending listing",
+        "Pending listing description",
+        1000,
+        "City",
+        2,
+        owner_id=10,
+        status="pending",
+    )
+
+    assert result.last_verified_at is None
+    assert db.adds == [result]
+    assert db.commits == 1
+    assert db.refreshes == [result]
+
+
+def test_explicit_valid_verification_sets_last_verified_at(monkeypatch):
+    property_item = make_property(
+        status="pending",
+        last_verified_at=None,
+    )
+
+    monkeypatch.setattr(
+        property_service.property_repository,
+        "get_property_by_id",
+        lambda db, property_id: property_item,
+    )
+
+    result = property_service.verify_property(FakeDb(), 1)
+
+    assert result.status == "available"
+    assert result.last_verified_at is not None
 
 
 @pytest.mark.parametrize(

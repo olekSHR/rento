@@ -177,7 +177,6 @@ def create_property(
         contact_name=contact_name,
         phone=phone,
         whatsapp=whatsapp,
-        last_verified_at=datetime.now(UTC)
     )
 
     db.add(new_property)
