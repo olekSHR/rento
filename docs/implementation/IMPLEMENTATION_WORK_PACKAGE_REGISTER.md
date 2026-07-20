@@ -48,15 +48,15 @@ The register is subordinate to published Repository Authority and cannot overrid
 |-------|-------|
 | Active implementation packages | 0 |
 | Authorized implementation packages | 0 |
-| Proposed implementation packages | 12 |
+| Proposed implementation packages | 11 |
 | Pending implementation packages | 0 |
-| Completed implementation packages | 0 |
+| Completed implementation packages | 1 |
 | Cancelled implementation packages | 0 |
 | Stage I1 packages | None authorized |
-| Stage I2 package definition | CORRECTIVE EXECUTION COMPLETED - proposed packages only - final independent completion review pending |
-| Implementation status | NOT AUTHORIZED |
+| Stage I2 package definition | CLOSED - 11 proposed packages remain reserved only after IWP-002 acceptance |
+| Implementation status | IWP-002 ACCEPTED - no other package authorized |
 
-Stage I2 corrective execution has produced corrected proposed, non-executable implementation work package metadata. No proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. No other proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
 
 ---
 
@@ -167,9 +167,9 @@ No active implementation work packages exist.
 
 ## 8A. Stage I2 Proposed Work Package Inventory
 
-These entries are proposed metadata only. Stable `IWP-###` identifiers provide identity for later review; they do not grant governance approval, activation, execution, implementation authority, merge authority, deployment authority, release authority, or Phase 4 authority.
+These entries are proposed metadata only except where a package entry explicitly records later accepted evidence. Stable `IWP-###` identifiers provide identity for later review; they do not grant governance approval, activation, execution, implementation authority, merge authority, deployment authority, release authority, or Phase 4 authority.
 
-All proposed packages require later independent governance authorization before any work may begin.
+All proposed packages require later independent governance authorization before any work may begin. IWP-002 is no longer proposed-only; its accepted status is recorded in its entry below and does not affect any other IWP.
 
 Corrective evidence basis for all entries:
 
@@ -228,9 +228,9 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Security Standards; Infrastructure Standards; Development Standards |
 | Stop Conditions | Stop if real secrets, production credentials, deployment operations, runtime config execution, or broader source inspection are required without separate authority |
 | Release Posture | Release deferred; configuration readiness is not deployment or release authority |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
-| Completion Verification | Later package evidence must confirm changed files, secret handling, checks run, and unavailable checks |
-| Residual Risk | Historical secret exposure may require separate security review |
+| Status | ACCEPTED - IMPLEMENTATION EXECUTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - RELEASE DEFERRED |
+| Completion Verification | Accepted by `docs/implementation/IWP_002_FINAL_ACCEPTANCE_REPORT.md`; implementation commit `819fab471d9842746765f7de5c0573e57fe23563`; security lifecycle decision commit `536e8385560d2e1bb2d512d3fb5c025859135373`; corrective delta validation PASS |
+| Residual Risk | Docker Compose rendering unavailable because Docker CLI was unavailable; no push, deployment, release, launch, scaling, Phase 4, or adjacent IWP authority |
 
 ### IWP-003 - Backend Domain And Authorization Hardening
 
@@ -598,6 +598,7 @@ The register must stop intake or package progression when:
 | Independent Publication Review | COMPLETED - APPROVED |
 | Active implementation packages | 0 |
 | Authorized implementation packages | 0 |
-| Implementation | NOT AUTHORIZED |
+| Accepted implementation packages | 1 - IWP-002 |
+| Implementation | IWP-002 ACCEPTED; no other package authorized |
 | Stage I1 | NOT AUTHORIZED |
 | Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md` |
