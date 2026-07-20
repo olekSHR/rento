@@ -228,7 +228,35 @@ Scoped Validation will verify:
 
 ---
 
-## 13. Full Verification Trigger Assessment
+## 13. Execution Checkpoint Evidence
+
+This section records the original IWP-001 execution checkpoint created after Scoped Validation passed. It does not describe or include any later corrective commit.
+
+| Item | Evidence |
+|------|----------|
+| Execution commit | `ee02e92bbec39c0db3348132db6279adcf30501b` |
+| Commit subject | `docs(implementation): execute IWP-001 assessment preparation` |
+| Commit parent | `5d474ba6059b9998b00b3de5856f195e53ee2a41` |
+| Post-execution HEAD | `ee02e92bbec39c0db3348132db6279adcf30501b` |
+| `origin/main` at execution checkpoint | `f74a868a0525df30311deba505d35107c80e9e17` |
+| Final execution-checkpoint divergence | `0 behind / 11 ahead` |
+| Staged files after execution commit | None |
+| Unrelated modified item preserved | `docs/design/releases/v1.0-admin-platform.md` |
+| Unrelated untracked item preserved | `docs/implementation/reviews/` |
+| Push | NOT RUN - NOT AUTHORIZED |
+| Acceptance | NOT YET GRANTED |
+
+Exact committed file list:
+
+1. `docs/implementation/IWP_001_CODE_TO_ARCHITECTURE_ASSESSMENT_CHARTER.md`
+2. `docs/implementation/IWP_001_AUTHORITY_TRACEABILITY_MATRIX.md`
+3. `docs/implementation/IWP_001_ASSESSMENT_EVIDENCE_BOUNDARY.md`
+4. `docs/implementation/IWP_001_GAP_ROUTING_AND_STOP_CONDITIONS.md`
+5. `docs/implementation/IWP_001_EXECUTION_EVIDENCE.md`
+
+---
+
+## 14. Full Verification Trigger Assessment
 
 | Trigger | Assessment |
 |---------|------------|
@@ -249,14 +277,12 @@ Scoped Validation is sufficient for IWP-001 execution because the work created m
 
 ---
 
-## 14. Execution Verdict
+## 15. Execution Verdict
 
 PASS - IWP-001 preparation executed within the published preparation-only boundary.
 
 ---
 
-## 15. Exact Next Authorized Action
+## 16. Exact Next Authorized Action
 
-Create one isolated local checkpoint commit containing only the five authorized IWP-001 output paths.
-
-After that commit, the next authorized action is one Targeted Final Block Review of the complete IWP-001 preparation outputs and evidence.
+After the original execution checkpoint, the next authorized action is one Targeted Final Block Review of the complete IWP-001 preparation outputs and evidence.
