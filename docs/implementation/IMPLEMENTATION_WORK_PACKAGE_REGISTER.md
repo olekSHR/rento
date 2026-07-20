@@ -48,15 +48,15 @@ The register is subordinate to published Repository Authority and cannot overrid
 |-------|-------|
 | Active implementation packages | 0 |
 | Authorized implementation packages | 0 |
-| Proposed implementation packages | 11 |
+| Proposed implementation packages | 10 |
 | Pending implementation packages | 0 |
-| Completed implementation packages | 1 |
+| Completed implementation packages | 2 |
 | Cancelled implementation packages | 0 |
 | Stage I1 packages | None authorized |
-| Stage I2 package definition | CLOSED - 11 proposed packages remain reserved only after IWP-002 acceptance |
-| Implementation status | IWP-002 ACCEPTED - no other package authorized |
+| Stage I2 package definition | CLOSED - 10 proposed packages remain reserved only after IWP-001 and IWP-002 acceptance |
+| Implementation status | IWP-001 ACCEPTED; IWP-002 ACCEPTED - no other package authorized |
 
-Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. No other proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-001 acceptance satisfies the registered IWP-001 dependency for future IWP-005 and IWP-009 authorization consideration only. No other proposed package is authorized, active, in progress, accepted, deployed, released, or executable.
 
 ---
 
@@ -169,7 +169,7 @@ No active implementation work packages exist.
 
 These entries are proposed metadata only except where a package entry explicitly records later accepted evidence. Stable `IWP-###` identifiers provide identity for later review; they do not grant governance approval, activation, execution, implementation authority, merge authority, deployment authority, release authority, or Phase 4 authority.
 
-All proposed packages require later independent governance authorization before any work may begin. IWP-002 is no longer proposed-only; its accepted status is recorded in its entry below and does not affect any other IWP.
+All proposed packages require later independent governance authorization before any work may begin. IWP-001 and IWP-002 are no longer proposed-only; their accepted statuses are recorded in their entries below and do not activate any other IWP.
 
 Corrective evidence basis for all entries:
 
@@ -196,14 +196,14 @@ Corrective evidence basis for all entries:
 | Evidence Basis | Published Stage I2 authorities, Implementation Governance, Repository Standards, and Git metadata only |
 | Deliverables | Audit charter, evidence boundary, authority map, unavailable-evidence policy, stop-condition checklist |
 | Validation Requirements | Git state verification, authority inventory, changed-file inventory, unavailable-evidence report |
-| Acceptance Criteria | Later authority approves a bounded audit scope and confirms the audit itself remains separately authorized |
+| Acceptance Criteria | Authorized preparation outputs exist, Scoped Validation passes, completion review and corrective delta validation are resolved, and the actual assessment remains separately authorized |
 | Required Evidence | Repository state evidence, authority inventory, scope review, unavailable-evidence report |
 | Required Review Routes | Repository Standards; Implementation Governance; owner authority review |
 | Stop Conditions | Stop if audit execution, source inspection, gap findings, remediation, implementation, deployment, release, or Phase 4 is requested without separate authority |
 | Release Posture | Release deferred; no deployment, tag, GitHub Release, production operation, or release authority is created by this proposal |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
-| Completion Verification | Later authorization must record approved scope, reviewed evidence, and confirmation that audit execution was separately authorized |
-| Residual Risk | Formal audit may require package splits after evidence is reviewed |
+| Status | ACCEPTED - PREPARATION EXECUTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - DEPENDENCY SATISFIED FOR FUTURE IWP-005/IWP-009 AUTHORIZATION CONSIDERATION - RELEASE DEFERRED |
+| Completion Verification | Accepted by `docs/implementation/IWP_001_FINAL_ACCEPTANCE_REPORT.md`; execution commit `ee02e92bbec39c0db3348132db6279adcf30501b`; corrective commit `e8f57bdaf5dc7f73f29ed748e560ab7b9961b97e`; corrective delta validation PASS |
+| Residual Risk | Actual Code-to-Architecture Assessment remains separately governed; Implementation Gap Register remains unauthorized; no push, deployment, release, launch, scaling, Phase 4, IWP-005, or IWP-009 authority |
 
 ### IWP-002 - Configuration And Secrets Hygiene
 
@@ -299,7 +299,7 @@ Corrective evidence basis for all entries:
 | Out of Scope | Stage I2 migration execution; production data changes; schema change without later package authority |
 | Repository Areas | `backend/alembic.ini`; `backend/alembic/env.py`; `backend/alembic/versions/`; `backend/alembic/versions_backup/`; `backend/app/models/`; `backend/app/repositories/` |
 | Change Classes | Persistence; Security; Repository/governance |
-| Dependencies | IWP-001; IWP-002 recommended |
+| Dependencies | IWP-001 SATISFIED for future authorization consideration; IWP-002 accepted - recommended prerequisite satisfied |
 | Required Authorities | Database Architecture; Database Standards; Backend Architecture; Security Standards |
 | Evidence Basis | Published authority docs, Stage I0 baseline declarations, and metadata-only tracked path inventory |
 | Deliverables | Migration graph review, model inclusion review, rollback notes, persistence checks, unavailable-evidence report |
@@ -407,7 +407,7 @@ Corrective evidence basis for all entries:
 | Out of Scope | Feature implementation; dependency addition without authority; CI vendor commitment unless authorized |
 | Repository Areas | `backend/`; `frontend/package.json`; future test directories; future CI configuration only if separately authorized |
 | Change Classes | Repository/governance; Local mechanical; AI-assisted if used |
-| Dependencies | IWP-001; supports all later implementation packages |
+| Dependencies | IWP-001 SATISFIED for future authorization consideration; supports all later implementation packages |
 | Required Authorities | Development Standards; Implementation Governance; AI Collaboration Standards |
 | Evidence Basis | Published authority docs, metadata-only tracked path inventory, and absence of tracked `.github` path in metadata inventory |
 | Deliverables | Backend test command, frontend verification commands, quality gate documentation, unavailable-evidence report |
@@ -598,7 +598,7 @@ The register must stop intake or package progression when:
 | Independent Publication Review | COMPLETED - APPROVED |
 | Active implementation packages | 0 |
 | Authorized implementation packages | 0 |
-| Accepted implementation packages | 1 - IWP-002 |
-| Implementation | IWP-002 ACCEPTED; no other package authorized |
+| Accepted implementation packages | 2 - IWP-001, IWP-002 |
+| Implementation | IWP-001 ACCEPTED; IWP-002 ACCEPTED; no other package authorized |
 | Stage I1 | NOT AUTHORIZED |
 | Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md` |
