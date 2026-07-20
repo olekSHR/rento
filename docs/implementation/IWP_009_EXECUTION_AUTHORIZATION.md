@@ -17,7 +17,7 @@
 **IWP-009 execution:** AUTHORIZED - NOT STARTED
 **IWP-009 executability:** EXECUTABLE ONLY WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY
 **IWP-009 acceptance:** NOT GRANTED
-**Implementation:** AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED
+**Implementation:** AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED
 **Commit:** AUTHORIZED AFTER REQUIRED IWP-009 LIFECYCLE VALIDATION ONLY
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
@@ -49,13 +49,13 @@ This lifecycle transition records three separate explicit decisions in order:
 This lifecycle transition:
 
 1. makes IWP-009 executable only within the exact published IWP-009 boundary;
-2. authorizes implementation only within the exact published IWP-009 boundary;
+2. authorizes implementation only within the exact published IWP-009 boundary as updated for the minimum test foundation;
 3. leaves implementation NOT STARTED;
 4. leaves IWP-009 completion review NOT STARTED;
 5. leaves IWP-009 acceptance NOT GRANTED;
 6. leaves every other non-accepted Work Package unselected, inactive, non-executable, and not authorized;
 7. grants no production access, production migration, push, deployment, release, launch, scaling, or Phase 4 authority;
-8. leaves continuity synchronization as the next separate lifecycle action.
+8. leaves minimum meaningful IWP-009 implementation as the next separate lifecycle action.
 
 Publication, selection, activation, execution authorization, implementation execution, completion review, acceptance, continuity synchronization, commit, push, release, and deployment remain distinct lifecycle acts. No act implies another.
 
@@ -100,7 +100,7 @@ Chat memory, model memory, generated summaries, implementation code, package man
 | Registered dependency | IWP-001 SATISFIED for future authorization consideration |
 | Registered downstream role | Supports all later implementation packages |
 | Registered release posture | Release deferred; quality gates are prerequisite evidence, not release authority |
-| Current status | SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY - IMPLEMENTATION NOT STARTED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED |
+| Current status | SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY - IMPLEMENTATION AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED |
 
 ---
 
@@ -115,7 +115,7 @@ Current repository lifecycle posture for this artifact:
 | IWP-002 | ACCEPTED |
 | IWP-005 | ACCEPTED |
 | IWP-009 | SELECTED - ACTIVE - AUTHORIZED - EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY |
-| Active implementation package | IWP-009 - implementation NOT STARTED |
+| Active implementation package | IWP-009 - implementation AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED |
 | Production migration | NOT AUTHORIZED |
 | Push | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
@@ -189,20 +189,59 @@ The future execution authority must stop if exact test or quality paths cannot b
 
 ## 8. Proposed Future Write Boundary
 
-This artifact authorizes future writes only within the exact published IWP-009 execution boundary. No write or implementation execution is performed by this lifecycle transition.
+This artifact authorizes future writes only within the exact published IWP-009 execution boundary as updated by this minimum test foundation authority update. No write or implementation execution is performed by this authority update.
 
 Candidate write classes:
 
 | Path or class | Candidate purpose | Current artifact posture |
 |---------------|-------------------|-----------------------|
 | `docs/implementation/IWP_009_EXECUTION_EVIDENCE.md` | Required future execution evidence | Authorized only during later execution within the exact IWP-009 boundary |
-| `docs/implementation/IWP_009_TEST_AND_QUALITY_GATE_REVIEW.md` | Candidate quality-gate review and unavailable-evidence report | Authorized only during later execution within the exact IWP-009 boundary |
-| `backend/` test or test-configuration paths | Backend test command, fixture, or quality-gate foundation if exact paths are confirmed | Authorized only during later execution after exact paths are confirmed |
-| `frontend/package.json` | Frontend scripts only if existing package-script posture requires bounded update | Authorized only during later execution; dependency additions require separate authority |
-| Future test directories | Test foundation only if exact directory paths are established | Authorized only during later execution; no guessed path is authorized |
+| `docs/implementation/IWP_009_TEST_AND_QUALITY_GATE_REVIEW.md` | Required quality-gate review and unavailable-evidence report | Authorized only during later execution within the exact IWP-009 boundary |
+| `backend/requirements.txt` | Add exactly `pytest` and `pytest-cov` as backend test dependencies | Authorized only during later execution; no other dependency addition, removal, upgrade, or version change is authorized |
+| `backend/pytest.ini` | Backend pytest configuration | Authorized only during later execution |
+| `backend/tests/conftest.py` | Shared safe test setup using placeholders only | Authorized only during later execution |
+| `backend/tests/test_backend_smoke.py` | Smallest representative backend smoke/unit test module | Authorized only during later execution |
+| `frontend/package.json` | Add a package-level `typecheck` script using the existing TypeScript dependency | Authorized only during later execution; frontend dependency and lockfile changes are not authorized |
 | Future CI configuration | Optional CI-readiness only if separately authorized | Not authorized by default |
 
 No vague paths such as related files, necessary code, package files, CI files, or test folders are authorized without exact future path confirmation.
+
+### 8A. Updated Minimum Test Foundation Write Set
+
+The later minimum meaningful IWP-009 implementation may modify exactly:
+
+1. `backend/requirements.txt`
+2. `backend/pytest.ini`
+3. `backend/tests/conftest.py`
+4. `backend/tests/test_backend_smoke.py`
+5. `frontend/package.json`
+6. `docs/implementation/IWP_009_EXECUTION_EVIDENCE.md`
+7. `docs/implementation/IWP_009_TEST_AND_QUALITY_GATE_REVIEW.md`
+
+No other future implementation write path is authorized by this update.
+
+### 8B. Updated Dependency Authority
+
+The later minimum meaningful IWP-009 implementation may add only these backend test dependencies to `backend/requirements.txt`:
+
+1. `pytest`
+2. `pytest-cov`
+
+The versions must be compatible with the existing Python/backend stack.
+
+No other dependency addition, removal, upgrade, or version change is authorized. Frontend dependency additions and `frontend/package-lock.json` changes are not authorized.
+
+### 8C. Updated Minimum Technical Capability
+
+The later implementation must create a reusable minimum test foundation that proves:
+
+1. backend pytest discovery works;
+2. backend imports required by the test foundation work in a safe test environment;
+3. no production service, secret, migration, external service, container, or persistent database is required;
+4. backend coverage measurement can run without imposing an invented coverage threshold;
+5. frontend lint remains executable;
+6. frontend typecheck is exposed through a canonical package-level script;
+7. all command results, unrun checks, unavailable evidence, and residual risks are recorded in the mandatory IWP-009 evidence artifacts.
 
 ---
 
@@ -213,7 +252,7 @@ Future IWP-009 must exclude:
 1. feature implementation;
 2. application behavior changes;
 3. unrelated refactoring;
-4. dependency addition without separate authority;
+4. dependency addition except the later addition of `pytest` and `pytest-cov` to `backend/requirements.txt` within the exact updated IWP-009 boundary;
 5. package manager or test framework migration without separate authority;
 6. CI vendor commitment unless separately authorized;
 7. deployment configuration;
@@ -230,6 +269,22 @@ Future IWP-009 must exclude:
 18. Phase 4 Product Development Methodology;
 19. IWP-003, IWP-004, IWP-006, IWP-007, IWP-008, IWP-010, IWP-011, or IWP-012 work;
 20. Stage I3 closure.
+
+The updated minimum test foundation also excludes:
+
+1. frontend dependency additions;
+2. `frontend/package-lock.json` changes;
+3. backend application feature changes;
+4. migration or model changes;
+5. production database use;
+6. external service calls;
+7. `.env` or secret-store access;
+8. real credentials;
+9. frontend unit, component, or end-to-end tooling;
+10. frontend test source creation;
+11. CI workflow creation or modification;
+12. repository-level task runner creation;
+13. formatting or unrelated refactoring.
 
 ---
 
@@ -295,7 +350,7 @@ Execution authorization is granted only after:
 ```text
 IWP-009 EXECUTION AUTHORIZATION: AUTHORIZED
 IWP-009 EXECUTABILITY: EXECUTABLE ONLY WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY
-IMPLEMENTATION: AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED
+IMPLEMENTATION: AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED
 ```
 
 No implementation file may be changed before the later implementation-discovery or implementation-execution action begins under this published boundary.
@@ -308,11 +363,11 @@ Future IWP-009 evidence must include:
 
 | Evidence | Requirement |
 |----------|-------------|
-| Backend test command evidence | Command executed, failed, or honestly unavailable |
-| Frontend verification evidence | Lint/build/test command executed, failed, or honestly unavailable |
-| Coverage posture | Coverage command/result or unavailable-evidence rationale |
+| Backend test command evidence | `python -m pytest` executed, failed, or blocked by a recorded stop condition |
+| Backend coverage posture | Backend coverage measurement executed with `pytest-cov`, failed, or blocked by a recorded stop condition; no invented coverage threshold is authorized |
+| Frontend verification evidence | `npm run lint` and `npm run typecheck` executed, failed, or honestly unavailable |
 | Generated-output review | Required if AI generates tests, config, docs, scripts, or review artifacts |
-| Dependency/tooling posture | No dependency change or separate authority for dependency/tooling change |
+| Dependency/tooling posture | Only `pytest` and `pytest-cov` may be added to `backend/requirements.txt`; all other dependency/tooling changes require separate authority |
 | CI-readiness posture | No CI change by default; separate authority if CI config is modified |
 | Unrun checks | Explicitly recorded with reason and residual risk |
 | Quality-gate review | Review against Development Standards, Implementation Governance, and AI Collaboration Standards |
@@ -397,7 +452,7 @@ The following acts are separate:
 | IWP-009 selection | SELECTED |
 | IWP-009 activation | ACTIVE |
 | IWP-009 execution authorization | AUTHORIZED |
-| IWP-009 implementation execution | AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED |
+| IWP-009 implementation execution | AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED |
 | IWP-009 completion review | NOT STARTED |
 | IWP-009 acceptance | NOT GRANTED |
 | Continuity synchronization | NOT AUTHORIZED BY THIS ARTIFACT |
@@ -418,8 +473,8 @@ Future IWP-009 work must stop if:
 2. IWP-009 selection, activation, authorization, executability, implementation-not-started posture, or acceptance-not-granted posture cannot be verified;
 3. scope ambiguity cannot be resolved from Repository Authority;
 4. exact future read/write paths cannot be established before implementation inspection;
-5. dependency or tooling changes are required without separate authority;
-6. package manager, framework, or test runner selection is required without authority;
+5. dependency or tooling changes beyond adding `pytest` and `pytest-cov` to `backend/requirements.txt` are required;
+6. package manager, framework, or test runner selection beyond backend pytest is required;
 7. CI expansion exceeds the registered package or lacks separate authorization;
 8. generated output cannot be reviewed or executed as required;
 9. secret, credential, `.env`, secret-store, production, or personal-data access is required;
@@ -429,6 +484,20 @@ Future IWP-009 work must stop if:
 13. deployment, release, push, launch, scaling, production operation, or Phase 4 is requested;
 14. required evidence cannot be recorded honestly.
 
+The later minimum implementation must also stop if:
+
+1. `pytest` or `pytest-cov` requires changes outside `backend/requirements.txt`;
+2. a backend lockfile or another dependency manifest must be created or modified;
+3. tests require application feature changes;
+4. tests require a live or persistent database;
+5. secrets, `.env`, production access, containers, or external services are required;
+6. `frontend/package-lock.json` changes;
+7. CI becomes mandatory;
+8. another test file or configuration surface outside the exact updated write set becomes necessary;
+9. another Work Package must be combined.
+
+A stop condition requires a new bounded authority decision and does not permit automatic scope expansion.
+
 Default result is BLOCKED.
 
 ---
@@ -437,11 +506,11 @@ Default result is BLOCKED.
 
 Residual risks to record in any future IWP-009 execution include:
 
-1. exact test framework and test path state are not confirmed by this artifact;
-2. exact backend test command may be absent or may require dependency/tooling decisions;
-3. exact frontend verification command may require package-script inspection;
-4. coverage may be unavailable without additional tooling;
-5. CI readiness may require a separate CI authority decision;
+1. backend pytest and pytest-cov must be added later before backend test evidence can exist;
+2. the minimum backend smoke test must remain representative without requiring feature changes, secrets, production access, migrations, or a persistent database;
+3. frontend test tooling remains deferred and unavailable in the minimum foundation;
+4. coverage measurement is authorized without an invented threshold;
+5. CI readiness remains deferred and may require a separate CI authority decision;
 6. AI-generated tests or artifacts require review and execution before evidence claims.
 
 Release posture remains:
@@ -486,9 +555,9 @@ IWP-009: SELECTED — ACTIVE — AUTHORIZED — EXECUTABLE WITHIN THE EXACT PUBL
 IWP-009 SELECTION: SELECTED.
 IWP-009 ACTIVATION: ACTIVE.
 IWP-009 EXECUTION: AUTHORIZED - NOT STARTED.
-IMPLEMENTATION: AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED.
+IMPLEMENTATION: AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED.
 TEST MODIFICATION: AUTHORIZED ONLY DURING LATER EXECUTION WITHIN THE EXACT IWP-009 BOUNDARY.
-DEPENDENCY MODIFICATION: NOT AUTHORIZED WITHOUT SEPARATE AUTHORITY.
+DEPENDENCY MODIFICATION: ONLY PYTEST AND PYTEST-COV IN BACKEND/REQUIREMENTS.TXT ARE AUTHORIZED; ALL OTHER DEPENDENCY CHANGES REQUIRE SEPARATE AUTHORITY.
 CI MODIFICATION: NOT AUTHORIZED WITHOUT SEPARATE AUTHORITY.
 ACCEPTANCE: NOT GRANTED.
 COMMIT: AUTHORIZED AFTER REQUIRED IWP-009 LIFECYCLE VALIDATION ONLY.
@@ -516,8 +585,8 @@ PHASE 4: NOT STARTED.
 | Review | COMPLETED - PASS |
 | Publication | COMPLETE - 2026-07-20 |
 | IWP-009 lifecycle posture | SELECTED — ACTIVE — AUTHORIZED — EXECUTABLE WITHIN THE EXACT PUBLISHED IWP-009 BOUNDARY |
-| Implementation | AUTHORIZED WITHIN IWP-009 BOUNDARY - NOT STARTED |
+| Implementation | AUTHORIZED WITHIN THE UPDATED IWP-009 BOUNDARY - NOT STARTED |
 | IWP-009 acceptance | NOT GRANTED |
 | Commit | AUTHORIZED AFTER REQUIRED IWP-009 LIFECYCLE VALIDATION ONLY |
 | Push | NOT AUTHORIZED |
-| Exact next authorized action | Synchronize only the existing continuity surfaces with the completed IWP-009 lifecycle transition before beginning implementation discovery |
+| Exact next authorized action | Execute the minimum meaningful IWP-009 implementation within the updated exact write set, including pytest, pytest-cov, backend smoke tests, frontend typecheck, focused validation, and the two mandatory evidence artifacts |
