@@ -2,7 +2,6 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from app.models.user import User
 from alembic import context
 
 # this is the Alembic Config object, which provides
@@ -19,8 +18,24 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from app.database.database import Base
-from app.models.property import Property
-from app.models.password_reset_token import PasswordResetToken
+from app.models import (
+    Favorite,
+    PasswordResetToken,
+    Property,
+    RealtorApplication,
+    RealtorProfile,
+    User,
+)
+
+# Import every model class so Alembic autogenerate sees the complete metadata set.
+_registered_models = (
+    Favorite,
+    PasswordResetToken,
+    Property,
+    RealtorApplication,
+    RealtorProfile,
+    User,
+)
 
 target_metadata = Base.metadata
 
