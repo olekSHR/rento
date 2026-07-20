@@ -1,17 +1,18 @@
+from pydantic import Field
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
 
-    DATABASE_URL: str
+    DATABASE_URL: str = Field(..., repr=False)
 
-    SECRET_KEY: str
+    SECRET_KEY: str = Field(..., repr=False)
 
-    ALGORITHM: str
+    ALGORITHM: str = Field(...)
 
-    ACCESS_TOKEN_EXPIRE_MINUTES: int
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(...)
 
-    OPENAI_API_KEY: str | None = None
+    OPENAI_API_KEY: str | None = Field(default=None, repr=False)
 
     PASSWORD_RESET_EXPIRE_MINUTES: int = 30
 
@@ -19,7 +20,7 @@ class Settings(BaseSettings):
 
     EMAIL_PROVIDER: str = "console"
 
-    RESEND_API_KEY: str | None = None
+    RESEND_API_KEY: str | None = Field(default=None, repr=False)
 
     RESEND_FROM_EMAIL: str | None = None
 
@@ -29,7 +30,7 @@ class Settings(BaseSettings):
 
     RATE_LIMIT_TRUST_PROXY_HEADERS: bool = True
 
-    RATE_LIMIT_STORAGE_URI: str = "memory://"
+    RATE_LIMIT_STORAGE_URI: str = Field(default="memory://", repr=False)
 
     RATE_LIMIT_LOGIN: str = "5/minute"
 

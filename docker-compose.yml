@@ -4,9 +4,9 @@ services:
     container_name: rento_db
 
     environment:
-      POSTGRES_DB: rento_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: strongpassword
+      POSTGRES_DB: ${POSTGRES_DB:-rento_db}
+      POSTGRES_USER: ${POSTGRES_USER:-rento_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in a local environment file or shell}
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
