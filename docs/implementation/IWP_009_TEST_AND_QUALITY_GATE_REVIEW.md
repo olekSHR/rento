@@ -31,8 +31,8 @@ No application feature code, migration, model, repository, runtime configuration
 |------------|--------|----------|
 | Backend pytest runner | PASS | `pytest==9.1.1` added and resolves |
 | Backend pytest configuration | PASS | `backend/pytest.ini` controls discovery and concise reporting |
-| Backend safe test setup | PASS | `backend/tests/conftest.py` sets required placeholders before imports |
-| Backend smoke/unit test | PASS | `backend/tests/test_backend_smoke.py` verifies settings and database module structure |
+| Backend safe test setup | PASS | `backend/tests/conftest.py` disables pydantic-settings dotenv loading and sets required placeholders before imports |
+| Backend smoke/unit test | PASS | `backend/tests/test_backend_smoke.py` verifies settings, database module structure, and canonical FastAPI entry-point availability |
 | Backend coverage measurement | PASS | `pytest-cov==7.1.0` added; terminal coverage report runs |
 | Frontend lint gate | PASS | Existing `npm run lint` passes |
 | Frontend typecheck gate | PASS | `npm run typecheck` added and passes |
@@ -52,11 +52,11 @@ python -m pytest -c backend/pytest.ini backend/tests
 Result:
 
 ```text
-2 collected
-2 passed
+3 collected
+3 passed
 0 failed
 0 skipped
-2 warnings
+6 warnings
 exit code 0
 ```
 
@@ -66,7 +66,7 @@ Gate verdict:
 PASS
 ```
 
-The test suite runs without a live database, persistent database, migration, schema mutation, external service, production access, `.env` content, or real credentials.
+The test suite runs without a live database, persistent database, migration, schema mutation, HTTP request, external service, production access, `.env` content, dotenv invocation, uploads-directory creation, or real credentials.
 
 ---
 
@@ -75,15 +75,15 @@ The test suite runs without a live database, persistent database, migration, sch
 Command:
 
 ```text
-python -m pytest -c backend/pytest.ini backend/tests --cov=backend/app --cov-report=term
+python -m pytest --cov=app --cov-report=term
 ```
 
 Result:
 
 ```text
-2 passed
-2 warnings
-TOTAL 854 statements, 822 missed, 4% coverage
+3 passed
+6 warnings
+TOTAL 1430 statements, 735 missed, 49% coverage
 exit code 0
 ```
 
@@ -115,17 +115,21 @@ Both commands emitted an npm warning about unknown env config `devdir`. The warn
 | Pytest resolves | PASS | `pytest 9.1.1` |
 | Pytest-cov resolves | PASS | `pytest-cov 7.1.0` |
 | Backend tests compile | PASS | `python -m py_compile` succeeded |
-| Configured backend pytest runs | PASS | 2 passed |
-| Coverage measurement runs | PASS | 4% total coverage, no threshold |
+| Dotenv invocation prevention | PASS | pydantic-settings dotenv provider invocation count `0` |
+| Configured backend pytest runs | PASS | 3 passed |
+| Coverage measurement runs | PASS | 49% total coverage, no threshold |
+| Canonical FastAPI entry point | PASS | Backend-context `app.main` import is available and exposes a non-empty route collection |
+| Root-context `app.main` import distinction | PASS | Context-sensitive relative `uploads` failure confirmed without creating an uploads directory |
 | Frontend lint runs | PASS | Exit code 0 |
 | Frontend typecheck runs | PASS | Exit code 0 |
 | No live DB required | PASS | In-memory SQLite placeholder only |
 | No migration required | PASS | No Alembic command run |
+| No HTTP request required | PASS | No TestClient or request execution used |
 | No production or external service required | PASS | No external service called |
 | No frontend dependency change | PASS | `package-lock.json` unchanged |
 | No CI change | PASS | CI deferred |
 | Markdown diagnostics | PASS | Evidence and review docs passed newline, LF, trailing whitespace, and tab checks |
-| Scoped `git diff --check` | PASS | Exact seven-file IWP-009 implementation scope passed |
+| Scoped `git diff --check` | PASS | Exact four-file correction scope passed |
 | Changed/staged scope | PASS | Staged files were empty before commit; unrelated files remained unstaged |
 | Acceptance granted | NOT APPLICABLE | Acceptance is explicitly not part of this task |
 
@@ -140,7 +144,7 @@ Both commands emitted an npm warning about unknown env config `devdir`. The warn
 | Frontend end-to-end tests | UNAVAILABLE | Frontend e2e tooling and test source creation are excluded |
 | CI workflow gate | UNAVAILABLE | CI creation/modification is deferred |
 | Coverage threshold gate | UNAVAILABLE | No threshold is authorized |
-| Full FastAPI app import gate | UNAVAILABLE | `app.main` currently requires an `uploads` mount directory outside the exact write set |
+| Root-context FastAPI app import gate | UNAVAILABLE | Repository-root import remains context-sensitive because `StaticFiles(directory="uploads")` resolves relative to the current working directory |
 
 Unavailable evidence is explicit and does not hide a failed in-scope check.
 
@@ -150,7 +154,7 @@ Unavailable evidence is explicit and does not hide a failed in-scope check.
 
 | Stop condition | Result |
 |----------------|--------|
-| Required change outside exact seven-file write set | PASS - not required |
+| Required change outside exact four-file correction write set | PASS - not required |
 | Additional backend dependency required | PASS - not required |
 | Backend lockfile required | PASS - not required |
 | Frontend dependency or lockfile change required | PASS - not required |
@@ -158,6 +162,8 @@ Unavailable evidence is explicit and does not hide a failed in-scope check.
 | Live or persistent database required | PASS - not required |
 | Migration or model change required | PASS - not required |
 | `.env`, secrets, production, containers, or external services required | PASS - not required |
+| Uploads directory creation required | PASS - not required |
+| HTTP request required | PASS - not required |
 | CI required | PASS - not required |
 | Another Work Package required | PASS - not required |
 
@@ -171,13 +177,13 @@ No stop condition remains active.
 2. The test suite does not yet validate domain, authorization, ownership, moderation, upload, API contract, or persistence invariants.
 3. Coverage is measurable but intentionally low because broad test coverage is outside this minimum foundation.
 4. Frontend unit/e2e and CI gates are deferred by authority.
-5. Existing Pydantic and SQLAlchemy deprecation warnings are visible and unresolved.
+5. Existing Pydantic, SQLAlchemy, and dependency deprecation warnings are visible and unresolved.
 
 ---
 
 ## 10. Acceptance Readiness Posture
 
-This implementation may proceed to independent final block review.
+This corrective implementation may proceed to read-only delta validation of the corrective commit and the two resolved MAJOR findings.
 
 This document does not grant IWP-009 acceptance.
 
@@ -194,5 +200,5 @@ PASS
 Exact next authorized action:
 
 ```text
-Perform one independent final block review of the committed IWP-009 implementation. Do not grant acceptance during that review.
+Perform read-only delta validation only of the corrective commit and the two resolved MAJOR findings. Do not repeat the complete IWP-009 final review.
 ```

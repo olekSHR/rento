@@ -1,3 +1,4 @@
+from fastapi import FastAPI
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
 
@@ -20,3 +21,10 @@ def test_database_module_is_structurally_available_without_connection():
     assert SessionLocal.kw["bind"] is engine
     assert Base.metadata is not None
     assert callable(get_db)
+
+
+def test_fastapi_application_entrypoint_is_structurally_available():
+    from app.main import app
+
+    assert isinstance(app, FastAPI)
+    assert len(app.routes) > 0

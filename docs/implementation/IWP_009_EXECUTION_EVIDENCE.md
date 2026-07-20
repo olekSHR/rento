@@ -8,7 +8,8 @@
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
 **Phase 4:** NOT STARTED
-**Implementation commit:** UNAVAILABLE UNTIL AFTER COMMIT
+**Implementation commit:** `be7a8ade5bd971e795d9ead4e49873135ed7ecfa`
+**Corrective commit:** UNAVAILABLE UNTIL AFTER COMMIT
 
 ---
 
@@ -73,14 +74,16 @@ No coverage threshold is imposed.
 
 ## 5. Safe Placeholder Test Environment
 
-`backend/tests/conftest.py` sets only the required settings keys before application imports:
+`backend/tests/conftest.py` disables the pydantic-settings dotenv source before application imports, then sets only the required settings keys from process-environment placeholders:
 
 1. `DATABASE_URL`
 2. `SECRET_KEY`
 3. `ALGORITHM`
 4. `ACCESS_TOKEN_EXPIRE_MINUTES`
 
-The database URL is an in-memory SQLite placeholder. The secret key is a non-real placeholder. The test setup does not read `.env`, secret stores, production systems, containers, external services, migrations, or persistent databases, and it does not print placeholder values.
+The database URL is an in-memory SQLite placeholder. The secret key is a non-real placeholder. The test setup does not read or attempt to read `.env`, secret stores, production systems, containers, external services, migrations, or persistent databases, and it does not print placeholder values.
+
+Focused correction validation recorded `DOTENV_INVOCATION_COUNT=0` while importing `app.core.config` through the corrected test setup.
 
 ---
 
@@ -92,9 +95,10 @@ The database URL is an in-memory SQLite placeholder. The secret key is a non-rea
 2. backend settings import under safe placeholders works;
 3. the canonical backend database module is structurally available;
 4. SQLAlchemy engine/session structures are created without connecting to a database;
-5. no migration, schema mutation, external request, production service, or real secret is required.
+5. the canonical backend-context `app.main` import is available as a FastAPI application with a non-empty route collection;
+6. no migration, schema mutation, external request, production service, or real secret is required.
 
-`app.main` was not imported because the repository currently lacks the `uploads` directory required by its `StaticFiles(directory="uploads")` mount. The smoke test uses `app.database.database` as the canonical backend entry point to stay within the exact IWP-009 write boundary.
+The canonical backend-context `app.main` import was tested and passed. A separate root-context probe remains context-sensitive because `StaticFiles(directory="uploads")` resolves the relative upload path from the process working directory; from the repository root, the import fails if root-level `uploads` is absent. No uploads directory was created.
 
 ---
 
@@ -124,14 +128,18 @@ This uses the existing TypeScript dependency and does not modify `frontend/packa
 | `python -m py_compile backend/tests/conftest.py backend/tests/test_backend_smoke.py` | PASS | New Python test files compile |
 | `python -m pytest -c backend/pytest.ini backend/tests` initial run | FAIL | Warning policy was too strict and converted existing Pydantic deprecation warning into failure |
 | `python -m pytest -c backend/pytest.ini backend/tests` second run | FAIL | Persisted shell placeholder `DATABASE_URL` was detected; test setup was made deterministic |
-| `python -m pytest -c backend/pytest.ini backend/tests` final run | PASS | 2 collected, 2 passed, 2 warnings, exit code 0 |
-| `python -m pytest -c backend/pytest.ini backend/tests --cov=backend/app --cov-report=term` | PASS | 2 collected, 2 passed, 2 warnings, total coverage 4%, exit code 0 |
+| Focused dotenv invocation detection | PASS | `DOTENV_INVOCATION_COUNT=0`, exit code 0; no `.env` was inspected, created, or read |
+| Backend-context `app.main` import probe | PASS | FastAPI app import available; observed 39 routes, exit code 0 |
+| Root-context `app.main` import probe | PASS | Context-sensitive relative `uploads` failure confirmed without creating an uploads directory, exit code 0 |
+| `python -m pytest --collect-only` from `backend/` | PASS | 3 collected, exit code 0 |
+| `python -m pytest` from `backend/` | PASS | 3 collected, 3 passed, 6 warnings, exit code 0 |
+| `python -m pytest --cov=app --cov-report=term` from `backend/` | PASS | 3 collected, 3 passed, 6 warnings, total coverage 49%, exit code 0 |
 | `npm run lint` from `frontend/` | PASS | Exit code 0; npm warned about unknown env config `devdir` |
 | `npm run typecheck` from `frontend/` | PASS | Exit code 0; npm warned about unknown env config `devdir` |
 | Known generated artifact cleanup | PASS | Removed `backend/.pytest_cache` and `backend/tests/__pycache__`; temp coverage file removed |
 | Markdown diagnostics on IWP-009 evidence documents | PASS | Final newline, LF-only line endings, no trailing whitespace, and no tabs |
-| Authorized file hygiene checks | PASS | Final newline, LF-only line endings, no trailing whitespace, and no tabs for all seven authorized files |
-| `git diff --check` scoped to the seven authorized files | PASS | No whitespace errors in the implementation scope |
+| Authorized file hygiene checks | PASS | Final newline, LF-only line endings, no trailing whitespace, and no tabs for all four authorized correction files |
+| `git diff --check` scoped to the four authorized correction files | PASS | No whitespace errors in the corrective implementation scope |
 | IDE lint diagnostics for changed files | PASS | No linter errors found |
 | Exact changed/staged scope verification | PASS | Staged files remained empty before commit; unrelated files remained unstaged |
 
@@ -144,11 +152,11 @@ Repository-wide `git diff --check` was not used as a commit gate because the exp
 Final backend pytest result:
 
 ```text
-collected 2 items
-2 passed
+collected 3 items
+3 passed
 0 failed
 0 skipped
-2 warnings
+6 warnings
 exit code 0
 ```
 
@@ -156,8 +164,10 @@ Warnings observed:
 
 1. Pydantic class-based `Config` deprecation warning in `app.core.config`.
 2. SQLAlchemy `declarative_base()` relocation warning in `app.database.database`.
+3. Pydantic class-based `Config` deprecation warning in `app.schemas.user`.
+4. `slowapi` deprecation warnings for `asyncio.iscoroutinefunction`.
 
-Both warnings are visible and are not hidden by the test configuration.
+The warning categories are visible and are not hidden by the test configuration.
 
 ---
 
@@ -166,15 +176,15 @@ Both warnings are visible and are not hidden by the test configuration.
 Coverage command:
 
 ```text
-python -m pytest -c backend/pytest.ini backend/tests --cov=backend/app --cov-report=term
+python -m pytest --cov=app --cov-report=term
 ```
 
 Result:
 
 ```text
-2 passed
-2 warnings
-TOTAL 854 statements, 822 missed, 4% coverage
+3 passed
+6 warnings
+TOTAL 1430 statements, 735 missed, 49% coverage
 exit code 0
 ```
 
@@ -201,7 +211,7 @@ Frontend unit, component, and end-to-end tests remain unavailable because fronte
 | Frontend end-to-end tests | UNAVAILABLE | Frontend e2e tooling and test source creation are explicitly excluded |
 | CI workflow evidence | UNAVAILABLE | CI creation/modification is explicitly deferred |
 | Coverage threshold evidence | UNAVAILABLE | No coverage threshold is authorized by IWP-009 minimum foundation |
-| `app.main` FastAPI app import | UNAVAILABLE | Import would require resolving the missing `uploads` mount directory outside the exact write set |
+| Root-context `app.main` import | UNAVAILABLE | Context-sensitive failure caused by the relative `uploads` path when invoked from the repository root without a root-level uploads directory |
 
 ---
 
@@ -210,6 +220,7 @@ Frontend unit, component, and end-to-end tests remain unavailable because fronte
 | Check | Result |
 |-------|--------|
 | `.env` content read | PASS - not performed |
+| pydantic-settings dotenv invocation | PASS - invocation count 0 |
 | Secret-store access | PASS - not performed |
 | Real credentials | PASS - not used |
 | Production database URL | PASS - not used |
@@ -223,10 +234,10 @@ Frontend unit, component, and end-to-end tests remain unavailable because fronte
 ## 14. Residual Risks
 
 1. The backend smoke test establishes a foundation only; it does not provide domain, authorization, API contract, persistence, or integration coverage.
-2. `app.main` import remains outside this minimum test because the missing upload mount directory would require a file-system surface not authorized by IWP-009.
-3. Coverage is measurable but intentionally low because no threshold or broad test suite was authorized.
+2. Root-context `app.main` import remains context-sensitive because the relative upload mount resolves from the process working directory.
+3. Coverage is measurable but no threshold or broad test suite was authorized.
 4. Frontend unit/e2e and CI gates remain deferred.
-5. Existing Pydantic and SQLAlchemy deprecation warnings are visible and may require later separately authorized cleanup.
+5. Existing Pydantic, SQLAlchemy, and dependency deprecation warnings are visible and may require later separately authorized cleanup.
 
 ---
 
@@ -251,8 +262,8 @@ This implementation does not authorize or perform:
 PASS
 ```
 
-Exact next authorized action after the permitted local implementation commit:
+Exact next authorized action after the permitted local corrective commit:
 
 ```text
-Perform one independent final block review of the committed IWP-009 implementation. Do not grant acceptance during that review.
+Perform read-only delta validation only of the corrective commit and the two resolved MAJOR findings. Do not repeat the complete IWP-009 final review.
 ```
