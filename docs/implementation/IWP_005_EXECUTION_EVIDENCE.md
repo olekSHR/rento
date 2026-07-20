@@ -7,6 +7,7 @@
 **Activation commit:** `4647eff3bd9d8395ef03346cbad00b0e8e40fda0`
 **Activation continuity commit:** `bfbca122b9b2d71cb9611ed9d1283c130098eaa3`
 **Implementation verdict:** EXECUTED WITH UNAVAILABLE DATABASE EVIDENCE
+**Corrective status:** DATABASE_URL INJECTION CORRECTION IMPLEMENTED - CORRECTIVE VALIDATION COMPLETED
 **Completion review:** NOT YET COMPLETED
 **Acceptance:** NOT GRANTED
 **Push:** NOT AUTHORIZED
@@ -172,13 +173,50 @@ Unrelated pre-existing items preserved:
 | Alembic heads | active migrations | PASS | no | Single head `b8c4e2f91a06`. |
 | Programmatic active graph | active migrations | PASS | no | One base, one head, no missing parents, no branch points. |
 | Programmatic backup graph | backup migrations | PASS | no | One separate backup base, one backup head, no missing parents, no branch points. |
-| Offline PostgreSQL SQL preview | active migrations | PASS | no | SQL generation completed without connecting to a database. |
+| Offline PostgreSQL SQL preview | active migrations | PASS WITH PROGRAMMATIC CONFIG OVERRIDE | no | SQL generation completed without connecting to a database only after the validation script set the Alembic URL programmatically. |
 | Disposable SQLite upgrade/downgrade/re-upgrade | active migrations | UNAVAILABLE/FAIL | yes | Explicit temp SQLite DB failed at FK constraint alter unsupported by SQLite dialect. |
 | Repository lint diagnostics | changed files | PASS | no | IDE diagnostics reported no linter errors for changed files. |
 | Whitespace and Markdown diagnostics | changed files | PASS | no | LF-only, final newline, no trailing whitespace, balanced fences, and valid table rows. |
 | Count-only secret scan | changed files | PASS - COUNT ONLY | no | Matches were identifier or documentation terms only, such as `PasswordResetToken`, `secret`, and `credential`; no values were inspected or recorded. |
 
 No validation used `.env`, real credentials, production data, personal data, external databases, deployment state, or release state.
+
+Final block review later reproduced normal repository-config invocation and found that `python -m alembic -c backend/alembic.ini upgrade head --sql` failed because `${DATABASE_URL}` remained unresolved by `backend/alembic/env.py`.
+
+---
+
+## 7A. Targeted DATABASE_URL Injection Correction
+
+The targeted correction for the final review MAJOR finding updates `backend/alembic/env.py` so normal Alembic CLI operation resolves `DATABASE_URL` from the process environment before offline or online migration configuration parses the URL or creates an engine.
+
+Correction properties:
+
+1. reads `DATABASE_URL` from process environment only;
+2. does not read `.env`;
+3. does not define or commit a fallback credential;
+4. does not print or log the URL;
+5. fails clearly if `DATABASE_URL` is absent without exposing a value;
+6. escapes `%` before applying the value to Alembic `ConfigParser`;
+7. preserves complete model registration and `Base.metadata`;
+8. does not modify migration history, models, repositories, domain behavior, authentication behavior, API behavior, deployment, release, or production configuration.
+
+Corrective checkpoint identity is not embedded in this file to avoid an impossible self-reference inside the same corrective commit. The exact corrective commit must be verified from Git metadata after the checkpoint is created.
+
+---
+
+## 7B. Targeted Corrective Validation
+
+Targeted corrective validation must verify the single MAJOR finding only.
+
+| Check | Scope | Result | Mutates database | Evidence |
+|-------|-------|--------|------------------|----------|
+| Python syntax compile | `backend/alembic/env.py` | PASS | no | In-memory compile succeeded. |
+| Model import with safe placeholders | `backend/alembic/env.py`; `backend/app/models/` | PASS | no | Seven metadata tables remained present. |
+| Alembic configuration parsing | repository config path | PASS | no | Base `d1b885e3c526`, head `b8c4e2f91a06`, and 11 active revisions remained unchanged. |
+| Alembic history | active migrations | PASS | no | Normal Alembic history command completed. |
+| Alembic heads | active migrations | PASS | no | Normal Alembic heads command reported single head `b8c4e2f91a06`. |
+| Normal repository-config offline SQL preview | `python -m alembic -c backend/alembic.ini upgrade head --sql` with safe placeholder `DATABASE_URL` | PASS | no | Command exited 0 and generated non-empty SQL through committed repository configuration without `cfg.set_main_option(...)`; Alembic INFO logging appeared on stderr but did not indicate failure. |
+| Whitespace, Markdown, lints, count-only secret scan | three corrective files | PASS | no | LF-only, final newline, no trailing whitespace, balanced Markdown tables/fences, no linter errors, count-only scan only. |
 
 ---
 

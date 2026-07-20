@@ -31,11 +31,15 @@ This review did not inspect routers, services, frontend code, CI implementation,
 |------|---------|
 | Script location | `%(here)s/alembic` |
 | Path separator | `os` |
-| Database URL posture | `sqlalchemy.url = ${DATABASE_URL}` placeholder |
+| Database URL posture | `sqlalchemy.url = ${DATABASE_URL}` placeholder with process-environment resolution in `backend/alembic/env.py` after targeted correction |
 | Secret posture | No real credential was copied into evidence. |
 | Production posture | No production config was read or used. |
 
 Configuration parsing through Alembic `Config` and `ScriptDirectory` succeeded.
+
+Final block review reproduced normal repository-config offline SQL preview and found that the original IWP-005 implementation did not resolve `${DATABASE_URL}` when Alembic was invoked through `python -m alembic -c backend/alembic.ini ...`.
+
+Targeted correction updates `backend/alembic/env.py` to read `DATABASE_URL` from the process environment and apply it to Alembic configuration before offline or online migration setup parses the URL or creates an engine. Corrective validation confirmed normal repository-config offline SQL preview succeeds with a safe placeholder process environment value and without `cfg.set_main_option(...)`.
 
 ---
 
@@ -48,7 +52,9 @@ Corrected posture:
 1. `backend/alembic/env.py` imports all current model classes from `app.models`.
 2. The imports are bound in `_registered_models` to make the metadata registration explicit.
 3. `target_metadata` remains `Base.metadata`.
-4. No runtime startup, domain behavior, authentication behavior, or API contract changed.
+4. `DATABASE_URL` is resolved from the process environment for normal Alembic CLI operation.
+5. `%` characters are escaped before applying the value to Alembic `ConfigParser`.
+6. No runtime startup, domain behavior, authentication behavior, or API contract changed.
 
 Validated metadata tables after the correction:
 
@@ -163,12 +169,12 @@ Safe checks completed:
 2. `alembic history`;
 3. `alembic heads`;
 4. programmatic Alembic script directory load;
-5. offline PostgreSQL SQL preview generation;
+5. original offline PostgreSQL SQL preview generation through a programmatic Alembic config override;
 6. explicit disposable SQLite upgrade attempt.
 
 Upgrade execution to head on a live database remains unavailable because no safe disposable PostgreSQL database was established. SQLite was not an adequate substitute for this chain because it cannot alter FK constraints in the required way.
 
-The offline PostgreSQL SQL preview generated all active migrations to head without connecting to a database.
+The original offline PostgreSQL SQL preview generated all active migrations to head without connecting to a database, but final review found that this evidence did not exercise normal repository configuration. Targeted correction reran normal repository-config offline SQL preview with a safe placeholder `DATABASE_URL` supplied through the process environment and without `cfg.set_main_option(...)`; the command exited successfully and produced non-empty SQL without connecting to a database.
 
 ---
 
@@ -278,6 +284,7 @@ Security posture:
 | Finding | Severity | Disposition |
 |---------|----------|-------------|
 | Partial Alembic model registration in `env.py` | Material within IWP-005 | Corrected by centralized model import from `app.models`. |
+| Normal Alembic CLI did not resolve `${DATABASE_URL}` from process environment | MAJOR in final block review | Targeted correction implemented in `backend/alembic/env.py`; corrective validation completed successfully. |
 | SQLite cannot validate full active chain because FK constraint alter is unsupported | Limitation | Recorded as unavailable database evidence. |
 | Existing hardening migration performs destructive cleanup | Residual risk | Classified; not executed; production migration remains unauthorized. |
 
@@ -301,8 +308,14 @@ It does not:
 
 ---
 
-## 18. Exact Next Authorized Action
+## 18. Corrective Checkpoint Treatment
 
-One Targeted Final Block Review of the complete IWP-005 implementation, evidence, and implementation checkpoint.
+The corrective checkpoint identity is intentionally not embedded in this file before commit creation. Embedding the hash of the commit that contains this file would require an impossible self-reference or a second commit. The exact corrective checkpoint must be verified from Git metadata after commit creation.
+
+---
+
+## 19. Exact Next Authorized Action
+
+Read-only delta validation of only the corrected DATABASE_URL injection MAJOR finding.
 
 Push remains NOT AUTHORIZED.

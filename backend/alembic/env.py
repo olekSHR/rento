@@ -1,4 +1,5 @@
 from logging.config import fileConfig
+import os
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
@@ -38,6 +39,25 @@ _registered_models = (
 )
 
 target_metadata = Base.metadata
+
+
+def _database_url_from_environment() -> str:
+    database_url = os.environ.get("DATABASE_URL")
+    if not database_url:
+        raise RuntimeError(
+            "DATABASE_URL environment variable is required for Alembic migrations."
+        )
+
+    return database_url
+
+
+def _apply_database_url_to_config() -> None:
+    # ConfigParser treats '%' as interpolation syntax; escaping preserves valid URLs.
+    database_url = _database_url_from_environment().replace("%", "%%")
+    config.set_main_option("sqlalchemy.url", database_url)
+
+
+_apply_database_url_to_config()
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
