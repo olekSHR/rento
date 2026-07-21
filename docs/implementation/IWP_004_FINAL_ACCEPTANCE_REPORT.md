@@ -6,10 +6,10 @@
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 - Domain Implementation
 **Work package:** IWP-004 - Backend API Contract Stabilization
-**IWP-004:** ACCEPTED - NOT CLOSED
+**IWP-004:** ACCEPTED - CLOSED
 **Stage I4:** IN PROGRESS
-**Closure:** NOT AUTHORIZED
-**Continuity synchronization:** NOT PERFORMED
+**Closure:** COMPLETED
+**Continuity synchronization:** COMPLETED
 **IWP-005 activation:** NOT AUTHORIZED BY THIS ACTION
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
@@ -22,11 +22,11 @@
 
 ## 1. Status And Purpose
 
-This report records formal acceptance of IWP-004 only.
+This report records formal acceptance and closure of IWP-004 only.
 
 It consumes the published IWP-004 package authority, technical implementation authorization evidence, targeted independent implementation re-review result, focused validation evidence, implementation checkpoint, checkpoint verification, push authorization decision, post-push synchronization verification, and live Git evidence.
 
-It does not close IWP-004, complete Stage I4, perform continuity synchronization, activate IWP-005 or any other Work Package, authorize push, authorize deployment, authorize release, authorize public launch, authorize scaling, authorize production access, or start Phase 4.
+It does not complete Stage I4, activate IWP-005 or any other Work Package, authorize push, authorize deployment, authorize release, authorize public launch, authorize scaling, authorize production access, or start Phase 4.
 
 ---
 
@@ -110,7 +110,7 @@ IWP-004 satisfies its required acceptance evidence:
 7. push authorization and post-push synchronization verification passed;
 8. open BLOCKING findings are 0;
 9. open MAJOR findings are 0;
-10. release, deployment, production access, launch, scaling, Phase 4, closure, continuity synchronization, and adjacent Work Package activation remain separate and unauthorized.
+10. release, deployment, production access, launch, scaling, Phase 4, and adjacent Work Package activation remain separate and unauthorized.
 
 ---
 
@@ -134,10 +134,10 @@ The 2 warnings are existing warnings and do not block IWP-004 acceptance.
 
 Acceptance preserves these boundaries:
 
-1. IWP-004 is ACCEPTED - NOT CLOSED.
+1. IWP-004 is ACCEPTED - CLOSED.
 2. Stage I4 remains IN PROGRESS.
-3. Closure remains a separate lifecycle action.
-4. Continuity synchronization is not performed by this report.
+3. Closure is completed by this bounded lifecycle action.
+4. Continuity synchronization is completed by the paired lifecycle commit.
 5. IWP-005 and every other Work Package are not activated by this action.
 6. Release remains deferred.
 7. Push, tag creation, GitHub Release creation, deployment, launch, scaling, production access, and Phase 4 remain not authorized.
@@ -156,9 +156,9 @@ IWP-004 satisfies its accepted evidence chain:
 6. No unresolved BLOCKING or MAJOR findings remain.
 7. Repository hygiene and release/deployment/Phase 4 separation are preserved.
 
-**Decision:** IWP-004 is formally ACCEPTED - NOT CLOSED.
+**Decision:** IWP-004 is formally ACCEPTED - CLOSED.
 
-Acceptance does not close IWP-004, complete Stage I4, perform continuity synchronization, or authorize another Work Package.
+Closure does not complete Stage I4, activate another Work Package, authorize release, authorize deployment, authorize production access, or authorize push.
 
 ---
 
@@ -166,11 +166,11 @@ Acceptance does not close IWP-004, complete Stage I4, perform continuity synchro
 
 | Item | Value |
 |------|-------|
-| IWP-004 | ACCEPTED - NOT CLOSED |
+| IWP-004 | ACCEPTED - CLOSED |
 | Accepted checkpoint | `0d524257daf8bc44724022a725f05a5c329f67a7` |
 | Stage I4 | IN PROGRESS |
-| Closure | NOT AUTHORIZED |
-| Continuity synchronization | NOT PERFORMED |
+| Closure | COMPLETED |
+| Continuity synchronization | COMPLETED |
 | IWP-005 activation | NOT AUTHORIZED BY THIS ACTION |
 | Release posture | Deferred |
 | Push/deployment/release/launch/scaling/production/Phase 4 | NOT AUTHORIZED |
@@ -178,7 +178,7 @@ Acceptance does not close IWP-004, complete Stage I4, perform continuity synchro
 Exact next authorized action:
 
 ```text
-Prepare one bounded decision combining IWP-004 closure and required continuity synchronization. Do not execute closure, continuity synchronization, IWP-005 activation, push, release, or deployment in this task.
+Perform one bounded push-authorization decision for the exact two-commit queue from origin/main 0d524257daf8bc44724022a725f05a5c329f67a7 through the IWP-004 closure/continuity commit. Do not push, activate IWP-005, release, or deploy in that task.
 ```
 
 ---
@@ -190,11 +190,11 @@ Prepare one bounded decision combining IWP-004 closure and required continuity s
 | Document path | `docs/implementation/IWP_004_FINAL_ACCEPTANCE_REPORT.md` |
 | Status | PUBLISHED - IWP-004 FINAL ACCEPTANCE |
 | Binding authority | IWP-004 acceptance record only |
-| IWP-004 | ACCEPTED - NOT CLOSED |
+| IWP-004 | ACCEPTED - CLOSED |
 | Accepted checkpoint | `0d524257daf8bc44724022a725f05a5c329f67a7` |
 | Stage I4 | IN PROGRESS |
-| Closure | NOT AUTHORIZED |
-| Continuity synchronization | NOT PERFORMED |
+| Closure | COMPLETED |
+| Continuity synchronization | COMPLETED |
 | Push | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
 | Release | NOT AUTHORIZED |
