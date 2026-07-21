@@ -150,6 +150,140 @@ def get_property_by_id(
     )
 
 
+def get_property_images(
+    db: Session,
+    property_id: int,
+):
+    return (
+        db.query(models.PropertyImage)
+        .filter(models.PropertyImage.property_id == property_id)
+        .order_by(models.PropertyImage.sort_order.asc())
+        .all()
+    )
+
+
+def get_property_image(
+    db: Session,
+    property_id: int,
+    image_id: int,
+):
+    return (
+        db.query(models.PropertyImage)
+        .filter(
+            models.PropertyImage.id == image_id,
+            models.PropertyImage.property_id == property_id,
+        )
+        .first()
+    )
+
+
+def create_property_image(
+    db: Session,
+    property_id: int,
+    url: str,
+    is_cover: bool,
+    sort_order: int,
+):
+    try:
+        if is_cover:
+            (
+                db.query(models.PropertyImage)
+                .filter(models.PropertyImage.property_id == property_id)
+                .update({"is_cover": False})
+            )
+
+        image = models.PropertyImage(
+            property_id=property_id,
+            url=url,
+            is_cover=is_cover,
+            sort_order=sort_order,
+        )
+
+        db.add(image)
+        db.commit()
+        db.refresh(image)
+
+        return image
+    except Exception:
+        db.rollback()
+        raise
+
+
+def update_property_image_sort_order(
+    db: Session,
+    image,
+    sort_order: int,
+):
+    try:
+        image.sort_order = sort_order
+        db.commit()
+        db.refresh(image)
+
+        return image
+    except Exception:
+        db.rollback()
+        raise
+
+
+def set_property_cover_image(
+    db: Session,
+    property_item,
+    image,
+):
+    try:
+        (
+            db.query(models.PropertyImage)
+            .filter(models.PropertyImage.property_id == property_item.id)
+            .update({"is_cover": False})
+        )
+
+        image.is_cover = True
+        property_item.image_url = image.url
+
+        db.add(property_item)
+        db.commit()
+        db.refresh(property_item)
+        db.refresh(image)
+
+        return image
+    except Exception:
+        db.rollback()
+        raise
+
+
+def delete_property_image(
+    db: Session,
+    property_item,
+    image,
+):
+    try:
+        was_cover = image.is_cover
+        db.delete(image)
+
+        replacement_image = None
+        if was_cover:
+            replacement_image = (
+                db.query(models.PropertyImage)
+                .filter(models.PropertyImage.property_id == property_item.id)
+                .order_by(models.PropertyImage.sort_order.asc())
+                .first()
+            )
+
+            property_item.image_url = replacement_image.url if replacement_image else None
+
+            if replacement_image:
+                replacement_image.is_cover = True
+
+        db.commit()
+
+        if replacement_image:
+            db.refresh(replacement_image)
+
+    except Exception:
+        db.rollback()
+        raise
+
+
 def create_property(
     db: Session,
     title: str,

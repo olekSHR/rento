@@ -55,6 +55,8 @@ def get_my_realtor_application(
 )
 def list_realtor_applications(
     status: str | None = Query(default=None),
+    limit: int = Query(default=100, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
     current_user: User = Depends(require_admin),
 ):
@@ -62,10 +64,13 @@ def list_realtor_applications(
         db,
         status,
     )
+    paginated_applications = applications[offset: offset + limit]
 
     return {
-        "items": applications,
+        "items": paginated_applications,
         "total": len(applications),
+        "limit": limit,
+        "offset": offset,
     }
 
 

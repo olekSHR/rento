@@ -220,6 +220,23 @@ def get_property_by_id_for_viewer(
     return _resolve_property_contacts_from_profile(db, property_item)
 
 
+def get_property_images_for_viewer(
+    db: Session,
+    property_id: int,
+    current_user=None,
+):
+    get_property_by_id_for_viewer(
+        db,
+        property_id,
+        current_user,
+    )
+
+    return property_repository.get_property_images(
+        db,
+        property_id,
+    )
+
+
 def create_property(
     db: Session,
     property_data,
@@ -283,6 +300,134 @@ def update_property(
         property_data.city,
         property_data.rooms,
         property_data.image_url,
+    )
+
+
+def add_property_image(
+    db: Session,
+    property_id: int,
+    image_data,
+    current_user,
+):
+    property_item = get_property_by_id(
+        db,
+        property_id,
+    )
+
+    ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
+
+    return property_repository.create_property_image(
+        db,
+        property_id,
+        image_data.url,
+        image_data.is_cover,
+        image_data.sort_order,
+    )
+
+
+def update_property_image_sort_order(
+    db: Session,
+    property_id: int,
+    image_id: int,
+    sort_order: int,
+    current_user,
+):
+    property_item = get_property_by_id(
+        db,
+        property_id,
+    )
+
+    ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
+
+    image = property_repository.get_property_image(
+        db,
+        property_id,
+        image_id,
+    )
+
+    if not image:
+        raise NotFoundException(
+            "Image not found"
+        )
+
+    return property_repository.update_property_image_sort_order(
+        db,
+        image,
+        sort_order,
+    )
+
+
+def set_cover_image(
+    db: Session,
+    property_id: int,
+    image_id: int,
+    current_user,
+):
+    property_item = get_property_by_id(
+        db,
+        property_id,
+    )
+
+    ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
+
+    image = property_repository.get_property_image(
+        db,
+        property_id,
+        image_id,
+    )
+
+    if not image:
+        raise NotFoundException(
+            "Image not found"
+        )
+
+    return property_repository.set_property_cover_image(
+        db,
+        property_item,
+        image,
+    )
+
+
+def delete_property_image(
+    db: Session,
+    property_id: int,
+    image_id: int,
+    current_user,
+):
+    property_item = get_property_by_id(
+        db,
+        property_id,
+    )
+
+    ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
+
+    image = property_repository.get_property_image(
+        db,
+        property_id,
+        image_id,
+    )
+
+    if not image:
+        raise NotFoundException(
+            "Image not found"
+        )
+
+    property_repository.delete_property_image(
+        db,
+        property_item,
+        image,
     )
 
 

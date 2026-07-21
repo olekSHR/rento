@@ -22,18 +22,21 @@ router = APIRouter(
     response_model=AdminUserListResponse,
 )
 def list_admin_users(
-    page: int = Query(default=1, ge=1),
-    limit: int = Query(default=20, ge=1, le=100),
-    q: str | None = Query(default=None),
-    role: str | None = Query(default=None),
-    application_status: str | None = Query(default=None),
+    limit: int = Query(default=20, ge=1, le=100, description="Items per page."),
+    offset: int = Query(default=0, ge=0, description="Zero-based item offset."),
+    q: str | None = Query(default=None, description="Optional user search query."),
+    role: str | None = Query(default=None, description="Optional role filter."),
+    application_status: str | None = Query(
+        default=None,
+        description="Optional realtor application status filter.",
+    ),
     db: Session = Depends(get_db),
     current_user: User = Depends(require_admin),
 ):
     return admin_user_service.list_users(
         db,
-        page,
         limit,
+        offset,
         q=q,
         role=role,
         application_status=application_status,

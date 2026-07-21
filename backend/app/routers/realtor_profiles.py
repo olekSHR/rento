@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
+from app.core.exceptions import ForbiddenException
 from app.core.security.dependencies import get_current_user
 from app.database.database import get_db
 from app.models.user import User
@@ -19,11 +20,8 @@ router = APIRouter(
 
 def require_realtor(current_user: User = Depends(get_current_user)) -> User:
     if current_user.role != "realtor":
-        from fastapi import HTTPException
-
-        raise HTTPException(
-            status_code=403,
-            detail="Only realtor can access this resource",
+        raise ForbiddenException(
+            "Only realtor can access this resource"
         )
 
     return current_user

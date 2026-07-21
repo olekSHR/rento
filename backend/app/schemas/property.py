@@ -73,11 +73,17 @@ class PropertyImageResponse(BaseModel):
 
 class PropertyImageCreate(BaseModel):
 
-    url: str
+    url: str = Field(
+        min_length=1,
+        max_length=500,
+    )
 
     is_cover: bool = False
 
-    sort_order: int = 0
+    sort_order: int = Field(
+        default=0,
+        ge=0,
+    )
 
 
 class PropertyCardResponse(BaseModel):

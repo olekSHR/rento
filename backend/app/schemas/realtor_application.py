@@ -33,3 +33,5 @@ class RealtorApplicationResponse(BaseModel):
 class RealtorApplicationListResponse(BaseModel):
     items: list[RealtorApplicationResponse]
     total: int
+    limit: int
+    offset: int

@@ -109,8 +109,8 @@ def _validate_application_status(
 
 def list_users(
     db: Session,
-    page: int,
     limit: int,
+    offset: int,
     *,
     q: str | None = None,
     role: str | None = None,
@@ -124,8 +124,8 @@ def list_users(
 
     result = admin_user_repository.list_users(
         db,
-        page,
         limit,
+        offset,
         q=normalized_q,
         role=validated_role,
         application_status=validated_application_status,
@@ -139,8 +139,8 @@ def list_users(
     return {
         "items": items,
         "total": result["total"],
-        "page": result["page"],
         "limit": result["limit"],
+        "offset": result["offset"],
     }
 
 

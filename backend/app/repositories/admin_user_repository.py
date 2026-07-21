@@ -92,14 +92,13 @@ def _apply_filters(
 
 def list_users(
     db: Session,
-    page: int,
     limit: int,
+    offset: int,
     *,
     q: str | None = None,
     role: str | None = None,
     application_status: str | None = None,
 ) -> dict:
-    offset = (page - 1) * limit
     filters = {
         "q": q,
         "role": role,
@@ -127,8 +126,8 @@ def list_users(
     return {
         "rows": rows,
         "total": total,
-        "page": page,
         "limit": limit,
+        "offset": offset,
     }
 
 

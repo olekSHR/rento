@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from fastapi import APIRouter, UploadFile, File, Request
 from fastapi import Depends
+from pydantic import BaseModel
 from starlette.responses import Response
 from app.core.config import settings
 from app.core.exceptions import BadRequestException
@@ -21,6 +22,11 @@ MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 CHUNK_SIZE_BYTES = 1024 * 1024
 
 
+class UploadImageResponse(BaseModel):
+    filename: str
+    url: str
+
+
 def _detect_image_type(header: bytes) -> tuple[str, str]:
     if len(header) >= 3 and header[0:3] == b"\xFF\xD8\xFF":
         return ("jpg", "image/jpeg")
@@ -36,7 +42,10 @@ def _detect_image_type(header: bytes) -> tuple[str, str]:
     )
 
 
-@router.post("/")
+@router.post(
+    "/",
+    response_model=UploadImageResponse,
+)
 @limiter.limit(settings.RATE_LIMIT_UPLOAD, key_func=get_upload_rate_limit_key)
 def upload_image(
     request: Request,

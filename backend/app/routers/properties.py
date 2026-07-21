@@ -1,7 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
-from app.models.property import PropertyImage
 from app.schemas.property import PropertyImageCreate, PropertyImageResponse
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from app.schemas.common import MessageResponse
 from app.database.database import get_db
@@ -14,7 +12,6 @@ from app.schemas.property import (
 )
 
 from app.services import property_service
-from app.models.property import Property
 
 from app.core.security.dependencies import (
     get_current_user_optional,
@@ -45,14 +42,14 @@ def get_properties_admin(
     )
 @router.get("/", response_model=PropertyListResponse)
 def get_properties(
-    limit: int = 10,
-    offset: int = 0,
+    limit: int = Query(default=10, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
     city: str | None = None,
     min_price: int | None = None,
     max_price: int | None = None,
     rooms: int | None = None,
-    sort_by: str = "created_at",
-    order: str = "desc",
+    sort_by: str = Query(default="created_at", pattern="^(price|created_at|rooms)$"),
+    order: str = Query(default="desc", pattern="^(asc|desc)$"),
     db: Session = Depends(get_db),
     
 ):
@@ -215,17 +212,10 @@ def get_property_images(
     current_user=Depends(get_current_user_optional),
 ):
 
-    property_service.get_property_by_id_for_viewer(
+    return property_service.get_property_images_for_viewer(
         db,
         property_id,
         current_user,
-    )
-
-    return (
-        db.query(PropertyImage)
-        .filter(PropertyImage.property_id == property_id)
-        .order_by(PropertyImage.sort_order.asc())
-        .all()
     )
 
 
@@ -241,71 +231,31 @@ def add_property_image(
     current_user=Depends(require_admin_or_realtor)
 ):
 
-    property_item = property_service.get_property_by_id(
+    return property_service.add_property_image(
         db,
-        property_id
+        property_id,
+        image,
+        current_user,
     )
 
-    property_service.ensure_property_mutation_allowed(
-        property_item,
-        current_user
-    )
-
-    if image.is_cover:
-        db.query(PropertyImage).filter(
-            PropertyImage.property_id == property_id
-        ).update({
-            "is_cover": False
-        })
-
-    new_image = PropertyImage(
-        property_id=property_id,
-        url=image.url,
-        is_cover=image.is_cover,
-        sort_order=image.sort_order
-    )
-
-    db.add(new_image)
-    db.commit()
-    db.refresh(new_image)
-
-    return new_image
-
-@router.patch("/{property_id}/images/{image_id}/sort-order")
+@router.patch(
+    "/{property_id}/images/{image_id}/sort-order",
+    response_model=PropertyImageResponse,
+)
 def update_property_image_sort_order(
     property_id: int,
     image_id: int,
-    sort_order: int,
+    sort_order: int = Query(ge=0),
     db: Session = Depends(get_db),
     current_user=Depends(require_admin_or_realtor)
 ):
-    property_item = property_service.get_property_by_id(
+    return property_service.update_property_image_sort_order(
         db,
-        property_id
+        property_id,
+        image_id,
+        sort_order,
+        current_user,
     )
-
-    property_service.ensure_property_mutation_allowed(
-        property_item,
-        current_user
-    )
-
-    image = db.query(PropertyImage).filter(
-        PropertyImage.id == image_id,
-        PropertyImage.property_id == property_id
-    ).first()
-
-    if not image:
-        raise HTTPException(
-            status_code=404,
-            detail="Image not found"
-        )
-
-    image.sort_order = sort_order
-
-    db.commit()
-    db.refresh(image)
-
-    return image
 
 @router.put(
     "/{property_id}/images/{image_id}/cover",
@@ -318,52 +268,12 @@ def set_cover_image(
     current_user=Depends(require_admin_or_realtor)
 ):
 
-    property_item = property_service.get_property_by_id(
+    return property_service.set_cover_image(
         db,
-        property_id
+        property_id,
+        image_id,
+        current_user,
     )
-
-    property_service.ensure_property_mutation_allowed(
-        property_item,
-        current_user
-    )
-
-    image = (
-        db.query(PropertyImage)
-        .filter(
-            PropertyImage.id == image_id,
-            PropertyImage.property_id == property_id
-        )
-        .first()
-    )
-
-    if not image:
-        raise HTTPException(
-            status_code=404,
-            detail="Image not found"
-        )
-
-    db.query(PropertyImage).filter(
-        PropertyImage.property_id == property_id
-    ).update({
-        "is_cover": False
-    })
-
-    image.is_cover = True
- 
-    property_item = property_service.get_property_by_id(
-    db,
-    property_id
-)
-
-    property_item.image_url = image.url
-
-    db.add(property_item)
-    db.commit()
-    db.refresh(property_item)
-    db.refresh(image)
-
-    return image
 
 
 @router.delete(
@@ -377,47 +287,12 @@ def delete_property_image(
     current_user=Depends(require_admin_or_realtor)
 ):
 
-    property_item = property_service.get_property_by_id(
+    property_service.delete_property_image(
         db,
-        property_id
+        property_id,
+        image_id,
+        current_user,
     )
-
-    property_service.ensure_property_mutation_allowed(
-        property_item,
-        current_user
-    )
-
-    image = (
-        db.query(PropertyImage)
-        .filter(
-            PropertyImage.id == image_id,
-            PropertyImage.property_id == property_id
-        )
-        .first()
-    )
-
-    if not image:
-        raise HTTPException(
-            status_code=404,
-            detail="Image not found"
-        )
-
-    was_cover = image.is_cover
-
-    db.delete(image)
-    db.commit()
-
-    if was_cover:
-        first_image = (
-            db.query(PropertyImage)
-            .filter(PropertyImage.property_id == property_id)
-            .order_by(PropertyImage.sort_order.asc())
-            .first()
-        )
-
-        if first_image:
-            first_image.is_cover = True
-            db.commit()
 
     return {
         "success": True,

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 
 class AdminUserListItem(BaseModel):
@@ -18,9 +18,9 @@ class AdminUserListItem(BaseModel):
 
 class AdminUserListResponse(BaseModel):
     items: list[AdminUserListItem]
-    total: int
-    page: int
-    limit: int
+    total: int = Field(ge=0)
+    limit: int = Field(ge=1, le=100)
+    offset: int = Field(ge=0)
 
 
 class AdminUserDetailResponse(BaseModel):
