@@ -46,8 +46,8 @@ The register is subordinate to published Repository Authority and cannot overrid
 
 | Field | Value |
 |-------|-------|
-| Active implementation packages | 0 |
-| Authorized implementation packages | 0 |
+| Active implementation packages | 1 - IWP-004 |
+| Authorized technical implementation packages | 0 |
 | Proposed implementation packages | 7 |
 | Pending implementation packages | 0 |
 | Completed implementation packages | 5 |
@@ -59,11 +59,11 @@ The register is subordinate to published Repository Authority and cannot overrid
 | Stage I4 implementation | IN PROGRESS |
 | IWP-003 authority | PUBLISHED - EFFECTIVE - publication commit `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4` |
 | IWP-003 lifecycle | ACCEPTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - DELTA VALIDATION PASS - RELEASE DEFERRED |
-| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; Stage I4 IN PROGRESS; IWP-003 ACCEPTED; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0; IWP-004 is the next future candidate only and remains PROPOSED - INACTIVE - NOT EXECUTABLE - NOT AUTHORIZED |
+| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; Stage I4 IN PROGRESS; IWP-003 ACCEPTED; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; IWP-004 SELECTED and ACTIVE for authorized read-only discovery only; discovery AUTHORIZED - NOT STARTED; technical implementation NOT AUTHORIZED - NOT STARTED; exact technical write set NOT YET ESTABLISHED - NOT AUTHORIZED; active implementation packages 1 - IWP-004; authorized technical implementation packages 0 |
 
-Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, authorized, executed, corrected, delta-validated, and accepted under published IWP-009 authority. Stage I3 is now completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. `docs/implementation/STAGE_I4_EXECUTION_AUTHORIZATION.md` is published and effective only as the Stage I4 execution authorization boundary at publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5`. `docs/implementation/IWP_003_EXECUTION_AUTHORIZATION.md` is published and effective for IWP-003 selection, activation, completed read-only discovery, and exact technical implementation scope authorization at publication commit `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4`. IWP-003 is now ACCEPTED by `docs/implementation/IWP_003_FINAL_ACCEPTANCE_REPORT.md`; Stage I4 remains IN PROGRESS; active implementation packages are 0; authorized implementation packages are 0. IWP-004 is the next future candidate only and remains proposed, inactive, non-executable, unselected, and unauthorized. Every other non-accepted package remains proposed, inactive, non-executable, unselected, and unauthorized beyond its explicit register status.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001 has now been separately selected, activated, executed within preparation-only scope, reviewed, corrected, delta-validated, and accepted under published IWP-001 authority. IWP-002 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-002 authority. IWP-005 has now been separately selected, activated, executed, reviewed, corrected, delta-validated, and accepted under published IWP-005 authority. IWP-009 has now been separately selected, activated, authorized, executed, corrected, delta-validated, and accepted under published IWP-009 authority. Stage I3 is now completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. `docs/implementation/STAGE_I4_EXECUTION_AUTHORIZATION.md` is published and effective only as the Stage I4 execution authorization boundary at publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5`. `docs/implementation/IWP_003_EXECUTION_AUTHORIZATION.md` is published and effective for IWP-003 selection, activation, completed read-only discovery, and exact technical implementation scope authorization at publication commit `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4`. IWP-003 is now ACCEPTED by `docs/implementation/IWP_003_FINAL_ACCEPTANCE_REPORT.md`; Stage I4 remains IN PROGRESS. IWP-004 is SELECTED and ACTIVE for authorized read-only discovery only through `docs/implementation/IWP_004_EXECUTION_AUTHORIZATION.md`; discovery is AUTHORIZED - NOT STARTED; technical implementation is NOT AUTHORIZED - NOT STARTED; exact technical write set is NOT YET ESTABLISHED - NOT AUTHORIZED; active implementation packages are 1 - IWP-004; authorized technical implementation packages are 0. IWP-006 remains proposed, inactive, and dependency-blocked until IWP-004 acceptance. IWP-007 and IWP-008 remain proposed, inactive, and non-executable. Every other non-accepted package remains proposed, inactive, non-executable, unselected, and unauthorized beyond its explicit register status.
 
-The exact next authorized action is a separate read-only IWP-004 authority-path determination. That determination must not select, activate, authorize, or begin IWP-004, and must not modify models, Alembic revisions, dependency manifests or lockfiles, frontend, uploads/media, CI, infrastructure, production, release, deployment, launch, scaling, or Phase 4 surfaces.
+The exact next authorized action is separate bounded read-only IWP-004 implementation discovery within the published authority boundary. That discovery action must not modify implementation, tests, models, Alembic revisions, dependency manifests or lockfiles, frontend, uploads/media, CI, infrastructure, production, release, deployment, launch, scaling, or Phase 4 surfaces.
 
 ---
 
@@ -164,11 +164,11 @@ Future package entries must use this schema:
 
 ## 8. Active Work Packages
 
-No active implementation work package exists. No implementation package is currently authorized or executing.
+IWP-004 is the only selected and active implementation work package. It is active for authorized read-only discovery only; technical implementation remains not authorized and not started.
 
 | Work Package ID | Owner Authority | Scope | Repository Areas | Acceptance Criteria | Required Evidence | Dependencies | Status | Completion Verification |
 |-----------------|-----------------|-------|------------------|---------------------|-------------------|--------------|--------|-------------------------|
-| None | None | No active implementation package | None | None | None | None | NOT APPLICABLE | Stage I3 completed; no active package remains |
+| IWP-004 | API Standards; Backend Architecture; Development Standards | Read-only implementation discovery only; technical implementation not authorized | `docs/implementation/IWP_004_EXECUTION_AUTHORIZATION.md` published discovery boundary | Discovery evidence only; acceptance not granted | Read-only discovery report in later separate action | IWP-001 ACCEPTED; IWP-003 ACCEPTED | SELECTED - ACTIVE - DISCOVERY AUTHORIZED - NOT STARTED | Exact technical write set NOT YET ESTABLISHED - NOT AUTHORIZED |
 
 ---
 
@@ -297,8 +297,13 @@ Corrective evidence basis for all entries:
 | Required Review Routes | API Standards; Backend Architecture; Development Standards |
 | Stop Conditions | Stop if product meaning, domain truth, compatibility, frontend scope, or source inspection exceeds later package authority |
 | Release Posture | Release deferred; API stabilization is not release or deployment authority |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
-| Completion Verification | Later package must record contract changes, compatibility evidence, checks, and review result |
+| Status | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - NOT STARTED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED |
+| Authority | PUBLISHED - EFFECTIVE - `docs/implementation/IWP_004_EXECUTION_AUTHORIZATION.md` at `4c17ad066d66d1cd4c2c0e75170659b59e287314` |
+| Discovery | AUTHORIZED - READ-ONLY - NOT STARTED |
+| Technical implementation | NOT AUTHORIZED - NOT STARTED |
+| Exact technical write set | NOT YET ESTABLISHED - NOT AUTHORIZED |
+| Acceptance | NOT GRANTED |
+| Completion Verification | Later discovery must record contract inventory, compatibility risks, exact proposed write set, checks, and review requirements before any technical implementation authorization |
 | Residual Risk | Frontend consumers may require coordinated future package work |
 
 ### IWP-005 - Persistence And Migration Integrity
@@ -351,7 +356,7 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Frontend Architecture; API Standards; Authentication Architecture; Authorization Architecture |
 | Stop Conditions | Stop if client state becomes authority, auth boundary conflicts, token storage risk lacks review, or backend scope is required without authority |
 | Release Posture | Release deferred; client stabilization is not release, deployment, or production authority |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Status | PROPOSED - INACTIVE - DEPENDENCY-BLOCKED UNTIL IWP-004 ACCEPTANCE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
 | Completion Verification | Later evidence must record changed client surfaces and auth/denial verification |
 | Residual Risk | Browser/session storage posture may require security review |
 
@@ -378,7 +383,7 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Frontend Architecture; Product Architecture; API Standards; Development Standards |
 | Stop Conditions | Stop if product meaning changes, backend implementation is required, client authority emerges, or admin/realtor scope must split |
 | Release Posture | Release deferred; workflow stabilization is not release or deployment authority |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Status | PROPOSED - INACTIVE - NOT EXECUTABLE - NOT SELECTED - NOT IMPLEMENTATION-AUTHORIZED - NOT RELEASE AUTHORITY |
 | Completion Verification | Later package must prove role-specific flows and no client-side authority drift |
 | Residual Risk | Admin and realtor surfaces may require split if review scope grows |
 
@@ -405,7 +410,7 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Security Standards; Infrastructure Standards; Backend Architecture; Frontend Architecture |
 | Stop Conditions | Stop if secret exposure, path traversal risk, external storage decision, production file migration, or deployment authority is required |
 | Release Posture | Release deferred; upload hardening is not storage provider, deployment, or release authority |
-| Status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Status | PROPOSED - INACTIVE - NOT EXECUTABLE - NOT SELECTED - NOT IMPLEMENTATION-AUTHORIZED - NOT RELEASE AUTHORITY |
 | Completion Verification | Later evidence must include upload denial and cleanup behavior |
 | Residual Risk | Durable storage choice may require future infrastructure decision |
 
@@ -611,14 +616,14 @@ The register must stop intake or package progression when:
 | Publication | COMPLETE |
 | Independent Governance Review | COMPLETED - APPROVED FOR PUBLICATION REVIEW |
 | Independent Publication Review | COMPLETED - APPROVED |
-| Active implementation packages | 0 |
-| Authorized implementation packages | 0 |
+| Active implementation packages | 1 - IWP-004 |
+| Authorized technical implementation packages | 0 |
 | Accepted implementation packages | 5 - IWP-001, IWP-002, IWP-003, IWP-005, IWP-009 |
 | Stage I3 | COMPLETED - COMPLETION REVIEW PASS - ACCEPTED |
 | Stage I4 execution authorization boundary | PUBLISHED - EFFECTIVE AS BOUNDARY ONLY - publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5` |
 | Stage I4 implementation | IN PROGRESS |
 | IWP-003 authority | PUBLISHED - EFFECTIVE - publication commit `1e782d6cdb7b61a4233e1386ac2a1a0fe378f0d4` |
 | IWP-003 lifecycle | ACCEPTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - DELTA VALIDATION PASS - RELEASE DEFERRED |
-| Implementation | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; Stage I4 IN PROGRESS; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-003 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; active implementation packages 0; authorized implementation packages 0; IWP-004 next future candidate only - PROPOSED - INACTIVE - NOT EXECUTABLE - NOT AUTHORIZED |
+| Implementation | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; Stage I4 IN PROGRESS; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-003 ACCEPTED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; IWP-004 SELECTED and ACTIVE for authorized read-only discovery only; discovery AUTHORIZED - NOT STARTED; technical implementation NOT AUTHORIZED - NOT STARTED; exact technical write set NOT YET ESTABLISHED - NOT AUTHORIZED; active implementation packages 1 - IWP-004; authorized technical implementation packages 0 |
 | Stage I1 | NOT AUTHORIZED |
 | Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `STAGE_I3_FINAL_COMPLETION_REPORT.md`, `STAGE_I4_EXECUTION_AUTHORIZATION.md`, `IWP_003_EXECUTION_AUTHORIZATION.md` |

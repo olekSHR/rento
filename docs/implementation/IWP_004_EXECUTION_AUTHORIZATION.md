@@ -1,31 +1,33 @@
 # IWP-004 Execution Authorization Artifact
 
-**Status:** PUBLISHED - AWAITING CONTINUITY SYNCHRONIZATION - NOT EFFECTIVE
+**Status:** PUBLISHED - EFFECTIVE
 **Authority class:** IWP package authority artifact
-**Binding authority:** NONE - PUBLISHED NON-EFFECTIVE ARTIFACT ONLY
+**Binding authority:** ACTIVE - IWP-004 SELECTION, ACTIVATION, AND READ-ONLY DISCOVERY AUTHORIZATION ONLY
 **Independent review:** COMPLETED - PASS
 **Review findings:** BLOCKING 0; MAJOR 0; MINOR 0; EDITORIAL 0
 **Approval integration:** COMPLETED - APPROVED FOR PUBLICATION CHECKPOINT
 **Publication integration:** COMPLETED
 **Publication checkpoint:** COMPLETED
-**Git checkpoint:** PENDING - THIS PUBLICATION COMMIT
-**Continuity/effectiveness synchronization:** NOT RUN - REQUIRED AS THE NEXT SEPARATE ACTION
+**Publication commit:** `4c17ad066d66d1cd4c2c0e75170659b59e287314`
+**Git checkpoint:** COMPLETED
+**Continuity/effectiveness synchronization:** COMPLETED
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 - Domain Implementation
 **Target package:** IWP-004 - Backend API Contract Stabilization
-**IWP-004:** PROPOSED - INACTIVE - NOT EXECUTABLE - NOT SELECTED - NOT AUTHORIZED
-**Package selection:** PROPOSED - NOT EFFECTIVE
-**Package activation:** PROPOSED - NOT EFFECTIVE
-**Read-only discovery authorization:** PROPOSED - NOT EFFECTIVE
-**Technical implementation authorization:** PROPOSED - NOT EFFECTIVE
-**Execution authorization:** PROPOSED - NOT EFFECTIVE
-**Discovery:** NOT AUTHORIZED
+**IWP-004:** SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED
+**Package selection:** SELECTED
+**Package activation:** ACTIVE
+**Read-only discovery authorization:** AUTHORIZED - NOT STARTED
+**Technical implementation authorization:** NOT AUTHORIZED - NOT STARTED
+**Execution authorization:** READ-ONLY DISCOVERY MAY OCCUR ONLY IN A LATER SEPARATE BOUNDED ACTION
+**Discovery:** AUTHORIZED - NOT STARTED
 **Technical implementation:** NOT AUTHORIZED - NOT STARTED
+**Exact technical write set:** NOT YET ESTABLISHED - NOT AUTHORIZED
 **Acceptance:** NOT GRANTED
 **Stage I4:** IN PROGRESS
 **IWP-003:** ACCEPTED
-**Active implementation packages:** 0
-**Authorized implementation packages:** 0
+**Active implementation packages:** 1 - IWP-004
+**Authorized technical implementation packages:** 0
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
@@ -35,14 +37,14 @@
 
 ## 1. Artifact Purpose And Authority Effect
 
-This published artifact records proposed package authority for IWP-004.
+This published artifact records effective package authority for IWP-004 selection, activation, and read-only discovery authorization only.
 
-This artifact is reviewed, approved, published, and not effective. It does not select IWP-004, activate IWP-004, authorize IWP-004 discovery, authorize IWP-004 technical implementation, authorize execution, grant acceptance, update continuity, authorize push, authorize release, authorize deployment, authorize production access, or start Phase 4.
+This artifact is reviewed, approved, published, locally checkpointed, continuity-synchronized, and effective. It selects IWP-004, activates IWP-004 as the only selected and active implementation package, and authorizes later bounded read-only discovery within the published discovery boundary. It does not authorize technical implementation, establish an exact technical write set, grant acceptance, authorize push, authorize release, authorize deployment, authorize production access, or start Phase 4.
 
-Until this artifact completes the publication Git checkpoint created by this action and the separate continuity/effectiveness synchronization under Repository Authority, IWP-004 remains:
+After this continuity/effectiveness synchronization under Repository Authority, IWP-004 is:
 
 ```text
-PROPOSED - INACTIVE - NOT EXECUTABLE - NOT SELECTED - NOT AUTHORIZED
+SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED
 ```
 
 ---
@@ -51,12 +53,12 @@ PROPOSED - INACTIVE - NOT EXECUTABLE - NOT SELECTED - NOT AUTHORIZED
 
 This artifact consumes only Repository Authority and accepted dependency evidence:
 
-| Authority or evidence | Use in this draft |
+| Authority or evidence | Use in this artifact |
 |-----------------------|-------------------|
 | `docs/implementation/STAGE_I4_EXECUTION_AUTHORIZATION.md` | Defines Stage I4 execution boundary, lifecycle separation, single-package sequencing, and future IWP-004 read/write boundary declarations |
 | `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` | Defines canonical IWP-004 metadata, dependencies, evidence, status, repository areas, and release posture |
 | `docs/implementation/IWP_001_FINAL_ACCEPTANCE_REPORT.md` | Evidence that IWP-001 dependency is accepted |
-| `docs/implementation/IWP_003_FINAL_ACCEPTANCE_REPORT.md` | Evidence that IWP-003 dependency is accepted and that IWP-004 remains inactive and unauthorized |
+| `docs/implementation/IWP_003_FINAL_ACCEPTANCE_REPORT.md` | Evidence that IWP-003 dependency is accepted |
 | `docs/implementation/IWP_003_EXECUTION_AUTHORIZATION.md` | Structural package authority precedent only where compatible with current Repository Authority |
 | `docs/engineering/API_STANDARDS.md` | Owner authority for API contract governance, compatibility, error, idempotency, pagination, filtering, and sorting discipline |
 | `docs/engineering/BACKEND_ARCHITECTURE.md` | Owner authority for backend access adaptation, service boundaries, command/query ownership, and domain truth separation |
@@ -88,7 +90,7 @@ If this artifact conflicts with published Repository Authority, published Reposi
 | Acceptance conditions | Errors, denials, pagination, filtering, sorting, and mutations remain honest, bounded, and service-owned |
 | Stop conditions | Stop if product meaning, domain truth, compatibility, frontend scope, or source inspection exceeds later package authority |
 | Release posture | Release deferred; API stabilization is not release or deployment authority |
-| Current status | PROPOSED - RESERVED IDENTIFIER ONLY - NOT ACTIVE - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Current status | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED |
 
 Owner Authorities and Required Authorities are distinct. API Standards, Backend Architecture, and Development Standards own the package meaning and review boundary. Implementation Governance is required authority for the work package model, authorization act requirements, evidence, gates, and stop conditions.
 
@@ -96,14 +98,14 @@ Owner Authorities and Required Authorities are distinct. API Standards, Backend 
 
 ## 4. Dependency Verification
 
-IWP-004 dependencies are satisfied for draft authoring only:
+IWP-004 dependencies are satisfied for this continuity/effectiveness synchronization:
 
 | Dependency | Evidence | Status |
 |------------|----------|--------|
 | IWP-001 | `docs/implementation/IWP_001_FINAL_ACCEPTANCE_REPORT.md` | ACCEPTED |
 | IWP-003 | `docs/implementation/IWP_003_FINAL_ACCEPTANCE_REPORT.md` | ACCEPTED |
 
-Dependency satisfaction does not select, activate, authorize, discover, execute, or accept IWP-004.
+Dependency satisfaction plus this published effective artifact selects and activates IWP-004 for read-only discovery only. It does not authorize technical implementation, establish an exact technical write set, execute discovery in this action, or accept IWP-004.
 
 ---
 
@@ -113,38 +115,38 @@ IWP-004 is the first eligible future Stage I4 candidate because:
 
 1. IWP-001 is accepted;
 2. IWP-003 is accepted;
-3. active implementation packages are 0;
-4. authorized implementation packages are 0;
+3. active implementation packages were 0 before activation;
+4. authorized technical implementation packages were 0 before activation;
 5. IWP-006 depends on IWP-004 and remains dependency-blocked until IWP-004 acceptance or separate explicit dependency authority;
 6. IWP-007 remains inactive under its IWP-003, IWP-004, IWP-006, and IWP-008 coordination dependencies;
 7. IWP-008 remains inactive under its IWP-002, IWP-003, IWP-005, and IWP-007 coordination dependencies;
 8. no Stage I5 or Stage I6 package is selected, active, executable, implementation-authorized, or executing.
 
-Candidate posture is not selection, activation, implementation authorization, discovery authorization, execution authorization, acceptance, push authorization, release authorization, deployment authorization, production authorization, or Phase 4 authorization.
+Effective posture is selection and activation for later bounded read-only discovery only. It is not technical implementation authorization, acceptance, push authorization, release authorization, deployment authorization, production authorization, or Phase 4 authorization.
 
 ---
 
-## 6. Proposed Lifecycle Decisions
+## 6. Effective Lifecycle Decisions
 
-This artifact records separate proposed lifecycle decisions only. No decision is effective. No decision implies another.
+This artifact records separate ordered lifecycle decisions made effective only through this continuity/effectiveness synchronization. No decision implies technical implementation authorization, acceptance, push, release, deployment, production access, or Phase 4 authority.
 
-| Decision | Proposed posture | Effective now | Does not authorize |
-|----------|------------------|---------------|--------------------|
-| Package selection | PROPOSED | NO | Activation, discovery, implementation, execution, acceptance |
-| Package activation | PROPOSED | NO | Discovery, implementation, execution, acceptance |
-| Read-only discovery authorization | PROPOSED | NO | Modification, execution, exact write-set authority, acceptance |
-| Technical implementation authorization | PROPOSED | NO | Execution before completed discovery and exact write-set authorization |
-| Execution authorization | PROPOSED | NO | Acceptance, push, release, deployment, production, Phase 4 |
+| Decision | Effective posture | Does not authorize |
+|----------|-------------------|--------------------|
+| Package selection | SELECTED | Another package, technical implementation, acceptance |
+| Package activation | ACTIVE - ONLY SELECTED AND ACTIVE PACKAGE | Another active package, technical implementation, acceptance |
+| Read-only discovery authorization | AUTHORIZED - NOT STARTED | File modification, implementation, tests, technical execution |
+| Technical implementation authorization | NOT AUTHORIZED - NOT STARTED | Exact write set, execution, acceptance, push, release, deployment |
+| Execution and acceptance | Discovery execution may occur only in a later separate bounded action; acceptance NOT GRANTED | Technical execution, acceptance, push, release, deployment, production, Phase 4 |
 
-Publication preserves lifecycle separation. This published artifact may make some or all proposed decisions effective only after the publication Git checkpoint and separate continuity/effectiveness synchronization requirements are satisfied.
+Technical implementation authority remains absent. The exact technical write set is NOT YET ESTABLISHED - NOT AUTHORIZED.
 
 ---
 
 ## 7. Future Read-Only Discovery Boundary
 
-Future IWP-004 discovery is not authorized by this artifact.
+Future IWP-004 read-only discovery is authorized by this artifact but is NOT STARTED by this synchronization action.
 
-If separately authorized later, read-only discovery must determine, without changing files:
+A later separate bounded read-only discovery action must determine, without changing files:
 
 1. current endpoint and router inventory;
 2. request and response schema behavior;
@@ -160,7 +162,7 @@ If separately authorized later, read-only discovery must determine, without chan
 12. overlap risk with IWP-003, IWP-006, IWP-007, and IWP-008;
 13. unavailable evidence and stop conditions.
 
-Discovery must not inspect or modify implementation surfaces until a later published package-specific action explicitly permits the exact read boundary. Discovery must not create implementation changes, tests, migrations, manifests, lockfiles, CI changes, runtime configuration changes, infrastructure changes, production changes, release artifacts, deployment artifacts, or Phase 4 work.
+Discovery execution must occur only in a later separate bounded action within this published discovery boundary. Discovery must not create implementation changes, tests, migrations, manifests, lockfiles, CI changes, runtime configuration changes, infrastructure changes, production changes, release artifacts, deployment artifacts, or Phase 4 work.
 
 ---
 
@@ -257,7 +259,7 @@ Evidence must report unrun checks honestly as NOT RUN or unavailable. Passing te
 
 ## 13. Review, Publication, Git, And Continuity Lifecycle
 
-Required lifecycle before this artifact can become effective:
+Completed lifecycle for this artifact:
 
 1. authored draft;
 2. independent targeted read-only review;
@@ -266,9 +268,9 @@ Required lifecycle before this artifact can become effective:
 5. approval integration if review approves;
 6. publication integration/checkpoint;
 7. local Git checkpoint with a traceable message if explicitly authorized;
-8. separate continuity/effectiveness synchronization.
+8. separate continuity/effectiveness synchronization - COMPLETED.
 
-Publication is separate from draft authoring. Git checkpoint is separate from publication integration. Push is a separate explicitly authorized act and is not authorized by this artifact.
+Publication is separate from draft authoring. Git checkpoint is separate from publication integration. Continuity/effectiveness synchronization is separate from publication checkpoint. Push is a separate explicitly authorized act and is not authorized by this artifact.
 
 ---
 
@@ -276,12 +278,12 @@ Publication is separate from draft authoring. Git checkpoint is separate from pu
 
 Only one implementation package may be selected, activated, implementation-authorized, or executing at a time unless published Repository Authority later explicitly authorizes a different model.
 
-Before any future IWP-004 activation or authorization, the lifecycle must verify:
+For this IWP-004 activation and read-only discovery authorization, the lifecycle verified:
 
-1. active implementation packages are 0;
-2. authorized implementation packages are 0;
-3. no other package is selected, active, executable, implementation-authorized, or executing;
-4. unrelated working-tree changes are excluded;
+1. active implementation packages were 0 before activation;
+2. authorized technical implementation packages were 0 before activation;
+3. no other package was selected, active, executable, implementation-authorized, or executing;
+4. unrelated working-tree changes were isolated and excluded;
 5. IWP-006, IWP-007, IWP-008, Stage I5 packages, and Stage I6 packages remain inactive.
 
 Parallel package execution is a stop condition.
@@ -312,48 +314,46 @@ Work must stop if any condition applies:
 
 This artifact does not authorize:
 
-1. IWP-004 selection;
-2. IWP-004 activation;
-3. IWP-004 discovery;
-4. IWP-004 technical implementation;
-5. IWP-004 execution;
-6. IWP-004 acceptance;
-7. another package;
-8. implementation files;
-9. tests;
-10. migrations, models, schemas, data backfills, or persistence changes;
-11. dependency manifests or lockfiles;
-12. frontend work;
-13. CI, runtime configuration, or infrastructure work;
-14. secret or production access;
-15. deployment;
-16. release;
-17. tag creation;
-18. GitHub Release creation;
-19. launch;
-20. scaling;
-21. push;
-22. Phase 4 Product Development Methodology.
+1. IWP-004 technical implementation;
+2. IWP-004 technical write set establishment;
+3. IWP-004 discovery execution in this synchronization action;
+4. IWP-004 acceptance;
+5. another package;
+6. implementation files;
+7. tests;
+8. migrations, models, schemas, data backfills, or persistence changes;
+9. dependency manifests or lockfiles;
+10. frontend work;
+11. CI, runtime configuration, or infrastructure work;
+12. secret or production access;
+13. deployment;
+14. release;
+15. tag creation;
+16. GitHub Release creation;
+17. launch;
+18. scaling;
+19. push;
+20. Phase 4 Product Development Methodology.
 
 ---
 
-## 17. Publication Validation Checklist
+## 17. Continuity Synchronization Validation Checklist
 
-Focused publication validation of this artifact should verify:
+Focused continuity synchronization validation of this artifact should verify:
 
-1. published status is honest and non-effective;
-2. binding authority is NONE - PUBLISHED NON-EFFECTIVE ARTIFACT ONLY;
+1. published status is effective only for IWP-004 selection, activation, and read-only discovery authorization;
+2. binding authority is active only within that limited boundary;
 3. canonical IWP-004 metadata matches the register;
 4. owner authorities and required authorities remain distinct;
 5. IWP-001 and IWP-003 dependency evidence is accepted;
-6. IWP-004 remains candidate-only;
-7. no selection, activation, discovery, implementation, execution, acceptance, publication, commit, push, release, deployment, or Phase 4 authority is implied;
-8. future discovery boundary is read-only and non-effective;
-9. no exact implementation write set is guessed;
+6. IWP-004 is selected and active for read-only discovery only;
+7. no technical implementation, acceptance, push, release, deployment, or Phase 4 authority is implied;
+8. future discovery boundary is read-only and authorized but not started;
+9. no exact implementation write set is guessed or authorized;
 10. conditional migration, dependency, frontend, security, and package-overlap authorities are routed as stop conditions;
 11. validation and evidence requirements are sufficient for API contract stabilization;
 12. single-active-package enforcement is preserved;
-13. lifecycle state remains Stage I4 IN PROGRESS, IWP-003 ACCEPTED, active packages 0, authorized packages 0.
+13. lifecycle state remains Stage I4 IN PROGRESS, IWP-003 ACCEPTED, active packages 1 - IWP-004, authorized technical implementation packages 0.
 
 ---
 
@@ -362,19 +362,21 @@ Focused publication validation of this artifact should verify:
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/IWP_004_EXECUTION_AUTHORIZATION.md` |
-| Status | PUBLISHED - AWAITING CONTINUITY SYNCHRONIZATION - NOT EFFECTIVE |
-| Binding authority | NONE - PUBLISHED NON-EFFECTIVE ARTIFACT ONLY |
-| IWP-004 | PROPOSED - INACTIVE - NOT EXECUTABLE - NOT SELECTED - NOT AUTHORIZED |
-| Discovery | NOT AUTHORIZED |
+| Status | PUBLISHED - EFFECTIVE |
+| Binding authority | ACTIVE - IWP-004 SELECTION, ACTIVATION, AND READ-ONLY DISCOVERY AUTHORIZATION ONLY |
+| Publication commit | `4c17ad066d66d1cd4c2c0e75170659b59e287314` |
+| IWP-004 | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED |
+| Discovery | AUTHORIZED - NOT STARTED |
 | Technical implementation | NOT AUTHORIZED - NOT STARTED |
+| Exact technical write set | NOT YET ESTABLISHED - NOT AUTHORIZED |
 | Acceptance | NOT GRANTED |
 | Independent review | COMPLETED - PASS |
 | Review findings | BLOCKING 0; MAJOR 0; MINOR 0; EDITORIAL 0 |
 | Approval integration | COMPLETED - APPROVED FOR PUBLICATION CHECKPOINT |
 | Publication integration | COMPLETED |
 | Publication checkpoint | COMPLETED |
-| Git checkpoint | PENDING - THIS PUBLICATION COMMIT |
-| Continuity/effectiveness synchronization | NOT RUN - REQUIRED AS THE NEXT SEPARATE ACTION |
+| Git checkpoint | COMPLETED |
+| Continuity/effectiveness synchronization | COMPLETED |
 | Push | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
 | Release | NOT AUTHORIZED |
