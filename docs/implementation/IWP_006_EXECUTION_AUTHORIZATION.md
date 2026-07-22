@@ -1041,3 +1041,280 @@ Prepare and execute a separately authorized bounded read-only token-storage secu
 That execution must verify a fresh repository baseline before inspection; must not expand beyond §24.4; must not select a remediation or storage mechanism; must not authorize technical implementation; must not establish a technical write set; must not resolve F-001 or accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; and must not deploy, release, launch, or scale.
 
 Push of this publication commit remains NOT AUTHORIZED unless separately authorized.
+
+---
+
+## 26. Third Amendment Draft — Bounded F-001 Correction-Scope Authorization
+
+**Amendment title:** IWP-006 Bounded F-001 Correction-Scope Authorization (Cookie Session Architecture)
+
+**Amendment status:** DRAFT - NOT REVIEWED - NOT PUBLISHED - NOT EFFECTIVE
+
+**Independent review:** NOT RUN
+
+**Publication-readiness decision:** NOT RUN
+
+**Backend read-only validation:** NOT AUTHORIZED - NOT STARTED
+
+**Technical correction implementation:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT STARTED
+
+**Exact technical write set:** NOT ESTABLISHED
+
+**F-001:** UNRESOLVED
+
+**F-013:** UNCERTAIN - DEFERRED
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+**Target architecture posture:** SELECTED — HttpOnly Secure SameSite cookie-based authenticated session transport (architecture-decision report; not yet published in Repository Authority)
+
+This third amendment draft defines only the **governed path** for F-001 correction-scope authorization. It does **not** authorize backend inspection, backend validation execution, application changes, remediation, technical implementation, a technical write set, F-001 resolution, IWP-006 acceptance or closure, push, release, deployment, or launch.
+
+Drafting this amendment is not review, approval, publication, backend validation, correction execution, implementation authorization, or acceptance.
+
+### 26.1 Identity And Relationship
+
+| Field | Value |
+|-------|-------|
+| Amendment identity | Third amendment draft within `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` |
+| Stable title | IWP-006 Bounded F-001 Correction-Scope Authorization (Cookie Session Architecture) |
+| Package relationship | Subordinate IWP-006 package-level bounded sub-activity |
+| Finding relationship | Addresses F-001 correction path only; informed by SR-F001-001 through SR-F001-007 |
+| Precondition — discovery | F-001 VERIFIED in `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` |
+| Precondition — security review | Published evidence `docs/implementation/IWP_006_TOKEN_STORAGE_SECURITY_REVIEW_EVIDENCE.md` @ commit `fe73288e2881147d7b7e4dc8e5f51ccc673ced49` |
+| Precondition — security posture | `SECURITY CORRECTION REQUIRED BEFORE IMPLEMENTATION AUTHORIZATION` (§24.7) |
+| Precondition — architecture decision | HttpOnly Secure SameSite cookie-based authenticated session transport (accepted architecture-decision report; not repository-published) |
+| Standalone governance lifecycle | **Not created** |
+| IWP-006 posture preserved | SELECTED - ACTIVE |
+| Stage I4 posture preserved | IN PROGRESS |
+
+### 26.2 Purpose And Governing Basis
+
+This draft authorizes **neither** backend validation **nor** correction implementation.
+
+Its purpose is to record:
+
+1. the accepted target architecture posture for F-001 correction;
+2. mandatory backend read-only validation subjects required before any technical write set or implementation authorization may be established;
+3. decision gates that translate validated backend facts into a bounded future correction scope;
+4. finding coverage, stop conditions, and lifecycle separation for the correction path.
+
+| Authority or evidence | Role |
+|-----------------------|------|
+| This instrument §24 and published §24 evidence @ `fe73288…` | Completed frontend security review; §24.7 correction posture |
+| `docs/implementation/IWP_006_TOKEN_STORAGE_SECURITY_REVIEW_EVIDENCE.md` | SR-F001-001 through SR-F001-007; evidence limitations §6 |
+| Accepted architecture-decision report | Target posture selection input (not controlling until separately published if required) |
+| This instrument §12, §13.6, §14.8, §18 | Conditional security and storage-change gates |
+| `docs/engineering/SECURITY_STANDARDS.md` | Trust boundaries, credential governance, CSRF/session policy consumption |
+| `docs/engineering/AUTHENTICATION_ARCHITECTURE.md` | AUTHN-SES-* session authority and client-copy reconciliation |
+| `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` | AUTHZ-BND-3 client non-authority |
+| `docs/engineering/API_STANDARDS.md` | Auth transport and error-contract discipline |
+| `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` IMPL-GATE-5 | Security review before implementation when auth/trust boundaries implicated |
+| `docs/engineering/REPOSITORY_STANDARDS.md` | Evidence integrity; targeted validation |
+
+### 26.3 Preserved Current State
+
+| Item | Value |
+|------|-------|
+| F-001 | UNRESOLVED |
+| IWP-006 acceptance | NOT GRANTED |
+| IWP-006 closure | NOT GRANTED |
+| Technical implementation authorization | NOT AUTHORIZED |
+| Exact technical write set | NOT ESTABLISHED |
+| Backend read-only validation | NOT AUTHORIZED BY THIS DRAFT |
+| Correction implementation | NOT AUTHORIZED |
+| Architecture posture in Repository Authority | **Not yet published** — selected only by accepted architecture-decision report |
+| Published §24 security evidence | PUBLISHED @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49` |
+
+### 26.4 Selected Target Architecture Posture
+
+The governed correction target for F-001 is:
+
+**HttpOnly Secure SameSite cookie-based authenticated session transport**
+
+Architecture requirements (decision input only; not implementation authorization):
+
+| Requirement | Architecture-level rule |
+|-------------|-------------------------|
+| Credential storage | **No** authentication material in JavaScript-readable persistent storage (`localStorage`, `sessionStorage`, or equivalent) |
+| Browser session persistence | HttpOnly session and/or refresh cookie(s) within bounded lifetime |
+| Authenticated request transport | Browser-managed cookie attachment to same-site API requests; no client-managed bearer secret in JS |
+| Cookie attributes | `HttpOnly`; `Secure` in production; `SameSite=Lax` minimum (evaluate `Strict` during correction-scope decision) |
+| CSRF | Explicit CSRF controls for cookie-authenticated mutating requests where SameSite alone is insufficient |
+| Expiry | Bounded session lifetime mandatory |
+| Renewal | Defined server renewal policy — sliding session and/or HttpOnly refresh credential with rotation (exact model decided after backend validation) |
+| Logout | Server-coordinated session termination and cookie clearing |
+| 401/403 reconciliation | Authoritative auth failure clears client presentation state and triggers re-establishment or login path |
+| Role handling | Server-derived role facts only; client route guards remain presentation-only |
+| Observability | Session lifecycle evidence without credential payload |
+
+This draft does **not** select exact TTL values, refresh implementation details, endpoints, or file-level changes.
+
+### 26.5 Mandatory Backend Read-Only Validation
+
+Future separately authorized backend read-only validation **must** inspect only paths established in a validation authorization act and recorded in a validation evidence artifact before inspection begins.
+
+This draft defines **validation subjects only**. It does **not** authorize inspection and does **not** name an executable path list.
+
+#### 26.5.1 Mandatory validation subjects
+
+| # | Subject | Validation purpose |
+|---|---------|-------------------|
+| 1 | Token or session issuance | Determine how authenticated sessions are created at login/register |
+| 2 | Access-token TTL | Record bounded access/session lifetime semantics |
+| 3 | Refresh-token issuance and TTL | Determine whether refresh exists; record lifetime if present |
+| 4 | Refresh rotation semantics | Determine rotation/reuse detection if refresh exists |
+| 5 | Revocation capability | Determine whether sessions/tokens can be invalidated server-side |
+| 6 | Logout endpoint and invalidation behavior | Determine server logout contract and cookie clearing support |
+| 7 | Cookie issuance or current lack thereof | Determine whether backend already sets HttpOnly/Secure/SameSite cookies |
+| 8 | Authentication dependencies and request extraction | Determine how protected routes obtain actor context (header vs cookie) |
+| 9 | CORS and credential policy | Determine compatibility with cookie `credentials` transport |
+| 10 | CSRF-relevant backend controls | Determine existing CSRF mitigations applicable to cookie auth |
+| 11 | `/users/me` or equivalent reconciliation contract | Determine session truth contract for client presentation sync |
+| 12 | Server-side role and authorization enforcement | Confirm server enforcement exists independent of client guards |
+| 13 | Observable session events | Confirm lifecycle events can be recorded without credential exposure |
+
+#### 26.5.2 Permitted backend inspection classes (to be enumerated at validation authorization)
+
+Future validation may inspect **read-only** backend surfaces limited to:
+
+- authentication and login issuance modules;
+- token/session configuration and lifetime settings;
+- logout and revocation handlers;
+- authentication middleware and dependency extraction;
+- CORS and credential policy configuration (no secret values);
+- CSRF-related middleware or settings;
+- current-user/session reconciliation endpoints;
+- role enforcement on protected routes (representative samples only).
+
+Exact file paths must be listed in the validation evidence artifact **before** inspection begins. This draft does not enumerate paths.
+
+#### 26.5.3 Explicit backend validation exclusions
+
+- secrets, `.env`, credentials, production data, runtime execution, database contents;
+- unrelated domain modules outside auth/session transport;
+- frontend application code (already covered by published §24 evidence);
+- infrastructure, CI/CD, deployment, migrations execution;
+- implementation changes during validation.
+
+### 26.6 Evidence Rules For Future Backend Validation
+
+| Rule | Requirement |
+|------|-------------|
+| Observed vs absent | Distinguish observed backend facts from absence of evidence |
+| No secrets | No secret values, credential material, or production data in evidence |
+| Exact paths | Record exact inspected paths in validation evidence before and during review |
+| Unavailable facts | Unavailable facts remain blockers — not assumptions |
+| Architecture conflict | Backend facts incompatible with §26.4 posture must stop correction-scope progression |
+| Non-prescriptive during validation | Validation records facts only; does not authorize implementation |
+
+Future validation evidence artifact (path to be defined at validation authorization): temporary IWP-006 package evidence only; not permanent Repository Authority.
+
+### 26.7 Decision Gates After Backend Validation
+
+After separately authorized backend read-only validation and independent review of its evidence, a future correction-scope decision must:
+
+| Gate | Decision output |
+|------|-----------------|
+| 1 | Compatibility assessment — selected cookie-session posture vs observed backend capability |
+| 2 | Exact expiry/renewal model — sliding session vs refresh rotation vs re-auth-only |
+| 3 | Logout and revocation requirements — server invalidation contract |
+| 4 | CSRF strategy — SameSite sufficiency vs additional token requirement |
+| 5 | Bounded technical write set — exact authorized correction surfaces only |
+| 6 | Independent review — before any implementation authorization |
+
+No gate may be combined. Validation alone does not establish a write set or authorize implementation.
+
+### 26.8 Finding Coverage
+
+| Finding | Severity | Draft disposition | Resolved by draft? |
+|---------|----------|-------------------|--------------------|
+| SR-F001-001 | HIGH | Target architecture eliminates JS-readable storage in correction scope | **NO** |
+| SR-F001-002 | HIGH | Mandates authoritative 401/403 reconciliation in correction scope | **NO** |
+| SR-F001-003 | MEDIUM | Requires server-coordinated logout in correction scope | **NO** |
+| SR-F001-004 | MEDIUM | Requires bounded expiry/renewal architecture in correction scope | **NO** |
+| SR-F001-005 | MEDIUM | Requires single cookie-based auth transport model in correction scope | **NO** |
+| SR-F001-006 | LOW | Guard/context alignment may be addressed within bounded correction scope | **NO** |
+| SR-F001-007 | LOW | Route guard UX may be addressed within bounded correction scope | **NO** |
+
+No finding may be marked resolved, reclassified, or closed by this draft.
+
+### 26.9 Stop Conditions
+
+Future correction-scope progression must stop if:
+
+1. repository baseline or authority materially differs from verified state;
+2. backend session/token behavior remains ambiguous after bounded validation;
+3. secret, credential, or production-data access would be required;
+4. selected architecture posture conflicts with published Security, Authentication, or Authorization Architecture;
+5. scope expands beyond F-001 cookie-session correction (including F-013 caller graph without separate authority);
+6. future technical write set cannot be isolated and bounded;
+7. cross-origin cookie requirements cannot be satisfied within published authority;
+8. CSRF posture for cookie transport cannot be defined;
+9. SR-F001-001 or SR-F001-002 remain unresolved at implementation authorization gate;
+10. this draft conflicts with published Repository Authority;
+11. backend validation or evidence review is skipped;
+12. implementation authorization is requested before write set establishment.
+
+### 26.10 Lifecycle Separation
+
+| Stage | Rule |
+|-------|------|
+| Draft authoring (this task) | Not review |
+| Independent targeted review | Not publication |
+| Bounded publication | Not backend validation |
+| Separately authorized backend validation | Not correction-scope decision |
+| Backend validation evidence review | Not implementation authorization |
+| Technical correction-scope decision | Not implementation execution |
+| Implementation authorization | Not implementation execution |
+| Correction execution | Not F-001 resolution claim |
+| F-001 resolution | Not IWP-006 acceptance |
+| IWP-006 acceptance | Not closure |
+| Merge | Not release |
+| Push | Not authorized by this draft |
+
+### 26.11 Explicit Non-Authorization
+
+This third amendment draft does **not** authorize:
+
+- backend read-only validation execution;
+- backend or frontend code inspection under this draft;
+- application changes or remediation;
+- technical implementation or correction execution;
+- establishment of a technical write set;
+- F-001 resolution;
+- IWP-006 acceptance or closure;
+- register, handoff, or continuity synchronization;
+- staging, commit, push, merge, release, deployment, or launch beyond publication of a future approved amendment version.
+
+Each later gate requires separate Repository Authority.
+
+### 26.12 Amendment Status And Effectiveness Boundary
+
+| State | Current value |
+|-------|---------------|
+| Third amendment draft authored | YES — by this draft preparation action |
+| Third amendment reviewed | NOT RUN |
+| Third amendment published | NOT RUN |
+| Third amendment effective | NOT RUN |
+| Target architecture posture recorded | YES — as decision input in §26.4 |
+| Backend read-only validation authorized | NO |
+| Backend read-only validation started | NO |
+| Correction-scope decision completed | NO |
+| Technical write set established | NO |
+| Technical implementation authorized | NO |
+| F-001 resolved | NO |
+
+---
+
+## 27. Exact Next Lifecycle Action After F-001 Correction-Scope Authorization Draft Preparation
+
+After preparation of this third amendment draft, the exact next authorized action is:
+
+Perform one bounded, independent, read-only review of **Third Amendment Draft — Bounded F-001 Correction-Scope Authorization** in §26 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against controlling Repository Authority, published §24 evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, accepted architecture-decision input, register posture, lifecycle separation, backend validation boundary, stop conditions, and prohibition on premature implementation authorization.
+
+That review must not approve, publish, or make the amendment effective; must not authorize or perform backend validation; must not authorize technical implementation; must not establish a technical write set; must not resolve F-001; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; and must not deploy, release, launch, or scale.
