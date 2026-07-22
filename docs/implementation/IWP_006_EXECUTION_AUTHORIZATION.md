@@ -2337,3 +2337,218 @@ After preparation of this sixth amendment draft, the exact next authorized actio
 Perform one bounded, independent, read-only review of **Sixth Amendment Draft — Consolidated F-001 Technical Correction-Scope Decision** in §32 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against controlling Repository Authority, published §26 correction-scope framework @ `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0`, published §24 frontend evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, published backend validation evidence @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6`, §26.7 gate completeness, write-set bounds and exclusions, finding coverage, CSRF and session decisions, stop conditions, lifecycle separation, and prohibition on premature implementation authorization.
 
 That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform implementation; must not execute the write set; must not resolve or reclassify F-001 or any SR-F001 finding; must not authorize technical implementation; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
+
+---
+
+## 34. Seventh Amendment Draft — Bounded F-001 Technical Implementation Execution Authorization
+
+**Amendment title:** IWP-006 Bounded F-001 Technical Implementation Execution Authorization
+
+**Amendment status:** DRAFT - NOT REVIEWED - NOT PUBLISHED - NOT EFFECTIVE
+
+**Independent review:** NOT RUN
+
+**Publication-readiness decision:** NOT RUN
+
+**Technical correction-scope decision:** PUBLISHED @ `867694cb555fedb417832e58a0bddb2438858fdc` (§32–§33)
+
+**F-001 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE
+
+**Exact technical write set:** ESTABLISHED BY PUBLISHED §32.11 — NOT EXECUTABLE UNTIL THIS AMENDMENT IS PUBLISHED AND SEPARATELY INVOKED
+
+**F-001:** UNRESOLVED
+
+**F-013:** UNCERTAIN - DEFERRED — OUT OF WRITE SET
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+This seventh amendment draft defines the **distinct execution-authorization gate** for one future bounded F-001 technical implementation pass directly subordinate to published §32 @ `867694cb555fedb417832e58a0bddb2438858fdc`. It does **not** authorize implementation during draft preparation, review, or publication authoring; does **not** execute the write set; does **not** resolve findings; and does **not** accept or close IWP-006.
+
+Drafting this amendment is not review, approval, publication, implementation execution, post-implementation validation, finding resolution, or acceptance.
+
+### 34.1 Identity And Authority Chain
+
+| Field | Value |
+|-------|-------|
+| Amendment identity | Seventh amendment draft within `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` |
+| Stable title | IWP-006 Bounded F-001 Technical Implementation Execution Authorization |
+| Controlling correction scope | Published §32–§33 @ `867694cb555fedb417832e58a0bddb2438858fdc` |
+| Correction-scope review | COMPLETED - PASS — F-001 CONSOLIDATED CORRECTION SCOPE APPROVED FOR PUBLICATION |
+| Backend validation evidence | Published @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6` |
+| Frontend security evidence | Published @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49` |
+| Prior correction-scope framework | Published §26–§27 @ `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0` |
+| Package | IWP-006 — SELECTED - ACTIVE |
+| Finding scope | F-001 only; SR-F001-001 through SR-F001-007 |
+
+| Authority | Role |
+|-----------|------|
+| Published §32.4–§32.14 | Architecture, write set, validation, migration, stop conditions — **not reinterpreted** |
+| Published §32.11 | Maximum 34-path write set — incorporated by reference |
+| Published §32.13 | Required validation set — incorporated by reference |
+| Published §32.16 | Stop conditions — incorporated by reference |
+| SECURITY_STANDARDS, AUTHENTICATION_ARCHITECTURE, AUTHORIZATION_ARCHITECTURE, API_STANDARDS | Compliance consumption |
+| IMPLEMENTATION_GOVERNANCE, REPOSITORY_STANDARDS | Lifecycle and evidence gates |
+| OBSERVABILITY_ARCHITECTURE | Credential-safe lifecycle evidence (AUTHN-SES-6 alignment) |
+
+### 34.2 Execution Authorization Boundary
+
+| Boundary | Rule |
+|----------|------|
+| Draft authoring (this task) | Does **not** authorize implementation |
+| Independent targeted review | Required before publication |
+| Bounded publication of §34 | Makes F-001 technical implementation **execution authorization effective** under published §32 only |
+| Publication of §34 | Does **not** start implementation automatically |
+| Implementation execution | Begins only through a **separate invoked bounded execution task** referencing published §32 and published §34 |
+| Unreviewed working-tree draft | Must **not** be treated as authorization to implement |
+| Post-implementation validation | Separate from this authorization |
+| Finding resolution / IWP-006 acceptance | Separate gates — not authorized here |
+
+Upon future publication, this amendment authorizes **one coordinated F-001 implementation pass**. No additional scope-definition artifact is required before invocation.
+
+### 34.3 Preserved Architecture (No Redesign)
+
+Future authorized execution must implement published §32 decisions without architectural reinterpretation:
+
+- server-side persisted session authority;
+- opaque session identifier in HttpOnly Secure SameSite cookie;
+- sliding idle timeout plus absolute expiry;
+- **no refresh-token mechanism** in this bounded scope;
+- server logout, session invalidation, and cookie clearing;
+- synchronizer-token CSRF protection on mutating requests;
+- normalized **401** (missing/invalid/expired/revoked session) and **403** (forbidden role/account);
+- single cookie-session authentication dependency;
+- credential-safe observability;
+- **no bearer/cookie dual mode** and no partial production bearer posture.
+
+### 34.4 Write Set Incorporation
+
+| Rule | Requirement |
+|------|-------------|
+| Authoritative list | Published §32.11 only |
+| Maximum paths | **34** — no additional path implied |
+| Conditional paths | B14/B18 may remain unchanged if dependency normalization suffices |
+| Exclusions | F-013 and `frontend/services/api.ts` remain **excluded** |
+| Expansion | Any required path beyond §32.11 → **immediate stop** per §32.16 and §34.9 |
+| env.py | `backend/alembic/env.py` is **not** in the published 34-path maximum; add AuthSession to env.py model imports **only if** hand-written migration BN5 cannot be validated safely without it — treat as bounded sub-decision within BN5/BN2, not write-set expansion |
+
+### 34.5 Implementation-Time Constraints (From Correction-Scope Review)
+
+These are execution constraints carried forward from the independent targeted review; they are **not** new findings and do **not** reopen discovery or correction-scope design:
+
+| Constraint | Requirement |
+|------------|-------------|
+| Gate semantics | Published §26.7 gate 5 = bounded write set (§32.11); gate 6 = independent review before implementation authorization — satisfied by correction-scope review for scope; **this §34 review** satisfies pre-publication review of implementation authorization |
+| CSRF bootstrap | Define safe bootstrap inside approved design: issue CSRF token via bounded auth-surface contract (e.g. login-page load, dedicated safe GET, or login-response pairing) before first mutating authenticated request; unauthenticated login/register POST policy must be explicit in implementation |
+| Alembic discovery | Confirm whether BN5 upgrade/downgrade requires `env.py` model registration before editing; prefer hand-written BN5 if sufficient |
+| Migration validation | **Explicitly** run Alembic upgrade and downgrade validation as part of required checks |
+| F-013 deferral | `frontend/services/api.ts` and caller graph remain deferred; partial bearer surface outside nine-path boundary is a known residual until separate authority |
+
+### 34.6 Coordinated Implementation Pass
+
+Future authorized execution must complete **one coordinated pass** covering:
+
+1. backend session, CSRF, auth dependency, and status-normalization changes within §32.11;
+2. Alembic migration BN5 (auth_sessions table);
+3. frontend migration from bearer storage/transport within nine-path boundary;
+4. targeted backend test artifact BT1;
+5. configuration key integration (names only in repository artifacts);
+6. **no** partial bearer/cookie production posture at completion.
+
+Execution must not land backend-only or frontend-only cookie session in a deployable intermediate state within this authorized pass.
+
+### 34.7 Required Validation
+
+Future execution must satisfy **all** of published §32.13 plus:
+
+| Additional check | Requirement |
+|------------------|-------------|
+| Idle vs absolute expiry | Distinct verification that idle timeout and absolute ceiling both enforce 401 |
+| Revoked session | Session invalidated by logout or server revocation rejected on subsequent protected access |
+| CSRF positive case | Valid CSRF token accepted on representative mutating request |
+| Alembic upgrade | BN5 applies cleanly |
+| Alembic downgrade | BN5 rolls back cleanly |
+| Regression | Relevant backend and frontend regression checks for auth router password-reset path and nine-path surfaces |
+
+Application tests and runtime validation are required **during the future execution task**, not during this authorization draft.
+
+### 34.8 Evidence Requirements
+
+Future execution must produce a bounded evidence artifact (path to be defined at invocation) containing at minimum:
+
+1. exact files changed mapped to §32.11 paths;
+2. per-finding mapping: SR-F001-001 through SR-F001-007 → implementation surface → validation performed;
+3. commands executed with complete pass/fail results;
+4. migration revision identity and upgrade/downgrade evidence;
+5. security-sensitive configuration **key names** only — no secret values;
+6. residual risks including F-013 deferred surface;
+7. final Git state;
+8. explicit statement that **no finding is resolved** unless and until separate acceptance authority supports closure.
+
+Evidence alone does not resolve F-001 or any SR-F001 finding.
+
+### 34.9 Stop Conditions
+
+In addition to published §32.16, future execution must stop if:
+
+1. write-set expansion beyond §32.11 would be required;
+2. implementation conflicts with published SECURITY, AUTHENTICATION, or AUTHORIZATION architecture;
+3. dual bearer/cookie authentication mode would be introduced;
+4. CSRF or session persistence cannot be isolated within the 34-path maximum;
+5. migration upgrade or downgrade fails or cannot be rolled back safely;
+6. SR-F001-001 or SR-F001-002 behavior remains unresolved after implementation;
+7. required validation cannot be completed;
+8. secret exposure or production-data dependency is discovered;
+9. F-013 / `api.ts` scope expansion is attempted without separate authority;
+10. repository baseline or controlling authority materially differs from verified state.
+
+### 34.10 Lifecycle Separation
+
+| Stage | Rule |
+|-------|------|
+| §34 draft authoring (this task) | Not review |
+| Independent targeted review | Not publication |
+| Bounded publication of §34 | Not implementation execution |
+| Separately invoked implementation execution | Not evidence acceptance |
+| Post-implementation validation evidence | Not finding resolution |
+| Finding resolution | Not IWP-006 acceptance |
+| IWP-006 acceptance | Not closure |
+| Push | Not authorized by this draft |
+
+### 34.11 Explicit Non-Authorization
+
+This seventh amendment draft does **not** authorize:
+
+- technical implementation during draft preparation or review;
+- backend or frontend code changes during draft preparation;
+- migration creation or execution during draft preparation;
+- post-implementation validation during draft preparation;
+- F-001 resolution or SR-F001 finding resolution/reclassification;
+- IWP-006 acceptance or closure;
+- register, handoff, or continuity synchronization;
+- staging, commit, push, merge, release, deployment, or launch beyond future separately authorized publication and invocation.
+
+### 34.12 Amendment Status And Effectiveness Boundary
+
+| State | Current value |
+|-------|---------------|
+| Seventh amendment draft authored | YES — by this draft preparation action |
+| Seventh amendment reviewed | NOT RUN |
+| Seventh amendment published | NOT RUN |
+| Seventh amendment effective | NOT RUN |
+| F-001 implementation execution authorized | NO |
+| Write set executable | NO — pending publication and invocation |
+| F-001 resolved | NO |
+
+---
+
+## 35. Exact Next Lifecycle Action After F-001 Technical Implementation Execution Authorization Draft Preparation
+
+After preparation of this seventh amendment draft, the exact next authorized action is:
+
+Perform one bounded, independent, read-only targeted review of **Seventh Amendment Draft — Bounded F-001 Technical Implementation Execution Authorization** in §34 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against published §32 @ `867694cb555fedb417832e58a0bddb2438858fdc`, correction-scope review PASS, published backend evidence @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6`, published frontend evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, write-set incorporation by reference, architecture preservation, implementation-time constraints, coordinated-pass requirements, validation and evidence requirements, stop conditions, lifecycle separation, and prohibition on premature implementation execution.
+
+That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform implementation; must not execute the write set; must not resolve or reclassify F-001 or any SR-F001 finding; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
