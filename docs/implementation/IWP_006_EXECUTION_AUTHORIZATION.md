@@ -1965,3 +1965,375 @@ After preparation of this fifth amendment draft, the exact next authorized actio
 Perform one bounded, independent, read-only review of **Fifth Amendment Draft — Bounded F-001 Backend Read-Only Validation Execution Authorization** in §30 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against controlling Repository Authority, published §28 validation-scope authority @ `9a36e9b8efbbc1a3a79a3c36fcbbd9e71cbb8ec2`, published §26 correction-scope authority @ `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0`, published §24 evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, F-001 discovery and security evidence, register posture, execution-gate clarity, inspection-path boundary, exclusions, evidence requirements, stop conditions, verdict semantics, publication/effectiveness semantics, lifecycle separation, and prohibition on premature validation execution or implementation authorization.
 
 That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform backend validation; must not inspect backend or application code; must not create validation evidence; must not establish a technical write set; must not resolve or reclassify F-001 or any SR-F001 finding; must not authorize technical implementation; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
+
+---
+
+## 32. Sixth Amendment Draft — Consolidated F-001 Technical Correction-Scope Decision
+
+**Amendment title:** IWP-006 Consolidated F-001 Technical Correction-Scope Decision (Cookie Session Architecture)
+
+**Amendment status:** DRAFT - NOT REVIEWED - NOT PUBLISHED - NOT EFFECTIVE
+
+**Independent review:** NOT RUN
+
+**Publication-readiness decision:** NOT RUN
+
+**Backend read-only validation:** COMPLETED — evidence published @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6`
+
+**Technical correction-scope decision:** PREPARED IN THIS DRAFT — NOT PUBLISHED — NOT EFFECTIVE
+
+**Technical correction implementation:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT STARTED
+
+**Exact technical write set:** ESTABLISHED IN THIS DRAFT — NOT EFFECTIVE UNTIL SEPARATELY AUTHORIZED IMPLEMENTATION GATE
+
+**F-001:** UNRESOLVED
+
+**F-013:** UNCERTAIN - DEFERRED — OUT OF WRITE SET
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+This sixth amendment draft completes the **consolidated technical correction-scope decision** required by published §26.7 after published backend validation evidence @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6` and published frontend security evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`. It records architecture decisions, bounded write set, required validation, finding coverage, stop conditions, and lifecycle separation.
+
+This draft does **not** authorize implementation execution, validation execution, remediation, F-001 resolution, finding reclassification, IWP-006 acceptance or closure, register/handoff synchronization, staging, commit, push, merge, release, deployment, or launch.
+
+Drafting this amendment is not review, approval, publication, implementation authorization, correction execution, or acceptance.
+
+### 32.1 Identity And Relationship
+
+| Field | Value |
+|-------|-------|
+| Amendment identity | Sixth amendment draft within `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` |
+| Stable title | IWP-006 Consolidated F-001 Technical Correction-Scope Decision (Cookie Session Architecture) |
+| Package relationship | Subordinate IWP-006 package-level bounded sub-activity |
+| Finding relationship | F-001 correction path only; SR-F001-001 through SR-F001-007 |
+| Precondition — frontend security review | Published evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49` |
+| Precondition — correction-scope framework | Published §26–§27 @ `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0` |
+| Precondition — backend validation | Published evidence @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6` |
+| Precondition — backend validation execution gate | Published §30 @ `0a8127896b087dc240e53f7710b1de7258c59bf1` |
+| IWP-006 posture preserved | SELECTED - ACTIVE |
+| Stage I4 posture preserved | IN PROGRESS |
+
+### 32.2 Purpose And Governing Basis
+
+This draft completes §26.7 decision gates 1–5 and records gate 6 as a future mandatory prerequisite before implementation authorization. It consolidates the full bounded correction scope in one instrument. It does **not** defer scope definition to another artifact.
+
+| Authority or evidence | Commit / role |
+|-----------------------|---------------|
+| This instrument §26.4, §26.7–§26.10 @ `def29765e…` | Target posture; decision gates; finding coverage; stop conditions |
+| Published §24 frontend security evidence | SR-F001-001–007; nine-path frontend facts |
+| Published backend validation evidence | Eighteen-path backend facts; subject and finding mapping |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` | F-001 trigger |
+| `docs/engineering/SECURITY_STANDARDS.md` | Credential governance; CSRF/session policy consumption |
+| `docs/engineering/AUTHENTICATION_ARCHITECTURE.md` | AUTHN-SES-*; AUTHN-INV-* |
+| `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` | AUTHZ-BND-3 presentation-only guards |
+| `docs/engineering/API_STANDARDS.md` | Auth transport and error-contract discipline |
+| `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` | IMPL-GATE-5; lifecycle gates |
+| `docs/engineering/REPOSITORY_STANDARDS.md` | Evidence integrity; targeted validation |
+
+### 32.3 Preserved Current State
+
+| Item | Value |
+|------|-------|
+| F-001 | UNRESOLVED |
+| SR-F001-001 through SR-F001-007 | UNRESOLVED — severities unchanged |
+| Backend validation | COMPLETED — evidence published |
+| Correction-scope decision | PREPARED IN DRAFT ONLY |
+| Technical write set | ESTABLISHED IN DRAFT — not executable |
+| Technical implementation authorization | NOT AUTHORIZED |
+| Correction implementation | NOT AUTHORIZED |
+| IWP-006 acceptance | NOT GRANTED |
+| IWP-006 closure | NOT GRANTED |
+
+### 32.4 §26.7 Gate 1 — Compatibility Assessment
+
+| Item | Decision |
+|------|----------|
+| Selected target posture | HttpOnly Secure SameSite cookie-based authenticated session transport (§26.4) |
+| Observed backend posture | Stateless JWT bearer returned as JSON; `OAuth2PasswordBearer` header extraction; no cookies (backend evidence §10 subjects 1, 7, 8) |
+| Observed frontend posture | `localStorage["access_token"]` with explicit `Authorization: Bearer` header (frontend evidence §4.1) |
+| Compatibility verdict | **INCOMPATIBLE** — correction required before implementation authorization |
+| CORS posture | Inspected backend enables `allow_credentials=True` for localhost origins (backend evidence subject 9); cookie transport feasible within bounded correction |
+| Correction direction | Replace bearer-header client-managed credential with server-issued HttpOnly session cookie and server-side session authority |
+
+### 32.5 §26.7 Gate 2 — Expiry And Renewal Model
+
+| Item | Decision |
+|------|----------|
+| Session authority model | **Server-side persisted session records** with opaque session identifier transported in HttpOnly cookie |
+| Access renewal | **Sliding idle timeout** extended on authenticated API activity within configured bounds |
+| Absolute ceiling | Configurable maximum session lifetime enforced server-side (config key names only; numeric values remain env-backed and are not decided in this draft) |
+| Refresh token | **Not in bounded initial correction scope** — re-authentication required after session expiry or invalidation |
+| JWT access token in login response | **Removed** from authenticated session path after correction |
+| Password-reset token subsystem | **Out of scope** — existing reset flow unchanged except where auth router shared wiring requires non-breaking import preservation |
+| Numeric TTL | Not invented; implementation must consume existing or newly declared config keys without embedding secret values in repository artifacts |
+
+**Configuration key names authorized for declaration (values not decided):**
+
+- `SESSION_COOKIE_NAME`
+- `SESSION_IDLE_TIMEOUT_MINUTES`
+- `SESSION_ABSOLUTE_TIMEOUT_MINUTES`
+- `SESSION_COOKIE_SECURE`
+- `SESSION_COOKIE_SAMESITE`
+- `CSRF_COOKIE_NAME`
+- `CSRF_HEADER_NAME`
+
+Existing `ACCESS_TOKEN_EXPIRE_MINUTES` must not be repurposed silently; migration to session timeout keys must be explicit in implementation.
+
+### 32.6 §26.7 Gate 3 — Logout And Revocation Requirements
+
+| Item | Decision |
+|------|----------|
+| Logout endpoint | **Required** — bounded under `backend/app/routers/auth.py` (e.g. `POST /auth/logout`) |
+| Server invalidation | **Required** — delete or mark session record invalid in server-side session store |
+| Cookie clearing | **Required** — response must clear session cookie and CSRF cookie |
+| Client presentation | Frontend logout must invoke server logout before or atomically with local presentation reset |
+| Bearer token revocation | **Not applicable after correction** — no client-retained bearer access token in corrected posture |
+| Concurrent sessions | Not decided — implementation may allow multiple active sessions per user unless a stricter rule is separately authorized |
+
+### 32.7 §26.7 Gate 4 — CSRF Strategy
+
+| Item | Decision |
+|------|----------|
+| Session cookie SameSite | **`Lax` minimum** — evaluate `Strict` only if UX and API routing remain compatible within bounded write set |
+| Session cookie attributes | `HttpOnly`; `Secure` in production; `SameSite` per config key |
+| CSRF control | **Synchronizer token required** for cookie-authenticated **mutating** requests (`POST`, `PUT`, `PATCH`, `DELETE`) where SameSite alone is insufficient for cross-origin SPA API usage |
+| CSRF transport | Double-submit or header-validated token pattern: CSRF token readable by client (non-HttpOnly cookie or login response contract) plus required custom header on mutating requests |
+| Safe methods | `GET`, `HEAD`, `OPTIONS` exempt from CSRF validation |
+| Bearer-header CSRF profile | **Deprecated** with bearer transport removal |
+
+### 32.8 §26.7 Gate 5 — Authentication Failure And Status Normalization
+
+| Item | Decision |
+|------|----------|
+| Missing or invalid session | **HTTP 401 Unauthorized** on all protected routes |
+| Authenticated but forbidden role or account restriction | **HTTP 403 Forbidden** |
+| Eliminate auth-failure 400 | **`BadRequestException` for invalid token/session in auth dependencies must not remain** — role-guard failures in `require_admin` / `require_admin_or_realtor` must use 403, not 400 (backend evidence subjects 8, 11, 12) |
+| Unified extraction | **Single** cookie-session authentication dependency in `backend/app/core/security/dependencies.py`; duplicate bearer `get_current_user` in `user_service.py` removed or reduced to delegate |
+| `/users/me` contract | Remains authoritative reconciliation endpoint; must use unified session dependency and normalized status semantics |
+| Client reconciliation (SR-F001-002) | `authFetch` must distinguish **401** → clear session presentation and route to login; **403** → clear or downgrade presentation per product rule without retaining false authenticated state |
+| Generic error collapse | In-session auth failures must trigger the same presentation reset as startup restore failure |
+
+### 32.9 §26.7 Gate 5 — Authorization Dependency Consistency
+
+| Item | Decision |
+|------|----------|
+| Server authority | Role and account-status enforcement remain server-side via dependencies (AUTHZ-BND-3) |
+| Dependency source | All protected routes consume unified session-based dependencies from `dependencies.py` |
+| Routes using `user_service.get_current_user` | Must migrate to unified dependency (`users.py`, `favorites.py` per backend evidence) |
+| Local guards | `require_realtor` in `realtor_profiles.py` remains presentation-adjacent server guard; must use unified session dependency |
+| Client guard alignment (SR-F001-006) | `RealtorRoute` must consume context `isRealtor` rather than recomputing `user?.role === "realtor"` |
+| Route guard UX (SR-F001-007) | Loading/redirect flash reduction permitted within bounded frontend route components; not security-critical |
+
+### 32.10 §26.7 Gate 5 — Security-Safe Observability And Audit
+
+| Item | Decision |
+|------|----------|
+| AUTHN-SES-6 compliance | Record session lifecycle events **without credential payload** |
+| Required event classes | Login success; login failure; logout; session invalidation; CSRF validation failure; session expiry |
+| Prohibited log content | Raw session identifiers in full, JWT material, CSRF secrets, cookie values, passwords |
+| Rate limiting | Login rate limit preserved; upload rate-limit key must migrate from bearer digest to session- or user-scoped key (`rate_limit.py`) |
+| Dedicated audit store | Not required in bounded scope — structured application logging sufficient if classification rules satisfied |
+| Metrics | Optional counters by event class; no credential-bearing labels |
+
+### 32.11 §26.7 Gate 5 — Exact Bounded Technical Write Set
+
+Write set is bounded to F-001 auth/session transport correction only. **F-013 / `frontend/services/api.ts` caller graph is excluded.**
+
+#### 32.11.1 Backend — existing paths (published backend validation evidence §6–§7)
+
+| # | Path | Correction purpose |
+|---|------|-------------------|
+| B1 | `backend/app/main.py` | CORS credential policy; CSRF middleware registration if applicable |
+| B2 | `backend/app/routers/auth.py` | Cookie-setting login; logout route; CSRF token issuance contract |
+| B3 | `backend/app/services/auth_service.py` | Session creation on login; remove JSON bearer issuance from session path |
+| B4 | `backend/app/core/security/jwt.py` | Remove access-token creation from authenticated session path; preserve password-reset token utilities if still referenced |
+| B5 | `backend/app/core/config.py` | Session and CSRF configuration keys |
+| B6 | `backend/app/core/security/dependencies.py` | Unified cookie-session `get_current_user`; normalized 401/403; remove OAuth2 bearer scheme as primary auth |
+| B7 | `backend/app/services/user_service.py` | Remove or delegate duplicate bearer `get_current_user` |
+| B8 | `backend/app/routers/users.py` | `/users/me` dependency alignment |
+| B9 | `backend/app/schemas/user.py` | Login/session response schema — no client bearer secret |
+| B10 | `backend/app/core/handlers.py` | Consistent 401/403 handler behavior |
+| B11 | `backend/app/core/exceptions.py` | Auth vs authorization exception mapping |
+| B12 | `backend/app/services/account_status_service.py` | Preserve account restriction checks; 403 on restricted authenticate |
+| B13 | `backend/app/models/user.py` | No schema change expected — reference only unless FK wiring requires docstring-only touch |
+| B14 | `backend/app/routers/admin_users.py` | No direct edit required if dependencies normalize status codes — **included only if integration test gap requires route-level assertion** |
+| B15 | `backend/app/routers/realtor_profiles.py` | Unified session dependency for `require_realtor` |
+| B16 | `backend/app/core/rate_limit.py` | Session/user-scoped limiter key replacing bearer digest |
+| B17 | `backend/app/routers/favorites.py` | Migrate from `user_service.get_current_user` to unified dependency |
+| B18 | `backend/app/routers/properties.py` | Verify optional-auth paths operate under cookie model — **dependency-only; direct edit only if optional session extraction requires explicit change** |
+
+#### 32.11.2 Backend — new paths (required by §26.4 server session authority; absence confirmed by repository search during draft preparation)
+
+| # | Path | Correction purpose |
+|---|------|-------------------|
+| BN1 | `backend/app/models/auth_session.py` | Server-side session persistence model (precedent: `password_reset_token.py`) |
+| BN2 | `backend/app/models/__init__.py` | Register `AuthSession` model |
+| BN3 | `backend/app/services/session_service.py` | Create, validate, renew idle timeout, invalidate sessions |
+| BN4 | `backend/app/core/security/csrf.py` | CSRF token generation and validation |
+| BN5 | `backend/alembic/versions/<new_revision>_add_auth_sessions.py` | Persist `auth_sessions` table |
+
+#### 32.11.3 Backend — validation artifact (implementation phase only)
+
+| # | Path | Correction purpose |
+|---|------|-------------------|
+| BT1 | `backend/tests/test_iwp006_f001_session_auth.py` | Targeted tests for session, logout, CSRF, 401/403 normalization |
+
+#### 32.11.4 Frontend — existing paths (published §24.4 nine-path boundary)
+
+| # | Path | Correction purpose |
+|---|------|-------------------|
+| F1 | `frontend/lib/tokenStorage.ts` | Remove `localStorage` access-token persistence; eliminate JS-readable auth credential |
+| F2 | `frontend/lib/authFetch.ts` | `credentials: 'include'`; remove bearer header; 401/403 reconciliation; CSRF header injection |
+| F3 | `frontend/context/AuthContext.tsx` | Server-coordinated logout; session restore via cookie + `/users/me`; remove token save path |
+| F4 | `frontend/services/authApi.ts` | Login/logout API contracts; align error handling with unified client |
+| F5 | `frontend/types/auth.ts` | Remove bearer-token-centric response types from session path |
+| F6 | `frontend/types/user.ts` | No role-model change — reference only unless type coupling requires adjustment |
+| F7 | `frontend/components/ProtectedRoute.tsx` | Presentation guard under reconciled session state |
+| F8 | `frontend/components/AdminRoute.tsx` | Presentation guard under reconciled session state |
+| F9 | `frontend/components/RealtorRoute.tsx` | Use context `isRealtor`; reduce duplicated role derivation (SR-F001-006) |
+
+#### 32.11.5 Frontend — new path
+
+| # | Path | Correction purpose |
+|---|------|-------------------|
+| FN1 | `frontend/lib/csrf.ts` | CSRF token read and header helper for mutating requests |
+
+#### 32.11.6 Explicit write-set exclusions
+
+- `frontend/services/api.ts` and F-013 caller graph
+- `backend/app/routers/ai.py`, `admin_stats.py`, `uploads.py`, `realtor_applications.py` — **excluded unless implementation discovers broken auth integration; any expansion requires separate authority**
+- Infrastructure, CI/CD, deployment manifests
+- Register, handoff, roadmap, unrelated IWP evidence
+- `.env`, secrets, production configuration values
+
+**Write-set cardinality:** 18 existing backend + 5 new backend + 1 new backend test + 9 existing frontend + 1 new frontend = **34 authorized paths maximum** (conditional paths B14/B18 may remain unchanged if dependency normalization suffices without edit).
+
+### 32.12 Finding-To-Correction Mapping
+
+| Finding | Severity | Required correction (governance level) | Write-set anchors | Resolved by this draft? |
+|---------|----------|----------------------------------------|-------------------|-------------------------|
+| SR-F001-001 | HIGH | Eliminate JS-readable bearer persistence; HttpOnly session cookie; no access token in login JSON body | F1, F2, F3, B2, B3, B6, B9 | **NO** |
+| SR-F001-002 | HIGH | Unified 401/403 contract; in-session reconciliation in `authFetch` and `AuthContext` | F2, F3, B6, B8, B10, B11 | **NO** |
+| SR-F001-003 | MEDIUM | Server logout endpoint; session invalidation; coordinated client logout | F3, F4, B2, B3, BN3 | **NO** |
+| SR-F001-004 | MEDIUM | Bounded session lifetime; sliding idle timeout; no client-side bearer renewal | B3, B5, BN1, BN3, BN5, F3 | **NO** |
+| SR-F001-005 | MEDIUM | Single cookie-session transport; remove dual bearer fetch models within nine-path boundary | F2, F4, F5, B6, B7 | **NO** |
+| SR-F001-006 | LOW | Unified server dependency; align `RealtorRoute` with context role flags | B6, B7, B17, F9 | **NO** |
+| SR-F001-007 | LOW | Optional guard UX improvement within route components | F7, F8, F9 | **NO** |
+
+No finding may be marked resolved, reclassified, or closed by this draft.
+
+### 32.13 Required Tests And Validation
+
+Validation is required after separately authorized implementation. Application tests are **NOT RUN** by this draft-preparation task.
+
+| Concern | Required validation |
+|---------|---------------------|
+| Session issuance | Login sets HttpOnly session cookie; response body contains no bearer access token |
+| Session extraction | Protected route accepts valid session cookie without `Authorization` header |
+| Session expiry | Expired or idle-timeout session returns 401 |
+| Logout | Logout invalidates server session and clears cookies; subsequent protected request returns 401 |
+| CSRF | Mutating request without valid CSRF token rejected; safe methods unaffected |
+| 401 normalization | Invalid or missing session returns 401 on `/users/me` and representative protected routes |
+| 403 normalization | Restricted account and insufficient role return 403, not 400 |
+| Dependency consistency | `favorites` and `/users/me` paths use same session dependency behavior |
+| Frontend reconciliation | Simulated 401 from API clears client session presentation |
+| Frontend storage | No `localStorage` / `sessionStorage` auth credential after login |
+| Rate limit | Upload limiter operates without raw bearer token in key material |
+| Observability | Login/logout/failure events log without credential payload |
+| Regression | Existing password-reset flow unaffected within auth router scope |
+
+**Validation mode:** targeted backend tests (BT1) plus bounded manual or automated frontend verification within nine-path surfaces; full runtime validation authorized only under future implementation gate.
+
+### 32.14 Migration, Configuration, Security, Compatibility, And Rollback
+
+| Dimension | Assessment |
+|-----------|------------|
+| **Migration** | One new Alembic revision (BN5) creating `auth_sessions` table; no data backfill from JWT; existing users re-authenticate after deployment |
+| **Configuration** | New session/CSRF config keys (§32.5); production origin list for CORS remains env-backed — not decided here |
+| **Security** | Removes XSS-readable bearer credential; introduces CSRF surface requiring synchronizer token; server-side revocation enabled |
+| **Compatibility** | **Breaking** for any client expecting JSON bearer token — bounded to IWP-006 frontend write set; external clients out of scope |
+| **Rollback** | Revert BN5 migration and code changes in single bounded rollback; active sessions invalidated on rollback; users re-authenticate under restored or interim posture |
+| **Dual-mode bearer/cookie** | **Not authorized** — single cookie-session posture only |
+
+### 32.15 §26.7 Gate 6 — Independent Review Before Implementation
+
+| Item | Requirement |
+|------|-------------|
+| Review target | This sixth amendment draft (§32) |
+| Review basis | Published §26 @ `def29765e…`; published frontend evidence @ `fe73288…`; published backend evidence @ `7395ced…`; write-set bounds; stop conditions |
+| Review outcome | Must occur before any **implementation authorization** amendment |
+| Review does not authorize | Implementation, validation execution, publication, or finding resolution |
+
+### 32.16 Stop Conditions
+
+Correction-scope progression or future implementation must stop if:
+
+1. repository baseline or authority materially differs from verified state;
+2. write-set execution expands beyond §32.11 without separate authority;
+3. F-013 / `api.ts` consolidation is introduced without separate authority;
+4. CSRF strategy cannot be implemented within bounded write set;
+5. session store migration cannot be isolated to BN5;
+6. SR-F001-001 or SR-F001-002 would remain unresolved at implementation authorization gate;
+7. secret, credential, or production-data access would be required to complete correction;
+8. dual bearer-and-cookie auth mode would be introduced;
+9. this draft conflicts with published Repository Authority;
+10. independent review of this draft is skipped before implementation authorization;
+11. implementation authorization is requested before bounded publication of this amendment.
+
+### 32.17 Lifecycle Separation
+
+| Stage | Rule |
+|-------|------|
+| §32 draft authoring (this task) | Not review |
+| Independent targeted review | Not publication |
+| Bounded publication of §32 | Not implementation authorization |
+| Implementation authorization (future amendment) | Not implementation execution |
+| Correction execution | Not post-correction validation |
+| Post-correction validation | Not F-001 resolution claim |
+| F-001 resolution | Not IWP-006 acceptance |
+| IWP-006 acceptance | Not closure |
+| Merge | Not release |
+| Push | Not authorized by this draft |
+
+### 32.18 Explicit Non-Authorization
+
+This sixth amendment draft does **not** authorize:
+
+- technical implementation or correction execution;
+- post-correction validation execution;
+- F-001 resolution or SR-F001 finding resolution/reclassification;
+- IWP-006 acceptance or closure;
+- register, handoff, or continuity synchronization;
+- staging, commit, push, merge, release, deployment, or launch beyond future separately authorized publication of an approved amendment version;
+- automatic effectiveness of the write set — write set is **defined** but **not executable** until a future implementation authorization gate.
+
+Each later gate requires separate Repository Authority.
+
+### 32.19 Amendment Status And Effectiveness Boundary
+
+| State | Current value |
+|-------|---------------|
+| Sixth amendment draft authored | YES — by this draft preparation action |
+| Sixth amendment reviewed | NOT RUN |
+| Sixth amendment published | NOT RUN |
+| Sixth amendment effective | NOT RUN |
+| §26.7 gates 1–5 decided in draft | YES |
+| §26.7 gate 6 (pre-implementation review) | REQUIRED — NOT RUN |
+| Exact technical write set | ESTABLISHED IN DRAFT — NOT EFFECTIVE |
+| Technical implementation authorized | NO |
+| Backend validation | COMPLETED — evidence published @ `7395ced…` |
+| F-001 resolved | NO |
+
+---
+
+## 33. Exact Next Lifecycle Action After F-001 Consolidated Correction-Scope Draft Preparation
+
+After preparation of this sixth amendment draft, the exact next authorized action is:
+
+Perform one bounded, independent, read-only review of **Sixth Amendment Draft — Consolidated F-001 Technical Correction-Scope Decision** in §32 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against controlling Repository Authority, published §26 correction-scope framework @ `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0`, published §24 frontend evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, published backend validation evidence @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6`, §26.7 gate completeness, write-set bounds and exclusions, finding coverage, CSRF and session decisions, stop conditions, lifecycle separation, and prohibition on premature implementation authorization.
+
+That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform implementation; must not execute the write set; must not resolve or reclassify F-001 or any SR-F001 finding; must not authorize technical implementation; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
