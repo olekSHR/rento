@@ -1644,3 +1644,324 @@ After preparation of this fourth amendment draft, the exact next authorized acti
 Perform one bounded, independent, read-only review of **Fourth Amendment Draft — Bounded F-001 Backend Read-Only Validation Authorization** in §28 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against controlling Repository Authority, published §26 authority @ `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0`, published §24 evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, F-001 discovery and security evidence, register posture, lifecycle separation, inspection-path boundary, stop conditions, evidence requirements, and prohibition on premature validation execution or implementation authorization.
 
 That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform backend validation; must not inspect backend or application code; must not authorize technical implementation; must not establish a technical write set; must not resolve F-001; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
+
+---
+
+## 30. Fifth Amendment Draft — Bounded F-001 Backend Read-Only Validation Execution Authorization
+
+**Amendment title:** IWP-006 Bounded F-001 Backend Read-Only Validation Execution Authorization
+
+**Amendment status:** DRAFT - NOT REVIEWED - NOT PUBLISHED - NOT EFFECTIVE
+
+**Independent review:** NOT RUN
+
+**Publication-readiness decision:** NOT RUN
+
+**Backend read-only validation execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical correction-scope decision:** NOT AUTHORIZED - NOT STARTED
+
+**Technical correction implementation:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT STARTED
+
+**Exact technical write set:** NOT ESTABLISHED
+
+**F-001:** UNRESOLVED
+
+**F-013:** UNCERTAIN - DEFERRED
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+This fifth amendment draft defines only the **distinct execution-authorization gate** required by published §28.4 and §28.13 for one future bounded backend read-only validation of F-001. It does **not** authorize validation execution during draft preparation, review, or publication authoring; does **not** perform backend inspection; does **not** authorize application changes, remediation, technical implementation, a technical write set, F-001 resolution, IWP-006 acceptance or closure, push, release, deployment, or launch.
+
+Drafting this amendment is not review, approval, publication, backend validation execution, evidence acceptance, correction-scope decision, implementation authorization, or acceptance.
+
+### 30.1 Identity And Relationship
+
+| Field | Value |
+|-------|-------|
+| Amendment identity | Fifth amendment draft within `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` |
+| Stable title | IWP-006 Bounded F-001 Backend Read-Only Validation Execution Authorization |
+| Package relationship | Subordinate IWP-006 package-level bounded sub-activity |
+| Finding relationship | F-001 only; informed by SR-F001-001 through SR-F001-007 |
+| Precondition — discovery | F-001 VERIFIED in `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` |
+| Precondition — frontend security review | Published evidence `docs/implementation/IWP_006_TOKEN_STORAGE_SECURITY_REVIEW_EVIDENCE.md` @ commit `fe73288e2881147d7b7e4dc8e5f51ccc673ced49` |
+| Precondition — security posture | `SECURITY CORRECTION REQUIRED BEFORE IMPLEMENTATION AUTHORIZATION` (§24.7) |
+| Precondition — correction-scope authority | Published third amendment §26–§27 @ commit `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0` |
+| Precondition — validation-scope authority | Published fourth amendment §28–§29 @ commit `9a36e9b8efbbc1a3a79a3c36fcbbd9e71cbb8ec2` |
+| Standalone governance lifecycle | **Not created** |
+| IWP-006 posture preserved | SELECTED - ACTIVE |
+| Stage I4 posture preserved | IN PROGRESS |
+
+### 30.2 Authority Chain And Subordination
+
+This draft is the **distinct execution-authorization act** required by §28.4 and §28.13. Published §28 @ `9a36e9b8efbbc1a3a79a3c36fcbbd9e71cbb8ec2` remains the controlling validation-scope authority for subjects, inspection classes, exclusions, and evidence rules.
+
+| Authority or evidence | Role |
+|-----------------------|------|
+| This instrument §28–§29 @ `9a36e9b8…` | Published validation-scope authority; §28.5 subjects; §28.6 path discovery; §28.7 classes; §28.8 exclusions; §28.9 evidence requirements |
+| This instrument §26–§27 @ `def29765e…` | Correction-scope path; §26.4 target architecture posture; §26.7 decision gates |
+| `docs/implementation/IWP_006_TOKEN_STORAGE_SECURITY_REVIEW_EVIDENCE.md` | SR-F001-001 through SR-F001-007; frontend facts |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` F-001 | Original verified finding |
+| `docs/engineering/SECURITY_STANDARDS.md` | Trust boundaries, credential governance, CSRF/session policy |
+| `docs/engineering/AUTHENTICATION_ARCHITECTURE.md` | AUTHN-SES-* session authority and reconciliation |
+| `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` | AUTHZ-BND-3 server enforcement and client non-authority |
+| `docs/engineering/API_STANDARDS.md` | Auth transport and error-contract discipline |
+| `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` IMPL-GATE-5 | Security review before implementation when auth/trust boundaries implicated |
+| `docs/engineering/REPOSITORY_STANDARDS.md` §11.6 | Targeted Validation for bounded sub-activities |
+
+Draft authoring, independent review approval, and bounded publication of this amendment do **not** perform backend validation.
+
+### 30.3 Preserved Current State
+
+| Item | Value |
+|------|-------|
+| F-001 | UNRESOLVED |
+| SR-F001-001 through SR-F001-007 | UNRESOLVED — no reclassification by this draft |
+| IWP-006 acceptance | NOT GRANTED |
+| IWP-006 closure | NOT GRANTED |
+| Technical implementation authorization | NOT AUTHORIZED |
+| Exact technical write set | NOT ESTABLISHED |
+| Backend read-only validation execution | NOT AUTHORIZED BY THIS DRAFT |
+| Backend read-only validation started | NO |
+| Validation evidence artifact | NOT CREATED |
+| Correction-scope decision | NOT AUTHORIZED |
+| Correction implementation | NOT AUTHORIZED |
+| Published §28 validation-scope authority | PUBLISHED @ `9a36e9b8efbbc1a3a79a3c36fcbbd9e71cbb8ec2` |
+
+### 30.4 Future Execution Objective
+
+Upon future separate publication of this fifth amendment, one future separately **invoked** bounded execution task may perform repository-only, read-only backend validation under published §28 and this §30 execution authorization.
+
+The future execution may determine repository facts only for:
+
+1. token or session issuance;
+2. access-token or session TTL;
+3. refresh issuance and TTL, if present;
+4. refresh rotation semantics, if present;
+5. revocation capability;
+6. logout endpoint and invalidation behavior;
+7. cookie issuance or confirmed absence of cookie support;
+8. credential extraction and authentication dependencies;
+9. credentialed CORS policy relevant to cookie transport;
+10. CSRF-relevant controls;
+11. `/users/me` or equivalent session reconciliation;
+12. server-side role and authorization enforcement;
+13. safe session observability without credential disclosure.
+
+The execution must not choose implementation details, TTL values, endpoints, cookie names, database schema, or remediation design. It must not presume any mechanism exists until observed in authorized repository surfaces.
+
+### 30.5 Inspection-Path Control
+
+This draft does **not** enumerate actual backend paths. Future execution must follow published §28.6 and the controls below:
+
+| Rule | Requirement |
+|------|-------------|
+| Entry-point discovery | Begin from narrow authentication/session entry-point discovery only |
+| Pre-inspection inventory | Record pre-inspection candidate path inventory in the validation evidence artifact before inspection begins |
+| Inspected-path inventory | Record every inspected path with validation subject linkage |
+| Expansion basis | Expand only through directly linked imports, dependencies, configuration references, or authorization/session call chains |
+| Expansion reason | Record the named validation subject and reason for every expansion before inspecting the additional path |
+| Minimum depth | Keep tracing to the minimum required depth for one listed subject |
+| Repository-wide prohibition | Prohibit repository-wide or whole-backend scanning, unbounded grep, or opportunistic directory review |
+| F-001 bound | Stop with `BLOCKED` if F-001 auth/session transport boundaries cannot be maintained |
+
+### 30.6 Permitted Read-Only Evidence Classes
+
+Future execution may inspect only repository-tracked backend material directly necessary for named validation subjects in §30.4, limited to these evidence classes (not a discovered path list):
+
+| Class | Permitted read-only surfaces |
+|-------|------------------------------|
+| Auth/session entry points | Login/register route handlers, auth router modules |
+| Token/session services | Token/session creation, validation, and helper modules |
+| Credential extraction | Authentication dependencies and middleware extracting credentials |
+| Auth middleware | Authentication and authorization middleware or dependencies |
+| Configuration declarations | Directly referenced configuration declarations (names/keys only; no secret values) |
+| Logout and invalidation | Logout handlers, refresh, renewal, revocation, and invalidation paths if present |
+| Cookie/CORS/CSRF | Cookie attribute, CORS credential policy, and CSRF-related declarations |
+| Session reconciliation | `/users/me` or equivalent reconciliation path |
+| Safe observability | Logging or event declarations related to session lifecycle without credential payload |
+| Traced domain symbols | Directly traced domain symbols only where strictly required to establish one F-001 fact |
+
+Exact paths within each class must be discovered, recorded, and justified under §30.5 before inspection.
+
+### 30.7 Explicit Exclusions
+
+Future execution under this authorization excludes:
+
+1. reading `.env` files or secret stores;
+2. reading, copying, printing, or exposing credential or token values;
+3. production data or production systems;
+4. runtime mutation or application/repository writes except the separately authorized evidence artifact;
+5. frontend inspection;
+6. database schema inspection beyond an unavoidable directly linked fact visible in authorized repository paths;
+7. migrations and migration execution;
+8. infrastructure and deployment inspection;
+9. dependency installation;
+10. network or external-service calls;
+11. application tests unless separately authorized;
+12. remediation, refactoring, implementation, or configuration changes;
+13. creation of a technical correction write set during validation;
+14. resolution or reclassification of findings by validation alone;
+15. F-013 caller-graph resolution or `frontend/services/api.ts` inspection;
+16. register, handoff, roadmap, or continuity synchronization unless separately authorized.
+
+### 30.8 Validation Evidence Artifact
+
+Future authorized execution must produce exactly one temporary subordinate evidence artifact at:
+
+`docs/implementation/IWP_006_F001_BACKEND_VALIDATION_EVIDENCE.md`
+
+No conflicting artifact exists at draft preparation time. That artifact is IWP-006 package evidence only. It is not independent permanent Repository Authority.
+
+Required contents:
+
+1. verified repository baseline and authority at validation start;
+2. pre-inspection candidate path inventory;
+3. complete inspected-path inventory;
+4. validation subject and reason for every path expansion;
+5. exact relevant symbols, endpoints, dependency names, or configuration keys without secret values;
+6. reproducible repository references (file paths and line ranges);
+7. separated categories: **observed fact**, **absence of implementation**, **absence of evidence**, **ambiguity or conflict**, **inaccessible or unauthorized evidence**;
+8. explicit fact versus inference separation;
+9. finding-by-finding mapping to SR-F001-001 through SR-F001-007;
+10. blockers and stop conditions encountered;
+11. exactly one verdict from §30.10;
+12. explicit confirmation that F-001 remains unresolved;
+13. explicit confirmation that no technical write set was established;
+14. explicit confirmation that no implementation was authorized.
+
+This draft preparation action does **not** create the evidence artifact.
+
+### 30.9 Finding Coverage
+
+| Finding | Severity | Execution relevance | Resolved by validation alone? |
+|---------|----------|---------------------|--------------------------------|
+| SR-F001-001 | HIGH | Backend transport facts inform cookie-session correction scope | **NO** |
+| SR-F001-002 | HIGH | Backend reconciliation and 401/403 contract facts required | **NO** |
+| SR-F001-003 | MEDIUM | Server logout and invalidation facts required | **NO** |
+| SR-F001-004 | MEDIUM | TTL, renewal, and rotation facts required | **NO** |
+| SR-F001-005 | MEDIUM | Backend auth transport facts inform single transport model | **NO** |
+| SR-F001-006 | LOW | Server role enforcement facts may inform guard alignment | **NO** |
+| SR-F001-007 | LOW | Route guard UX remains frontend concern; backend facts ancillary | **NO** |
+
+Unresolved HIGH findings are not themselves evidence-execution failures, but they must prevent any later acceptance or implementation-readiness conclusion until handled through the proper downstream correction-scope and implementation gates.
+
+No finding may be marked resolved, reclassified, or closed by validation evidence alone.
+
+### 30.10 Permitted Future Execution Verdicts
+
+Future authorized execution must return exactly one verdict:
+
+| Verdict | Meaning |
+|---------|---------|
+| `PASS — F-001 BACKEND READ-ONLY VALIDATION EVIDENCE PREPARED` | Bounded backend validation evidence artifact prepared; facts recorded honestly; ready for independent evidence review |
+| `FAIL — F-001 BACKEND VALIDATION IDENTIFIED CORRECTABLE EVIDENCE DEFECTS` | Execution completed but evidence artifact contains correctable defects requiring bounded correction before evidence review |
+| `BLOCKED — F-001 BACKEND READ-ONLY VALIDATION CANNOT BE COMPLETED` | Baseline, authority, scope, or evidence access prevents safe bounded completion |
+
+A `PASS` verdict means evidence preparation only. It does **not**:
+
+- resolve or reclassify F-001 or any SR-F001 finding;
+- authorize remediation or implementation;
+- create or approve a technical write set;
+- accept or close IWP-006;
+- authorize commit, push, release, deployment, or launch beyond the separately authorized evidence artifact.
+
+### 30.11 Stop Conditions
+
+Future execution must stop and return `BLOCKED` if:
+
+1. repository baseline or authority materially differs from verified state;
+2. scope expands beyond F-001 auth/session transport subjects;
+3. session or token behavior cannot be determined without speculation;
+4. secret values, credential values, or production data would be required;
+5. runtime mutation or external calls would be required;
+6. unauthorized frontend, database content, migration execution, infrastructure, deployment, or production inspection would be required;
+7. repository implementation conflicts materially with published architecture and the conflict cannot be represented safely as evidence;
+8. cross-origin cookie behavior would require unsupported assumptions;
+9. CSRF posture cannot be determined within authorized scope;
+10. logout, renewal, rotation, revocation, or invalidation semantics cannot be determined within authorized scope;
+11. inspection cannot remain bounded under §30.5 and §28.6;
+12. the evidence artifact cannot be isolated from a technical write set;
+13. authority conflicts or superseding governance exist;
+14. a downstream gate would need to be skipped;
+15. remediation or implementation would be required to continue.
+
+### 30.12 Lifecycle Separation
+
+| Stage | Rule |
+|-------|------|
+| §30 draft authoring (this task) | Not review |
+| Independent targeted review | Not publication |
+| Bounded publication of §30 | Not validation execution |
+| Separately invoked validation execution | Not evidence acceptance |
+| Backend validation evidence review | Not correction-scope decision |
+| Technical correction-scope decision (§26.7) | Not implementation authorization |
+| Implementation authorization | Not implementation execution |
+| Correction execution | Not F-001 resolution claim |
+| F-001 resolution | Not IWP-006 acceptance |
+| IWP-006 acceptance | Not closure |
+| Merge | Not release |
+| Push | Not authorized by this draft |
+
+### 30.13 Publication And Invocation Boundary
+
+| Boundary | Rule |
+|----------|------|
+| Draft authoring | Does **not** authorize execution |
+| Independent review approval | Does **not** authorize execution |
+| Bounded publication of §30 | Makes F-001 backend read-only validation **execution authorization effective** under published §28 scope only |
+| Publication of §30 | Does **not** start validation automatically |
+| Validation execution | Begins only through a **separate invoked bounded execution task** referencing published §28 and published §30 |
+| Publication and execution | Must **not** be combined in one task |
+| Implementation | Remains prohibited |
+
+Upon future publication, this fifth amendment authorizes one bounded backend read-only validation execution under §28. It does **not** authorize implementation, correction-scope decision, write-set establishment, F-001 resolution, or IWP-006 acceptance or closure.
+
+No additional authorization instrument is required after §30 publication before validation execution may be invoked. The invoked execution task itself remains separate from publication.
+
+### 30.14 Explicit Non-Authorization
+
+This fifth amendment draft does **not** authorize:
+
+- backend read-only validation execution during draft preparation or review;
+- backend code inspection during draft preparation or review;
+- application changes or remediation;
+- technical correction-scope decision;
+- technical implementation or correction execution;
+- establishment of a technical write set;
+- F-001 resolution or SR-F001 finding resolution/reclassification;
+- IWP-006 acceptance or closure;
+- register, handoff, or continuity synchronization;
+- staging, commit, push, merge, release, deployment, or launch beyond publication of a future approved amendment version and the separately authorized evidence artifact.
+
+Each later gate requires separate Repository Authority except the invoked execution task authorized by published §30 under published §28.
+
+### 30.15 Amendment Status And Effectiveness Boundary
+
+| State | Current value |
+|-------|---------------|
+| Fifth amendment draft authored | YES — by this draft preparation action |
+| Fifth amendment reviewed | NOT RUN |
+| Fifth amendment published | NOT RUN |
+| Fifth amendment effective | NOT RUN |
+| Backend read-only validation execution authorized | NO |
+| Backend read-only validation started | NO |
+| Backend validation evidence prepared | NO |
+| Correction-scope decision completed | NO |
+| Technical write set established | NO |
+| Technical implementation authorized | NO |
+| F-001 resolved | NO |
+
+---
+
+## 31. Exact Next Lifecycle Action After F-001 Backend Validation Execution Authorization Draft Preparation
+
+After preparation of this fifth amendment draft, the exact next authorized action is:
+
+Perform one bounded, independent, read-only review of **Fifth Amendment Draft — Bounded F-001 Backend Read-Only Validation Execution Authorization** in §30 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against controlling Repository Authority, published §28 validation-scope authority @ `9a36e9b8efbbc1a3a79a3c36fcbbd9e71cbb8ec2`, published §26 correction-scope authority @ `def29765e7bdafdb3ce4d0f2687df6e4822c5ca0`, published §24 evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, F-001 discovery and security evidence, register posture, execution-gate clarity, inspection-path boundary, exclusions, evidence requirements, stop conditions, verdict semantics, publication/effectiveness semantics, lifecycle separation, and prohibition on premature validation execution or implementation authorization.
+
+That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform backend validation; must not inspect backend or application code; must not create validation evidence; must not establish a technical write set; must not resolve or reclassify F-001 or any SR-F001 finding; must not authorize technical implementation; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
