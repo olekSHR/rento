@@ -202,6 +202,84 @@ When implementation exposes missing authority, conflicting authority, security r
 
 Implementation Governance does not create Product Development Methodology, sprint process, or organizational delivery model. Phase 4 remains separate.
 
+### 4.11 Implementation-Driven Governance Posture
+
+During an active Implementation, Stabilization & Launch Program governed by `docs/implementation/IMPLEMENTATION_PROGRAM.md`, the following posture applies in addition to sections 1–4 and all downstream gates in this document.
+
+#### IMPL-ID-1 - Implementation Is The Primary Development Stream
+
+While the Implementation Program is active and implementation scope is separately authorized, authorized implementation work is the primary project-development stream. Repository Authority during the program exists to enable, protect, unblock, validate, and support safe, continuously progressing implementation while preserving architectural integrity, quality, security, lifecycle control, and repository integrity.
+
+#### IMPL-ID-2 - Effectiveness Is Measured By Safe Implementation Progress
+
+Implementation-era governance effectiveness is measured by the ability to support safe, predictable, and continuously progressing implementation within existing authorization boundaries while preserving mandatory governance quality and repository control. Governance artifact volume is not a measure of effectiveness.
+
+#### IMPL-ID-3 - Governance Effort Must Stay Proportional To Risk
+
+Governance effort and validation scope must remain proportional to implementation risk and authorized change scope. Validation scope selection, Review Type selection, and escalation rules are governed exclusively by `docs/engineering/REPOSITORY_STANDARDS.md` §11.6. Executors must select the smallest Validation Scope that guarantees correctness.
+
+#### IMPL-ID-4 - Reuse Existing Authority Before Expansion
+
+Existing published Repository Authority must be reused before creating new governance documents, instruments, workflows, lifecycle elements, or terminology. `docs/engineering/REPOSITORY_STANDARDS.md` REP-2 and REP-9 apply.
+
+#### IMPL-ID-5 - Governance Expansion Requires Demonstrated Justification
+
+New implementation-era governance work requires at least one demonstrated justification:
+
+| Justification | Meaning |
+|---------------|---------|
+| Implementation blocker | Authorized implementation cannot proceed without the governance act |
+| Material implementation risk | A risk to security, authority, data, ownership, migration, release, deployment, or lifecycle control requires governance response |
+| Repository Authority gap | Required authority, evidence, or lifecycle rule is missing |
+| Authority conflict or ambiguity | Published authorities conflict or cannot be applied conservatively |
+| Mandatory lifecycle decision | A stage, package, review, publication, or acceptance decision required by Repository Authority cannot be made without the governance act |
+| Required review or acceptance evidence | Independent review, acceptance, or verification evidence required by existing authority cannot be produced without the governance act |
+| Existing authority prerequisite | A published prerequisite explicitly requires the governance act before later work may proceed |
+
+Governance must not expand solely because additional governance is possible.
+
+#### IMPL-ID-6 - Governance Must Not Become An Independent Workstream
+
+Governance during the Implementation Program must not become an independent project-development stream without a demonstrated Repository Authority deficiency or mandatory lifecycle requirement.
+
+#### IMPL-ID-7 - Every Governance Activity Needs An Implementation-Facing Outcome
+
+Every implementation-era governance activity must have a defined outcome, including one or more of:
+
+- removing an implementation blocker;
+- reducing material implementation risk;
+- resolving an authority conflict;
+- closing a demonstrated authority gap;
+- authorizing a bounded activity;
+- validating implementation evidence;
+- supporting an independent review;
+- supporting an acceptance decision;
+- supporting a mandatory lifecycle decision.
+
+Governance work that changes no decision, satisfies no mandatory requirement, and does not materially reduce implementation uncertainty must not become an independent workstream.
+
+#### IMPL-ID-8 - Absence Of Unnecessary Governance Is Not A Deficiency
+
+The absence of unnecessary governance work is not a governance deficiency.
+
+#### IMPL-ID-9 - Authorized Implementation Progress Must Not Be Delayed For Convenience
+
+Implementation progress within already authorized boundaries must not be delayed solely to expand governance documentation or instruments unless existing Repository Authority identifies that governance activity as a prerequisite or blocking condition.
+
+#### IMPL-ID-10 - Mandatory Controls Are Not Reduced
+
+This posture does not bypass, weaken, or substitute for any applicable:
+
+- Stage Gate under `docs/implementation/IMPLEMENTATION_PROGRAM.md`;
+- Work Package selection, activation, execution authorization, or acceptance requirement;
+- independent review, publication, or continuity requirement under `docs/engineering/REPOSITORY_STANDARDS.md`;
+- security, migration, testing, quality, or observability gate under this document, `docs/engineering/DEVELOPMENT_STANDARDS.md`, or applicable published engineering authorities;
+- release, deployment, or Phase 4 separation requirement;
+- Full Verification trigger under `docs/engineering/REPOSITORY_STANDARDS.md` §11.6.11;
+- lifecycle separation defined by Repository Authority.
+
+Implementation enablement and acceleration operate only within existing authorization boundaries.
+
 ---
 
 ## 5. Implementation Work Package Model
@@ -874,6 +952,12 @@ Terms defined in upstream authorities retain upstream meaning.
 | **Superior to** | Future implementation authorization packages and implementation artifacts on implementation governance matters (upon publication and separate implementation authorization) |
 | **Does not authorize** | Implementation; product feature scope; product development methodology; Phase 4; release execution; Git tag creation; GitHub Release creation; deployment; operations; code changes; migrations; infrastructure changes; AI product features; provider selection; framework selection |
 | **Prerequisites** | AI Collaboration Standards published - satisfied; Development Standards published - satisfied; Authorization Architecture published - satisfied; Authentication Architecture published - satisfied; Security Standards published - satisfied; Infrastructure Standards published - satisfied; Observability Architecture published - satisfied; Integration Architecture published - satisfied; Database Standards published - satisfied; Phase 3 Evolution AUTHORIZED - satisfied |
+| **§4.11 amendment (Governance Maintenance)** | §4.11 Implementation-Driven Governance Posture (IMPL-ID-1 through IMPL-ID-10) — PUBLISHED — EFFECTIVE |
+| **§4.11 maintenance lifecycle** | Repository Maintenance · Governance Maintenance · state PUBLISHED per REPOSITORY_STANDARDS.md §7.8.4 |
+| **§4.11 independent review** | COMPLETED — APPROVED — Review Type Independent Review — Validation Scope Targeted Validation |
+| **§4.11 review evidence** | `docs/implementation/reviews/IMPLEMENTATION_GOVERNANCE_4_11_INDEPENDENT_REVIEW.md` |
+| **§4.11 findings** | BLOCKING NONE · NON-BLOCKING NONE · OBSERVATIONS O-1 through O-3 — correction NOT REQUIRED |
+| **§4.11 publication checkpoint** | EXECUTED BY THE SCOPED PUBLICATION COMMIT CREATED BY THIS TASK — §4.11 binding authority ACTIVE |
 
 ---
 
