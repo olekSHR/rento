@@ -90,10 +90,10 @@ def test_role_guards_allow_realtor_boundary_and_admin_boundary():
 def test_role_guard_denies_ordinary_user():
     ordinary_user = make_user(role="user")
 
-    with pytest.raises(BadRequestException):
+    with pytest.raises(ForbiddenException):
         dependencies.require_admin_or_realtor(ordinary_user)
 
-    with pytest.raises(BadRequestException):
+    with pytest.raises(ForbiddenException):
         dependencies.require_admin(ordinary_user)
 
 

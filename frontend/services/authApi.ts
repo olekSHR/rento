@@ -1,7 +1,7 @@
 import type {
-  AuthResponse,
   CurrentUserResponse,
   LoginRequest,
+  LoginResponse,
   MessageResponse,
   RegisterRequest,
 } from "@/types/auth";
@@ -27,7 +27,7 @@ async function parseApiErrorMessage(
   return fallback;
 }
 
-export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
+export async function loginUser(data: LoginRequest): Promise<LoginResponse> {
   const formData = new URLSearchParams();
 
   formData.append("username", data.email);
@@ -38,6 +38,7 @@ export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
+    credentials: "include",
     body: formData,
   });
 
@@ -47,14 +48,22 @@ export async function loginUser(data: LoginRequest): Promise<AuthResponse> {
       if (typeof data.message === "string" && data.message.trim()) {
         throw new Error(data.message);
       }
-    } catch {
-      // Ignore parse errors and fall back to generic message
+    } catch (error) {
+      if (error instanceof Error && error.message !== "Invalid email or password") {
+        throw error;
+      }
     }
 
     throw new Error("Invalid email or password");
   }
 
   return response.json();
+}
+
+export async function logoutUser(): Promise<MessageResponse> {
+  return authFetch("/auth/logout", {
+    method: "POST",
+  });
 }
 
 export async function registerUser(

@@ -11,8 +11,8 @@
 } from "react";
   import type { User } from "@/types/user";
   import type { LoginRequest, RegisterRequest } from "@/types/auth";
-  import { getCurrentUser, loginUser, registerUser } from "@/services/authApi";
-  import { removeToken, saveToken } from "@/lib/tokenStorage";
+  import { getCurrentUser, loginUser, logoutUser, registerUser } from "@/services/authApi";
+  import { removeToken } from "@/lib/tokenStorage";
 
   type AuthContextValue = {
     user: User | null;
@@ -22,7 +22,7 @@
     isRealtor: boolean;
     login: (data: LoginRequest) => Promise<User>;
     register: (data: RegisterRequest) => Promise<void>;
-    logout: () => void;
+    logout: () => Promise<void>;
   };
 
   const AuthContext = createContext<AuthContextValue | null>(null);
@@ -47,10 +47,20 @@
       restoreSession();
     }, []);
 
-    const login = useCallback(async (data: LoginRequest) => {
-  const response = await loginUser(data);
+    useEffect(() => {
+      function handleUnauthorized() {
+        removeToken();
+        setUser(null);
+      }
 
-  saveToken(response.access_token);
+      window.addEventListener("auth:unauthorized", handleUnauthorized);
+      return () => {
+        window.removeEventListener("auth:unauthorized", handleUnauthorized);
+      };
+    }, []);
+
+    const login = useCallback(async (data: LoginRequest) => {
+  await loginUser(data);
 
   const currentUser = await getCurrentUser();
 
@@ -63,15 +73,21 @@
   async (data: RegisterRequest) => {
     await registerUser(data);
 
-    await login(data);
+    const currentUser = await getCurrentUser();
+
+    setUser(currentUser);
   },
-  [login]
+  []
 );
 
-    function logout() {
-      removeToken();
-      setUser(null);
-    }
+    const logout = useCallback(async () => {
+      try {
+        await logoutUser();
+      } finally {
+        removeToken();
+        setUser(null);
+      }
+    }, []);
 
     const value = useMemo<AuthContextValue>(
       () => ({
@@ -84,7 +100,7 @@
         register,
         logout,
       }),
-      [user, isLoading, login, register]
+      [user, isLoading, login, register, logout]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

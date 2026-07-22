@@ -8,10 +8,8 @@ from app.schemas.favorite import (
     FavoriteResponse,
 )
 
-from app.services import (
-    favorite_service,
-    user_service,
-)
+from app.core.security.dependencies import get_current_user
+from app.services import favorite_service
 
 
 router = APIRouter(
@@ -27,7 +25,7 @@ router = APIRouter(
 )
 def add_favorite(
     property_id: int,
-    current_user = Depends(user_service.get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
@@ -44,7 +42,7 @@ def add_favorite(
 )
 def remove_favorite(
     property_id: int,
-    current_user = Depends(user_service.get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
@@ -64,7 +62,7 @@ def remove_favorite(
     response_model=FavoriteListResponse,
 )
 def get_my_favorites(
-    current_user = Depends(user_service.get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 

@@ -12,9 +12,7 @@ type RealtorRouteProps = {
 export default function RealtorRoute({ children }: RealtorRouteProps) {
   const router = useRouter()
 
-  const { isAuthenticated, isLoading, user } = useAuth()
-
-  const isRealtor = user?.role === "realtor"
+  const { isAuthenticated, isLoading, isRealtor } = useAuth()
 
   useEffect(() => {
     if (isLoading) {

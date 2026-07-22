@@ -15,7 +15,7 @@ RESTRICTED_ACCOUNT_STATUSES = frozenset(
 
 def assert_can_login(user: User) -> None:
     if user.account_status != ACCOUNT_STATUS_ACTIVE:
-        raise BadRequestException(
+        raise ForbiddenException(
             "Account restricted"
         )
 

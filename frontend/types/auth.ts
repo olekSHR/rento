@@ -10,9 +10,9 @@ export type RegisterRequest = {
   password: string;
 };
 
-export type AuthResponse = {
-  access_token: string;
-  token_type: "bearer";
+export type LoginResponse = {
+  success: boolean;
+  message: string;
 };
 
 export type CurrentUserResponse = User;

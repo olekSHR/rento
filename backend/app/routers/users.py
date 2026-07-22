@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.core.security.dependencies import require_admin
+from app.core.security.dependencies import get_current_user, require_admin
 from app.database.database import get_db
 from app.schemas.user import UserResponse, UserRoleUpdate
 from app.services import user_service
@@ -18,7 +18,7 @@ router = APIRouter(
     response_model=UserResponse
 )
 def get_me(
-    current_user = Depends(user_service.get_current_user)
+    current_user = Depends(get_current_user)
 ):
 
     return current_user

@@ -36,14 +36,13 @@ def get_client_ip(request: Request) -> str:
 
 
 def get_upload_rate_limit_key(request: Request) -> str:
-    authorization = request.headers.get("Authorization", "")
+    from app.core.config import settings
 
-    if authorization.startswith("Bearer "):
-        token = authorization[7:].strip()
+    session_token = request.cookies.get(settings.SESSION_COOKIE_NAME)
 
-        if token:
-            digest = hashlib.sha256(token.encode()).hexdigest()[:32]
-            return f"upload:user:{digest}"
+    if session_token:
+        digest = hashlib.sha256(session_token.encode()).hexdigest()[:32]
+        return f"upload:session:{digest}"
 
     return get_client_ip(request)
 

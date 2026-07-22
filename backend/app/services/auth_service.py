@@ -8,8 +8,6 @@ from app.core.exceptions import BadRequestException
 
 from app.core.security.hashing import verify_password
 
-from app.core.security.jwt import create_access_token
-
 from app.services import account_status_service
 
 def _normalize_email(email: str) -> str:
@@ -47,14 +45,7 @@ def login_user(
 
     account_status_service.assert_can_login(user)
 
-    access_token = create_access_token({
-        "sub": user.email
-    })
-
-    return {
-        "access_token": access_token,
-        "token_type": "bearer"
-    }
+    return user
 
 def register_user(
     db: Session,

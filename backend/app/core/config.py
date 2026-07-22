@@ -40,6 +40,20 @@ class Settings(BaseSettings):
 
     ENABLE_API_DOCS: bool = False
 
+    SESSION_COOKIE_NAME: str = "rento_session"
+
+    SESSION_IDLE_TIMEOUT_MINUTES: int = 30
+
+    SESSION_ABSOLUTE_TIMEOUT_MINUTES: int = 1440
+
+    SESSION_COOKIE_SECURE: bool = False
+
+    SESSION_COOKIE_SAMESITE: str = "lax"
+
+    CSRF_COOKIE_NAME: str = "rento_csrf"
+
+    CSRF_HEADER_NAME: str = "X-CSRF-Token"
+
 
     class Config:
 

@@ -39,8 +39,8 @@ class UserLogin(BaseModel):
     password: str
 
 
-class TokenResponse(BaseModel):
+class LoginResponse(BaseModel):
 
-    access_token: str
+    success: bool = True
 
-    token_type: str
+    message: str = "Logged in"

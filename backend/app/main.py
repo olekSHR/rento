@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 
 
@@ -30,6 +31,13 @@ from app.core.handlers import (
 )
 from app.core.config import settings
 from app.core.rate_limit import register_rate_limiting
+from app.core.security.csrf import validate_csrf_request
+
+class CSRFMiddleware(BaseHTTPMiddleware):
+
+    async def dispatch(self, request: Request, call_next):
+        validate_csrf_request(request)
+        return await call_next(request)
 
 app = FastAPI(
     docs_url="/docs" if settings.ENABLE_API_DOCS else None,
@@ -38,6 +46,8 @@ app = FastAPI(
 )
 
 register_rate_limiting(app)
+
+app.add_middleware(CSRFMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
