@@ -2552,3 +2552,141 @@ After preparation of this seventh amendment draft, the exact next authorized act
 Perform one bounded, independent, read-only targeted review of **Seventh Amendment Draft — Bounded F-001 Technical Implementation Execution Authorization** in §34 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against published §32 @ `867694cb555fedb417832e58a0bddb2438858fdc`, correction-scope review PASS, published backend evidence @ `7395ced7925903ccec9d1a8dcd413f80f2b0b7c6`, published frontend evidence @ `fe73288e2881147d7b7e4dc8e5f51ccc673ced49`, write-set incorporation by reference, architecture preservation, implementation-time constraints, coordinated-pass requirements, validation and evidence requirements, stop conditions, lifecycle separation, and prohibition on premature implementation execution.
 
 That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform implementation; must not execute the write set; must not resolve or reclassify F-001 or any SR-F001 finding; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
+
+---
+
+## 36. Eighth Amendment Draft — Bounded F-001 Regression-Test Alignment Authorization
+
+**DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE**
+
+This eighth amendment draft authorizes a later bounded correction of one legacy regression test whose expectation conflicts with published F-001 authentication-failure and status-normalization semantics. Draft preparation does not modify tests, production code, or findings posture.
+
+### 36.1 Trigger
+
+F-001 technical implementation execution (invoked under published §34 @ `2257bf8512d1d3b412ddf61d9e00777239f805fe`) produced one backend regression failure:
+
+| Item | Verified value |
+|------|----------------|
+| Command | `pytest tests/test_iwp_003_domain_authorization.py -q` |
+| Result | **FAIL** — 1 failed, 28 passed |
+| Failing test | `test_role_guard_denies_ordinary_user` |
+| Current test expectation | `pytest.raises(BadRequestException)` for `dependencies.require_admin_or_realtor(ordinary_user)` and `dependencies.require_admin(ordinary_user)` |
+| Implemented behavior | `ForbiddenException("Admin or realtor access required")` and `ForbiddenException("Admin access required")` in `backend/app/core/security/dependencies.py` |
+| HTTP semantics | Authenticated ordinary user denied by role guard → **403 Forbidden**, not 400 Bad Request |
+
+The failure is a test-expectation drift against published correction scope, not a defect in the implemented role-guard behavior required by §32.
+
+### 36.2 Authority Hierarchy
+
+Published Repository Authority controls over the obsolete test expectation:
+
+| Authority | Requirement |
+|-----------|-------------|
+| Published §32.8 @ `867694cb555fedb417832e58a0bddb2438858fdc` | Missing or invalid session → **HTTP 401**; authenticated but forbidden role or account restriction → **HTTP 403**; role-guard failures in `require_admin` / `require_admin_or_realtor` must use **403, not 400** |
+| Published §32.9 | Role enforcement remains server-side via unified session-based dependencies in `dependencies.py` |
+| AUTHORIZATION_ARCHITECTURE.md | Insufficient role scope → deny without domain mutation; authorization denial when required role or scope is absent |
+| F-001 implementation evidence | Documents the same single-test regression; implementation behavior matches §32 |
+
+Reverting production role-guard behavior to `BadRequestException` / HTTP 400 would violate published §32.8 and the F-001 correction scope. Test alignment is the smallest valid correction.
+
+### 36.3 Authorized Later Correction
+
+When this amendment is independently reviewed, published, and separately invoked, it authorizes **only**:
+
+- align the affected expectation in `test_role_guard_denies_ordinary_user` from `BadRequestException` to `ForbiddenException`;
+- update directly associated assertion text or comments within that test function if needed for honesty;
+- preserve all other tests in the module unchanged unless diagnostic evidence during later execution proves an additional assertion in the same function still encodes the obsolete 400 role-guard expectation.
+
+No other test function, module, or assertion surface is authorized by this draft.
+
+### 36.4 Production-Code Prohibition
+
+The later correction authorized by this draft must **not**:
+
+- modify `backend/app/core/security/dependencies.py` or any other production module;
+- change `require_admin`, `require_admin_or_realtor`, or unified session authentication behavior;
+- change exception classes, HTTP status mapping, handlers, or middleware;
+- revert 403 role-guard semantics to 400;
+- modify the uncommitted F-001 implementation diff;
+- modify migrations, configuration, frontend, or F-013 surfaces.
+
+### 36.5 Maximum Write Set
+
+Exactly **one** path:
+
+| Path | Purpose |
+|------|---------|
+| `backend/tests/test_iwp_003_domain_authorization.py` | Align obsolete role-guard denial expectation with published 403 semantics |
+
+No other path may be created, modified, deleted, renamed, or generated under this amendment.
+
+### 36.6 Required Later Validation
+
+Future execution under this amendment must run at minimum:
+
+| Check | Purpose |
+|-------|---------|
+| `pytest tests/test_iwp_003_domain_authorization.py::test_role_guard_denies_ordinary_user -q` | Previously failing targeted test |
+| `pytest tests/test_iwp_003_domain_authorization.py -q` | Complete module regression |
+| `pytest tests/test_iwp006_f001_session_auth.py -q` | F-001 targeted session-auth tests |
+| `pytest tests/test_backend_smoke.py -q` | Backend smoke tests |
+| `git diff --check` | Whitespace and conflict-marker integrity |
+
+Passing these checks does not resolve or accept F-001.
+
+### 36.7 Lifecycle Boundary
+
+| Stage | Rule |
+|-------|------|
+| §36 draft authoring (this task) | Not review; not test modification |
+| Independent targeted review | Not publication |
+| Bounded publication of §36 | Not corrective execution |
+| Separately invoked corrective execution | Not finding resolution |
+| Passing regression tests | Not F-001 acceptance |
+
+Draft preparation does not authorize test modification, publication, or invocation of this amendment.
+
+### 36.8 Findings Posture
+
+| Item | Status |
+|------|--------|
+| F-001 | **UNRESOLVED** |
+| SR-F001-001 through SR-F001-007 | **UNRESOLVED** |
+| IWP-006 | Not accepted; not closed |
+
+Test alignment alone does not resolve, accept, reclassify, or close any finding.
+
+### 36.9 Stop Conditions
+
+Later correction must stop without expanding scope if:
+
+1. production-code modification would be required to make the test pass;
+2. another test file, application path, or assertion outside `test_role_guard_denies_ordinary_user` must change;
+3. published 401/403 semantics are ambiguous or conflict with corrected expectations;
+4. the failing behavior cannot be reproduced;
+5. unrelated working-tree interference prevents safe isolation of the one-file correction;
+6. write-set expansion beyond the single authorized path would be required.
+
+On stop: preserve diagnostics; do not commit or push; do not resolve findings.
+
+### 36.10 Amendment Status And Effectiveness Boundary
+
+| State | Current value |
+|-------|---------------|
+| Eighth amendment draft authored | YES — by this draft preparation action |
+| Eighth amendment reviewed | NOT RUN |
+| Eighth amendment published | NOT RUN |
+| Eighth amendment effective | NOT RUN |
+| Regression-test correction authorized | NO |
+| Write set executable | NO — pending publication and invocation |
+| F-001 resolved | NO |
+
+---
+
+## 37. Exact Next Lifecycle Action After F-001 Regression-Test Alignment Authorization Draft Preparation
+
+After preparation of this eighth amendment draft, the exact next authorized action is:
+
+Perform one bounded, independent, read-only targeted review of **Eighth Amendment Draft — Bounded F-001 Regression-Test Alignment Authorization** in §36 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against published §32.8 @ `867694cb555fedb417832e58a0bddb2438858fdc`, the verified regression diagnostic (`test_role_guard_denies_ordinary_user` expecting `BadRequestException` while implementation raises `ForbiddenException`), one-file maximum write set, production-code prohibition, required later validation, stop conditions, lifecycle separation, and prohibition on premature corrective execution.
+
+That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform test correction; must not resolve or reclassify F-001 or any SR-F001 finding; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
