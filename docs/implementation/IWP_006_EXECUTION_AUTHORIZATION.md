@@ -1,36 +1,52 @@
 # IWP-006 Execution Authorization Artifact
 
-**Status:** PUBLISHED - EFFECTIVE
+**Status:** PUBLISHED - EFFECTIVE (base instrument) · AMENDMENT DRAFT - NOT REVIEWED - NOT APPROVED - NOT PUBLISHED - NOT EFFECTIVE
 **Authority class:** IWP package authority artifact
-**Binding authority:** ACTIVE - IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY - NOT SELECTION - NOT ACTIVATION - NOT DISCOVERY EXECUTION - NOT IMPLEMENTATION AUTHORIZATION
-**Effectiveness:** EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY
-**Independent review:** COMPLETED - PASS
-**Review findings:** BLOCKING 0; NON-BLOCKING 0
-**Publication-readiness decision:** COMPLETED - PASS
-**Pre-publication validation:** COMPLETED - PASS
-**Approval integration:** COMPLETED - APPROVED FOR PUBLICATION CHECKPOINT
-**Publication integration:** COMPLETED
-**Publication checkpoint:** COMPLETED
+**Base instrument binding authority:** ACTIVE - IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY - NOT SELECTION - NOT ACTIVATION - NOT DISCOVERY EXECUTION - NOT IMPLEMENTATION AUTHORIZATION
+**Proposed amendment binding authority (DRAFT - NOT EFFECTIVE):** ACTIVE - IWP-006 SELECTION, ACTIVATION, AND READ-ONLY DISCOVERY AUTHORIZATION ONLY
+**Effectiveness:** EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY — amendment draft is NOT EFFECTIVE
+**Independent review:** COMPLETED - PASS (base instrument)
+**Amendment independent review:** NOT RUN
+**Review findings:** BLOCKING 0; NON-BLOCKING 0 (base instrument)
+**Amendment review findings:** NOT RUN
+**Publication-readiness decision:** COMPLETED - PASS (base instrument)
+**Selection/discovery readiness decision:** COMPLETED - PASS
+**Pre-publication validation:** COMPLETED - PASS (base instrument)
+**Approval integration:** COMPLETED - APPROVED FOR PUBLICATION CHECKPOINT (base instrument)
+**Amendment approval integration:** NOT RUN
+**Publication integration:** COMPLETED (base instrument)
+**Amendment publication integration:** NOT RUN
+**Publication checkpoint:** COMPLETED (base instrument)
+**Amendment publication checkpoint:** NOT RUN
 **Publication date:** 2026-07-22
-**Publication commit:** PENDING - THIS PUBLICATION COMMIT
-**Git checkpoint:** PENDING - THIS PUBLICATION COMMIT
-**Continuity synchronization:** NOT RUN - REQUIRED AS SEPARATE ACTION
+**Publication commit:** `fe64f2bce9bcf1e6b2df287593497c7e03c99827`
+**Git checkpoint:** COMPLETED (base instrument)
+**Amendment commit:** NOT APPLICABLE until separately authorized publication action
+**Continuity synchronization:** COMPLETED at `74de50e64751e89bb9c51855e5a3688d8072bde4`
+**Amendment continuity synchronization:** NOT RUN
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 - Domain Implementation
 **Target package:** IWP-006 - Frontend Auth And API Client Stabilization
-**IWP-006:** PROPOSED - INACTIVE - NOT SELECTED - NOT ACTIVATED - NOT AUTHORIZED - NOT EXECUTABLE
-**Package selection:** NOT SELECTED
-**Package activation:** NOT ACTIVATED
-**Read-only discovery authorization:** NOT AUTHORIZED - NOT STARTED
-**Technical implementation authorization:** NOT AUTHORIZED
-**Execution authorization:** NOT AUTHORIZED
-**Discovery:** NOT AUTHORIZED - NOT STARTED
-**Technical implementation:** NOT AUTHORIZED
+**IWP-006 (current live posture):** PROPOSED - INACTIVE - NOT SELECTED - NOT ACTIVATED - NOT AUTHORIZED - NOT EXECUTABLE
+**IWP-006 (proposed amendment posture — DRAFT - NOT EFFECTIVE):** SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED
+**Package selection (current live):** NOT SELECTED
+**Package selection (proposed amendment — DRAFT):** SELECTED
+**Package activation (current live):** NOT ACTIVATED
+**Package activation (proposed amendment — DRAFT):** ACTIVE - ONLY SELECTED AND ACTIVE PACKAGE
+**Read-only discovery authorization (current live):** NOT AUTHORIZED - NOT STARTED
+**Read-only discovery authorization (proposed amendment — DRAFT):** AUTHORIZED - NOT STARTED
+**Technical implementation authorization:** NOT AUTHORIZED - NOT STARTED
+**Execution authorization (current live):** NOT AUTHORIZED
+**Execution authorization (proposed amendment — DRAFT):** READ-ONLY DISCOVERY MAY OCCUR ONLY IN A LATER SEPARATE BOUNDED ACTION
+**Discovery (current live):** NOT AUTHORIZED - NOT STARTED
+**Discovery (proposed amendment — DRAFT):** AUTHORIZED - NOT STARTED
+**Technical implementation:** NOT AUTHORIZED - NOT STARTED
 **Exact technical write set:** NOT ESTABLISHED
 **Acceptance:** NOT GRANTED
 **Stage I4:** IN PROGRESS
 **IWP-004:** ACCEPTED - CLOSED
-**Active implementation packages:** 0
+**Active implementation packages (current live):** 0
+**Active implementation packages (proposed amendment — DRAFT):** 1 - IWP-006
 **Authorized technical implementation packages:** 0
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
@@ -41,13 +57,28 @@
 
 ## 1. Artifact Purpose And Authority Effect
 
-This published artifact records effective IWP-006 package authority instrument boundaries only.
+This artifact contains two distinct authority layers:
 
-It defines future package-level boundaries for selection, activation, and bounded read-only discovery. This publication does **not** select IWP-006, activate IWP-006, authorize discovery execution, establish an exact technical write set, authorize technical implementation, grant acceptance, authorize push, authorize release, authorize deployment, authorize production access, or start Phase 4.
+1. **Published base instrument** — effective IWP-006 package authority instrument boundaries only.
+2. **Amendment draft** — non-effective draft publication amendment prepared to record proposed selection, activation, and bounded read-only discovery authorization upon future separate publication.
 
-Publication of this instrument does not change the live IWP-006 package lifecycle posture recorded by Repository Authority.
+The published base instrument defines package-level boundaries for selection, activation, and bounded read-only discovery. The base publication does **not** select IWP-006, activate IWP-006, authorize discovery execution, establish an exact technical write set, authorize technical implementation, grant acceptance, authorize push, authorize release, authorize deployment, authorize production access, or start Phase 4.
 
-Selection, activation, or read-only discovery authorization could take effect only after separate future acts satisfy the remaining lifecycle steps below:
+The amendment draft prepared in this document does **not** make selection, activation, or read-only discovery authorization effective. Drafting is not approval, approval is not publication, and publication is not discovery execution.
+
+**Current live posture under Repository Authority remains unchanged until a separately authorized amendment publication act:**
+
+```text
+PROPOSED - INACTIVE - NOT SELECTED - NOT ACTIVATED - NOT AUTHORIZED - NOT EXECUTABLE
+```
+
+**Proposed amendment posture upon future publication (DRAFT - NOT EFFECTIVE):**
+
+```text
+SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED
+```
+
+Completed base-instrument lifecycle:
 
 | Step | Requirement | Status |
 |------|-------------|--------|
@@ -56,39 +87,52 @@ Selection, activation, or read-only discovery authorization could take effect on
 | 3 | Targeted correction delta review if corrections are made | NOT APPLICABLE |
 | 4 | Approval integration if review approves | COMPLETE - APPROVED FOR PUBLICATION CHECKPOINT |
 | 5 | Publication integration and publication checkpoint per `docs/engineering/REPOSITORY_STANDARDS.md` §7 | COMPLETE |
-| 6 | Applicable continuity synchronization if required by Repository Authority | NOT RUN - REQUIRED AS SEPARATE ACTION |
-| 7 | Separate explicit package selection and activation act if required | NOT RUN |
-| 8 | Separate explicit authorization for any later discovery execution or implementation action | NOT RUN |
+| 6 | Applicable continuity synchronization if required by Repository Authority | COMPLETE at `74de50e64751e89bb9c51855e5a3688d8072bde4` |
+| 7 | Selection/discovery readiness decision | COMPLETE - PASS |
+| 8 | Amendment draft preparation | COMPLETE - DRAFT ONLY |
 
-Current live posture under Repository Authority remains:
+Amendment lifecycle (not yet started for effectiveness):
 
-```text
-PROPOSED - INACTIVE - NOT SELECTED - NOT ACTIVATED - NOT AUTHORIZED - NOT EXECUTABLE
-```
+| Step | Requirement | Status |
+|------|-------------|--------|
+| 1 | Independent targeted read-only review of amendment draft | NOT RUN |
+| 2 | Targeted correction if required | NOT RUN |
+| 3 | Targeted correction delta review if corrections are made | NOT APPLICABLE |
+| 4 | Approval integration if review approves | NOT RUN |
+| 5 | Publication integration and publication checkpoint per `docs/engineering/REPOSITORY_STANDARDS.md` §7 | NOT RUN |
+| 6 | Applicable continuity synchronization if required by Repository Authority | NOT RUN |
+| 7 | Separate explicit bounded read-only discovery execution action | NOT RUN |
+| 8 | Separate explicit authorization for any later technical implementation action | NOT RUN |
 
 ---
 
 ## 2. Repository And Lifecycle Baseline
 
-This draft is authored against the following repository baseline observed at draft creation time:
+This amendment draft is authored against the following repository baseline observed at amendment draft preparation time:
 
 | Item | Baseline value |
 |------|----------------|
 | Repository | `https://github.com/olekSHR/rento.git` |
 | Branch | `main` |
-| Repository baseline commit | `7212c549d52313ebd01ba1e5cb696aa06450464a` |
-| `origin/main` | `7212c549d52313ebd01ba1e5cb696aa06450464a` |
+| Repository baseline commit | `74de50e64751e89bb9c51855e5a3688d8072bde4` |
+| `origin/main` | `74de50e64751e89bb9c51855e5a3688d8072bde4` |
 | Divergence | 0 behind / 0 ahead |
+| Base instrument publication commit | `fe64f2bce9bcf1e6b2df287593497c7e03c99827` |
+| Base instrument continuity synchronization commit | `74de50e64751e89bb9c51855e5a3688d8072bde4` |
+| Base instrument post-publication verification | PASS |
+| Selection/discovery readiness decision | PASS — IWP-006 READY FOR SEPARATE SELECTION AND BOUNDED READ-ONLY DISCOVERY AUTHORIZATION — NO EXECUTION AUTHORIZED |
 | Stage I4 | IN PROGRESS |
 | Stage I4 execution authorization boundary | PUBLISHED - EFFECTIVE AS BOUNDARY ONLY - publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5` |
 | IWP-004 | ACCEPTED - CLOSED |
 | IWP-004 accepted implementation checkpoint | `0d524257daf8bc44724022a725f05a5c329f67a7` |
 | IWP-004 durable closure checkpoint | `b4294eff295e835dc4d3e36afbdacda5be9ccbf6` |
 | IWP-004 post-push synchronization point | `f73e4ff3e32bca4a9819e57083c93a14c3d0d548` |
-| Active implementation packages | 0 |
+| Active implementation packages (current live) | 0 |
+| Active implementation packages (proposed amendment — DRAFT) | 1 - IWP-006 |
 | Authorized technical implementation packages | 0 |
+| Phase 4 | NOT STARTED |
 
-Publication of a future approved version must re-verify live Git evidence before any lifecycle transition takes effect.
+Publication of a future approved amendment version must re-verify live Git evidence before any selection, activation, or discovery authorization transition takes effect.
 
 ---
 
@@ -138,6 +182,7 @@ If this draft conflicts with published Repository Authority, published Repositor
 | Release posture | Release deferred; client stabilization is not release, deployment, or production authority |
 | Residual risk | Browser/session storage posture may require security review |
 | Current status | PROPOSED - INACTIVE - IWP-004 DEPENDENCY SATISFIED BY ACCEPTANCE - NOT SELECTED - NOT EXECUTABLE - NOT IMPLEMENTATION AUTHORITY - NOT RELEASE AUTHORITY |
+| Proposed amendment status (DRAFT - NOT EFFECTIVE) | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED - ACCEPTANCE NOT GRANTED - RELEASE DEFERRED |
 
 Owner Authorities and Required Authorities are distinct. Frontend Architecture, API Standards, Authentication Architecture, and Authorization Architecture own the package meaning and review boundary. Implementation Governance is required authority for the work package model, authorization act requirements, evidence, gates, and stop conditions.
 
@@ -153,7 +198,7 @@ IWP-006 hard dependency is satisfied for future package-level governance conside
 
 Dependency satisfaction alone does **not** select, activate, authorize, or make IWP-006 executable.
 
-IWP-004 closure, required continuity synchronization, and authorized fast-forward push to `origin/main` are complete as recorded by Repository Authority at baseline commit `7212c549d52313ebd01ba1e5cb696aa06450464a`.
+IWP-004 closure, required continuity synchronization, and authorized fast-forward push to `origin/main` are complete as recorded by Repository Authority at continuity commit `74de50e64751e89bb9c51855e5a3688d8072bde4`.
 
 No other register-recorded hard dependency applies to IWP-006.
 
@@ -178,39 +223,42 @@ Candidate posture is not selection, activation, discovery authorization, impleme
 
 ---
 
-## 7. Proposed Selection Boundary
+## 7. Proposed Selection Boundary — Amendment Draft
 
-This section defines the conditions under which **publication** of a future approved version of this instrument **could** record IWP-006 as selected.
+This section records the proposed selection boundary for publication of this amendment draft. **Selection is NOT EFFECTIVE until amendment publication.**
 
-Publication-time selection could occur only if all conditions below are verified from fresh live Git evidence:
+Publication-time selection would occur only if all conditions below are verified from fresh live Git evidence at amendment publication time:
 
-1. this artifact has completed independent review with outcome APPROVED or equivalent published review route;
-2. approval integration is complete;
-3. publication integration and publication checkpoint are complete;
-4. Stage I4 remains authorized and IN PROGRESS;
-5. IWP-004 remains ACCEPTED - CLOSED;
-6. IWP-006 register dependencies remain satisfied;
-7. the repository baseline remains valid and synchronized as required;
-8. no conflicting package is selected, active, executable, implementation-authorized, or executing;
-9. active implementation packages remain 0 immediately before selection effect;
-10. authorized technical implementation packages remain 0 immediately before selection effect;
-11. no unresolved blocker recorded by Repository Authority prevents selection;
-12. unrelated working-tree changes are isolated and excluded from the publication act.
+1. this amendment draft has completed independent review with outcome APPROVED or equivalent published review route;
+2. amendment approval integration is complete;
+3. amendment publication integration and publication checkpoint are complete;
+4. the base instrument remains published and effective as the IWP-006 package authority instrument;
+5. base instrument continuity synchronization remains complete at `74de50e64751e89bb9c51855e5a3688d8072bde4`;
+6. Stage I4 remains authorized and IN PROGRESS;
+7. IWP-004 remains ACCEPTED - CLOSED;
+8. IWP-006 register dependencies remain satisfied;
+9. the repository baseline remains valid and synchronized as required;
+10. no conflicting package is selected, active, executable, implementation-authorized, or executing;
+11. active implementation packages remain 0 immediately before selection effect;
+12. authorized technical implementation packages remain 0 immediately before selection effect;
+13. no unresolved blocker recorded by Repository Authority prevents selection;
+14. unrelated working-tree changes are isolated and excluded from the publication act;
+15. selection/discovery readiness decision remains PASS or is re-verified at publication time.
 
-This instrument does **not** select IWP-006 by this publication.
+**Proposed amendment records IWP-006 as SELECTED upon future publication.** This amendment draft does **not** select IWP-006.
 
-Selection would identify IWP-006 as the chosen package for possible activation. Selection alone would not authorize discovery execution, technical implementation, acceptance, push, release, deployment, production access, or Phase 4.
+Selection would identify IWP-006 as the chosen package for activation and bounded read-only discovery authorization. Selection alone would not authorize discovery execution, technical implementation, acceptance, push, release, deployment, production access, or Phase 4.
 
 ---
 
-## 8. Proposed Activation Boundary
+## 8. Proposed Activation Boundary — Amendment Draft
 
-This section defines the separate conditions under which **publication** of a future approved version **could** record IWP-006 as active.
+This section records the proposed activation boundary for publication of this amendment draft. **Activation is NOT EFFECTIVE until amendment publication.**
 
-Publication-time activation could occur only if all conditions below are verified from fresh live Git evidence:
+Publication-time activation would occur only if all conditions below are verified from fresh live Git evidence at amendment publication time:
 
 1. all proposed selection boundary conditions in §7 are satisfied;
-2. IWP-006 is recorded as selected by the same published instrument or an explicitly linked prior effective selection act permitted by Repository Authority;
+2. IWP-006 is recorded as SELECTED by this same published amendment or an explicitly linked prior effective selection act permitted by Repository Authority;
 3. active implementation packages remain 0 immediately before activation effect;
 4. authorized technical implementation packages remain 0 immediately before activation effect;
 5. IWP-006 would become the only selected and active implementation package;
@@ -218,35 +266,37 @@ Publication-time activation could occur only if all conditions below are verifie
 7. single-active-package enforcement per `docs/implementation/STAGE_I4_EXECUTION_AUTHORIZATION.md` §8 is preserved;
 8. applicable continuity synchronization requirements are satisfied if Repository Authority requires them for the publication act.
 
-This instrument does **not** activate IWP-006 by this publication.
+**Proposed amendment records IWP-006 as ACTIVE — ONLY SELECTED AND ACTIVE PACKAGE upon future publication.** This amendment draft does **not** activate IWP-006.
 
-Activation would open the IWP-006 package lifecycle for later bounded read-only discovery authorization contained in the same published instrument. Activation alone would not authorize discovery execution, technical implementation, exact write set establishment, acceptance, push, release, deployment, production access, or Phase 4.
+Activation would open the IWP-006 package lifecycle for bounded read-only discovery authorization contained in this same published amendment. Activation alone would not authorize discovery execution, technical implementation, exact write set establishment, acceptance, push, release, deployment, production access, or Phase 4.
 
 ---
 
-## 9. Proposed Lifecycle Decisions Upon Future Publication
+## 9. Proposed Lifecycle Decisions Upon Amendment Publication
 
-If a future separate selection and activation act occurs under Repository Authority, a later effective publication update or linked act could record separate ordered lifecycle decisions. No decision below is effective from this publication alone.
+This section records separate ordered lifecycle decisions proposed for publication of this amendment draft. **No decision below is effective from this draft preparation.** Effectiveness requires amendment review, approval, publication, and fresh Git re-verification.
 
-| Decision | Proposed future posture upon publication | Does not authorize |
-|----------|------------------------------------------|--------------------|
-| Package selection | Could record SELECTED | Another package, technical implementation, acceptance |
-| Package activation | Could record ACTIVE - ONLY SELECTED AND ACTIVE PACKAGE | Another active package, technical implementation, acceptance |
-| Read-only discovery authorization | Could record AUTHORIZED - NOT STARTED | File modification, implementation, tests, technical execution |
-| Technical implementation authorization | Would remain NOT AUTHORIZED - NOT STARTED | Exact write set, execution, acceptance, push, release, deployment |
+| Decision | Proposed posture upon amendment publication | Does not authorize |
+|----------|---------------------------------------------|--------------------|
+| Package selection | SELECTED | Another package, technical implementation, acceptance |
+| Package activation | ACTIVE - ONLY SELECTED AND ACTIVE PACKAGE | Another active package, technical implementation, acceptance |
+| Read-only discovery authorization | AUTHORIZED - NOT STARTED | File modification, implementation, tests, technical execution |
+| Technical implementation authorization | NOT AUTHORIZED - NOT STARTED | Exact write set, execution, acceptance, push, release, deployment |
 | Execution and acceptance | Discovery execution may occur only in a later separate bounded action; acceptance NOT GRANTED | Technical execution, acceptance, push, release, deployment, production, Phase 4 |
 
-Technical implementation authority remains absent from this publication. The exact technical write set is NOT ESTABLISHED.
+Technical implementation authority remains absent from this amendment draft. The exact technical write set is NOT ESTABLISHED.
+
+Upon future amendment publication, IWP-006 would become the only selected and active implementation package. Active implementation packages would become 1 - IWP-006. Authorized technical implementation packages would remain 0.
 
 ---
 
-## 10. Proposed Bounded Read-Only Discovery Boundary
+## 10. Bounded Read-Only Discovery Boundary — Amendment Draft
 
-This draft may define a prospective bounded read-only discovery authority that could become effective only after future publication of an approved version.
+This section records the bounded read-only discovery authority proposed for publication of this amendment draft.
 
-This draft does **not** authorize or start discovery.
+**This amendment draft does not authorize or start discovery.** Discovery execution remains NOT STARTED and may occur only in a later separate bounded action after amendment publication.
 
-A later separate bounded read-only discovery action, if separately authorized after publication, must determine without changing files:
+Upon future amendment publication, bounded read-only discovery would be authorized within this published discovery boundary. A later separate bounded read-only discovery action must determine without changing files:
 
 1. current frontend auth context and session-state inventory;
 2. route guard and protected-route behavior inventory;
@@ -261,9 +311,9 @@ A later separate bounded read-only discovery action, if separately authorized af
 11. backend, dependency, configuration, migration, CI, infrastructure, and production impact;
 12. unavailable evidence and stop conditions.
 
-### 10.1 Exact proposed discovery surfaces
+### 10.1 Exact discovery surfaces
 
-Discovery, if later authorized and executed, would be read-only and limited to these register-derived surfaces only:
+Discovery, if later authorized by amendment publication and executed in a separate bounded action, would be read-only and limited to these register-derived surfaces only:
 
 1. `frontend/context/`
 2. `frontend/lib/`
@@ -271,7 +321,7 @@ Discovery, if later authorized and executed, would be read-only and limited to t
 4. `frontend/components/*Route.tsx`
 5. `frontend/types/`
 
-These surfaces are proposed register-derived boundaries only. They do not authorize inspection, modification, execution, or acceptance in this draft.
+These surfaces are register-derived boundaries. They do not authorize inspection, modification, execution, or acceptance in this amendment draft.
 
 ### 10.2 Discovery exclusions
 
@@ -288,13 +338,13 @@ Discovery must not:
 
 Discovery must produce a separate discovery evidence report for later assessment. A separate decision is required after discovery evidence is reviewed before any implementation authorization may be considered.
 
-This draft must not claim that discovery has occurred.
+This amendment draft must not claim that discovery has occurred or is authorized for execution.
 
 ---
 
 ## 11. Future Technical Boundary — Explicitly Not Authorized
 
-This draft does not authorize technical implementation.
+This amendment draft does not authorize technical implementation.
 
 The register-derived future technical areas for IWP-006 are:
 
@@ -304,7 +354,7 @@ The register-derived future technical areas for IWP-006 are:
 4. `frontend/components/*Route.tsx`
 5. `frontend/types/`
 
-These are proposed repository areas only. They are not an exact future write set and do not authorize inspection, modification, execution, or acceptance in this draft.
+These are proposed repository areas only. They are not an exact future write set and do not authorize inspection, modification, execution, or acceptance in this amendment draft.
 
 Exact technical writes require, in separate later actions:
 
@@ -313,7 +363,7 @@ Exact technical writes require, in separate later actions:
 3. explicit technical implementation authorization for that exact write set;
 4. a later separately authorized implementation action.
 
-This draft must not be interpreted as authorization to change frontend auth surfaces, API clients, route guards, types, tests, backend files, migrations, models, dependency files, lockfiles, CI, runtime configuration, infrastructure, production systems, deployment artifacts, release artifacts, or Phase 4 surfaces.
+This amendment draft must not be interpreted as authorization to change frontend auth surfaces, API clients, route guards, types, tests, backend files, migrations, models, dependency files, lockfiles, CI, runtime configuration, infrastructure, production systems, deployment artifacts, release artifacts, or Phase 4 surfaces.
 
 ---
 
@@ -333,7 +383,7 @@ Conditional authority requirements for future IWP-006 work:
 | IWP-007 or IWP-008 overlap | Stop; route to split, sequencing, or coordination authority |
 | Code-to-Architecture Audit or Implementation Gap Register need | Stop; route to separate governance authority |
 
-No conditional authority is granted by this draft.
+No conditional authority is granted by this amendment draft.
 
 ---
 
@@ -349,7 +399,7 @@ Future IWP-006 implementation, if separately authorized after discovery and expl
 6. browser or session storage changes require explicit security review before implementation authorization;
 7. contact-source, role, visibility, and moderation truth must not be redefined by client state.
 
-This draft does not authorize future implementation and does not inspect implementation surfaces.
+This amendment draft does not authorize future implementation and does not inspect implementation surfaces.
 
 ---
 
@@ -374,7 +424,7 @@ Future IWP-006 package evidence must include, where applicable and separately au
 
 Evidence must report unrun checks honestly as NOT RUN or unavailable. Passing checks alone cannot override missing authority.
 
-For this draft only, the required output of draft authoring is this non-effective instrument itself. No discovery or implementation evidence is created by draft creation.
+For this amendment draft only, the required output of amendment draft preparation is this non-effective amendment draft within the instrument. No discovery or implementation evidence is created by amendment draft preparation.
 
 ---
 
@@ -384,18 +434,20 @@ Validation for this draft and any future publication route must use the smallest
 
 | Phase | Proposed validation scope |
 |-------|---------------------------|
-| Draft review | Targeted Validation of this draft against register metadata, Stage I4 boundary, owner authorities, dependency evidence, lifecycle separation, and security stop conditions |
-| Publication review | Targeted Validation or Scoped Validation as required by Repository Authority |
+| Amendment draft review | Targeted Validation of this amendment draft against register metadata, Stage I4 boundary, owner authorities, dependency evidence, lifecycle separation, single-active-package rule, and security stop conditions |
+| Amendment publication review | Targeted Validation or Scoped Validation as required by Repository Authority |
 | Future discovery | Targeted Validation of discovery evidence and boundary preservation |
 | Future implementation | Scoped Validation at minimum for frontend/auth/API/security surfaces |
 
-Draft creation alone does not satisfy review, publication, discovery, implementation, or acceptance validation gates.
+Amendment draft preparation alone does not satisfy review, publication, discovery, implementation, or acceptance validation gates.
 
 ---
 
 ## 16. Publication And Effectiveness Boundary
 
-This instrument is published and effective as the IWP-006 package authority instrument only. It is not selection, activation, discovery execution, or implementation authorization.
+### 16.1 Base instrument — published and effective
+
+The base instrument is published and effective as the IWP-006 package authority instrument only. It is not selection, activation, discovery execution, or implementation authorization.
 
 | State | Current value |
 |-------|---------------|
@@ -410,7 +462,7 @@ This instrument is published and effective as the IWP-006 package authority inst
 | Discovery execution authorized | NO |
 | Technical implementation authorized | NO |
 
-Completed lifecycle through publication:
+Completed base-instrument lifecycle:
 
 | Step | Requirement | Status |
 |------|-------------|--------|
@@ -419,14 +471,46 @@ Completed lifecycle through publication:
 | 3 | Targeted correction delta review if corrections are made | NOT APPLICABLE |
 | 4 | Approval integration if review approves | COMPLETE - APPROVED FOR PUBLICATION CHECKPOINT |
 | 5 | Publication integration and publication checkpoint | COMPLETE |
-| 6 | Local Git checkpoint with traceable message | PENDING - THIS PUBLICATION COMMIT |
-| 7 | Separate continuity synchronization if required by Repository Authority | NOT RUN - REQUIRED AS SEPARATE ACTION |
-| 8 | Separate package selection and activation act if required | NOT RUN |
-| 9 | Separate explicit authorization for any later discovery execution or implementation action | NOT RUN |
+| 6 | Local Git checkpoint with traceable message | COMPLETE at `fe64f2bce9bcf1e6b2df287593497c7e03c99827` |
+| 7 | Continuity synchronization if required by Repository Authority | COMPLETE at `74de50e64751e89bb9c51855e5a3688d8072bde4` |
+| 8 | Post-publication verification | COMPLETE - PASS |
+| 9 | Selection/discovery readiness decision | COMPLETE - PASS |
 
-Publication is separate from package selection and activation. Git checkpoint is separate from continuity synchronization. Push beyond this publication commit is a separate explicitly authorized act and is not authorized by this instrument.
+### 16.2 Amendment draft — not published and not effective
 
-### 16.1 Publication integration checklist
+The amendment draft prepared in this document is **NOT REVIEWED, NOT APPROVED, NOT PUBLISHED, and NOT EFFECTIVE.**
+
+| State | Current value |
+|-------|---------------|
+| Amendment draft authored | YES |
+| Amendment reviewed | NO |
+| Amendment approved | NO |
+| Amendment published | NO |
+| Amendment effective | NO |
+| Proposed IWP-006 package selected | DRAFT ONLY — NOT EFFECTIVE |
+| Proposed IWP-006 package activated | DRAFT ONLY — NOT EFFECTIVE |
+| Proposed discovery authorization | DRAFT ONLY — NOT EFFECTIVE |
+| Discovery execution authorized | NO |
+| Technical implementation authorized | NO |
+
+Amendment lifecycle:
+
+| Step | Requirement | Status |
+|------|-------------|--------|
+| 1 | Amendment draft preparation | COMPLETE - DRAFT ONLY |
+| 2 | Independent targeted read-only review of amendment draft | NOT RUN |
+| 3 | Targeted correction if required | NOT RUN |
+| 4 | Targeted correction delta review if corrections are made | NOT APPLICABLE |
+| 5 | Amendment approval integration if review approves | NOT RUN |
+| 6 | Amendment publication integration and publication checkpoint | NOT RUN |
+| 7 | Local Git checkpoint with traceable message | NOT APPLICABLE until separately authorized publication action |
+| 8 | Separate continuity synchronization if required by Repository Authority | NOT RUN |
+| 9 | Separate bounded read-only discovery execution action | NOT RUN |
+| 10 | Separate explicit authorization for any later technical implementation action | NOT RUN |
+
+Amendment publication is separate from amendment draft preparation. Git checkpoint is separate from continuity synchronization. Push beyond any future amendment publication commit is a separate explicitly authorized act and is not authorized by this amendment draft.
+
+### 16.3 Base instrument publication integration checklist
 
 | Step | Requirement | Status |
 |------|-------------|--------|
@@ -441,8 +525,28 @@ Publication is separate from package selection and activation. Git checkpoint is
 | 9 | Authorized technical implementation packages remain 0 immediately before publication | VERIFIED |
 | 10 | Publication integration | COMPLETE |
 | 11 | Publication checkpoint per `docs/engineering/REPOSITORY_STANDARDS.md` §7.6 | COMPLETE |
-| 12 | Git checkpoint with traceable message | PENDING - THIS PUBLICATION COMMIT |
-| 13 | Continuity synchronization if required by Repository Authority | NOT RUN - REQUIRED AS SEPARATE ACTION |
+| 12 | Git checkpoint with traceable message | COMPLETE at `fe64f2bce9bcf1e6b2df287593497c7e03c99827` |
+| 13 | Continuity synchronization if required by Repository Authority | COMPLETE at `74de50e64751e89bb9c51855e5a3688d8072bde4` |
+| 14 | Post-publication verification | COMPLETE - PASS |
+
+### 16.4 Amendment publication integration checklist
+
+| Step | Requirement | Status |
+|------|-------------|--------|
+| 1 | Selection/discovery readiness decision PASS | COMPLETE |
+| 2 | Amendment draft preparation complete | COMPLETE - DRAFT ONLY |
+| 3 | Independent review of amendment draft | NOT RUN |
+| 4 | Amendment approval integration complete | NOT RUN |
+| 5 | Fresh Git baseline re-verification at amendment publication time | NOT RUN |
+| 6 | Unrelated working-tree isolation at amendment publication time | NOT RUN |
+| 7 | Stage I4 remains IN PROGRESS | TO BE VERIFIED AT PUBLICATION |
+| 8 | IWP-004 remains ACCEPTED - CLOSED | TO BE VERIFIED AT PUBLICATION |
+| 9 | Active implementation packages remain 0 immediately before selection/activation effect | TO BE VERIFIED AT PUBLICATION |
+| 10 | Authorized technical implementation packages remain 0 immediately before selection/activation effect | TO BE VERIFIED AT PUBLICATION |
+| 11 | Amendment publication integration | NOT RUN |
+| 12 | Amendment publication checkpoint per `docs/engineering/REPOSITORY_STANDARDS.md` §7.6 | NOT RUN |
+| 13 | Git checkpoint with traceable message | NOT APPLICABLE until separately authorized publication action |
+| 14 | Continuity synchronization if required by Repository Authority | NOT RUN |
 
 ---
 
@@ -450,13 +554,16 @@ Publication is separate from package selection and activation. Git checkpoint is
 
 Only one implementation package may be selected, activated, implementation-authorized, or executing at a time unless published Repository Authority later explicitly authorizes a different model.
 
-Before any future activation effect, publication must verify:
+Before any future amendment activation effect, publication must verify:
 
 1. active implementation packages remain 0;
 2. authorized technical implementation packages remain 0;
 3. no other package is selected, active, executable, implementation-authorized, or executing;
 4. unrelated working-tree changes are isolated and excluded;
-5. IWP-007, IWP-008, Stage I5 packages, and Stage I6 packages remain inactive.
+5. IWP-007, IWP-008, Stage I5 packages, and Stage I6 packages remain inactive;
+6. IWP-006 would become the only selected and active implementation package.
+
+Upon future amendment publication, active implementation packages would become 1 - IWP-006. Authorized technical implementation packages would remain 0.
 
 Parallel package execution is a stop condition.
 
@@ -491,13 +598,13 @@ Work must stop and require separate review before any future IWP-006-related act
 23. Code-to-Architecture Audit or Implementation Gap Register creation becomes necessary;
 24. push, tag, GitHub Release, deployment, release, public launch, scaling, production access, or Phase 4 is requested without separate authority.
 
-This draft does not perform the security review and does not choose a token-storage solution.
+This amendment draft does not perform the security review and does not choose a token-storage solution.
 
 ---
 
 ## 19. Technical Implementation Prohibition
 
-This draft explicitly prohibits:
+This amendment draft explicitly prohibits:
 
 1. technical implementation;
 2. source-code changes;
@@ -512,11 +619,11 @@ This draft explicitly prohibits:
 11. establishment of an exact technical write set;
 12. acceptance or closure of IWP-006;
 13. discovery execution;
-14. effective selection or activation of IWP-006.
+14. effective selection or activation of IWP-006 by this draft preparation action.
 
 Technical implementation may be considered only through a later separate authority after bounded discovery evidence has been produced and assessed.
 
-Publication of a future approved version of this instrument would not by itself authorize technical implementation unless that future published text explicitly and separately authorizes an exact write set in a manner permitted by Repository Authority. This draft does not contain such authorization.
+Publication of a future approved amendment version would not by itself authorize technical implementation unless that future published text explicitly and separately authorizes an exact write set in a manner permitted by Repository Authority. This amendment draft does not contain such authorization.
 
 ---
 
@@ -537,7 +644,7 @@ The following separations must be preserved:
 | Deployment | Not public launch |
 | Public launch | Not authorization to scale |
 
-This draft must not:
+This amendment draft must not:
 
 1. complete Stage I4;
 2. start Phase 4;
@@ -545,16 +652,17 @@ This draft must not:
 4. create deployment, production, launch, or scaling authority;
 5. alter IWP-007 or IWP-008;
 6. reopen IWP-004 or IWP-005;
-7. modify the Work Package Register or continuity surfaces.
+7. modify the Work Package Register or continuity surfaces;
+8. make selection, activation, or read-only discovery authorization effective.
 
 ---
 
 ## 21. Explicit Exclusions
 
-This draft does not authorize:
+This amendment draft does not authorize:
 
-1. IWP-006 selection effect;
-2. IWP-006 activation effect;
+1. effective IWP-006 selection;
+2. effective IWP-006 activation;
 3. IWP-006 discovery execution;
 4. IWP-006 technical implementation;
 5. IWP-006 technical write set establishment;
@@ -575,17 +683,19 @@ This draft does not authorize:
 20. scaling;
 21. push;
 22. Phase 4 Product Development Methodology;
-23. modification of any repository file other than this draft during draft authoring.
+23. modification of any repository file other than this instrument during amendment draft preparation;
+24. amendment publication, approval, or effectiveness;
+25. register or continuity surface updates.
 
 ---
 
-## 22. Exact Next Lifecycle Action After Publication
+## 22. Exact Next Lifecycle Action After Amendment Draft Preparation
 
-After publication of this instrument, the exact next authorized action is:
+After preparation of this amendment draft, the exact next authorized action is:
 
-Perform one bounded, independent, read-only post-publication verification of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` at the publication commit against controlling Repository Authority.
+Perform one bounded, independent, read-only review of this amendment draft in `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against controlling Repository Authority, register metadata, Stage I4 boundary, IWP-004 dependency evidence, single-active-package rule, discovery boundary, and security stop conditions.
 
-That verification must not select or activate IWP-006, must not authorize or perform discovery or implementation, must not update the Work Package Register or continuity surfaces unless separately authorized, and must not deploy, release, launch, or scale.
+That review must not approve, publish, or make the amendment effective; must not select or activate IWP-006; must not authorize or perform discovery or implementation; must not update the Work Package Register or continuity surfaces unless separately authorized; and must not deploy, release, launch, or scale.
 
 ---
 
@@ -594,29 +704,44 @@ That verification must not select or activate IWP-006, must not authorize or per
 | Item | Value |
 |------|-------|
 | Document path | `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` |
-| Status | PUBLISHED - EFFECTIVE |
-| Effectiveness | EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY |
-| Binding authority | ACTIVE - IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY - NOT SELECTION - NOT ACTIVATION - NOT DISCOVERY EXECUTION - NOT IMPLEMENTATION AUTHORIZATION |
-| Publication date | 2026-07-22 |
-| Publication commit | PENDING - THIS PUBLICATION COMMIT |
-| IWP-006 | PROPOSED - INACTIVE - NOT SELECTED - NOT ACTIVATED - NOT AUTHORIZED - NOT EXECUTABLE |
-| Discovery | NOT AUTHORIZED - NOT STARTED |
-| Technical implementation | NOT AUTHORIZED |
+| Base instrument status | PUBLISHED - EFFECTIVE |
+| Base instrument effectiveness | EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY |
+| Base instrument binding authority | ACTIVE - IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY - NOT SELECTION - NOT ACTIVATION - NOT DISCOVERY EXECUTION - NOT IMPLEMENTATION AUTHORIZATION |
+| Amendment status | DRAFT - NOT REVIEWED - NOT APPROVED - NOT PUBLISHED - NOT EFFECTIVE |
+| Proposed amendment binding authority | ACTIVE - IWP-006 SELECTION, ACTIVATION, AND READ-ONLY DISCOVERY AUTHORIZATION ONLY (DRAFT ONLY) |
+| Base instrument publication date | 2026-07-22 |
+| Base instrument publication commit | `fe64f2bce9bcf1e6b2df287593497c7e03c99827` |
+| Base instrument continuity synchronization | COMPLETED at `74de50e64751e89bb9c51855e5a3688d8072bde4` |
+| Amendment commit | NOT APPLICABLE until separately authorized publication action |
+| IWP-006 (current live posture) | PROPOSED - INACTIVE - NOT SELECTED - NOT ACTIVATED - NOT AUTHORIZED - NOT EXECUTABLE |
+| IWP-006 (proposed amendment posture — DRAFT) | SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED |
+| Discovery (current live) | NOT AUTHORIZED - NOT STARTED |
+| Discovery (proposed amendment — DRAFT) | AUTHORIZED - NOT STARTED |
+| Technical implementation | NOT AUTHORIZED - NOT STARTED |
 | Exact technical write set | NOT ESTABLISHED |
 | Acceptance | NOT GRANTED |
-| Independent review | COMPLETED - PASS |
-| Review findings | BLOCKING 0; NON-BLOCKING 0 |
-| Publication-readiness decision | COMPLETED - PASS |
-| Pre-publication validation | COMPLETED - PASS |
-| Approval integration | COMPLETED - APPROVED FOR PUBLICATION CHECKPOINT |
-| Publication integration | COMPLETED |
-| Publication checkpoint | COMPLETED |
-| Git checkpoint | PENDING - THIS PUBLICATION COMMIT |
-| Continuity synchronization | NOT RUN - REQUIRED AS SEPARATE ACTION |
+| Base instrument independent review | COMPLETED - PASS |
+| Base instrument review findings | BLOCKING 0; NON-BLOCKING 0 |
+| Amendment independent review | NOT RUN |
+| Amendment review findings | NOT RUN |
+| Selection/discovery readiness decision | COMPLETED - PASS |
+| Base instrument publication-readiness decision | COMPLETED - PASS |
+| Base instrument pre-publication validation | COMPLETED - PASS |
+| Base instrument approval integration | COMPLETED - APPROVED FOR PUBLICATION CHECKPOINT |
+| Amendment approval integration | NOT RUN |
+| Base instrument publication integration | COMPLETED |
+| Amendment publication integration | NOT RUN |
+| Base instrument publication checkpoint | COMPLETED |
+| Amendment publication checkpoint | NOT RUN |
+| Base instrument Git checkpoint | COMPLETED at `fe64f2bce9bcf1e6b2df287593497c7e03c99827` |
+| Base instrument post-publication verification | COMPLETE - PASS |
+| Amendment continuity synchronization | NOT RUN |
 | Stage I4 | IN PROGRESS |
-| Active implementation packages | 0 |
+| IWP-004 | ACCEPTED - CLOSED |
+| Active implementation packages (current live) | 0 |
+| Active implementation packages (proposed amendment — DRAFT) | 1 - IWP-006 |
 | Authorized technical implementation packages | 0 |
-| Push beyond publication checkpoint | NOT AUTHORIZED |
+| Push beyond any future amendment publication checkpoint | NOT AUTHORIZED |
 | Deployment | NOT AUTHORIZED |
 | Release | NOT AUTHORIZED |
 | Phase 4 | NOT STARTED |
