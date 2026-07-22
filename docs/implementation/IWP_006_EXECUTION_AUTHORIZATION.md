@@ -6,6 +6,12 @@
 **Proposed amendment binding authority (DRAFT - NOT EFFECTIVE):** ACTIVE - IWP-006 SELECTION, ACTIVATION, AND READ-ONLY DISCOVERY AUTHORIZATION ONLY
 **Effectiveness:** EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY — amendment draft is NOT EFFECTIVE
 **Independent review:** COMPLETED - PASS (base instrument)
+**Second amendment independent review:** COMPLETED - PASS
+**Second amendment review evidence:** `docs/implementation/reviews/IWP_006_SECTION_24_INDEPENDENT_REVIEW.md`
+**Second amendment reviewed digest:** `70653a41d1ea92960837b8836a2004582b798c923a120e4c5db51392f43ff02e`
+**Second amendment publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+**Second amendment publication integration:** COMPLETED
+**Second amendment effectiveness:** EFFECTIVE AS F-001 SECURITY REVIEW AUTHORIZATION ONLY — NOT SECURITY REVIEW EXECUTION — NOT IMPLEMENTATION AUTHORIZATION
 **Amendment independent review:** NOT RUN
 **Review findings:** BLOCKING 0; NON-BLOCKING 0 (base instrument)
 **Amendment review findings:** NOT RUN
@@ -745,3 +751,293 @@ That review must not approve, publish, or make the amendment effective; must not
 | Deployment | NOT AUTHORIZED |
 | Release | NOT AUTHORIZED |
 | Phase 4 | NOT STARTED |
+
+---
+
+## 24. Second Amendment — Bounded Token-Storage Security Review For F-001
+
+**Amendment title:** IWP-006 Bounded Token-Storage Security Review Amendment (F-001)
+
+**Amendment status:** PUBLISHED - EFFECTIVE (F-001 SECURITY REVIEW AUTHORIZATION ONLY)
+
+**Independent review:** COMPLETED - PASS — evidence `docs/implementation/reviews/IWP_006_SECTION_24_INDEPENDENT_REVIEW.md`
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Security review execution:** NOT AUTHORIZED BY THIS PUBLICATION — NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT STARTED
+
+**Exact technical write set:** NOT ESTABLISHED
+
+**F-001:** UNRESOLVED
+
+**F-013:** UNCERTAIN - DEFERRED
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+This second amendment is effective only as authorization for a separately executed bounded read-only token-storage security review under §24. It does **not** execute that review, select a storage or transport architecture, authorize technical implementation, establish a technical write set, accept or close IWP-006, or authorize push, release, deployment, or launch.
+
+Publication of this amendment is not review execution, security decision acceptance, implementation authorization, or acceptance.
+
+### 24.1 Identity And Relationship
+
+| Field | Value |
+|-------|-------|
+| Amendment identity | Second amendment draft within `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` |
+| Stable title | IWP-006 Bounded Token-Storage Security Review Amendment (F-001) |
+| Package relationship | Subordinate IWP-006 package-level bounded sub-activity |
+| Finding relationship | Addresses F-001 only from accepted `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` |
+| Standalone governance lifecycle | **Not created** — no separate permanent authorization instrument |
+| Precondition | Accepted discovery evidence publication at commit `34f1d7c6520274ceacbcea12bb92806f58fce48e` |
+| IWP-006 posture preserved | SELECTED - ACTIVE |
+| Stage I4 posture preserved | IN PROGRESS |
+| Phase 4 posture preserved | NOT STARTED |
+
+This amendment draft is a bounded package sub-activity authorization proposal only. It does not create a standalone governance lifecycle, program, stage, or permanent Repository Authority entity.
+
+### 24.2 Authority Basis
+
+The future token-storage security review requirement is traced only to the authorities below:
+
+| Authority or evidence | Role |
+|-----------------------|------|
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` F-001 | VERIFIED finding: access token persisted in browser-accessible storage; requires storage posture review before implementation authorization |
+| This instrument §12 | Token persistence or browser storage of authentication material requires separate security review before any later authority |
+| This instrument §13.6 | Browser or session storage changes require explicit security review before implementation authorization |
+| This instrument §14.8 | Security review evidence required where token or session storage is implicated |
+| This instrument §18 | Security triggers and mandatory stop conditions for token persistence and browser storage |
+| `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` | Records mandatory token-storage security review before separate technical implementation authorization; IWP-006 SELECTED - ACTIVE - READ-ONLY DISCOVERY COMPLETED |
+| `docs/design/CURSOR_HANDOFF.md` | Records same mandatory precondition and IWP-006 active posture |
+| `docs/engineering/SECURITY_STANDARDS.md` | Security policy, trust boundaries, credential and secret governance consumed for review assessment |
+| `docs/engineering/AUTHENTICATION_ARCHITECTURE.md` | Identity context, session authority, and client non-authority consumed for review assessment |
+| `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` | Client non-authority and authorization decision boundaries consumed for review assessment |
+| `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` IMPL-GATE-5 | Security review is a blocking gate before acceptance when auth, secrets, or trust boundaries are implicated |
+| `docs/implementation/IWP_002_SECURITY_LIFECYCLE_DECISION.md` | Structural precedent for bounded security sub-activity evidence/decision within package lifecycle — not a mandate for standalone authorization instrument |
+| `docs/engineering/REPOSITORY_STANDARDS.md` §11.6 | Targeted Validation applies to bounded sub-activities |
+
+No authority above mandates a standalone permanent authorization artifact for this review.
+
+### 24.3 Review Objective
+
+Upon future separate publication of this amendment and a later separately authorized bounded execution action, the future independent read-only token-storage security review must produce a solution-neutral security decision covering:
+
+1. browser-accessible bearer-token persistence posture;
+2. browser and session trust boundaries applicable to the observed token path;
+3. exposure consequences within the current authentication model recorded by accepted discovery evidence;
+4. token creation, retrieval, attachment, removal, and logout boundaries within permitted surfaces;
+5. missing, expired, invalid, or rejected token behavior observable within permitted surfaces;
+6. unauthorized-session recovery behavior observable within permitted surfaces;
+7. client-side route guard assumptions versus server authority;
+8. whether the current posture may be retained within published authority, must be corrected before technical implementation authorization, or requires additional bounded evidence before technical implementation authorization may be considered;
+9. CSRF trust-boundary consequences of the observed bearer-header transport pattern compared with hypothetical cookie-based transport, as comparative analysis only;
+10. HttpOnly, Secure, and SameSite cookie properties as a comparative trust-boundary analysis only, without selecting a transport or storage mechanism;
+11. access-token lifetime, expiry, and session-duration behavior observable within permitted surfaces, including bounded limitations where lifetime semantics cannot be fully verified without excluded paths;
+12. presence or absence of refresh-token and rotation behavior within permitted surfaces, including resulting governance or security implications observable from permitted evidence only.
+
+The review must not select a remediation mechanism, storage product, token format, cookie policy, or exact code change.
+
+### 24.4 Exact Future Evidence Boundary
+
+Future token-storage security review execution, if separately authorized after amendment publication, is read-only and limited to **exactly** the nine paths below. Each path is justified only by accepted discovery evidence. No additional path may be opened without a separate scope amendment.
+
+| Exact path | Review purpose | Discovery evidence basis |
+|------------|----------------|--------------------------|
+| `frontend/lib/tokenStorage.ts` | Primary F-001 surface: token key, storage medium, save/get/remove/hasToken API, SSR guard | F-001; discovery §5.1 |
+| `frontend/lib/authFetch.ts` | Token retrieval via `getToken()`, bearer attachment, non-OK response handling including absence of 401 recovery | Discovery §5.1, §6.1 Pattern A |
+| `frontend/context/AuthContext.tsx` | Login, logout, session restore, `saveToken`/`removeToken` coupling, client session truth derivation | Discovery §3.1, §5.1 |
+| `frontend/services/authApi.ts` | Auth entrypoints using `authFetch` and raw `fetch`, login/logout-adjacent flows, structured vs generic error handling | Discovery §3.1, §6.1 Pattern C |
+| `frontend/types/auth.ts` | Auth request/response and token-adjacent type definitions supporting reviewed flows | Discovery §7.1 |
+| `frontend/types/user.ts` | Role and user shape used by auth context and route guards | Discovery §3.1, §4.1, §7.1 |
+| `frontend/components/ProtectedRoute.tsx` | Authentication-only guard behavior and denied-session routing | Discovery §4.1 |
+| `frontend/components/AdminRoute.tsx` | Authentication plus admin role guard behavior and denied-session routing | Discovery §4.1 |
+| `frontend/components/RealtorRoute.tsx` | Authentication plus realtor role guard behavior and local role recompute | Discovery §4.1, F-004 |
+
+**Explicitly excluded from this boundary:**
+
+- `frontend/services/api.ts` and caller graph resolution (F-013 deferred);
+- `frontend/services/favoritesApi.ts`, `frontend/context/FavoritesContext.tsx`, and other auth-adjacent but non-F-001 surfaces;
+- imports, callers, pages, hooks, layouts, tests, configuration, backend, infrastructure, runtime, production, and secrets outside the exact list above.
+
+Following imports, callers, or adjacent files outside this exact list is prohibited. Any additional surface requires a separate scope amendment.
+
+### 24.5 Security-Review Questions
+
+The future reviewer must answer precisely:
+
+1. What authentication token material is persisted, and where?
+2. Which browser contexts or scripts can access persisted token material?
+3. How are tokens created, stored, retrieved, attached to requests, removed, and cleared on logout?
+4. What happens when a token is missing, expired, invalid, or rejected within permitted surfaces?
+5. What 401 and 403 behavior is observable within permitted surfaces, and is denial handling honest and bounded?
+6. Do client-side route guards treat client state as authorization authority contrary to Authorization Architecture?
+7. What visible role and account-state assumptions depend on client-side persisted or derived state?
+8. Does the observed posture comply with published Security Standards, Authentication Architecture, and Authorization Architecture?
+9. Is repository evidence sufficient for a security decision, or is additional bounded evidence required before technical implementation authorization may be considered?
+10. Which conclusions are verified facts, evidence-based inferences, and unresolved uncertainties?
+11. What CSRF trust-boundary consequences apply to the observed bearer-token-in-header pattern compared with hypothetical cookie-based transport, and how do those consequences differ, without selecting either mechanism?
+12. How do HttpOnly, Secure, and SameSite properties compare as trust-boundary controls relative to the observed browser-accessible storage posture, as comparative analysis only?
+13. What access-token lifetime, expiry, and session-duration behavior is observable within permitted surfaces, and where lifetime semantics cannot be fully verified within the nine-path boundary, what bounded limitation or missing evidence must be recorded instead of expanding scope?
+14. Is refresh-token issuance, storage, rotation, or renewal behavior present within permitted surfaces; if absent, what governance or security implications follow from that absence within the observable client session model?
+
+The reviewer must answer questions 11 through 14 analytically and read-only only. They must not select a target storage or transport mechanism, prescribe implementation, authorize cookie migration, authorize refresh-token implementation, expand inspection into backend or excluded paths, or require reading secrets. Where a topic cannot be fully verified within the nine permitted paths, the reviewer must record it as missing evidence or a bounded limitation instead of expanding scope.
+
+The reviewer must not choose a remediation or storage mechanism.
+
+### 24.6 Required Future Output
+
+Future authorized review execution must produce exactly one temporary subordinate evidence artifact at:
+
+`docs/implementation/IWP_006_TOKEN_STORAGE_SECURITY_REVIEW_EVIDENCE.md`
+
+That artifact is IWP-006 package evidence only. It is not independent permanent Repository Authority.
+
+Required contents:
+
+1. verified repository baseline at review start;
+2. evidence inventory listing only exact permitted paths inspected;
+3. per-question assessment mapped to §24.5;
+4. separated facts, inferences, and uncertainties;
+5. stable finding IDs and severity classifications;
+6. authority-compliance assessment against Security Standards, Authentication Architecture, and Authorization Architecture;
+7. residual risks;
+8. blockers and stop conditions triggered or not triggered;
+9. exactly one decision posture from §24.7;
+10. explicit confirmation that no technical write set was established;
+11. explicit confirmation that no implementation was authorized.
+
+Publication of review evidence does not accept or close IWP-006 and does not authorize technical implementation.
+
+### 24.7 Decision Postures
+
+The future evidence artifact must record exactly one posture:
+
+| Posture | Meaning |
+|---------|---------|
+| `CURRENT POSTURE ACCEPTABLE WITHIN PUBLISHED AUTHORITY` | Observed token-storage posture may remain for governance purposes pending separate technical implementation authorization |
+| `SECURITY CORRECTION REQUIRED BEFORE IMPLEMENTATION AUTHORIZATION` | Technical implementation authorization must remain blocked until a separately authorized correction scope exists |
+| `ADDITIONAL BOUNDED EVIDENCE REQUIRED` | Current exact boundary is insufficient; more bounded read-only evidence is required before a security decision can be finalized |
+| `BLOCKED` | Review cannot proceed safely under current authority or repository state |
+
+No posture may automatically:
+
+- establish a technical write set;
+- authorize implementation;
+- accept or close IWP-006;
+- complete Stage I4;
+- start Phase 4.
+
+### 24.8 Exclusions
+
+This second amendment draft and any future authorized review under it exclude:
+
+1. implementation changes;
+2. exact remediation or storage-mechanism selection;
+3. technical write-set definition;
+4. F-013 caller-graph resolution;
+5. backend implementation inspection;
+6. database, migrations, and persistence inspection;
+7. tests and fixtures;
+8. dependencies and lockfiles;
+9. runtime secrets and production data access;
+10. infrastructure, CI/CD, and deployment;
+11. release, launch, and scale decisions;
+12. register, handoff, or roadmap updates unless separately authorized;
+13. amendment publication, approval, or effectiveness by this draft preparation action.
+
+### 24.9 Stop Conditions
+
+The future reviewer must stop if:
+
+1. repository baseline materially differs from verified authority state;
+2. required authority is unavailable or contradictory;
+3. necessary evidence lies outside the exact nine-path list in §24.4;
+4. unrelated working-tree changes overlap an evidence source;
+5. isolated read-only review cannot be guaranteed;
+6. technical mutation becomes necessary to answer a review question;
+7. runtime execution, production access, or secret-store access would be required;
+8. the work would establish a write set or authorize implementation;
+9. F-013 resolution or `frontend/services/api.ts` caller-graph analysis becomes necessary — route to separate scope amendment or IWP-007 coordination instead;
+10. scope expansion beyond F-001 token-storage security posture is requested without separate authority.
+
+### 24.10 Lifecycle Separation
+
+The following separations are mandatory for this second amendment draft and any future authorized review under it:
+
+| Transition | Rule |
+|------------|------|
+| Draft | Not publication |
+| Publication | Not review execution |
+| Review execution | Not acceptance |
+| Accepted review evidence | Not a technical write set |
+| Security decision | Not implementation authorization |
+| Implementation authorization | Not implementation execution |
+| Implementation completion | Not IWP acceptance |
+| IWP closure | Not Stage I4 completion |
+| Stage completion | Not Phase 4 commencement |
+| Merge | Not release |
+| Release | Not deployment |
+| Deployment | Not launch |
+| Launch | Not authorization to scale |
+
+### 24.11 Future Review Controls
+
+Any future token-storage security review execution authorized by publication of this amendment must:
+
+1. remain independent and read-only;
+2. verify a fresh remote baseline before inspection;
+3. inspect only the exact nine permitted files in §24.4;
+4. install no tools and run no applications;
+5. preserve unrelated working-tree items untouched;
+6. make no repository mutation during review execution;
+7. return one evidence-backed verdict using exactly one posture from §24.7;
+8. stop after review and reporting.
+
+Independent review of the future evidence artifact is required before the security decision may be treated as accepted package evidence. That acceptance does not authorize implementation.
+
+### 24.12 Amendment Status And Effectiveness Boundary
+
+| State | Current value |
+|-------|---------------|
+| Second amendment draft authored | YES — by draft preparation action |
+| Second amendment reviewed | COMPLETED - PASS — `docs/implementation/reviews/IWP_006_SECTION_24_INDEPENDENT_REVIEW.md` |
+| Second amendment publication-readiness decision | COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION |
+| Second amendment approved | COMPLETED - APPROVED FOR BOUNDED PUBLICATION |
+| Second amendment published | YES — by this publication execution |
+| Second amendment effective | YES — AS F-001 SECURITY REVIEW AUTHORIZATION ONLY |
+| Token-storage security review execution authorized by this publication | NO — separate bounded execution authorization required |
+| Token-storage security review execution started | NO |
+| Technical implementation authorized | NO |
+| Exact technical write set established | NO |
+| F-001 resolved | NO |
+| F-013 deferred | YES |
+| IWP-006 accepted or closed | NO |
+
+Publication of this second amendment makes the bounded read-only token-storage security review scope in §24 effective as a permitted lifecycle authorization only. It does **not** authorize security-review execution by itself, does not authorize implementation, does not establish a technical write set, and does not accept or close IWP-006.
+
+Any token-storage security review execution authorized after this publication must re-verify live Git evidence before inspection begins.
+
+### 24.13 Validation Requirements
+
+| Phase | Validation scope |
+|-------|------------------|
+| Second amendment draft review | COMPLETED - PASS |
+| Second amendment publication review | COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION |
+| Future token-storage security review evidence | Targeted Validation of evidence boundary, question coverage, posture honesty, and prohibition on remediation selection |
+| Future technical implementation authorization | Separate later authority only; not authorized by this draft |
+
+Second amendment draft preparation alone does not satisfy review, publication, security review execution, implementation, or acceptance validation gates.
+
+---
+
+## 25. Exact Next Lifecycle Action After Second Amendment Publication
+
+After publication of the second amendment in §24, the exact next authorized action is:
+
+Prepare and execute a separately authorized bounded read-only token-storage security review under §24, using the nine permitted inspection paths in §24.4, producing evidence at `docs/implementation/IWP_006_TOKEN_STORAGE_SECURITY_REVIEW_EVIDENCE.md` as defined in §24.6.
+
+That execution must verify a fresh repository baseline before inspection; must not expand beyond §24.4; must not select a remediation or storage mechanism; must not authorize technical implementation; must not establish a technical write set; must not resolve F-001 or accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; and must not deploy, release, launch, or scale.
+
+Push of this publication commit remains NOT AUTHORIZED unless separately authorized.
