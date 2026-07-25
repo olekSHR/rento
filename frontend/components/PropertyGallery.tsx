@@ -3,15 +3,9 @@
 import { useEffect, useRef, useState } from "react"
 
 import { getImageUrl } from "@/lib/getImageUrl"
+import type { PropertyImage } from "@/types/property"
 
 import Image from "next/image"
-
-type PropertyImage = {
-  id: number
-  url: string
-  is_cover: boolean
-  sort_order: number
-}
 
 type Props = {
   title: string

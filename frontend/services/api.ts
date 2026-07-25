@@ -2,6 +2,7 @@ import { getCsrfHeaderValue } from "@/lib/csrf"
 import { parseApiErrorMessage } from "@/lib/apiError"
 import { dispatchAuthUnauthorized } from "@/lib/authSessionEvents"
 import { normalizeImagePath } from "@/lib/getImageUrl"
+import type { PropertyImage } from "@/types/property"
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
@@ -346,13 +347,6 @@ export async function reportProperty(id: number) {
 /* =========================
    Property Gallery API
 ========================= */
-
-export type PropertyImage = {
-  id: number
-  url: string
-  is_cover: boolean
-  sort_order: number
-}
 
 export type CreatePropertyImageData = {
   url: string

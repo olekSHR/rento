@@ -20,6 +20,7 @@ import {
 import SortableGalleryItem from "@/components/admin/SortableGalleryItem"
 import { getImageUrl } from "@/lib/getImageUrl"
 import { getToken } from "@/lib/tokenStorage"
+import type { PropertyImage } from "@/types/property"
 import {
   addPropertyImage,
   deletePropertyImage,
@@ -27,7 +28,6 @@ import {
   setCoverImage,
   updatePropertyImageSortOrder,
   uploadImage,
-  type PropertyImage,
 } from "@/services/api"
 
 type RealtorPropertyGalleryProps = {
