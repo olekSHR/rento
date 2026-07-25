@@ -4992,17 +4992,23 @@ That check verified publication integrity only. It did not authorize implementat
 
 ---
 
-## 49. Eighteenth Amendment Draft — Bounded Unused API Export Removal
+## 49. Eighteenth Amendment — Bounded Unused API Export Removal
 
-**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+**Amendment status:** PUBLISHED — EFFECTIVE (BOUNDED UNUSED API EXPORT REMOVAL AUTHORIZATION ONLY)
+
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
 
 **Finding targets:** F-013 M2 / M8 — deferred zero-caller `api.ts` exports (not separate numbered findings)
 
-**Exact technical write set:** §49.3 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
+**Exact technical write set:** ESTABLISHED BY §49.3 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
 
 **IWP-006 acceptance / closure:** NOT GRANTED
 
-Draft creation does **not** authorize implementation, resolve the dead-export targets, or accept or close IWP-006.
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
 
 ### 49.1 Defect (@ `1f1a9668bf814e3888823f0931ce258f2e96ff50`)
 
@@ -5043,7 +5049,7 @@ Live registration uses `@/services/authApi` (`register/page.tsx`, `AuthContext.t
 
 Maximum production paths: **1**. No other `api.ts` edits authorized.
 
-### 49.4 Implementation contract (not executable until published)
+### 49.4 Implementation contract (executable)
 
 **W1:** Delete the five named declarations above and their function bodies only. Preserve every surviving export, endpoint string, parser, type, auth transport, property, image, and error behavior unchanged.
 
@@ -5068,13 +5074,25 @@ Stop without disposition if: any executable caller, alias, re-export, or dynamic
 | Item | Value |
 |------|-------|
 | Target disposition | **DEFERRED-DEAD-EXPORT — RESOLVED — BOUNDED UNUSED API EXPORT REMOVAL SCOPE** (after implementation + E1 + commit only) |
-| This amendment | **DRAFT — NOT EFFECTIVE** |
-| Implementation authorized | **NO** until **PUBLISHED — EFFECTIVE** |
+| This amendment | **PUBLISHED — EFFECTIVE** (bounded unused API export removal authorization only) |
+| Implementation authorized | **YES** for W1 when separately invoked under published §49.3–§49.4 |
 
-### 49.9 Draft status record
+### 49.9 Publication status record
 
 | Item | Value |
 |------|-------|
-| Section | §49 |
-| Write set | W1 + E1 |
-| Dead-export implementation | NOT AUTHORIZED — NOT STARTED |
+| Amendment number | Eighteenth |
+| Amendment section | §49 |
+| Effective | YES — BOUNDED UNUSED API EXPORT REMOVAL AUTHORIZATION ONLY |
+| Reviewed | **NOT APPLICABLE** — bounded pre-publication integrity check only |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Write set | W1 `frontend/services/api.ts` (five named declaration removals only) |
+| Dead-export implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded dead-export implementation invocation referencing published §49.3–§49.4 (W1); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 49.10 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — single-path W1 write set; E1 evidence path only; five declarations mapped exactly; zero `@/services/api` callers for `registerUser`; zero external references for `generateAIListing` and AI types; canonical registration `authApi.registerUser` unchanged; F-007/F-008/F-010/F-002 Phase 2/backend/env/deployment excluded; export-surface removal preserves live runtime and surviving `api.ts` behavior; IWP-007/IWP-008 not activated; F-001/F-003/F-005/F-006/F-009 not reopened; dead-export disposition target RESOLVED — bounded unused API export removal scope.
+
+That check verified publication integrity only. It did not authorize implementation execution.
