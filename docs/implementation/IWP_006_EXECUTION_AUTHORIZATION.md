@@ -2968,3 +2968,332 @@ That review verified publication readiness only. It did not authorize implementa
 Perform one separate bounded F-005 technical implementation invocation referencing published §39.3 (G1–G3).
 
 That invocation must not accept or close IWP-006; must not complete Stage I4; must not start Phase 4; must not authorize F-013; must not modify paths outside §39.3.1; must not invoke automatically upon publication; must not update the Work Package Register or continuity surfaces unless separately authorized; and must not push, release, deploy, launch, or scale.
+
+---
+
+## 41. Tenth Amendment — Bounded F-013 Read-Only Caller-Graph Discovery
+
+**Amendment title:** IWP-006 Bounded F-013 Read-Only Caller-Graph Discovery
+
+**Amendment status:** PUBLISHED - EFFECTIVE (F-013 BOUNDED READ-ONLY DISCOVERY AUTHORIZATION ONLY)
+
+**Independent review:** COMPLETED - PASS (Publication Readiness Review)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
+
+**F-013 read-only discovery execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE
+
+**Exact technical write set:** NONE — read-only discovery only; no frontend source modification authorized
+
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this amendment
+
+**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this amendment
+
+**F-002:** UNRESOLVED — EXPLICITLY NOT ACTIVATED — remains deferred pending F-013 evidence and separate boundary decision
+
+**F-003:** UNRESOLVED — EXPLICITLY NOT ACTIVATED — remains deferred pending F-013 evidence and separate boundary decision
+
+**F-013:** UNCERTAIN — PRIMARY IN-SCOPE TARGET for read-only discovery only
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+**Stage I4:** IN PROGRESS — NOT COMPLETED by this amendment
+
+**Push:** NOT AUTHORIZED
+
+**Deployment / release / launch / scaling:** NOT AUTHORIZED
+
+**Phase 4 Product Development Methodology:** NOT STARTED
+
+This tenth amendment is effective only as authorization for one future bounded read-only F-013 caller-graph discovery pass under §41.2–§41.3. It does **not** authorize discovery during publication integration; does **not** execute the read set; does **not** authorize any frontend source modification; does **not** establish an exact technical implementation write set; does **not** resolve IWP-006 acceptance or closure; does **not** activate F-002 or F-003; does **not** select, activate, or authorize IWP-007 or IWP-008; does **not** authorize `frontend/services/api.ts` boundary expansion or caller migration; and does **not** authorize push, release, deployment, or launch.
+
+Publication of this amendment is not discovery execution, evidence disposition, or IWP-006 acceptance.
+
+### 41.1 Identity and authority chain
+
+| Authority | Role |
+|-----------|------|
+| `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §39 | Ninth amendment — F-005 resolved; F-002/F-003 deferred per F-013 / `api.ts` boundary |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §11 F-013; §13 | F-013 UNCERTAIN — caller graph UNRESOLVED outside original §10.1 surfaces |
+| `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` | Post-F-001 cookie-session model; F-013 / `api.ts` excluded from F-001 write set |
+| `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` §13.3 | Remaining open findings; F-013 deferred — IWP-007 coordination route |
+| `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-006, IWP-007, IWP-008 entries | Package scope, overlap, and repository-area boundaries |
+| `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` IMPL-ID-11; `docs/engineering/REPOSITORY_STANDARDS.md` §11.6.10A | One authorization → bounded execution → evidence → review → disposition; no implementation cascade from discovery alone |
+| `docs/engineering/FRONTEND_ARCHITECTURE.md` | Owner — client surfaces and presentation boundaries |
+| `docs/engineering/API_STANDARDS.md` | Owner — API client discipline |
+| `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` AUTHZ-BND-3 | Client remains presentation-only; discovery must not treat caller inspection as authorization to migrate auth authority client-side |
+
+**Finding scope for this amendment draft:**
+
+| Finding | Treatment |
+|---------|-----------|
+| **F-013** | **Primary — IN SCOPE — sole discovery target** |
+| F-001 | CLOSED — not reopened |
+| F-005 | RESOLVED — not reopened |
+| F-002 | UNRESOLVED — **not activated** — deferred; discovery may inform future boundary only |
+| F-003 | UNRESOLVED — **not activated** — deferred; discovery may inform future boundary only |
+| F-004 | Substantially addressed in F-001; not reopened |
+| F-006, F-007 | UNRESOLVED — may be referenced in evidence as `api.ts`-adjacent observations only; not implementation targets |
+| F-008, F-009 | UNRESOLVED — may be referenced as overlap observations only; not implementation targets |
+| F-010–F-012 | OUT OF SCOPE — not discovery targets |
+
+**Slice-selection rationale:** F-013 is the smallest open **UNCERTAIN** finding whose closure requires only read-only evidence gathering. Original discovery completed within instrument §10.1 but left `frontend/services/api.ts` caller graph **UNRESOLVED** (discovery §13). F-002 and F-003 remain HIGH severity but are boundary-deferred until F-013 evidence and a separate explicit `api.ts` boundary decision exist. This amendment authorizes evidence gathering only — not consolidation, caller edits, or package coordination binding acts.
+
+### 41.2 Objectives (exact)
+
+Future authorized read-only discovery execution must achieve **only** the following:
+
+**F-013 — `frontend/services/api.ts` caller-graph and boundary evidence**
+
+Produce committed-repository evidence that determines, without modifying any file:
+
+1. complete export/symbol inventory for `frontend/services/api.ts`;
+2. complete committed caller graph for every import of `@/services/api` across the frontend;
+3. per call site: imported symbols, page/component category, and observed auth-transport class (`cookie-session via auth stack`, `bearer/token-parameter via api.ts`, `unauthenticated`, `mixed`, or `uncertain`);
+4. post-F-001 contrast against `authFetch`, `authApi`, `AuthContext`, `tokenStorage`, and route guards;
+5. overlap classification against IWP-006 core auth/client scope vs IWP-007 workflow surfaces vs IWP-008 media-adjacent surfaces per discovery §9;
+6. explicit unavailable-evidence register for runtime behavior, backend contract truth, lint/build/test, and environment configuration;
+7. **non-binding** input for a future separate `api.ts` boundary decision — without selecting, activating, or authorizing F-002, F-003, IWP-007, or any implementation write set.
+
+**Non-objectives (explicit):**
+
+- Editing `frontend/services/api.ts` or any caller
+- Dual-client consolidation (F-002 implementation)
+- Error envelope unification (F-003 implementation)
+- Shared API config extraction (F-008 implementation)
+- Session-failure transport redesign (F-009 implementation)
+- Duplicate symbol removal (F-006 / F-007 implementation)
+- Hygiene deletion of `api.ts.save` (F-010)
+- Backend, migration, config, CI, infrastructure, or deployment inspection unless already permitted elsewhere and strictly read-only
+- IWP-006 package acceptance or closure
+- IWP-007 or IWP-008 selection, activation, or coordination binding acts
+- Push, continuity synchronization, or register mutation as part of discovery execution
+
+### 41.3 Exact bounded read set (committed repository only)
+
+Discovery execution must use **only committed** file contents at the repository baseline recorded in the evidence artifact. Uncommitted working-tree content is not authority.
+
+#### 41.3.1 Primary F-013 surfaces — mandatory read
+
+| # | Path | Purpose |
+|---|------|---------|
+| R1 | `frontend/services/api.ts` | Export inventory; authenticated vs unauthenticated function classes; bearer-token parameter pattern |
+| R2 | `frontend/app/page.tsx` | Public caller — property listing |
+| R3 | `frontend/app/properties/[id]/page.tsx` | Public/authenticated caller |
+| R4 | `frontend/app/favorites/page.tsx` | Favorites caller |
+| R5 | `frontend/app/register/page.tsx` | Auth-adjacent caller — duplicate `registerUser` surface (F-006 observation) |
+| R6 | `frontend/app/become-realtor/page.tsx` | Realtor workflow caller |
+| R7 | `frontend/app/realtor/page.tsx` | Realtor workflow caller |
+| R8 | `frontend/app/realtor/profile/page.tsx` | Realtor workflow caller |
+| R9 | `frontend/app/realtor/properties/create/page.tsx` | Realtor workflow caller |
+| R10 | `frontend/app/realtor/properties/[id]/edit/page.tsx` | Realtor workflow caller |
+| R11 | `frontend/app/admin/page.tsx` | Admin workflow caller |
+| R12 | `frontend/app/admin/properties/page.tsx` | Admin workflow caller |
+| R13 | `frontend/app/admin/properties/create/page.tsx` | Admin workflow caller |
+| R14 | `frontend/app/admin/properties/[id]/page.tsx` | Admin workflow caller |
+| R15 | `frontend/app/admin/properties/[id]/edit/page.tsx` | Admin workflow caller |
+| R16 | `frontend/app/admin/realtor-applications/page.tsx` | Admin workflow caller |
+| R17 | `frontend/app/admin/users/page.tsx` | Admin workflow caller |
+| R18 | `frontend/app/admin/users/[id]/page.tsx` | Admin workflow caller |
+| R19 | `frontend/components/ReportButton.tsx` | Component caller |
+| R20 | `frontend/components/gallery/PropertyGalleryManager.tsx` | Gallery caller — IWP-008 overlap observation |
+| R21 | `frontend/components/realtor/RealtorPropertyGallery.tsx` | Gallery caller — IWP-008 overlap observation |
+| R22 | `frontend/components/admin/AdminUserListCard.tsx` | Type-only caller |
+| R23 | `frontend/lib/realtorWorkspace.ts` | Type-only caller — IWP-007-adjacent observation |
+
+#### 41.3.2 Contrast surfaces — mandatory read
+
+| # | Path | Purpose |
+|---|------|---------|
+| C1 | `frontend/lib/authFetch.ts` | Cookie-session client model; 401/403 handling post-F-001 |
+| C2 | `frontend/services/authApi.ts` | Canonical auth entrypoints; error parsing variance |
+| C3 | `frontend/context/AuthContext.tsx` | Session restore; `auth:unauthorized` handling |
+| C4 | `frontend/lib/tokenStorage.ts` | Post-F-001 no-op token surface vs legacy caller usage |
+| C5 | `frontend/lib/csrf.ts` | CSRF header semantics for auth stack contrast |
+| C6 | `frontend/components/ProtectedRoute.tsx` | Route guard contrast |
+| C7 | `frontend/components/AdminRoute.tsx` | Route guard contrast |
+| C8 | `frontend/components/RealtorRoute.tsx` | Route guard contrast |
+| C9 | `frontend/services/favoritesApi.ts` | Auth-adjacent non-`api.ts` client contrast |
+| C10 | `frontend/lib/getImageUrl.ts` | API URL constant overlap observation (F-008 / IWP-008) |
+
+#### 41.3.3 Authority and register surfaces — mandatory read
+
+| # | Path | Purpose |
+|---|------|---------|
+| A1 | `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §9, §11, §13 | F-013 baseline; overlap; unresolved caller graph |
+| A2 | `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` | F-001 boundary preservation |
+| A3 | `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` §13.3 | Remaining finding posture |
+| A4 | `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-006 / IWP-007 / IWP-008 entries | Cross-package boundary input |
+
+#### 41.3.4 Optional bounded read (reference only — no expansion without stop)
+
+- `frontend/services/api.ts.save` — existence/hygiene note only (F-010); not a caller-graph target
+- Import re-exports or barrel files that re-export `@/services/api` symbols — record if discovered during R1–R23 traversal; do not expand into tests, backend, CI, or dependency manifests
+
+**Maximum mandatory read paths:** 37 (R1–R23, C1–C10, A1–A4). No path outside §41.3.1–§41.3.3 may be treated as mandatory without a stop and separate authority act.
+
+### 41.4 Exact prohibited write set
+
+Discovery execution is **read-only**. The following writes are **prohibited**:
+
+#### 41.4.1 Prohibited source and runtime modifications
+
+- `frontend/services/api.ts` — **explicitly prohibited**
+- Every path in §41.3.1 and §41.3.2
+- All other `frontend/**` source paths
+- All `backend/**`, migrations, tests, manifests, lockfiles, CI, infrastructure, deployment, and runtime configuration files
+
+#### 41.4.2 Prohibited lifecycle and authority mutations during discovery execution
+
+- `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md`
+- `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md`
+- `docs/design/CURSOR_HANDOFF.md`
+- All other governance, roadmap, release, and continuity surfaces unless a distinct authority act explicitly authorizes synchronization after discovery review
+
+#### 41.4.3 Sole authorized write (future discovery execution only)
+
+| # | Path | Purpose |
+|---|------|---------|
+| E1 | `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` | F-013 read-only discovery evidence artifact |
+
+No other new or modified files are authorized by this amendment.
+
+### 41.5 Expected evidence outputs
+
+The evidence artifact `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` must contain at minimum:
+
+| # | Output | Requirement |
+|---|--------|-------------|
+| O1 | Repository baseline | Record commit SHA, branch, and read-set version |
+| O2 | `api.ts` export inventory | Functions, types, constants; authenticated vs public classification |
+| O3 | Caller graph table | Every R2–R23 path mapped to imported symbols and call pattern |
+| O4 | Auth-transport classification | Per caller: cookie stack vs bearer/`getToken()`/`localStorage` vs none |
+| O5 | Post-F-001 mismatch register | Structural inconsistencies between auth stack and `api.ts` callers |
+| O6 | Cross-package overlap matrix | IWP-006 vs IWP-007 vs IWP-008 classification per discovery §9 |
+| O7 | F-002 / F-003 boundary input | **Non-binding** summary of whether future bounded fixes appear confined to IWP-006 register areas or require IWP-007 coordination — **not** a binding boundary decision |
+| O8 | Unavailable evidence | Runtime login flows, backend auth contract, lint/build/test, env values |
+| O9 | Findings disposition input | Whether F-013 moves from UNCERTAIN to VERIFIED — does not close F-002/F-003 |
+| O10 | Explicit stop-condition log | Record any stop triggered during discovery |
+
+### 41.6 Validation requirements
+
+| Check | Requirement |
+|-------|-------------|
+| Read-only integrity | `git status` after discovery — no modified tracked source files outside E1 |
+| Scoped diff check | No diff in `frontend/**` except none permitted; evidence file only |
+| Evidence completeness | O1–O10 present or explicitly marked UNAVAILABLE with reason |
+| Authority trace | Map evidence sections to F-013 and discovery §13 unresolved caller graph |
+| Frontend typecheck / lint / build | **NOT REQUIRED** — no source modification authorized |
+| Backend pytest | **NOT REQUIRED** — no backend read authorization beyond existing package boundaries |
+| Runtime manual testing | **NOT REQUIRED** — optional UNAVAILABLE record only |
+| Independent discovery review | **Required after evidence** — separate act; not part of this draft |
+
+### 41.7 Security and architecture review requirements
+
+| Gate | Application |
+|------|-------------|
+| **IMPL-GATE-5** | **NOT APPLICABLE** — no source modification authorized |
+| Review type | Read-only evidence review after discovery execution |
+| Review focus | Confirm discovery did not modify auth transport; confirm evidence does not implicitly authorize implementation, IWP-007 activation, or client-side authority expansion |
+| Controlling prior evidence | F-001 and F-005 implementation evidence; discovery §8–§9 |
+| Separate token-storage review | **NOT REQUIRED** — no storage or transport change authorized |
+
+### 41.8 Stop conditions
+
+Discovery execution must **STOP** and escalate if:
+
+1. Any modification to `frontend/services/api.ts`
+2. Any modification to any caller in §41.3.1 or any contrast surface in §41.3.2
+3. Any frontend source, backend, migration, test, config, CI, or infrastructure modification
+4. F-002 or F-003 is activated or treated as authorized for implementation
+5. IWP-007 or IWP-008 is selected, activated, or treated as executable
+6. An `api.ts` boundary expansion or caller-migration write set is established as authorized
+7. Dual-client consolidation, error-envelope unification, or session-transport redesign is attempted
+8. F-001 or F-005 architecture is reopened or contradicted without separate authority
+9. Discovery absorbs uncommitted working-tree content as authority
+10. Discovery modifies register, handoff, roadmap, or this instrument except E1 evidence recording
+11. Discovery claims IWP-006 acceptance, closure, Stage I4 completion, or Phase 4 start
+12. Push, tag, release, deployment, or production access is attempted
+13. Read set expands beyond §41.3 without stop — including backend inspection, test execution that mutates state, or repository-wide audit
+14. Evidence artifact omits O7 non-binding disclaimer and appears to bind a future boundary decision
+
+### 41.9 Discovery completion criteria (not IWP-006 package acceptance)
+
+F-013 read-only discovery is **disposition-complete** when all are satisfied:
+
+| Criterion | Evidence |
+|-----------|----------|
+| F-013 caller graph | O2–O4 complete for all mandatory read paths or UNAVAILABLE justified |
+| F-001 / F-005 preserved | No source modification; no reopening claims |
+| F-002 / F-003 | Remain explicitly **not activated** in evidence |
+| Cross-package honesty | O6 records IWP-007 / IWP-008 overlap without activating those packages |
+| Unavailable evidence | O8 documents limits |
+| Read-only integrity | Validation §41.6 PASS |
+| Lifecycle | Evidence recorded; one independent discovery evidence review scheduled as separate act |
+
+**IWP-006 register acceptance criteria** remain **open** — F-013 discovery alone does not accept or close the package.
+
+### 41.10 Explicit non-goals
+
+- F-001 and all SR-F001-* — closed; not reopened
+- F-005 — resolved; not reopened
+- **F-002** — dual auth client models — **not activated**
+- **F-003** — error handling normalization — **not activated**
+- F-006, F-007, F-008, F-009, F-010 — not implemented; observations only where strictly necessary for caller graph
+- IWP-007, IWP-008 — not selected; not activated; not authorized
+- `api.ts` boundary expansion — not authorized
+- Caller migration or consolidation — not authorized
+- Technical implementation authorization — not established
+- Package acceptance, package closure, Stage I4 completion
+- Push, tag, release, deployment, production access, Phase 4
+- Republication or instrument mutation during discovery execution
+- Continuity synchronization of register or handoff
+- Governance-threshold integration
+- Metadata reconciliation of stale instrument header fields
+
+### 41.11 Repository Authority boundaries
+
+| Boundary | Rule |
+|----------|------|
+| Publication of §41 | Makes F-013 bounded read set **defined and invokable**; does **not** auto-start discovery |
+| Discovery invocation | One separate bounded read-only execution task referencing published §41 |
+| Evidence review | One separate discovery evidence review after O1–O10 exist |
+| Boundary decision | Separate act after evidence review — may authorize future `api.ts` scope amendment or route to IWP-007 coordination; **not** part of this amendment |
+| Implementation | Requires distinct later amendment with exact write set — **not** authorized here |
+| IWP-006 acceptance | Separate gate — **not authorized here** |
+
+### 41.12 Lifecycle separation
+
+```text
+§41 publication (this authorization act — EFFECTIVE for discovery definition only)
+    → bounded F-013 read-only discovery invocation (NOT STARTED)
+        → evidence artifact E1 only
+            → independent discovery evidence review
+                → separate boundary / next-slice decision
+                    → IWP-006 remains NOT ACCEPTED — NOT CLOSED
+```
+
+### 41.13 Publication status record
+
+| Item | Value |
+|------|-------|
+| Amendment number | Tenth |
+| Amendment section | §41 |
+| Effective | YES — F-013 BOUNDED READ-ONLY DISCOVERY AUTHORIZATION ONLY |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Discovery execution | NOT AUTHORIZED - NOT STARTED |
+| Technical implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded F-013 read-only discovery invocation referencing published §41.2–§41.3; must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 41.14 Publication integration record
+
+Independent publication readiness review: **COMPLETED - PASS** — BLOCKING-1 corrected; no remaining blocking defects within §41 at publication time.
+
+That review verified publication readiness only. It did not authorize discovery execution.
