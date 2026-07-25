@@ -4527,3 +4527,255 @@ Stop if:
 Bounded pre-publication integrity check: **COMPLETED - PASS** — Gap A (403 session invalidation) and Gap B (sessionFetch 401 without reconciliation) verified; three-path write set (shared session event + authFetch + api.ts sessionFetch); AuthContext subscription sufficient; authApi excluded; no refresh/backend/IWP-007; F-003/F-006/dead-code cleanup not bundled; 401/403 semantics preserved in contract.
 
 That check verified publication integrity only. It did not authorize implementation execution.
+
+---
+
+## 46. Fifteenth Amendment Draft — Bounded F-007 PropertyImage Canonical Ownership
+
+**Amendment title:** IWP-006 Bounded F-007 — PropertyImage Canonical Type Ownership
+
+**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+
+**Independent review:** NOT RUN
+
+**Publication-readiness decision:** NOT RUN
+
+**Publication integration:** NOT RUN
+
+**Bounded pre-publication integrity check:** NOT RUN
+
+**F-007 technical implementation execution:** NOT AUTHORIZED — NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED — NOT EFFECTIVE
+
+**Exact technical write set:** ESTABLISHED BY §46.4 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
+
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this draft
+
+**F-002:** PARTIALLY RESOLVED — Phase 1 COMPLETE — NOT REOPENED; Phase 2 deferred
+
+**F-003:** RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE — NOT REOPENED by this draft
+
+**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this draft
+
+**F-006:** RESOLVED — BOUNDED R5 SCOPE ONLY — NOT REOPENED by this draft
+
+**F-009:** RESOLVED — BOUNDED SESSION-FAILURE RECONCILIATION SCOPE — NOT REOPENED by this draft
+
+**F-007:** UNRESOLVED — **Primary in-scope finding — sole bounded implementation target**
+
+**F-008:** UNRESOLVED — EXPLICITLY OUT OF SCOPE — not activated by this draft
+
+**F-013:** VERIFIED within bounded §41 read set — consumed; not reopened
+
+**IWP-007:** NOT SELECTED — NOT ACTIVATED — caller migration deferred
+
+**IWP-008:** NOT SELECTED — NOT ACTIVATED
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+**Stage I4:** IN PROGRESS — NOT COMPLETED by this draft
+
+**Push:** NOT AUTHORIZED
+
+This fifteenth amendment draft establishes bounded implementation authority for one future F-007 technical correction pass under §46.4 only. It does **not** authorize implementation during draft creation; does **not** execute the write set; does **not** resolve F-007; does **not** resolve or implement F-008; does **not** remove dead `api.ts::registerUser` or `generateAIListing`; does **not** modify `frontend/services/authApi.ts`; does **not** implement F-002 Phase 2; does **not** select or activate IWP-007 or IWP-008; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
+
+Draft creation is not review, approval, publication, implementation authorization, slice disposition, or IWP-006 acceptance.
+
+### 46.1 Identity and authority chain
+
+| Authority | Role |
+|-----------|------|
+| `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §39–§45 | Active IWP-006 package authority |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §11 F-007 | Original finding — duplicate `PropertyImage` type definitions |
+| `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` O2, M4–M5, R20, R21 | Committed caller graph; duplicate surfaces; active type imports |
+| `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-006 acceptance criteria | Canonical type ownership required for client non-authoritative posture |
+| Committed `frontend/types/property.ts` @ `887f5ace418c7773d935ddc8ca55cc1e19a9c0de` | Domain `Property` model embeds `PropertyImage` |
+| Committed `frontend/services/api.ts` @ `887f5ace418c7773d935ddc8ca55cc1e19a9c0de` | Duplicate exported `PropertyImage` at line 350 |
+| Committed `frontend/components/PropertyGallery.tsx` @ `887f5ace418c7773d935ddc8ca55cc1e19a9c0de` | Local duplicate `PropertyImage` at line 9 |
+| Committed `frontend/components/gallery/PropertyGalleryManager.tsx` (R20) @ `887f5ace418c7773d935ddc8ca55cc1e19a9c0de` | Imports `type PropertyImage` from `@/services/api` |
+| Committed `frontend/components/realtor/RealtorPropertyGallery.tsx` (R21) @ `887f5ace418c7773d935ddc8ca55cc1e19a9c0de` | Imports `type PropertyImage` from `@/services/api` |
+
+**Finding scope for this amendment draft:**
+
+| Finding | Treatment |
+|---------|-----------|
+| **F-007** | **Primary — IN SCOPE — PropertyImage canonical ownership — disposition target after future implementation** |
+| F-013 | VERIFIED — consumed; not reopened |
+| F-001, F-003, F-005, F-006, F-009 | RESOLVED within bounded prior scopes — not reopened |
+| F-002 | PARTIALLY RESOLVED (Phase 1) — not reopened; Phase 2 deferred |
+| **F-008** | **UNRESOLVED — OUT OF SCOPE — separate amendment required** |
+| F-010, dead exports, authApi parser variance | OUT OF SCOPE — not bundled |
+| IWP-007 caller migration | **EXPLICITLY DEFERRED** |
+
+**Slice-selection rationale:** F-013 evidence confirms four committed `PropertyImage` ownership surfaces with identical field shapes (`id`, `url`, `is_cover`, `sort_order`). Only R20 and R21 import the type from the non-canonical `api.ts` export; `PropertyGallery.tsx` defines a third duplicate locally. Correction is confinable to four production paths without API contract, transport, or runtime behavior change.
+
+### 46.2 Verified defect determination
+
+**Verified committed behavior @ `887f5ace418c7773d935ddc8ca55cc1e19a9c0de`:**
+
+| # | Surface | Location | Role |
+|---|---------|----------|------|
+| 1 | Canonical domain candidate | `frontend/types/property.ts:8` | `export type PropertyImage` embedded in `Property` |
+| 2 | Service-layer duplicate export | `frontend/services/api.ts:350` | `export type PropertyImage` — identical shape; used in gallery function return types |
+| 3 | Component local duplicate | `frontend/components/PropertyGallery.tsx:9` | Local `type PropertyImage` — identical shape; not imported from canonical surface |
+| 4 | Non-canonical type import — R20 | `frontend/components/gallery/PropertyGalleryManager.tsx:31` | `type PropertyImage` from `@/services/api` |
+| 5 | Non-canonical type import — R21 | `frontend/components/realtor/RealtorPropertyGallery.tsx:30` | `type PropertyImage` from `@/services/api` |
+
+**Defect:** `PropertyImage` has multiple competing ownership surfaces. Type drift risk exists across gallery and property presentation flows. No single canonical import path is enforced for active committed callers.
+
+**Out of defect scope for this amendment:** `CreatePropertyImageData` in `api.ts` (request payload type — not a duplicate `PropertyImage` owner); gallery function exports (`getPropertyImages`, `addPropertyImage`, etc.) — runtime behavior preserved unchanged.
+
+### 46.3 Canonical ownership determination
+
+| Question | Determination |
+|----------|---------------|
+| Candidate canonical owner | `frontend/types/property.ts` |
+| Domain embedding | `Property.images?: PropertyImage[]` in same file — domain model owns image shape |
+| Service-layer role | `frontend/services/api.ts` is transport/client — must consume domain types, not re-export competing definitions |
+| Competing owners in committed code | `api.ts:350` export; `PropertyGallery.tsx:9` local type |
+| Active non-canonical imports | R20, R21 only — confirmed by F-013 O2 and committed import graph |
+| Repository Authority conflict | **NONE** — discovery F-007 and IWP-006 acceptance criteria require canonical type ownership; no published authority designates `api.ts` or component-local types as canonical |
+
+**Canonical owner verdict:** `frontend/types/property.ts` is the correct and sole canonical `PropertyImage` type owner for this bounded correction.
+
+### 46.4 Exact bounded technical write set
+
+**Maximum production paths: 4.** No backend paths. No caller migration beyond the two confirmed type-import surfaces and one local duplicate removal.
+
+#### 46.4.1 Authorized modification
+
+| # | Path | Purpose |
+|---|------|---------|
+| **W1** | `frontend/services/api.ts` | Remove exported duplicate `PropertyImage` definition; import `PropertyImage` from `@/types/property` for internal function signatures only; preserve all gallery function implementations, exports, and runtime behavior |
+| **W2** | `frontend/components/gallery/PropertyGalleryManager.tsx` | Import `PropertyImage` from `@/types/property`; remove `type PropertyImage` from `@/services/api` import; preserve all function imports and runtime gallery logic |
+| **W3** | `frontend/components/realtor/RealtorPropertyGallery.tsx` | Import `PropertyImage` from `@/types/property`; remove `type PropertyImage` from `@/services/api` import; preserve all function imports and runtime gallery logic |
+| **W4** | `frontend/components/PropertyGallery.tsx` | Remove local `PropertyImage` type definition; import `PropertyImage` from `@/types/property`; preserve component props and rendering behavior |
+
+#### 46.4.2 Authorized evidence artifact (future implementation only)
+
+| # | Path | Purpose |
+|---|------|---------|
+| **E1** | `docs/implementation/IWP_006_F007_IMPLEMENTATION_EVIDENCE.md` | F-007 implementation and validation evidence — created only during separately authorized implementation |
+
+#### 46.4.3 Explicit exclusions — prohibited modifications
+
+- F-008 `NEXT_PUBLIC_API_URL` consolidation (`authFetch.ts`, `authApi.ts`, `getImageUrl.ts`, or other config surfaces)
+- F-010 `frontend/services/api.ts.save` cleanup
+- Dead export removal (`api.ts::registerUser`, `generateAIListing`)
+- F-002 Phase 2 legacy token plumbing at R6–R21 callers
+- `frontend/services/authApi.ts` modifications
+- Parser deduplication or error-envelope reopening (F-003)
+- Session-failure reconciliation reopening (F-009)
+- Transport, authentication, or session changes
+- Backend changes, API contract changes, or property schema redesign
+- Broad type refactoring beyond the four authorized production paths
+- IWP-007 activation or IWP-008 coordination surfaces
+- Tests unrelated to the bounded type correction
+- Register, roadmap, handoff, continuity, release, deployment, or push actions
+
+### 46.5 Implementation contract (future — not executable until published)
+
+#### 46.5.1 W1 — api.ts
+
+1. Delete the exported `PropertyImage` type block at `api.ts:350–355`.
+2. Add `import type { PropertyImage } from "@/types/property"` for internal signature use.
+3. **Must not** re-export `PropertyImage` from `api.ts`.
+4. Preserve `CreatePropertyImageData`, all gallery function bodies, fetch URLs, headers, credentials, parsing, and thrown errors unchanged.
+
+#### 46.5.2 W2 — PropertyGalleryManager (R20)
+
+1. Import `type PropertyImage` from `@/types/property`.
+2. Remove `type PropertyImage` from the `@/services/api` import list.
+3. Preserve all gallery function imports and runtime logic unchanged.
+
+#### 46.5.3 W3 — RealtorPropertyGallery (R21)
+
+1. Import `type PropertyImage` from `@/types/property`.
+2. Remove `type PropertyImage` from the `@/services/api` import list.
+3. Preserve all gallery function imports and runtime logic unchanged.
+
+#### 46.5.4 W4 — PropertyGallery
+
+1. Delete the local `PropertyImage` type block at `PropertyGallery.tsx:9–14`.
+2. Import `type PropertyImage` from `@/types/property`.
+3. Preserve `Props`, rendering, and `getImageUrl` usage unchanged.
+
+#### 46.5.5 Runtime preservation
+
+| Element | Rule |
+|---------|------|
+| Network requests | Unchanged |
+| Request and response payloads | Unchanged |
+| API endpoints | Unchanged |
+| Authentication behavior | Unchanged |
+| Property-image runtime behavior | Unchanged |
+| Component rendering behavior | Unchanged |
+| Generated JavaScript semantics | Unchanged except unavoidable type-only import removal |
+
+### 46.6 Required validation (future implementation — proportional)
+
+| Check | Requirement |
+|-------|-------------|
+| Targeted symbol search | Confirm zero committed `PropertyImage` exports from `api.ts`; zero local duplicates; R20/R21 import from `@/types/property` only |
+| Frontend TypeScript typecheck | Project frontend typecheck command — PASS or recorded stop |
+| Frontend lint | Project lint command scoped to authorized files or full project lint — PASS or recorded stop |
+| Scoped `git diff --check` | PASS on W1–W4 (+ E1 if created) |
+| Exact scoped diff inspection | Confirm only W1–W4 production paths and E1 (if created) changed |
+
+**Not required for this bounded correction:**
+
+- Repository-wide review beyond scoped diff
+- Backend tests
+- Database tests
+- Migration checks
+- Browser QA (type-only correction — no runtime code change authorized beyond import/type alignment)
+- New general security review
+
+### 46.7 Stop conditions (future implementation)
+
+Stop without disposition if:
+
+1. Canonical type ownership cannot be established or conflicts with Repository Authority.
+2. Correction requires API schema or runtime behavior changes.
+3. Additional callers importing `PropertyImage` from non-canonical surfaces are discovered outside W2–W4.
+4. F-008 or another finding must be modified simultaneously.
+5. Backend or generated schema changes are required.
+6. A new dependency is required.
+7. Bounded type correction cannot pass typecheck without scope expansion beyond W1–W4.
+
+### 46.8 Lifecycle separation
+
+| Item | Status |
+|------|--------|
+| This amendment | **DRAFT — NOT PUBLISHED — NOT EFFECTIVE** |
+| Draft creation | Does **not** authorize implementation |
+| Draft creation | Does **not** resolve F-007 |
+| Draft creation | Does **not** affect F-008 |
+| Draft creation | Does **not** accept or close IWP-006 |
+| Implementation | Requires amendment to become **PUBLISHED — EFFECTIVE** through the lifecycle required by Repository Authority |
+| Next lifecycle step | **NOT AUTHORIZED** by completion of this draft task |
+
+### 46.9 Target disposition (future — not achieved by this draft)
+
+| Item | Value |
+|------|-------|
+| Finding | F-007 |
+| Target disposition label | **F-007 — RESOLVED — BOUNDED PROPERTYIMAGE CANONICAL-OWNERSHIP SCOPE** |
+| Achieved by this draft | **NO** — disposition recorded only after separately authorized implementation and evidence |
+
+### 46.10 Draft status record
+
+| Item | Value |
+|------|-------|
+| Amendment number | Fifteenth |
+| Amendment section | §46 |
+| Effective | **NO** — DRAFT ONLY |
+| Reviewed | NOT RUN |
+| Publication | NOT RUN |
+| Write set | W1 `frontend/services/api.ts`; W2 `frontend/components/gallery/PropertyGalleryManager.tsx`; W3 `frontend/components/realtor/RealtorPropertyGallery.tsx`; W4 `frontend/components/PropertyGallery.tsx` |
+| F-007 implementation | NOT AUTHORIZED — NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after draft | **NOT AUTHORIZED BY THIS DRAFT TASK** — publication and implementation require separate lifecycle acts |
