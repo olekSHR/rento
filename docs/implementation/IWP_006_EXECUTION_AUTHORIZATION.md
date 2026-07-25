@@ -4782,3 +4782,90 @@ Stop without disposition if:
 Bounded pre-publication integrity check: **COMPLETED - PASS** — four-path W1–W4 production write set; E1 evidence path only; canonical owner `frontend/types/property.ts` confirmed; R20/R21 non-canonical type imports and `PropertyGallery.tsx` local duplicate aligned in closed scope; F-008/F-010/dead exports/F-002 Phase 2/authApi/backend/API contract excluded; type-only correction preserves runtime behavior; IWP-007/IWP-008 not activated; F-001/F-003/F-005/F-006/F-009 not reopened; F-007 disposition target RESOLVED — bounded PropertyImage canonical-ownership scope.
 
 That check verified publication integrity only. It did not authorize implementation execution.
+
+---
+
+## 47. Sixteenth Amendment Draft — Bounded F-008 API URL Fallback Consolidation
+
+**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+
+**F-008:** UNRESOLVED — **Primary in-scope finding**
+
+**Exact technical write set:** §47.3 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
+
+**IWP-006 acceptance / closure:** NOT GRANTED
+
+Draft creation does **not** authorize implementation, resolve F-008, or accept or close IWP-006.
+
+### 47.1 Defect (@ `4a81dc6e5ef60c0af7f99dfe7dc992b9db44b8cf`)
+
+Four surfaces duplicate `process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"`:
+
+| Surface | Path | Composition |
+|---------|------|-------------|
+| Auth transport | `frontend/lib/authFetch.ts:5–6` | `${API_BASE_URL}${endpoint}` |
+| Domain API | `frontend/services/api.ts:7–9` | `${API_URL}/...` |
+| Auth raw-fetch | `frontend/services/authApi.ts:10–11` | `${API_BASE_URL}/auth/...` via raw `fetch` |
+| Image URLs | `frontend/lib/getImageUrl.ts:1–3` | base `.replace(/\/$/, "")` then `${API_URL}${normalized}` |
+
+Same env key and fallback host. No `/api` suffix. Only `getImageUrl.ts` strips trailing slash on the base. No existing shared canonical owner in `frontend/lib/`.
+
+### 47.2 Canonical ownership
+
+| Item | Rule |
+|------|------|
+| Owner | **`frontend/lib/apiBaseUrl.ts`** (new) |
+| Export | One resolver returning `process.env.NEXT_PUBLIC_API_URL \|\| "http://127.0.0.1:8000"` |
+| Trailing slash | **Not** normalized in W1 — W5 alone applies `.replace(/\/$/, "")` at image composition |
+| Auth/API semantics | Unchanged — consumers import W1 only |
+
+### 47.3 Exact bounded write set
+
+| # | Path |
+|---|------|
+| **W1** | `frontend/lib/apiBaseUrl.ts` — new canonical resolver |
+| **W2** | `frontend/lib/authFetch.ts` — remove duplicate; import W1 |
+| **W3** | `frontend/services/api.ts` — remove duplicate; import W1 |
+| **W4** | `frontend/services/authApi.ts` — remove duplicate; import W1 |
+| **W5** | `frontend/lib/getImageUrl.ts` — import W1; preserve local `.replace(/\/$/, "")` |
+| **E1** | `docs/implementation/IWP_006_F008_IMPLEMENTATION_EVIDENCE.md` — future evidence only |
+
+Maximum production paths: **5**. No new dependencies.
+
+### 47.4 Implementation contract (not executable until published)
+
+**W1:** Export resolver only; no trailing-slash strip, no `/api` append, no imports from auth/API modules.
+
+**W2–W4:** Replace local fallback with W1 import; preserve all URL templates, CSRF, credentials, session transport, F-003/F-009 behavior, and raw-fetch auth paths.
+
+**W5:** Import W1; apply `.replace(/\/$/, "")` only at existing image URL composition site; preserve `normalizeImagePath` and absolute-URL passthrough.
+
+**Runtime preservation:** API request URLs, auth login/forgot/reset fetch, cookie/session transport, image resolution, and development fallback `"http://127.0.0.1:8000"` unchanged for equivalent env values.
+
+### 47.5 Exclusions
+
+F-007, F-010, dead exports (`registerUser`, `generateAIListing`), F-002 Phase 2, `apiError.ts`/CSRF/session-event changes beyond base URL import, backend, API contracts, `.env`/deployment/CI, env key renames, broad config refactor, IWP-007/IWP-008, register/roadmap/handoff/continuity/release/push.
+
+### 47.6 Validation (future implementation)
+
+Targeted symbol search (zero local fallbacks outside W1); `npm run typecheck`; `npm run lint`; scoped `git diff --check` on W1–W5 (+ E1); confirm trailing-slash strip remains W5-only.
+
+### 47.7 Stop conditions
+
+Stop without disposition if: paths outside W1–W5 required; trailing-slash preservation needs auth/API changes; auth semantics, API contracts, or env keys must change; backend/deployment/`.env` changes required; new dependency required; typecheck/lint fails without scope expansion.
+
+### 47.8 Disposition and lifecycle
+
+| Item | Value |
+|------|-------|
+| Target disposition | **F-008 — RESOLVED — BOUNDED API URL FALLBACK CONSOLIDATION SCOPE** (after implementation + E1 only) |
+| This amendment | **DRAFT — NOT EFFECTIVE** |
+| Implementation authorized | **NO** until **PUBLISHED — EFFECTIVE** |
+
+### 47.9 Draft status record
+
+| Item | Value |
+|------|-------|
+| Section | §47 |
+| Write set | W1–W5 + E1 |
+| F-008 implementation | NOT AUTHORIZED — NOT STARTED |
