@@ -1,8 +1,49 @@
+import { getCsrfHeaderValue } from "@/lib/csrf"
 import { normalizeImagePath } from "@/lib/getImageUrl"
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://127.0.0.1:8000"
+
+const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"])
+
+function buildSessionHeaders(
+  initHeaders?: HeadersInit,
+  method = "GET",
+  jsonBody = false
+): Headers {
+  const headers = new Headers(initHeaders)
+
+  if (jsonBody && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json")
+  }
+
+  if (MUTATING_METHODS.has(method.toUpperCase())) {
+    const csrfToken = getCsrfHeaderValue()
+
+    if (csrfToken) {
+      headers.set("X-CSRF-Token", csrfToken)
+    }
+  }
+
+  return headers
+}
+
+async function sessionFetch(
+  url: string,
+  options: RequestInit = {}
+): Promise<Response> {
+  const method = (options.method ?? "GET").toUpperCase()
+  const hasJsonBody =
+    options.body !== undefined && typeof options.body === "string"
+
+  return fetch(url, {
+    ...options,
+    method,
+    headers: buildSessionHeaders(options.headers, method, hasJsonBody),
+    credentials: "include",
+  })
+}
 
 type PropertySearchParams = {
   city?: string
@@ -47,16 +88,11 @@ export async function getProperties(
 export async function getAdminProperties(
   token: string
 ) {
-  const response = await fetch(
-    `${API_URL}/properties/admin/all`,
-    {
-      cache: "no-store",
+  void token
 
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
+  const response = await sessionFetch(`${API_URL}/properties/admin/all`, {
+    cache: "no-store",
+  })
 
   if (!response.ok) {
     throw new Error("Failed to fetch admin properties")
@@ -66,16 +102,14 @@ export async function getAdminProperties(
 }
 
 export async function getPropertyById(id: number, token?: string) {
-  const headers: HeadersInit = {}
+  const url = `${API_URL}/properties/${id}`
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-
-  const response = await fetch(`${API_URL}/properties/${id}`, {
-    cache: "no-store",
-    headers,
-  })
+  const response =
+    token !== undefined
+      ? await sessionFetch(url, { cache: "no-store" })
+      : await fetch(url, {
+          cache: "no-store",
+        })
 
   if (!response.ok) {
     throw new Error("Failed to fetch property")
@@ -101,19 +135,12 @@ export async function createProperty(
   data: CreatePropertyData,
   token: string
 ) {
-  const response = await fetch(
-    `${API_URL}/properties/`,
-    {
-      method: "POST",
+  void token
 
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-
-      body: JSON.stringify(data),
-    }
-  )
+  const response = await sessionFetch(`${API_URL}/properties/`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  })
 
   if (!response.ok) {
     throw new Error("Failed to create property")
@@ -131,17 +158,14 @@ export async function uploadImage(
   file: File,
   token: string
 ): Promise<UploadImageResponse> {
+  void token
+
   const formData = new FormData()
 
   formData.append("image", file)
 
-  const response = await fetch(`${API_URL}/upload/`, {
+  const response = await sessionFetch(`${API_URL}/upload/`, {
     method: "POST",
-
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-
     body: formData,
   })
 
@@ -182,14 +206,10 @@ export async function updateProperty(
   data: UpdatePropertyData,
   token: string
 ) {
-  const response = await fetch(`${API_URL}/properties/${id}`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/properties/${id}`, {
     method: "PUT",
-
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-
     body: JSON.stringify(data),
   })
 
@@ -204,12 +224,10 @@ export async function deleteProperty(
   id: number,
   token: string
 ) {
-  const response = await fetch(`${API_URL}/properties/${id}`, {
-    method: "DELETE",
+  void token
 
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  const response = await sessionFetch(`${API_URL}/properties/${id}`, {
+    method: "DELETE",
   })
 
   if (!response.ok) {
@@ -223,14 +241,12 @@ export async function verifyProperty(
   id: number,
   token: string
 ) {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/properties/${id}/verify`,
     {
       method: "POST",
-
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     }
   )
 
@@ -245,14 +261,12 @@ export async function archiveProperty(
   id: number,
   token: string
 ) {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/properties/${id}/archive`,
     {
       method: "POST",
-
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     }
   )
 
@@ -268,14 +282,12 @@ export async function activateProperty(
   id: number,
   token: string
 ) {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/properties/${id}/activate`,
     {
       method: "POST",
-
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     }
   )
 
@@ -322,19 +334,14 @@ export async function getPropertyImages(
   propertyId: number,
   token?: string
 ): Promise<PropertyImage[]> {
-  const headers: HeadersInit = {}
+  const url = `${API_URL}/properties/${propertyId}/images`
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-
-  const response = await fetch(
-    `${API_URL}/properties/${propertyId}/images`,
-    {
-      cache: "no-store",
-      headers,
-    }
-  )
+  const response =
+    token !== undefined
+      ? await sessionFetch(url, { cache: "no-store" })
+      : await fetch(url, {
+          cache: "no-store",
+        })
 
   if (!response.ok) {
     throw new Error("Failed to fetch property images")
@@ -348,16 +355,12 @@ export async function addPropertyImage(
   data: CreatePropertyImageData,
   token: string
 ): Promise<PropertyImage> {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images`,
     {
       method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-
       body: JSON.stringify(data),
     }
   )
@@ -374,14 +377,12 @@ export async function setCoverImage(
   imageId: number,
   token: string
 ): Promise<PropertyImage> {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images/${imageId}/cover`,
     {
       method: "PUT",
-
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     }
   )
 
@@ -397,14 +398,12 @@ export async function deletePropertyImage(
   imageId: number,
   token: string
 ) {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images/${imageId}`,
     {
       method: "DELETE",
-
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     }
   )
 
@@ -421,13 +420,12 @@ export async function updatePropertyImageSortOrder(
   sortOrder: number,
   token: string
 ): Promise<PropertyImage> {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images/${imageId}/sort-order?sort_order=${sortOrder}`,
     {
       method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     }
   )
 
@@ -439,12 +437,10 @@ export async function updatePropertyImageSortOrder(
 }
 
 export async function getMyRealtorProperties(token: string) {
-  const response = await fetch(`${API_URL}/realtor/properties`, {
-    cache: "no-store",
+  void token
 
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  const response = await sessionFetch(`${API_URL}/realtor/properties`, {
+    cache: "no-store",
   })
 
   if (!response.ok) {
@@ -483,12 +479,10 @@ export type RealtorProfileUpdate = {
 export async function getMyRealtorProfile(
   token: string
 ): Promise<RealtorProfile> {
-  const response = await fetch(`${API_URL}/realtor/profile`, {
-    cache: "no-store",
+  void token
 
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  const response = await sessionFetch(`${API_URL}/realtor/profile`, {
+    cache: "no-store",
   })
 
   if (!response.ok) {
@@ -502,14 +496,10 @@ export async function updateMyRealtorProfile(
   data: RealtorProfileUpdate,
   token: string
 ): Promise<RealtorProfile> {
-  const response = await fetch(`${API_URL}/realtor/profile`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/realtor/profile`, {
     method: "PATCH",
-
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-
     body: JSON.stringify(data),
   })
 
@@ -539,14 +529,10 @@ export async function generateAIListing(
   data: AIListingRequest,
   token: string
 ): Promise<AIListingResponse> {
-  const response = await fetch(`${API_URL}/ai/listing-description`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/ai/listing-description`, {
     method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-
     body: JSON.stringify(data),
   })
 
@@ -646,11 +632,10 @@ async function parseRealtorApplicationError(
 export async function getMyRealtorApplication(
   token: string
 ): Promise<RealtorApplication | null> {
-  const response = await fetch(`${API_URL}/realtor-applications/me`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/realtor-applications/me`, {
     cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   })
 
   if (response.status === 404) {
@@ -673,12 +658,10 @@ export async function createRealtorApplication(
   data: RealtorApplicationCreateData,
   token: string
 ): Promise<RealtorApplication> {
-  const response = await fetch(`${API_URL}/realtor-applications/`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/realtor-applications/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(data),
   })
 
@@ -707,15 +690,14 @@ export async function getRealtorApplications(
   token: string,
   status?: string
 ): Promise<RealtorApplicationListResponse> {
+  void token
+
   const url = status
     ? `${API_URL}/realtor-applications/?status=${encodeURIComponent(status)}`
     : `${API_URL}/realtor-applications/`
 
-  const response = await fetch(url, {
+  const response = await sessionFetch(url, {
     cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   })
 
   if (response.status === 401) {
@@ -739,14 +721,12 @@ export async function reviewRealtorApplication(
   status: "approved" | "rejected",
   token: string
 ): Promise<RealtorApplication> {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/realtor-applications/${applicationId}/review`,
     {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
       body: JSON.stringify({ status }),
     }
   )
@@ -776,11 +756,10 @@ export type AdminStats = {
 }
 
 export async function getAdminStats(token: string): Promise<AdminStats> {
-  const response = await fetch(`${API_URL}/admin/stats`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/admin/stats`, {
     cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   })
 
   if (!response.ok) {
@@ -822,6 +801,8 @@ export async function getAdminUsers(
   pageOrQuery: number | AdminUsersQuery = 1,
   limit = 20
 ): Promise<AdminUsersResponse> {
+  void token
+
   const query: AdminUsersQuery =
     typeof pageOrQuery === "number"
       ? { page: pageOrQuery, limit }
@@ -846,11 +827,8 @@ export async function getAdminUsers(
     params.set("application_status", query.application_status)
   }
 
-  const response = await fetch(`${API_URL}/admin/users?${params}`, {
+  const response = await sessionFetch(`${API_URL}/admin/users?${params}`, {
     cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   })
 
   if (!response.ok) {
@@ -869,11 +847,10 @@ export async function getAdminUserById(
   token: string,
   userId: number
 ): Promise<AdminUserDetail> {
-  const response = await fetch(`${API_URL}/admin/users/${userId}`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/admin/users/${userId}`, {
     cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   })
 
   if (response.status === 404) {
@@ -918,12 +895,10 @@ export async function updateUserRole(
   userId: number,
   role: ManageableUserRole
 ): Promise<{ id: number; email: string; role: string }> {
-  const response = await fetch(`${API_URL}/users/${userId}/role`, {
+  void token
+
+  const response = await sessionFetch(`${API_URL}/users/${userId}/role`, {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify({ role }),
   })
 
@@ -951,14 +926,12 @@ export async function updateAdminUserAccountStatus(
   userId: number,
   accountStatus: ManageableAccountStatus
 ): Promise<AdminUserDetail> {
-  const response = await fetch(
+  void token
+
+  const response = await sessionFetch(
     `${API_URL}/admin/users/${userId}/account-status`,
     {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
       body: JSON.stringify({ account_status: accountStatus }),
     }
   )
