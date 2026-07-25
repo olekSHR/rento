@@ -2,15 +2,17 @@
 
 **Status:** PUBLISHED — IWP-006 FINAL ACCEPTANCE
 **Authority class:** Implementation work package acceptance evidence
-**Binding authority:** IWP-006 acceptance record only
+**Binding authority:** IWP-006 acceptance and closure record only
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 — Domain Implementation
 **Work package:** IWP-006 — Frontend Auth And API Client Stabilization
-**IWP-006:** ACCEPTED
-**IWP-006 closure:** NOT DECLARED
+**IWP-006:** ACCEPTED — CLOSED
 **Stage I4:** IN PROGRESS
+**Closure:** COMPLETED
+**Continuity synchronization:** NOT PERFORMED BY THIS ACT
 **Completion Review:** PASS — BLOCKING 0
 **Acceptance outcome:** Accepted with recorded residual risk
+**IWP-007 activation:** NOT AUTHORIZED BY THIS ACTION
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
@@ -20,17 +22,17 @@
 
 ## 1. Status And Purpose
 
-This report records formal acceptance of IWP-006 only.
+This report records formal acceptance and closure of IWP-006 only.
 
-It consumes the published Package Acceptance Authorization, published IWP-006 execution authority through §49, referenced implementation evidence, Completion Review result **PASS — BLOCKING 0**, and committed Git lineage.
+It consumes the published Package Acceptance Authorization, published IWP-006 execution authority through §49, referenced implementation evidence, Completion Review result **PASS — BLOCKING 0**, acceptance commit `cc851107df188f08f80ee83e453c4594eabbf322`, and committed Git lineage.
 
-It does **not** close IWP-006, complete Stage I4, activate IWP-007 or IWP-008, authorize new implementation, authorize push, authorize deployment, authorize release, or start Phase 4.
+It does **not** complete Stage I4, activate IWP-007 or IWP-008, authorize new implementation, perform continuity synchronization, authorize push, authorize deployment, authorize release, or start Phase 4.
 
 Supporting closure rule — `docs/implementation/IWP_006_PACKAGE_ACCEPTANCE_AUTHORIZATION.md` §10:
 
 > Acceptance ≠ closure — Closure requires separate explicit authority unless the acceptance report explicitly includes it.
 
-This report **does not** include closure authority.
+Acceptance was recorded at commit `cc85110` with **IWP-006: ACCEPTED — NOT CLOSED**. Closure is completed by this bounded lifecycle act amending this report per IWP-004 precedent (`b4294eff295e835dc4d3e36afbdacda5be9ccbf6`).
 
 ---
 
@@ -44,13 +46,15 @@ This report **does not** include closure authority.
 | `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` | Acceptance model §16.1–§16.3 |
 | `docs/engineering/REPOSITORY_STANDARDS.md` | Completion Review Review Type; publication discipline |
 | Referenced IWP-006 evidence artifacts | Slice disposition and validation chain per Package Acceptance Authorization §4 |
-| Git metadata | Implementation and publication checkpoint lineage |
+| Git metadata | Implementation, acceptance, and closure checkpoint lineage |
 
 | Checkpoint | Value |
 |------------|-------|
 | Package Acceptance Authorization commit | `dfaa291fb9f4d0594b0d3d17129c297b861fdbdc` |
-| Package Acceptance Authorization parent | `84b39d0aba293bea3c8863b77cecdfd3577753ad` |
 | Final bounded implementation commit (§49) | `84b39d0aba293bea3c8863b77cecdfd3577753ad` |
+| Final acceptance commit | `cc851107df188f08f80ee83e453c4594eabbf322` |
+| Final acceptance parent | `dfaa291fb9f4d0594b0d3d17129c297b861fdbdc` |
+| Final acceptance subject | `docs(iwp-006): record final package acceptance` |
 | Completion Review | **PASS — BLOCKING 0** |
 | Open BLOCKING findings | 0 |
 
@@ -89,7 +93,7 @@ Accepted repository surfaces are those modified under authorized bounded slices 
 | Outcome | **PASS — BLOCKING 0** |
 | Review routes consumed | Frontend Architecture; API Standards; Authentication Architecture; Authorization Architecture — per register IWP-006 entry |
 
-Completion Review verified preconditions P1–P5, P7–P8, and P10 at acceptance time. P9 is satisfied by this report. P6 is satisfied by the recorded review outcome above.
+Completion Review verified preconditions P1–P5, P7–P8, and P10 at acceptance time. P9 is satisfied by acceptance commit `cc85110`. P6 is satisfied by the recorded review outcome above.
 
 ---
 
@@ -126,41 +130,52 @@ Accepted with recorded residual risk per `docs/engineering/IMPLEMENTATION_GOVERN
 | **F-002 Phase 2** — caller migration (`getToken()` / bearer arguments at workflow surfaces) | **Deferred to IWP-007** — not accepted within IWP-006 |
 | **F-013 M1** — caller-side legacy token plumbing | **Deferred to IWP-007** — not accepted within IWP-006 |
 | Production/staging `NEXT_PUBLIC_API_URL` runtime values | **UNAVAILABLE** — honestly recorded in slice evidence; not deployment authority |
-| Register / continuity metadata lag | **Non-blocking** — separate integration acts; not required by Package Acceptance Authorization for this acceptance act |
+| Register / continuity metadata lag | **Non-blocking** — separate integration acts; not required for this closure act |
 
-No residual risk is redefined or reopened by this report.
+Closure does not resolve, reopen, or reclassify deferred risks. No residual risk is redefined by this act.
 
 ---
 
-## 7. Acceptance Evidence Summary
+## 7. Acceptance And Closure Evidence Summary
 
-IWP-006 satisfies required acceptance evidence at bounded package level:
+IWP-006 satisfies required acceptance and closure evidence at bounded package level:
 
 1. Package Acceptance Authorization published and effective — `dfaa291`;
-2. zero currently open authorized IWP-006 technical execution packages;
-3. zero published unexecuted IWP-006 bounded implementation authority through §49;
+2. zero currently open authorized IWP-006 technical execution packages at acceptance;
+3. zero published unexecuted IWP-006 bounded implementation authority through §49 at acceptance;
 4. bounded slice dispositions complete in referenced evidence;
 5. Completion Review **PASS — BLOCKING 0**;
 6. `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` §16.2 checklist satisfied or honestly escalated;
 7. recorded frontend typecheck/lint PASS and targeted backend validation PASS in slice evidence;
-8. release, deployment, push, Phase 4, and IWP-007 execution remain separate and unauthorized.
+8. formal acceptance recorded at `cc85110`;
+9. release, deployment, push, Phase 4, and IWP-007 execution remain separate and unauthorized.
 
-Formal acceptance does not rerun full implementation validation because committed evidence and Git lineage establish disposition without contradiction at acceptance time.
+Formal closure does not rerun full implementation validation because committed evidence, acceptance record, and Git lineage establish disposition without contradiction at closure time.
 
 ---
 
 ## 8. Explicit Boundaries
 
-This acceptance act does **not**:
+This closure act does **not**:
 
 - authorize new IWP-006 implementation;
 - authorize IWP-007 or IWP-008 selection, activation, or execution;
 - resolve or implement F-002 Phase 2 within IWP-006;
 - resolve or implement F-013 M1 within IWP-006;
-- close IWP-006;
 - complete Stage I4;
+- perform continuity synchronization;
 - update register, continuity, roadmap, or handoff surfaces;
 - authorize push, release, deployment, or Phase 4.
+
+Closure preserves these boundaries:
+
+1. IWP-006 is **ACCEPTED — CLOSED**.
+2. Stage I4 remains **IN PROGRESS**.
+3. Closure is completed by this bounded lifecycle act.
+4. Continuity synchronization is **not** performed by this act.
+5. IWP-007 and every other Work Package are **not** activated by this action.
+6. Release remains deferred.
+7. Push, deployment, launch, scaling, production access, and Phase 4 remain not authorized.
 
 ---
 
@@ -168,18 +183,23 @@ This acceptance act does **not**:
 
 | Field | Value |
 |-------|-------|
-| IWP-006 acceptance | **GRANTED by this report** |
-| IWP-006 closure | **NOT DECLARED** |
-| Closure authority | Separate explicit act required — Package Acceptance Authorization §10 |
+| IWP-006 acceptance | **GRANTED** — commit `cc85110` |
+| IWP-006 closure | **COMPLETED by this act** |
+| Closure authority | Separate bounded closure act — Package Acceptance Authorization §10; IWP-004 precedent |
+| Continuity synchronization | **NOT PERFORMED** — separate act if and when authorized |
+
+**Decision:** IWP-006 is formally **ACCEPTED — CLOSED**.
+
+Closure does not complete Stage I4, activate another Work Package, authorize release, authorize deployment, authorize production access, or authorize push.
 
 ---
 
-## 10. Acceptance Verdict
+## 10. Acceptance And Closure Verdict
 
-**IWP-006: ACCEPTED — NOT CLOSED**
+**IWP-006: ACCEPTED — CLOSED**
 
 **Acceptance outcome:** Accepted with recorded residual risk
 
 **Release posture:** Deferred
 
-**Exact next authorized action:** Separate IWP-006 closure act if and when explicitly authorized by Repository Authority — not implied by this acceptance. IWP-007 remains inactive pending its own selection, activation, and coordination authority.
+**Exact next authorized action:** Separate continuity synchronization act for register, program, and handoff surfaces if and when explicitly authorized by Repository Authority — not implied by this closure. IWP-007 remains inactive pending its own selection, activation, and coordination authority.
