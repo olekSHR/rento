@@ -3297,3 +3297,323 @@ F-013 read-only discovery is **disposition-complete** when all are satisfied:
 Independent publication readiness review: **COMPLETED - PASS** — BLOCKING-1 corrected; no remaining blocking defects within §41 at publication time.
 
 That review verified publication readiness only. It did not authorize discovery execution.
+
+---
+
+## 42. Eleventh Amendment — Bounded F-002 Phase 1 `api.ts` Cookie-Session Transport Foundation
+
+**Amendment title:** IWP-006 Bounded F-002 Phase 1 — `api.ts` Cookie-Session Transport Foundation
+
+**Amendment status:** PUBLISHED - EFFECTIVE (F-002 PHASE 1 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
+
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
+
+**F-002 Phase 1 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE UNTIL SEPARATELY INVOKED
+
+**Exact technical write set:** ESTABLISHED BY §42.3 (W1 ONLY) — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
+
+**F-013:** VERIFIED within bounded §41 read set — caller graph evidence `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md`
+
+**F-002:** UNRESOLVED — **Phase 1 sole in-scope finding** — **PARTIALLY RESOLVED after Phase 1 disposition only**
+
+**F-003:** UNRESOLVED — EXPLICITLY DEFERRED — not in scope
+
+**F-006:** UNRESOLVED — EXPLICITLY DEFERRED — not in scope
+
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this amendment
+
+**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this amendment
+
+**IWP-007:** NOT SELECTED — NOT ACTIVATED — Phase 2 caller migration deferred
+
+**IWP-008:** NOT SELECTED — NOT ACTIVATED — gallery validation deferred
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+**Stage I4:** IN PROGRESS — NOT COMPLETED by this amendment
+
+**Push:** NOT AUTHORIZED
+
+This eleventh amendment is effective only as authorization for one future bounded F-002 Phase 1 technical implementation pass under §42.3 (W1). It does **not** authorize implementation during publication integration; does **not** execute the write set; does **not** fully resolve or close F-002; does **not** authorize caller migration; does **not** select or activate IWP-007 or IWP-008; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
+
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
+
+### 42.1 Identity and authority chain
+
+| Authority | Role |
+|-----------|------|
+| `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §41 | Published F-013 read-only discovery authorization — consumed |
+| `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` | F-013 VERIFIED caller graph; F-002/F-003 boundary input O5–O7 |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §11 F-002 | Original finding — dual auth client models |
+| `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` | F-001 cookie-session + CSRF model — preserved |
+| `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` | F-005 route guards — preserved |
+| `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-006 entry | Repository areas include `frontend/services/` |
+| `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-007 entry | Caller paths deferred — `frontend/app/`, `frontend/components/` |
+| `backend/app/core/security/dependencies.py` @ discovery baseline | Domain routes authenticate via session cookie — cookie transport compatible |
+| `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` IMPL-ID-11 | One authorization → implementation → review → disposition |
+
+**Finding scope for this amendment draft:**
+
+| Finding | Treatment |
+|---------|-----------|
+| **F-002** | **Primary — IN SCOPE — Phase 1 transport foundation only — PARTIAL resolution target** |
+| F-013 | VERIFIED — not reopened; evidence consumed |
+| F-001 | CLOSED — not reopened |
+| F-005 | RESOLVED — not reopened |
+| **F-003** | **OUT OF SCOPE — explicitly deferred** |
+| **F-006** | **OUT OF SCOPE — explicitly deferred** |
+| F-004 | Substantially addressed in F-001 — not reopened |
+| F-007–F-012 | OUT OF SCOPE |
+| IWP-007 Phase 2 caller migration | **EXPLICITLY DEFERRED** |
+
+**Slice-selection rationale:** F-013 evidence confirms 14 workflow/gallery callers pass dead bearer tokens while backend domain auth uses F-001 session cookies. The smallest coherent IWP-006-only remediation converts **`frontend/services/api.ts` authenticated transport** to cookie-session semantics **without** modifying IWP-007 caller surfaces. Full F-002 closure requires deferred Phase 2 caller migration under separate IWP-007 or cross-package authority.
+
+### 42.2 Objectives (exact)
+
+Future authorized execution must achieve **only** the following:
+
+**F-002 Phase 1 — `api.ts` cookie-session transport foundation**
+
+Convert authenticated exports in `frontend/services/api.ts` so that:
+
+1. Authenticated requests **no longer depend** on a valid bearer token argument.
+2. Authenticated requests use **cookie-session transport** aligned with F-001 (`credentials: "include"`).
+3. State-changing authenticated requests include **CSRF** via existing `getCsrfHeaderValue()` from `frontend/lib/csrf.ts` (import permitted; file not modified).
+4. **Public/unauthenticated** exports preserve current behavior (no session requirement added).
+5. **Exported function signatures** may retain existing `token` parameters for temporary caller compatibility; **`token` values must not control transport** (ignored for auth; no `Authorization: Bearer` emission).
+6. **No bearer token storage** and **no `Authorization: Bearer` header** from any `api.ts` code path after implementation.
+7. F-001 and F-005 semantics remain unchanged.
+
+**Phase 1 disposition target:** F-002 **PARTIALLY RESOLVED — Phase 1 transport foundation only**. F-002 is **not closed**. Dual-module surface (`authFetch` vs `api.ts`) and caller-side token plumbing remain until Phase 2.
+
+**Non-objectives (explicit):**
+
+- Caller migration (IWP-007 Phase 2)
+- Token-argument removal at call sites
+- `getToken()` / `localStorage` removal in pages or components
+- F-003 error-envelope normalization
+- F-006 register-page correction
+- IWP-007 or IWP-008 selection/activation
+- IWP-006 package acceptance or closure
+
+### 42.3 Exact bounded technical write set
+
+**Maximum production paths: 1.** No path beyond this list may be modified. No new production paths may be created outside W1.
+
+#### 42.3.1 Authorized modification
+
+| # | Path | Purpose |
+|---|------|---------|
+| **W1** | `frontend/services/api.ts` | F-002 Phase 1 — authenticated transport conversion to cookie-session; public exports preserved; internal private helpers permitted **inside this file only** |
+
+#### 42.3.2 Authorized reads for implementation (do not expand write set)
+
+Implementation invocation may **read** (not modify) the minimum committed sources required to implement and validate W1:
+
+| # | Path | Purpose |
+|---|------|---------|
+| R-W1 | `frontend/services/api.ts` | Write target |
+| R-A1 | `frontend/lib/authFetch.ts` | F-001 cookie-session reference pattern |
+| R-A2 | `frontend/services/authApi.ts` | Auth entrypoint reference |
+| R-A3 | `frontend/lib/csrf.ts` | CSRF header helper — import allowed |
+| R-A4 | `frontend/context/AuthContext.tsx` | Session model reference |
+| R-B1 | `backend/app/core/security/dependencies.py` | Cookie session dependency verification |
+| R-B2 | `backend/app/core/security/csrf.py` | CSRF contract verification |
+| R-B3 | `backend/app/core/config.py` | Cookie/header name verification |
+| R-T1 | Existing frontend tests touching `api.ts` or auth (if any) | Regression signal only |
+| R-T2 | `frontend/package.json` scripts | typecheck/lint invocation |
+
+Reading backend or other frontend files does **not** authorize modifying them.
+
+#### 42.3.3 Explicit exclusions — prohibited modifications
+
+- Every caller path in F-013 evidence R2–R23
+- `frontend/lib/authFetch.ts`
+- `frontend/services/authApi.ts`
+- `frontend/context/AuthContext.tsx`
+- `frontend/lib/tokenStorage.ts`
+- `frontend/lib/csrf.ts`
+- `frontend/components/*Route.tsx` and all other `frontend/**` paths except W1
+- All backend paths, migrations, tests, manifests, lockfiles, CI, infrastructure, deployment artifacts
+- `docs/**` except this instrument during amendment authoring/publication acts separately authorized
+- `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md`
+
+### 42.4 Implementation contract (executable)
+
+Future execution of W1 **must** implement the following contract:
+
+#### 42.4.1 Transport classes within W1
+
+| Export class | Functions (committed @ F-013 baseline) | Required transport after Phase 1 |
+|--------------|----------------------------------------|--------------------------------|
+| **Public — preserve** | `getProperties`, `reportProperty` | Raw `fetch`; **no** `credentials: "include"` requirement added; **no** CSRF; **no** Authorization header |
+| **Auth-adjacent public POST — preserve** | `registerUser` | Raw `fetch` JSON POST; **no** bearer; behavior unchanged unless required to remove accidental bearer (none today) |
+| **Optional-auth read — preserve public path** | `getPropertyById(id, token?)` | When called **without** token arg: unchanged public fetch. When token arg present: **must not** attach Bearer; use cookie-session fetch if authenticated read is attempted, or treat same as public read if endpoint allows anonymous access |
+| **Authenticated — convert** | All other exported functions accepting `token: string` (26 functions per F-013 O2.1) | Cookie-session fetch with `credentials: "include"`; CSRF on mutating methods; **no** Authorization header; **`token` parameter ignored** |
+
+#### 42.4.2 Internal implementation rules (W1 only)
+
+1. Introduce **private** request helper(s) **inside `api.ts` only** (not exported) that:
+   - set `credentials: "include"`;
+   - attach `X-CSRF-Token` from `getCsrfHeaderValue()` on `POST`, `PUT`, `PATCH`, `DELETE` (and other state-changing methods used in W1);
+   - **never** set `Authorization: Bearer`;
+   - preserve `FormData` bodies for `uploadImage` without forcing JSON `Content-Type`.
+2. **May import** `getCsrfHeaderValue` from `@/lib/csrf`. **Must not modify** `csrf.ts`.
+3. **Must not import** `authFetch` for authenticated domain calls if doing so breaks multipart/upload semantics; inline cookie-session fetch is permitted within W1.
+4. Retain existing exported function names and parameter lists (including `token: string`) for caller compatibility.
+5. Remove all `Authorization: Bearer ${token}` (and variants) from W1.
+6. Preserve existing error-throwing behavior class (generic errors) — **F-003 deferred**; do not redesign error envelopes in Phase 1.
+7. Preserve `API_URL` resolution and public URL construction for public exports.
+
+#### 42.4.3 Backend compatibility assumption (pre-validated for publication)
+
+Committed backend domain authentication uses session cookies via `get_current_user` (`backend/app/core/security/dependencies.py`). Phase 1 assumes authenticated `api.ts` endpoints accept cookie-session auth **without bearer**. If implementation discovers an endpoint that requires bearer or rejects cookie auth → **STOP** per §42.8.
+
+#### 42.4.4 F-001 / F-005 preservation
+
+| Preserved element | Rule |
+|-------------------|------|
+| HttpOnly session cookie model | Unchanged — W1 consumes cookies only |
+| CSRF double-submit | Applied on mutating W1 calls using existing helper |
+| `authFetch` / `authApi` / `AuthContext` / route guards | **Untouched** |
+| Bearer reintroduction | **Forbidden** |
+| F-005 route guard presentation | **Untouched** |
+
+### 42.5 Explicit deferrals (Phase 2 and other findings)
+
+The following are **explicitly deferred** and **prohibited** in Phase 1:
+
+| Deferred item | Owner |
+|---------------|-------|
+| Remove `token` arguments from caller signatures | IWP-007 Phase 2 |
+| Remove `getToken()` usage at call sites | IWP-007 Phase 2 |
+| Remove `localStorage.getItem("access_token")` in pages | IWP-007 Phase 2 |
+| Workflow page migration (R6–R18) | IWP-007 Phase 2 |
+| Gallery caller migration validation (R20–R21) | IWP-007 / IWP-008 coordination |
+| IWP-007 selection or activation | Separate authority |
+| IWP-008 gallery hardening validation | Separate authority |
+| Full F-002 closure | After Phase 2 + disposition |
+| F-003 error-envelope normalization | Separate amendment |
+| F-006 register-page correction (R5) | Separate amendment |
+| Dual-module elimination (`authFetch` vs `api.ts` merge) | Out of Phase 1 scope |
+
+### 42.6 Required validation
+
+| Check | Requirement |
+|-------|-------------|
+| Frontend typecheck | `npm run typecheck` — PASS or recorded stop |
+| Frontend lint | `npm run lint` — PASS or recorded stop if script exists |
+| Bearer elimination inspection | Static review of W1 diff: **zero** `Authorization: Bearer` (or bearer token header construction) in `frontend/services/api.ts` |
+| Credentials inspection | Static review: all authenticated export code paths use `credentials: "include"` |
+| Public preservation inspection | Confirm `getProperties`, `reportProperty`, and unauthenticated `getPropertyById` paths do not require session |
+| CSRF inspection | Confirm mutating authenticated exports attach CSRF header via `getCsrfHeaderValue()` |
+| Existing relevant tests | Run targeted frontend tests if present for auth/api; record PASS or UNAVAILABLE |
+| Scoped `git diff --check` | PASS on W1 only |
+| Backend pytest full suite | **NOT REQUIRED** |
+| Repository-wide validation | **NOT REQUIRED** |
+| Manual runtime workflow QA | **Optional** — record UNAVAILABLE if not performed |
+
+**Evidence artifact (future, not authorized by publication):** `docs/implementation/IWP_006_F002_PHASE1_IMPLEMENTATION_EVIDENCE.md`
+
+### 42.7 Security review requirements
+
+| Gate | Application |
+|------|-------------|
+| **IMPL-GATE-5** | Applies — authenticated client transport touched |
+| Review type | Targeted validation — W1 transport only |
+| Review focus | Confirm no bearer reintroduction; confirm CSRF on mutating calls; confirm public exports unchanged; confirm F-001 not reopened; confirm callers untouched |
+| Controlling prior evidence | F-001 implementation evidence; F-013 caller-graph evidence |
+| Separate token-storage review | **NOT REQUIRED** — no storage change authorized |
+
+Security review is part of the **final review** gate after implementation, not a separate pre-authorization cascade.
+
+### 42.8 Stop conditions
+
+Execution must **STOP** and escalate if:
+
+1. Modification of any path outside W1
+2. Any caller path (R2–R23) requires modification to complete Phase 1
+3. Modification of `authFetch.ts`, `authApi.ts`, `AuthContext.tsx`, `tokenStorage.ts`, or `csrf.ts`
+4. Backend, migration, or config change required
+5. Public exports (`getProperties`, `reportProperty`, unauthenticated `getPropertyById`) cannot preserve current unauthenticated behavior
+6. Cookie-session authentication is incompatible with a required authenticated domain endpoint
+7. CSRF cannot be applied using existing `getCsrfHeaderValue()` helper
+8. Bearer `Authorization` header would need to remain for any authenticated call
+9. Write set must expand beyond W1
+10. IWP-007 or IWP-008 selection/activation becomes necessary to complete Phase 1
+11. F-001 session architecture or F-005 route guards require reopening
+12. F-003 or F-006 scope is absorbed into Phase 1
+13. Full F-002 closure is attempted or recorded
+14. Unrelated dirty working-tree files are treated as authority or required for execution
+15. IWP-006 acceptance, closure, Stage I4 completion, or Phase 4 start attempted
+16. Push, release, deployment, or production access attempted
+
+### 42.9 Slice acceptance criteria (not IWP-006 package acceptance)
+
+Phase 1 is **disposition-complete** when all are satisfied:
+
+| Criterion | Evidence |
+|-----------|----------|
+| W1 only | Diff limited to `frontend/services/api.ts` |
+| Authenticated transport | Cookie-session + CSRF; no bearer in W1 |
+| Public exports preserved | Inspection confirms public behavior unchanged |
+| Caller compatibility | Signatures retained; token args ignored for transport |
+| F-002 disposition | **PARTIALLY RESOLVED — Phase 1 transport foundation only** — **not closed** |
+| F-001 / F-005 preserved | No regression in excluded paths |
+| Phase 2 deferred | Evidence explicitly records IWP-007 caller migration still open |
+| Validation | typecheck/lint PASS; inspections recorded |
+| Security | Targeted review PASS — transport-only |
+| Lifecycle | Implementation evidence recorded; one final review complete |
+
+**IWP-006 register acceptance criteria** remain **open** — F-002 Phase 2, F-003, and other findings prevent package acceptance.
+
+### 42.10 Explicit non-goals
+
+- Full F-002 resolution or closure
+- F-003, F-006, F-007–F-012 implementation
+- Caller migration or token-plumbing cleanup
+- IWP-007 / IWP-008 activation
+- `authFetch` / `authApi` consolidation merge
+- Package acceptance, package closure, Stage I4 completion
+- Push, tag, release, deployment, Phase 4
+- Republication or instrument mutation during Phase 1 implementation
+- Continuity synchronization
+- F-013 evidence mutation
+
+### 42.11 Lifecycle separation
+
+```text
+§42 publication (this authorization act — EFFECTIVE for W1 invocation only)
+    → bounded F-002 Phase 1 implementation invocation (W1) — NOT STARTED
+        → bounded corrections under §42 (if required)
+            → one final targeted review
+                → slice disposition — F-002 PARTIALLY RESOLVED (Phase 1)
+                    → IWP-006 remains NOT ACCEPTED — NOT CLOSED
+```
+
+### 42.12 Publication status record
+
+| Item | Value |
+|------|-------|
+| Amendment number | Eleventh |
+| Amendment section | §42 |
+| Effective | YES — F-002 PHASE 1 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Write set | W1 — `frontend/services/api.ts` only |
+| Phase 1 implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded F-002 Phase 1 implementation invocation referencing published §42.3 (W1); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 42.13 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — W1-only write set; IWP-007/IWP-008 not activated; F-001/F-005 preservation present; F-002 partial disposition defined; caller migration, F-003, and F-006 deferred.
+
+That check verified publication integrity only. It did not authorize implementation execution.
