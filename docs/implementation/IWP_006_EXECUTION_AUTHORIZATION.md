@@ -3938,3 +3938,335 @@ F-006 slice is **disposition-complete** when all are satisfied:
 Bounded pre-publication integrity check: **COMPLETED - PASS** — R5-only production write set; E1-only evidence path; `authApi.registerUser` canonical client; `useAuth().register()` excluded for UX preservation; backend changes not authorized; F-003 and duplicate `api.ts registerUser` cleanup deferred; F-006 disposition target RESOLVED — bounded R5 scope only; IWP-007/IWP-008 not activated; F-001/F-005/F-002 Phase 1 not reopened.
 
 That check verified publication integrity only. It did not authorize implementation execution.
+
+---
+
+## 44. Thirteenth Amendment — Bounded F-003 Frontend Error-Envelope Normalization
+
+**Amendment title:** IWP-006 Bounded F-003 — Frontend Service-Layer Error-Envelope Normalization
+
+**Amendment status:** PUBLISHED - EFFECTIVE (F-003 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
+
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
+
+**F-003 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE UNTIL SEPARATELY INVOKED
+
+**Exact technical write set:** ESTABLISHED BY §44.3 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
+
+**F-002:** PARTIALLY RESOLVED — Phase 1 COMPLETE — IMPL-GATE-5 PASS — NOT REOPENED by this amendment
+
+**F-006:** RESOLVED — BOUNDED R5 SCOPE ONLY — IMPL-GATE-5 PASS — NOT REOPENED by this amendment
+
+**F-003:** UNRESOLVED — **Primary in-scope finding — sole bounded implementation target**
+
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this amendment
+
+**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this amendment
+
+**F-009:** UNRESOLVED — EXPLICITLY OUT OF SCOPE — not activated by this amendment
+
+**F-013:** VERIFIED — evidence consumed; not reopened
+
+**IWP-007:** NOT SELECTED — NOT ACTIVATED — caller migration deferred
+
+**IWP-008:** NOT SELECTED — NOT ACTIVATED
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+**Stage I4:** IN PROGRESS — NOT COMPLETED by this amendment
+
+**Push:** NOT AUTHORIZED
+
+This thirteenth amendment is effective only as authorization for one future bounded F-003 technical implementation pass under §44.3. It does **not** authorize implementation during publication integration; does **not** execute the write set; does **not** resolve or close F-002 Phase 2; does **not** reopen F-006; does **not** activate F-009; does **not** modify caller pages or components; does **not** modify `frontend/services/authApi.ts` unless a future correction pass proves W2 insufficient (not expected); does **not** modify backend, auth transport architecture, or session semantics; does **not** select or activate IWP-007 or IWP-008; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
+
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
+
+### 44.1 Identity and authority chain
+
+| Authority | Role |
+|-----------|------|
+| `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §39–§43 | Active IWP-006 package authority |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §6.2, §11 F-003 | Original finding — error-envelope variance |
+| `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` M10, O7 | Error variance confirmed; caller migration not required for envelope-only slice |
+| `docs/implementation/IWP_006_F002_PHASE1_IMPLEMENTATION_EVIDENCE.md` | F-002 Phase 1 — generic-error preservation superseded only as defined in §44.4.5 |
+| `docs/implementation/IWP_006_F006_IMPLEMENTATION_EVIDENCE.md` | F-006 complete — not reopened |
+| `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-006 | Repository areas include `frontend/lib/`, `frontend/services/` |
+| Committed `backend/app/core/handlers.py` @ `169ca33` | Application errors return `{ success: false, message: string }` |
+| Committed `frontend/lib/authFetch.ts`, `frontend/services/api.ts`, `frontend/services/authApi.ts` @ `169ca33` | Implementation surfaces |
+
+**Finding scope for this amendment draft:**
+
+| Finding | Treatment |
+|---------|-----------|
+| **F-003** | **Primary — IN SCOPE — frontend service-layer error-envelope normalization — RESOLVED target after disposition** |
+| F-002 | PARTIALLY RESOLVED (Phase 1) — not reopened; Phase 2 deferred |
+| F-006 | RESOLVED (R5) — not reopened |
+| F-001 | RESOLVED — not reopened |
+| F-005 | RESOLVED — not reopened |
+| **F-009** | **OUT OF SCOPE — not activated** |
+| F-007–F-012 | OUT OF SCOPE |
+| IWP-007 caller migration | **EXPLICITLY DEFERRED** |
+
+**Slice-selection rationale:** Discovery F-003 and §39 record that **complete** resolution requires `frontend/services/api.ts` in addition to auth-stack normalization. F-013 M10 confirms error variance between `authFetch` generic status errors and partial parsing in `api.ts`. Committed callers consume thrown `Error` messages only; service-layer envelope normalization does **not** require caller migration or IWP-007 activation. Smallest **architecture-compliant** design places reusable parsing logic in `frontend/lib/` (see §44.2) rather than importing `api.ts` from `authFetch.ts`.
+
+### 44.2 Architectural import-boundary determination
+
+**Verified committed import facts @ `169ca33`:**
+
+| Module | Role | Current `@/lib` imports |
+|--------|------|-------------------------|
+| `frontend/lib/authFetch.ts` | Authenticated cookie-session transport wrapper | `csrf` |
+| `frontend/services/api.ts` | Domain/admin/realtor API client (`sessionFetch` internal) | `csrf`, `getImageUrl` |
+| `frontend/services/authApi.ts` | Auth entrypoint facade | none directly; uses `authFetch` |
+
+**Determination:** **Option B — shared helper under `frontend/lib/`**
+
+`frontend/services/api.ts` **must not** import generic error-parsing logic from `frontend/lib/authFetch.ts`. Evidence:
+
+1. `api.ts` and `authFetch` are separate client models (discovery F-002/F-003; F-013 M10).
+2. `api.ts` uses internal `sessionFetch`; it does not consume `authFetch` as transport.
+3. Importing a domain API client from an authenticated transport wrapper inverts module responsibility and couples unrelated surfaces.
+4. `api.ts` already imports neutral `@/lib` utilities (`csrf`, `getImageUrl`) — a small shared parser in `frontend/lib/` matches existing dependency direction.
+
+**Therefore the smallest architecture-compliant write set is:**
+
+- **W1** — new shared parser module in `frontend/lib/`
+- **W2** — `authFetch.ts` consumes W1
+- **W3** — `api.ts` consumes W1
+
+`frontend/services/authApi.ts` is **excluded**. Auth paths using `authFetch` inherit W2 automatically; login/password-reset raw-fetch paths already parse `message` and are out of scope unless a correction pass proves inconsistency (not expected at authoring time).
+
+### 44.3 Exact bounded technical write set
+
+**Maximum production paths: 3.** No path beyond this list may be modified. No caller paths may be modified.
+
+#### 44.3.1 Authorized modification
+
+| # | Path | Purpose |
+|---|------|---------|
+| **W1** | `frontend/lib/apiError.ts` | **New** — shared safe backend error-envelope parser for frontend service clients |
+| **W2** | `frontend/lib/authFetch.ts` | Consume W1 on non-OK responses; preserve specialized 401/403 behavior |
+| **W3** | `frontend/services/api.ts` | Consume W1 for authorized failure paths; replace generic `"Failed to ..."` throws on session/authenticated and public fetch failure paths covered by this slice |
+
+#### 44.3.2 Authorized evidence artifact (future implementation)
+
+| # | Path | Purpose |
+|---|------|---------|
+| **E1** | `docs/implementation/IWP_006_F003_IMPLEMENTATION_EVIDENCE.md` | F-003 implementation and validation evidence |
+
+#### 44.3.3 Authorized reads for implementation (do not expand write set)
+
+| # | Path | Purpose |
+|---|------|---------|
+| R-W1–W3 | W1, W2, W3 | Write targets |
+| R-A1 | `frontend/services/authApi.ts` | Auth facade reference — read only |
+| R-A2 | `frontend/context/AuthContext.tsx` | Caller reference — read only |
+| R-B1 | `backend/app/core/handlers.py` | Application error envelope |
+| R-B2 | `backend/app/core/exceptions.py` | Exception classes |
+| R-C1 | `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §6.2 | Error variance baseline |
+| R-C2 | `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` | Caller graph — confirm no caller edits required |
+| R-T1 | `frontend/package.json` scripts | typecheck/lint invocation |
+
+Reading any path above does **not** authorize modifying it.
+
+#### 44.3.4 Explicit exclusions — prohibited modifications
+
+- All `frontend/app/**` and `frontend/components/**` caller paths (including `register/page.tsx`)
+- `frontend/services/authApi.ts` (unless a future bounded correction amendment explicitly authorizes it — not expected)
+- `frontend/context/AuthContext.tsx`
+- `frontend/lib/csrf.ts`, `frontend/lib/tokenStorage.ts`
+- Removal of dead `api.ts::registerUser`
+- F-006 R5 bounded error heuristic removal
+- Auth transport consolidation, bearer/localStorage changes, cookie/session architecture changes
+- Backend, migrations, tests, manifests, lockfiles, CI, infrastructure
+- F-002 Phase 2 caller migration
+- IWP-007 / IWP-008 surfaces
+- `docs/**` except E1 during implementation and this instrument during separate publication acts
+
+### 44.4 Implementation contract (executable)
+
+Future execution of W1–W3 **must** implement the following contract:
+
+#### 44.4.1 Error-envelope precedence (all authorized client paths)
+
+For non-success HTTP responses handled by W2 or W3:
+
+1. **Preserve specialized auth/session behavior first** — W2 must retain existing `401` → `UnauthorizedError` and `403` → `ForbiddenError` handling before generic envelope parsing.
+2. **Parse safe string `message`** when response JSON contains non-empty string `message` (committed application handler contract).
+3. **Parse safe string `detail`** only when `message` is unavailable and `detail` is a **string** — never surface array/object validation structures directly.
+4. **Do not expose** FastAPI validation arrays/objects or raw JSON structures in thrown user-facing messages.
+5. **Fall back** to stable operation-specific fallback strings (existing generic copy class permitted) or status-based fallback when no safe string is available.
+6. **Preserve thrown `Error` interface** — no new error class taxonomy required; existing caller signatures unchanged.
+
+#### 44.4.2 W1 — shared parser module rules
+
+1. Export parser helper(s) from `frontend/lib/apiError.ts` for use by W2 and W3 only.
+2. Parser must be **transport-agnostic** — accepts `Response` (or equivalent parsed body + status) without requiring auth cookies or CSRF.
+3. Must implement precedence in §44.4.1.
+4. Must not import from `authFetch.ts` or `api.ts`.
+
+#### 44.4.3 W2 — authFetch rules
+
+1. Replace generic `Request failed: ${status}` throws on non-OK (except existing 401/403 specialized paths) with W1 parser + stable fallback.
+2. Preserve `credentials: "include"`, CSRF header attachment, and JSON content-type behavior.
+3. Must not import from `api.ts`.
+
+#### 44.4.4 W3 — api.ts rules
+
+1. Import W1 parser only — **must not** import `authFetch.ts`.
+2. Apply W1 to non-success responses on internal `sessionFetch` failure paths and raw public `fetch` failure paths where generic `"Failed to ..."` throws exist today.
+3. Consolidate existing partial parser sites (`parseRealtorApplicationError`, `parseUserRoleError`) through W1 where doing so remains inside bounded envelope normalization — without expanding scope to remove dead exports or change transport.
+4. Preserve all export names, parameter lists, transport behavior (cookie-session, CSRF, no bearer), and F-002 Phase 1 semantics except error **message content** class.
+5. Preserve existing operation-specific fallback strings where no safe backend message exists.
+6. Must not modify caller-visible function signatures.
+
+#### 44.4.5 Explicit supersession of §42 generic-error preservation
+
+§42.4.2 item 6 preserved generic error-throwing **behavior class** for F-002 Phase 1 transport foundation. This amendment **supersedes that preservation only** for authorized F-003 error-envelope normalization inside W2 and W3:
+
+- Permitted: replace content of thrown `Error` messages using §44.4.1 precedence.
+- Not permitted: change transport, CSRF, credentials, bearer elimination, export signatures, or authenticated/public transport classification from §42.
+
+No other §42 boundary or disposition is superseded.
+
+#### 44.4.6 F-001 / F-005 / F-006 / F-009 preservation
+
+| Preserved element | Rule |
+|-------------------|------|
+| Cookie-session model (F-001) | Unchanged — error parsing only |
+| Route guard presentation (F-005) | Untouched |
+| Register flow (F-006 R5) | Untouched — including local heuristic |
+| Session renewal / 401 recovery expansion (F-009) | **Not in scope** — do not add refresh or global 401 recovery |
+
+### 44.5 Explicit deferrals
+
+| Deferred item | Owner |
+|---------------|-------|
+| Caller page/component migration | IWP-007 / separate authority |
+| `authApi.ts` parser deduplication | Optional future slice — not required for F-003 closure |
+| Dead `api.ts registerUser` removal | Separate deferred slice |
+| F-002 Phase 2 / full F-002 closure | IWP-007 coordination |
+| F-009 session-failure semantics | Separate finding |
+| Full IWP-006 package acceptance | Blocked by remaining open findings |
+
+### 44.6 Required validation
+
+| Check | Requirement |
+|-------|-------------|
+| Frontend typecheck | `npm run typecheck` — PASS or recorded stop |
+| Frontend lint | `npm run lint` — PASS or recorded stop |
+| W2 401/403 preservation | Static inspection — specialized errors unchanged |
+| Non-string `detail` safety | Static inspection — no direct surfacing of array/object validation payloads |
+| W3 generic failure paths | Static inspection — authorized paths use W1 envelope/fallback contract |
+| Zero `api.ts` → `authFetch` import | Static inspection — PASS |
+| W1 transport-agnostic | Static inspection — no auth/session imports in W1 |
+| F-001/F-002 Phase 1/F-005/F-006 preservation | Static inspection — no transport/signature regression |
+| Scoped `git diff --check` | PASS on W1–W3 (+ E1 if created) |
+| Targeted automated frontend tests | **NOT APPLICABLE** — no frontend `*.test.*` / `*.spec.*` infrastructure @ `169ca33`; do not add dependencies or CI |
+| Deterministic source-level validation cases | Record in E1: (a) handler-style `{ message: string }`; (b) string `detail` only; (c) array/object `detail` fallback; (d) W2 401/403 unchanged |
+| Repository-wide validation | **NOT REQUIRED** |
+| Manual runtime browser QA | **Optional** — record NOT RUN if not performed |
+
+**Evidence artifact (future, not authorized by amendment authoring):** `docs/implementation/IWP_006_F003_IMPLEMENTATION_EVIDENCE.md`
+
+### 44.7 Security review requirements
+
+| Gate | Application |
+|------|-------------|
+| **IMPL-GATE-5** | Applies — client error presentation touched |
+| Review type | Targeted validation — envelope parsing only |
+| Review focus | No validation-structure leakage; 401/403 preservation; no auth transport regression; no caller expansion |
+| Separate token-storage review | **NOT REQUIRED** |
+
+Security review is part of the **final review** gate after implementation, not a separate pre-authorization cascade.
+
+### 44.8 Stop conditions
+
+Execution must **STOP** and escalate if:
+
+1. Modification of any path outside W1–W3 (+ E1 evidence)
+2. Any caller path requires modification
+3. `authApi.ts` modification becomes necessary (unless separately authorized)
+4. Backend or migration change required
+5. Auth/session/cookie/CSRF transport behavior would change
+6. F-009 scope (refresh, global 401 recovery) must be absorbed
+7. Non-string FastAPI `detail` cannot meet safe fallback without expanding scope
+8. New npm dependency or lockfile change required
+9. F-001, F-005, F-002 Phase 1, or F-006 require reopening beyond §44.4.5 supersession
+10. IWP-007 or IWP-008 activation becomes necessary
+11. Write set must expand beyond W1–W3
+12. Unrelated dirty working-tree files prevent scoped isolation
+13. IWP-006 acceptance, closure, or Stage I4 completion attempted
+14. Push, release, deployment, or production access attempted
+
+### 44.9 Slice acceptance criteria (not IWP-006 package acceptance)
+
+F-003 slice is **disposition-complete** when all are satisfied:
+
+| Criterion | Evidence |
+|-----------|----------|
+| W1–W3 only | Production diff limited to authorized paths |
+| Shared parser | W1 used by W2 and W3; no `api.ts` → `authFetch` import |
+| Envelope contract | §44.4.1 precedence implemented |
+| Caller compatibility | Export signatures unchanged; callers untouched |
+| F-003 disposition | **RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE** |
+| Prior slices preserved | F-001, F-005, F-002 Phase 1, F-006 not regressed |
+| Validation | typecheck/lint PASS; inspections recorded |
+| Security | Targeted review PASS — envelope-only |
+| Lifecycle | Implementation evidence recorded; one final review complete |
+
+**IWP-006 register acceptance criteria** remain **open** — F-002 Phase 2, F-009, and other findings prevent package acceptance.
+
+### 44.10 Explicit non-goals
+
+- F-002 Phase 2 or full F-002 closure
+- F-006, F-007–F-012 implementation or reopening
+- F-009 session-failure semantics
+- Caller migration or page edits
+- `authApi.ts` cleanup unless future correction amendment
+- Dead symbol removal
+- Auth client merge
+- IWP-007 / IWP-008 activation
+- Package acceptance, package closure, Stage I4 completion
+- Push, tag, release, deployment, Phase 4
+- Continuity synchronization during publication (unless separately authorized)
+- Republication or instrument mutation during F-003 implementation (except E1 evidence)
+
+### 44.11 Lifecycle separation
+
+```text
+§44 publication (this authorization act — EFFECTIVE for W1–W3 invocation only)
+    → bounded F-003 implementation invocation (W1–W3) — NOT STARTED
+        → bounded corrections under §44 (if required)
+                → one final targeted review (IMPL-GATE-5)
+                    → slice disposition — F-003 RESOLVED (bounded envelope scope)
+                        → IWP-006 remains NOT ACCEPTED — NOT CLOSED
+```
+
+### 44.12 Publication status record
+
+| Item | Value |
+|------|-------|
+| Amendment number | Thirteenth |
+| Amendment section | §44 |
+| Effective | YES — F-003 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY |
+| Reviewed | **NOT APPLICABLE** — bounded pre-publication integrity check only |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Write set | W1 `frontend/lib/apiError.ts`; W2 `frontend/lib/authFetch.ts`; W3 `frontend/services/api.ts` |
+| F-003 implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded F-003 implementation invocation referencing published §44.3 (W1–W3); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 44.13 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — architecture-compliant three-path write set (shared `frontend/lib/` parser + `authFetch` + `api.ts`); no caller migration; no IWP-007 activation; §42 generic-error preservation supersession scoped to envelope content only; F-001/F-005/F-006/F-002 Phase 1 not reopened; no frontend test infrastructure — deterministic source-level validation defined; authApi excluded as non-required; F-003 sole finding; disposition target RESOLVED — bounded frontend error-envelope scope.
+
+That check verified publication integrity only. It did not authorize implementation execution.
