@@ -10,8 +10,8 @@
 | Controlling authority | `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §45 |
 | Finding scope | F-009 only — bounded session-failure reconciliation |
 | F-009 implementation | COMPLETED — W1, W2, W3 |
-| Independent final targeted review | **NOT RUN** — IMPL-GATE-5 deferred |
-| F-009 slice disposition | **IMPLEMENTED — PENDING IMPL-GATE-5 VALIDATION** |
+| Independent final targeted review | **PASS** — IMPL-GATE-5 (§45.7 session-failure reconciliation validation) |
+| F-009 slice disposition | **RESOLVED — BOUNDED SESSION-FAILURE RECONCILIATION SCOPE — IMPL-GATE-5 PASS** |
 | IWP-006 status | **SELECTED — ACTIVE — NOT ACCEPTED — NOT CLOSED** |
 | IWP-006 acceptance | NOT GRANTED |
 | IWP-006 closure | NOT GRANTED |
@@ -159,11 +159,89 @@ Implementation-time checks executed from `frontend/`.
 | Targeted automated frontend tests | **NOT APPLICABLE** | no frontend test infrastructure per §45 |
 | Manual runtime browser QA | **NOT RUN** | not required by §45 |
 | Repository-wide validation | **NOT RUN** | not required |
-| IMPL-GATE-5 | **NOT RUN** | deferred by invocation scope |
+| IMPL-GATE-5 | **PASS** — read-only targeted validation completed |
 
 ---
 
-## 10. Scope Exclusions and Remaining Findings
+## 10. IMPL-GATE-5 Targeted Review (Read-Only)
+
+| Field | Value |
+|-------|-------|
+| Review type | Read-only targeted validation — session-failure reconciliation only |
+| Review result | **PASS** |
+| Reviewed commit | `eca4296223f7ad4b36901aa0fc0f6a8cfc9dbe1d` |
+| Controlling gate | §45.7 / §45.9 |
+
+### 10.1 Implementation commit integrity
+
+| Finding | Verdict |
+|---------|---------|
+| Commit hash and subject match authorized implementation | **PASS** |
+| Committed paths exactly W1 + W2 + W3 + E1 | **PASS** |
+| No caller, guard, backend, dependency, or unrelated documentation paths | **PASS** |
+
+### 10.2 W1 neutral event helper
+
+| Finding | Verdict |
+|---------|---------|
+| Exports bounded `dispatchAuthUnauthorized()` helper | **PASS** |
+| Canonical event name `auth:unauthorized` | **PASS** |
+| Browser `window` guard only | **PASS** |
+| No React, AuthContext, router, API, storage, cookie, refresh, retry, or dependency imports | **PASS** |
+
+### 10.3 W2 authFetch correction
+
+| Finding | Verdict |
+|---------|---------|
+| Imports and uses W1 | **PASS** |
+| **401** dispatches W1 and throws `UnauthorizedError("Session expired or invalid")` | **PASS** |
+| **403** does not dispatch W1; throws `ForbiddenError("Access forbidden")` | **PASS** |
+| 401/403 no longer conflated for session invalidation | **PASS** |
+| F-003 generic non-OK parsing, CSRF, credentials, success path preserved | **PASS** |
+
+### 10.4 W3 sessionFetch reconciliation
+
+| Finding | Verdict |
+|---------|---------|
+| Imports W1 directly — zero `authFetch` import | **PASS** |
+| **401** dispatches W1 before returning original `Response` | **PASS** |
+| Response body not consumed or parsed inside `sessionFetch` | **PASS** |
+| **403** does not dispatch W1 | **PASS** |
+| Callers, domain-specific errors, F-003 parsing, dead `registerUser` preserved | **PASS** |
+
+### 10.5 End-to-end event flow
+
+| Finding | Verdict |
+|---------|---------|
+| authFetch **401** → W1 → existing AuthContext listener clears state | **PASS** |
+| authFetch **403** does not initiate session-invalidation flow | **PASS** |
+| sessionFetch **401** initiates reconciliation flow | **PASS** |
+| sessionFetch **403** does not initiate reconciliation flow | **PASS** |
+| W1 performs no navigation; AuthContext and guards required no F-009 edits | **PASS** |
+
+### 10.6 Preservation and proportional checks
+
+| Finding | Verdict |
+|---------|---------|
+| F-001, F-002 Phase 1, F-003, F-005, F-006 boundaries preserved | **PASS** |
+| authApi.ts unchanged; backend unchanged | **PASS** |
+| `npm run typecheck` | **PASS** |
+| `npm run lint` | **PASS** |
+| E1 material accuracy | **PASS** |
+| IWP-007 not activated | **PASS** |
+
+### 10.7 Accepted residuals (non-blocking)
+
+| Residual | Verdict |
+|----------|---------|
+| Repeated concurrent **401** events | **ACCEPTED RESIDUAL** — idempotent AuthContext clear |
+| No frontend unit-test framework | **ACCEPTED RESIDUAL** — §45 allows static validation |
+| `authApi.ts` raw-fetch paths | **ACCEPTED RESIDUAL** — explicitly excluded by §45 |
+| Dead `api.ts::registerUser` | **ACCEPTED RESIDUAL** — explicitly excluded by §45 |
+
+---
+
+## 11. Scope Exclusions and Remaining Findings
 
 | Item | Status |
 |------|--------|
@@ -175,7 +253,7 @@ Implementation-time checks executed from `frontend/`.
 
 ---
 
-## 11. Stop-Condition Assessment (§45.6)
+## 12. Stop-Condition Assessment (§45.6)
 
 | Condition | Status |
 |-----------|--------|
@@ -188,48 +266,71 @@ Implementation-time checks executed from `frontend/`.
 
 ---
 
-## 12. Risks and Unresolved Limitations
+## 13. Risks and Unresolved Limitations
 
 | Risk | Severity | Notes |
 |------|----------|-------|
-| Concurrent **401** responses may emit multiple events | Low | Idempotent AuthContext clear; §45 excludes deduplication infrastructure |
-| No automated frontend tests | Medium | Static event-flow cases recorded; IMPL-GATE-5 pending |
+| Concurrent **401** responses may emit multiple events | Low | **Accepted residual** — idempotent AuthContext clear; IMPL-GATE-5 PASS recorded |
+| No automated frontend tests | Medium | Static event-flow cases recorded; IMPL-GATE-5 PASS recorded |
+| `authApi.ts` raw-fetch variance | Low | **Accepted residual** under §45 |
+| Dead `registerUser` export | Low | Deferred separate slice |
 | Pre-existing unrelated dirty working tree | Low | Isolated at commit staging |
 
 ---
 
-## 13. Implementation Commit Record
+## 14. Deferred Work
+
+| Item | Owner |
+|------|-------|
+| Dead `api.ts::registerUser` removal | Separate deferred slice |
+| F-002 Phase 2 caller migration | IWP-007 |
+| `authApi.ts` parser deduplication | Optional future slice |
+| IWP-006 package acceptance | Blocked by remaining open findings |
+
+---
+
+## 15. Final Git State
+
+| Item | Value |
+|------|-------|
+| F-009 implementation commit | `eca4296223f7ad4b36901aa0fc0f6a8cfc9dbe1d` (see §15.1) |
+| F-009 disposition commit | Recorded at disposition finalization (see §15.2) |
+| Push | NOT PERFORMED — not authorized |
+
+### 15.1 Implementation commit record
 
 | Field | Value |
 |-------|-------|
-| Commit hash | Locate via `git log -1 --grep='fix(iwp-006): reconcile F-009 session failures'` on parent `b201919` |
+| Commit hash | `eca4296223f7ad4b36901aa0fc0f6a8cfc9dbe1d` |
 | Parent | `b201919bdaf57f88cc6899c41078aad2de82fe19` |
 | Subject | `fix(iwp-006): reconcile F-009 session failures` |
 | Paths committed | W1 + W2 + W3 + E1 only |
 
----
-
-## 14. Final Git State
-
-| Item | Value |
-|------|-------|
-| Push | NOT PERFORMED — not authorized |
-
----
-
-## 15. Posture
+### 15.2 Disposition commit record
 
 | Field | Value |
 |-------|-------|
-| F-009 | **IMPLEMENTED — PENDING IMPL-GATE-5 VALIDATION** |
-| IWP-006 | **SELECTED — ACTIVE — NOT ACCEPTED — NOT CLOSED** |
-| IWP-007 | **NOT ACTIVATED** |
-
-Does **not** claim F-009 RESOLVED, IMPL-GATE-5 PASS, IWP-006 acceptance/closure, continuity synchronization, release readiness, deployment, or push authorization.
+| Commit hash | Recorded at disposition finalization |
+| Subject | `docs(iwp-006): record F-009 resolved disposition` |
+| Paths committed | E1 only |
 
 ---
 
-## 16. Acceptance Verdicts (Implementation Only)
+## 16. Final Disposition
+
+| Field | Value |
+|-------|-------|
+| F-009 | **RESOLVED — BOUNDED SESSION-FAILURE RECONCILIATION SCOPE — IMPL-GATE-5 PASS** |
+| IWP-006 | **SELECTED — ACTIVE — NOT ACCEPTED — NOT CLOSED** |
+| IWP-007 | **NOT ACTIVATED** |
+| F-002 Phase 2 | **UNRESOLVED** — deferred |
+| Dead `registerUser` cleanup | **UNRESOLVED** — deferred |
+
+Slice disposition recorded in this evidence artifact only. Does **not** establish IWP-006 acceptance, IWP-006 closure, Stage completion, continuity synchronization, release readiness, deployment, or push authorization.
+
+---
+
+## 17. Acceptance Verdicts
 
 | Gate | Verdict |
 |------|---------|
@@ -237,13 +338,16 @@ Does **not** claim F-009 RESOLVED, IMPL-GATE-5 PASS, IWP-006 acceptance/closure,
 | W1/W2/W3 contract | **PASS** |
 | Validation (typecheck/lint) | **PASS** |
 | Preservation boundaries | **PASS** |
-| IMPL-GATE-5 | **NOT RUN** |
-| F-009 RESOLVED disposition | **NOT RECORDED** |
+| Session-failure reconciliation review (IMPL-GATE-5) | **PASS** |
+| 401/403 semantics review (IMPL-GATE-5) | **PASS** |
+| Event-flow review (IMPL-GATE-5) | **PASS** |
+| IMPL-GATE-5 overall | **PASS** |
+| F-009 RESOLVED disposition | **RECORDED** — bounded session-failure reconciliation scope |
 | IWP-006 acceptance/closure | **NOT GRANTED** |
-| Push | **NOT RUN** |
+| Push | **NOT RUN** — not authorized |
 
 ---
 
-## 17. Exact Next Authorized Action
+## 18. Exact Next Authorized Action
 
-**One separate bounded IMPL-GATE-5 targeted read-only review of F-009 implementation against published §45 — without recording F-009 as RESOLVED unless review PASS and disposition separately authorized; without accepting or closing IWP-006; without activating IWP-007; without push.**
+**One separate IWP-006 lifecycle decision selecting the next bounded finding or work-package act (for example dead `api.ts::registerUser` cleanup, F-002 Phase 2 planning, or optional `authApi.ts` parser deduplication) under existing Repository Authority — without automatically activating IWP-007, without push, without package acceptance or closure, and without treating the F-009 disposition as full IWP-006 resolution.**
