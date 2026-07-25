@@ -3617,3 +3617,324 @@ Phase 1 is **disposition-complete** when all are satisfied:
 Bounded pre-publication integrity check: **COMPLETED - PASS** — W1-only write set; IWP-007/IWP-008 not activated; F-001/F-005 preservation present; F-002 partial disposition defined; caller migration, F-003, and F-006 deferred.
 
 That check verified publication integrity only. It did not authorize implementation execution.
+
+---
+
+## 43. Twelfth Amendment — Bounded F-006 Register-Flow Correction (R5)
+
+**Amendment title:** IWP-006 Bounded F-006 — Register Page Canonical Auth Client Alignment
+
+**Amendment status:** PUBLISHED - EFFECTIVE (F-006 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
+
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
+
+**F-006 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE UNTIL SEPARATELY INVOKED
+
+**Exact technical write set:** ESTABLISHED BY §43.3 (R5 ONLY) — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
+
+**F-002:** PARTIALLY RESOLVED — Phase 1 COMPLETE — IMPL-GATE-5 PASS — NOT REOPENED by this amendment
+
+**F-003:** UNRESOLVED — EXPLICITLY DEFERRED — not in scope
+
+**F-006:** UNRESOLVED — **Primary in-scope finding — sole bounded implementation target**
+
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this amendment
+
+**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this amendment
+
+**F-013:** VERIFIED — evidence consumed; not reopened
+
+**IWP-007:** NOT SELECTED — NOT ACTIVATED — caller migration deferred
+
+**IWP-008:** NOT SELECTED — NOT ACTIVATED
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+**Stage I4:** IN PROGRESS — NOT COMPLETED by this amendment
+
+**Push:** NOT AUTHORIZED
+
+This twelfth amendment is effective only as authorization for one future bounded F-006 technical implementation pass under §43.3 (R5). It does **not** authorize implementation during publication integration; does **not** execute the write set; does **not** resolve or close F-002 Phase 2; does **not** implement F-003; does **not** modify `api.ts`, AuthContext, authApi, authFetch, csrf, tokenStorage, backend, or IWP-007 caller surfaces; does **not** select or activate IWP-007 or IWP-008; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
+
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
+
+### 43.1 Identity and authority chain
+
+| Authority | Role |
+|-----------|------|
+| `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §42 and prior published acts | Active IWP-006 package authority |
+| `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` O2.1, R5, M6–M7 | F-006 caller evidence — R5 bypass confirmed |
+| `docs/implementation/IWP_006_F002_PHASE1_IMPLEMENTATION_EVIDENCE.md` | F-002 Phase 1 complete — `api.ts registerUser` remains public raw fetch; not reopened |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §11 F-006 | Original finding — duplicate `registerUser` clients |
+| `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` | F-001 cookie-session + CSRF model — preserved |
+| `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` | F-005 route guards — preserved |
+| Committed `frontend/app/register/page.tsx` @ `1c2217a` | R5 write target baseline |
+| Committed `frontend/services/authApi.ts` @ `1c2217a` | Canonical `registerUser(RegisterRequest)` via `authFetch` |
+| Committed `frontend/context/AuthContext.tsx` @ `1c2217a` | Canonical auth stack — `register` delegates to `authApi.registerUser` |
+| Committed `backend/app/routers/auth.py` @ `1c2217a` | Registration contract — `POST /auth/register` JSON `{ email, password }`; session + CSRF cookies issued |
+| Committed `backend/app/core/security/csrf.py` @ `1c2217a` | `/auth/register` CSRF-exempt; cookie-session model compatible |
+
+**Finding scope for this amendment draft:**
+
+| Finding | Treatment |
+|---------|-----------|
+| **F-006** | **Primary — IN SCOPE — register-page canonical auth alignment — RESOLVED target after disposition** |
+| F-013 | VERIFIED — consumed; not reopened |
+| F-001 | RESOLVED — not reopened |
+| F-005 | RESOLVED — not reopened |
+| **F-002** | **PARTIALLY RESOLVED (Phase 1) — not reopened; Phase 2 deferred** |
+| **F-003** | **OUT OF SCOPE — explicitly deferred** |
+| F-007–F-012 | OUT OF SCOPE |
+| IWP-007 caller migration | **EXPLICITLY DEFERRED** |
+
+**Slice-selection rationale:** F-002 Phase 1 is complete. F-013 evidence confirms R5 (`frontend/app/register/page.tsx`) is the sole committed caller of `api.ts registerUser` and bypasses the canonical auth stack (`authApi` / `AuthContext`). Committed `authApi.registerUser` already implements registration via `authFetch` with `credentials: "include"`. Correction requires **one production file only** — R5 import and submit-path realignment. No backend change, no AuthContext change, and no F-002 Phase 2 caller migration is required.
+
+### 43.2 Objectives (exact)
+
+Future authorized execution must achieve **only** the following:
+
+**F-006 — Register page canonical auth client alignment (R5)**
+
+Correct `frontend/app/register/page.tsx` so that:
+
+1. Registration submission uses the **canonical auth client** (`registerUser` from `@/services/authApi`) rather than `registerUser` from `@/services/api`.
+2. Registration transport uses the **existing cookie-session model** via `authFetch` (`credentials: "include"`). CSRF header attachment follows existing `authFetch` behavior; backend `/auth/register` is CSRF-exempt.
+3. **No bearer token** emission, storage, or `access_token` / `localStorage` authentication reads or writes are introduced in R5.
+4. Submitted payload remains **`RegisterRequest`-compatible:** `{ email: string; password: string }` with the same trimmed email and password values currently submitted.
+5. **Page-local validation, loading state, error presentation, success panel, and `/login` navigation** remain functionally equivalent to committed R5 unless a bounded correction is strictly required to preserve coherent behavior after auth-client switch.
+6. **Success behavior preservation rule:** Committed R5 shows a post-register success panel (“Account created. You can now sign in.”) and `/login` link **without** establishing authenticated UI state. Therefore R5 **must not** call `useAuth().register()` if that would hydrate session state and alter this success UX. R5 **must** call `authApi.registerUser` directly (same HTTP entrypoint used inside `AuthContext.register` before session hydration).
+7. **Backend registration contract unchanged** — same endpoint, payload, and response consumption pattern (`UserResponse` / `CurrentUserResponse`); no backend edits.
+8. **Login, logout, session restoration, route guards, and authenticated domain transport** remain untouched.
+9. F-001, F-005, and F-002 Phase 1 semantics are **not reopened**.
+10. Only **F-006** is resolved by this slice.
+
+**Disposition target:** F-006 **RESOLVED — bounded R5 scope only** after implementation, validation, and targeted review.
+
+**Non-objectives (explicit):**
+
+- Removing `registerUser` from `api.ts` (F-007 / duplicate-symbol cleanup — separate scope)
+- F-003 global error-envelope normalization across auth clients
+- F-002 Phase 2 caller migration
+- AuthContext, authApi, authFetch, csrf, or tokenStorage modification
+- Auto-login or post-register redirect behavior change unless required solely to preserve coherent error handling
+- IWP-007 or IWP-008 selection/activation
+- IWP-006 package acceptance or closure
+
+### 43.3 Exact bounded technical write set
+
+**Maximum production paths: 1.** No path beyond this list may be modified. No new production paths may be created outside R5.
+
+#### 43.3.1 Authorized modification
+
+| # | Path | Purpose |
+|---|------|---------|
+| **R5** | `frontend/app/register/page.tsx` | F-006 — replace `api.ts` register import/call with canonical `authApi.registerUser`; preserve page UX and validation |
+
+#### 43.3.2 Authorized evidence artifact (future implementation)
+
+| # | Path | Purpose |
+|---|------|---------|
+| **E1** | `docs/implementation/IWP_006_F006_IMPLEMENTATION_EVIDENCE.md` | F-006 implementation and validation evidence |
+
+#### 43.3.3 Authorized reads for implementation (do not expand write set)
+
+| # | Path | Purpose |
+|---|------|---------|
+| R-R5 | `frontend/app/register/page.tsx` | Write target |
+| R-A1 | `frontend/services/authApi.ts` | Canonical register client |
+| R-A2 | `frontend/context/AuthContext.tsx` | Auth stack reference — read only; do not modify |
+| R-A3 | `frontend/lib/authFetch.ts` | Transport reference |
+| R-A4 | `frontend/lib/csrf.ts` | CSRF helper reference |
+| R-A5 | `frontend/app/login/page.tsx` | Auth page pattern reference |
+| R-A6 | `frontend/types/auth.ts` | `RegisterRequest` contract |
+| R-B1 | `backend/app/routers/auth.py` | Registration endpoint contract |
+| R-B2 | `backend/app/core/security/csrf.py` | CSRF exemption verification |
+| R-C1 | `docs/implementation/IWP_006_F013_CALLER_GRAPH_EVIDENCE.md` | R5 / M6 evidence |
+| R-T1 | Existing frontend tests touching register flow (if any) | Regression signal only |
+| R-T2 | `frontend/package.json` scripts | typecheck/lint invocation |
+
+Reading any path above does **not** authorize modifying it.
+
+#### 43.3.4 Explicit exclusions — prohibited modifications
+
+- `frontend/services/api.ts` (including removal of duplicate `registerUser`)
+- `frontend/services/authApi.ts`
+- `frontend/lib/authFetch.ts`
+- `frontend/lib/csrf.ts`
+- `frontend/lib/tokenStorage.ts`
+- `frontend/context/AuthContext.tsx`
+- All route guards and all other `frontend/**` paths except R5
+- All backend paths, migrations, tests, manifests, lockfiles, CI, infrastructure
+- `docs/**` except E1 during implementation evidence recording and this instrument during separate publication acts
+- F-013 evidence mutation
+- IWP-007 / IWP-008 caller surfaces (R6–R23 except R5)
+
+### 43.4 Implementation contract (executable)
+
+Future execution of R5 **must** implement the following contract:
+
+#### 43.4.1 Required R5 changes
+
+1. **Remove** import of `registerUser` from `@/services/api`.
+2. **Import** `registerUser` from `@/services/authApi` (and `RegisterRequest` from `@/types/auth` if used for typing).
+3. **Replace** submission call:
+   - **From:** `await registerUser(email.trim(), password)` (`api.ts` positional args)
+   - **To:** `await registerUser({ email: email.trim(), password })` (`authApi` object arg)
+4. **Preserve** existing page-local validation rules:
+   - email required (trimmed)
+   - password required
+   - password minimum length 6
+   - confirm-password match check
+5. **Preserve** loading flag behavior (`isLoading` set true/false in try/finally).
+6. **Preserve** success panel and `/login` link navigation pattern (`isSuccess` state).
+7. **Preserve** error display structure (inline red error panel using caught `Error.message` or existing fallback string).
+8. **Do not** add `useAuth().register()` unless publication-time evidence proves equivalent success UX without session hydration — **not expected** per committed AuthContext behavior.
+9. **Do not** add raw `fetch` to `/auth/register` in R5.
+10. **Do not** read or write bearer tokens or `localStorage` auth keys in R5.
+
+#### 43.4.2 Bounded error-presentation allowance (R5 only)
+
+Committed `api.ts registerUser` maps backend duplicate-email messages to user-facing copy. Committed `authFetch` may surface generic failure messages. Within R5 only, implementation **may** add bounded catch-block normalization for registration-specific failures (for example mapping known duplicate-email outcomes) **without** modifying `authApi` or `authFetch`. Global error-envelope redesign remains **F-003 deferred**.
+
+#### 43.4.3 Backend compatibility assumption (pre-validated for amendment authoring)
+
+Committed backend `POST /auth/register` accepts JSON `{ email, password }`, returns `201` with user payload, and sets session + CSRF cookies. No backend modification is required for R5 alignment. If implementation discovers contract incompatibility requiring backend change → **STOP** per §43.8.
+
+#### 43.4.4 F-001 / F-005 / F-002 Phase 1 preservation
+
+| Preserved element | Rule |
+|-------------------|------|
+| HttpOnly session cookie model | R5 consumes canonical auth client only; no bearer reintroduction |
+| AuthContext / authApi / authFetch modules | **Untouched** |
+| Route guard presentation (F-005) | **Untouched** |
+| `api.ts` authenticated transport (F-002 Phase 1) | **Untouched** |
+| Login / logout flows | **Untouched** |
+
+### 43.5 Explicit deferrals
+
+| Deferred item | Owner |
+|---------------|-------|
+| Remove duplicate `api.ts registerUser` export | Separate finding / future slice (F-007 adjacent) |
+| F-003 error-envelope normalization | Separate amendment |
+| F-002 Phase 2 caller migration | IWP-007 |
+| Auto-login after register via AuthContext | Out of scope — success UX preserved |
+| IWP-007 / IWP-008 activation | Separate authority |
+| Full IWP-006 package acceptance | Blocked by remaining open findings |
+
+### 43.6 Required validation
+
+| Check | Requirement |
+|-------|-------------|
+| Frontend typecheck | `npm run typecheck` — PASS or recorded stop |
+| Frontend lint | `npm run lint` — PASS or recorded stop if script exists |
+| Raw auth fetch elimination (R5) | Static review: **zero** raw `fetch` to `/auth/register` and **zero** `@/services/api` import in R5 |
+| Bearer / localStorage inspection (R5) | **Zero** bearer headers and **zero** `access_token` / auth localStorage usage in R5 |
+| Canonical client inspection | Confirm R5 calls `authApi.registerUser` with `{ email, password }` |
+| Payload contract inspection | Confirm trimmed email + password submitted unchanged in shape |
+| UX preservation inspection | Confirm validation, loading, error panel, success panel, and `/login` link remain present |
+| Existing relevant tests | Run targeted frontend tests if present; record PASS or UNAVAILABLE |
+| Scoped `git diff --check` | PASS on R5 (+ E1 if created) |
+| Repository-wide validation | **NOT REQUIRED** |
+| Manual runtime browser QA | **Optional** — record NOT RUN if not performed |
+
+**Evidence artifact (future, not authorized by amendment authoring):** `docs/implementation/IWP_006_F006_IMPLEMENTATION_EVIDENCE.md`
+
+### 43.7 Security review requirements
+
+| Gate | Application |
+|------|-------------|
+| **IMPL-GATE-5** | Applies — registration auth entrypoint touched |
+| Review type | Targeted validation — R5 register transport only |
+| Review focus | Confirm no bearer/localStorage auth; confirm canonical authApi path; confirm public duplicate `api.ts` caller removed from R5; confirm F-001/F-005/F-002 Phase 1 not reopened |
+| Controlling prior evidence | F-001, F-013 M6, F-002 Phase 1 evidence |
+| Separate token-storage review | **NOT REQUIRED** — no storage change authorized |
+
+Security review is part of the **final review** gate after implementation, not a separate pre-authorization cascade.
+
+### 43.8 Stop conditions
+
+Execution must **STOP** and escalate if:
+
+1. Modification of any production path outside R5
+2. `authApi.registerUser` or AuthContext lacks a usable registration operation ( **not triggered at authoring** — both exist @ `1c2217a`)
+3. Modification of AuthContext, authApi, authFetch, csrf, or tokenStorage required
+4. Backend, migration, or config change required
+5. Registration fields, validation, or success/navigation behavior cannot be preserved without expanding write set
+6. Backend contract materially incompatible with `authApi.registerUser`
+7. F-002 Phase 2 caller migration required to complete F-006
+8. IWP-007 or IWP-008 activation becomes necessary
+9. F-001, F-005, or F-002 Phase 1 require reopening
+10. F-003 scope must be absorbed to complete R5 beyond bounded catch normalization
+11. Write set must expand beyond R5 (+ E1 evidence)
+12. Unrelated dirty working-tree files are treated as authority or prevent scoped isolation
+13. IWP-006 acceptance, closure, Stage I4 completion, or Phase 4 start attempted
+14. Push, release, deployment, or production access attempted
+
+### 43.9 Slice acceptance criteria (not IWP-006 package acceptance)
+
+F-006 slice is **disposition-complete** when all are satisfied:
+
+| Criterion | Evidence |
+|-----------|----------|
+| R5 only | Production diff limited to `frontend/app/register/page.tsx` |
+| Canonical register client | R5 uses `authApi.registerUser`; no `api.ts` register import |
+| No bearer / localStorage auth in R5 | Inspection confirms |
+| UX preserved | Validation, loading, errors, success panel, `/login` link |
+| F-006 disposition | **RESOLVED — bounded R5 scope only** |
+| F-001 / F-005 / F-002 Phase 1 preserved | No regression in excluded paths |
+| Validation | typecheck/lint PASS; inspections recorded |
+| Security | Targeted review PASS — register transport only |
+| Lifecycle | Implementation evidence recorded; one final review complete |
+
+**IWP-006 register acceptance criteria** remain **open** — F-002 Phase 2, F-003, and other findings prevent package acceptance.
+
+### 43.10 Explicit non-goals
+
+- F-002 Phase 2 or full F-002 closure
+- F-003, F-007–F-012 implementation
+- `api.ts` duplicate symbol removal
+- Auth stack module edits
+- IWP-007 / IWP-008 activation
+- Package acceptance, package closure, Stage I4 completion
+- Push, tag, release, deployment, Phase 4
+- Republication or instrument mutation during F-006 implementation (except E1 evidence)
+- Continuity synchronization during amendment authoring
+- Separate discovery cycle
+
+### 43.11 Lifecycle separation
+
+```text
+§43 publication (this authorization act — EFFECTIVE for R5 invocation only)
+    → bounded F-006 implementation invocation (R5) — NOT STARTED
+        → bounded corrections under §43 (if required)
+            → one final targeted review (IMPL-GATE-5)
+                → slice disposition — F-006 RESOLVED (R5)
+                    → IWP-006 remains NOT ACCEPTED — NOT CLOSED
+```
+
+### 43.12 Publication status record
+
+| Item | Value |
+|------|-------|
+| Amendment number | Twelfth |
+| Amendment section | §43 |
+| Effective | YES — F-006 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Write set | R5 — `frontend/app/register/page.tsx` only (+ E1 evidence on implementation) |
+| F-006 implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded F-006 implementation invocation referencing published §43.3 (R5); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 43.13 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — R5-only production write set; E1-only evidence path; `authApi.registerUser` canonical client; `useAuth().register()` excluded for UX preservation; backend changes not authorized; F-003 and duplicate `api.ts registerUser` cleanup deferred; F-006 disposition target RESOLVED — bounded R5 scope only; IWP-007/IWP-008 not activated; F-001/F-005/F-002 Phase 1 not reopened.
+
+That check verified publication integrity only. It did not authorize implementation execution.
