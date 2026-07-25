@@ -131,22 +131,28 @@ Changes are type-only import/declaration alignment. No fetch URLs, payloads, cre
 | F-010 / dead exports | Not addressed |
 | F-002 Phase 2 | Deferred |
 | IWP-006 package acceptance | NOT GRANTED |
-| IMPL-GATE-5 final targeted review | NOT RUN — separate act per §46.8 lifecycle |
-| Implementation commit | NOT PERFORMED — §46 does not authorize commit within implementation invocation |
+| IMPL-GATE-5 final targeted review | NOT RUN — NOT APPLICABLE (type-only slice; §46.6) |
+| Implementation commit | `0617146a566ced86c511e267297f3d28dc4bb90d` |
 
 ---
 
 ## 13. F-007 Disposition
 
-**F-007 — RESOLVED — BOUNDED PROPERTYIMAGE CANONICAL-OWNERSHIP SCOPE**
+| Field | Value |
+|-------|-------|
+| Implementation commit | `0617146a566ced86c511e267297f3d28dc4bb90d` |
+| F-007 | **RESOLVED — BOUNDED PROPERTYIMAGE CANONICAL-OWNERSHIP SCOPE** |
+| IWP-006 | **NOT ACCEPTED — NOT CLOSED** |
+| F-008 | **UNRESOLVED — UNTOUCHED** |
+| Push | **NOT PERFORMED** |
 
-Implementation and required proportional validation passed. Independent IMPL-GATE-5 review and path-isolated commit remain separate lifecycle acts.
+Slice disposition recorded in this evidence artifact only. Does **not** establish IWP-006 acceptance, IWP-006 closure, Stage completion, continuity synchronization, release readiness, deployment, or push authorization.
 
 ---
 
 ## 14. Explicit Non-Claims
 
-- F-008 was **not** modified.
-- IWP-006 was **not** accepted or closed.
-- Push was **not** performed.
+- F-008 — **UNRESOLVED — UNTOUCHED**.
+- IWP-006 — **NOT ACCEPTED — NOT CLOSED**.
+- Push — **NOT PERFORMED**.
 - Register, roadmap, handoff, and continuity surfaces were **not** synchronized.
