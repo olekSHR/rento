@@ -4270,3 +4270,260 @@ F-003 slice is **disposition-complete** when all are satisfied:
 Bounded pre-publication integrity check: **COMPLETED - PASS** — architecture-compliant three-path write set (shared `frontend/lib/` parser + `authFetch` + `api.ts`); no caller migration; no IWP-007 activation; §42 generic-error preservation supersession scoped to envelope content only; F-001/F-005/F-006/F-002 Phase 1 not reopened; no frontend test infrastructure — deterministic source-level validation defined; authApi excluded as non-required; F-003 sole finding; disposition target RESOLVED — bounded frontend error-envelope scope.
 
 That check verified publication integrity only. It did not authorize implementation execution.
+
+---
+
+## 45. Fourteenth Amendment — Bounded F-009 Session-Failure Reconciliation
+
+**Amendment title:** IWP-006 Bounded F-009 — Frontend Session-Failure Reconciliation
+
+**Amendment status:** PUBLISHED - EFFECTIVE (F-009 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
+
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
+
+**F-009 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE UNTIL SEPARATELY INVOKED
+
+**Exact technical write set:** ESTABLISHED BY §45.3 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
+
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this amendment
+
+**F-002:** PARTIALLY RESOLVED — Phase 1 COMPLETE — NOT REOPENED; Phase 2 deferred
+
+**F-003:** RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE — NOT REOPENED by this amendment
+
+**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this amendment
+
+**F-006:** RESOLVED — BOUNDED R5 SCOPE ONLY — NOT REOPENED by this amendment
+
+**F-009:** UNRESOLVED — **Primary in-scope finding — sole bounded implementation target**
+
+**F-013:** VERIFIED within instrument references — not reopened
+
+**IWP-007:** NOT SELECTED — NOT ACTIVATED — caller migration deferred
+
+**IWP-008:** NOT SELECTED — NOT ACTIVATED
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+**Stage I4:** IN PROGRESS — NOT COMPLETED by this amendment
+
+**Push:** NOT AUTHORIZED
+
+This fourteenth amendment is effective only as authorization for one future bounded F-009 technical implementation pass under §45.3. It does **not** authorize implementation during publication integration; does **not** execute the write set; does **not** reopen F-003 error-envelope normalization; does **not** implement F-002 Phase 2; does **not** remove dead `api.ts::registerUser`; does **not** modify `frontend/services/authApi.ts` unless a future correction pass proves insufficient (not expected); does **not** implement refresh tokens, silent renewal, or backend session redesign; does **not** select or activate IWP-007 or IWP-008; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
+
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
+
+### 45.1 Identity and authority chain
+
+| Authority | Role |
+|-----------|------|
+| `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §39–§44 | Active IWP-006 package authority |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §5, §11 F-009 | Original finding — incomplete session-failure semantics |
+| `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` | F-001 cookie-session model; SR-F001-002 401/403 reconciliation baseline |
+| `docs/implementation/IWP_006_F003_IMPLEMENTATION_EVIDENCE.md` | F-003 complete — authFetch 401/403 specialized paths preserved as baseline |
+| `docs/implementation/IWP_006_F002_PHASE1_IMPLEMENTATION_EVIDENCE.md` | F-002 Phase 1 `api.ts` sessionFetch transport — preserved |
+| Committed `frontend/lib/authFetch.ts`, `frontend/context/AuthContext.tsx`, `frontend/services/api.ts` @ `8d8470e` | Implementation surfaces |
+
+**Finding scope for this amendment draft:**
+
+| Finding | Treatment |
+|---------|-----------|
+| **F-009** | **Primary — IN SCOPE — bounded session-failure reconciliation — RESOLVED target after disposition** |
+| F-001 | RESOLVED — not reopened |
+| F-002 | PARTIALLY RESOLVED (Phase 1) — not reopened; Phase 2 deferred |
+| F-003 | RESOLVED — not reopened |
+| F-005 | RESOLVED — not reopened |
+| F-006 | RESOLVED (R5) — not reopened |
+| Dead `api.ts::registerUser` | **EXPLICITLY EXCLUDED** — separate deferred slice |
+| F-007–F-008, F-010–F-012 | OUT OF SCOPE |
+| IWP-007 caller migration | **EXPLICITLY DEFERRED** |
+
+**Slice-selection rationale:** Committed code shows two session-failure correctness gaps after F-001/F-003: (1) `authFetch` emits session-invalidation signal on **403** as well as **401**, conflating authorization denial with session expiry; (2) `api.ts` internal `sessionFetch` authenticated paths receive **401** without emitting the existing `auth:unauthorized` reconciliation signal, allowing stale authenticated UI after backend session invalidation. These are user-visible correctness defects with higher stabilization value than dead-symbol hygiene. The smallest architecture-compliant correction mirrors F-003 Option B: one shared session-invalidation signal module consumed by `authFetch` and `api.ts` without coupling `api.ts` to `authFetch`.
+
+### 45.2 Architectural session-failure determination
+
+**Verified committed behavior @ `8d8470e`:**
+
+| Question | Determination |
+|----------|---------------|
+| 1. Exact defect | **Gap A:** `authFetch` calls session-invalidation dispatch on both **401** and **403**, clearing authenticated presentation for authorization denials. **Gap B:** `api.ts` `sessionFetch` returns **401** responses without emitting `auth:unauthorized`, so `AuthContext` retains stale `user` while domain/admin/realtor calls fail. |
+| 2. Session state owner | `frontend/context/AuthContext.tsx` — `user` state; `isAuthenticated := user !== null` |
+| 3. authFetch on 401 | session-invalidation dispatch → `UnauthorizedError("Session expired or invalid")` |
+| 4. authFetch on 403 | session-invalidation dispatch → `ForbiddenError("Access forbidden")` — **incorrect session invalidation** |
+| 5. Signal propagation | `window.dispatchEvent(new Event("auth:unauthorized"))` when `window` defined |
+| 6. AuthContext subscription | **Yes** — listener clears via `removeToken()` + `setUser(null)` |
+| 7. Stale state after expiry | **Yes** — via Gap B on `sessionFetch` authenticated paths until navigation/refresh |
+| 8. Route guard correction | Guards redirect when `!isAuthenticated` after state clears; Gap B delays correction |
+| 9. Login navigation ownership | Route guards — not AuthContext |
+| 10. Correctable without redesign | **Yes** — event-based reconciliation only |
+| 11. 403 vs 401 today | **Not compatible** with bounded F-001 SR-F001-002 intent — 403 must not invalidate session presentation |
+| 12. authApi.ts required | **No** — auth-stack paths use `authFetch`; login raw-fetch failures must not globally invalidate session |
+
+**Architectural posture:**
+
+| Element | Rule |
+|---------|------|
+| Frontend authenticated state | Owned by `AuthContext.user` |
+| HTTP 401 on authenticated transport | Session invalid/expired — emit session-invalidation signal; preserve specialized error throws |
+| HTTP 403 on authenticated transport | Authorization denial — **do not** emit session-invalidation signal; preserve forbidden errors |
+| Reconciliation | Existing `auth:unauthorized` event → AuthContext clears presentation state |
+| Cookie/session architecture | Unchanged — HttpOnly cookie session |
+| Server-derived roles | Unchanged |
+
+### 45.3 Exact bounded technical write set
+
+**Maximum production paths: 3.** No caller paths. No `authApi.ts`.
+
+#### 45.3.1 Authorized modification
+
+| # | Path | Purpose |
+|---|------|---------|
+| **W1** | `frontend/lib/authSessionEvents.ts` | **New** — transport-agnostic session-invalidation signal helper |
+| **W2** | `frontend/lib/authFetch.ts` | Emit W1 on **401 only**; remove session-invalidation on **403**; preserve CSRF, credentials, F-003 parsing |
+| **W3** | `frontend/services/api.ts` | Internal `sessionFetch` emits W1 on **401** before returning response; preserve caller throws and F-003 parsing |
+
+#### 45.3.2 Authorized evidence artifact (future implementation)
+
+| # | Path | Purpose |
+|---|------|---------|
+| **E1** | `docs/implementation/IWP_006_F009_IMPLEMENTATION_EVIDENCE.md` | F-009 implementation and validation evidence |
+
+#### 45.3.3 Explicit exclusions — prohibited modifications
+
+- `frontend/services/authApi.ts`
+- `frontend/context/AuthContext.tsx` (unless future correction amendment — not expected)
+- Route guards, callers, pages, components
+- Dead `api.ts::registerUser` removal
+- F-003 envelope reopening beyond incidental coexistence
+- Backend, cookie policy, refresh/renewal protocol
+- IWP-007 / IWP-008 surfaces
+
+### 45.4 Implementation contract (executable)
+
+#### 45.4.1 W1 — session-invalidation signal
+
+1. Export helper dispatching `auth:unauthorized` when `window` is defined.
+2. Transport-agnostic — no fetch, CSRF, or cookie imports.
+3. Must not import `authFetch.ts` or `api.ts`.
+4. Idempotent — repeated calls safe.
+
+#### 45.4.2 W2 — authFetch
+
+1. **401:** call W1 before throwing `UnauthorizedError`.
+2. **403:** **must not** call W1; throw `ForbiddenError` only.
+3. Preserve request construction, CSRF, credentials, success path, exports, F-003 envelope behavior.
+
+#### 45.4.3 W3 — api.ts sessionFetch
+
+1. Import W1 only — **must not** import `authFetch.ts`.
+2. If `response.status === 401`, call W1 once before returning `response`.
+3. **Do not** call W1 on **403** inside `sessionFetch`.
+4. Preserve domain-specific branches, public raw `fetch` paths, F-002 transport, F-003 envelopes, export signatures.
+5. No automatic navigation or retry.
+
+#### 45.4.4 Navigation and AuthContext
+
+1. Rely on existing AuthContext listener — modification not authorized unless correction proves insufficient.
+2. `/login` redirect remains route-guard owned.
+
+#### 45.4.5 Preservation
+
+| Element | Rule |
+|---------|------|
+| F-001 cookie-session | Unchanged |
+| F-002 Phase 1 transport | Unchanged |
+| F-003 envelope parsing | Unchanged |
+| F-005 route guards | Untouched |
+| F-006 register flow | Untouched |
+| Login/register failure | Must not globally invalidate session |
+| Logout | Untouched |
+
+### 45.5 Required validation
+
+| Check | Requirement |
+|-------|-------------|
+| Frontend typecheck | `npm run typecheck` — PASS or recorded stop |
+| Frontend lint | `npm run lint` — PASS or recorded stop |
+| W2 401 emits W1 | Static inspection |
+| W2 403 does not emit W1 | Static inspection |
+| W3 sessionFetch 401 emits W1 | Static inspection |
+| Zero `api.ts` → `authFetch` import | Static inspection |
+| Scoped `git diff --check` | PASS on W1–W3 (+ E1 if created) |
+| Targeted automated frontend tests | **NOT APPLICABLE** |
+| Source-level cases in E1 | (a) authFetch 401 → event; (b) authFetch 403 → no event; (c) sessionFetch 401 → event; (d) login 401 → no global clear |
+| Repository-wide validation | **NOT REQUIRED** |
+
+### 45.6 Stop conditions
+
+Stop if:
+
+1. Modification outside W1–W3 (+ E1)
+2. Caller or route-guard edits required
+3. `AuthContext.tsx` or `authApi.ts` modification required
+4. Backend, cookie policy, or refresh/renewal required
+5. Retry/replay or request queue required
+6. IWP-007 activation required
+7. New dependency or lockfile change required
+8. F-003 must be reopened beyond coexistence
+9. Push or IWP-006 acceptance/closure attempted
+
+### 45.7 Slice acceptance criteria
+
+| Criterion | Evidence |
+|-----------|----------|
+| W1–W3 only | Scoped production diff |
+| 401 reconciliation | W1 on authFetch 401 and sessionFetch 401 |
+| 403 preservation | No session invalidation on authFetch 403 |
+| Prior slices preserved | F-001, F-002 Phase 1, F-003, F-005, F-006 |
+| Validation | typecheck/lint PASS |
+| IMPL-GATE-5 | Targeted review PASS |
+| F-009 disposition | **RESOLVED — BOUNDED SESSION-FAILURE RECONCILIATION SCOPE** |
+
+**IWP-006 acceptance** remains **open**.
+
+### 45.8 Explicit non-goals
+
+- Refresh tokens, silent renewal, backend session redesign
+- F-002 Phase 2, F-003 reopening, dead symbol removal
+- authApi deduplication, caller migration, IWP-007 activation
+- Package acceptance, closure, push
+- Continuity synchronization during publication (unless separately authorized)
+
+### 45.9 Lifecycle separation
+
+```text
+§45 publication (this authorization act — EFFECTIVE for W1–W3 invocation only)
+    → bounded F-009 implementation invocation (W1–W3) — NOT STARTED
+        → bounded corrections under §45 (if required)
+            → one final targeted review (IMPL-GATE-5)
+                → slice disposition — F-009 RESOLVED (bounded session-failure scope)
+                    → IWP-006 remains NOT ACCEPTED — NOT CLOSED
+```
+
+### 45.10 Publication status record
+
+| Item | Value |
+|------|-------|
+| Amendment number | Fourteenth |
+| Amendment section | §45 |
+| Effective | YES — F-009 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY |
+| Reviewed | **NOT APPLICABLE** — bounded pre-publication integrity check only |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Write set | W1 `frontend/lib/authSessionEvents.ts`; W2 `frontend/lib/authFetch.ts`; W3 `frontend/services/api.ts` |
+| F-009 implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded F-009 implementation invocation referencing published §45.3 (W1–W3); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 45.11 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — Gap A (403 session invalidation) and Gap B (sessionFetch 401 without reconciliation) verified; three-path write set (shared session event + authFetch + api.ts sessionFetch); AuthContext subscription sufficient; authApi excluded; no refresh/backend/IWP-007; F-003/F-006/dead-code cleanup not bundled; 401/403 semantics preserved in contract.
+
+That check verified publication integrity only. It did not authorize implementation execution.
