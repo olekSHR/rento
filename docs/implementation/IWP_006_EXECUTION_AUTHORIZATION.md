@@ -4890,17 +4890,23 @@ That check verified publication integrity only. It did not authorize implementat
 
 ---
 
-## 48. Seventeenth Amendment Draft — Bounded F-010 Services Backup File Removal
+## 48. Seventeenth Amendment — Bounded F-010 Services Backup File Removal
 
-**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+**Amendment status:** PUBLISHED — EFFECTIVE (F-010 BOUNDED SERVICES BACKUP FILE REMOVAL AUTHORIZATION ONLY)
+
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
 
 **F-010:** UNRESOLVED — **Primary in-scope finding**
 
-**Exact technical write set:** §48.3 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
+**Exact technical write set:** ESTABLISHED BY §48.3 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
 
 **IWP-006 acceptance / closure:** NOT GRANTED
 
-Draft creation does **not** authorize implementation, resolve F-010, or accept or close IWP-006.
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
 
 ### 48.1 Defect (@ `04de088f56ed72b52600700cbcced21077a2c110`)
 
@@ -4936,7 +4942,7 @@ No live production caller, test caller, type-only reference, or documentation de
 
 Maximum production paths: **1 deletion**. **`frontend/services/api.ts` must not be modified.**
 
-### 48.4 Implementation contract (not executable until published)
+### 48.4 Implementation contract (executable)
 
 **W1:** Remove `frontend/services/api.ts.save` from the repository (`git rm` or equivalent). No replacement module. No caller redirection — file has zero callers.
 
@@ -4961,13 +4967,25 @@ Stop without disposition if: any committed importer of `api.ts.save` is found; d
 | Item | Value |
 |------|-------|
 | Target disposition | **F-010 — RESOLVED — BOUNDED SERVICES BACKUP FILE REMOVAL SCOPE** (after implementation + E1 + commit only) |
-| This amendment | **DRAFT — NOT EFFECTIVE** |
-| Implementation authorized | **NO** until **PUBLISHED — EFFECTIVE** |
+| This amendment | **PUBLISHED — EFFECTIVE** (F-010 bounded services backup file removal authorization only) |
+| Implementation authorized | **YES** for W1 when separately invoked under published §48.3–§48.4 |
 
-### 48.9 Draft status record
+### 48.9 Publication status record
 
 | Item | Value |
 |------|-------|
-| Section | §48 |
-| Write set | W1 + E1 |
-| F-010 implementation | NOT AUTHORIZED — NOT STARTED |
+| Amendment number | Seventeenth |
+| Amendment section | §48 |
+| Effective | YES — F-010 BOUNDED SERVICES BACKUP FILE REMOVAL AUTHORIZATION ONLY |
+| Reviewed | **NOT APPLICABLE** — bounded pre-publication integrity check only |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Write set | W1 `frontend/services/api.ts.save` (delete) |
+| F-010 implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded F-010 implementation invocation referencing published §48.3–§48.4 (W1 deletion); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 48.10 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — single-path W1 deletion write set; E1 evidence path only; target `frontend/services/api.ts.save` confirmed orphan with zero committed importers; canonical survivor `frontend/services/api.ts` unchanged; F-007/F-008/F-002 Phase 2/dead exports/backend/env/deployment excluded; deletion-only correction preserves runtime and public module behavior; IWP-007/IWP-008 not activated; F-001/F-003/F-005/F-006/F-009 not reopened; F-010 disposition target RESOLVED — bounded services backup file removal scope.
+
+That check verified publication integrity only. It did not authorize implementation execution.
