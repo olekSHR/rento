@@ -4989,3 +4989,92 @@ Stop without disposition if: any committed importer of `api.ts.save` is found; d
 Bounded pre-publication integrity check: **COMPLETED - PASS** — single-path W1 deletion write set; E1 evidence path only; target `frontend/services/api.ts.save` confirmed orphan with zero committed importers; canonical survivor `frontend/services/api.ts` unchanged; F-007/F-008/F-002 Phase 2/dead exports/backend/env/deployment excluded; deletion-only correction preserves runtime and public module behavior; IWP-007/IWP-008 not activated; F-001/F-003/F-005/F-006/F-009 not reopened; F-010 disposition target RESOLVED — bounded services backup file removal scope.
 
 That check verified publication integrity only. It did not authorize implementation execution.
+
+---
+
+## 49. Eighteenth Amendment Draft — Bounded Unused API Export Removal
+
+**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+
+**Finding targets:** F-013 M2 / M8 — deferred zero-caller `api.ts` exports (not separate numbered findings)
+
+**Exact technical write set:** §49.3 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
+
+**IWP-006 acceptance / closure:** NOT GRANTED
+
+Draft creation does **not** authorize implementation, resolve the dead-export targets, or accept or close IWP-006.
+
+### 49.1 Defect (@ `1f1a9668bf814e3888823f0931ce258f2e96ff50`)
+
+Two exported symbols in `frontend/services/api.ts` have zero committed executable callers:
+
+| Export | Lines | Transport | Caller status |
+|--------|-------|-----------|---------------|
+| `registerUser(email, password)` | 594–628 | Raw `fetch` → `/auth/register` | **ZERO** `@/services/api` importers — F-006 RESOLVED; R5 uses `authApi.registerUser` |
+| `generateAIListing(data, token)` | 568–586 | `sessionFetch` → `/ai/listing-description` | **ZERO** committed importers |
+
+Associated exported types used only by `generateAIListing`: `AIListingRequest` (553–560), `AIListingResponse` (562–566). Non-exported helper type `RegisterUserResponse` (588–592) is local to `registerUser` only.
+
+Canonical registration API: **`authApi.registerUser`** — unchanged. No replacement AI listing API is created.
+
+### 49.2 Caller and reference determination
+
+Targeted committed-code search (@ `1f1a966`):
+
+| Search | Result |
+|--------|--------|
+| `registerUser` import from `@/services/api` | **zero** matches |
+| `generateAIListing` / `AIListingRequest` / `AIListingResponse` outside `api.ts` | **zero** matches |
+| Namespace import `* as` from `@/services/api` | **none** |
+| Dynamic `require` / string-based reference | **none** |
+| Test/mock callers | **none** |
+| Re-exports / barrels | **none** |
+
+Live registration uses `@/services/authApi` (`register/page.tsx`, `AuthContext.tsx`). Surviving `@/services/api` imports (23 surfaces) do not reference either dead export.
+
+### 49.3 Combined scope and bounded write set
+
+**Combined-scope justification:** Both exports share one production file, zero-caller status, dead-export defect class, no caller migration, and identical validation (symbol search + typecheck + lint + scoped diff). Atomic removal does not obscure separate risk.
+
+| # | Path | Action |
+|---|------|--------|
+| **W1** | `frontend/services/api.ts` | Remove `registerUser`, `RegisterUserResponse`, `generateAIListing`, `AIListingRequest`, `AIListingResponse` only |
+| **E1** | `docs/implementation/IWP_006_DEAD_API_EXPORTS_IMPLEMENTATION_EVIDENCE.md` | Future evidence only |
+
+Maximum production paths: **1**. No other `api.ts` edits authorized.
+
+### 49.4 Implementation contract (not executable until published)
+
+**W1:** Delete the five named declarations above and their function bodies only. Preserve every surviving export, endpoint string, parser, type, auth transport, property, image, and error behavior unchanged.
+
+Remove top-level imports only if proven exclusively used by deleted code and unused afterward — **NOT APPLICABLE** at current evidence (`sessionFetch` and shared helpers remain in use).
+
+**No caller redirection. No compatibility alias. No deprecation period.**
+
+### 49.5 Exclusions
+
+F-007, F-008, F-010, F-002 Phase 2, `api.ts.save`, unrelated `api.ts` exports, `authApi.ts`, backend, `.env`/deployment/CI, register/roadmap/handoff/continuity/release/push, IWP-006 acceptance or closure.
+
+### 49.6 Validation (future implementation)
+
+Targeted export/import search (zero `registerUser`/`generateAIListing`/`AIListingRequest`/`AIListingResponse` from `@/services/api`); confirm five declarations absent; `npm run typecheck`; `npm run lint`; scoped `git diff --check` on W1 (+ E1); verify surviving `api.ts` endpoint composition unchanged.
+
+### 49.7 Stop conditions
+
+Stop without disposition if: any executable caller, alias, re-export, or dynamic reference is found; `authApi.registerUser` or surviving exports must change; scope expands beyond W1; runtime/API behavior must change; unrelated imports or exports require modification; typecheck/lint fails due to task changes.
+
+### 49.8 Disposition and lifecycle
+
+| Item | Value |
+|------|-------|
+| Target disposition | **DEFERRED-DEAD-EXPORT — RESOLVED — BOUNDED UNUSED API EXPORT REMOVAL SCOPE** (after implementation + E1 + commit only) |
+| This amendment | **DRAFT — NOT EFFECTIVE** |
+| Implementation authorized | **NO** until **PUBLISHED — EFFECTIVE** |
+
+### 49.9 Draft status record
+
+| Item | Value |
+|------|-------|
+| Section | §49 |
+| Write set | W1 + E1 |
+| Dead-export implementation | NOT AUTHORIZED — NOT STARTED |
