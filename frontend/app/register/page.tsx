@@ -3,7 +3,23 @@
 import Link from "next/link"
 import { useState } from "react"
 
-import { registerUser } from "@/services/api"
+import { registerUser } from "@/services/authApi"
+
+function getRegistrationErrorMessage(error: unknown): string {
+  if (!(error instanceof Error)) {
+    return "Registration failed. Please try again."
+  }
+
+  if (error.message === "Request failed: 400") {
+    return "This email is already registered."
+  }
+
+  if (error.message.startsWith("Request failed:")) {
+    return "Registration failed. Please try again."
+  }
+
+  return error.message || "Registration failed. Please try again."
+}
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("")
@@ -42,15 +58,14 @@ export default function RegisterPage() {
     try {
       setIsLoading(true)
 
-      await registerUser(email.trim(), password)
+      await registerUser({
+        email: email.trim(),
+        password,
+      })
 
       setIsSuccess(true)
     } catch (registerError) {
-      setError(
-        registerError instanceof Error
-          ? registerError.message
-          : "Registration failed. Please try again."
-      )
+      setError(getRegistrationErrorMessage(registerError))
     } finally {
       setIsLoading(false)
     }
