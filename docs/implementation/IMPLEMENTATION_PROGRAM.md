@@ -16,6 +16,13 @@
 **Runtime Git HEAD at initialization:** `84c51da42f504c390720523c4b1868c52eeda28d`
 **Latest repository checkpoint:** `84c51da`
 **Engineering release baseline:** `engineering-v1.0` COMPLETE
+**Current live Stage:** Stage I4 IN PROGRESS
+**IWP-006 lifecycle:** ACCEPTED - CLOSED
+**Active implementation packages:** 0
+**Currently open authorized technical execution packages:** 0
+**F-002 Phase 2:** deferred to IWP-007
+**F-013 M1:** deferred to IWP-007
+**IWP-007:** inactive
 
 ---
 
@@ -245,4 +252,12 @@ Default rule: stop, preserve repository state, and route to the owning authority
 | Phase 4 | NOT STARTED |
 | Stage I1 | NOT AUTHORIZED |
 | Application code changes | Prohibited by this document |
-| Related documents | `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` |
+| Current live Stage | Stage I4 IN PROGRESS |
+| IWP-006 lifecycle | ACCEPTED - CLOSED |
+| Active implementation packages | 0 |
+| F-002 Phase 2 | deferred to IWP-007 |
+| F-013 M1 | deferred to IWP-007 |
+| IWP-007 | inactive |
+| Exact next authorized action | One bounded IWP-007 selection or authority-path readiness determination; must not activate, authorize, or execute IWP-007 without separate Repository Authority; must not complete Stage I4 |
+| Version history — IWP-006 closure continuity | 2026-07-26 — IWP-006 closure continuity synchronized; acceptance `cc85110`; closure `f65b706` |
+| Related documents | `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `IMPLEMENTATION_WORK_PACKAGE_REGISTER.md`, `docs/implementation/IWP_006_FINAL_ACCEPTANCE_REPORT.md` |

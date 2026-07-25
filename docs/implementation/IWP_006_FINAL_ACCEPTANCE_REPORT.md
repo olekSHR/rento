@@ -9,7 +9,7 @@
 **IWP-006:** ACCEPTED — CLOSED
 **Stage I4:** IN PROGRESS
 **Closure:** COMPLETED
-**Continuity synchronization:** NOT PERFORMED BY THIS ACT
+**Continuity synchronization:** COMPLETED
 **Completion Review:** PASS — BLOCKING 0
 **Acceptance outcome:** Accepted with recorded residual risk
 **IWP-007 activation:** NOT AUTHORIZED BY THIS ACTION
@@ -26,7 +26,7 @@ This report records formal acceptance and closure of IWP-006 only.
 
 It consumes the published Package Acceptance Authorization, published IWP-006 execution authority through §49, referenced implementation evidence, Completion Review result **PASS — BLOCKING 0**, acceptance commit `cc851107df188f08f80ee83e453c4594eabbf322`, and committed Git lineage.
 
-It does **not** complete Stage I4, activate IWP-007 or IWP-008, authorize new implementation, perform continuity synchronization, authorize push, authorize deployment, authorize release, or start Phase 4.
+It does **not** complete Stage I4, activate IWP-007 or IWP-008, authorize new implementation, authorize push, authorize deployment, authorize release, or start Phase 4.
 
 Supporting closure rule — `docs/implementation/IWP_006_PACKAGE_ACCEPTANCE_AUTHORIZATION.md` §10:
 
@@ -163,8 +163,7 @@ This closure act does **not**:
 - resolve or implement F-002 Phase 2 within IWP-006;
 - resolve or implement F-013 M1 within IWP-006;
 - complete Stage I4;
-- perform continuity synchronization;
-- update register, continuity, roadmap, or handoff surfaces;
+- update register, continuity, roadmap, or handoff surfaces beyond the paired continuity synchronization commit;
 - authorize push, release, deployment, or Phase 4.
 
 Closure preserves these boundaries:
@@ -172,7 +171,7 @@ Closure preserves these boundaries:
 1. IWP-006 is **ACCEPTED — CLOSED**.
 2. Stage I4 remains **IN PROGRESS**.
 3. Closure is completed by this bounded lifecycle act.
-4. Continuity synchronization is **not** performed by this act.
+4. Continuity synchronization is completed by the paired continuity synchronization commit.
 5. IWP-007 and every other Work Package are **not** activated by this action.
 6. Release remains deferred.
 7. Push, deployment, launch, scaling, production access, and Phase 4 remain not authorized.
@@ -186,7 +185,7 @@ Closure preserves these boundaries:
 | IWP-006 acceptance | **GRANTED** — commit `cc85110` |
 | IWP-006 closure | **COMPLETED by this act** |
 | Closure authority | Separate bounded closure act — Package Acceptance Authorization §10; IWP-004 precedent |
-| Continuity synchronization | **NOT PERFORMED** — separate act if and when authorized |
+| Continuity synchronization | **COMPLETED** — by post-closure continuity synchronization commit |
 
 **Decision:** IWP-006 is formally **ACCEPTED — CLOSED**.
 
@@ -202,4 +201,4 @@ Closure does not complete Stage I4, activate another Work Package, authorize rel
 
 **Release posture:** Deferred
 
-**Exact next authorized action:** Separate continuity synchronization act for register, program, and handoff surfaces if and when explicitly authorized by Repository Authority — not implied by this closure. IWP-007 remains inactive pending its own selection, activation, and coordination authority.
+**Exact next authorized action:** One bounded IWP-007 selection or authority-path readiness determination; must not activate, authorize, or execute IWP-007 without separate Repository Authority; must not complete Stage I4. IWP-007 remains inactive pending its own selection, activation, and coordination authority.

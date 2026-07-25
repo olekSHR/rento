@@ -46,12 +46,12 @@ The register is subordinate to published Repository Authority and cannot overrid
 
 | Field | Value |
 |-------|-------|
-| Active implementation packages | 1 - IWP-006 |
+| Active implementation packages | 0 |
 | Currently open authorized technical execution packages | 0 |
 | Authorized technical implementation packages | 0 |
 | Proposed implementation packages | 6 |
 | Pending implementation packages | 0 |
-| Completed implementation packages | 6 |
+| Completed implementation packages | 7 |
 | Cancelled implementation packages | 0 |
 | Stage I1 packages | None authorized |
 | Stage I2 package definition | CLOSED - 8 proposed packages remain reserved only after IWP-001, IWP-002, IWP-005, and IWP-009 acceptance |
@@ -62,15 +62,15 @@ The register is subordinate to published Repository Authority and cannot overrid
 | IWP-003 lifecycle | ACCEPTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - DELTA VALIDATION PASS - RELEASE DEFERRED |
 | IWP-006 original instrument | PUBLISHED - EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY - publication commit `fe64f2bce9bcf1e6b2df287593497c7e03c99827`; post-publication verification PASS |
 | IWP-006 amendment | PUBLISHED AND EFFECTIVE - publication commit `89f9af0539a1e2468c5c2f9139829894268947a7`; independent review BLOCKING 0; NON-BLOCKING 0 |
-| IWP-006 lifecycle | SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED |
+| IWP-006 lifecycle | ACCEPTED - CLOSED |
 | Bounded F-001 | COMPLETED AND INDEPENDENTLY ACCEPTED; F-001 and SR-F001-001 through SR-F001-007 RESOLVED within bounded F-001 scope; F-013 deferred outside completed F-001 scope |
 | Bounded F-005 | RESOLVED within bounded §39 scope; implementation commit `94de75197f10c3909c69dfa421d804ba1779e80a`; evidence `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` |
 | Phase 4 | NOT STARTED |
-| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; Stage I4 IN PROGRESS; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-003 ACCEPTED; IWP-004 ACCEPTED - CLOSED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; IWP-006 SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED; active implementation packages 1 - IWP-006; currently open authorized technical execution packages 0; bounded F-001 COMPLETED AND INDEPENDENTLY ACCEPTED; bounded F-005 RESOLVED within bounded §39 scope; F-002 and F-003 remain open/deferred; F-013 deferred; Phase 4 NOT STARTED; push NOT PERFORMED |
+| Implementation status | Stage I3 COMPLETED - COMPLETION REVIEW PASS - ACCEPTED; Stage I4 execution authorization boundary PUBLISHED - EFFECTIVE AS BOUNDARY ONLY; Stage I4 IN PROGRESS; IWP-001 ACCEPTED; IWP-002 ACCEPTED; IWP-003 ACCEPTED; IWP-004 ACCEPTED - CLOSED; IWP-005 ACCEPTED; IWP-009 ACCEPTED; IWP-006 ACCEPTED - CLOSED; active implementation packages 0; currently open authorized technical execution packages 0; bounded F-001 COMPLETED AND INDEPENDENTLY ACCEPTED; bounded F-005 RESOLVED within bounded §39 scope; F-002 and F-003 remain open/deferred; F-013 deferred; Phase 4 NOT STARTED; push NOT PERFORMED |
 
-Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001, IWP-002, IWP-005, and IWP-009 are accepted under their published authorities. Stage I3 is completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. Stage I4 remains IN PROGRESS under the published Stage I4 execution authorization boundary. IWP-004 remains ACCEPTED - CLOSED. IWP-006 remains SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED. Bounded F-001 implementation is COMPLETED AND INDEPENDENTLY ACCEPTED per `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` and implementation commit `084711f386a335e833311e85c38e1fbda1d452f9`. Bounded F-005 is RESOLVED within bounded §39 scope per `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` and implementation commit `94de75197f10c3909c69dfa421d804ba1779e80a`. F-001 and SR-F001-001 through SR-F001-007 are RESOLVED within bounded F-001 scope. F-002 and F-003 remain open/deferred. F-013 remains deferred and outside completed F-001 scope. Active implementation packages are 1 - IWP-006. Currently open authorized technical execution packages are 0. Historical discovery and F-001 authorization sections in `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` remain point-in-time records. IWP-007 and IWP-008 remain proposed, inactive, and non-executable. Phase 4 remains NOT STARTED.
+Stage I2 corrective execution produced corrected proposed, non-executable implementation work package metadata. IWP-001, IWP-002, IWP-005, and IWP-009 are accepted under their published authorities. Stage I3 is completed with completion review PASS and accepted by `docs/implementation/STAGE_I3_FINAL_COMPLETION_REPORT.md`. Stage I4 remains IN PROGRESS under the published Stage I4 execution authorization boundary. IWP-004 remains ACCEPTED - CLOSED. IWP-006 is formally ACCEPTED - CLOSED. Bounded F-001 implementation is COMPLETED AND INDEPENDENTLY ACCEPTED per `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` and implementation commit `084711f386a335e833311e85c38e1fbda1d452f9`. Bounded F-005 is RESOLVED within bounded §39 scope per `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` and implementation commit `94de75197f10c3909c69dfa421d804ba1779e80a`. F-001 and SR-F001-001 through SR-F001-007 are RESOLVED within bounded F-001 scope. F-002 and F-003 remain open/deferred. F-013 remains deferred and outside completed F-001 scope. Active implementation packages are 0. Currently open authorized technical execution packages are 0. Historical discovery and F-001 authorization sections in `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` remain point-in-time records. IWP-007 and IWP-008 remain proposed, inactive, and non-executable. Phase 4 remains NOT STARTED.
 
-The exact next authorized action is one bounded IWP-006 readiness decision for the next authorized lifecycle action after completed F-005 slice. It must not automatically activate F-002 or any other finding; must not accept or close IWP-006; must not complete Stage I4. Every later lifecycle transition requires separate authority.
+The exact next authorized action is one bounded IWP-007 selection or authority-path readiness determination; must not activate, authorize, or execute IWP-007 without separate Repository Authority; must not complete Stage I4.
 
 ---
 
@@ -171,7 +171,7 @@ Future package entries must use this schema:
 
 ## 8. Active Work Packages
 
-IWP-006 is the only selected and active implementation work package. IWP-004 is formally accepted and closed. IWP-005 remains accepted historical Stage I3 work and is not an active implementation package. IWP-006 is SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED. Bounded F-001 implementation is COMPLETED AND INDEPENDENTLY ACCEPTED. Bounded F-005 is RESOLVED within bounded §39 scope. F-002 and F-003 remain open/deferred. F-013 remains deferred outside completed F-001 scope. Currently open authorized technical execution packages are 0. Stage I4 remains IN PROGRESS. Phase 4 remains NOT STARTED.
+There is no selected or active implementation work package after IWP-006 closure. IWP-004 and IWP-006 are formally accepted and closed. IWP-005 remains accepted historical Stage I3 work and is not an active implementation package. Bounded F-001 implementation is COMPLETED AND INDEPENDENTLY ACCEPTED. Bounded F-005 is RESOLVED within bounded §39 scope. F-002 and F-003 remain open/deferred. F-013 remains deferred outside completed F-001 scope. Currently open authorized technical execution packages are 0. Stage I4 remains IN PROGRESS. Phase 4 remains NOT STARTED.
 
 | Work Package ID | Owner Authority | Scope | Repository Areas | Acceptance Criteria | Required Evidence | Dependencies | Status | Completion Verification |
 |-----------------|-----------------|-------|------------------|---------------------|-------------------|--------------|--------|-------------------------|
@@ -363,7 +363,7 @@ Corrective evidence basis for all entries:
 | Required Review Routes | Frontend Architecture; API Standards; Authentication Architecture; Authorization Architecture |
 | Stop Conditions | Stop if client state becomes authority, auth boundary conflicts, token storage risk lacks review, or backend scope is required without authority |
 | Release Posture | Release deferred; client stabilization is not release, deployment, or production authority |
-| Status | SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED - RELEASE DEFERRED |
+| Status | ACCEPTED - CLOSED - RELEASE DEFERRED |
 | Authority | PUBLISHED AND EFFECTIVE - `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` - original instrument `fe64f2bce9bcf1e6b2df287593497c7e03c99827`; amendment `89f9af0539a1e2468c5c2f9139829894268947a7`; §39 F-005 authorization `7a49b168ba330e6a8881bf9bfbd7029ab0fbe2af` |
 | Original instrument publication | `fe64f2bce9bcf1e6b2df287593497c7e03c99827` |
 | Previous continuity synchronization | `d942e00ca0ae63fe5fd40aeedc3d7bd130c5f29c`; F-005 slice completion continuity synchronized by this repository synchronization commit |
@@ -377,8 +377,8 @@ Corrective evidence basis for all entries:
 | F-005 evidence | `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` |
 | F-005 disposition | RESOLVED within bounded §39 scope |
 | Currently open authorized technical execution packages | 0 |
-| Completion Verification | Bounded read-only discovery COMPLETED and accepted; bounded F-001 COMPLETED AND INDEPENDENTLY ACCEPTED; bounded F-005 RESOLVED within bounded §39 scope; IWP-006 remains NOT ACCEPTED and NOT CLOSED; Stage I4 remains IN PROGRESS; historical discovery/F-001 authorization sections retained as point-in-time records |
-| Residual Risk | F-002 and F-003 remain open/deferred; F-013 / residual bearer transport on excluded surfaces remains deferred; IWP-006 package acceptance and Stage I4 completion remain open |
+| Completion Verification | Accepted and closed by `docs/implementation/IWP_006_FINAL_ACCEPTANCE_REPORT.md`; acceptance commit `cc851107df188f08f80ee83e453c4594eabbf322`; closure commit `f65b706395dc5ddd7180df47edc0c541769561ef`; implementation checkpoint `84b39d0aba293bea3c8863b77cecdfd3577753ad`; Completion Review PASS - BLOCKING 0; closure/continuity synchronization completed |
+| Residual Risk | F-002 Phase 2 deferred to IWP-007; F-013 M1 deferred to IWP-007; Stage I4 completion remains open; release deferred |
 
 ### IWP-007 - Frontend Property And Realtor Workflow Stabilization
 
@@ -636,10 +636,10 @@ The register must stop intake or package progression when:
 | Publication | COMPLETE |
 | Independent Governance Review | COMPLETED - APPROVED FOR PUBLICATION REVIEW |
 | Independent Publication Review | COMPLETED - APPROVED |
-| Active implementation packages | 1 - IWP-006 |
+| Active implementation packages | 0 |
 | Currently open authorized technical execution packages | 0 |
 | Authorized technical implementation packages | 0 |
-| Accepted implementation packages | 6 - IWP-001, IWP-002, IWP-003, IWP-004, IWP-005, IWP-009 |
+| Accepted implementation packages | 7 - IWP-001, IWP-002, IWP-003, IWP-004, IWP-005, IWP-006, IWP-009 |
 | Stage I3 | COMPLETED - COMPLETION REVIEW PASS - ACCEPTED |
 | Stage I4 execution authorization boundary | PUBLISHED - EFFECTIVE AS BOUNDARY ONLY - publication commit `dee540af3a6e02d2e8d2e360fa282a4eb52968e5` |
 | Stage I4 implementation | IN PROGRESS |
@@ -647,12 +647,12 @@ The register must stop intake or package progression when:
 | IWP-003 lifecycle | ACCEPTED - FINAL BLOCK REVIEW COMPLETED - CORRECTIVE FINDINGS RESOLVED - DELTA VALIDATION PASS - RELEASE DEFERRED |
 | IWP-006 original instrument | PUBLISHED - EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY - publication commit `fe64f2bce9bcf1e6b2df287593497c7e03c99827`; post-publication verification PASS |
 | IWP-006 amendment | PUBLISHED AND EFFECTIVE - publication commit `89f9af0539a1e2468c5c2f9139829894268947a7`; independent review BLOCKING 0; NON-BLOCKING 0 |
-| IWP-006 lifecycle | SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED |
+| IWP-006 lifecycle | ACCEPTED - CLOSED |
 | Bounded F-001 | COMPLETED AND INDEPENDENTLY ACCEPTED; F-001 and SR-F001-001 through SR-F001-007 RESOLVED within bounded F-001 scope; F-013 deferred outside completed F-001 scope |
 | Bounded F-005 | RESOLVED within bounded §39 scope; implementation commit `94de75197f10c3909c69dfa421d804ba1779e80a`; evidence `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` |
 | Phase 4 | NOT STARTED |
-| Implementation | Stage I4 IN PROGRESS; IWP-006 SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED; active implementation packages 1 - IWP-006; currently open authorized technical execution packages 0; bounded F-001 COMPLETED AND INDEPENDENTLY ACCEPTED; bounded F-005 RESOLVED within bounded §39 scope; F-002 and F-003 remain open/deferred; F-013 deferred; Phase 4 NOT STARTED; push NOT PERFORMED |
-| Exact next authorized action | One bounded IWP-006 readiness decision for the next authorized lifecycle action after completed F-005 slice; must not automatically activate F-002 or any other finding |
-| Version history — continuity correction | 2026-07-25 — IWP-006 F-005 slice completion continuity synchronized; historical discovery statements retained as point-in-time records |
+| Implementation | Stage I4 IN PROGRESS; IWP-006 ACCEPTED - CLOSED; active implementation packages 0; currently open authorized technical execution packages 0; bounded F-001 COMPLETED AND INDEPENDENTLY ACCEPTED; bounded F-005 RESOLVED within bounded §39 scope; F-002 and F-003 remain open/deferred; F-013 deferred; Phase 4 NOT STARTED; push NOT PERFORMED |
+| Exact next authorized action | One bounded IWP-007 selection or authority-path readiness determination; must not activate, authorize, or execute IWP-007 without separate Repository Authority |
+| Version history — continuity correction | 2026-07-26 — IWP-006 closure continuity synchronized; acceptance `cc85110`; closure `f65b706`; historical discovery statements retained as point-in-time records |
 | Stage I1 | NOT AUTHORIZED |
 | Related documents | `IMPLEMENTATION_PROGRAM.md`, `PROGRAM_TRANSITION_HANDOFF.md`, `IMPLEMENTATION_BASELINE.md`, `STAGE_I3_FINAL_COMPLETION_REPORT.md`, `STAGE_I4_EXECUTION_AUTHORIZATION.md`, `IWP_003_EXECUTION_AUTHORIZATION.md`, `IWP_006_EXECUTION_AUTHORIZATION.md`, `IWP_006_DISCOVERY_EVIDENCE.md`, `IWP_006_F005_IMPLEMENTATION_EVIDENCE.md` |
