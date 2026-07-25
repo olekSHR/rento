@@ -1,4 +1,5 @@
 import { getCsrfHeaderValue } from "@/lib/csrf"
+import { parseApiErrorMessage } from "@/lib/apiError"
 import { normalizeImagePath } from "@/lib/getImageUrl"
 
 const API_URL =
@@ -79,7 +80,9 @@ export async function getProperties(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch properties")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to fetch properties")
+    )
   }
 
   return response.json()
@@ -95,7 +98,9 @@ export async function getAdminProperties(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch admin properties")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to fetch admin properties")
+    )
   }
 
   return response.json()
@@ -112,7 +117,9 @@ export async function getPropertyById(id: number, token?: string) {
         })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to fetch property")
+    )
   }
 
   return response.json()
@@ -143,7 +150,9 @@ export async function createProperty(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to create property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to create property")
+    )
   }
 
   return response.json()
@@ -170,7 +179,9 @@ export async function uploadImage(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to upload image")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to upload image")
+    )
   }
 
   const data: UploadImageResponse = await response.json()
@@ -214,7 +225,9 @@ export async function updateProperty(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to update property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to update property")
+    )
   }
 
   return response.json()
@@ -231,7 +244,9 @@ export async function deleteProperty(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to delete property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to delete property")
+    )
   }
 
   return response.json()
@@ -251,7 +266,9 @@ export async function verifyProperty(
   )
 
   if (!response.ok) {
-    throw new Error("Failed to verify property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to verify property")
+    )
   }
 
   return response.json()
@@ -271,7 +288,9 @@ export async function archiveProperty(
   )
 
   if (!response.ok) {
-    throw new Error("Failed to archive property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to archive property")
+    )
   }
 
   return response.json()
@@ -292,7 +311,9 @@ export async function activateProperty(
   )
 
   if (!response.ok) {
-    throw new Error("Failed to activate property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to activate property")
+    )
   }
 
   return response.json()
@@ -307,7 +328,9 @@ export async function reportProperty(id: number) {
   )
 
   if (!response.ok) {
-    throw new Error("Failed to report property")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to report property")
+    )
   }
 
   return response.json()
@@ -344,7 +367,9 @@ export async function getPropertyImages(
         })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch property images")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to fetch property images")
+    )
   }
 
   return response.json()
@@ -366,7 +391,9 @@ export async function addPropertyImage(
   )
 
   if (!response.ok) {
-    throw new Error("Failed to add property image")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to add property image")
+    )
   }
 
   return response.json()
@@ -387,7 +414,9 @@ export async function setCoverImage(
   )
 
   if (!response.ok) {
-    throw new Error("Failed to set cover image")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to set cover image")
+    )
   }
 
   return response.json()
@@ -408,7 +437,9 @@ export async function deletePropertyImage(
   )
 
   if (!response.ok) {
-    throw new Error("Failed to delete property image")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to delete property image")
+    )
   }
 
   return response.json()
@@ -430,7 +461,12 @@ export async function updatePropertyImageSortOrder(
   )
 
   if (!response.ok) {
-    throw new Error("Failed to update property image sort order")
+    throw new Error(
+      await parseApiErrorMessage(
+        response,
+        "Failed to update property image sort order"
+      )
+    )
   }
 
   return response.json()
@@ -444,7 +480,9 @@ export async function getMyRealtorProperties(token: string) {
   })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch realtor properties")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to fetch realtor properties")
+    )
   }
 
   return response.json()
@@ -486,7 +524,9 @@ export async function getMyRealtorProfile(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to fetch realtor profile")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to fetch realtor profile")
+    )
   }
 
   return response.json()
@@ -504,7 +544,9 @@ export async function updateMyRealtorProfile(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to update realtor profile")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to update realtor profile")
+    )
   }
 
   return response.json()
@@ -537,7 +579,9 @@ export async function generateAIListing(
   })
 
   if (!response.ok) {
-    throw new Error("Failed to generate AI listing")
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to generate AI listing")
+    )
   }
 
   return response.json()
@@ -605,30 +649,6 @@ export type RealtorApplicationCreateData = {
   message?: string
 }
 
-async function parseRealtorApplicationError(
-  response: Response,
-  fallback: string
-): Promise<string> {
-  try {
-    const data = (await response.json()) as {
-      message?: string
-      detail?: string
-    }
-
-    if (typeof data.message === "string") {
-      return data.message
-    }
-
-    if (typeof data.detail === "string") {
-      return data.detail
-    }
-  } catch {
-    // Keep fallback message
-  }
-
-  return fallback
-}
-
 export async function getMyRealtorApplication(
   token: string
 ): Promise<RealtorApplication | null> {
@@ -644,10 +664,7 @@ export async function getMyRealtorApplication(
 
   if (!response.ok) {
     throw new Error(
-      await parseRealtorApplicationError(
-        response,
-        "Failed to load your application."
-      )
+      await parseApiErrorMessage(response, "Failed to load your application.")
     )
   }
 
@@ -671,7 +688,7 @@ export async function createRealtorApplication(
 
   if (!response.ok) {
     throw new Error(
-      await parseRealtorApplicationError(
+      await parseApiErrorMessage(
         response,
         "Something went wrong. Please try again later."
       )
@@ -706,10 +723,7 @@ export async function getRealtorApplications(
 
   if (!response.ok) {
     throw new Error(
-      await parseRealtorApplicationError(
-        response,
-        "Failed to load applications."
-      )
+      await parseApiErrorMessage(response, "Failed to load applications.")
     )
   }
 
@@ -737,10 +751,7 @@ export async function reviewRealtorApplication(
 
   if (!response.ok) {
     throw new Error(
-      await parseRealtorApplicationError(
-        response,
-        "Failed to update application."
-      )
+      await parseApiErrorMessage(response, "Failed to update application.")
     )
   }
 
@@ -763,7 +774,9 @@ export async function getAdminStats(token: string): Promise<AdminStats> {
   })
 
   if (!response.ok) {
-    throw new Error("Unable to load dashboard stats.")
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load dashboard stats.")
+    )
   }
 
   return response.json()
@@ -832,7 +845,9 @@ export async function getAdminUsers(
   })
 
   if (!response.ok) {
-    throw new Error("Unable to load users.")
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load users.")
+    )
   }
 
   return response.json()
@@ -858,37 +873,15 @@ export async function getAdminUserById(
   }
 
   if (!response.ok) {
-    throw new Error("Unable to load user.")
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load user.")
+    )
   }
 
   return response.json()
 }
 
 export type ManageableUserRole = "user" | "realtor"
-
-async function parseUserRoleError(
-  response: Response,
-  fallback: string
-): Promise<string> {
-  try {
-    const data = (await response.json()) as {
-      message?: string
-      detail?: string
-    }
-
-    if (typeof data.message === "string") {
-      return data.message
-    }
-
-    if (typeof data.detail === "string") {
-      return data.detail
-    }
-  } catch {
-    // Keep fallback message
-  }
-
-  return fallback
-}
 
 export async function updateUserRole(
   token: string,
@@ -912,7 +905,7 @@ export async function updateUserRole(
 
   if (!response.ok) {
     throw new Error(
-      await parseUserRoleError(response, "Unable to update user role.")
+      await parseApiErrorMessage(response, "Unable to update user role.")
     )
   }
 
@@ -946,7 +939,7 @@ export async function updateAdminUserAccountStatus(
 
   if (!response.ok) {
     throw new Error(
-      await parseUserRoleError(response, "Unable to update account status.")
+      await parseApiErrorMessage(response, "Unable to update account status.")
     )
   }
 
