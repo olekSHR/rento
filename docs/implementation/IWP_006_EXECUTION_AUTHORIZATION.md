@@ -4530,41 +4530,39 @@ That check verified publication integrity only. It did not authorize implementat
 
 ---
 
-## 46. Fifteenth Amendment Draft — Bounded F-007 PropertyImage Canonical Ownership
+## 46. Fifteenth Amendment — Bounded F-007 PropertyImage Canonical Ownership
 
 **Amendment title:** IWP-006 Bounded F-007 — PropertyImage Canonical Type Ownership
 
-**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+**Amendment status:** PUBLISHED - EFFECTIVE (F-007 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
 
-**Independent review:** NOT RUN
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
 
-**Publication-readiness decision:** NOT RUN
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
 
-**Publication integration:** NOT RUN
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
 
-**Bounded pre-publication integrity check:** NOT RUN
+**F-007 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
 
-**F-007 technical implementation execution:** NOT AUTHORIZED — NOT STARTED
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE UNTIL SEPARATELY INVOKED
 
-**Technical implementation authorization:** NOT AUTHORIZED — NOT EFFECTIVE
+**Exact technical write set:** ESTABLISHED BY §46.4 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
 
-**Exact technical write set:** ESTABLISHED BY §46.4 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
-
-**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this draft
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this amendment
 
 **F-002:** PARTIALLY RESOLVED — Phase 1 COMPLETE — NOT REOPENED; Phase 2 deferred
 
-**F-003:** RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE — NOT REOPENED by this draft
+**F-003:** RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE — NOT REOPENED by this amendment
 
-**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this draft
+**F-005:** RESOLVED within bounded §39 scope — NOT REOPENED by this amendment
 
-**F-006:** RESOLVED — BOUNDED R5 SCOPE ONLY — NOT REOPENED by this draft
+**F-006:** RESOLVED — BOUNDED R5 SCOPE ONLY — NOT REOPENED by this amendment
 
-**F-009:** RESOLVED — BOUNDED SESSION-FAILURE RECONCILIATION SCOPE — NOT REOPENED by this draft
+**F-009:** RESOLVED — BOUNDED SESSION-FAILURE RECONCILIATION SCOPE — NOT REOPENED by this amendment
 
 **F-007:** UNRESOLVED — **Primary in-scope finding — sole bounded implementation target**
 
-**F-008:** UNRESOLVED — EXPLICITLY OUT OF SCOPE — not activated by this draft
+**F-008:** UNRESOLVED — EXPLICITLY OUT OF SCOPE — not activated by this amendment
 
 **F-013:** VERIFIED within bounded §41 read set — consumed; not reopened
 
@@ -4576,13 +4574,13 @@ That check verified publication integrity only. It did not authorize implementat
 
 **IWP-006 closure:** NOT GRANTED
 
-**Stage I4:** IN PROGRESS — NOT COMPLETED by this draft
+**Stage I4:** IN PROGRESS — NOT COMPLETED by this amendment
 
 **Push:** NOT AUTHORIZED
 
-This fifteenth amendment draft establishes bounded implementation authority for one future F-007 technical correction pass under §46.4 only. It does **not** authorize implementation during draft creation; does **not** execute the write set; does **not** resolve F-007; does **not** resolve or implement F-008; does **not** remove dead `api.ts::registerUser` or `generateAIListing`; does **not** modify `frontend/services/authApi.ts`; does **not** implement F-002 Phase 2; does **not** select or activate IWP-007 or IWP-008; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
+This fifteenth amendment is effective only as authorization for one future bounded F-007 technical implementation pass under §46.4. It does **not** authorize implementation during publication integration; does **not** execute the write set; does **not** resolve F-007; does **not** resolve or implement F-008; does **not** remove dead `api.ts::registerUser` or `generateAIListing`; does **not** modify `frontend/services/authApi.ts`; does **not** implement F-002 Phase 2; does **not** select or activate IWP-007 or IWP-008; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
 
-Draft creation is not review, approval, publication, implementation authorization, slice disposition, or IWP-006 acceptance.
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
 
 ### 46.1 Identity and authority chain
 
@@ -4676,7 +4674,7 @@ Draft creation is not review, approval, publication, implementation authorizatio
 - Tests unrelated to the bounded type correction
 - Register, roadmap, handoff, continuity, release, deployment, or push actions
 
-### 46.5 Implementation contract (future — not executable until published)
+### 46.5 Implementation contract (executable)
 
 #### 46.5.1 W1 — api.ts
 
@@ -4748,34 +4746,39 @@ Stop without disposition if:
 
 ### 46.8 Lifecycle separation
 
-| Item | Status |
-|------|--------|
-| This amendment | **DRAFT — NOT PUBLISHED — NOT EFFECTIVE** |
-| Draft creation | Does **not** authorize implementation |
-| Draft creation | Does **not** resolve F-007 |
-| Draft creation | Does **not** affect F-008 |
-| Draft creation | Does **not** accept or close IWP-006 |
-| Implementation | Requires amendment to become **PUBLISHED — EFFECTIVE** through the lifecycle required by Repository Authority |
-| Next lifecycle step | **NOT AUTHORIZED** by completion of this draft task |
+```text
+§46 publication (this authorization act — EFFECTIVE for W1–W4 invocation only)
+    → bounded F-007 implementation invocation (W1–W4) — NOT STARTED
+        → bounded corrections under §46 (if required)
+            → one final targeted review (IMPL-GATE-5)
+                → slice disposition — F-007 RESOLVED (bounded PropertyImage canonical-ownership scope)
+                    → IWP-006 remains NOT ACCEPTED — NOT CLOSED
+```
 
-### 46.9 Target disposition (future — not achieved by this draft)
+### 46.9 Target disposition (future — not achieved by publication)
 
 | Item | Value |
 |------|-------|
 | Finding | F-007 |
 | Target disposition label | **F-007 — RESOLVED — BOUNDED PROPERTYIMAGE CANONICAL-OWNERSHIP SCOPE** |
-| Achieved by this draft | **NO** — disposition recorded only after separately authorized implementation and evidence |
+| Achieved by publication | **NO** — disposition recorded only after separately authorized implementation and evidence |
 
-### 46.10 Draft status record
+### 46.10 Publication status record
 
 | Item | Value |
 |------|-------|
 | Amendment number | Fifteenth |
 | Amendment section | §46 |
-| Effective | **NO** — DRAFT ONLY |
-| Reviewed | NOT RUN |
-| Publication | NOT RUN |
+| Effective | YES — F-007 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY |
+| Reviewed | **NOT APPLICABLE** — bounded pre-publication integrity check only |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
 | Write set | W1 `frontend/services/api.ts`; W2 `frontend/components/gallery/PropertyGalleryManager.tsx`; W3 `frontend/components/realtor/RealtorPropertyGallery.tsx`; W4 `frontend/components/PropertyGallery.tsx` |
-| F-007 implementation | NOT AUTHORIZED — NOT STARTED |
+| F-007 implementation | NOT AUTHORIZED - NOT STARTED |
 | Evidence artifact | NOT CREATED |
-| Exact next action after draft | **NOT AUTHORIZED BY THIS DRAFT TASK** — publication and implementation require separate lifecycle acts |
+| Exact next action after publication | One separate bounded F-007 implementation invocation referencing published §46.4 (W1–W4); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 46.11 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — four-path W1–W4 production write set; E1 evidence path only; canonical owner `frontend/types/property.ts` confirmed; R20/R21 non-canonical type imports and `PropertyGallery.tsx` local duplicate aligned in closed scope; F-008/F-010/dead exports/F-002 Phase 2/authApi/backend/API contract excluded; type-only correction preserves runtime behavior; IWP-007/IWP-008 not activated; F-001/F-003/F-005/F-006/F-009 not reopened; F-007 disposition target RESOLVED — bounded PropertyImage canonical-ownership scope.
+
+That check verified publication integrity only. It did not authorize implementation execution.
