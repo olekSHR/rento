@@ -10,6 +10,28 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
+function ProtectedRouteSkeleton() {
+  return (
+    <main
+      className="
+        min-h-screen
+        bg-slate-950
+        px-4
+        pt-6
+        text-white
+      "
+    >
+      <div className="space-y-4">
+        <div className="h-12 w-48 animate-pulse rounded-xl bg-slate-800" />
+
+        <div className="h-64 animate-pulse rounded-3xl bg-slate-800" />
+
+        <div className="h-64 animate-pulse rounded-3xl bg-slate-800" />
+      </div>
+    </main>
+  );
+}
+
 export default function ProtectedRoute({
   children,
 }: ProtectedRouteProps) {
@@ -20,40 +42,16 @@ export default function ProtectedRoute({
     isLoading,
   } = useAuth();
 
+  const isDenied = !isLoading && !isAuthenticated;
+
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isDenied) {
       router.push("/login");
     }
-  }, [
-    isAuthenticated,
-    isLoading,
-    router,
-  ]);
+  }, [isDenied, router]);
 
-  if (isLoading) {
-    return (
-      <main
-        className="
-          min-h-screen
-          bg-slate-950
-          px-4
-          pt-6
-          text-white
-        "
-      >
-        <div className="space-y-4">
-          <div className="h-12 w-48 animate-pulse rounded-xl bg-slate-800" />
-
-          <div className="h-64 animate-pulse rounded-3xl bg-slate-800" />
-
-          <div className="h-64 animate-pulse rounded-3xl bg-slate-800" />
-        </div>
-      </main>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return null;
+  if (isLoading || isDenied) {
+    return <ProtectedRouteSkeleton />;
   }
 
   return <>{children}</>;

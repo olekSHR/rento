@@ -1,48 +1,48 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext";
 
 type RealtorRouteProps = {
-  children: React.ReactNode
+  children: React.ReactNode;
+};
+
+function RealtorRouteSkeleton() {
+  return (
+    <main className="min-h-screen bg-zinc-100 px-4 pt-6">
+      <div className="mx-auto max-w-md space-y-4">
+        <div className="h-12 w-48 animate-pulse rounded-xl bg-zinc-200" />
+        <div className="h-64 animate-pulse rounded-3xl bg-zinc-200" />
+      </div>
+    </main>
+  );
 }
 
 export default function RealtorRoute({ children }: RealtorRouteProps) {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { isAuthenticated, isLoading, isRealtor } = useAuth()
+  const { isAuthenticated, isLoading, isRealtor } = useAuth();
+
+  const isUnauthenticated = !isLoading && !isAuthenticated;
+  const isUnauthorized = !isLoading && isAuthenticated && !isRealtor;
+  const isDenied = isUnauthenticated || isUnauthorized;
 
   useEffect(() => {
-    if (isLoading) {
-      return
+    if (isUnauthenticated) {
+      router.push("/login");
+      return;
     }
 
-    if (!isAuthenticated) {
-      router.push("/login")
-      return
+    if (isUnauthorized) {
+      router.push("/");
     }
+  }, [isUnauthenticated, isUnauthorized, router]);
 
-    if (!isRealtor) {
-      router.push("/")
-    }
-  }, [isAuthenticated, isLoading, isRealtor, router])
-
-  if (isLoading) {
-    return (
-      <main className="min-h-screen bg-zinc-100 px-4 pt-6">
-        <div className="mx-auto max-w-md space-y-4">
-          <div className="h-12 w-48 animate-pulse rounded-xl bg-zinc-200" />
-          <div className="h-64 animate-pulse rounded-3xl bg-zinc-200" />
-        </div>
-      </main>
-    )
+  if (isLoading || isDenied) {
+    return <RealtorRouteSkeleton />;
   }
 
-  if (!isAuthenticated || !isRealtor) {
-    return null
-  }
-
-  return <>{children}</>
+  return <>{children}</>;
 }
