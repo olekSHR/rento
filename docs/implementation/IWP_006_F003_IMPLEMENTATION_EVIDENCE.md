@@ -10,8 +10,8 @@
 | Controlling authority | `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §44 |
 | Finding scope | F-003 only — bounded frontend error-envelope normalization |
 | F-003 implementation | COMPLETED — W1, W2, W3 |
-| Independent final targeted review | **NOT RUN** — IMPL-GATE-5 pending separate review act |
-| F-003 slice disposition | **IMPLEMENTED — PENDING IMPL-GATE-5 VALIDATION** |
+| Independent final targeted review | **PASS** — IMPL-GATE-5 (§44.7 envelope-parsing validation) |
+| F-003 slice disposition | **RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE — IMPL-GATE-5 PASS** |
 | IWP-006 status | **SELECTED — ACTIVE — NOT ACCEPTED — NOT CLOSED** |
 | IWP-006 acceptance | NOT GRANTED |
 | IWP-006 closure | NOT GRANTED |
@@ -99,7 +99,7 @@ Added transport-agnostic helper `parseApiErrorMessage(response, fallback)`:
 | Element | Result |
 |---------|--------|
 | Import | `@/lib/apiError` only — **zero** `authFetch` import |
-| Generic session/public failure paths | 30 paths now use `parseApiErrorMessage` with operation-specific fallback preserved |
+| Generic session/public failure paths | 29 `parseApiErrorMessage` call sites with operation-specific fallback preserved |
 | Local parsers removed | `parseRealtorApplicationError`, `parseUserRoleError` consolidated into W1 |
 | Domain-specific status branches | preserved — api.ts `401`/`404` custom messages unchanged |
 | `registerUser` | **unchanged** — dead export retained; custom duplicate-email mapping preserved (explicitly excluded domain behavior) |
@@ -124,9 +124,9 @@ Deterministic source-level validation cases (§44.6):
 
 ## 7. api.ts Failure-Path Inventory
 
-### 7.1 Normalized via W1 (30 paths)
+### 7.1 Normalized via W1 (29 call sites)
 
-All generic `!response.ok` throws on session/authenticated and public fetch failure paths now call `parseApiErrorMessage` with the prior operation-specific fallback string.
+All generic `!response.ok` throws on session/authenticated and public fetch failure paths now call `parseApiErrorMessage` with the prior operation-specific fallback string (29 invocations in W3).
 
 Realtor-application and admin user-role failure paths previously using local parsers now call W1 directly.
 
@@ -164,25 +164,80 @@ All remaining occurrences are **fallback arguments** to `parseApiErrorMessage`, 
 
 ## 9. Validation Commands and Exact Results
 
-Executed from `frontend/` at implementation time.
+Implementation-time checks executed from `frontend/`. IMPL-GATE-5 review reproduced targeted checks against commit `0e704c8`.
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| `npm run typecheck` | **PASS** | `tsc --noEmit` exit 0 |
-| `npm run lint` | **PASS** | `eslint` exit 0 |
-| `git diff --check` (W1–W3) | **PASS** | no whitespace errors |
+| `npm run typecheck` | **PASS** | exit code 0 — reproduced at IMPL-GATE-5 review |
+| `npm run lint` | **PASS** | exit code 0 — reproduced at IMPL-GATE-5 review |
+| `git diff --check db10634..0e704c8` | **PASS** | exit code 0 — implementation commit whitespace |
+| Commit path inventory | **PASS** | W1, W2, W3, E1 only |
+| Later modification check (W1/W2/W3/E1) | **PASS** | no commits after `0e704c8` on reviewed paths |
 | W2 401/403 preservation | **PASS** | static inspection |
 | Non-string `detail` safety | **PASS** | typeof string guard only |
 | Zero `api.ts` → `authFetch` import | **PASS** | grep confirms |
 | W1 transport-agnostic | **PASS** | no auth/session imports |
-| Scoped path verification | **PASS** | W1, W2, W3, E1 only |
 | Targeted automated frontend tests | **NOT APPLICABLE** | no frontend test infrastructure |
 | Manual runtime browser QA | **NOT RUN** | optional per §44.6 |
 | Repository-wide validation | **NOT RUN** | not required |
 
 ---
 
-## 10. Stop-Condition Assessment (§44.8)
+## 10. IMPL-GATE-5 Targeted Review (Read-Only)
+
+| Field | Value |
+|-------|-------|
+| Review type | Read-only targeted validation — envelope parsing only |
+| Review result | **PASS** |
+| Reviewed diff | `db106346e916448155c564416b54393e9b08ce4b..0e704c8fcf20bb2b043345e9144c7697e81bb099` |
+| Controlling gate | §44.7 / §44.9 |
+
+### 10.1 W1 envelope parsing
+
+| Finding | Verdict |
+|---------|---------|
+| Precedence: non-empty string `message` → non-empty string `detail` → stable fallback | **PASS** |
+| Empty body, invalid JSON, JSON primitives | fallback — no secondary throw | **PASS** |
+| Object, array, and null `detail` payloads | ignored — no validation-structure leakage | **PASS** |
+| Transport-agnostic — no auth/session imports | **PASS** |
+
+### 10.2 W2 authFetch preservation
+
+| Finding | Verdict |
+|---------|---------|
+| Request construction, URL, method, headers, body, credentials unchanged | **PASS** |
+| CSRF attachment unchanged | **PASS** |
+| Success response behavior unchanged | **PASS** |
+| `401` → `UnauthorizedError("Session expired or invalid")` before generic parsing | **PASS** |
+| `403` → `ForbiddenError("Access forbidden")` before generic parsing | **PASS** |
+| `notifyUnauthorized()` on `401` and `403` | **PASS** — pre-existing at implementation parent `db10634` |
+| Generic non-OK uses W1 with status-based fallback | **PASS** |
+| No token, storage, retry, redirect, refresh, logout, or cookie semantic change | **PASS** |
+
+### 10.3 W3 api.ts normalization
+
+| Finding | Verdict |
+|---------|---------|
+| Request URLs, methods, headers, payloads, credentials unchanged | **PASS** |
+| Export signatures unchanged | **PASS** |
+| Success parsing unchanged | **PASS** |
+| Operation-specific fallbacks preserved at all 29 parser call sites | **PASS** |
+| Domain `401`/`404` branches intentionally preserved outside normalization | **PASS** |
+| `registerUser` dead export and F-006 duplicate-email heuristic unchanged | **PASS** |
+| No caller migration | **PASS** |
+| Zero `api.ts` → `authFetch` import | **PASS** |
+
+### 10.4 Scope and residual boundaries
+
+| Finding | Verdict |
+|---------|---------|
+| No backend change | **PASS** |
+| IWP-007 not activated | **PASS** |
+| `authApi.ts` raw-fetch variance (login message-only parser) | **ACCEPTED RESIDUAL** — explicitly excluded by §44.3.4 / §44.5 |
+
+---
+
+## 11. Stop-Condition Assessment (§44.8)
 
 | Condition | Status |
 |-----------|--------|
@@ -196,58 +251,70 @@ Executed from `frontend/` at implementation time.
 
 ---
 
-## 11. Risks and Unresolved Limitations
+## 12. Risks and Unresolved Limitations
 
 | Risk | Severity | Notes |
 |------|----------|-------|
-| `authApi.ts` login/password-reset raw-fetch parsers | Low | Out of scope — inherit W2 for `authFetch` paths only |
+| `authApi.ts` login/password-reset raw-fetch parsers | Low | **Accepted residual** under §44 — `authFetch` paths inherit W2 |
 | `registerUser` dead export + custom parser | Low | Deferred separate slice |
-| No automated frontend tests | Medium | Deterministic source-level cases recorded; IMPL-GATE-5 review required |
+| No automated frontend tests | Medium | Deterministic source-level cases recorded; IMPL-GATE-5 PASS recorded |
 | Pre-existing unrelated dirty working tree | Low | Isolate at commit staging |
 
 ---
 
-## 12. Deferred Work
+## 13. Deferred Work
 
 | Item | Owner |
 |------|-------|
-| IMPL-GATE-5 targeted review | Separate review act |
-| F-003 disposition RESOLVED | After IMPL-GATE-5 PASS |
 | `authApi.ts` parser deduplication | Optional future slice |
 | Dead `api.ts::registerUser` removal | Separate deferred slice |
 | F-002 Phase 2 caller migration | IWP-007 |
+| F-009 session-failure semantics | Separate finding |
 | IWP-006 package acceptance | Blocked by open findings |
 
 ---
 
-## 13. Final Git State
+## 14. Final Git State
 
 | Item | Value |
 |------|-------|
-| F-003 commit | Recorded at commit finalization (see §13.1) |
+| F-003 implementation commit | `0e704c8fcf20bb2b043345e9144c7697e81bb099` (see §14.1) |
+| F-003 disposition commit | Recorded at disposition finalization (see §14.2) |
 | Push | NOT PERFORMED |
 
-### 13.1 Commit record (post-finalization)
+### 14.1 Implementation commit record
 
 | Field | Value |
 |-------|-------|
-| Commit hash | Recorded after scoped commit |
+| Commit hash | `0e704c8fcf20bb2b043345e9144c7697e81bb099` |
+| Parent | `db106346e916448155c564416b54393e9b08ce4b` |
 | Subject | `fix(iwp-006): normalize F-003 frontend API errors` |
 | Paths committed | W1 + W2 + W3 + E1 only |
 
----
+### 14.2 Disposition commit record
 
-## 14. Disposition Recommendation
-
-**F-003 — IMPLEMENTED — PENDING IMPL-GATE-5 VALIDATION**
-
-Implementation alone does **not** establish F-003 acceptance, IWP-006 acceptance, or IWP-006 closure.
-
-Maximum disposition after this evidence: bounded implementation complete pending targeted security/error-presentation review per §44.7.
+| Field | Value |
+|-------|-------|
+| Commit hash | Recorded at disposition finalization |
+| Subject | `docs(iwp-006): record F-003 resolved disposition` |
+| Paths committed | E1 only |
 
 ---
 
-## 15. Acceptance Verdicts
+## 15. Final Disposition
+
+| Field | Value |
+|-------|-------|
+| F-003 | **RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE — IMPL-GATE-5 PASS** |
+| IWP-006 | **SELECTED — ACTIVE — NOT ACCEPTED — NOT CLOSED** |
+| F-002 Phase 2 | **UNRESOLVED** — deferred |
+| F-009 | **UNRESOLVED** — out of bounded F-003 scope |
+
+Slice disposition recorded in this evidence artifact only. Does **not** establish IWP-006 acceptance, IWP-006 closure, Stage completion, release readiness, deployment, or push authorization.
+
+---
+
+## 16. Acceptance Verdicts
 
 | Gate | Verdict |
 |------|---------|
@@ -255,14 +322,17 @@ Maximum disposition after this evidence: bounded implementation complete pending
 | W1/W2/W3 contract | **PASS** |
 | Validation (typecheck/lint) | **PASS** |
 | Preservation boundaries | **PASS** |
-| IMPL-GATE-5 review | **NOT RUN** |
-| F-003 RESOLVED disposition | **NOT GRANTED** — pending review |
+| §44 implementation conformity (IMPL-GATE-5) | **PASS** |
+| Envelope parsing review (IMPL-GATE-5) | **PASS** |
+| 401/403 preservation review (IMPL-GATE-5) | **PASS** |
+| Transport regression review (IMPL-GATE-5) | **PASS** |
+| IMPL-GATE-5 overall | **PASS** |
+| F-003 RESOLVED disposition | **RECORDED** — bounded frontend error-envelope scope |
 | IWP-006 acceptance/closure | **NOT GRANTED** |
+| Push | **NOT RUN** — not authorized |
 
 ---
 
-## 16. Exact Next Authorized Action
+## 17. Exact Next Authorized Action
 
-**One bounded IMPL-GATE-5 targeted final review** of W1–W3 per §44.7 — envelope parsing, 401/403 preservation, no validation-structure leakage, no transport regression — without accepting or closing IWP-006, without activating IWP-007, and without push unless separately authorized.
-
-After review PASS: record F-003 disposition **RESOLVED — BOUNDED FRONTEND ERROR-ENVELOPE SCOPE** per §44.9.
+**One separate IWP-006 lifecycle decision selecting the next bounded finding or work-package act (for example F-002 Phase 2 planning, F-009, F-007-adjacent duplicate-symbol cleanup, or optional `authApi.ts` parser deduplication) under existing Repository Authority — without automatically activating IWP-007, without push, without package acceptance or closure, and without treating the F-003 disposition as full IWP-006 resolution.**
