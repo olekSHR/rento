@@ -4785,17 +4785,23 @@ That check verified publication integrity only. It did not authorize implementat
 
 ---
 
-## 47. Sixteenth Amendment Draft — Bounded F-008 API URL Fallback Consolidation
+## 47. Sixteenth Amendment — Bounded F-008 API URL Fallback Consolidation
 
-**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+**Amendment status:** PUBLISHED — EFFECTIVE (F-008 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
+
+**Publication integrity check:** COMPLETED - PASS (bounded pre-publication check — not a separate review lifecycle)
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
 
 **F-008:** UNRESOLVED — **Primary in-scope finding**
 
-**Exact technical write set:** §47.3 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
+**Exact technical write set:** ESTABLISHED BY §47.3 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
 
 **IWP-006 acceptance / closure:** NOT GRANTED
 
-Draft creation does **not** authorize implementation, resolve F-008, or accept or close IWP-006.
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
 
 ### 47.1 Defect (@ `4a81dc6e5ef60c0af7f99dfe7dc992b9db44b8cf`)
 
@@ -4832,7 +4838,7 @@ Same env key and fallback host. No `/api` suffix. Only `getImageUrl.ts` strips t
 
 Maximum production paths: **5**. No new dependencies.
 
-### 47.4 Implementation contract (not executable until published)
+### 47.4 Implementation contract (executable)
 
 **W1:** Export resolver only; no trailing-slash strip, no `/api` append, no imports from auth/API modules.
 
@@ -4859,13 +4865,25 @@ Stop without disposition if: paths outside W1–W5 required; trailing-slash pres
 | Item | Value |
 |------|-------|
 | Target disposition | **F-008 — RESOLVED — BOUNDED API URL FALLBACK CONSOLIDATION SCOPE** (after implementation + E1 only) |
-| This amendment | **DRAFT — NOT EFFECTIVE** |
-| Implementation authorized | **NO** until **PUBLISHED — EFFECTIVE** |
+| This amendment | **PUBLISHED — EFFECTIVE** (F-008 bounded implementation authorization only) |
+| Implementation authorized | **YES** for W1–W5 when separately invoked under published §47.3–§47.4 |
 
-### 47.9 Draft status record
+### 47.9 Publication status record
 
 | Item | Value |
 |------|-------|
-| Section | §47 |
-| Write set | W1–W5 + E1 |
-| F-008 implementation | NOT AUTHORIZED — NOT STARTED |
+| Amendment number | Sixteenth |
+| Amendment section | §47 |
+| Effective | YES — F-008 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY |
+| Reviewed | **NOT APPLICABLE** — bounded pre-publication integrity check only |
+| Publication | COMPLETED BY THIS PUBLICATION COMMIT |
+| Write set | W1 `frontend/lib/apiBaseUrl.ts`; W2 `frontend/lib/authFetch.ts`; W3 `frontend/services/api.ts`; W4 `frontend/services/authApi.ts`; W5 `frontend/lib/getImageUrl.ts` |
+| F-008 implementation | NOT AUTHORIZED - NOT STARTED |
+| Evidence artifact | NOT CREATED |
+| Exact next action after publication | One separate bounded F-008 implementation invocation referencing published §47.3–§47.4 (W1–W5); must not execute automatically upon publication; must not accept or close IWP-006; must not synchronize continuity unless separately authorized |
+
+### 47.10 Publication integration record
+
+Bounded pre-publication integrity check: **COMPLETED - PASS** — five-path W1–W5 production write set; E1 evidence path only; canonical owner `frontend/lib/apiBaseUrl.ts` confirmed; four duplicate fallback surfaces aligned in closed scope; trailing-slash strip preserved W5-only; F-007/F-010/dead exports/F-002 Phase 2/backend/API contract/env/deployment excluded; config-only correction preserves auth transport, domain API, raw auth fetch, and image URL runtime behavior; IWP-007/IWP-008 not activated; F-001/F-003/F-005/F-006/F-009 not reopened; F-008 disposition target RESOLVED — bounded API URL fallback consolidation scope.
+
+That check verified publication integrity only. It did not authorize implementation execution.
