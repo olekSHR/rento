@@ -4887,3 +4887,87 @@ Stop without disposition if: paths outside W1–W5 required; trailing-slash pres
 Bounded pre-publication integrity check: **COMPLETED - PASS** — five-path W1–W5 production write set; E1 evidence path only; canonical owner `frontend/lib/apiBaseUrl.ts` confirmed; four duplicate fallback surfaces aligned in closed scope; trailing-slash strip preserved W5-only; F-007/F-010/dead exports/F-002 Phase 2/backend/API contract/env/deployment excluded; config-only correction preserves auth transport, domain API, raw auth fetch, and image URL runtime behavior; IWP-007/IWP-008 not activated; F-001/F-003/F-005/F-006/F-009 not reopened; F-008 disposition target RESOLVED — bounded API URL fallback consolidation scope.
 
 That check verified publication integrity only. It did not authorize implementation execution.
+
+---
+
+## 48. Seventeenth Amendment Draft — Bounded F-010 Services Backup File Removal
+
+**Amendment status:** DRAFT — NOT REVIEWED — NOT PUBLISHED — NOT EFFECTIVE
+
+**F-010:** UNRESOLVED — **Primary in-scope finding**
+
+**Exact technical write set:** §48.3 — NOT EXECUTABLE UNTIL PUBLISHED AND SEPARATELY INVOKED
+
+**IWP-006 acceptance / closure:** NOT GRANTED
+
+Draft creation does **not** authorize implementation, resolve F-010, or accept or close IWP-006.
+
+### 48.1 Defect (@ `04de088f56ed72b52600700cbcced21077a2c110`)
+
+| Item | Evidence |
+|------|----------|
+| Target | **`frontend/services/api.ts.save`** — tracked backup copy in services surface |
+| Nature | Orphan duplicate of an older/smaller `api.ts` variant (~7.2 KB vs ~19.2 KB committed `api.ts`) |
+| Module status | Not a resolvable import target — `.save` suffix; zero committed importers |
+| Stale content | Local `NEXT_PUBLIC_API_URL` fallback and pre–F-007 `PropertyImage` export — not authoritative |
+| Canonical API | **`frontend/services/api.ts`** — sole live module for `@/services/api` imports (R1–R23) |
+
+Discovery: F-010 VERIFIED (hygiene). F-013 M7: optional cleanup; not imported in R1–R23.
+
+### 48.2 Caller and import determination
+
+Targeted committed-code search (@ `04de088`):
+
+| Search | Result |
+|--------|--------|
+| `api.ts.save` / `services/api.ts.save` | Zero matches in production, test, or config paths |
+| `@/services/api` imports | All resolve to `frontend/services/api.ts` only (23 caller surfaces in F-013) |
+| `registerUser` / `generateAIListing` from `@/services/api` | Zero committed callers — **out of F-010 scope** (separate optional hygiene) |
+| Re-exports / barrel references to `.save` | None |
+
+No live production caller, test caller, type-only reference, or documentation dependency on `api.ts.save`.
+
+### 48.3 Exact bounded write set
+
+| # | Path | Action |
+|---|------|--------|
+| **W1** | `frontend/services/api.ts.save` | **Delete** tracked orphan backup file only |
+| **E1** | `docs/implementation/IWP_006_F010_IMPLEMENTATION_EVIDENCE.md` | Future evidence only |
+
+Maximum production paths: **1 deletion**. **`frontend/services/api.ts` must not be modified.**
+
+### 48.4 Implementation contract (not executable until published)
+
+**W1:** Remove `frontend/services/api.ts.save` from the repository (`git rm` or equivalent). No replacement module. No caller redirection — file has zero callers.
+
+**Preserved behavior:** All `@/services/api` imports continue to resolve to `frontend/services/api.ts` unchanged. Auth, property, image, parsing, transport, and API contracts unchanged.
+
+**No migration or compatibility period required.**
+
+### 48.5 Exclusions
+
+F-007, F-008, F-002 Phase 2, `registerUser`/`generateAIListing` dead-export removal, `frontend/services/api.ts` edits, backend, `.env`/deployment/CI, dependencies, register/roadmap/handoff/continuity/release/push, IWP-006 acceptance or closure.
+
+### 48.6 Validation (future implementation)
+
+Targeted search confirming zero `api.ts.save` references and file absent; `npm run typecheck`; `npm run lint`; scoped `git diff --check` on W1 (+ E1). Focused test only if an existing test directly references the deleted path — **NOT APPLICABLE** at current evidence (zero references).
+
+### 48.7 Stop conditions
+
+Stop without disposition if: any committed importer of `api.ts.save` is found; deletion requires `api.ts` or caller changes; runtime/API behavior must change; scope expands beyond W1; typecheck/lint fails due to hidden dependency on the backup file.
+
+### 48.8 Disposition and lifecycle
+
+| Item | Value |
+|------|-------|
+| Target disposition | **F-010 — RESOLVED — BOUNDED SERVICES BACKUP FILE REMOVAL SCOPE** (after implementation + E1 + commit only) |
+| This amendment | **DRAFT — NOT EFFECTIVE** |
+| Implementation authorized | **NO** until **PUBLISHED — EFFECTIVE** |
+
+### 48.9 Draft status record
+
+| Item | Value |
+|------|-------|
+| Section | §48 |
+| Write set | W1 + E1 |
+| F-010 implementation | NOT AUTHORIZED — NOT STARTED |
