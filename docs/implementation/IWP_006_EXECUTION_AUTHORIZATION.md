@@ -1,63 +1,60 @@
 # IWP-006 Execution Authorization Artifact
 
-**Status:** PUBLISHED - EFFECTIVE (base instrument) · AMENDMENT DRAFT - NOT REVIEWED - NOT APPROVED - NOT PUBLISHED - NOT EFFECTIVE
+**Status:** PUBLISHED - EFFECTIVE (base instrument and subsequent published IWP-006 amendments through F-001 lifecycle) · CURRENT LIVE CONTINUITY CORRECTED LOCALLY - NOT A NEW PUBLICATION CLAIM
 **Authority class:** IWP package authority artifact
-**Base instrument binding authority:** ACTIVE - IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY - NOT SELECTION - NOT ACTIVATION - NOT DISCOVERY EXECUTION - NOT IMPLEMENTATION AUTHORIZATION
-**Proposed amendment binding authority (DRAFT - NOT EFFECTIVE):** ACTIVE - IWP-006 SELECTION, ACTIVATION, AND READ-ONLY DISCOVERY AUTHORIZATION ONLY
-**Effectiveness:** EFFECTIVE AS IWP-006 PACKAGE AUTHORITY INSTRUMENT ONLY — amendment draft is NOT EFFECTIVE
+**Base instrument binding authority:** ACTIVE - IWP-006 PACKAGE AUTHORITY INSTRUMENT
+**Selection / activation / discovery:** EFFECTIVE per amendment publication `89f9af0539a1e2468c5c2f9139829894268947a7` and subsequent published discovery / F-001 lifecycle acts
 **Independent review:** COMPLETED - PASS (base instrument)
 **Second amendment independent review:** COMPLETED - PASS
 **Second amendment review evidence:** `docs/implementation/reviews/IWP_006_SECTION_24_INDEPENDENT_REVIEW.md`
 **Second amendment reviewed digest:** `70653a41d1ea92960837b8836a2004582b798c923a120e4c5db51392f43ff02e`
 **Second amendment publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
 **Second amendment publication integration:** COMPLETED
-**Second amendment effectiveness:** EFFECTIVE AS F-001 SECURITY REVIEW AUTHORIZATION ONLY — NOT SECURITY REVIEW EXECUTION — NOT IMPLEMENTATION AUTHORIZATION
-**Amendment independent review:** NOT RUN
 **Review findings:** BLOCKING 0; NON-BLOCKING 0 (base instrument)
-**Amendment review findings:** NOT RUN
 **Publication-readiness decision:** COMPLETED - PASS (base instrument)
 **Selection/discovery readiness decision:** COMPLETED - PASS
 **Pre-publication validation:** COMPLETED - PASS (base instrument)
 **Approval integration:** COMPLETED - APPROVED FOR PUBLICATION CHECKPOINT (base instrument)
-**Amendment approval integration:** NOT RUN
 **Publication integration:** COMPLETED (base instrument)
-**Amendment publication integration:** NOT RUN
 **Publication checkpoint:** COMPLETED (base instrument)
-**Amendment publication checkpoint:** NOT RUN
 **Publication date:** 2026-07-22
 **Publication commit:** `fe64f2bce9bcf1e6b2df287593497c7e03c99827`
 **Git checkpoint:** COMPLETED (base instrument)
-**Amendment commit:** NOT APPLICABLE until separately authorized publication action
-**Continuity synchronization:** COMPLETED at `74de50e64751e89bb9c51855e5a3688d8072bde4`
-**Amendment continuity synchronization:** NOT RUN
+**Amendment publication commit (selection/discovery):** `89f9af0539a1e2468c5c2f9139829894268947a7`
+**F-001 implementation commit:** `084711f386a335e833311e85c38e1fbda1d452f9`
+**Ninth amendment (§39 F-005 authorization):** PUBLISHED - EFFECTIVE (F-005 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
+**Ninth amendment independent review:** COMPLETED - PASS (Publication Readiness Review)
+**Ninth amendment review evidence:** `docs/implementation/reviews/IWP_006_SECTION_39_PUBLICATION_READINESS_REVIEW.md`
+**Ninth amendment publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+**Ninth amendment publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
+**F-005 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
+**Continuity synchronization (historical):** COMPLETED at `d942e00ca0ae63fe5fd40aeedc3d7bd130c5f29c`
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 - Domain Implementation
 **Target package:** IWP-006 - Frontend Auth And API Client Stabilization
-**IWP-006 (current live posture):** PROPOSED - INACTIVE - NOT SELECTED - NOT ACTIVATED - NOT AUTHORIZED - NOT EXECUTABLE
-**IWP-006 (proposed amendment posture — DRAFT - NOT EFFECTIVE):** SELECTED - ACTIVE - READ-ONLY DISCOVERY AUTHORIZED - TECHNICAL IMPLEMENTATION NOT AUTHORIZED
-**Package selection (current live):** NOT SELECTED
-**Package selection (proposed amendment — DRAFT):** SELECTED
-**Package activation (current live):** NOT ACTIVATED
-**Package activation (proposed amendment — DRAFT):** ACTIVE - ONLY SELECTED AND ACTIVE PACKAGE
-**Read-only discovery authorization (current live):** NOT AUTHORIZED - NOT STARTED
-**Read-only discovery authorization (proposed amendment — DRAFT):** AUTHORIZED - NOT STARTED
-**Technical implementation authorization:** NOT AUTHORIZED - NOT STARTED
-**Execution authorization (current live):** NOT AUTHORIZED
-**Execution authorization (proposed amendment — DRAFT):** READ-ONLY DISCOVERY MAY OCCUR ONLY IN A LATER SEPARATE BOUNDED ACTION
-**Discovery (current live):** NOT AUTHORIZED - NOT STARTED
-**Discovery (proposed amendment — DRAFT):** AUTHORIZED - NOT STARTED
-**Technical implementation:** NOT AUTHORIZED - NOT STARTED
-**Exact technical write set:** NOT ESTABLISHED
+**IWP-006 (current live posture):** SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED
+**Package selection (current live):** SELECTED
+**Package activation (current live):** ACTIVE - ONLY SELECTED AND ACTIVE PACKAGE
+**Read-only discovery:** COMPLETED - EVIDENCE ACCEPTED - does not equal IWP acceptance or closure
+**Bounded F-001 technical implementation:** COMPLETED AND INDEPENDENTLY ACCEPTED
+**F-001:** RESOLVED within bounded F-001 scope
+**SR-F001-001 through SR-F001-007:** RESOLVED within bounded F-001 scope
+**F-013:** deferred and outside completed F-001 scope
+**Currently open authorized technical execution packages:** 0
+**Exact technical write set (F-005):** ESTABLISHED BY PUBLISHED §39.3 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
+**Exact technical write set (current open execution):** NONE OPEN — F-005 write set defined but not invoked
 **Acceptance:** NOT GRANTED
+**Closure:** NOT GRANTED
 **Stage I4:** IN PROGRESS
 **IWP-004:** ACCEPTED - CLOSED
-**Active implementation packages (current live):** 0
-**Active implementation packages (proposed amendment — DRAFT):** 1 - IWP-006
-**Authorized technical implementation packages:** 0
+**Active implementation packages (current live):** 1 - IWP-006
+**Authorized technical implementation packages (currently open):** 0
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
 **Phase 4 Product Development Methodology:** NOT STARTED
+**Exact next authorized action:** one separate bounded F-005 technical implementation invocation referencing published §39.3 (G1–G3); must not invoke automatically upon publication; must not accept or close IWP-006
+**Historical note:** Earlier header draft labels and point-in-time section text below remain historical records of prior lifecycle states; current live posture is this status block plus §38 and published §39.
 
 ---
 
@@ -2690,3 +2687,284 @@ After preparation of this eighth amendment draft, the exact next authorized acti
 Perform one bounded, independent, read-only targeted review of **Eighth Amendment Draft — Bounded F-001 Regression-Test Alignment Authorization** in §36 of `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` against published §32.8 @ `867694cb555fedb417832e58a0bddb2438858fdc`, the verified regression diagnostic (`test_role_guard_denies_ordinary_user` expecting `BadRequestException` while implementation raises `ForbiddenException`), one-file maximum write set, production-code prohibition, required later validation, stop conditions, lifecycle separation, and prohibition on premature corrective execution.
 
 That review must not modify files; must not approve, publish, or make the amendment effective; must not authorize or perform test correction; must not resolve or reclassify F-001 or any SR-F001 finding; must not accept or close IWP-006; must not update the Work Package Register or continuity surfaces unless separately authorized; must not stage, commit, or push; and must not deploy, release, launch, or scale.
+
+---
+
+## 38. Current Disposition — Governance Threshold Continuity Correction (2026-07-24)
+
+**Disposition class:** Current live continuity correction only
+**Publication claim:** NONE — local authoring pending independent Scoped Validation
+**Historical sections §1–§37:** retained as point-in-time records; not rewritten
+
+### 38.1 Current live posture
+
+| Item | Current live value |
+|------|--------------------|
+| Stage I4 | IN PROGRESS |
+| IWP-006 | SELECTED - ACTIVE - NOT ACCEPTED - NOT CLOSED |
+| Active implementation packages | 1 - IWP-006 |
+| Currently open authorized technical execution packages | 0 |
+| Bounded F-001 implementation | COMPLETED AND INDEPENDENTLY ACCEPTED |
+| F-001 | RESOLVED within bounded F-001 scope |
+| SR-F001-001 through SR-F001-007 | RESOLVED within bounded F-001 scope |
+| F-013 | deferred and outside completed F-001 scope |
+| Phase 4 | NOT STARTED |
+| IWP-006 acceptance | NOT GRANTED |
+| IWP-006 closure | NOT GRANTED |
+| Stage I4 completion | NOT COMPLETED |
+
+Evidence consumed for F-001 disposition (not modified by this correction):
+
+- `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md`
+- `docs/implementation/IWP_006_F001_BACKEND_VALIDATION_EVIDENCE.md`
+- F-001 implementation commit `084711f386a335e833311e85c38e1fbda1d452f9`
+
+### 38.2 Governance threshold consumption
+
+This disposition consumes the Authorization Continuity Threshold integrated into:
+
+- `docs/engineering/REPOSITORY_STANDARDS.md` §11.6.10A
+- `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` IMPL-ID-11
+
+`docs/engineering/GOVERNANCE_THRESHOLD_AMENDMENT.md` remains subordinate rationale/integration record only and is not binding.
+
+### 38.3 Exact next authorized action
+
+Independent read-only Scoped Validation of this exact governance threshold integration and continuity correction before publication.
+
+This disposition does **not** publish the integration, declare ACTIVE AUTHORITY, accept or close IWP-006, complete Stage I4, start Phase 4, authorize F-013, or authorize push, release, deployment, launch, or scaling.
+
+---
+
+## 39. Ninth Amendment — Bounded F-005 Route Guard Presentation Stabilization
+
+**Amendment title:** IWP-006 Bounded F-005 Route Guard Presentation Stabilization
+
+**Amendment status:** PUBLISHED - EFFECTIVE (F-005 BOUNDED IMPLEMENTATION AUTHORIZATION ONLY)
+
+**Independent review:** COMPLETED - PASS (Publication Readiness Review) — evidence `docs/implementation/reviews/IWP_006_SECTION_39_PUBLICATION_READINESS_REVIEW.md`
+
+**Publication-readiness decision:** COMPLETED - PASS - APPROVED FOR BOUNDED PUBLICATION
+
+**Publication integration:** COMPLETED BY THIS PUBLICATION COMMIT
+
+**F-005 technical implementation execution:** NOT AUTHORIZED - NOT STARTED
+
+**Technical implementation authorization:** NOT AUTHORIZED - NOT EFFECTIVE UNTIL SEPARATELY INVOKED
+
+**Exact technical write set:** ESTABLISHED BY §39.3 — NOT EXECUTABLE UNTIL SEPARATELY INVOKED
+
+**F-001:** RESOLVED within bounded F-001 scope — NOT REOPENED by this amendment
+
+**F-002:** UNRESOLVED — EXPLICITLY DEFERRED (F-013 / `api.ts` boundary)
+
+**F-013:** UNCERTAIN - DEFERRED — OUT OF WRITE SET
+
+**IWP-006 acceptance:** NOT GRANTED
+
+**IWP-006 closure:** NOT GRANTED
+
+This ninth amendment is effective only as authorization for one future bounded F-005 technical implementation pass under §39.3 (G1–G3). It does **not** authorize implementation during publication integration; does **not** execute the write set; does **not** resolve IWP-006 acceptance or closure; and does **not** authorize push, release, deployment, or launch.
+
+Publication of this amendment is not implementation execution, slice disposition, or IWP-006 acceptance.
+
+### 39.1 Identity and authority chain
+
+| Authority | Role |
+|-----------|------|
+| `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` §38 | Current live IWP-006 disposition; F-001 complete |
+| `docs/implementation/IWP_006_DISCOVERY_EVIDENCE.md` §11 | F-005 findings register — sole in-scope finding for this slice |
+| `docs/implementation/IWP_006_F001_IMPLEMENTATION_EVIDENCE.md` §4 | F7 `ProtectedRoute.tsx`, F8 `AdminRoute.tsx` left unchanged; F-013 / `api.ts` excluded |
+| Published §32.9 @ `867694cb555fedb417832e58a0bddb2438858fdc` | SR-F001-007: route-guard UX / flash reduction permitted in bounded route components |
+| `docs/implementation/IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-006 entry | Package scope includes route guards; deliverable includes protected route behavior |
+| `docs/engineering/IMPLEMENTATION_GOVERNANCE.md` IMPL-ID-11; `REPOSITORY_STANDARDS.md` §11.6.10A | One authorization → implementation → bounded corrections → one final review → slice disposition |
+| `docs/engineering/FRONTEND_ARCHITECTURE.md` | Owner — route guards, client presentation |
+| `docs/engineering/AUTHORIZATION_ARCHITECTURE.md` AUTHZ-BND-3 | Client guards remain presentation-only; server authority unchanged |
+
+**Finding scope for this amendment:**
+
+| Finding | Treatment |
+|---------|-----------|
+| **F-005** | **Primary — IN SCOPE — sole implementation target** |
+| F-001 | CLOSED — not reopened |
+| F-002 | UNRESOLVED — **deferred** (requires `frontend/services/api.ts`; F-013 boundary) |
+| F-003 | OUT OF SCOPE — requires `api.ts` for complete resolution |
+| F-004 | Substantially addressed in F-001; G3 touch limited to F-005 presentation consistency only |
+| F-006, F-007 | OUT OF SCOPE — require `api.ts` |
+| F-008, F-009 | OUT OF SCOPE — deferred to later IWP-006 slices |
+| F-010–F-012 | OUT OF SCOPE |
+| F-013 | DEFERRED — OUT OF SCOPE |
+
+**Slice selection rationale:** F-005 is the smallest open finding **fully resolvable without `frontend/services/api.ts`**, within IWP-006 register areas. F-002 and F-003 remain HIGH severity but are **boundary-deferred**, not abandoned, because discovery and F-001 exclusions prohibit `api.ts` modification in this slice (discovery F-013 → IWP-007 coordination).
+
+### 39.2 Objectives (exact)
+
+Future authorized execution must achieve **only** the following:
+
+**F-005 — Route guard presentation normalization**
+
+Normalize loading, unauthenticated, and unauthorized presentation across `ProtectedRoute`, `AdminRoute`, and `RealtorRoute` so that:
+
+- guards do not render `null` briefly after loading completes before redirect;
+- denied-state UX is consistent across the three route surfaces;
+- guards consume reconciled cookie-session auth state from F-001 via `useAuth()` without adding client-side authorization authority.
+
+**Non-objectives (explicit):**
+
+- Dual-client consolidation (F-002)
+- Error envelope unification (F-003)
+- Shared API config extraction (F-008)
+- Session-failure transport redesign (F-009)
+- Any `authFetch`, `authApi`, `AuthContext`, `tokenStorage`, or `csrf` modification
+- Backend, migration, or session-model changes
+- IWP-006 package acceptance or closure
+
+### 39.3 Exact bounded technical write set
+
+**Maximum paths: 3.** No path beyond this list may be modified. No new paths may be created.
+
+#### 39.3.1 Authorized modifications
+
+| # | Path | Purpose |
+|---|------|---------|
+| G1 | `frontend/components/ProtectedRoute.tsx` | F-005 — loading/denied presentation normalization |
+| G2 | `frontend/components/AdminRoute.tsx` | F-005 — loading/denied presentation normalization |
+| G3 | `frontend/components/RealtorRoute.tsx` | F-005 — loading/denied presentation normalization; preserve F-001 `isRealtor` usage |
+
+#### 39.3.2 Explicit exclusions — prohibited modifications
+
+- `frontend/lib/authFetch.ts`
+- `frontend/services/authApi.ts`
+- `frontend/context/AuthContext.tsx`
+- `frontend/lib/tokenStorage.ts`
+- `frontend/lib/csrf.ts`
+- `frontend/types/auth.ts` and all other `frontend/types/**`
+- `frontend/services/api.ts` and all F-013 surfaces
+- All backend paths, migrations, tests, dependency manifests, CI, infrastructure, deployment artifacts
+- `docs/**` governance and continuity surfaces (unless separately authorized)
+- Any F-001 write-set path not listed in §39.3.1
+
+### 39.4 Preserved architecture (F-001 non-reopening)
+
+Future execution must **preserve** all F-001 decisions without modification to any excluded path:
+
+- HttpOnly cookie session + CSRF double-submit
+- `authFetch` with `credentials: 'include'`; no bearer reintroduction
+- Server-side session authority; client guards remain presentation-only (AUTHZ-BND-3)
+- No refresh-token mechanism
+- No backend/router/service/schema/migration edits
+- Login/register/logout transport contracts in `authApi.ts` unchanged
+- F-013 bearer residual on excluded `api.ts` surfaces remains known accepted residual
+
+Any requirement touching session transport, CSRF, cookie names, login/logout backend contracts, auth client modules, or Alembic → **STOP** — out of slice scope.
+
+### 39.5 Implementation authorization boundary
+
+| Boundary | Rule |
+|----------|------|
+| Publication of §39 | Makes F-005 bounded write set **defined and invokable**; does **not** auto-start execution |
+| Implementation invocation | One separate bounded execution task referencing published §39 |
+| Bounded corrections | Permitted under **this same §39 authorization** per IMPL-ID-11 / §11.6.10A |
+| Final review | One targeted review of implementation evidence before slice disposition |
+| Slice disposition | Records F-005 resolution within bounded scope |
+| IWP-006 acceptance | Separate gate — **not authorized here** |
+
+### 39.6 Required validation
+
+| Check | Requirement |
+|-------|-------------|
+| Frontend typecheck | `npm run typecheck` — PASS or recorded stop |
+| Frontend lint | `npm run lint` — PASS or recorded stop |
+| Frontend build | `npm run build` — PASS or recorded stop |
+| Route guard tests | **UNAVAILABLE** — no frontend test tooling in repository; record unavailable-evidence justification per register IWP-006 Validation Requirements |
+| Manual guard-flow review | **Required** — document loading, unauthenticated redirect, and wrong-role redirect for Protected, Admin, and Realtor routes |
+| Authority trace | Map G1–G3 to F-005 and register deliverable "protected route behavior" |
+| Scoped `git diff --check` | PASS on exact write set (G1–G3 only) |
+| Backend pytest | NOT REQUIRED — no backend paths authorized |
+| Migration checks | NOT REQUIRED — no migration paths authorized |
+
+**Evidence artifact (future, not authorized by publication):** `docs/implementation/IWP_006_F005_IMPLEMENTATION_EVIDENCE.md`
+
+### 39.7 Security review requirements
+
+| Gate | Application |
+|------|-------------|
+| **IMPL-GATE-5** | Applies — route guard presentation surfaces touched |
+| Review type | Targeted validation — presentation-layer only |
+| Review focus | Confirm guards do not become authorization authority (AUTHZ-BND-3); confirm no auth transport or storage changes; confirm no `api.ts` expansion |
+| Controlling prior evidence | `IWP_006_TOKEN_STORAGE_SECURITY_REVIEW_EVIDENCE.md`; F-001 implementation evidence |
+| Separate token-storage review | **NOT REQUIRED** — no storage or transport change authorized |
+
+Security review is part of the **final review** gate after implementation, not a separate pre-authorization cascade.
+
+### 39.8 Stop conditions
+
+Execution must **STOP** and escalate if:
+
+1. Modification of any path outside §39.3.1
+2. Any edit to `frontend/services/api.ts` or F-013 caller-graph work
+3. Any edit to `authFetch.ts`, `authApi.ts`, `AuthContext.tsx`, `tokenStorage.ts`, `csrf.ts`, or other F-001 auth-layer paths
+4. **Login/logout/register transport change** — including request shape, credentials mode, form-login path, or cookie issuance/consumption behavior
+5. **CSRF or session contract change** — including cookie names, CSRF header/cookie semantics, or session-restore/logout coordination
+6. **`authApi` transport redesign** — including routing login through `authFetch` or altering F-001-established auth bootstrap
+7. **Authorization logic inside route guards** — guards must not enforce decisions beyond presentation routing derived from server-reconciled `useAuth()` state (AUTHZ-BND-3)
+8. Backend, migration, config, CI, infrastructure, or deployment change required
+9. F-001 session architecture reopening required
+10. Scope expands to F-002, F-003, F-006, F-007, F-008, F-009, or F-013
+11. Unrelated repository files absorbed into the change set
+12. IWP-006 acceptance, closure, Stage I4 completion, or Phase 4 start attempted
+13. IWP-007 or IWP-008 selection/activation requested
+14. New file creation required (write set is closed at G1–G3)
+
+### 39.9 Slice acceptance criteria (not IWP-006 package acceptance)
+
+This slice is **disposition-complete** when all are satisfied:
+
+| Criterion | Evidence |
+|-----------|----------|
+| F-005 | Guards present consistent loading and denied UX; post-loading `null` flash eliminated or bounded limitation documented with discovery trace |
+| F-001 preserved | No regression in session transport; G1–G3 only changed |
+| F-002 / F-013 preserved | `api.ts` untouched; F-002 remains explicitly deferred |
+| AUTHZ-BND-3 | Guards remain presentation-only |
+| Validation | typecheck, lint, build PASS; route-guard test unavailability documented; manual guard review recorded |
+| Security | Targeted review PASS — presentation-only guards |
+| Lifecycle | Implementation evidence recorded; bounded corrections (if any) under same §39; one final review complete |
+
+**IWP-006 register acceptance criteria** remain **open** — F-002, F-003, and other findings prevent package acceptance after this slice alone.
+
+### 39.10 Explicit out-of-scope items
+
+- F-001 and all SR-F001-* — closed; not reopened
+- **F-002** — dual auth client models (`api.ts` required) — **deferred per F-013 boundary**
+- F-003, F-008, F-009 — not bundled; deferred to later IWP-006 slices
+- F-006, F-007 — require `api.ts`
+- F-010–F-012 — not in scope
+- F-013 — `api.ts` caller graph; IWP-007 coordination route
+- IWP-007, IWP-008 — not selected; not authorized
+- Package acceptance, package closure, Stage I4 completion
+- Push, tag, release, deployment, production access, Phase 4
+
+### 39.11 Lifecycle separation
+
+```text
+§39 publication (one authorization act)
+    → bounded F-005 implementation invocation
+        → bounded corrections under §39 (if required)
+            → one final targeted review
+                → slice disposition in implementation evidence
+                    → IWP-006 remains NOT ACCEPTED — NOT CLOSED
+```
+
+### 39.12 Publication readiness review record
+
+Independent publication readiness review: **COMPLETED - PASS** — evidence `docs/implementation/reviews/IWP_006_SECTION_39_PUBLICATION_READINESS_REVIEW.md`.
+
+That review verified publication readiness only. It did not authorize implementation execution.
+
+---
+
+## 40. Exact Next Lifecycle Action After Ninth Amendment Publication
+
+Perform one separate bounded F-005 technical implementation invocation referencing published §39.3 (G1–G3).
+
+That invocation must not accept or close IWP-006; must not complete Stage I4; must not start Phase 4; must not authorize F-013; must not modify paths outside §39.3.1; must not invoke automatically upon publication; must not update the Work Package Register or continuity surfaces unless separately authorized; and must not push, release, deploy, launch, or scale.
