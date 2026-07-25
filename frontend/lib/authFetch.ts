@@ -1,5 +1,6 @@
 import { getCsrfHeaderValue } from "./csrf";
 import { parseApiErrorMessage } from "./apiError";
+import { dispatchAuthUnauthorized } from "./authSessionEvents";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
@@ -15,12 +16,6 @@ export class ForbiddenError extends Error {
   constructor(message = "Forbidden") {
     super(message);
     this.name = "ForbiddenError";
-  }
-}
-
-function notifyUnauthorized() {
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new Event("auth:unauthorized"));
   }
 }
 
@@ -45,12 +40,11 @@ export async function authFetch(
   });
 
   if (response.status === 401) {
-    notifyUnauthorized();
+    dispatchAuthUnauthorized();
     throw new UnauthorizedError("Session expired or invalid");
   }
 
   if (response.status === 403) {
-    notifyUnauthorized();
     throw new ForbiddenError("Access forbidden");
   }
 

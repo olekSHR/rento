@@ -1,5 +1,6 @@
 import { getCsrfHeaderValue } from "@/lib/csrf"
 import { parseApiErrorMessage } from "@/lib/apiError"
+import { dispatchAuthUnauthorized } from "@/lib/authSessionEvents"
 import { normalizeImagePath } from "@/lib/getImageUrl"
 
 const API_URL =
@@ -38,12 +39,18 @@ async function sessionFetch(
   const hasJsonBody =
     options.body !== undefined && typeof options.body === "string"
 
-  return fetch(url, {
+  const response = await fetch(url, {
     ...options,
     method,
     headers: buildSessionHeaders(options.headers, method, hasJsonBody),
     credentials: "include",
   })
+
+  if (response.status === 401) {
+    dispatchAuthUnauthorized()
+  }
+
+  return response
 }
 
 type PropertySearchParams = {
