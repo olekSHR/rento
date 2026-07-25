@@ -1,9 +1,7 @@
+import { API_BASE_URL } from "./apiBaseUrl";
 import { getCsrfHeaderValue } from "./csrf";
 import { parseApiErrorMessage } from "./apiError";
 import { dispatchAuthUnauthorized } from "./authSessionEvents";
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
 export class UnauthorizedError extends Error {
   constructor(message = "Unauthorized") {

@@ -1,12 +1,9 @@
+import { API_BASE_URL as API_URL } from "@/lib/apiBaseUrl"
 import { getCsrfHeaderValue } from "@/lib/csrf"
 import { parseApiErrorMessage } from "@/lib/apiError"
 import { dispatchAuthUnauthorized } from "@/lib/authSessionEvents"
 import { normalizeImagePath } from "@/lib/getImageUrl"
 import type { PropertyImage } from "@/types/property"
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "http://127.0.0.1:8000"
 
 const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"])
 
