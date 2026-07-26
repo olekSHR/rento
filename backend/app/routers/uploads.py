@@ -81,6 +81,11 @@ def upload_image(
             "Failed to read uploaded file."
         )
 
+    if not header:
+        raise BadRequestException(
+            "Uploaded file is empty."
+        )
+
     extension, expected_content_type = _detect_image_type(header)
 
     if image.content_type != expected_content_type:
@@ -109,6 +114,11 @@ def upload_image(
                     )
 
                 buffer.write(chunk)
+
+        if total_bytes == 0:
+            raise BadRequestException(
+                "Uploaded file is empty."
+            )
 
         os.replace(temp_path, final_path)
     except BadRequestException:
