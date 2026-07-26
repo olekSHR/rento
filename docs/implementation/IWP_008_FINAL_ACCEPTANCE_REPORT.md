@@ -1,18 +1,19 @@
 # IWP-008 Final Acceptance Report
 
-**Status:** PUBLISHED — IWP-008 FULL REGISTER PACKAGE ACCEPTANCE
+**Status:** PUBLISHED — IWP-008 FULL REGISTER PACKAGE ACCEPTANCE AND CLOSURE
 **Authority class:** Implementation work package acceptance evidence
 **Binding authority:** IWP-008 package acceptance record only
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 — Domain Implementation
 **Work package:** IWP-008 — Uploads And Media Storage Hardening
 **Accepted units:** Frontend signature slice (§3–§15); backend upload-validation slice (§16); full register package (§17)
-**IWP-008 package:** ACCEPTED — NOT CLOSED
+**IWP-008 package:** ACCEPTED — CLOSED — INACTIVE
 **Stage I4:** IN PROGRESS
-**Closure:** NOT PERFORMED
+**Closure:** PERFORMED
 **Continuity synchronization:** NOT PERFORMED
 **Completion Review:** PASS — BLOCKING 0
-**Acceptance outcome:** Accepted with recorded residual risk
+**Acceptance outcome:** Full register package accepted with recorded residual risk
+**Active implementation packages:** 0
 **Push:** NOT AUTHORIZED
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
@@ -473,3 +474,155 @@ IWP-008 package closure: NOT GRANTED
 **One bounded IWP-008 package closure act** under Stage I4 lifecycle — separate explicit authority.
 
 Closure must not complete Stage I4, push, release, or deploy unless separately authorized.
+
+---
+
+## 18. Package Closure
+
+**Closure basis commit:** `f15f93b7e3e88f514c5fe3790e132c9758c0611a`
+
+**Closure authority:** This instrument §17.12; `STAGE_I4_EXECUTION_AUTHORIZATION.md` §10 lifecycle separation
+
+**Standalone closure artifact required:** **NOT APPLICABLE** — closure recorded in this instrument per documentation minimization.
+
+### 18.1 Closure prerequisite matrix
+
+| # | Precondition | Result |
+|---|--------------|--------|
+| 1 | Full register package acceptance granted | **PASS** — §17.10 @ `f15f93b` |
+| 2 | All mandatory IWP-008 deliverables satisfied | **PASS** — §17.1 |
+| 3 | Blocking findings = 0 | **PASS** |
+| 4 | No mandatory technical scope deferred | **PASS** — §17.9 |
+| 5 | Implementation evidence committed | **PASS** — E1 @ `ea5eee4`; E2 @ `03c9c96` |
+| 6 | Acceptance evidence committed | **PASS** — §13–§17 @ `549b912`, `e1bdc19` |
+| 7 | Closure does not imply Stage I4 completion | **PASS** |
+| 8 | No release or deployment obligation | **PASS** |
+| 9 | No unresolved IWP-007 dependency | **PASS** — IWP-007 CLOSED — INACTIVE |
+| 10 | No new implementation authorization required | **PASS** |
+
+### 18.2 Closure determination
+
+| Item | Value |
+|------|-------|
+| Package acceptance commit | `f15f93b7e3e88f514c5fe3790e132c9758c0611a` |
+| Acceptance status | IWP-008 FULL REGISTER PACKAGE — **ACCEPTED** |
+| Blocking findings | **0** |
+| Mandatory technical scope remaining | **none** |
+| IWP-008 activation | **DEACTIVATED** by this act |
+| Active implementation packages | **0** |
+
+No production code or tests modified by this act.
+
+### 18.3 Explicit boundaries
+
+This closure act does **not**:
+
+- complete Stage I4;
+- synchronize register, roadmap, handoff, or other continuity surfaces;
+- select or activate another IWP;
+- authorize push, release, deployment, or Phase 4;
+- reopen accepted implementation or acceptance evidence.
+
+### 18.4 Closure decision
+
+```text
+IWP-008: ACCEPTED — CLOSED — INACTIVE
+```
+
+**Package closure is GRANTED.**
+
+### 18.5 Resulting lifecycle state
+
+| Field | Value |
+|-------|-------|
+| IWP-008 | **ACCEPTED — CLOSED — INACTIVE** |
+| Frontend signature slice | **ACCEPTED** |
+| Backend upload-validation slice | **ACCEPTED** |
+| Full register package | **ACCEPTED** |
+| Package closure | **GRANTED** |
+| Active implementation packages | **0** |
+| Stage I4 | **IN PROGRESS** |
+| Continuity synchronization | **NOT PERFORMED** |
+| Push / release / deployment | **NOT AUTHORIZED** |
+
+### 18.6 Next authorized action
+
+**Stage I4 lifecycle continuation** under `STAGE_I4_EXECUTION_AUTHORIZATION.md` — separate explicit authority.
+
+Must **not** select or activate the next IWP in this act. Must **not** push, release, or deploy unless separately authorized.
+
+---
+
+## 18. Package Closure
+
+**Closure basis commit:** `f15f93b7e3e88f514c5fe3790e132c9758c0611a`
+
+**Closure authority:** This instrument §17.12; `STAGE_I4_EXECUTION_AUTHORIZATION.md` §10 lifecycle separation
+
+**Standalone closure artifact required:** **NOT APPLICABLE** — closure recorded in this instrument per documentation minimization.
+
+### 18.1 Closure prerequisite matrix
+
+| # | Precondition | Result |
+|---|--------------|--------|
+| 1 | Full register package acceptance granted | **PASS** — §17.10 @ `f15f93b` |
+| 2 | All mandatory IWP-008 deliverables satisfied | **PASS** — §17.1 |
+| 3 | Blocking findings = 0 | **PASS** |
+| 4 | No mandatory technical scope deferred | **PASS** — §17.9 |
+| 5 | Implementation evidence committed | **PASS** — E1 @ `ea5eee4`; E2 @ `03c9c96` |
+| 6 | Acceptance evidence committed | **PASS** — §13–§17 @ `549b912`, `e1bdc19` |
+| 7 | Closure does not imply Stage I4 completion | **PASS** |
+| 8 | No release or deployment obligation | **PASS** |
+| 9 | No unresolved IWP-007 dependency | **PASS** — IWP-007 CLOSED — INACTIVE |
+| 10 | No new implementation authorization required | **PASS** |
+
+### 18.2 Closure determination
+
+| Item | Value |
+|------|-------|
+| Package acceptance commit | `f15f93b7e3e88f514c5fe3790e132c9758c0611a` |
+| Acceptance status | IWP-008 FULL REGISTER PACKAGE — **ACCEPTED** |
+| Blocking findings | **0** |
+| Mandatory technical scope remaining | **none** |
+| IWP-008 activation | **DEACTIVATED** by this act |
+| Active implementation packages | **0** |
+
+No production code or tests modified by this act.
+
+### 18.3 Explicit boundaries
+
+This closure act does **not**:
+
+- complete Stage I4;
+- synchronize register, roadmap, handoff, or other continuity surfaces;
+- select or activate another IWP;
+- authorize push, release, deployment, or Phase 4;
+- reopen accepted implementation or acceptance evidence.
+
+### 18.4 Closure decision
+
+```text
+IWP-008: ACCEPTED — CLOSED — INACTIVE
+```
+
+**Package closure is GRANTED.**
+
+### 18.5 Resulting lifecycle state
+
+| Field | Value |
+|-------|-------|
+| IWP-008 | **ACCEPTED — CLOSED — INACTIVE** |
+| Frontend signature slice | **ACCEPTED** |
+| Backend upload-validation slice | **ACCEPTED** |
+| Full register package | **ACCEPTED** |
+| Package closure | **GRANTED** |
+| Active implementation packages | **0** |
+| Stage I4 | **IN PROGRESS** |
+| Continuity synchronization | **NOT PERFORMED** |
+| Push / release / deployment | **NOT AUTHORIZED** |
+
+### 18.6 Next authorized action
+
+**Stage I4 lifecycle continuation** under `STAGE_I4_EXECUTION_AUTHORIZATION.md` — separate explicit authority.
+
+Must **not** select or activate the next IWP in this act. Must **not** push, release, or deploy unless separately authorized.
