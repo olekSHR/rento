@@ -236,3 +236,89 @@ If Stage I4 is later completed under valid authority, the next governance gate i
 | Deployment | NOT AUTHORIZED |
 | Release | NOT AUTHORIZED |
 | Phase 4 | NOT STARTED |
+| Stage I4 completion | **COMPLETED — COMPLETION REVIEW PASS — ACCEPTED** — §17 |
+| Stage I5 | NOT AUTHORIZED — NOT STARTED |
+| Completion basis commit | `1366fa5abe2dee9b3259b0d59cae356ebe1cac13` |
+| Continuity synchronization | NOT PERFORMED |
+
+---
+
+## 17. Stage I4 Completion Record
+
+**Authority class:** Implementation program stage completion evidence
+**Binding authority:** Stage I4 completion record only
+**Completion basis commit:** `1366fa5abe2dee9b3259b0d59cae356ebe1cac13`
+**Stage I4:** COMPLETED — COMPLETION REVIEW PASS — ACCEPTED
+**Stage I5:** NOT AUTHORIZED — NOT STARTED
+**Active implementation packages:** 0
+**Push:** NOT AUTHORIZED
+**Deployment:** NOT AUTHORIZED
+**Release:** NOT AUTHORIZED
+**Phase 4:** NOT STARTED
+
+This section records formal completion of Stage I4 — Domain Implementation under `STAGE_I4_AUTHORIZATION.md` §13 and `IMPLEMENTATION_PROGRAM.md` I4-GATE. It consumes committed package acceptance and closure instruments only. It does not authorize Stage I5, select a Work Package, activate a Work Package, authorize implementation, push, release, deploy, or start Phase 4.
+
+### 17.1 Completion basis
+
+| Item | Value |
+|------|-------|
+| Repository | `C:/Users/Александр/Desktop/Projects/rento` |
+| Branch | `main` |
+| Basis HEAD | `1366fa5abe2dee9b3259b0d59cae356ebe1cac13` |
+| Basis HEAD subject | `docs(iwp-008): close accepted package` |
+| Staged files at basis | None |
+| Unrelated working-tree items | Not inspected, modified, staged, or absorbed |
+
+### 17.2 Consolidated canonical package result
+
+| Package | Completion status | Evidence instrument |
+|---------|-------------------|---------------------|
+| IWP-003 | ACCEPTED — INACTIVE | `docs/implementation/IWP_003_FINAL_ACCEPTANCE_REPORT.md` |
+| IWP-004 | ACCEPTED — CLOSED — INACTIVE | `docs/implementation/IWP_004_FINAL_ACCEPTANCE_REPORT.md` |
+| IWP-006 | ACCEPTED — CLOSED — INACTIVE | `docs/implementation/IWP_006_FINAL_ACCEPTANCE_REPORT.md` |
+| IWP-007 | ACCEPTED — CLOSED — INACTIVE | `docs/implementation/IWP_007_PACKAGE_CLOSURE_REPORT.md` |
+| IWP-008 | ACCEPTED — CLOSED — INACTIVE | `docs/implementation/IWP_008_FINAL_ACCEPTANCE_REPORT.md` |
+
+Accepted/completed Stage I4 packages: **5**. Active implementation packages: **0**.
+
+### 17.3 Completion verification
+
+| Requirement | Source | Result |
+|-------------|--------|--------|
+| Accepted or explicitly blocked domain packages | §13 | **PASS** — all five canonical packages ACCEPTED |
+| I4-GATE package evidence | §11; `IMPLEMENTATION_PROGRAM.md` | **PASS** — satisfied by committed package instruments |
+| Complete evidence | §13 | **PASS** — package acceptance and closure instruments exist |
+| Review outcomes | §13 | **PASS** — package reviews recorded; stage completion review **PASS — BLOCKING 0** |
+| Residual risk record | §13 | **PASS** — non-blocking package-level residuals recorded in owning instruments; no open blocking findings |
+| Remaining restrictions record | §13; §14 | **PASS** — §14 preserved; restrictions restated in §17.5 |
+| Exact next action | §13; §15 | **PASS** — §17.6 |
+| No unregistered work | §11 | **PASS** |
+| No package scope drift | §11 | **PASS** |
+| No release or deployment execution | §11 | **PASS** |
+| No Phase 4 start | §11 | **PASS** |
+| Active implementation packages = 0 | `STAGE_I4_EXECUTION_AUTHORIZATION.md` §8 | **PASS** |
+
+### 17.4 Completion decision
+
+**Decision:** Stage I4 is formally **COMPLETED — COMPLETION REVIEW PASS — ACCEPTED**.
+
+Stage I4 completion does not authorize Stage I5, deployment, release, Phase 4, audit, gap creation, or adjacent implementation.
+
+### 17.5 Remaining restrictions
+
+Stage I4 completion preserves the restrictions in §14:
+
+- implementation outside exact packages remains NOT AUTHORIZED;
+- work package activation outside authorization remains NOT AUTHORIZED;
+- Code-to-Architecture Audit remains NOT AUTHORIZED;
+- Implementation Gap Register remains NOT AUTHORIZED;
+- remediation outside package scope remains NOT AUTHORIZED;
+- migration execution outside package scope remains NOT AUTHORIZED;
+- deployment, release, and Phase 4 remain NOT AUTHORIZED;
+- push remains NOT AUTHORIZED.
+
+### 17.6 Exact next governance gate
+
+The next governance gate is **separate explicit authorization for Stage I5 Stabilization** per §15.
+
+Must **not** activate Stage I5, select a Work Package, push, release, or deploy unless separately authorized.
