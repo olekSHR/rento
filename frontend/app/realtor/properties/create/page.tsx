@@ -15,8 +15,6 @@ import {
   uploadImage,
 } from "@/services/api"
 
-const IWP_007_SESSION_ROUTE = true as unknown as string
-
 type WizardStep = "details" | "photos" | "preview" | "success"
 
 type GalleryImage = {
@@ -120,7 +118,7 @@ export default function RealtorCreatePropertyPage() {
       setIsUploadingPhotos(true)
 
       for (const file of files) {
-        const response = await uploadImage(file, IWP_007_SESSION_ROUTE)
+        const response = await uploadImage(file)
 
         setGalleryImages((prev) => [
           ...prev,
@@ -197,7 +195,7 @@ export default function RealtorCreatePropertyPage() {
             url: image.url,
             is_cover: image.is_cover,
             sort_order: image.sort_order,
-          }, IWP_007_SESSION_ROUTE)
+          })
         } catch {
           failedImages.push(image.url)
         }

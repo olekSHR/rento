@@ -14,8 +14,6 @@ import {
 import Image from "next/image"
 import { getImageUrl } from "@/lib/getImageUrl"
 
-const IWP_007_SESSION_ROUTE = true as unknown as string;
-
 
 export default function CreatePropertyPage() {
   const router = useRouter();
@@ -103,7 +101,7 @@ export default function CreatePropertyPage() {
     }
 
     for (const file of files) {
-      const response = await uploadImage(file, IWP_007_SESSION_ROUTE)
+      const response = await uploadImage(file)
 
       setGalleryImages((prev) => [
         ...prev,
@@ -177,8 +175,7 @@ await Promise.all(
         url: image.url,
         is_cover: image.is_cover,
         sort_order: image.sort_order,
-      },
-      IWP_007_SESSION_ROUTE
+      }
     )
   )
 )

@@ -31,8 +31,6 @@ import {
 } from "@/services/api"
 import type { Property } from "@/types/property"
 
-const IWP_007_SESSION_ROUTE = true as unknown as string
-
 const AVATAR_OUTPUT_SIZE = 512
 const AVATAR_CROP_PREVIEW_SIZE = 176
 const ALLOWED_AVATAR_TYPES = [
@@ -423,7 +421,7 @@ export default function RealtorWorkspacePage() {
         avatarOffsetY,
         avatarSelectedFile
       )
-      const uploaded = await uploadImage(croppedFile, IWP_007_SESSION_ROUTE)
+      const uploaded = await uploadImage(croppedFile)
       const updatedProfile = await updateMyRealtorProfile({
         avatar_url: uploaded.url,
       })

@@ -166,11 +166,8 @@ type UploadImageResponse = {
 }
 
 export async function uploadImage(
-  file: File,
-  token: string
+  file: File
 ): Promise<UploadImageResponse> {
-  void token
-
   const formData = new FormData()
 
   formData.append("image", file)
@@ -325,18 +322,21 @@ export type CreatePropertyImageData = {
   sort_order?: number
 }
 
+export type PropertyImageFetchOptions = {
+  authenticated?: boolean
+}
+
 export async function getPropertyImages(
   propertyId: number,
-  token?: string
+  options?: PropertyImageFetchOptions
 ): Promise<PropertyImage[]> {
   const url = `${API_URL}/properties/${propertyId}/images`
 
-  const response =
-    token !== undefined
-      ? await sessionFetch(url, { cache: "no-store" })
-      : await fetch(url, {
-          cache: "no-store",
-        })
+  const response = options?.authenticated
+    ? await sessionFetch(url, { cache: "no-store" })
+    : await fetch(url, {
+        cache: "no-store",
+      })
 
   if (!response.ok) {
     throw new Error(
@@ -349,11 +349,8 @@ export async function getPropertyImages(
 
 export async function addPropertyImage(
   propertyId: number,
-  data: CreatePropertyImageData,
-  token: string
+  data: CreatePropertyImageData
 ): Promise<PropertyImage> {
-  void token
-
   const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images`,
     {
@@ -373,11 +370,8 @@ export async function addPropertyImage(
 
 export async function setCoverImage(
   propertyId: number,
-  imageId: number,
-  token: string
+  imageId: number
 ): Promise<PropertyImage> {
-  void token
-
   const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images/${imageId}/cover`,
     {
@@ -396,11 +390,8 @@ export async function setCoverImage(
 
 export async function deletePropertyImage(
   propertyId: number,
-  imageId: number,
-  token: string
+  imageId: number
 ) {
-  void token
-
   const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images/${imageId}`,
     {
@@ -420,11 +411,8 @@ export async function deletePropertyImage(
 export async function updatePropertyImageSortOrder(
   propertyId: number,
   imageId: number,
-  sortOrder: number,
-  token: string
+  sortOrder: number
 ): Promise<PropertyImage> {
-  void token
-
   const response = await sessionFetch(
     `${API_URL}/properties/${propertyId}/images/${imageId}/sort-order?sort_order=${sortOrder}`,
     {

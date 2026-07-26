@@ -17,8 +17,6 @@ import AdminGalleryManager from "@/components/admin/AdminGalleryManager"
 import Image from "next/image"
 import { getImageUrl } from "@/lib/getImageUrl"
 
-const IWP_007_SESSION_ROUTE = true as unknown as string
-
 export default function EditPropertyPage() {
   const params = useParams();
   const router = useRouter();
@@ -101,7 +99,7 @@ export default function EditPropertyPage() {
         return;
       }
 
-      const response = await uploadImage(file, IWP_007_SESSION_ROUTE);
+      const response = await uploadImage(file);
 
       setFormData((prev) => ({
         ...prev,

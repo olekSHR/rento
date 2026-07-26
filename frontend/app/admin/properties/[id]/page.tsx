@@ -11,8 +11,6 @@ import { getImageUrl } from "@/lib/getImageUrl"
 import type { Property } from "@/types/property"
 import Image from "next/image"
 
-const IWP_007_SESSION_ROUTE = true as unknown as string
-
 export default function PropertyDetailsPage() {
   const params = useParams()
   const router = useRouter()
@@ -29,10 +27,9 @@ export default function PropertyDetailsPage() {
   async function loadProperty() {
     try {
       const data = await getPropertyById(propertyId, { authenticated: true })
-      const images = await getPropertyImages(
-        propertyId,
-        IWP_007_SESSION_ROUTE
-      )
+      const images = await getPropertyImages(propertyId, {
+        authenticated: true,
+      })
 
     
 

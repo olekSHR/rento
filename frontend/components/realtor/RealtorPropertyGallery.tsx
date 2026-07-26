@@ -20,8 +20,6 @@ import {
 import SortableGalleryItem from "@/components/admin/SortableGalleryItem"
 import { getImageUrl } from "@/lib/getImageUrl"
 import type { PropertyImage } from "@/types/property"
-
-const IWP_007_SESSION_ROUTE = true as unknown as string
 import {
   addPropertyImage,
   deletePropertyImage,
@@ -52,10 +50,9 @@ export default function RealtorPropertyGallery({
   )
 
   const refreshImages = useCallback(async () => {
-    const updatedImages = await getPropertyImages(
-      propertyId,
-      IWP_007_SESSION_ROUTE
-    )
+    const updatedImages = await getPropertyImages(propertyId, {
+      authenticated: true,
+    })
     const sortedImages = [...updatedImages].sort(
       (a, b) => a.sort_order - b.sort_order
     )
@@ -88,8 +85,8 @@ export default function RealtorPropertyGallery({
       setIsUploading(true)
 
       for (const file of files) {
-        const uploaded = await uploadImage(file, IWP_007_SESSION_ROUTE)
-        await addPropertyImage(propertyId, { url: uploaded.url }, IWP_007_SESSION_ROUTE)
+        const uploaded = await uploadImage(file)
+        await addPropertyImage(propertyId, { url: uploaded.url })
       }
 
       await refreshImages()
@@ -104,7 +101,7 @@ export default function RealtorPropertyGallery({
   async function handleSetCover(imageId: number) {
     try {
       setSettingCoverId(imageId)
-      await setCoverImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
+      await setCoverImage(propertyId, imageId)
       await refreshImages()
     } catch (error) {
       console.error("Failed to set cover image", error)
@@ -118,7 +115,7 @@ export default function RealtorPropertyGallery({
     if (!confirmed) return
 
     try {
-      await deletePropertyImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
+      await deletePropertyImage(propertyId, imageId)
       await refreshImages()
     } catch (error) {
       console.error("Failed to delete image", error)
@@ -146,7 +143,7 @@ export default function RealtorPropertyGallery({
     try {
       await Promise.all(
         reordered.map((image, index) =>
-          updatePropertyImageSortOrder(propertyId, image.id, index, IWP_007_SESSION_ROUTE)
+          updatePropertyImageSortOrder(propertyId, image.id, index)
         )
       )
       await refreshImages()

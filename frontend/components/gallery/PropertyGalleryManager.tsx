@@ -21,8 +21,6 @@ import {
 import { getImageUrl } from "@/lib/getImageUrl"
 import type { PropertyImage } from "@/types/property"
 
-const IWP_007_SESSION_ROUTE = true as unknown as string
-
 import {
   addPropertyImage,
   deletePropertyImage,
@@ -71,10 +69,9 @@ const canGoNext =
 )
 
   const refreshImages = useCallback(async () => {
-  const updatedImages = await getPropertyImages(
-    propertyId,
-    IWP_007_SESSION_ROUTE
-  )
+  const updatedImages = await getPropertyImages(propertyId, {
+    authenticated: true,
+  })
 
   const sortedImages = [...updatedImages].sort(
     (a, b) => a.sort_order - b.sort_order
@@ -101,7 +98,7 @@ const canGoNext =
     try {
       setSettingCoverId(imageId)
 
-      await setCoverImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
+      await setCoverImage(propertyId, imageId)
 
       setImages((prevImages) =>
         prevImages.map((image) => ({
@@ -149,7 +146,7 @@ const canGoNext =
     if (!confirmed) return
 
     try {
-      await deletePropertyImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
+      await deletePropertyImage(propertyId, imageId)
       await refreshImages()
     } catch (error) {
       console.error("Failed to delete image", error)
@@ -169,15 +166,11 @@ const canGoNext =
       setIsUploading(true)
 
       for (const file of files) {
-        const uploadedImage = await uploadImage(
-          file,
-          IWP_007_SESSION_ROUTE
-        )
+        const uploadedImage = await uploadImage(file)
 
         await addPropertyImage(
           propertyId,
-          { url: uploadedImage.url },
-          IWP_007_SESSION_ROUTE
+          { url: uploadedImage.url }
         )
       }
 
@@ -226,8 +219,7 @@ async function handleDragEnd(event: DragEndEvent) {
         updatePropertyImageSortOrder(
           propertyId,
           image.id,
-          index,
-          IWP_007_SESSION_ROUTE
+          index
         )
       )
     )
