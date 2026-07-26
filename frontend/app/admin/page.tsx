@@ -17,7 +17,6 @@ import PageHeader from "@/components/ui/PageHeader"
 import PageShell from "@/components/ui/PageShell"
 import SectionCard from "@/components/ui/SectionCard"
 import StatusBadge from "@/components/ui/StatusBadge"
-import { getToken } from "@/lib/tokenStorage"
 import { getAdminStats, type AdminStats } from "@/services/api"
 
 type MetricKey = keyof Pick<
@@ -321,13 +320,7 @@ export default function AdminPage() {
   useEffect(() => {
     async function loadStats() {
       try {
-        const token = getToken()
-
-        if (!token) {
-          throw new Error("Unable to load dashboard stats.")
-        }
-
-        const data = await getAdminStats(token)
+        const data = await getAdminStats()
         setStats(data)
       } catch (loadError) {
         setError(

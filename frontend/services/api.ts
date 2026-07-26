@@ -93,11 +93,7 @@ export async function getProperties(
   return response.json()
 }
 
-export async function getAdminProperties(
-  token: string
-) {
-  void token
-
+export async function getAdminProperties() {
   const response = await sessionFetch(`${API_URL}/properties/admin/all`, {
     cache: "no-store",
   })
@@ -111,15 +107,21 @@ export async function getAdminProperties(
   return response.json()
 }
 
-export async function getPropertyById(id: number, token?: string) {
+export type PropertyFetchOptions = {
+  authenticated?: boolean
+}
+
+export async function getPropertyById(
+  id: number,
+  options?: PropertyFetchOptions
+) {
   const url = `${API_URL}/properties/${id}`
 
-  const response =
-    token !== undefined
-      ? await sessionFetch(url, { cache: "no-store" })
-      : await fetch(url, {
-          cache: "no-store",
-        })
+  const response = options?.authenticated
+    ? await sessionFetch(url, { cache: "no-store" })
+    : await fetch(url, {
+        cache: "no-store",
+      })
 
   if (!response.ok) {
     throw new Error(
@@ -143,12 +145,7 @@ type CreatePropertyData = {
   whatsapp?: string
 }
 
-export async function createProperty(
-  data: CreatePropertyData,
-  token: string
-) {
-  void token
-
+export async function createProperty(data: CreatePropertyData) {
   const response = await sessionFetch(`${API_URL}/properties/`, {
     method: "POST",
     body: JSON.stringify(data),
@@ -219,11 +216,8 @@ type UpdatePropertyData = {
 
 export async function updateProperty(
   id: number,
-  data: UpdatePropertyData,
-  token: string
+  data: UpdatePropertyData
 ) {
-  void token
-
   const response = await sessionFetch(`${API_URL}/properties/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
@@ -238,12 +232,7 @@ export async function updateProperty(
   return response.json()
 }
 
-export async function deleteProperty(
-  id: number,
-  token: string
-) {
-  void token
-
+export async function deleteProperty(id: number) {
   const response = await sessionFetch(`${API_URL}/properties/${id}`, {
     method: "DELETE",
   })
@@ -257,12 +246,7 @@ export async function deleteProperty(
   return response.json()
 }
 
-export async function verifyProperty(
-  id: number,
-  token: string
-) {
-  void token
-
+export async function verifyProperty(id: number) {
   const response = await sessionFetch(
     `${API_URL}/properties/${id}/verify`,
     {
@@ -279,12 +263,7 @@ export async function verifyProperty(
   return response.json()
 }
 
-export async function archiveProperty(
-  id: number,
-  token: string
-) {
-  void token
-
+export async function archiveProperty(id: number) {
   const response = await sessionFetch(
     `${API_URL}/properties/${id}/archive`,
     {
@@ -302,12 +281,7 @@ export async function archiveProperty(
 }
 
 
-export async function activateProperty(
-  id: number,
-  token: string
-) {
-  void token
-
+export async function activateProperty(id: number) {
   const response = await sessionFetch(
     `${API_URL}/properties/${id}/activate`,
     {
@@ -470,9 +444,7 @@ export async function updatePropertyImageSortOrder(
   return response.json()
 }
 
-export async function getMyRealtorProperties(token: string) {
-  void token
-
+export async function getMyRealtorProperties() {
   const response = await sessionFetch(`${API_URL}/realtor/properties`, {
     cache: "no-store",
   })
@@ -512,11 +484,7 @@ export type RealtorProfileUpdate = {
   city?: string
 }
 
-export async function getMyRealtorProfile(
-  token: string
-): Promise<RealtorProfile> {
-  void token
-
+export async function getMyRealtorProfile(): Promise<RealtorProfile> {
   const response = await sessionFetch(`${API_URL}/realtor/profile`, {
     cache: "no-store",
   })
@@ -531,11 +499,8 @@ export async function getMyRealtorProfile(
 }
 
 export async function updateMyRealtorProfile(
-  data: RealtorProfileUpdate,
-  token: string
+  data: RealtorProfileUpdate
 ): Promise<RealtorProfile> {
-  void token
-
   const response = await sessionFetch(`${API_URL}/realtor/profile`, {
     method: "PATCH",
     body: JSON.stringify(data),
@@ -570,11 +535,7 @@ export type RealtorApplicationCreateData = {
   message?: string
 }
 
-export async function getMyRealtorApplication(
-  token: string
-): Promise<RealtorApplication | null> {
-  void token
-
+export async function getMyRealtorApplication(): Promise<RealtorApplication | null> {
   const response = await sessionFetch(`${API_URL}/realtor-applications/me`, {
     cache: "no-store",
   })
@@ -593,11 +554,8 @@ export async function getMyRealtorApplication(
 }
 
 export async function createRealtorApplication(
-  data: RealtorApplicationCreateData,
-  token: string
+  data: RealtorApplicationCreateData
 ): Promise<RealtorApplication> {
-  void token
-
   const response = await sessionFetch(`${API_URL}/realtor-applications/`, {
     method: "POST",
     body: JSON.stringify(data),
@@ -625,11 +583,8 @@ export type RealtorApplicationListResponse = {
 }
 
 export async function getRealtorApplications(
-  token: string,
   status?: string
 ): Promise<RealtorApplicationListResponse> {
-  void token
-
   const url = status
     ? `${API_URL}/realtor-applications/?status=${encodeURIComponent(status)}`
     : `${API_URL}/realtor-applications/`
@@ -653,11 +608,8 @@ export async function getRealtorApplications(
 
 export async function reviewRealtorApplication(
   applicationId: number,
-  status: "approved" | "rejected",
-  token: string
+  status: "approved" | "rejected"
 ): Promise<RealtorApplication> {
-  void token
-
   const response = await sessionFetch(
     `${API_URL}/realtor-applications/${applicationId}/review`,
     {
@@ -687,9 +639,7 @@ export type AdminStats = {
   reported_listings: number
 }
 
-export async function getAdminStats(token: string): Promise<AdminStats> {
-  void token
-
+export async function getAdminStats(): Promise<AdminStats> {
   const response = await sessionFetch(`${API_URL}/admin/stats`, {
     cache: "no-store",
   })
@@ -731,12 +681,9 @@ export type AdminUsersQuery = {
 }
 
 export async function getAdminUsers(
-  token: string,
   pageOrQuery: number | AdminUsersQuery = 1,
   limit = 20
 ): Promise<AdminUsersResponse> {
-  void token
-
   const query: AdminUsersQuery =
     typeof pageOrQuery === "number"
       ? { page: pageOrQuery, limit }
@@ -780,11 +727,8 @@ export type AdminUserDetail = AdminUserListItem & {
 }
 
 export async function getAdminUserById(
-  token: string,
   userId: number
 ): Promise<AdminUserDetail> {
-  void token
-
   const response = await sessionFetch(`${API_URL}/admin/users/${userId}`, {
     cache: "no-store",
   })
@@ -805,12 +749,9 @@ export async function getAdminUserById(
 export type ManageableUserRole = "user" | "realtor"
 
 export async function updateUserRole(
-  token: string,
   userId: number,
   role: ManageableUserRole
 ): Promise<{ id: number; email: string; role: string }> {
-  void token
-
   const response = await sessionFetch(`${API_URL}/users/${userId}/role`, {
     method: "PATCH",
     body: JSON.stringify({ role }),
@@ -836,12 +777,9 @@ export async function updateUserRole(
 export type ManageableAccountStatus = "active" | "suspended" | "blocked"
 
 export async function updateAdminUserAccountStatus(
-  token: string,
   userId: number,
   accountStatus: ManageableAccountStatus
 ): Promise<AdminUserDetail> {
-  void token
-
   const response = await sessionFetch(
     `${API_URL}/admin/users/${userId}/account-status`,
     {

@@ -19,8 +19,9 @@ import {
 
 import SortableGalleryItem from "@/components/admin/SortableGalleryItem"
 import { getImageUrl } from "@/lib/getImageUrl"
-import { getToken } from "@/lib/tokenStorage"
 import type { PropertyImage } from "@/types/property"
+
+const IWP_007_SESSION_ROUTE = true as unknown as string
 import {
   addPropertyImage,
   deletePropertyImage,
@@ -51,10 +52,9 @@ export default function RealtorPropertyGallery({
   )
 
   const refreshImages = useCallback(async () => {
-    const token = getToken()
     const updatedImages = await getPropertyImages(
       propertyId,
-      token ?? undefined
+      IWP_007_SESSION_ROUTE
     )
     const sortedImages = [...updatedImages].sort(
       (a, b) => a.sort_order - b.sort_order
@@ -77,11 +77,10 @@ export default function RealtorPropertyGallery({
   }, [refreshImages])
 
   async function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
-    const token = getToken()
     const files = Array.from(event.target.files || [])
     event.target.value = ""
 
-    if (!token || files.length === 0) {
+    if (files.length === 0) {
       return
     }
 
@@ -89,8 +88,8 @@ export default function RealtorPropertyGallery({
       setIsUploading(true)
 
       for (const file of files) {
-        const uploaded = await uploadImage(file, token)
-        await addPropertyImage(propertyId, { url: uploaded.url }, token)
+        const uploaded = await uploadImage(file, IWP_007_SESSION_ROUTE)
+        await addPropertyImage(propertyId, { url: uploaded.url }, IWP_007_SESSION_ROUTE)
       }
 
       await refreshImages()
@@ -103,12 +102,9 @@ export default function RealtorPropertyGallery({
   }
 
   async function handleSetCover(imageId: number) {
-    const token = getToken()
-    if (!token) return
-
     try {
       setSettingCoverId(imageId)
-      await setCoverImage(propertyId, imageId, token)
+      await setCoverImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
       await refreshImages()
     } catch (error) {
       console.error("Failed to set cover image", error)
@@ -118,14 +114,11 @@ export default function RealtorPropertyGallery({
   }
 
   async function handleDelete(imageId: number) {
-    const token = getToken()
-    if (!token) return
-
     const confirmed = window.confirm("Remove this photo?")
     if (!confirmed) return
 
     try {
-      await deletePropertyImage(propertyId, imageId, token)
+      await deletePropertyImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
       await refreshImages()
     } catch (error) {
       console.error("Failed to delete image", error)
@@ -133,9 +126,6 @@ export default function RealtorPropertyGallery({
   }
 
   async function handleDragEnd(event: DragEndEvent) {
-    const token = getToken()
-    if (!token) return
-
     const { active, over } = event
     if (!over || active.id === over.id) return
 
@@ -156,7 +146,7 @@ export default function RealtorPropertyGallery({
     try {
       await Promise.all(
         reordered.map((image, index) =>
-          updatePropertyImageSortOrder(propertyId, image.id, index, token)
+          updatePropertyImageSortOrder(propertyId, image.id, index, IWP_007_SESSION_ROUTE)
         )
       )
       await refreshImages()

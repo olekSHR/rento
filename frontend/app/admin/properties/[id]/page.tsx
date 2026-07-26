@@ -8,9 +8,10 @@ import {
   getPropertyImages,
 } from "@/services/api"
 import { getImageUrl } from "@/lib/getImageUrl"
-import { getToken } from "@/lib/tokenStorage"
 import type { Property } from "@/types/property"
 import Image from "next/image"
+
+const IWP_007_SESSION_ROUTE = true as unknown as string
 
 export default function PropertyDetailsPage() {
   const params = useParams()
@@ -27,14 +28,11 @@ export default function PropertyDetailsPage() {
 
   async function loadProperty() {
     try {
-      const token = getToken()
-
-      if (!token) {
-        throw new Error("No token")
-      }
-
-      const data = await getPropertyById(propertyId, token)
-      const images = await getPropertyImages(propertyId, token)
+      const data = await getPropertyById(propertyId, { authenticated: true })
+      const images = await getPropertyImages(
+        propertyId,
+        IWP_007_SESSION_ROUTE
+      )
 
     
 

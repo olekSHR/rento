@@ -10,7 +10,6 @@ import {
   getPropertyStatusLabel,
   getPropertyStatusTone,
 } from "@/lib/realtorWorkspace"
-import { getToken } from "@/lib/tokenStorage"
 import { getPropertyById, updateProperty } from "@/services/api"
 import type { Property, PropertyStatus } from "@/types/property"
 
@@ -44,13 +43,9 @@ export default function RealtorEditPropertyPage() {
 
     async function loadProperty() {
       try {
-        const token = getToken()
-
-        if (!token) {
-          throw new Error("No token")
-        }
-
-        const property: Property = await getPropertyById(propertyId, token)
+        const property: Property = await getPropertyById(propertyId, {
+          authenticated: true,
+        })
 
         setPropertyStatus(property.status)
         setFormData({
@@ -111,27 +106,17 @@ export default function RealtorEditPropertyPage() {
       setIsSaving(true)
       setSaveMessage("")
 
-      const token = getToken()
+      const property = await getPropertyById(propertyId, { authenticated: true })
 
-      if (!token) {
-        throw new Error("No token")
-      }
-
-      const property = await getPropertyById(propertyId, token)
-
-      await updateProperty(
-        propertyId,
-        {
-          title: formData.title,
-          description: formData.description,
-          price: Number(formData.price),
-          city: formData.city,
-          rooms: Number(formData.rooms),
-          image_url: property.image_url ?? "",
-          status: propertyStatus,
-        },
-        token
-      )
+      await updateProperty(propertyId, {
+        title: formData.title,
+        description: formData.description,
+        price: Number(formData.price),
+        city: formData.city,
+        rooms: Number(formData.rooms),
+        image_url: property.image_url ?? "",
+        status: propertyStatus,
+      })
 
       setSaveMessage("Changes saved successfully")
       window.setTimeout(() => router.push("/realtor"), 900)

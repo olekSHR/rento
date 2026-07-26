@@ -12,7 +12,6 @@ import PrimaryButton from "@/components/ui/PrimaryButton"
 import SecondaryButton from "@/components/ui/SecondaryButton"
 import SectionCard from "@/components/ui/SectionCard"
 import StatusBadge from "@/components/ui/StatusBadge"
-import { getToken } from "@/lib/tokenStorage"
 import {
   getRealtorApplications,
   reviewRealtorApplication,
@@ -132,13 +131,7 @@ export default function AdminRealtorApplicationsPage() {
     setLoadError("")
 
     try {
-      const token = getToken()
-
-      if (!token) {
-        throw new Error("Please sign in again.")
-      }
-
-      const data = await getRealtorApplications(token, "pending")
+      const data = await getRealtorApplications("pending")
       setApplications(data.items)
     } catch (error) {
       setLoadError(
@@ -174,13 +167,7 @@ export default function AdminRealtorApplicationsPage() {
     try {
       setReviewingId(application.id)
 
-      const token = getToken()
-
-      if (!token) {
-        throw new Error("Please sign in again.")
-      }
-
-      await reviewRealtorApplication(application.id, status, token)
+      await reviewRealtorApplication(application.id, status)
     } catch (error) {
       setApplications(previousApplications)
       setCardErrors((prev) => ({

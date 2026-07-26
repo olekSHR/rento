@@ -19,7 +19,6 @@ import PageShell from "@/components/ui/PageShell"
 import PrimaryButton from "@/components/ui/PrimaryButton"
 import SectionCard from "@/components/ui/SectionCard"
 import StatusBadge from "@/components/ui/StatusBadge"
-import { getToken } from "@/lib/tokenStorage"
 import {
   createRealtorApplication,
   getMyRealtorApplication,
@@ -123,13 +122,7 @@ export default function BecomeRealtorPage() {
   useEffect(() => {
     async function loadExistingApplication() {
       try {
-        const token = getToken()
-
-        if (!token) {
-          return
-        }
-
-        const application = await getMyRealtorApplication(token)
+        const application = await getMyRealtorApplication()
 
         if (application?.status === "pending") {
           setIsSubmitted(true)
@@ -180,13 +173,6 @@ export default function BecomeRealtorPage() {
       return
     }
 
-    const token = getToken()
-
-    if (!token) {
-      setError("Please sign in to submit your application.")
-      return
-    }
-
     try {
       setIsSubmitting(true)
 
@@ -200,8 +186,7 @@ export default function BecomeRealtorPage() {
           ...(formData.message.trim()
             ? { message: formData.message.trim() }
             : {}),
-        },
-        token
+        }
       )
 
       setIsSubmitted(true)

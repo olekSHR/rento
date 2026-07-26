@@ -93,13 +93,7 @@ const [filter, setFilter] = useState<
 
   async function loadProperties() {
     try {
-      const token = localStorage.getItem("access_token");
-
-     if (!token) {
-       throw new Error("No token");
-     }
-
-const data = await getAdminProperties(token);
+      const data = await getAdminProperties();
 
       if (!isMounted) {
         return;
@@ -132,14 +126,7 @@ const data = await getAdminProperties(token);
         return;
       }
 
-      const token =
-        localStorage.getItem("access_token");
-
-      if (!token) {
-        throw new Error("No token");
-      }
-
-      await deleteProperty(id, token);
+      await deleteProperty(id);
 
       setProperties((prev) =>
         prev.filter((property) => property.id !== id)
@@ -153,15 +140,8 @@ const data = await getAdminProperties(token);
 
 async function handleVerify(id: number) {
   try {
-    const token =
-      localStorage.getItem("access_token")
-
-    if (!token) {
-      throw new Error("No token")
-    }
-
     const updatedProperty =
-      await verifyProperty(id, token)
+      await verifyProperty(id)
 
     setProperties((prev) =>
       prev.map((property) =>
@@ -187,17 +167,10 @@ async function handleArchiveToggle(
   status: Property["status"]
 ) {
   try {
-    const token =
-      localStorage.getItem("access_token")
-
-    if (!token) {
-      throw new Error("No token")
-    }
-
     const updatedProperty =
       status === "archived"
-        ? await activateProperty(id, token)
-        : await archiveProperty(id, token)
+        ? await activateProperty(id)
+        : await archiveProperty(id)
 
     setProperties((prev) =>
       prev.map((property) =>

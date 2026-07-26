@@ -19,8 +19,9 @@ import {
 } from "@dnd-kit/sortable"
 
 import { getImageUrl } from "@/lib/getImageUrl"
-import { getToken } from "@/lib/tokenStorage"
 import type { PropertyImage } from "@/types/property"
+
+const IWP_007_SESSION_ROUTE = true as unknown as string
 
 import {
   addPropertyImage,
@@ -70,10 +71,9 @@ const canGoNext =
 )
 
   const refreshImages = useCallback(async () => {
-  const token = getToken()
   const updatedImages = await getPropertyImages(
     propertyId,
-    token ?? undefined
+    IWP_007_SESSION_ROUTE
   )
 
   const sortedImages = [...updatedImages].sort(
@@ -98,13 +98,10 @@ const canGoNext =
   }, [refreshImages])
 
   async function handleSetCover(imageId: number) {
-    const token = getToken()
-    if (!token) return
-
     try {
       setSettingCoverId(imageId)
 
-      await setCoverImage(propertyId, imageId, token)
+      await setCoverImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
 
       setImages((prevImages) =>
         prevImages.map((image) => ({
@@ -148,14 +145,11 @@ const canGoNext =
   }
 }, [selectedImageIndex, images.length])
   async function handleDeleteImage(imageId: number) {
-    const token = getToken()
-    if (!token) return
-
     const confirmed = window.confirm("Delete this image?")
     if (!confirmed) return
 
     try {
-      await deletePropertyImage(propertyId, imageId, token)
+      await deletePropertyImage(propertyId, imageId, IWP_007_SESSION_ROUTE)
       await refreshImages()
     } catch (error) {
       console.error("Failed to delete image", error)
@@ -165,9 +159,6 @@ const canGoNext =
   async function handleUploadImages(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
-    const token = getToken()
-    if (!token) return
-
     const files = Array.from(event.target.files || [])
 
     event.target.value = ""
@@ -180,13 +171,13 @@ const canGoNext =
       for (const file of files) {
         const uploadedImage = await uploadImage(
           file,
-          token
+          IWP_007_SESSION_ROUTE
         )
 
         await addPropertyImage(
           propertyId,
           { url: uploadedImage.url },
-          token
+          IWP_007_SESSION_ROUTE
         )
       }
 
@@ -202,9 +193,6 @@ const canGoNext =
   
 
 async function handleDragEnd(event: DragEndEvent) {
-  const token = getToken()
-  if (!token) return
-
   const { active, over } = event
 
   if (!over || active.id === over.id) return
@@ -239,7 +227,7 @@ async function handleDragEnd(event: DragEndEvent) {
           propertyId,
           image.id,
           index,
-          token
+          IWP_007_SESSION_ROUTE
         )
       )
     )

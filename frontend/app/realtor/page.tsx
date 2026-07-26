@@ -22,7 +22,6 @@ import {
   searchProperties,
   type PropertyFilter,
 } from "@/lib/realtorWorkspace"
-import { getToken } from "@/lib/tokenStorage"
 import {
   getMyRealtorProfile,
   getMyRealtorProperties,
@@ -31,6 +30,8 @@ import {
   type RealtorProfile,
 } from "@/services/api"
 import type { Property } from "@/types/property"
+
+const IWP_007_SESSION_ROUTE = true as unknown as string
 
 const AVATAR_OUTPUT_SIZE = 512
 const AVATAR_CROP_PREVIEW_SIZE = 176
@@ -240,12 +241,9 @@ export default function RealtorWorkspacePage() {
         setIsDataLoading(true)
         setError("")
 
-        const token = getToken()
-        if (!token) return
-
         const [propertiesData, profileData] = await Promise.all([
-          getMyRealtorProperties(token),
-          getMyRealtorProfile(token),
+          getMyRealtorProperties(),
+          getMyRealtorProfile(),
         ])
 
         setProperties(propertiesData.items || [])
@@ -413,12 +411,6 @@ export default function RealtorWorkspacePage() {
       return
     }
 
-    const token = getToken()
-
-    if (!token) {
-      return
-    }
-
     try {
       setAvatarError("")
       setIsAvatarUploading(true)
@@ -431,11 +423,10 @@ export default function RealtorWorkspacePage() {
         avatarOffsetY,
         avatarSelectedFile
       )
-      const uploaded = await uploadImage(croppedFile, token)
-      const updatedProfile = await updateMyRealtorProfile(
-        { avatar_url: uploaded.url },
-        token
-      )
+      const uploaded = await uploadImage(croppedFile, IWP_007_SESSION_ROUTE)
+      const updatedProfile = await updateMyRealtorProfile({
+        avatar_url: uploaded.url,
+      })
 
       setProfile(updatedProfile)
       closeAvatarPreview()

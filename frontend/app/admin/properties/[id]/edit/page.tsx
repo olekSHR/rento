@@ -12,12 +12,12 @@ import {
   uploadImage,
 } from "@/services/api";
 
-import { getToken } from "@/lib/tokenStorage";
-
 import type { Property } from "@/types/property";
 import AdminGalleryManager from "@/components/admin/AdminGalleryManager"
 import Image from "next/image"
 import { getImageUrl } from "@/lib/getImageUrl"
+
+const IWP_007_SESSION_ROUTE = true as unknown as string
 
 export default function EditPropertyPage() {
   const params = useParams();
@@ -47,13 +47,9 @@ export default function EditPropertyPage() {
       try {
         setIsLoading(true);
 
-        const token = getToken();
-
-        if (!token) {
-          throw new Error("No token");
-        }
-
-        const property: Property = await getPropertyById(propertyId, token);
+        const property: Property = await getPropertyById(propertyId, {
+          authenticated: true,
+        });
 
         setFormData({
           title: property.title,
@@ -105,13 +101,7 @@ export default function EditPropertyPage() {
         return;
       }
 
-      const token = localStorage.getItem("access_token");
-
-      if (!token) {
-        throw new Error("No token");
-      }
-
-      const response = await uploadImage(file, token);
+      const response = await uploadImage(file, IWP_007_SESSION_ROUTE);
 
       setFormData((prev) => ({
         ...prev,
@@ -133,12 +123,6 @@ export default function EditPropertyPage() {
     try {
       setIsSaving(true);
 
-      const token = localStorage.getItem("access_token");
-
-      if (!token) {
-        throw new Error("No token");
-      }
-
       await updateProperty(
   propertyId,
   {
@@ -152,8 +136,7 @@ export default function EditPropertyPage() {
     phone: formData.phone,
     whatsapp: formData.whatsapp,
 
-  },
-  token
+  }
 );
 
       router.push("/admin/properties");

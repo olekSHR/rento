@@ -12,7 +12,9 @@ import {
   addPropertyImage,
 } from "@/services/api";
 import Image from "next/image"
-import { getImageUrl } from "@/lib/getImageUrl";
+import { getImageUrl } from "@/lib/getImageUrl"
+
+const IWP_007_SESSION_ROUTE = true as unknown as string;
 
 
 export default function CreatePropertyPage() {
@@ -100,14 +102,8 @@ export default function CreatePropertyPage() {
       return
     }
 
-    const token = localStorage.getItem("access_token")
-
-    if (!token) {
-      throw new Error("No token")
-    }
-
     for (const file of files) {
-      const response = await uploadImage(file, token)
+      const response = await uploadImage(file, IWP_007_SESSION_ROUTE)
 
       setGalleryImages((prev) => [
         ...prev,
@@ -158,13 +154,6 @@ function handleRemoveGalleryImage(indexToRemove: number) {
     try {
       setIsLoading(true);
 
-      const token =
-        localStorage.getItem("access_token");
-
-      if (!token) {
-        throw new Error("No token found");
-      }
-
       const createdProperty = await createProperty(
   {
     title: formData.title,
@@ -177,8 +166,7 @@ function handleRemoveGalleryImage(indexToRemove: number) {
     contact_name: formData.contact_name,
     phone: formData.phone,
     whatsapp: formData.whatsapp,
-  },
-  token
+  }
 );
 
 await Promise.all(
@@ -190,7 +178,7 @@ await Promise.all(
         is_cover: image.is_cover,
         sort_order: image.sort_order,
       },
-      token
+      IWP_007_SESSION_ROUTE
     )
   )
 )

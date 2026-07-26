@@ -12,7 +12,6 @@ import PrimaryButton from "@/components/ui/PrimaryButton"
 import SecondaryButton from "@/components/ui/SecondaryButton"
 import SectionCard from "@/components/ui/SectionCard"
 import StatusBadge from "@/components/ui/StatusBadge"
-import { getToken } from "@/lib/tokenStorage"
 import {
   getAdminUserById,
   updateAdminUserAccountStatus,
@@ -318,15 +317,9 @@ function RoleManagementSection({
     try {
       setIsSaving(true)
 
-      const token = getToken()
+      await updateUserRole(user.id, selectedRole)
 
-      if (!token) {
-        throw new Error("Unable to update user role.")
-      }
-
-      await updateUserRole(token, user.id, selectedRole)
-
-      const refreshedUser = await getAdminUserById(token, user.id)
+      const refreshedUser = await getAdminUserById(user.id)
 
       onRoleUpdated(refreshedUser)
       sessionStorage.setItem(ADMIN_USERS_RELOAD_KEY, "1")
@@ -515,14 +508,7 @@ function AccountStatusManagementSection({
     try {
       setIsSaving(true)
 
-      const token = getToken()
-
-      if (!token) {
-        throw new Error("Unable to update account status.")
-      }
-
       const refreshedUser = await updateAdminUserAccountStatus(
-        token,
         user.id,
         selectedStatus
       )
@@ -646,13 +632,7 @@ export default function AdminUserDetailPage() {
       try {
         setIsLoading(true)
 
-        const token = getToken()
-
-        if (!token) {
-          throw new Error("Unable to load user.")
-        }
-
-        const data = await getAdminUserById(token, userId)
+        const data = await getAdminUserById(userId)
 
         if (!isMounted) {
           return

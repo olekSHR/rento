@@ -13,7 +13,6 @@ import PageShell from "@/components/ui/PageShell"
 import PrimaryButton from "@/components/ui/PrimaryButton"
 import SecondaryButton from "@/components/ui/SecondaryButton"
 import SectionCard from "@/components/ui/SectionCard"
-import { getToken } from "@/lib/tokenStorage"
 import {
   getAdminUsers,
   type AdminUserListItem,
@@ -212,13 +211,7 @@ export default function AdminUsersPage() {
       try {
         setIsLoading(true)
 
-        const token = getToken()
-
-        if (!token) {
-          throw new Error("Unable to load users.")
-        }
-
-        const data = await getAdminUsers(token, {
+        const data = await getAdminUsers({
           page,
           limit: PAGE_LIMIT,
           q: effectiveQuery,

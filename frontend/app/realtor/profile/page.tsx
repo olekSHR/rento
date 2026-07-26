@@ -30,14 +30,7 @@ export default function RealtorProfilePage() {
   useEffect(() => {
     async function loadProfile() {
       try {
-        const token = localStorage.getItem("access_token")
-
-        if (!token) {
-          setIsLoading(false)
-          return
-        }
-
-        const data = await getMyRealtorProfile(token)
+        const data = await getMyRealtorProfile()
 
         setProfile(data)
 
@@ -77,12 +70,6 @@ export default function RealtorProfilePage() {
       setSuccess("")
       setIsSaving(true)
 
-      const token = localStorage.getItem("access_token")
-
-      if (!token) {
-        throw new Error("No token")
-      }
-
       const updatedProfile = await updateMyRealtorProfile(
         {
           full_name: formData.full_name,
@@ -92,8 +79,7 @@ export default function RealtorProfilePage() {
           avatar_url: formData.avatar_url,
           bio: formData.bio,
           city: formData.city,
-        },
-        token
+        }
       )
 
       setProfile(updatedProfile)
