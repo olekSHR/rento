@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import BadRequestException, NotFoundException
+from app.core.observability.signals import emit_privileged_signal
 from app.repositories import admin_user_repository, user_repository
 
 VALID_ROLES = frozenset({"user", "realtor", "admin"})
@@ -205,6 +206,14 @@ def update_account_status(
         db,
         target,
         account_status,
+    )
+
+    emit_privileged_signal(
+        "account_status_update",
+        actor_user_id=admin_user.id,
+        target_type="user",
+        target_id=user_id,
+        outcome="success",
     )
 
     return get_user_by_id(db, user_id)

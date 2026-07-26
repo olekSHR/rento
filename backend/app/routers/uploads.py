@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from starlette.responses import Response
 from app.core.config import settings
 from app.core.exceptions import BadRequestException
+from app.core.observability.signals import emit_upload_signal
 from app.core.rate_limit import get_upload_rate_limit_key, limiter
 from app.core.security.dependencies import (
     require_admin_or_realtor
@@ -56,6 +57,11 @@ def upload_image(
     )
 ):
     if not image.content_type:
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="missing_content_type",
+        )
         raise BadRequestException(
             "Missing content type. Allowed: image/jpeg, image/png, image/webp."
         )
@@ -69,6 +75,11 @@ def upload_image(
     )
 
     if image.content_type not in allowed_content_types:
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="unsupported_content_type",
+        )
         raise BadRequestException(
             "Unsupported content type. Allowed: image/jpeg, image/png, image/webp."
         )
@@ -77,18 +88,41 @@ def upload_image(
         header = image.file.read(16)
         image.file.seek(0)
     except Exception:
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="read_failed",
+        )
         raise BadRequestException(
             "Failed to read uploaded file."
         )
 
     if not header:
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="empty_file",
+        )
         raise BadRequestException(
             "Uploaded file is empty."
         )
 
-    extension, expected_content_type = _detect_image_type(header)
+    try:
+        extension, expected_content_type = _detect_image_type(header)
+    except BadRequestException:
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="unsupported_file_type",
+        )
+        raise
 
     if image.content_type != expected_content_type:
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="content_type_mismatch",
+        )
         raise BadRequestException(
             "File content does not match content type."
         )
@@ -109,6 +143,11 @@ def upload_image(
                 total_bytes += len(chunk)
 
                 if total_bytes > MAX_UPLOAD_BYTES:
+                    emit_upload_signal(
+                        "deny",
+                        actor_user_id=current_user.id,
+                        reason_code="file_too_large",
+                    )
                     raise BadRequestException(
                         "File too large. Max size is 10 MB."
                     )
@@ -116,6 +155,11 @@ def upload_image(
                 buffer.write(chunk)
 
         if total_bytes == 0:
+            emit_upload_signal(
+                "deny",
+                actor_user_id=current_user.id,
+                reason_code="empty_file",
+            )
             raise BadRequestException(
                 "Uploaded file is empty."
             )
@@ -134,6 +178,11 @@ def upload_image(
                 os.remove(temp_path)
         except Exception:
             pass
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="upload_collision",
+        )
         raise BadRequestException(
             "Upload collision. Please retry."
         )
@@ -143,9 +192,20 @@ def upload_image(
                 os.remove(temp_path)
         except Exception:
             pass
+        emit_upload_signal(
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="save_failed",
+        )
         raise BadRequestException(
             "Failed to save uploaded file."
         )
+
+    emit_upload_signal(
+        "success",
+        actor_user_id=current_user.id,
+        file_ref=filename,
+    )
 
     return {
         "filename": filename,

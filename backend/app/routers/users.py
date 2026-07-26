@@ -38,5 +38,6 @@ def update_user_role(
     return user_service.update_user_role(
         db,
         user_id,
-        role_update.role
+        role_update.role,
+        actor_user_id=current_user.id,
     )

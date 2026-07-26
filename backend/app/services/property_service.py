@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 
 from app.repositories import property_repository, realtor_profile_repository
 from app.core.exceptions import BadRequestException, ForbiddenException, NotFoundException
+from app.core.observability.signals import emit_privileged_signal, emit_transition_signal
 
 
 PROPERTY_STATUS_AVAILABLE = "available"
@@ -264,7 +265,7 @@ def create_property(
             "Access denied"
         )
 
-    return property_repository.create_property(
+    created = property_repository.create_property(
         db,
         property_data.title,
         property_data.description,
@@ -278,6 +279,17 @@ def create_property(
         phone,
         whatsapp
     )
+
+    if current_user.role == "realtor":
+        emit_transition_signal(
+            "property",
+            created.id,
+            None,
+            PROPERTY_STATUS_PENDING,
+            actor_user_id=current_user.id,
+        )
+
+    return created
 
 
 def update_property(
@@ -433,7 +445,9 @@ def delete_property_image(
 
 def delete_property(
     db: Session,
-    property_id: int
+    property_id: int,
+    *,
+    actor_user_id: int | None = None,
 ):
 
     property_item = property_repository.get_property_by_id(
@@ -452,9 +466,20 @@ def delete_property(
         property_item
     )
 
+    if actor_user_id is not None:
+        emit_privileged_signal(
+            "property_delete",
+            actor_user_id=actor_user_id,
+            target_type="property",
+            target_id=property_id,
+            outcome="success",
+        )
+
 def verify_property(
     db: Session,
-    property_id: int
+    property_id: int,
+    *,
+    actor_user_id: int | None = None,
 ):
 
     property_item = property_repository.get_property_by_id(
@@ -473,16 +498,38 @@ def verify_property(
             "Only pending listings can be verified"
         )
 
-    return property_repository.update_property_status(
+    from_status = property_item.status
+    updated = property_repository.update_property_status(
         db,
         property_item,
         PROPERTY_STATUS_AVAILABLE,
         update_verified_at=True,
     )
 
+    emit_transition_signal(
+        "property",
+        property_id,
+        from_status,
+        PROPERTY_STATUS_AVAILABLE,
+        actor_user_id=actor_user_id,
+    )
+
+    if actor_user_id is not None:
+        emit_privileged_signal(
+            "property_verify",
+            actor_user_id=actor_user_id,
+            target_type="property",
+            target_id=property_id,
+            outcome="success",
+        )
+
+    return updated
+
 def archive_property(
     db: Session,
-    property_id: int
+    property_id: int,
+    *,
+    actor_user_id: int | None = None,
 ):
 
     property_item = property_repository.get_property_by_id(
@@ -501,16 +548,38 @@ def archive_property(
             "Only available listings can be archived"
         )
 
-    return property_repository.update_property_status(
+    from_status = property_item.status
+    updated = property_repository.update_property_status(
         db,
         property_item,
         PROPERTY_STATUS_ARCHIVED,
     )
 
+    emit_transition_signal(
+        "property",
+        property_id,
+        from_status,
+        PROPERTY_STATUS_ARCHIVED,
+        actor_user_id=actor_user_id,
+    )
+
+    if actor_user_id is not None:
+        emit_privileged_signal(
+            "property_archive",
+            actor_user_id=actor_user_id,
+            target_type="property",
+            target_id=property_id,
+            outcome="success",
+        )
+
+    return updated
+
 
 def activate_property(
     db: Session,
-    property_id: int
+    property_id: int,
+    *,
+    actor_user_id: int | None = None,
 ):
 
     property_item = property_repository.get_property_by_id(
@@ -529,12 +598,32 @@ def activate_property(
             "Only archived listings can be activated"
         )
 
-    return property_repository.update_property_status(
+    from_status = property_item.status
+    updated = property_repository.update_property_status(
         db,
         property_item,
         PROPERTY_STATUS_AVAILABLE,
         update_verified_at=True,
     )
+
+    emit_transition_signal(
+        "property",
+        property_id,
+        from_status,
+        PROPERTY_STATUS_AVAILABLE,
+        actor_user_id=actor_user_id,
+    )
+
+    if actor_user_id is not None:
+        emit_privileged_signal(
+            "property_activate",
+            actor_user_id=actor_user_id,
+            target_type="property",
+            target_id=property_id,
+            outcome="success",
+        )
+
+    return updated
 
 def report_property(
     db: Session,

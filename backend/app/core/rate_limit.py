@@ -8,6 +8,7 @@ from slowapi.middleware import SlowAPIMiddleware
 from starlette.responses import JSONResponse
 
 from app.core.config import settings
+from app.core.observability.signals import emit_failure_signal
 
 logger = logging.getLogger(__name__)
 
@@ -60,6 +61,11 @@ async def rate_limit_exception_handler(
     request: Request,
     exc: RateLimitExceeded,
 ) -> JSONResponse:
+    emit_failure_signal(
+        "rate_limit_exceeded",
+        path=request.url.path,
+        status_code=429,
+    )
 
     response = JSONResponse(
         status_code=429,

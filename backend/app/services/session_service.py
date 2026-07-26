@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.exceptions import UnauthorizedException
+from app.core.observability.signals import emit_decision_signal
 from app.models.auth_session import AuthSession
 from app.models.user import User
 from app.repositories import user_repository
@@ -118,11 +119,21 @@ def get_current_user_from_session(
     session = get_valid_session(db, raw_token)
 
     if not session:
+        emit_decision_signal(
+            "authentication",
+            "deny",
+            reason_code="invalid_or_expired_session",
+        )
         raise UnauthorizedException("Invalid or expired session")
 
     user = user_repository.get_user_by_id(db, session.user_id)
 
     if not user:
+        emit_decision_signal(
+            "authentication",
+            "deny",
+            reason_code="session_user_not_found",
+        )
         raise UnauthorizedException("User not found")
 
     return user

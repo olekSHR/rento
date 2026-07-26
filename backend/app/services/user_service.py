@@ -5,6 +5,7 @@ from app.core.exceptions import (
     BadRequestException,
     NotFoundException,
 )
+from app.core.observability.signals import emit_privileged_signal
 from app.repositories import user_repository
 
 
@@ -20,6 +21,7 @@ def update_user_role(
     role: str,
     *,
     commit: bool = True,
+    actor_user_id: int | None = None,
 ):
 
     user = user_repository.get_user_by_id(
@@ -55,9 +57,20 @@ def update_user_role(
             f"Cannot change role from {user.role} to {role}"
         )
 
-    return user_repository.update_user_role(
+    updated = user_repository.update_user_role(
         db,
         user,
         role,
         commit=commit,
     )
+
+    if actor_user_id is not None:
+        emit_privileged_signal(
+            "user_role_update",
+            actor_user_id=actor_user_id,
+            target_type="user",
+            target_id=user_id,
+            outcome="success",
+        )
+
+    return updated

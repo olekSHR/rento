@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import BadRequestException, NotFoundException
+from app.core.observability.signals import emit_privileged_signal, emit_transition_signal
 from app.models.realtor_application import RealtorApplication
 from app.models.user import User
 from app.repositories import realtor_application_repository
@@ -114,6 +115,7 @@ def review_application(
         )
 
     reviewed_at = datetime.now(timezone.utc)
+    from_status = application.status
 
     if status == REVIEW_STATUS_APPROVED:
         try:
@@ -137,12 +139,44 @@ def review_application(
             db.rollback()
             raise
 
+        emit_transition_signal(
+            "realtor_application",
+            application.id,
+            from_status,
+            status,
+            actor_user_id=admin_user.id,
+        )
+        emit_privileged_signal(
+            "realtor_application_review",
+            actor_user_id=admin_user.id,
+            target_type="realtor_application",
+            target_id=application.id,
+            outcome="success",
+        )
+
         return application
 
-    return realtor_application_repository.update_review(
+    updated = realtor_application_repository.update_review(
         db,
         application,
         status,
         admin_user.id,
         reviewed_at,
     )
+
+    emit_transition_signal(
+        "realtor_application",
+        application.id,
+        from_status,
+        status,
+        actor_user_id=admin_user.id,
+    )
+    emit_privileged_signal(
+        "realtor_application_review",
+        actor_user_id=admin_user.id,
+        target_type="realtor_application",
+        target_id=application.id,
+        outcome="success",
+    )
+
+    return updated

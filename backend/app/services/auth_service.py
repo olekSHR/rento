@@ -5,6 +5,7 @@ from app.repositories import user_repository
 from app.core.security.hashing import hash_password
 
 from app.core.exceptions import BadRequestException
+from app.core.observability.signals import emit_decision_signal
 
 from app.core.security.hashing import verify_password
 
@@ -28,6 +29,11 @@ def login_user(
 
     if not user:
 
+        emit_decision_signal(
+            "authentication",
+            "deny",
+            reason_code="invalid_credentials",
+        )
         raise BadRequestException(
             "Invalid email or password"
         )
@@ -39,6 +45,11 @@ def login_user(
 
     if not is_valid_password:
 
+        emit_decision_signal(
+            "authentication",
+            "deny",
+            reason_code="invalid_credentials",
+        )
         raise BadRequestException(
             "Invalid email or password"
         )

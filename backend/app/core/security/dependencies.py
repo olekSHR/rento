@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.exceptions import ForbiddenException, UnauthorizedException
+from app.core.observability.signals import emit_decision_signal
 from app.database.database import get_db
 from app.services import account_status_service
 from app.services import session_service
@@ -22,6 +23,12 @@ def require_admin(
     current_user=Depends(get_current_user),
 ):
     if current_user.role != "admin":
+        emit_decision_signal(
+            "authorization",
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="admin_required",
+        )
         raise ForbiddenException("Admin access required")
 
     return current_user
@@ -45,6 +52,12 @@ def require_admin_or_realtor(
     current_user=Depends(get_current_user),
 ):
     if current_user.role not in ["admin", "realtor"]:
+        emit_decision_signal(
+            "authorization",
+            "deny",
+            actor_user_id=current_user.id,
+            reason_code="admin_or_realtor_required",
+        )
         raise ForbiddenException("Admin or realtor access required")
 
     return current_user

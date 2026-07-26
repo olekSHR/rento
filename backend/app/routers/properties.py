@@ -78,7 +78,8 @@ def verify_property(
 
     return property_service.verify_property(
         db,
-        property_id
+        property_id,
+        actor_user_id=current_user.id,
     )
 
 @router.post(
@@ -93,7 +94,8 @@ def archive_property(
 
     return property_service.archive_property(
         db,
-        property_id
+        property_id,
+        actor_user_id=current_user.id,
     )
 
 
@@ -109,7 +111,8 @@ def activate_property(
 
     return property_service.activate_property(
         db,
-        property_id
+        property_id,
+        actor_user_id=current_user.id,
     )
 
 @router.post(
@@ -193,9 +196,10 @@ def delete_property(
     )
 
     property_service.delete_property(
-    db,
-    property_id
-)
+        db,
+        property_id,
+        actor_user_id=current_user.id,
+    )
 
     return {
         "success": True,
