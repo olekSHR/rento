@@ -1,28 +1,29 @@
 # IWP-008 Execution Authorization
 
-**Status:** PUBLISHED — EFFECTIVE (IWP-008 package implementation scope authorization only)
+**Status:** PUBLISHED — EFFECTIVE (IWP-008 package implementation scope authorization; first amendment published)
 **Authority class:** IWP package authority artifact
 **Binding authority:** ACTIVE — exact technical write set authorization only; not technical implementation execution; not acceptance
-**Independent review:** NOT REQUIRED for this publication gate class
-**Publication integration:** COMPLETED
-**Publication checkpoint (git):** COMPLETED BY THIS PUBLICATION COMMIT
-**Publication parent commit:** `7f0ba8c5880d7bff7d58e747ec5431ad378a3e21`
+**Independent review:** NOT REQUIRED for first-amendment publication gate class
+**Publication integration:** COMPLETED (base instrument); FIRST AMENDMENT — PENDING PUBLICATION COMMIT
+**Publication parent commit (base instrument):** `7f0ba8c5880d7bff7d58e747ec5431ad378a3e21`
+**First amendment basis commit:** `549b912c3ba8fca8da7ec88ed260eb87db680cb5`
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 — Domain Implementation
 **Target package:** IWP-008 — Uploads And Media Storage Hardening
 **Selection:** SELECTED — EFFECTIVE per `docs/implementation/IWP_008_SELECTION_AUTHORIZATION.md`
 **Activation:** ACTIVE — EFFECTIVE per `docs/implementation/IWP_008_ACTIVATION_AUTHORIZATION.md`
 **Package authority:** PUBLISHED — EFFECTIVE
-**Read-only discovery basis:** COMPLETED — bounded upload/media inspection @ HEAD `7f0ba8c`; no open-ended discovery authorized
-**Technical implementation:** AUTHORIZED WITHIN EXACT WRITE SET BELOW — NOT STARTED
-**Implementation write authority:** AUTHORIZED ONLY FOR THE EXACT PRODUCTION WRITE SET IN §9
+**Read-only discovery basis:** COMPLETED — bounded upload/media inspection @ HEAD `7f0ba8c`; backend upload inspection @ HEAD `549b912` (§17.2)
+**Technical implementation (frontend signature slice):** COMPLETED — ACCEPTED @ `ea5eee4`
+**Technical implementation (backend upload-validation slice):** AUTHORIZED BY §17 — NOT STARTED
+**Implementation write authority:** AUTHORIZED ONLY FOR THE EXACT PRODUCTION WRITE SET IN §6 AND §17.3
 **Acceptance:** NOT GRANTED
 **Closure:** NOT GRANTED
 
 **Current effective IWP-008 status:**
 
 ```text
-SELECTED — ACTIVE — IMPLEMENTATION-AUTHORIZED — TECHNICAL IMPLEMENTATION NOT STARTED — ACCEPTANCE NOT GRANTED
+SELECTED — ACTIVE — IMPLEMENTATION-AUTHORIZED — FRONTEND SIGNATURE SLICE ACCEPTED — BACKEND UPLOAD-VALIDATION SLICE AUTHORIZED NOT STARTED — PACKAGE CLOSURE NOT GRANTED
 ```
 
 **Stage I4:** IN PROGRESS
@@ -331,3 +332,120 @@ It must **not** complete Stage I4, push, release, or deploy.
 | Artifact | `docs/implementation/IWP_008_EXECUTION_AUTHORIZATION.md` |
 | Inspected production paths | W1–W8; R8 read-only; `AdminGalleryManager.tsx`; `PropertyGallery.tsx`; `getImageUrl.ts` (excluded) |
 | Authority conferred | IWP-008 exact technical write set — EFFECTIVE upon publication commit |
+
+---
+
+## 17. First Amendment — Backend Upload Validation Slice
+
+**Amendment status:** PUBLISHED — EFFECTIVE (backend upload-validation bounded implementation authorization only)
+
+**Amendment basis:** `docs/implementation/IWP_008_FINAL_ACCEPTANCE_REPORT.md`; register IWP-008 validation requirements; coordination ownership of `backend/app/routers/uploads.py`
+
+**Amendment discipline:** Bounded extension of this same package execution authorization per `docs/implementation/IWP_006_EXECUTION_AUTHORIZATION.md` amendment precedent and `docs/engineering/REPOSITORY_STANDARDS.md` §11.6.10A. Does **not** require a separate execution-authorization file, re-selection, or re-activation.
+
+**Frontend signature slice (§3–§16):** COMPLETED — ACCEPTED — not rewritten by this amendment.
+
+Publication of this amendment is not implementation execution, slice acceptance, package closure, or Stage I4 completion.
+
+### 17.1 Slice objective
+
+Harden and prove **backend upload validation and denial behavior** on the existing authenticated `POST /upload/` endpoint:
+
+- preserve current endpoint contract, auth dependency, rate limit, and response shape;
+- add explicit denial coverage for empty, oversize, unsupported, and content-spoofed uploads;
+- add register-required upload denial, size/type, and temp-file cleanup tests;
+- stop if backend architecture extraction, storage-provider, migration, or deployment authority becomes necessary.
+
+### 17.2 Read-only inspection (@ `549b912`)
+
+| Item | Current state |
+|------|---------------|
+| Endpoint | `POST /upload/` in `backend/app/routers/uploads.py` |
+| Auth | `require_admin_or_realtor` |
+| Rate limit | `settings.RATE_LIMIT_UPLOAD` via `limiter` |
+| Allowed types | `image/jpeg`, `image/png`, `image/webp` via declared content-type |
+| Magic-byte check | `_detect_image_type(header)` for JPEG, PNG, WebP |
+| Spoof guard | Rejects when declared content-type ≠ detected type |
+| Max size | `MAX_UPLOAD_BYTES = 10 * 1024 * 1024`; chunked read |
+| Filename | `{uuid4()}.{extension}` — client filename not used for storage path |
+| Persistence | Write to `uploads/{uuid}.uploading`, then `os.replace` to final path |
+| Cleanup | Temp file removed on `BadRequestException`, `FileExistsError`, and generic failure |
+| Existing upload tests | **None dedicated** — only incidental `/uploads/` URL references elsewhere |
+| Missing register evidence | Upload denial tests; size/type tests; cleanup-on-failure tests |
+
+**Determination:** Validation logic exists but lacks dedicated regression proof. No migration, dependency, or storage-provider change required for this slice.
+
+### 17.3 Exact write set
+
+| ID | Path | Allowed changes |
+|----|------|-----------------|
+| **W-B1** | `backend/app/routers/uploads.py` | Bounded validation hardening only: explicit empty-file denial; preserve auth, rate limit, URLs, methods, response model, temp-write/replace/cleanup order; may refactor only co-located private helpers/constants required for testability — no service-layer extraction |
+| **W-B2** | `backend/tests/test_iwp_008_upload_validation.py` | **New file** — denial/size/type/cleanup tests for upload validation |
+| **W-B3** | `backend/tests/conftest.py` | **NOT APPLICABLE** unless pytest strictly requires a shared fixture and no in-test fixture suffices |
+
+**Evidence (future implementation act):**
+
+| ID | Path |
+|----|------|
+| **E2** | `docs/implementation/IWP_008_BACKEND_UPLOAD_VALIDATION_IMPLEMENTATION_EVIDENCE.md` |
+
+### 17.4 Explicit exclusions
+
+| Surface | Rule |
+|---------|------|
+| Frontend paths §6 | Accepted slice — not writable |
+| `backend/app/main.py` static mount | Not writable |
+| `backend/app/models/property.py` | Not writable |
+| `backend/app/services/` new upload service | Not writable — no router→service extraction in this slice |
+| `frontend/lib/getImageUrl.ts` | Not writable |
+| Gallery UX / frontend components | Not writable |
+| Auth stack | Not writable |
+| Migrations / Alembic | Not writable |
+| `backend/requirements.txt` / lockfiles | Not writable |
+| CI / Docker / deployment | Not writable |
+| External storage provider selection | Stop condition |
+| Production file migration | Stop condition |
+
+### 17.5 Required validation (future implementation act)
+
+| Check | Command / method | Required result |
+|-------|------------------|-----------------|
+| V-B1 | `pytest backend/tests/test_iwp_008_upload_validation.py` (from repo root or `backend/`) | PASS |
+| V-B2 | Static: W-B1 diff limited to upload router validation/helpers | PASS |
+| V-B3 | Static: no new dependency or lockfile change | PASS |
+| V-B4 | Static: endpoint contract unchanged (`POST /upload/`, response fields) | PASS |
+| V-B5 | Manual trace: auth still required; public anonymous upload not introduced | PASS |
+
+Frontend V1–V3 from §11: **NOT APPLICABLE** — no frontend write set in this slice.
+
+### 17.6 Stop conditions (backend slice)
+
+| # | Condition |
+|---|-----------|
+| SC-B1 | Modification required outside W-B1–W-B3 or E2 |
+| SC-B2 | Service-layer extraction or backend architecture redesign appears necessary |
+| SC-B3 | Migration, dependency, lockfile, or CI change appears necessary |
+| SC-B4 | External storage provider decision or production file migration appears necessary |
+| SC-B5 | Static file serving or `main.py` mount change appears necessary |
+| SC-B6 | Endpoint contract or auth dependency weakening appears necessary |
+
+### 17.7 Lifecycle result after amendment publication
+
+| Item | State |
+|------|-------|
+| IWP-008 | **SELECTED — ACTIVE — IMPLEMENTATION-AUTHORIZED** |
+| Frontend signature slice | **COMPLETED — ACCEPTED** |
+| Backend upload-validation slice | **AUTHORIZED — NOT STARTED** |
+| Package closure | **NOT GRANTED** |
+| Stage I4 | IN PROGRESS |
+| Push / release / deployment | NOT AUTHORIZED |
+
+Broader register scope (`getImageUrl`, gallery functional hardening, storage review documentation) remains deferred for later separate authority within this instrument or future authority acts.
+
+### 17.8 Next authorized action after amendment publication
+
+**Exact next authorized action:** One bounded **IWP-008 backend upload-validation technical implementation** act under §17.3–§17.5.
+
+That act must modify only W-B1–W-B3 (W-B3 only if justified), produce E2, satisfy §17.5 validation, and stop on SC-B1–SC-B6.
+
+It must **not** grant slice acceptance, package closure, continuity synchronization, Stage I4 completion, push, release, or deploy.
