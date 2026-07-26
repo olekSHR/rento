@@ -1,13 +1,13 @@
 # IWP-008 Final Acceptance Report
 
-**Status:** PUBLISHED — IWP-008 UPLOAD/MEDIA SIGNATURE SLICE ACCEPTANCE
+**Status:** PUBLISHED — IWP-008 FRONTEND SIGNATURE SLICE AND BACKEND UPLOAD-VALIDATION SLICE ACCEPTANCE
 **Authority class:** Implementation work package acceptance evidence
 **Binding authority:** IWP-008 authorized-slice acceptance record only
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 — Domain Implementation
 **Work package:** IWP-008 — Uploads And Media Storage Hardening
-**Accepted unit:** Upload/media API signature and §10.3 bridge-remediation slice only
-**IWP-008 package:** ACCEPTED SLICE — NOT CLOSED
+**Accepted units:** Frontend upload/media signature slice; backend upload-validation slice (§17)
+**IWP-008 package:** ACCEPTED SLICES — NOT CLOSED
 **Stage I4:** IN PROGRESS
 **Closure:** NOT PERFORMED
 **Continuity synchronization:** NOT PERFORMED
@@ -226,3 +226,85 @@ Acceptance basis:
 That act may deactivate IWP-008 and reduce active implementation packages. It must **not** complete Stage I4, push, release, or deploy unless separately authorized.
 
 Broader deferred IWP-008 register scope requires **new separate selection/activation/execution authority** — not implied by this slice acceptance.
+
+---
+
+## 16. Backend Upload-Validation Slice Acceptance (§17 Amendment)
+
+**Reviewed implementation commit:** `03c9c965f9ad2082ae7fbc887d46739ee2e81985`
+
+**Parent:** `b8c4879727852b1e0784cf8b073866f8687529f4`
+
+**Subject:** `feat(iwp-008): harden backend upload validation`
+
+**Governing authority:** `docs/implementation/IWP_008_EXECUTION_AUTHORIZATION.md` §17
+
+**Evidence:** `docs/implementation/IWP_008_BACKEND_UPLOAD_VALIDATION_IMPLEMENTATION_EVIDENCE.md` (E2)
+
+### 16.1 Committed path inventory
+
+| Path | Disposition |
+|------|-------------|
+| `backend/app/routers/uploads.py` | W-B1 — **PASS** |
+| `backend/tests/test_iwp_008_upload_validation.py` | W-B2 — **PASS** |
+| `docs/implementation/IWP_008_BACKEND_UPLOAD_VALIDATION_IMPLEMENTATION_EVIDENCE.md` | E2 — **PASS** |
+| `backend/tests/conftest.py` | W-B3 — **NOT APPLICABLE** |
+
+No additional committed path.
+
+### 16.2 Acceptance criteria disposition
+
+| Criterion | Result |
+|-----------|--------|
+| Empty upload deterministically rejected | **PASS** — `Uploaded file is empty.` after zero-byte header and before `os.replace` when `total_bytes == 0` |
+| Successful-upload behavior preserved | **PASS** — endpoint, response fields, UUID filename, atomic replace unchanged |
+| Auth and role guards preserved | **PASS** — `require_admin_or_realtor` unchanged |
+| MIME, magic-byte, spoof, size, temp, atomic replace, cleanup preserved | **PASS** |
+| 11 focused tests credibly cover slice | **PASS** |
+| Invalid/oversized uploads leave no temp/final artifacts (tested cases) | **PASS** |
+| E2 credibility | **PASS** |
+| SC-B1–SC-B6 | **PASS** — none triggered |
+| HTTP integration testing | **NOT APPLICABLE** — not required by §17 |
+
+**Focused validation:** `python -m pytest backend/tests/test_iwp_008_upload_validation.py -v` — **PASS** (E2; commit unchanged — not re-run)
+
+**Blocking finding count:** 0
+
+### 16.3 Accepted backend-slice boundary
+
+**Accepted:** explicit empty-upload denial plus register-required upload denial, size/type, and cleanup regression tests on `POST /upload/` — exactly as authorized by §17.
+
+**Not accepted as complete:** full IWP-008 register package. Deferred: `getImageUrl`, gallery functional hardening, storage review documentation, broader backend surfaces.
+
+### 16.4 Residual risks
+
+| Risk | Disposition |
+|------|-------------|
+| HTTP integration path not separately exercised | **NOT RUN** — non-blocking; tests invoke handler directly |
+| Browser/runtime upload QA | **NOT RUN** — non-blocking |
+
+### 16.5 Backend-slice acceptance decision
+
+```text
+IWP-008 backend upload-validation slice: ACCEPTED
+IWP-008 full register package: INCOMPLETE — NOT CLOSED
+```
+
+**Backend-slice acceptance is GRANTED. Full package acceptance and package closure are NOT GRANTED.**
+
+### 16.6 Updated lifecycle state
+
+| Field | Value |
+|-------|-------|
+| Frontend signature slice | **ACCEPTED** |
+| Backend upload-validation slice | **ACCEPTED** |
+| IWP-008 activation | **ACTIVE — NOT DEACTIVATED** |
+| Full register-defined package | **INCOMPLETE** |
+| Package closure | **NOT GRANTED** |
+| Stage I4 | **IN PROGRESS** |
+
+### 16.7 Next mandatory implementation action
+
+**Deferred register scope** (`getImageUrl`, gallery functional hardening, storage review) requires **new separate execution authority** within this instrument or a future authority act — not implied by backend-slice acceptance.
+
+**Package closure** remains a separate bounded lifecycle act if and when repository authority supports lifecycle deactivation without treating register scope as complete.
