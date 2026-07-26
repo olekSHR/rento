@@ -1,13 +1,13 @@
 # IWP-008 Final Acceptance Report
 
-**Status:** PUBLISHED — IWP-008 FRONTEND SIGNATURE SLICE AND BACKEND UPLOAD-VALIDATION SLICE ACCEPTANCE
+**Status:** PUBLISHED — IWP-008 FULL REGISTER PACKAGE ACCEPTANCE
 **Authority class:** Implementation work package acceptance evidence
-**Binding authority:** IWP-008 authorized-slice acceptance record only
+**Binding authority:** IWP-008 package acceptance record only
 **Program:** Implementation, Stabilization & Launch
 **Stage:** I4 — Domain Implementation
 **Work package:** IWP-008 — Uploads And Media Storage Hardening
-**Accepted units:** Frontend upload/media signature slice; backend upload-validation slice (§17)
-**IWP-008 package:** ACCEPTED SLICES — NOT CLOSED
+**Accepted units:** Frontend signature slice (§3–§15); backend upload-validation slice (§16); full register package (§17)
+**IWP-008 package:** ACCEPTED — NOT CLOSED
 **Stage I4:** IN PROGRESS
 **Closure:** NOT PERFORMED
 **Continuity synchronization:** NOT PERFORMED
@@ -308,3 +308,168 @@ IWP-008 full register package: INCOMPLETE — NOT CLOSED
 **Deferred register scope** (`getImageUrl`, gallery functional hardening, storage review) requires **new separate execution authority** within this instrument or a future authority act — not implied by backend-slice acceptance.
 
 **Package closure** remains a separate bounded lifecycle act if and when repository authority supports lifecycle deactivation without treating register scope as complete.
+
+---
+
+## 17. Register Package Finalization And Acceptance
+
+**Finalization basis commit:** `e1bdc199ec98a314b4dbff3bad412f270793959e`
+
+**Governing register:** `IMPLEMENTATION_WORK_PACKAGE_REGISTER.md` IWP-008
+
+**Accepted implementation evidence:** E1 (`ea5eee4`), E2 (`03c9c96`); slice acceptances §13, §16
+
+**Inspection method:** Read-only reconciliation of register criteria against committed source, accepted evidence, and focused test record. No production code or test modification in this act.
+
+### 17.1 Register deliverable matrix
+
+| Register deliverable | Disposition | Basis |
+|----------------------|-------------|-------|
+| File validation | **PASS** | Backend upload router validation + E2 + 11 pytest cases |
+| Storage boundary documentation | **PASS** | §17.3 below — consolidated in this instrument |
+| Gallery consistency checks | **PASS** | §17.4 below — read-only verification recorded |
+| Unavailable-evidence report | **PASS** | §17.7 — non-mandatory checks explicitly NOT RUN |
+
+### 17.2 Register validation and acceptance criteria
+
+| Register requirement | Result | Basis |
+|----------------------|--------|-------|
+| Upload denial tests | **PASS** | `backend/tests/test_iwp_008_upload_validation.py` — E2 |
+| Size/type tests | **PASS** | Same focused suite — E2 |
+| Cleanup tests or unavailable evidence | **PASS** | Oversize/empty denial cleanup covered in focused suite |
+| Storage review | **PASS** | §17.3 storage boundary review (read-only) |
+| Acceptance: security | **PASS** | Auth-gated upload, type/MIME/magic-byte/size enforcement |
+| Acceptance: path | **PASS** | Server-generated UUID paths; client filename unused |
+| Acceptance: size | **PASS** | 10 MB chunked enforcement |
+| Acceptance: type | **PASS** | JPEG/PNG/WebP whitelist + magic-byte verification |
+| Acceptance: ownership | **PASS** | Gallery mutations session-authenticated; upload admin/realtor only |
+| Acceptance: gallery truth | **PASS** | DB-backed `PropertyImage` records; cover/fallback rendering verified |
+| Acceptance: file-serving boundaries | **PASS** | `/uploads` static mount aligned with upload response URLs |
+| Required evidence: security tests/checks | **PASS** | Focused upload regression suite |
+| Required evidence: manual storage review | **PASS** | §17.3 |
+| Required evidence: security review | **PASS** | §17.5 media security disposition |
+| Required evidence: unavailable evidence | **PASS** | §17.7 |
+| Stop conditions (register) | **PASS** | No secret exposure, path traversal via upload naming, external storage, production migration, or deployment authority required |
+
+**Blocking finding count:** 0
+
+### 17.3 Storage boundary and serving review (read-only)
+
+| Item | Finding |
+|------|---------|
+| Upload destination | Local directory `uploads/` relative to backend process CWD |
+| Final path format | `uploads/{uuid4}.{jpg\|png\|webp}` |
+| Upload response URL | `/uploads/{filename}` |
+| Frontend persistence | Normalized relative path stored in DB via `PropertyImage.url` / `property.image_url` |
+| Static serving | `backend/app/main.py` mounts `/uploads` → `StaticFiles(directory="uploads")` |
+| Alignment | Upload response paths match static mount and `getImageUrl` relative resolution |
+| Temp lifecycle | `.uploading` temp file → atomic `os.replace`; cleanup on failure — evidenced E2 |
+| Restart persistence | Files persist on local disk under current single-node architecture — **NOT APPLICABLE** external/durable storage |
+| Limitation | Local-disk boundary only; external storage provider explicitly out of register scope |
+
+### 17.4 Gallery and getImageUrl verification (read-only)
+
+Inspected callers use `getImageUrl` / `normalizeImagePath` consistently. Public property page uses public `getPropertyImages(propertyId)` and `getImageUrl` for display. Gallery managers use authenticated reads and normalized URLs. Loading and empty states present in `PropertyGallery` and gallery managers. No mandatory functional defect identified requiring new production implementation.
+
+### 17.5 Consolidated finalization subjects (1–20)
+
+| # | Subject | Result |
+|---|---------|--------|
+| 1 | `getImageUrl` contract and normalization | **PASS** |
+| 2 | Absolute, relative, null and empty URL behavior | **PASS** |
+| 3 | Upload-response URL normalization | **PASS** — `normalizeImagePath` in `api.ts` |
+| 4 | Public image retrieval vs authenticated mutation boundaries | **PASS** — E1/R8 + session mutations |
+| 5 | Gallery use of normalized image URLs | **PASS** — inspected gallery/card callers use `getImageUrl` |
+| 6 | Gallery loading, empty and fallback behavior | **PASS** — loading/empty states present; fallback variance non-blocking |
+| 7 | Upload destination and final path format | **PASS** |
+| 8 | DB media-reference persistence | **PASS** — `PropertyImage` + cover `image_url` |
+| 9 | Static `/uploads` serving alignment | **PASS** |
+| 10 | Temp-file and failed-upload cleanup | **PASS** — E2 |
+| 11 | Local-disk persistence boundary | **PASS** — documented limitation above |
+| 12 | Storage boundary limitations | **PASS** — local disk only; durable storage deferred per register out-of-scope |
+| 13 | Media security review | **PASS** — §17.6 |
+| 14 | Existing upload regression tests | **PASS** — 11 focused pytest cases committed |
+| 15 | Frontend test availability | **NOT APPLICABLE** — no mandatory frontend test requirement in controlling slice authority |
+| 16 | HTTP integration QA | **NOT RUN** — non-blocking |
+| 17 | Browser QA | **NOT RUN** — non-blocking per prior slice acceptance |
+| 18 | Orphan-file cleanup on DB delete | **NOT APPLICABLE** — not explicitly required by register or controlling authority |
+| 19 | Placeholder fallback asset | **NOT APPLICABLE** — optional caller fallback; not an acceptance criterion |
+| 20 | Migration and dependency disposition | **NOT APPLICABLE** — none required |
+
+### 17.6 Media security disposition (read-only)
+
+| Control | Result |
+|---------|--------|
+| Upload authentication | **PASS** — `require_admin_or_realtor` |
+| Upload authorization vs public read | **PASS** — mutations authenticated; public property image list unchanged |
+| Content-type whitelist | **PASS** |
+| Magic-byte verification | **PASS** |
+| Content spoof rejection | **PASS** |
+| Size limit enforcement | **PASS** — 10 MB |
+| Empty upload denial | **PASS** — explicit rejection |
+| Path generation | **PASS** — UUID server-side; no client filename in storage path |
+| Rate limiting | **PASS** — preserved on upload endpoint |
+| Bearer/client token construction | **PASS** — not introduced (E1) |
+
+No controlling authority requires a separate standalone security review artifact for package acceptance when disposition is recorded in this instrument.
+
+### 17.7 Residual risks (non-blocking)
+
+| Risk | Disposition |
+|------|-------------|
+| HTTP integration upload path | **NOT RUN** |
+| Browser/runtime gallery QA | **NOT RUN** |
+| Filesystem orphans after DB image delete | Known limitation — **NOT APPLICABLE** mandatory cleanup |
+| Durable/external storage | Deferred — register out-of-scope |
+| Register metadata lag | Continuity not synchronized |
+
+### 17.8 Checks not run (unavailable-evidence consolidation)
+
+| Check | Result | Mandatory |
+|-------|--------|-----------|
+| Browser/runtime upload and gallery QA | **NOT RUN** | No |
+| HTTP integration upload test | **NOT RUN** | No |
+| Full backend pytest suite | **NOT RUN** | No |
+| Frontend unit tests for `getImageUrl` | **NOT APPLICABLE** | No |
+
+### 17.9 Exact accepted package boundary
+
+**Accepted as complete for IWP-008 register package:**
+
+1. Frontend upload/media API signature remediation and §10.3 bridge removal (E1).
+2. Backend upload validation, denial, size/type enforcement, temp cleanup, and focused regression proof (E2).
+3. Existing `getImageUrl` normalization and gallery URL consumption behavior as verified read-only.
+4. Existing local-disk upload persistence, DB media references, and `/uploads` static serving alignment.
+
+**Explicitly not accepted as part of this package:** external storage provider selection, production file migration, deployment, release, durable storage architecture, optional UX hardening beyond verified behavior.
+
+**No further mandatory production implementation** identified for register completion.
+
+### 17.10 Package-level acceptance decision
+
+```text
+IWP-008 FULL REGISTER PACKAGE: ACCEPTED
+IWP-008 package closure: NOT GRANTED
+```
+
+**Package acceptance is GRANTED. Package closure is NOT GRANTED.**
+
+### 17.11 Resulting lifecycle state
+
+| Field | Value |
+|-------|-------|
+| IWP-008 | **SELECTED — ACTIVE — PACKAGE ACCEPTED — NOT CLOSED** |
+| Frontend signature slice | **ACCEPTED** |
+| Backend upload-validation slice | **ACCEPTED** |
+| Full register package acceptance | **GRANTED** |
+| Package closure | **NOT GRANTED** |
+| Active implementation packages | **1 — IWP-008 ONLY** |
+| Stage I4 | **IN PROGRESS** |
+| Continuity synchronization | **NOT PERFORMED** |
+| Push / release / deployment | **NOT AUTHORIZED** |
+
+### 17.12 Next authorized action
+
+**One bounded IWP-008 package closure act** under Stage I4 lifecycle — separate explicit authority.
+
+Closure must not complete Stage I4, push, release, or deploy unless separately authorized.
