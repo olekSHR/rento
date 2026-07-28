@@ -1,8 +1,8 @@
 # Launch Readiness Checklist
 
-**Status:** IWP-011 LAUNCH READINESS EVIDENCE — CHECKLIST ONLY
-**Authority:** `docs/implementation/IMPLEMENTATION_PROGRAM.md` I6-GATE; `docs/engineering/INFRASTRUCTURE_STANDARDS.md`
-**Work package:** IWP-011 — Infrastructure Backup And Recovery Readiness
+**Status:** IWP-011 + IWP-012 LAUNCH READINESS EVIDENCE — CHECKLIST ONLY
+**Authority:** `docs/implementation/IMPLEMENTATION_PROGRAM.md` I6-GATE; `docs/engineering/INFRASTRUCTURE_STANDARDS.md`; `docs/engineering/ENGINEERING_RELEASE_STRATEGY.md`
+**Work packages:** IWP-011 — Infrastructure Backup And Recovery Readiness; IWP-012 — Launch Readiness Release And Rollback Evidence
 **Deployment:** NOT AUTHORIZED
 **Release:** NOT AUTHORIZED
 **Launch execution:** NOT AUTHORIZED
@@ -100,3 +100,126 @@ PARTIAL READINESS EVIDENCE ESTABLISHED — DEPLOYMENT NOT AUTHORIZED
 ```
 
 This checklist satisfies the first bounded IWP-011 documentation and compose-hygiene slice only. Stage I6 completion and launch execution remain separately gated.
+
+---
+
+## 9. IWP-012 Package Acceptance Evidence Inventory (R1)
+
+| Package | Primary acceptance / closure evidence | Status |
+|---------|--------------------------------------|--------|
+| IWP-001 | `docs/implementation/IWP_001_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-002 | `docs/implementation/IWP_002_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-003 | `docs/implementation/IWP_003_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-004 | `docs/implementation/IWP_004_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-005 | `docs/implementation/IWP_005_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-006 | `docs/implementation/IWP_006_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-007 | `docs/implementation/IWP_007_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-008 | `docs/implementation/IWP_008_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-009 | `docs/implementation/IWP_009_FINAL_ACCEPTANCE_REPORT.md` | **PASS — ACCEPTED** |
+| IWP-010 | `docs/implementation/IWP_010_COMPLETION_AND_ACCEPTANCE_REPORT.md`; `IWP_010_CLOSURE_REPORT.md` | **PASS — ACCEPTED — CLOSED** |
+| IWP-011 | `docs/implementation/IWP_011_COMPLETION_AND_ACCEPTANCE_REPORT.md`; `IWP_011_CLOSURE_REPORT.md` | **PASS — ACCEPTED — CLOSED** |
+
+Stage completion references: `STAGE_I3_FINAL_COMPLETION_REPORT.md`; `STAGE_I5_FINAL_COMPLETION_REPORT.md`; `STAGE_I6_EXECUTION_AUTHORIZATION.md`.
+
+Register/program metadata continuity lag is **NOT APPLICABLE** as a launch blocker.
+
+---
+
+## 10. IWP-012 Release Posture (R2)
+
+| Item | Evidence | Status |
+|------|----------|--------|
+| Engineering release strategy defined | `docs/engineering/ENGINEERING_RELEASE_STRATEGY.md` | **PASS — GOVERNANCE ONLY** |
+| Product/application release execution authorized | Repository Authority | **NOT AUTHORIZED** |
+| Git tag / GitHub Release creation authorized | Repository Authority | **NOT AUTHORIZED** |
+| Release separated from deployment | `STAGE_I6_EXECUTION_AUTHORIZATION.md`; IWP-012 scope exclusions | **PASS** |
+| IWP-012 release-readiness documentation present | `docs/operations/DEPLOYMENT_PROCEDURE.md`; this checklist §9–§14 | **PASS — READINESS ONLY** |
+| Public launch readiness claimed | N/A | **NOT AUTHORIZED — OUT OF SCOPE** |
+
+Release posture is **readiness evidence only**. Release execution remains a separate authorization act.
+
+---
+
+## 11. IWP-012 R1–R7 Readiness Matrix
+
+| Req | Objective (summary) | Primary evidence | Status |
+|-----|---------------------|------------------|--------|
+| **R1** | Package acceptance inventory | §9 above | **PASS** |
+| **R2** | Release readiness and posture | §10 above; `ENGINEERING_RELEASE_STRATEGY.md` | **PASS — READINESS ONLY** |
+| **R3** | Deployment procedure readiness | `docs/operations/DEPLOYMENT_PROCEDURE.md` | **PASS — PROCEDURE ONLY** |
+| **R4** | Rollback procedure readiness | `DEPLOYMENT_PROCEDURE.md` §11; `BACKUP_AND_RECOVERY_PLAN.md` (reference) | **PASS — PROCEDURE ONLY** |
+| **R5** | Production configuration inventory | `docs/operations/PRODUCTION_CONFIGURATION_INVENTORY.md` | **PASS — PLACEHOLDERS ONLY** |
+| **R6** | Migration deployment procedure | `DEPLOYMENT_PROCEDURE.md` §7 | **PASS — PROCEDURE ONLY** |
+| **R7** | Residual blockers and handoff | §13 below | **PASS — DOCUMENTED** |
+
+Live production validation for R3–R6 remains **NOT RUN** until separate deployment authorization.
+
+---
+
+## 12. Go/No-Go Input Matrix (R2, R7)
+
+| Input | Required for future release/deployment decision | Current disposition |
+|-------|--------------------------------------------------|---------------------|
+| IWP-001–IWP-011 acceptance evidence | Yes | **PASS — INVENTORY COMPLETE** |
+| IWP-012 implementation evidence | Yes | **PENDING — NOT ACCEPTED** |
+| Deployment procedure documented | Yes | **PASS — `DEPLOYMENT_PROCEDURE.md`** |
+| Rollback procedure documented | Yes | **PASS — APP/IMAGE ROLLBACK DOCUMENTED** |
+| Configuration inventory complete | Yes | **PASS — `PRODUCTION_CONFIGURATION_INVENTORY.md`** |
+| Production deployment authorization | Yes | **NOT AUTHORIZED** |
+| Production migration execution evidence | Yes | **NOT RUN** |
+| Live backup/restore evidence | Yes | **NOT RUN — PLAN ONLY** |
+| Stage I6 completion | Yes | **NOT COMPLETE** |
+| Stage I7 authorization | Yes | **NOT AUTHORIZED** |
+| CI/CD pipeline present | No — not required by IWP-012 authority | **NOT APPLICABLE** |
+
+This matrix records **inputs only**. It does **not** authorize go/no-go execution.
+
+---
+
+## 13. Residual Blockers And Ownership (R7)
+
+| ID | Blocker / risk | Owner | Disposition | Blocks acceptance? |
+|----|----------------|-------|-------------|-------------------|
+| RB-01 | Production deployment not authorized | Operations / program authority | **NOT RUN — BY DESIGN** | No — expected |
+| RB-02 | Live migration not executed | Operations | **NOT RUN — BY DESIGN** | No — expected |
+| RB-03 | Live backup/restore not executed | Operations | **NOT RUN — PLAN ONLY** | No — IWP-011 accepted |
+| RB-04 | Manual Alembic on fresh PostgreSQL volume | Operator | **DOCUMENTED** — `DEPLOYMENT_PROCEDURE.md` §7 | No — accepted residual |
+| RB-05 | Production hosting / DNS / TLS undefined | Infrastructure | **NOT RUN — OUT OF SCOPE** | No — deployment-only |
+| RB-06 | IWP-012 formal acceptance not granted | Program authority | **PENDING** | Yes — separate gate |
+| RB-07 | Register/program metadata continuity lag | Documentation governance | **NOT APPLICABLE** as launch blocker | No |
+
+---
+
+## 14. Production-Only NOT RUN Inventory (R2–R7)
+
+| Item | Status |
+|------|--------|
+| Live production deployment | **NOT RUN — NOT AUTHORIZED** |
+| Live production rollback | **NOT RUN — NOT AUTHORIZED** |
+| Live production database migration | **NOT RUN — NOT AUTHORIZED** |
+| Live backup execution | **NOT RUN — NOT AUTHORIZED** |
+| Live restore execution | **NOT RUN — NOT AUTHORIZED** |
+| DNS / TLS / hosting provisioning | **NOT RUN — NOT AUTHORIZED** |
+| Git tag / GitHub Release | **NOT RUN — NOT AUTHORIZED** |
+| Push to remote / publication | **NOT RUN — SEPARATE AUTHORITY** |
+| Production monitoring vendor selection | **NOT RUN — OUT OF SCOPE** |
+| Public launch execution | **NOT RUN — NOT AUTHORIZED** |
+
+---
+
+## 15. IWP-012 Readiness Verdict Inputs (R7)
+
+```text
+LAUNCH READINESS DOCUMENTATION COMPLETE — DEPLOYMENT NOT AUTHORIZED — ACCEPTANCE NOT GRANTED
+```
+
+| Verdict component | Status |
+|-------------------|--------|
+| R1–R7 readiness documentation | **PASS — IMPLEMENTED UNDER IWP-012** |
+| IWP-012 package acceptance | **NOT GRANTED** |
+| Stage I6 completion | **NOT COMPLETE** |
+| Release execution | **NOT AUTHORIZED** |
+| Deployment execution | **NOT AUTHORIZED** |
+| Stage I7 | **NOT AUTHORIZED** |
+
+Exact next lifecycle gate: **formal IWP-012 package review and acceptance** under `STAGE_I6_EXECUTION_AUTHORIZATION.md` §9 steps 9–12.
