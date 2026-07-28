@@ -25,9 +25,10 @@ Readiness is **not** launch authorization.
 | Backend container build definition present | `backend/Dockerfile` | **PASS** |
 | Frontend container build definition present | `frontend/Dockerfile` | **PASS** |
 | Compose service healthchecks declared | `docker-compose.yml` — IWP-011 implementation | **PASS — DECLARED** |
-| Healthcheck probe commands match image tooling | Static review: `postgres:16` → `pg_isready`; `python:3.12-slim` → `python`; `node:22-alpine` → `node`/`fetch` (corrected from unavailable `wget`) | **PASS — STATIC REVIEW ONLY** |
-| Ordered service startup via health dependencies | `docker-compose.yml` — `condition: service_healthy` | **PASS — DECLARED** |
-| Docker compose render / image build / runtime health verified | Docker CLI | **NOT RUN — UNAVAILABLE** |
+| Healthcheck probe commands match image tooling | Runtime: `pg_isready`, Python `urllib`, Node `fetch` probes executed successfully in containers | **PASS** |
+| Ordered service startup via health dependencies | Runtime: `db` healthy → `backend` healthy → `frontend` healthy | **PASS** |
+| Docker compose render / image build / runtime health verified | Docker CLI — local bounded validation 2026-07-28 | **PASS** |
+| Backend PostgreSQL integration via Compose `db` service | Local validation used existing ignored `backend/.env` SQLite contract | **NOT RUN** |
 | Production hosting parity | N/A | **DEFERRED — OUT OF SCOPE** |
 
 ---
@@ -82,7 +83,8 @@ Readiness is **not** launch authorization.
 
 | Check | Reason | Disposition |
 |-------|--------|-------------|
-| `docker compose config` / image build / container health | Docker CLI unavailable in validation environment (`CommandNotFoundException`) | **Runtime verification blocked — static review only** |
+| `docker compose config` / image build / container health | Resolved — Docker CLI operational; full local stack validation completed 2026-07-28 | **PASS — LOCAL RUNTIME ONLY** |
+| Backend PostgreSQL parity against Compose `db` service | Local validation used SQLite `DATABASE_URL` from ignored `backend/.env` | **NOT RUN** |
 | Frontend healthcheck command availability | Static review: `node:22-alpine` does not ship `wget`; compose corrected to Node `fetch` probe | **Corrected in bounded follow-up commit** |
 | Live backup/restore dry-run | Operations execution not authorized | **Plan only** |
 | Production environment parity | Production access not authorized | **Deferred** |
