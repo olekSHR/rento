@@ -28,7 +28,8 @@ Readiness is **not** launch authorization.
 | Healthcheck probe commands match image tooling | Runtime: `pg_isready`, Python `urllib`, Node `fetch` probes executed successfully in containers | **PASS** |
 | Ordered service startup via health dependencies | Runtime: `db` healthy → `backend` healthy → `frontend` healthy | **PASS** |
 | Docker compose render / image build / runtime health verified | Docker CLI — local bounded validation 2026-07-28 | **PASS** |
-| Backend PostgreSQL integration via Compose `db` service | Local validation used existing ignored `backend/.env` SQLite contract | **NOT RUN** |
+| Backend PostgreSQL integration via Compose `db` service | Runtime: Compose `DATABASE_URL` override; Alembic `PostgresqlImpl`; engine host `db` | **PASS — LOCAL RUNTIME ONLY** |
+| Frontend server-side API reachability via Compose network | Runtime: SSR `/properties/` from frontend container IP; `INTERNAL_API_URL=http://backend:8000` | **PASS — LOCAL RUNTIME ONLY** |
 | Production hosting parity | N/A | **DEFERRED — OUT OF SCOPE** |
 
 ---
@@ -40,7 +41,7 @@ Readiness is **not** launch authorization.
 | Secret-free environment contract documented | `docs/implementation/IWP_002_ENVIRONMENT_DOCUMENTATION.md` | **PASS — ACCEPTED IWP-002** |
 | Compose database settings use substitution / required password gate | `docker-compose.yml` | **PASS** |
 | Alembic uses environment-backed `DATABASE_URL` | `backend/alembic/env.py`; placeholder in `backend/alembic.ini` | **PASS** |
-| Frontend API URL configured for local stack | `docker-compose.yml`; `frontend/next.config.ts` image remote patterns | **PASS** |
+| Frontend API URL configured for local stack | `docker-compose.yml` — `NEXT_PUBLIC_API_URL` (browser) and `INTERNAL_API_URL` (server); `frontend/lib/apiBaseUrl.ts` | **PASS** |
 | Production configuration values committed | Repository scan | **PASS — NONE FOUND IN AUTHORIZED SURFACES** |
 
 ---
@@ -84,7 +85,8 @@ Readiness is **not** launch authorization.
 | Check | Reason | Disposition |
 |-------|--------|-------------|
 | `docker compose config` / image build / container health | Resolved — Docker CLI operational; full local stack validation completed 2026-07-28 | **PASS — LOCAL RUNTIME ONLY** |
-| Backend PostgreSQL parity against Compose `db` service | Local validation used SQLite `DATABASE_URL` from ignored `backend/.env` | **NOT RUN** |
+| Backend PostgreSQL parity against Compose `db` service | Runtime: migrations to head; backend engine `postgresql`/`db`/`rento_db` | **PASS — LOCAL RUNTIME ONLY** |
+| Frontend SSR internal API connectivity | Runtime: no `ECONNREFUSED`; backend logs show `/properties/` from frontend container | **PASS — LOCAL RUNTIME ONLY** |
 | Frontend healthcheck command availability | Static review: `node:22-alpine` does not ship `wget`; compose corrected to Node `fetch` probe | **Corrected in bounded follow-up commit** |
 | Live backup/restore dry-run | Operations execution not authorized | **Plan only** |
 | Production environment parity | Production access not authorized | **Deferred** |

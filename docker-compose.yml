@@ -34,6 +34,9 @@ services:
     env_file:
       - ./backend/.env
 
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-rento_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-rento_db}
+
     volumes:
       - ./backend/uploads:/app/uploads
 
@@ -63,6 +66,7 @@ services:
 
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
+      INTERNAL_API_URL: http://backend:8000
 
     ports:
       - "3000:3000"

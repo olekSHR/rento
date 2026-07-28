@@ -1,4 +1,4 @@
-import { API_BASE_URL as API_URL } from "@/lib/apiBaseUrl"
+import { getServerApiBaseUrl } from "@/lib/apiBaseUrl"
 import { getCsrfHeaderValue } from "@/lib/csrf"
 import { parseApiErrorMessage } from "@/lib/apiError"
 import { dispatchAuthUnauthorized } from "@/lib/authSessionEvents"
@@ -77,8 +77,8 @@ export async function getProperties(
   const query = params.toString()
 
   const url = query
-    ? `${API_URL}/properties/?${query}`
-    : `${API_URL}/properties/`
+    ? `${getServerApiBaseUrl()}/properties/?${query}`
+    : `${getServerApiBaseUrl()}/properties/`
 
   const response = await fetch(url, {
     cache: "no-store",
@@ -94,7 +94,7 @@ export async function getProperties(
 }
 
 export async function getAdminProperties() {
-  const response = await sessionFetch(`${API_URL}/properties/admin/all`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/properties/admin/all`, {
     cache: "no-store",
   })
 
@@ -115,7 +115,7 @@ export async function getPropertyById(
   id: number,
   options?: PropertyFetchOptions
 ) {
-  const url = `${API_URL}/properties/${id}`
+  const url = `${getServerApiBaseUrl()}/properties/${id}`
 
   const response = options?.authenticated
     ? await sessionFetch(url, { cache: "no-store" })
@@ -146,7 +146,7 @@ type CreatePropertyData = {
 }
 
 export async function createProperty(data: CreatePropertyData) {
-  const response = await sessionFetch(`${API_URL}/properties/`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/properties/`, {
     method: "POST",
     body: JSON.stringify(data),
   })
@@ -172,7 +172,7 @@ export async function uploadImage(
 
   formData.append("image", file)
 
-  const response = await sessionFetch(`${API_URL}/upload/`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/upload/`, {
     method: "POST",
     body: formData,
   })
@@ -215,7 +215,7 @@ export async function updateProperty(
   id: number,
   data: UpdatePropertyData
 ) {
-  const response = await sessionFetch(`${API_URL}/properties/${id}`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/properties/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
   })
@@ -230,7 +230,7 @@ export async function updateProperty(
 }
 
 export async function deleteProperty(id: number) {
-  const response = await sessionFetch(`${API_URL}/properties/${id}`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/properties/${id}`, {
     method: "DELETE",
   })
 
@@ -245,7 +245,7 @@ export async function deleteProperty(id: number) {
 
 export async function verifyProperty(id: number) {
   const response = await sessionFetch(
-    `${API_URL}/properties/${id}/verify`,
+    `${getServerApiBaseUrl()}/properties/${id}/verify`,
     {
       method: "POST",
     }
@@ -262,7 +262,7 @@ export async function verifyProperty(id: number) {
 
 export async function archiveProperty(id: number) {
   const response = await sessionFetch(
-    `${API_URL}/properties/${id}/archive`,
+    `${getServerApiBaseUrl()}/properties/${id}/archive`,
     {
       method: "POST",
     }
@@ -280,7 +280,7 @@ export async function archiveProperty(id: number) {
 
 export async function activateProperty(id: number) {
   const response = await sessionFetch(
-    `${API_URL}/properties/${id}/activate`,
+    `${getServerApiBaseUrl()}/properties/${id}/activate`,
     {
       method: "POST",
     }
@@ -297,7 +297,7 @@ export async function activateProperty(id: number) {
 
 export async function reportProperty(id: number) {
   const response = await fetch(
-    `${API_URL}/properties/${id}/report`,
+    `${getServerApiBaseUrl()}/properties/${id}/report`,
     {
       method: "POST",
     }
@@ -330,7 +330,7 @@ export async function getPropertyImages(
   propertyId: number,
   options?: PropertyImageFetchOptions
 ): Promise<PropertyImage[]> {
-  const url = `${API_URL}/properties/${propertyId}/images`
+  const url = `${getServerApiBaseUrl()}/properties/${propertyId}/images`
 
   const response = options?.authenticated
     ? await sessionFetch(url, { cache: "no-store" })
@@ -352,7 +352,7 @@ export async function addPropertyImage(
   data: CreatePropertyImageData
 ): Promise<PropertyImage> {
   const response = await sessionFetch(
-    `${API_URL}/properties/${propertyId}/images`,
+    `${getServerApiBaseUrl()}/properties/${propertyId}/images`,
     {
       method: "POST",
       body: JSON.stringify(data),
@@ -373,7 +373,7 @@ export async function setCoverImage(
   imageId: number
 ): Promise<PropertyImage> {
   const response = await sessionFetch(
-    `${API_URL}/properties/${propertyId}/images/${imageId}/cover`,
+    `${getServerApiBaseUrl()}/properties/${propertyId}/images/${imageId}/cover`,
     {
       method: "PUT",
     }
@@ -393,7 +393,7 @@ export async function deletePropertyImage(
   imageId: number
 ) {
   const response = await sessionFetch(
-    `${API_URL}/properties/${propertyId}/images/${imageId}`,
+    `${getServerApiBaseUrl()}/properties/${propertyId}/images/${imageId}`,
     {
       method: "DELETE",
     }
@@ -414,7 +414,7 @@ export async function updatePropertyImageSortOrder(
   sortOrder: number
 ): Promise<PropertyImage> {
   const response = await sessionFetch(
-    `${API_URL}/properties/${propertyId}/images/${imageId}/sort-order?sort_order=${sortOrder}`,
+    `${getServerApiBaseUrl()}/properties/${propertyId}/images/${imageId}/sort-order?sort_order=${sortOrder}`,
     {
       method: "PATCH",
     }
@@ -433,7 +433,7 @@ export async function updatePropertyImageSortOrder(
 }
 
 export async function getMyRealtorProperties() {
-  const response = await sessionFetch(`${API_URL}/realtor/properties`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/realtor/properties`, {
     cache: "no-store",
   })
 
@@ -473,7 +473,7 @@ export type RealtorProfileUpdate = {
 }
 
 export async function getMyRealtorProfile(): Promise<RealtorProfile> {
-  const response = await sessionFetch(`${API_URL}/realtor/profile`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/realtor/profile`, {
     cache: "no-store",
   })
 
@@ -489,7 +489,7 @@ export async function getMyRealtorProfile(): Promise<RealtorProfile> {
 export async function updateMyRealtorProfile(
   data: RealtorProfileUpdate
 ): Promise<RealtorProfile> {
-  const response = await sessionFetch(`${API_URL}/realtor/profile`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/realtor/profile`, {
     method: "PATCH",
     body: JSON.stringify(data),
   })
@@ -524,7 +524,7 @@ export type RealtorApplicationCreateData = {
 }
 
 export async function getMyRealtorApplication(): Promise<RealtorApplication | null> {
-  const response = await sessionFetch(`${API_URL}/realtor-applications/me`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/realtor-applications/me`, {
     cache: "no-store",
   })
 
@@ -544,7 +544,7 @@ export async function getMyRealtorApplication(): Promise<RealtorApplication | nu
 export async function createRealtorApplication(
   data: RealtorApplicationCreateData
 ): Promise<RealtorApplication> {
-  const response = await sessionFetch(`${API_URL}/realtor-applications/`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/realtor-applications/`, {
     method: "POST",
     body: JSON.stringify(data),
   })
@@ -574,8 +574,8 @@ export async function getRealtorApplications(
   status?: string
 ): Promise<RealtorApplicationListResponse> {
   const url = status
-    ? `${API_URL}/realtor-applications/?status=${encodeURIComponent(status)}`
-    : `${API_URL}/realtor-applications/`
+    ? `${getServerApiBaseUrl()}/realtor-applications/?status=${encodeURIComponent(status)}`
+    : `${getServerApiBaseUrl()}/realtor-applications/`
 
   const response = await sessionFetch(url, {
     cache: "no-store",
@@ -599,7 +599,7 @@ export async function reviewRealtorApplication(
   status: "approved" | "rejected"
 ): Promise<RealtorApplication> {
   const response = await sessionFetch(
-    `${API_URL}/realtor-applications/${applicationId}/review`,
+    `${getServerApiBaseUrl()}/realtor-applications/${applicationId}/review`,
     {
       method: "PATCH",
       body: JSON.stringify({ status }),
@@ -628,7 +628,7 @@ export type AdminStats = {
 }
 
 export async function getAdminStats(): Promise<AdminStats> {
-  const response = await sessionFetch(`${API_URL}/admin/stats`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/admin/stats`, {
     cache: "no-store",
   })
 
@@ -696,7 +696,7 @@ export async function getAdminUsers(
     params.set("application_status", query.application_status)
   }
 
-  const response = await sessionFetch(`${API_URL}/admin/users?${params}`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/admin/users?${params}`, {
     cache: "no-store",
   })
 
@@ -717,7 +717,7 @@ export type AdminUserDetail = AdminUserListItem & {
 export async function getAdminUserById(
   userId: number
 ): Promise<AdminUserDetail> {
-  const response = await sessionFetch(`${API_URL}/admin/users/${userId}`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/admin/users/${userId}`, {
     cache: "no-store",
   })
 
@@ -740,7 +740,7 @@ export async function updateUserRole(
   userId: number,
   role: ManageableUserRole
 ): Promise<{ id: number; email: string; role: string }> {
-  const response = await sessionFetch(`${API_URL}/users/${userId}/role`, {
+  const response = await sessionFetch(`${getServerApiBaseUrl()}/users/${userId}/role`, {
     method: "PATCH",
     body: JSON.stringify({ role }),
   })
@@ -769,7 +769,7 @@ export async function updateAdminUserAccountStatus(
   accountStatus: ManageableAccountStatus
 ): Promise<AdminUserDetail> {
   const response = await sessionFetch(
-    `${API_URL}/admin/users/${userId}/account-status`,
+    `${getServerApiBaseUrl()}/admin/users/${userId}/account-status`,
     {
       method: "PATCH",
       body: JSON.stringify({ account_status: accountStatus }),
