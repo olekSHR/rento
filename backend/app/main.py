@@ -33,6 +33,20 @@ from app.core.config import settings
 from app.core.rate_limit import register_rate_limiting
 from app.core.security.csrf import validate_csrf_request
 
+
+def _cors_allow_origins() -> list[str]:
+    origins = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost",
+        "http://127.0.0.1",
+    ]
+    frontend_url = settings.FRONTEND_URL.rstrip("/")
+    if frontend_url and frontend_url not in origins:
+        origins.append(frontend_url)
+    return origins
+
+
 class CSRFMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):
@@ -51,10 +65,7 @@ app.add_middleware(CSRFMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=_cors_allow_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

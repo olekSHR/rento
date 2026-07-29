@@ -16,6 +16,16 @@ const nextConfig: NextConfig = {
         port: "8000",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "/api/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "rentonow.ro",
+        pathname: "/api/uploads/**",
+      },
     ],
   },
 }
