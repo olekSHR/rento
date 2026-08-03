@@ -13,12 +13,14 @@ import ConsumerShell from "@/components/ConsumerShell"
 import FavoriteButton from "@/components/FavoriteButton"
 import BackButton from "@/components/BackButton"
 import PropertyGallery from "@/components/PropertyGallery"
+import PropertyCard from "@/components/PropertyCard"
 import ShareButton from "@/components/ShareButton"
 import ReportButton from "@/components/ReportButton"
 import { RealtorAvatarEnlargeTrigger } from "@/components/RealtorAvatarLightbox"
 import { SAFE_BOTTOM_CONTENT_CLASS } from "@/lib/bottomNavLayout"
-import { getImageUrl } from "@/lib/getImageUrl"
+import { getImageUrl, hasPropertyListingImage } from "@/lib/getImageUrl"
 import {
+  getProperties,
   getPropertyById,
   getPropertyImages,
 } from "@/services/api"
@@ -75,6 +77,43 @@ function getContactInitials(contactName?: string | null): string {
   ).toUpperCase()
 }
 
+async function getRelatedListings(
+  currentId: number,
+  city?: string | null
+): Promise<Property[]> {
+  try {
+    const data = await getProperties()
+    const items: Property[] = data.items ?? []
+
+    const photographed = items.filter(
+      (property) =>
+        property.id !== currentId && hasPropertyListingImage(property)
+    )
+
+    if (photographed.length === 0) {
+      return []
+    }
+
+    const normalizedCity = city?.trim().toLowerCase() || ""
+
+    const sameCity = normalizedCity
+      ? photographed.filter(
+          (property) => property.city?.trim().toLowerCase() === normalizedCity
+        )
+      : []
+
+    const otherCities = photographed.filter(
+      (property) =>
+        !normalizedCity ||
+        property.city?.trim().toLowerCase() !== normalizedCity
+    )
+
+    return [...sameCity, ...otherCities].slice(0, 3)
+  } catch {
+    return []
+  }
+}
+
 export default async function PropertyPage({ params }: Props) {
   const { id } = await params
 
@@ -98,16 +137,22 @@ export default async function PropertyPage({ params }: Props) {
     notFound()
   }
 
+  const relatedListings = await getRelatedListings(
+    property.id,
+    property.city
+  )
+
   const verificationLabel = getVerificationLabel(property.last_verified_at)
   const isVerified = verificationLabel !== "Needs Verification"
-  const realtorTrustSubtitle = isVerified
-    ? "Verified Realtor"
-    : verificationLabel
   const contactAvatarUrl = property.avatar_url
     ? getImageUrl(property.avatar_url)
     : null
   const realtorDisplayName =
     property.contact_name?.trim() || "Property contact"
+  const hasRealtorIdentity = Boolean(
+    property.contact_name?.trim() || property.avatar_url
+  )
+  const hasContactMethods = Boolean(property.phone || property.whatsapp)
 
   const galleryImages =
     property.images && property.images.length > 0
@@ -125,208 +170,231 @@ export default async function PropertyPage({ params }: Props) {
 
   return (
     <ConsumerShell hideBottomNav>
-    <main className={`min-h-screen bg-zinc-100 ${SAFE_BOTTOM_CONTENT_CLASS}`}>
-      <div className="mx-auto min-h-screen max-w-md bg-white">
-        <div className="relative">
-          <BackButton />
+      <main
+        className={`min-h-screen bg-[#1B1B1B] text-[#F5F5F5] ${SAFE_BOTTOM_CONTENT_CLASS}`}
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-10 lg:px-8 lg:pt-8">
+            <div className="relative">
+              <BackButton />
 
-          <div className="absolute right-4 top-4 z-20 flex items-center gap-2">
-            <ShareButton title={property.title} />
-            <FavoriteButton propertyId={property.id} />
-          </div>
+              <div className="absolute right-4 top-4 z-30 flex items-center gap-2">
+                <ShareButton title={property.title} className="relative" />
+                <FavoriteButton
+                  propertyId={property.id}
+                  className="relative"
+                />
+              </div>
 
-          <PropertyGallery
-            title={property.title}
-            images={galleryImages}
-          />
-        </div>
+              <PropertyGallery
+                title={property.title}
+                images={galleryImages}
+              />
+            </div>
 
-        <section className="relative -mt-6 rounded-t-[32px] bg-white px-4 pb-6 pt-5 shadow-[0_-18px_35px_rgba(15,23,42,0.08)]">
-          <div
-            className={`
-              mb-4
-              inline-flex
-              items-center
-              gap-1.5
-              rounded-full
-              px-3
-              py-1.5
-              text-xs
-              font-semibold
-              ${
-                isVerified
-                  ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100"
-                  : "bg-amber-50 text-amber-700 ring-1 ring-amber-100"
-              }
-            `}
-          >
-            <BadgeCheck className="h-4 w-4" />
-            {verificationLabel}
-          </div>
+            <section className="px-5 pt-6 md:px-8 lg:px-0 lg:pt-2">
+              <div
+                className={`
+                  inline-flex
+                  items-center
+                  gap-1.5
+                  rounded-full
+                  px-3
+                  py-1.5
+                  text-xs
+                  font-medium
+                  backdrop-blur-sm
+                  ${
+                    isVerified
+                      ? "bg-[#252525] text-[#DFC58A] ring-1 ring-white/15"
+                      : "bg-[#252525] text-[#F5F5F5] ring-1 ring-white/15"
+                  }
+                `}
+              >
+                <BadgeCheck className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                <span>{verificationLabel}</span>
+              </div>
 
-          <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
-            {property.title}
-          </h1>
+              <h1 className="mt-4 text-[1.75rem] font-semibold leading-tight tracking-tight text-[#F5F5F5] md:text-[2rem]">
+                {property.title}
+              </h1>
 
-          <div className="mt-3 flex items-center gap-1.5 text-sm font-medium text-zinc-500">
-            <MapPin className="h-4 w-4" />
-            <span>{property.city || "Unknown city"}</span>
-          </div>
+              <div className="mt-3 flex items-center gap-1.5 text-sm text-[#B8B8B8]">
+                <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>{property.city || "Unknown city"}</span>
+              </div>
 
-          <div className="mt-6 overflow-hidden rounded-[28px] border border-zinc-200 bg-zinc-50">
-            <div className="p-4 pb-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-                Monthly rent
-              </p>
+              <div className="mt-6 flex items-end justify-between gap-4">
+                <div className="min-w-0">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#B8B8B8]">
+                    Monthly rent
+                  </p>
+                  <p className="mt-1 text-[1.625rem] font-bold leading-none tracking-tight text-[#DFC58A] md:text-[1.75rem]">
+                    €{property.price || 0}
+                  </p>
+                </div>
 
-              <div className="mt-2 flex items-end justify-between gap-4">
-                <p className="text-4xl font-extrabold tracking-tight text-zinc-950">
-                  €{property.price || 0}
-                </p>
-
-                <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 text-sm font-semibold text-zinc-700 ring-1 ring-zinc-200">
-                  <BedDouble className="h-4 w-4" />
+                <div className="flex shrink-0 items-center gap-2 rounded-xl bg-[#252525] px-3 py-2 text-sm font-medium text-[#F5F5F5] ring-1 ring-white/10">
+                  <BedDouble className="h-4 w-4 text-[#B8B8B8]" aria-hidden="true" />
                   <span>{property.rooms || 0} rooms</span>
                 </div>
               </div>
-            </div>
 
-            <div className="mx-4 border-t border-zinc-200" />
+              {hasRealtorIdentity && (
+                <div className="mt-7 flex items-center gap-3 rounded-[24px] border border-white/8 bg-[#2D2D2D] px-4 py-4">
+                  {contactAvatarUrl ? (
+                    <RealtorAvatarEnlargeTrigger
+                      imageUrl={contactAvatarUrl}
+                      alt={realtorDisplayName}
+                      className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-[#252525] ring-1 ring-[#DFC58A]/30 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
+                    >
+                      <Image
+                        src={contactAvatarUrl}
+                        alt={realtorDisplayName}
+                        fill
+                        unoptimized
+                        className="object-cover"
+                        sizes="48px"
+                      />
+                    </RealtorAvatarEnlargeTrigger>
+                  ) : (
+                    <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#252525] ring-1 ring-[#DFC58A]/30">
+                      <span className="text-sm font-semibold text-[#DFC58A]">
+                        {getContactInitials(property.contact_name)}
+                      </span>
+                    </div>
+                  )}
 
-            <div className="flex min-h-14 items-center gap-3 px-4 py-3">
-              {contactAvatarUrl ? (
-                <RealtorAvatarEnlargeTrigger
-                  imageUrl={contactAvatarUrl}
-                  alt={realtorDisplayName}
-                  className="relative h-11 w-11 shrink-0 overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200 active:scale-95"
-                >
-                  <Image
-                    src={contactAvatarUrl}
-                    alt={realtorDisplayName}
-                    fill
-                    unoptimized
-                    className="object-cover"
-                    sizes="44px"
-                  />
-                </RealtorAvatarEnlargeTrigger>
-              ) : (
-                <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-blue-700 ring-1 ring-zinc-200">
-                  <span className="text-sm font-bold text-white">
-                    {getContactInitials(property.contact_name)}
-                  </span>
+                  {hasContactMethods ? (
+                    <a
+                      href="#property-contact"
+                      className="flex min-w-0 flex-1 items-center gap-2 rounded-xl py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-[#F5F5F5]">
+                          {realtorDisplayName}
+                        </p>
+                        <p className="mt-0.5 truncate text-xs text-[#B8B8B8]">
+                          Listing agent
+                        </p>
+                      </div>
+                      <ChevronRight
+                        className="h-5 w-5 shrink-0 text-[#B8B8B8]"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  ) : (
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-semibold text-[#F5F5F5]">
+                        {realtorDisplayName}
+                      </p>
+                      <p className="mt-0.5 truncate text-xs text-[#B8B8B8]">
+                        Listing agent
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
+            </section>
+          </div>
 
-              <a
-                href="#property-contact"
-                className="flex min-w-0 flex-1 items-center gap-2 rounded-xl py-1 active:opacity-80"
+          <div className="px-5 pb-8 pt-8 md:px-8 lg:px-8">
+            <section aria-labelledby="property-about-heading">
+              <h2
+                id="property-about-heading"
+                className="text-xl font-semibold tracking-tight text-[#F5F5F5]"
               >
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold text-zinc-950">
-                    {realtorDisplayName}
-                  </p>
-                  <p
-                    className={`mt-0.5 truncate text-xs font-semibold ${
-                      isVerified ? "text-emerald-700" : "text-amber-700"
-                    }`}
-                  >
-                    {realtorTrustSubtitle}
-                  </p>
-                </div>
-                <ChevronRight className="h-5 w-5 shrink-0 text-zinc-400" />
-              </a>
-            </div>
+                About this property
+              </h2>
 
-            <div className="mx-4 border-t border-zinc-200" />
+              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-[#B8B8B8]">
+                {property.description || "No description available."}
+              </p>
+            </section>
 
-            <div className="grid grid-cols-3 gap-2 p-4 pt-3">
-              <div className="rounded-2xl bg-white p-3 ring-1 ring-zinc-200">
-                <p className="text-[11px] font-semibold uppercase text-zinc-400">
-                  City
-                </p>
-                <p className="mt-1 truncate text-sm font-bold text-zinc-900">
-                  {property.city || "Unknown"}
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white p-3 ring-1 ring-zinc-200">
-                <p className="text-[11px] font-semibold uppercase text-zinc-400">
-                  Rooms
-                </p>
-                <p className="mt-1 text-sm font-bold text-zinc-900">
-                  {property.rooms || 0}
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white p-3 ring-1 ring-zinc-200">
-                <p className="text-[11px] font-semibold uppercase text-zinc-400">
-                  Status
-                </p>
-                <p
-                  className={`mt-1 truncate text-sm font-bold ${
-                    isVerified ? "text-emerald-700" : "text-amber-700"
-                  }`}
+            {hasContactMethods && (
+              <section
+                id="property-contact"
+                aria-labelledby="property-contact-heading"
+                className="mt-8 scroll-mt-6 rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5"
+              >
+                <h2
+                  id="property-contact-heading"
+                  className="text-xs font-medium uppercase tracking-[0.12em] text-[#B8B8B8]"
                 >
-                  {verificationLabel}
+                  Contact
+                </h2>
+
+                <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+                  Ask {realtorDisplayName} about availability, viewing time, and
+                  rental conditions.
                 </p>
-              </div>
-            </div>
+
+                <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {property.whatsapp && (
+                    <a
+                      href={`https://wa.me/${property.whatsapp.replace(/[^0-9]/g, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#DFC58A] px-4 text-sm font-semibold text-[#1B1B1B] transition hover:bg-[#e8d099] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
+                    >
+                      <MessageCircle className="h-5 w-5" aria-hidden="true" />
+                      WhatsApp
+                    </a>
+                  )}
+
+                  {property.phone && (
+                    <a
+                      href={`tel:${property.phone}`}
+                      className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-white/15 bg-[#252525] px-4 text-sm font-semibold text-[#F5F5F5] transition hover:border-white/25 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
+                    >
+                      <Phone className="h-5 w-5" aria-hidden="true" />
+                      Call
+                    </a>
+                  )}
+                </div>
+              </section>
+            )}
+
+            <ReportButton propertyId={property.id} />
+
+            {relatedListings.length > 0 && (
+              <section
+                aria-labelledby="related-listings-heading"
+                className="mt-12"
+              >
+                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#B8B8B8]">
+                  Available now
+                </p>
+
+                <h2
+                  id="related-listings-heading"
+                  className="mt-2 text-[1.5rem] font-semibold tracking-tight text-[#F5F5F5]"
+                >
+                  Similar rentals
+                </h2>
+
+                <ul className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {relatedListings.map((related) => (
+                    <li key={related.id} className="min-w-0">
+                      <PropertyCard
+                        id={related.id}
+                        title={related.title}
+                        price={related.price}
+                        city={related.city}
+                        rooms={related.rooms}
+                        image_url={related.image_url}
+                        images={related.images}
+                        last_verified_at={related.last_verified_at}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </div>
-
-          <div className="mt-6">
-            <h2 className="text-lg font-bold text-zinc-950">
-              About this property
-            </h2>
-
-            <p className="mt-3 leading-7 text-zinc-700">
-              {property.description || "No description available."}
-            </p>
-          </div>
-
-          {(property.phone || property.whatsapp) && (
-            <div
-              id="property-contact"
-              className="mt-7 scroll-mt-6 rounded-[28px] border border-zinc-200 bg-white p-4 shadow-[0_12px_30px_rgba(15,23,42,0.07)]"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-                Contact
-              </p>
-
-              <p className="mt-2 text-sm leading-relaxed text-zinc-500">
-                Ask {realtorDisplayName} about availability, viewing time, and
-                rental conditions.
-              </p>
-
-              <div className="mt-4 grid grid-cols-1 gap-3">
-                {property.whatsapp && (
-                  <a
-                    href={`https://wa.me/${property.whatsapp.replace(/[^0-9]/g, "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-4 font-bold text-white shadow-[0_12px_28px_rgba(5,150,105,0.25)] active:scale-[0.98]"
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                    WhatsApp
-                  </a>
-                )}
-
-                {property.phone && (
-                  <a
-                    href={`tel:${property.phone}`}
-                    className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-zinc-300 bg-white px-4 font-bold text-zinc-950 active:scale-[0.98]"
-                  >
-                    <Phone className="h-5 w-5" />
-                    Call
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-
-          <ReportButton propertyId={property.id} />
-        </section>
-      </div>
-    </main>
+        </div>
+      </main>
     </ConsumerShell>
   )
 }

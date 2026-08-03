@@ -5,15 +5,14 @@ import { Share2 } from "lucide-react"
 type Props = {
   title: string
   url?: string
+  className?: string
 }
 
 function isMobileDevice() {
-  return /Android|iPhone|iPad|iPod/i.test(
-    navigator.userAgent,
-  )
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 }
 
-export default function ShareButton({ title, url }: Props) {
+export default function ShareButton({ title, url, className }: Props) {
   async function handleShare() {
     const shareUrl = url || window.location.href
 
@@ -29,7 +28,7 @@ export default function ShareButton({ title, url }: Props) {
       }
 
       await navigator.clipboard.writeText(shareUrl)
-          } catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -39,29 +38,29 @@ export default function ShareButton({ title, url }: Props) {
       type="button"
       onClick={handleShare}
       aria-label="Share property"
-      className="
-  absolute
-  right-[4.25rem]
-  top-3
-  z-10
-  flex
-  h-11
-  w-11
-  items-center
-  justify-center
-  rounded-full
-  border
-  border-white/70
-  bg-white/90
-  text-zinc-900
-  shadow-[0_10px_25px_rgba(15,23,42,0.18)]
-  backdrop-blur-xl
-  transition-all
-  duration-200
-  active:scale-90
-"
+      className={`
+        z-10
+        flex
+        h-11
+        w-11
+        items-center
+        justify-center
+        rounded-full
+        border
+        border-white/15
+        bg-[#1B1B1B]/55
+        text-[#F5F5F5]
+        shadow-[0_10px_25px_rgba(0,0,0,0.22)]
+        backdrop-blur-md
+        transition
+        active:scale-95
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-[#DFC58A]
+        ${className ?? "absolute right-[4.25rem] top-3"}
+      `}
     >
-      <Share2 className="h-5 w-5 text-zinc-800" />
+      <Share2 className="h-5 w-5 text-[#F5F5F5]" />
     </button>
   )
 }

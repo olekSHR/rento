@@ -23,7 +23,7 @@ export function RealtorAvatarLightbox({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#1B1B1B]/80 p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -33,7 +33,7 @@ export function RealtorAvatarLightbox({
         type="button"
         onClick={onClose}
         aria-label="Close photo preview"
-        className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white ring-1 ring-white/20 active:scale-95"
+        className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#252525]/90 text-[#F5F5F5] ring-1 ring-white/20 transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
       >
         <X className="h-5 w-5" />
       </button>

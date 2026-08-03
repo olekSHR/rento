@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+
 import { reportProperty } from "@/services/api"
 
 type Props = {
@@ -16,7 +17,6 @@ export default function ReportButton({ propertyId }: Props) {
       return
     }
 
-    
     try {
       setIsLoading(true)
 
@@ -37,23 +37,30 @@ export default function ReportButton({ propertyId }: Props) {
       onClick={handleReport}
       disabled={isLoading || isReported}
       className="
-        mt-6
+        mt-8
         w-full
         rounded-2xl
         border
-        border-red-200
-        bg-red-50
-        p-4
+        border-white/10
+        bg-[#252525]
+        px-4
+        py-3.5
         text-sm
-        font-semibold
-        text-red-700
+        font-medium
+        text-[#B8B8B8]
+        transition
+        hover:border-white/15
+        hover:text-[#F5F5F5]
         disabled:opacity-60
-        active:scale-[0.98]
+        active:scale-[0.99]
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-[#DFC58A]
+        focus-visible:ring-offset-2
+        focus-visible:ring-offset-[#1B1B1B]
       "
     >
-      {isReported
-        ? "Reported. Thank you."
-        : "⚠ Report Listing"}
+      {isReported ? "Reported. Thank you." : "Report listing"}
     </button>
   )
 }
