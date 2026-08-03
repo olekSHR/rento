@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 
 import AdminRoute from "@/components/AdminRoute"
 import PageHeader from "@/components/ui/PageHeader"
-import PageShell from "@/components/ui/PageShell"
+import AdminPageShell from "@/components/admin/AdminPageShell"
 import SectionCard from "@/components/ui/SectionCard"
 import StatusBadge from "@/components/ui/StatusBadge"
 import { getAdminStats, type AdminStats } from "@/services/api"
@@ -338,7 +338,7 @@ export default function AdminPage() {
 
   return (
     <AdminRoute>
-      <PageShell>
+      <AdminPageShell>
         <PageHeader
           title="Admin Dashboard"
           subtitle="Platform management and moderation overview."
@@ -399,7 +399,7 @@ export default function AdminPage() {
             })}
           </div>
         </SectionCard>
-      </PageShell>
+      </AdminPageShell>
     </AdminRoute>
   )
 }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 
 import AdminRoute from "@/components/AdminRoute"
 import PageHeader from "@/components/ui/PageHeader"
-import PageShell from "@/components/ui/PageShell"
+import AdminPageShell from "@/components/admin/AdminPageShell"
 import PrimaryButton from "@/components/ui/PrimaryButton"
 import SecondaryButton from "@/components/ui/SecondaryButton"
 import SectionCard from "@/components/ui/SectionCard"
@@ -117,11 +117,11 @@ function isAccountStatusValue(
 
 function DetailSkeleton() {
   return (
-    <PageShell>
+    <AdminPageShell>
       <div className="h-5 w-32 animate-pulse rounded bg-zinc-200" />
       <div className="h-40 animate-pulse rounded-3xl bg-zinc-200" />
       <div className="h-48 animate-pulse rounded-3xl bg-zinc-200" />
-    </PageShell>
+    </AdminPageShell>
   )
 }
 
@@ -684,7 +684,7 @@ export default function AdminUserDetailPage() {
 
   return (
     <AdminRoute>
-      <PageShell>
+      <AdminPageShell>
         <Link
           href="/admin/users"
           className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700"
@@ -751,7 +751,7 @@ export default function AdminUserDetailPage() {
             {toastMessage}
           </div>
         )}
-      </PageShell>
+      </AdminPageShell>
     </AdminRoute>
   )
 }

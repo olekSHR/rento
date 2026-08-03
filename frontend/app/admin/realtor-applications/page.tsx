@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react"
 import AdminRoute from "@/components/AdminRoute"
 import EmptyState from "@/components/ui/EmptyState"
 import PageHeader from "@/components/ui/PageHeader"
-import PageShell from "@/components/ui/PageShell"
+import AdminPageShell from "@/components/admin/AdminPageShell"
 import PrimaryButton from "@/components/ui/PrimaryButton"
 import SecondaryButton from "@/components/ui/SecondaryButton"
 import SectionCard from "@/components/ui/SectionCard"
@@ -184,7 +184,7 @@ export default function AdminRealtorApplicationsPage() {
 
   return (
     <AdminRoute>
-      <PageShell>
+      <AdminPageShell>
         <Link
           href="/admin"
           className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700"
@@ -235,7 +235,7 @@ export default function AdminRealtorApplicationsPage() {
             ))}
           </div>
         )}
-      </PageShell>
+      </AdminPageShell>
     </AdminRoute>
   )
 }
