@@ -6,8 +6,15 @@ export type FavoriteRecord = {
   property_id: number;
 };
 
+type FavoriteListResponse = {
+  items: FavoriteRecord[];
+  total: number;
+};
+
 export async function getFavorites(): Promise<FavoriteRecord[]> {
-  return authFetch("/favorites/");
+  const response = (await authFetch("/favorites/")) as FavoriteListResponse;
+
+  return Array.isArray(response.items) ? response.items : [];
 }
 
 export async function addFavorite(
