@@ -4,9 +4,21 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { Suspense, useState } from "react"
 
+import AuthField from "@/components/auth/AuthField"
+import AuthShell, {
+  authErrorClassName,
+  authFormStackClassName,
+  authLinkClassName,
+  authPrimaryButtonClassName,
+  authSecondaryTextClassName,
+  authSkeletonClassName,
+  authSuccessClassName,
+} from "@/components/auth/AuthShell"
 import { resetPassword } from "@/services/authApi"
 
 const SUCCESS_MESSAGE = "Password updated. You can now sign in."
+
+const FORM_ERROR_ID = "reset-password-form-error"
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams()
@@ -64,20 +76,17 @@ function ResetPasswordForm() {
 
   if (!hasToken && !isSuccess) {
     return (
-      <div className="space-y-4">
-        <p className="rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-600 ring-1 ring-red-100">
+      <div className="space-y-3">
+        <p role="alert" aria-live="polite" className={authErrorClassName}>
           Reset link is invalid or missing. Request a new one.
         </p>
 
-        <Link
-          href="/forgot-password"
-          className="flex h-12 items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white"
-        >
+        <Link href="/forgot-password" className={authPrimaryButtonClassName}>
           Request new reset link
         </Link>
 
-        <p className="text-center text-sm text-zinc-600">
-          <Link href="/login" className="font-semibold text-blue-700">
+        <p className={`text-center ${authSecondaryTextClassName}`}>
+          <Link href="/login" className={authLinkClassName}>
             Back to login
           </Link>
         </p>
@@ -87,15 +96,12 @@ function ResetPasswordForm() {
 
   if (isSuccess) {
     return (
-      <div className="space-y-4">
-        <p className="rounded-2xl bg-emerald-50 p-4 text-sm font-medium text-emerald-700 ring-1 ring-emerald-100">
+      <div className="space-y-3">
+        <p role="alert" aria-live="polite" className={authSuccessClassName}>
           {SUCCESS_MESSAGE}
         </p>
 
-        <Link
-          href="/login"
-          className="flex h-12 items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white"
-        >
+        <Link href="/login" className={authPrimaryButtonClassName}>
           Go to login
         </Link>
       </div>
@@ -103,83 +109,89 @@ function ResetPasswordForm() {
   }
 
   return (
-  <>
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <input
-        type="password"
-        placeholder="New password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        required
-        autoComplete="new-password"
-        className="h-12 rounded-2xl border border-zinc-300 px-4 outline-none"
-      />
+    <>
+      <form onSubmit={handleSubmit} className={authFormStackClassName}>
+        <AuthField
+          id="reset-password-new"
+          label="New password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          autoComplete="new-password"
+          required
+          invalid={Boolean(error)}
+          errorDescribedBy={error ? FORM_ERROR_ID : undefined}
+        />
 
-      <input
-        type="password"
-        placeholder="Confirm new password"
-        value={confirmPassword}
-        onChange={(event) => setConfirmPassword(event.target.value)}
-        required
-        autoComplete="new-password"
-        className="h-12 rounded-2xl border border-zinc-300 px-4 outline-none"
-      />
+        <AuthField
+          id="reset-password-confirm"
+          label="Confirm new password"
+          name="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          autoComplete="new-password"
+          required
+          invalid={Boolean(error)}
+          errorDescribedBy={error ? FORM_ERROR_ID : undefined}
+        />
 
-      {error && (
-        <div className="space-y-3">
-          <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
-            {error}
-          </p>
+        {error ? (
+          <div className="space-y-2">
+            <p
+              id={FORM_ERROR_ID}
+              role="alert"
+              aria-live="polite"
+              className={authErrorClassName}
+            >
+              {error}
+            </p>
 
-          <Link
-            href="/forgot-password"
-            className="block text-center text-sm font-semibold text-blue-700"
-          >
-            Request a new reset link
-          </Link>
-        </div>
-      )}
+            <p className="text-center">
+              <Link href="/forgot-password" className={authLinkClassName}>
+                Request a new reset link
+              </Link>
+            </p>
+          </div>
+        ) : null}
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="h-12 rounded-2xl bg-blue-700 font-medium text-white transition-transform active:scale-[0.98] disabled:opacity-50"
-      >
-        {isLoading ? "Updating..." : "Update password"}
-      </button>
-    </form>
+        <button
+          type="submit"
+          disabled={isLoading}
+          aria-busy={isLoading}
+          className={authPrimaryButtonClassName}
+        >
+          {isLoading ? "Updating..." : "Update password"}
+        </button>
+      </form>
 
-    <p className="mt-5 text-center text-sm text-zinc-600">
-      <Link href="/login" className="font-semibold text-blue-700">
-        Back to login
-      </Link>
-    </p>
-  </>
+      <p className={`mt-4 text-center ${authSecondaryTextClassName}`}>
+        <Link href="/login" className={authLinkClassName}>
+          Back to login
+        </Link>
+      </p>
+    </>
   )
 }
 
 export default function ResetPasswordPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-100 p-4">
-      <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-sm">
-        <h1 className="mb-2 text-2xl font-bold text-zinc-900">Reset password</h1>
-
-        <p className="mb-6 text-sm text-zinc-500">
-          Choose a new password for your account.
-        </p>
-
-        <Suspense
-          fallback={
-            <div className="space-y-4">
-              <div className="h-12 animate-pulse rounded-2xl bg-zinc-200" />
-              <div className="h-12 animate-pulse rounded-2xl bg-zinc-200" />
-              <div className="h-12 animate-pulse rounded-2xl bg-zinc-200" />
-            </div>
-          }
-        >
-          <ResetPasswordForm />
-        </Suspense>
-      </div>
-    </main>
+    <AuthShell
+      title="Reset password"
+      description="Choose a new password for your account."
+    >
+      <Suspense
+        fallback={
+          <div className="space-y-3" aria-hidden="true">
+            <div className={authSkeletonClassName} />
+            <div className={authSkeletonClassName} />
+            <div className={authSkeletonClassName} />
+          </div>
+        }
+      >
+        <ResetPasswordForm />
+      </Suspense>
+    </AuthShell>
   )
 }

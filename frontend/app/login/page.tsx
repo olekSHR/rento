@@ -4,7 +4,18 @@ import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
+import AuthField from "@/components/auth/AuthField"
+import AuthShell, {
+  authErrorClassName,
+  authLinkClassName,
+  authFormStackClassName,
+  authPrimaryButtonClassName,
+  authRealtorNoteClassName,
+  authSecondaryTextClassName,
+} from "@/components/auth/AuthShell"
 import { useAuth } from "@/context/AuthContext"
+
+const FORM_ERROR_ID = "login-form-error"
 
 function getPostLoginPath(role: string): string {
   if (role === "admin") {
@@ -55,71 +66,75 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-100 p-4">
-      <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-sm">
-        <h1 className="mb-2 text-2xl font-bold text-zinc-900">Login</h1>
-
-        <p className="mb-6 text-sm text-zinc-500">
-          Sign in to save favorites and access your account.
+    <AuthShell
+      title="Login"
+      description="Sign in to save favorites and access your account."
+      footer={
+        <p className={authRealtorNoteClassName}>
+          Are you a realtor? Contact Rento to request workspace access.
         </p>
+      }
+    >
+      <form onSubmit={handleSubmit} className={authFormStackClassName}>
+        <AuthField
+          id="login-email"
+          label="Email"
+          name="email"
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          autoComplete="email"
+          required
+          invalid={Boolean(error)}
+          errorDescribedBy={error ? FORM_ERROR_ID : undefined}
+        />
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-            className="h-12 rounded-2xl border border-zinc-300 px-4 outline-none"
-          />
+        <AuthField
+          id="login-password"
+          label="Password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          autoComplete="current-password"
+          required
+          invalid={Boolean(error)}
+          errorDescribedBy={error ? FORM_ERROR_ID : undefined}
+        />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-            className="h-12 rounded-2xl border border-zinc-300 px-4 outline-none"
-          />
-
-          <p className="text-right">
-            <Link
-              href="/forgot-password"
-              className="text-sm font-semibold text-blue-700"
-            >
-              Forgot password?
-            </Link>
-          </p>
-
-          {error && (
-            <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="h-12 rounded-2xl bg-blue-700 font-medium text-white transition-transform active:scale-[0.98] disabled:opacity-50"
-          >
-            {isLoading ? "Signing in..." : "Login"}
-          </button>
-        </form>
-
-        <p className="mt-5 text-center text-sm text-zinc-600">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/register"
-            className="font-semibold text-blue-700"
-          >
-            Create account
+        <p className="-mt-1 text-right">
+          <Link href="/forgot-password" className={authLinkClassName}>
+            Forgot password?
           </Link>
         </p>
 
-        <p className="mt-4 rounded-2xl bg-zinc-50 p-3 text-center text-xs leading-5 text-zinc-500 ring-1 ring-zinc-100">
-          Are you a realtor? Contact Rento to request workspace access.
-        </p>
-      </div>
-    </main>
+        {error ? (
+          <p
+            id={FORM_ERROR_ID}
+            role="alert"
+            aria-live="polite"
+            className={authErrorClassName}
+          >
+            {error}
+          </p>
+        ) : null}
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          aria-busy={isLoading}
+          className={authPrimaryButtonClassName}
+        >
+          {isLoading ? "Signing in..." : "Login"}
+        </button>
+      </form>
+
+      <p className={`mt-4 text-center ${authSecondaryTextClassName}`}>
+        Don&apos;t have an account?{" "}
+        <Link href="/register" className={authLinkClassName}>
+          Create account
+        </Link>
+      </p>
+    </AuthShell>
   )
 }
