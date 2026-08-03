@@ -1,4 +1,4 @@
-import RentoGlyph from "@/components/RentoGlyph"
+import RentoLogo from "@/components/RentoLogo"
 
 type RentoBrandMarkProps = {
   align?: "center" | "start"
@@ -15,9 +15,10 @@ export default function RentoBrandMark({
         align === "center" ? "justify-center" : ""
       } ${className}`.trim()}
     >
-      <RentoGlyph
+      <RentoLogo
         size={36}
-        className="shrink-0 shadow-[0_4px_14px_rgba(223,197,138,0.18)]"
+        variant="symbol"
+        className="shadow-[0_4px_14px_rgba(223,197,138,0.18)]"
       />
 
       <div className="min-w-0 leading-none">

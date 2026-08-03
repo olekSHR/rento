@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og"
 
-import RentoGlyph from "@/components/RentoGlyph"
+import { getRentoLogoDataUri } from "@/lib/rentoBrandAssets.server"
 
 export const alt = "Rento — Find your next home"
 
@@ -12,6 +12,8 @@ export const size = {
 export const contentType = "image/png"
 
 export default function OpenGraphImage() {
+  const logoSrc = getRentoLogoDataUri("full")
+
   return new ImageResponse(
     (
       <div
@@ -69,7 +71,25 @@ export default function OpenGraphImage() {
             </div>
           </div>
 
-          <RentoGlyph size={190} title="Rento" />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 220,
+              height: 220,
+              borderRadius: 32,
+              background: "#DFC58A",
+            }}
+          >
+            <img
+              src={logoSrc}
+              alt="Rento"
+              width={200}
+              height={200}
+              style={{ objectFit: "contain" }}
+            />
+          </div>
         </div>
       </div>
     ),
