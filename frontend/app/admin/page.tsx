@@ -1,314 +1,394 @@
 "use client"
 
 import Link from "next/link"
-import {
-  Building2,
-  ClipboardList,
-  Flag,
-  Home,
-  PlusCircle,
-  Users,
-  type LucideIcon,
-} from "lucide-react"
+import { ClipboardList, Home, PlusCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import AdminRoute from "@/components/AdminRoute"
-import PageHeader from "@/components/ui/PageHeader"
 import AdminPageShell from "@/components/admin/AdminPageShell"
-import SectionCard from "@/components/ui/SectionCard"
-import StatusBadge from "@/components/ui/StatusBadge"
 import { getAdminStats, type AdminStats } from "@/services/api"
 
-type MetricKey = keyof Pick<
+type SecondaryMetricKey = keyof Pick<
   AdminStats,
-  | "total_users"
-  | "total_realtors"
-  | "pending_realtor_applications"
-  | "active_listings"
-  | "reported_listings"
+  "total_users" | "total_realtors" | "active_listings"
 >
 
-type MetricColor = "blue" | "purple" | "orange" | "green" | "red"
-
-type MetricConfig = {
-  key: MetricKey
+type SecondaryMetricConfig = {
+  key: SecondaryMetricKey
   label: string
   description: string
-  icon: LucideIcon
-  color: MetricColor
-  href?: string
-  comingSoon?: boolean
-  showActionBadge?: (value: number) => boolean
+  href: string
 }
 
-const METRIC_CONFIG: MetricConfig[] = [
+const SECONDARY_METRICS: SecondaryMetricConfig[] = [
   {
     key: "total_users",
-    label: "Total Users",
+    label: "Total users",
     description: "Registered accounts",
-    icon: Users,
-    color: "blue",
     href: "/admin/users",
   },
   {
     key: "total_realtors",
-    label: "Realtors",
-    description: "Verified realtor accounts",
-    icon: Building2,
-    color: "purple",
+    label: "Realtor accounts",
+    description: "Users with the realtor role",
     href: "/admin/users?role=realtor",
   },
   {
-    key: "pending_realtor_applications",
-    label: "Pending Applications",
-    description: "Awaiting admin review",
-    icon: ClipboardList,
-    color: "orange",
-    href: "/admin/realtor-applications",
-    showActionBadge: (value) => value > 0,
-  },
-  {
     key: "active_listings",
-    label: "Active Listings",
-    description: "Published on marketplace",
-    icon: Home,
-    color: "green",
+    label: "Available listings",
+    description: "Listings with available status",
     href: "/admin/properties",
-  },
-  {
-    key: "reported_listings",
-    label: "Reports",
-    description: "Listings with user reports",
-    icon: Flag,
-    color: "red",
-    href: "/admin/properties",
-    showActionBadge: (value) => value > 0,
   },
 ]
 
-type QuickAction =
-  | {
-      href: string
-      icon: LucideIcon
-      title: string
-      description: string
-    }
-  | {
-      icon: LucideIcon
-      title: string
-      description: string
-      comingSoon: true
-    }
+const focusRingClassName =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
 
-const QUICK_ACTIONS: QuickAction[] = [
-  {
-    href: "/admin/properties",
-    icon: Home,
-    title: "Manage Properties",
-    description: "View, edit, and moderate listings.",
-  },
-  {
-    href: "/admin/properties/create",
-    icon: PlusCircle,
-    title: "Create Property",
-    description: "Add a new listing to the platform.",
-  },
-  {
-    href: "/admin/realtor-applications",
-    icon: ClipboardList,
-    title: "Realtor Applications",
-    description: "Review and approve realtor access requests.",
-  },
-  {
-    href: "/admin/users",
-    icon: Users,
-    title: "Users",
-    description: "Manage platform accounts and roles.",
-  },
-]
+const cardClassName =
+  "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5"
 
-const ICON_COLOR_CLASSES: Record<MetricColor, string> = {
-  blue: "bg-blue-700 text-white",
-  purple: "bg-violet-700 text-white",
-  orange: "bg-amber-600 text-white",
-  green: "bg-emerald-700 text-white",
-  red: "bg-red-600 text-white",
+function DashboardHeader() {
+  return (
+    <header>
+      <p className="text-xs font-bold uppercase tracking-wide text-[#DFC58A]">
+        Admin dashboard
+      </p>
+      <h1 className="mt-2 text-2xl font-extrabold tracking-tight text-[#F5F5F5] md:text-3xl">
+        Admin Dashboard
+      </h1>
+      <p className="mt-2 text-sm text-[#B8B8B8]">
+        Review platform totals, check priority moderation queues, and move
+        directly into the workflows that need attention.
+      </p>
+    </header>
+  )
 }
 
-const CARD_INTERACTIVE_CLASSES =
-  "transition-all duration-200 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
-
-function StatsSkeleton() {
+function DashboardSkeleton() {
   return (
-    <div className="grid grid-cols-1 gap-3">
-      {Array.from({ length: 5 }).map((_, index) => (
-        <div
-          key={index}
-          className="h-28 animate-pulse rounded-2xl bg-zinc-200"
-        />
-      ))}
+    <div
+      role="status"
+      aria-live="polite"
+      className="space-y-4"
+    >
+      <span className="sr-only">Loading admin dashboard</span>
+
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+        <div className="space-y-4">
+          <div className="h-40 animate-pulse rounded-[24px] border border-white/8 bg-[#2D2D2D] motion-reduce:animate-none" />
+          <div className="space-y-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-28 animate-pulse rounded-[24px] border border-white/8 bg-[#2D2D2D] motion-reduce:animate-none"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-28 animate-pulse rounded-[24px] border border-white/8 bg-[#2D2D2D] motion-reduce:animate-none"
+              />
+            ))}
+          </div>
+          <div className="space-y-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-20 animate-pulse rounded-[24px] border border-white/8 bg-[#2D2D2D] motion-reduce:animate-none"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
-function PlatformStatusSkeleton() {
-  return <div className="h-36 animate-pulse rounded-3xl bg-zinc-200" />
-}
-
-function PlatformStatus({ stats }: { stats: AdminStats }) {
-  const pending = stats.pending_realtor_applications
-  const reports = stats.reported_listings
-
-  const statusCardClassName =
-    reports > 0
-      ? "border-red-100 bg-red-50"
-      : pending > 0
-        ? "border-amber-100 bg-amber-50"
-        : "border-emerald-100 bg-emerald-50"
-
-  const statusHeadline =
-    reports > 0
-      ? "🔴 Moderation Required"
-      : pending > 0
-        ? "🟠 Attention Required"
-        : "🟢 Healthy"
-
-  const pendingLine =
-    pending > 0
-      ? `${pending.toLocaleString()} ${pending === 1 ? "realtor application awaiting review." : "realtor applications awaiting review."}`
-      : "No pending realtor applications."
-
-  const reportsLine =
-    reports > 0
-      ? `${reports.toLocaleString()} ${reports === 1 ? "listing requires moderation." : "listings require moderation."}`
-      : "No reported listings."
-
-  return (
-    <SectionCard className={statusCardClassName}>
-      <div className="space-y-3">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-            Platform Status
-          </p>
-          <p className="mt-1 text-sm font-bold text-zinc-900">{statusHeadline}</p>
-        </div>
-
-        <ul className="space-y-1.5 text-sm text-zinc-700">
-          <li className={pending > 0 ? "font-medium text-amber-900" : ""}>
-            {pendingLine}
-          </li>
-          <li className={reports > 0 ? "font-medium text-red-800" : ""}>
-            {reportsLine}
-          </li>
-        </ul>
-      </div>
-    </SectionCard>
-  )
-}
-
-function MetricCard({
-  label,
-  description,
-  value,
-  icon: Icon,
-  color,
-  href,
-  comingSoon = false,
-  showActionBadge,
+function DashboardErrorPanel({
+  message,
+  onRetry,
 }: {
-  label: string
-  description: string
-  value: number
-  icon: LucideIcon
-  color: MetricColor
-  href?: string
-  comingSoon?: boolean
-  showActionBadge?: (value: number) => boolean
+  message: string
+  onRetry: () => void
 }) {
-  const badge = comingSoon ? (
-    <StatusBadge variant="neutral">Coming Soon</StatusBadge>
-  ) : showActionBadge?.(value) ? (
-    <StatusBadge variant="warning">Action</StatusBadge>
-  ) : null
-
-  const content = (
-    <>
-      <div className="flex items-start justify-between gap-2">
-        <div
-          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${ICON_COLOR_CLASSES[color]}`}
-        >
-          <Icon className="h-4 w-4" />
-        </div>
-        {badge}
-      </div>
-      <p className="mt-3 text-2xl font-extrabold tracking-tight text-zinc-900">
-        {value.toLocaleString()}
+  return (
+    <div
+      role="alert"
+      className={`${cardClassName} border-red-500/30 bg-[#252525]`}
+    >
+      <p className="text-sm font-semibold text-[#F5F5F5]">
+        Unable to load dashboard stats
       </p>
-      <p className="mt-1 text-xs font-bold text-zinc-900">{label}</p>
-      <p className="mt-0.5 text-xs text-zinc-500">{description}</p>
-    </>
-  )
-
-  const baseClassName = `rounded-2xl bg-zinc-50 p-4 ring-1 ring-zinc-100 ${comingSoon ? "cursor-default opacity-90" : CARD_INTERACTIVE_CLASSES}`
-
-  if (comingSoon || !href) {
-    return <div className={baseClassName}>{content}</div>
-  }
-
-  return (
-    <Link href={href} className={`block ${baseClassName}`}>
-      {content}
-    </Link>
+      <p className="mt-2 text-sm text-[#B8B8B8]">{message}</p>
+      <button
+        type="button"
+        onClick={onRetry}
+        className={`mt-4 inline-flex min-h-11 items-center rounded-xl border border-white/10 bg-[#2D2D2D] px-4 text-sm font-semibold text-[#F5F5F5] transition-colors hover:text-[#DFC58A] ${focusRingClassName}`}
+      >
+        Retry
+      </button>
+    </div>
   )
 }
 
-function PlatformOverview({
-  stats,
-  isLoading,
-  error,
-}: {
-  stats: AdminStats | null
-  isLoading: boolean
-  error: string
-}) {
+function PlatformStatusCard({ stats }: { stats: AdminStats }) {
+  const pendingApplications = stats.pending_realtor_applications
+  const reportedListings = stats.reported_listings
+  const needsAttention = pendingApplications > 0 || reportedListings > 0
+
+  const statusLabel = needsAttention ? "Attention required" : "All clear"
+  const statusDescription = needsAttention
+    ? "Review the priority queues below before moving on to other admin work."
+    : "No pending realtor applications or reported listings require action from dashboard stats."
+
   return (
-    <>
-      {isLoading ? (
-        <PlatformStatusSkeleton />
-      ) : stats && !error ? (
-        <PlatformStatus stats={stats} />
-      ) : null}
+    <section aria-labelledby="platform-status-heading" className={cardClassName}>
+      <p className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
+        Platform status
+      </p>
+      <h2
+        id="platform-status-heading"
+        className="mt-2 text-lg font-bold text-[#F5F5F5]"
+      >
+        {statusLabel}
+      </h2>
+      <p className="mt-2 text-sm text-[#B8B8B8]">{statusDescription}</p>
 
-      <SectionCard>
-        <h2 className="text-sm font-bold text-zinc-900">Platform Overview</h2>
+      <ul className="mt-4 space-y-2 text-sm text-[#F5F5F5]">
+        <li>
+          {pendingApplications > 0 ? (
+            <>
+              <span className="font-semibold text-[#DFC58A]">
+                {pendingApplications.toLocaleString()}
+              </span>{" "}
+              {pendingApplications === 1
+                ? "realtor application awaiting review."
+                : "realtor applications awaiting review."}
+            </>
+          ) : (
+            "No pending realtor applications."
+          )}
+        </li>
+        <li>
+          {reportedListings > 0 ? (
+            <>
+              <span className="font-semibold text-[#DFC58A]">
+                {reportedListings.toLocaleString()}
+              </span>{" "}
+              {reportedListings === 1
+                ? "reported listing recorded in platform stats."
+                : "reported listings recorded in platform stats."}
+            </>
+          ) : (
+            "No reported listings recorded in platform stats."
+          )}
+        </li>
+      </ul>
 
-        <div className="mt-4">
-          {isLoading ? (
-            <StatsSkeleton />
-          ) : error ? (
-            <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
-              {error}
-            </p>
-          ) : stats ? (
-            <div className="grid grid-cols-1 gap-3">
-              {METRIC_CONFIG.map((metric) => (
-                <MetricCard
-                  key={metric.key}
-                  label={metric.label}
-                  description={metric.description}
-                  value={stats[metric.key]}
-                  icon={metric.icon}
-                  color={metric.color}
-                  href={metric.href}
-                  comingSoon={metric.comingSoon}
-                  showActionBadge={metric.showActionBadge}
-                />
-              ))}
-            </div>
-          ) : null}
+      <p className="mt-4 text-sm text-[#B8B8B8]">
+        Property moderation has a separate queue. Review it directly for pending
+        listings.
+      </p>
+      <Link
+        href="/admin/properties"
+        className={`mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#DFC58A] transition-colors hover:text-[#F5F5F5] ${focusRingClassName}`}
+      >
+        Review properties
+      </Link>
+    </section>
+  )
+}
+
+function PriorityQueuesSection({ stats }: { stats: AdminStats }) {
+  const pendingApplications = stats.pending_realtor_applications
+  const reportedListings = stats.reported_listings
+
+  return (
+    <section aria-labelledby="priority-queues-heading" className="space-y-3">
+      <h2
+        id="priority-queues-heading"
+        className="text-sm font-bold uppercase tracking-wide text-[#B8B8B8]"
+      >
+        Priority queues
+      </h2>
+
+      <Link
+        href="/admin/realtor-applications"
+        className={`block ${cardClassName} transition-colors hover:border-[#DFC58A]/30 ${focusRingClassName}`}
+      >
+        <p className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
+          Pending realtor applications
+        </p>
+        <p
+          className={`mt-2 text-2xl font-extrabold tracking-tight ${
+            pendingApplications > 0 ? "text-[#DFC58A]" : "text-[#F5F5F5]"
+          }`}
+        >
+          {pendingApplications.toLocaleString()}
+        </p>
+        <p className="mt-2 text-sm text-[#B8B8B8]">
+          {pendingApplications > 0
+            ? "Open the applications queue to approve or reject access requests."
+            : "No applications are waiting for review right now."}
+        </p>
+        <span className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#DFC58A]">
+          Review applications
+        </span>
+      </Link>
+
+      <div className={`${cardClassName} border-white/6 bg-[#252525]`}>
+        <p className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
+          Reported listings
+        </p>
+        <p className="mt-2 text-2xl font-extrabold tracking-tight text-[#F5F5F5]">
+          {reportedListings.toLocaleString()}
+        </p>
+        <p className="mt-2 text-sm text-[#B8B8B8]">
+          {reportedListings > 0
+            ? "This count comes from platform stats. Report-focused filtering is not available on the dashboard yet."
+            : "No reported listings are recorded in platform stats."}
+        </p>
+      </div>
+
+      <Link
+        href="/admin/properties"
+        className={`block ${cardClassName} transition-colors hover:border-[#DFC58A]/30 ${focusRingClassName}`}
+      >
+        <p className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
+          Property moderation
+        </p>
+        <p className="mt-2 text-sm text-[#F5F5F5]">
+          Pending listing counts are not included in dashboard stats. Review the
+          property moderation queue directly.
+        </p>
+        <span className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#DFC58A]">
+          Open property moderation
+        </span>
+      </Link>
+    </section>
+  )
+}
+
+function SecondaryMetricsSection({ stats }: { stats: AdminStats }) {
+  return (
+    <section aria-labelledby="secondary-metrics-heading">
+      <h2
+        id="secondary-metrics-heading"
+        className="text-sm font-bold uppercase tracking-wide text-[#B8B8B8]"
+      >
+        Platform totals
+      </h2>
+
+      <dl className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {SECONDARY_METRICS.map((metric) => (
+          <div key={metric.key}>
+            <Link
+              href={metric.href}
+              className={`block ${cardClassName} transition-colors hover:border-[#DFC58A]/30 ${focusRingClassName}`}
+            >
+              <dt className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
+                {metric.label}
+              </dt>
+              <dd className="mt-2 text-2xl font-extrabold tracking-tight text-[#F5F5F5]">
+                {stats[metric.key].toLocaleString()}
+              </dd>
+              <dd className="mt-2 text-sm text-[#B8B8B8]">{metric.description}</dd>
+            </Link>
+          </div>
+        ))}
+      </dl>
+    </section>
+  )
+}
+
+function QuickActionsSection() {
+  return (
+    <section aria-labelledby="quick-actions-heading">
+      <h2
+        id="quick-actions-heading"
+        className="text-sm font-bold uppercase tracking-wide text-[#B8B8B8]"
+      >
+        Quick actions
+      </h2>
+
+      <div className="mt-3 space-y-3">
+        <Link
+          href="/admin/properties/create"
+          className={`flex min-h-11 items-start gap-3 rounded-[24px] border border-[#DFC58A]/30 bg-[#252525] p-5 transition-colors hover:border-[#DFC58A]/50 ${focusRingClassName}`}
+        >
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#DFC58A]/15 text-[#DFC58A]">
+            <PlusCircle className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-sm font-bold text-[#F5F5F5]">
+              Create property
+            </span>
+            <span className="mt-1 block text-sm text-[#B8B8B8]">
+              Add a new listing to the platform.
+            </span>
+          </span>
+        </Link>
+
+        <Link
+          href="/admin/realtor-applications"
+          className={`flex min-h-11 items-start gap-3 ${cardClassName} transition-colors hover:border-[#DFC58A]/30 ${focusRingClassName}`}
+        >
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-[#252525] text-[#DFC58A]">
+            <ClipboardList className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-sm font-bold text-[#F5F5F5]">
+              Review applications
+            </span>
+            <span className="mt-1 block text-sm text-[#B8B8B8]">
+              Open the realtor application review queue.
+            </span>
+          </span>
+        </Link>
+
+        <Link
+          href="/admin/properties"
+          className={`flex min-h-11 items-start gap-3 ${cardClassName} transition-colors hover:border-[#DFC58A]/30 ${focusRingClassName}`}
+        >
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-[#252525] text-[#DFC58A]">
+            <Home className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-sm font-bold text-[#F5F5F5]">
+              Review properties
+            </span>
+            <span className="mt-1 block text-sm text-[#B8B8B8]">
+              Moderate listings and manage marketplace availability.
+            </span>
+          </span>
+        </Link>
+      </div>
+    </section>
+  )
+}
+
+function DashboardContent({ stats }: { stats: AdminStats }) {
+  return (
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div className="space-y-4">
+        <PlatformStatusCard stats={stats} />
+        <PriorityQueuesSection stats={stats} />
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <div className="order-1 lg:order-2">
+          <QuickActionsSection />
         </div>
-      </SectionCard>
-    </>
+        <div className="order-2 lg:order-1">
+          <SecondaryMetricsSection stats={stats} />
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -316,89 +396,65 @@ export default function AdminPage() {
   const [stats, setStats] = useState<AdminStats | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState("")
+  const [reloadKey, setReloadKey] = useState(0)
 
   useEffect(() => {
+    let isMounted = true
+
     async function loadStats() {
       try {
         const data = await getAdminStats()
+
+        if (!isMounted) {
+          return
+        }
+
         setStats(data)
+        setError("")
       } catch (loadError) {
+        if (!isMounted) {
+          return
+        }
+
+        setStats(null)
         setError(
           loadError instanceof Error
             ? loadError.message
             : "Unable to load dashboard stats."
         )
       } finally {
-        setIsLoading(false)
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
     }
 
     void loadStats()
-  }, [])
+
+    return () => {
+      isMounted = false
+    }
+  }, [reloadKey])
+
+  function handleRetry() {
+    setIsLoading(true)
+    setError("")
+    setStats(null)
+    setReloadKey((current) => current + 1)
+  }
 
   return (
     <AdminRoute>
       <AdminPageShell>
-        <PageHeader
-          title="Admin Dashboard"
-          subtitle="Platform management and moderation overview."
-        />
+        <DashboardHeader />
 
-        <PlatformOverview stats={stats} isLoading={isLoading} error={error} />
-
-        <SectionCard>
-          <h2 className="text-sm font-bold text-zinc-900">Quick Actions</h2>
-
-          <div className="mt-4 space-y-3">
-            {QUICK_ACTIONS.map((action) => {
-              const Icon = action.icon
-
-              if ("comingSoon" in action) {
-                return (
-                  <div
-                    key={action.title}
-                    className="flex items-start gap-3 rounded-2xl bg-zinc-50 p-4 ring-1 ring-zinc-100"
-                  >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-700 text-white">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-start justify-between gap-2">
-                        <h3 className="text-sm font-bold text-zinc-900">
-                          {action.title}
-                        </h3>
-                        <StatusBadge variant="neutral">Coming Soon</StatusBadge>
-                      </div>
-                      <p className="mt-1 text-sm text-zinc-500">
-                        {action.description}
-                      </p>
-                    </div>
-                  </div>
-                )
-              }
-
-              return (
-                <Link
-                  key={action.href}
-                  href={action.href}
-                  className={`flex items-start gap-3 rounded-2xl bg-zinc-50 p-4 ring-1 ring-zinc-100 ${CARD_INTERACTIVE_CLASSES}`}
-                >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-700 text-white">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-sm font-bold text-zinc-900">
-                      {action.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-zinc-500">
-                      {action.description}
-                    </p>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
-        </SectionCard>
+        {isLoading ? (
+          <DashboardSkeleton />
+        ) : stats ? (
+          <DashboardContent stats={stats} />
+        ) : (
+          <DashboardErrorPanel message={error} onRetry={handleRetry} />
+        )}
       </AdminPageShell>
     </AdminRoute>
   )
