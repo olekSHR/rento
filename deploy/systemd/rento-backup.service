@@ -1,0 +1,15 @@
+[Unit]
+Description=Rento production backup (PostgreSQL + uploads)
+After=docker.service
+Wants=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/rento
+ExecStart=/opt/rento/scripts/ops/rento-backup.sh
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=rento-backup
+
+[Install]
+WantedBy=multi-user.target
