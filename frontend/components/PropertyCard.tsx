@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { BadgeCheck, BedDouble, MapPin } from "lucide-react"
+import { BadgeCheck, BedDouble, Home, MapPin } from "lucide-react"
 
 import FavoriteButton from "./FavoriteButton"
 import ShareButton from "./ShareButton"
@@ -110,8 +110,17 @@ export default function PropertyCard({
               className="object-cover transition-transform duration-500 hover:scale-[1.02]"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-sm font-medium text-[#B8B8B8]">
-              No Image
+            <div
+              role="img"
+              aria-label="Photos are not available"
+              className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[#252525] px-4 text-center"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#2D2D2D] ring-1 ring-white/10">
+                <Home className="h-5 w-5 text-[#B8B8B8]" aria-hidden="true" />
+              </div>
+              <p className="text-xs font-medium text-[#B8B8B8]">
+                Photos are not available
+              </p>
             </div>
           )}
 
