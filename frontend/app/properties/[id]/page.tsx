@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import {
@@ -31,6 +32,43 @@ type Props = {
   params: Promise<{
     id: string
   }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params
+  const canonicalPath = `/properties/${encodeURIComponent(id)}`
+  const description = "Discover verified homes for rent on Rento."
+
+  return {
+    title: {
+      absolute: "Rento",
+    },
+    description,
+    alternates: {
+      canonical: canonicalPath,
+    },
+    openGraph: {
+      type: "website",
+      url: canonicalPath,
+      siteName: "Rento",
+      title: "Rento",
+      description,
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: "Rento — Find your next home",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Rento",
+      description,
+      images: ["/opengraph-image"],
+    },
+  }
 }
 
 function getVerificationLabel(lastVerifiedAt?: string | null) {
@@ -179,7 +217,7 @@ export default async function PropertyPage({ params }: Props) {
               <BackButton />
 
               <div className="absolute right-4 top-4 z-30 flex items-center gap-2">
-                <ShareButton title={property.title} className="relative" />
+                <ShareButton className="relative" />
                 <FavoriteButton
                   propertyId={property.id}
                   className="relative"

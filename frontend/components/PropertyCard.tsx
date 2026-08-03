@@ -90,7 +90,6 @@ export default function PropertyCard({
   return (
     <article className="relative w-full overflow-hidden rounded-[24px] border border-white/8 bg-[#2D2D2D] shadow-[0_10px_30px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 active:scale-[0.99]">
       <ShareButton
-        title={title}
         url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://rentonow.ro"}/properties/${id}`}
       />
       <FavoriteButton propertyId={id} />

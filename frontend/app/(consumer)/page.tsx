@@ -3,6 +3,7 @@ import Link from "next/link"
 import HomeHero from "@/components/HomeHero"
 import HomePageContent from "@/components/HomePageContent"
 import PropertyCard from "@/components/PropertyCard"
+import RentoGlyph from "@/components/RentoGlyph"
 import { BOTTOM_NAV_CONTENT_CLASS } from "@/lib/bottomNavLayout"
 import { hasPropertyListingImage } from "@/lib/getImageUrl"
 import { getProperties } from "@/services/api"
@@ -81,9 +82,10 @@ export default async function HomePage({
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#252525]/95 shadow-[0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md">
         <div className="mx-auto flex h-[4rem] max-w-[1280px] items-center justify-between px-5 md:px-8 lg:px-10">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#DFC58A] text-sm font-semibold text-[#1B1B1B] shadow-[0_4px_14px_rgba(223,197,138,0.18)]">
-              R
-            </div>
+            <RentoGlyph
+              size={36}
+              className="shrink-0 shadow-[0_4px_14px_rgba(223,197,138,0.18)]"
+            />
 
             <div className="min-w-0 leading-none">
               <h1 className="truncate text-[1.375rem] font-semibold tracking-tight text-[#F5F5F5]">

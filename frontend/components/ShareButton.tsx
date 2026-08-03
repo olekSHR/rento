@@ -3,7 +3,6 @@
 import { Share2 } from "lucide-react"
 
 type Props = {
-  title: string
   url?: string
   className?: string
 }
@@ -12,22 +11,23 @@ function isMobileDevice() {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 }
 
-export default function ShareButton({ title, url, className }: Props) {
+export default function ShareButton({ url, className }: Props) {
   async function handleShare() {
     const shareUrl = url || window.location.href
+    const shareText = "Discover homes on Rento"
 
     try {
       if (navigator.share && isMobileDevice()) {
         await navigator.share({
-          title,
-          text: `Check this property on Rento: ${title}`,
+          title: "Rento",
+          text: shareText,
           url: shareUrl,
         })
 
         return
       }
 
-      await navigator.clipboard.writeText(shareUrl)
+      await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`)
     } catch (error) {
       console.error(error)
     }
@@ -60,7 +60,7 @@ export default function ShareButton({ title, url, className }: Props) {
         ${className ?? "absolute right-[4.25rem] top-3"}
       `}
     >
-      <Share2 className="h-5 w-5 text-[#F5F5F5]" />
+      <Share2 className="h-5 w-5 text-[#F5F5F5]" aria-hidden="true" />
     </button>
   )
 }
