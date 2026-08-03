@@ -25,7 +25,7 @@ export default function OpenGraphImage() {
           justifyContent: "center",
           background: "#1B1B1B",
           color: "#F5F5F5",
-          padding: "72px",
+          padding: "64px",
         }}
       >
         <div
@@ -33,27 +33,52 @@ export default function OpenGraphImage() {
             width: "100%",
             height: "100%",
             display: "flex",
+            flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-between",
             border: "2px solid rgba(223, 197, 138, 0.38)",
             borderRadius: "44px",
             background: "#252525",
-            padding: "72px 84px",
+            padding: "56px 72px",
           }}
         >
           <div
             style={{
               display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 296,
+              height: 296,
+              borderRadius: 36,
+              background: "#DFC58A",
+              flexShrink: 0,
+            }}
+          >
+            <img
+              src={logoSrc}
+              alt="Rento"
+              width={272}
+              height={272}
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+
+          <div
+            style={{
+              display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              marginLeft: 72,
+              flex: 1,
             }}
           >
             <div
               style={{
                 display: "flex",
-                fontSize: "92px",
+                fontSize: "108px",
                 fontWeight: 700,
-                letterSpacing: "-4px",
+                letterSpacing: "-5px",
+                lineHeight: 1,
+                color: "#F5F5F5",
               }}
             >
               Rento
@@ -61,34 +86,29 @@ export default function OpenGraphImage() {
             <div
               style={{
                 display: "flex",
-                marginTop: "22px",
-                fontSize: "30px",
+                marginTop: 28,
+                fontSize: 34,
+                fontWeight: 500,
                 color: "#B8B8B8",
                 letterSpacing: "-0.5px",
+                lineHeight: 1.25,
               }}
             >
-              Find your next home.
+              Find your next home with Rento.
             </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 220,
-              height: 220,
-              borderRadius: 32,
-              background: "#DFC58A",
-            }}
-          >
-            <img
-              src={logoSrc}
-              alt="Rento"
-              width={200}
-              height={200}
-              style={{ objectFit: "contain" }}
-            />
+            <div
+              style={{
+                display: "flex",
+                marginTop: 20,
+                fontSize: 28,
+                fontWeight: 500,
+                color: "#DFC58A",
+                letterSpacing: "0.01em",
+                lineHeight: 1.2,
+              }}
+            >
+              rentonow.ro
+            </div>
           </div>
         </div>
       </div>
