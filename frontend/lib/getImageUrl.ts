@@ -37,3 +37,35 @@ export function getImageUrl(
 
   return `${API_URL}${normalized}`
 }
+
+type PropertyImageSource = {
+  image_url?: string | null
+  images?: Array<{ url: string; is_cover?: boolean }> | null
+}
+
+/** Resolves the best listing image path for photography-first surfaces. */
+export function resolvePropertyListingImage(
+  property: PropertyImageSource
+): string | null {
+  const candidates = [
+    property.images?.find((image) => image.is_cover)?.url,
+    property.images?.[0]?.url,
+    property.image_url,
+  ]
+
+  for (const candidate of candidates) {
+    const normalized = normalizeImagePath(candidate)
+
+    if (normalized) {
+      return normalized
+    }
+  }
+
+  return null
+}
+
+export function hasPropertyListingImage(
+  property: PropertyImageSource
+): boolean {
+  return resolvePropertyListingImage(property) !== null
+}

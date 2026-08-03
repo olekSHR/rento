@@ -27,7 +27,7 @@ export default function HomeHero() {
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#1B1B1B] via-[#1B1B1B]/92 to-transparent" />
       </div>
 
-      <div className="relative grid min-h-[clamp(18rem,50svh,28rem)] grid-rows-[minmax(0,1fr)_auto] px-5 pb-10">
+      <div className="relative grid min-h-[clamp(18rem,50svh,28rem)] grid-rows-[minmax(0,1fr)_auto] px-5 pb-8 md:pb-10">
         <div aria-hidden="true" className="min-h-[3rem] sm:min-h-[4rem]" />
 
         <div className="mx-auto w-full max-w-[20rem] text-center sm:max-w-[22rem]">

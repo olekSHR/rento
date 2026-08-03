@@ -7,7 +7,7 @@ import { BadgeCheck, BedDouble, MapPin } from "lucide-react"
 import FavoriteButton from "./FavoriteButton"
 import ShareButton from "./ShareButton"
 import { RealtorAvatarEnlargeTrigger } from "./RealtorAvatarLightbox"
-import { getImageUrl } from "@/lib/getImageUrl"
+import { getImageUrl, resolvePropertyListingImage } from "@/lib/getImageUrl"
 import type { Property } from "@/types/property"
 
 type PropertyCardProps = Pick<
@@ -80,11 +80,7 @@ export default function PropertyCard({
   contact_name,
   avatar_url,
 }: PropertyCardProps) {
-  const coverImage =
-    images?.find((image) => image.is_cover)?.url ??
-    images?.[0]?.url ??
-    image_url ??
-    null
+  const coverImage = resolvePropertyListingImage({ images, image_url })
 
   const verificationLabel = getVerificationLabel(last_verified_at)
   const isVerified = verificationLabel !== "Needs Verification"
@@ -92,7 +88,7 @@ export default function PropertyCard({
   const showRealtorRow = Boolean(realtorAvatarUrl || contact_name?.trim())
 
   return (
-    <article className="relative mx-auto mb-5 w-full max-w-md overflow-hidden rounded-[26px] border border-white/8 bg-[#2D2D2D] shadow-[0_10px_30px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 active:scale-[0.99] md:max-w-lg">
+    <article className="relative w-full overflow-hidden rounded-[24px] border border-white/8 bg-[#2D2D2D] shadow-[0_10px_30px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 active:scale-[0.99]">
       <ShareButton
         title={title}
         url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://rentonow.ro"}/properties/${id}`}
@@ -101,7 +97,7 @@ export default function PropertyCard({
 
       <Link
         href={`/properties/${id}`}
-        className="block rounded-[26px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+        className="block rounded-[24px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
       >
         <div className="relative h-60 w-full overflow-hidden bg-[#252525]">
           {coverImage ? (
