@@ -3,15 +3,11 @@
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import { useParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 
 import AdminRoute from "@/components/AdminRoute"
-import PageHeader from "@/components/ui/PageHeader"
 import AdminPageShell from "@/components/admin/AdminPageShell"
-import PrimaryButton from "@/components/ui/PrimaryButton"
-import SecondaryButton from "@/components/ui/SecondaryButton"
-import SectionCard from "@/components/ui/SectionCard"
-import StatusBadge from "@/components/ui/StatusBadge"
+import { useAuth } from "@/context/AuthContext"
 import {
   getAdminUserById,
   updateAdminUserAccountStatus,
@@ -22,6 +18,55 @@ import {
 } from "@/services/api"
 
 const ADMIN_USERS_RELOAD_KEY = "adminUsersNeedsReload"
+
+type BadgeVariant = "success" | "warning" | "danger" | "neutral" | "info"
+
+const badgeClassNames: Record<BadgeVariant, string> = {
+  success:
+    "border border-emerald-400/30 bg-emerald-950/40 text-emerald-200",
+  warning: "border border-amber-400/30 bg-amber-950/40 text-amber-200",
+  danger: "border border-red-400/30 bg-red-950/40 text-red-200",
+  neutral: "border border-white/10 bg-[#252525] text-[#B8B8B8]",
+  info: "border border-sky-400/30 bg-sky-950/40 text-sky-200",
+}
+
+const actionButtonClassName =
+  "inline-flex h-11 items-center justify-center rounded-2xl px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:cursor-not-allowed disabled:opacity-50"
+
+const selectClassName =
+  "mt-2 min-h-11 w-full rounded-2xl border border-white/10 bg-[#252525] px-4 text-sm text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-50"
+
+function DarkBadge({
+  children,
+  variant = "neutral",
+}: {
+  children: ReactNode
+  variant?: BadgeVariant
+}) {
+  return (
+    <span
+      className={`inline-flex shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${badgeClassNames[variant]}`}
+    >
+      {children}
+    </span>
+  )
+}
+
+function DarkCard({
+  children,
+  className = "",
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <section
+      className={`rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5 ${className}`.trim()}
+    >
+      {children}
+    </section>
+  )
+}
 
 function getDisplayInitials(displayName: string): string {
   const parts = displayName.trim().split(/\s+/).filter(Boolean)
@@ -37,9 +82,7 @@ function getDisplayInitials(displayName: string): string {
   return "U"
 }
 
-function getRoleVariant(
-  role: string
-): "success" | "warning" | "neutral" | "info" {
+function getRoleVariant(role: string): BadgeVariant {
   if (role === "admin") {
     return "info"
   }
@@ -51,9 +94,7 @@ function getRoleVariant(
   return "neutral"
 }
 
-function getApplicationVariant(
-  status: string
-): "success" | "warning" | "danger" | "neutral" {
+function getApplicationVariant(status: string): BadgeVariant {
   if (status === "approved") {
     return "success"
   }
@@ -67,6 +108,38 @@ function getApplicationVariant(
   }
 
   return "neutral"
+}
+
+function getAccountStatusVariant(status: string): BadgeVariant {
+  if (status === "active") {
+    return "success"
+  }
+
+  if (status === "suspended") {
+    return "warning"
+  }
+
+  if (status === "blocked") {
+    return "danger"
+  }
+
+  return "neutral"
+}
+
+function formatAccountStatusLabel(status: string): string {
+  if (status === "active") {
+    return "Active"
+  }
+
+  if (status === "suspended") {
+    return "Suspended"
+  }
+
+  if (status === "blocked") {
+    return "Blocked"
+  }
+
+  return status
 }
 
 function formatRegisteredAt(value: string | null): string {
@@ -91,24 +164,6 @@ function canManageAccountStatus(role: string): boolean {
   return role !== "admin"
 }
 
-function getAccountStatusVariant(
-  status: string
-): "success" | "warning" | "danger" | "neutral" {
-  if (status === "active") {
-    return "success"
-  }
-
-  if (status === "suspended") {
-    return "warning"
-  }
-
-  if (status === "blocked") {
-    return "danger"
-  }
-
-  return "neutral"
-}
-
 function isAccountStatusValue(
   value: string
 ): value is ManageableAccountStatus {
@@ -118,157 +173,221 @@ function isAccountStatusValue(
 function DetailSkeleton() {
   return (
     <AdminPageShell>
-      <div className="h-5 w-32 animate-pulse rounded bg-zinc-200" />
-      <div className="h-40 animate-pulse rounded-3xl bg-zinc-200" />
-      <div className="h-48 animate-pulse rounded-3xl bg-zinc-200" />
+      <div
+        role="status"
+        aria-live="polite"
+        className="space-y-4"
+      >
+        <span className="sr-only">Loading user details</span>
+        <div className="h-5 w-32 animate-pulse rounded bg-[#2D2D2D] motion-reduce:animate-none" />
+        <div className="h-40 animate-pulse rounded-[24px] bg-[#2D2D2D] motion-reduce:animate-none" />
+        <div className="h-48 animate-pulse rounded-[24px] bg-[#2D2D2D] motion-reduce:animate-none" />
+      </div>
     </AdminPageShell>
   )
 }
 
-function ProfileSection({ user }: { user: AdminUserDetail }) {
-  return (
-    <SectionCard>
-      <div className="flex items-start gap-4">
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-blue-700 text-lg font-bold text-white">
-          {getDisplayInitials(user.display_name)}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <h2 className="text-xl font-extrabold tracking-tight text-zinc-900">
-            {user.display_name}
-          </h2>
-          <p className="mt-1 truncate text-sm text-zinc-500">{user.email}</p>
-
-          <div className="mt-3 flex flex-wrap gap-1">
-            <StatusBadge variant={getRoleVariant(user.role)}>
-              {user.role}
-            </StatusBadge>
-            <StatusBadge variant={getAccountStatusVariant(user.account_status)}>
-              {user.account_status}
-            </StatusBadge>
-            {user.is_verified_realtor && (
-              <StatusBadge variant="success">Verified</StatusBadge>
-            )}
-            {user.application_status && (
-              <StatusBadge
-                variant={getApplicationVariant(user.application_status)}
-              >
-                {user.application_status}
-              </StatusBadge>
-            )}
-          </div>
-        </div>
-      </div>
-    </SectionCard>
-  )
-}
-
-function AccountSection({ user }: { user: AdminUserDetail }) {
-  return (
-    <SectionCard>
-      <h2 className="text-sm font-bold text-zinc-900">Account</h2>
-
-      <dl className="mt-4 space-y-3 text-sm">
-        <div>
-          <dt className="font-semibold text-zinc-700">User ID</dt>
-          <dd className="mt-0.5 text-zinc-500">{user.id}</dd>
-        </div>
-        <div>
-          <dt className="font-semibold text-zinc-700">Role</dt>
-          <dd className="mt-0.5 text-zinc-500">{user.role}</dd>
-        </div>
-        <div>
-          <dt className="font-semibold text-zinc-700">Account Status</dt>
-          <dd className="mt-0.5 text-zinc-500">{user.account_status}</dd>
-        </div>
-        <div>
-          <dt className="font-semibold text-zinc-700">Listings</dt>
-          <dd className="mt-0.5 text-zinc-500">
-            {user.listings_count.toLocaleString()}
-          </dd>
-        </div>
-        <div>
-          <dt className="font-semibold text-zinc-700">Registered</dt>
-          <dd className="mt-0.5 text-zinc-500">
-            {formatRegisteredAt(user.registered_at)}
-          </dd>
-        </div>
-      </dl>
-    </SectionCard>
-  )
-}
-
-function ContactSection({ user }: { user: AdminUserDetail }) {
-  return (
-    <SectionCard>
-      <h2 className="text-sm font-bold text-zinc-900">Contact</h2>
-
-      <dl className="mt-4 space-y-3 text-sm">
-        <div>
-          <dt className="font-semibold text-zinc-700">Phone</dt>
-          <dd className="mt-0.5 text-zinc-500">
-            {formatOptionalValue(user.phone)}
-          </dd>
-        </div>
-        <div>
-          <dt className="font-semibold text-zinc-700">Agency</dt>
-          <dd className="mt-0.5 text-zinc-500">
-            {formatOptionalValue(user.agency_name)}
-          </dd>
-        </div>
-      </dl>
-    </SectionCard>
-  )
-}
-
-function RoleConfirmDialog({
+function ConfirmDialog({
   isOpen,
   isSaving,
+  titleId,
+  title,
+  description,
   onCancel,
   onConfirm,
+  triggerRef,
 }: {
   isOpen: boolean
   isSaving: boolean
+  titleId: string
+  title: string
+  description: string
   onCancel: () => void
   onConfirm: () => void
+  triggerRef: React.RefObject<HTMLButtonElement | null>
 }) {
+  const cancelRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    cancelRef.current?.focus()
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape" && !isSaving) {
+        onCancel()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [isOpen, isSaving, onCancel])
+
+  useEffect(() => {
+    if (isOpen || isSaving) {
+      return
+    }
+
+    triggerRef.current?.focus()
+  }, [isOpen, isSaving, triggerRef])
+
   if (!isOpen) {
     return null
   }
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-[#1B1B1B]/80 p-4 sm:items-center"
       role="presentation"
       onClick={isSaving ? undefined : onCancel}
     >
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby="role-confirm-title"
-        className="w-full max-w-md rounded-3xl bg-white p-6 ring-1 ring-zinc-200 shadow-lg"
+        aria-labelledby={titleId}
+        aria-describedby={`${titleId}-description`}
+        className="w-full max-w-md rounded-[24px] border border-white/8 bg-[#2D2D2D] p-6 shadow-lg"
         onClick={(event) => event.stopPropagation()}
       >
         <h2
-          id="role-confirm-title"
-          className="text-base font-bold text-zinc-900"
+          id={titleId}
+          className="text-base font-bold text-[#F5F5F5]"
         >
-          Confirm role change
+          {title}
         </h2>
-        <p className="mt-2 text-sm text-zinc-500">
-          Are you sure you want to change this user&apos;s role?
+        <p
+          id={`${titleId}-description`}
+          className="mt-2 text-sm text-[#B8B8B8]"
+        >
+          {description}
         </p>
 
-        <div className="mt-6 space-y-3">
-          <PrimaryButton disabled={isSaving} onClick={onConfirm}>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row-reverse">
+          <button
+            type="button"
+            disabled={isSaving}
+            onClick={onConfirm}
+            className={`${actionButtonClassName} bg-[#DFC58A] text-[#1B1B1B]`}
+          >
             {isSaving ? "Saving..." : "Confirm"}
-          </PrimaryButton>
-          <SecondaryButton disabled={isSaving} onClick={onCancel}>
+          </button>
+          <button
+            ref={cancelRef}
+            type="button"
+            disabled={isSaving}
+            onClick={onCancel}
+            className={`${actionButtonClassName} border border-white/10 bg-[#252525] text-[#F5F5F5]`}
+          >
             Cancel
-          </SecondaryButton>
+          </button>
         </div>
       </div>
     </div>
+  )
+}
+
+function ProfileSection({ user }: { user: AdminUserDetail }) {
+  return (
+    <DarkCard>
+      <div className="flex items-start gap-4">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#252525] text-lg font-bold text-[#DFC58A] ring-1 ring-white/10">
+          {getDisplayInitials(user.display_name)}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <h2 className="text-xl font-extrabold tracking-tight text-[#F5F5F5]">
+            {user.display_name}
+          </h2>
+          <p className="mt-1 break-all text-sm text-[#B8B8B8] sm:truncate">
+            {user.email}
+          </p>
+
+          <div className="mt-3 flex flex-wrap gap-1">
+            <DarkBadge variant={getRoleVariant(user.role)}>
+              {user.role}
+            </DarkBadge>
+            <DarkBadge variant={getAccountStatusVariant(user.account_status)}>
+              {formatAccountStatusLabel(user.account_status)}
+            </DarkBadge>
+            {user.is_verified_realtor && (
+              <DarkBadge variant="success">Verified</DarkBadge>
+            )}
+            {user.application_status && (
+              <DarkBadge
+                variant={getApplicationVariant(user.application_status)}
+              >
+                {user.application_status}
+              </DarkBadge>
+            )}
+          </div>
+        </div>
+      </div>
+    </DarkCard>
+  )
+}
+
+function AccountSection({ user }: { user: AdminUserDetail }) {
+  return (
+    <DarkCard>
+      <h2 className="text-sm font-bold text-[#F5F5F5]">Account</h2>
+
+      <dl className="mt-4 space-y-3 text-sm">
+        <div>
+          <dt className="font-semibold text-[#B8B8B8]">User ID</dt>
+          <dd className="mt-0.5 text-[#F5F5F5]">{user.id}</dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-[#B8B8B8]">Role</dt>
+          <dd className="mt-0.5 text-[#F5F5F5]">{user.role}</dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-[#B8B8B8]">Account Status</dt>
+          <dd className="mt-0.5 text-[#F5F5F5]">
+            {formatAccountStatusLabel(user.account_status)}
+          </dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-[#B8B8B8]">Listings</dt>
+          <dd className="mt-0.5 text-[#F5F5F5]">
+            {user.listings_count.toLocaleString()}
+          </dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-[#B8B8B8]">Registered</dt>
+          <dd className="mt-0.5 text-[#F5F5F5]">
+            {formatRegisteredAt(user.registered_at)}
+          </dd>
+        </div>
+      </dl>
+    </DarkCard>
+  )
+}
+
+function ContactSection({ user }: { user: AdminUserDetail }) {
+  return (
+    <DarkCard>
+      <h2 className="text-sm font-bold text-[#F5F5F5]">Contact</h2>
+
+      <dl className="mt-4 space-y-3 text-sm">
+        <div>
+          <dt className="font-semibold text-[#B8B8B8]">Phone</dt>
+          <dd className="mt-0.5 text-[#F5F5F5]">
+            {formatOptionalValue(user.phone)}
+          </dd>
+        </div>
+        <div>
+          <dt className="font-semibold text-[#B8B8B8]">Agency</dt>
+          <dd className="mt-0.5 text-[#F5F5F5]">
+            {formatOptionalValue(user.agency_name)}
+          </dd>
+        </div>
+      </dl>
+    </DarkCard>
   )
 }
 
@@ -281,6 +400,7 @@ function RoleManagementSection({
   onRoleUpdated: (updatedUser: AdminUserDetail) => void
   onSuccess: () => void
 }) {
+  const saveButtonRef = useRef<HTMLButtonElement>(null)
   const [selectedRole, setSelectedRole] = useState<ManageableUserRole>(
     isManageableRole(user.role) ? user.role : "user"
   )
@@ -339,34 +459,34 @@ function RoleManagementSection({
 
   if (!isManageableRole(user.role)) {
     return (
-      <SectionCard>
-        <h2 className="text-sm font-bold text-zinc-900">Role Management</h2>
-        <p className="mt-2 text-sm text-zinc-500">
+      <DarkCard>
+        <h2 className="text-sm font-bold text-[#F5F5F5]">Role Management</h2>
+        <p className="mt-2 text-sm text-[#B8B8B8]">
           Admin role is protected and cannot be changed from this page.
         </p>
-      </SectionCard>
+      </DarkCard>
     )
   }
 
   return (
     <>
-      <SectionCard>
-        <h2 className="text-sm font-bold text-zinc-900">Role Management</h2>
+      <DarkCard aria-busy={isSaving}>
+        <h2 className="text-sm font-bold text-[#F5F5F5]">Role Management</h2>
 
         <div className="mt-4 space-y-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-zinc-500">
+            <p className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
               Current Role
             </p>
             <div className="mt-2">
-              <StatusBadge variant={getRoleVariant(user.role)}>
+              <DarkBadge variant={getRoleVariant(user.role)}>
                 {user.role}
-              </StatusBadge>
+              </DarkBadge>
             </div>
           </div>
 
           <label className="block">
-            <span className="text-xs font-bold uppercase tracking-wide text-zinc-500">
+            <span className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
               New Role
             </span>
             <select
@@ -375,7 +495,7 @@ function RoleManagementSection({
               onChange={(event) =>
                 setSelectedRole(event.target.value as ManageableUserRole)
               }
-              className="mt-2 w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-900 outline-none disabled:opacity-50"
+              className={selectClassName}
             >
               <option value="user">User</option>
               <option value="realtor">Realtor</option>
@@ -383,90 +503,52 @@ function RoleManagementSection({
           </label>
 
           {saveError && (
-            <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
+            <p
+              role="alert"
+              className="rounded-2xl border border-red-400/20 bg-red-950/30 p-3 text-sm font-medium text-red-100"
+            >
               {saveError}
             </p>
           )}
 
-          <PrimaryButton
+          <button
+            ref={saveButtonRef}
+            type="button"
             disabled={!hasRoleChange || isSaving}
             onClick={handleSaveClick}
+            className={`${actionButtonClassName} w-full bg-[#DFC58A] text-[#1B1B1B]`}
           >
             Save
-          </PrimaryButton>
+          </button>
         </div>
-      </SectionCard>
+      </DarkCard>
 
-      <RoleConfirmDialog
+      <ConfirmDialog
         isOpen={showConfirm}
         isSaving={isSaving}
+        titleId="role-confirm-title"
+        title="Confirm role change"
+        description="Are you sure you want to change this user's role?"
         onCancel={handleCancelConfirm}
         onConfirm={() => void handleConfirmRoleChange()}
+        triggerRef={saveButtonRef}
       />
     </>
   )
 }
 
-function AccountStatusConfirmDialog({
-  isOpen,
-  isSaving,
-  onCancel,
-  onConfirm,
-}: {
-  isOpen: boolean
-  isSaving: boolean
-  onCancel: () => void
-  onConfirm: () => void
-}) {
-  if (!isOpen) {
-    return null
-  }
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center"
-      role="presentation"
-      onClick={isSaving ? undefined : onCancel}
-    >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="account-status-confirm-title"
-        className="w-full max-w-md rounded-3xl bg-white p-6 ring-1 ring-zinc-200 shadow-lg"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <h2
-          id="account-status-confirm-title"
-          className="text-base font-bold text-zinc-900"
-        >
-          Confirm account status change
-        </h2>
-        <p className="mt-2 text-sm text-zinc-500">
-          Are you sure you want to change this user&apos;s account status?
-        </p>
-
-        <div className="mt-6 space-y-3">
-          <PrimaryButton disabled={isSaving} onClick={onConfirm}>
-            {isSaving ? "Saving..." : "Confirm"}
-          </PrimaryButton>
-          <SecondaryButton disabled={isSaving} onClick={onCancel}>
-            Cancel
-          </SecondaryButton>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function AccountStatusManagementSection({
   user,
+  currentAdminId,
   onUserUpdated,
   onSuccess,
 }: {
   user: AdminUserDetail
+  currentAdminId: number | undefined
   onUserUpdated: (updatedUser: AdminUserDetail) => void
   onSuccess: () => void
 }) {
+  const saveButtonRef = useRef<HTMLButtonElement>(null)
   const initialStatus = isAccountStatusValue(user.account_status)
     ? user.account_status
     : "active"
@@ -477,8 +559,11 @@ function AccountStatusManagementSection({
   const [saveError, setSaveError] = useState("")
   const [showConfirm, setShowConfirm] = useState(false)
 
+  const isSelfTarget =
+    currentAdminId !== undefined && currentAdminId === user.id
   const hasStatusChange =
     canManageAccountStatus(user.role) &&
+    !isSelfTarget &&
     selectedStatus !== user.account_status
 
   function handleSaveClick() {
@@ -531,34 +616,45 @@ function AccountStatusManagementSection({
 
   if (!canManageAccountStatus(user.role)) {
     return (
-      <SectionCard>
-        <h2 className="text-sm font-bold text-zinc-900">Account Status</h2>
-        <p className="mt-2 text-sm text-zinc-500">
+      <DarkCard>
+        <h2 className="text-sm font-bold text-[#F5F5F5]">Account Status</h2>
+        <p className="mt-2 text-sm text-[#B8B8B8]">
           Admin account status is protected and cannot be changed from this page.
         </p>
-      </SectionCard>
+      </DarkCard>
+    )
+  }
+
+  if (isSelfTarget) {
+    return (
+      <DarkCard>
+        <h2 className="text-sm font-bold text-[#F5F5F5]">Account Status</h2>
+        <p className="mt-2 text-sm text-[#B8B8B8]">
+          You cannot change your own account status from this page.
+        </p>
+      </DarkCard>
     )
   }
 
   return (
     <>
-      <SectionCard>
-        <h2 className="text-sm font-bold text-zinc-900">Account Status</h2>
+      <DarkCard aria-busy={isSaving}>
+        <h2 className="text-sm font-bold text-[#F5F5F5]">Account Status</h2>
 
         <div className="mt-4 space-y-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wide text-zinc-500">
+            <p className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
               Current Status
             </p>
             <div className="mt-2">
-              <StatusBadge variant={getAccountStatusVariant(user.account_status)}>
-                {user.account_status}
-              </StatusBadge>
+              <DarkBadge variant={getAccountStatusVariant(user.account_status)}>
+                {formatAccountStatusLabel(user.account_status)}
+              </DarkBadge>
             </div>
           </div>
 
           <label className="block">
-            <span className="text-xs font-bold uppercase tracking-wide text-zinc-500">
+            <span className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
               New Status
             </span>
             <select
@@ -570,7 +666,7 @@ function AccountStatusManagementSection({
                   setSelectedStatus(value)
                 }
               }}
-              className="mt-2 w-full rounded-2xl border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-900 outline-none disabled:opacity-50"
+              className={selectClassName}
             >
               <option value="active">Active</option>
               <option value="suspended">Suspended</option>
@@ -578,26 +674,42 @@ function AccountStatusManagementSection({
             </select>
           </label>
 
+          {(selectedStatus === "suspended" || selectedStatus === "blocked") && (
+            <p className="rounded-2xl border border-amber-400/20 bg-amber-950/20 p-3 text-sm text-amber-100">
+              Suspended and blocked accounts cannot authenticate normally.
+            </p>
+          )}
+
           {saveError && (
-            <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
+            <p
+              role="alert"
+              className="rounded-2xl border border-red-400/20 bg-red-950/30 p-3 text-sm font-medium text-red-100"
+            >
               {saveError}
             </p>
           )}
 
-          <PrimaryButton
+          <button
+            ref={saveButtonRef}
+            type="button"
             disabled={!hasStatusChange || isSaving}
             onClick={handleSaveClick}
+            className={`${actionButtonClassName} w-full bg-[#DFC58A] text-[#1B1B1B]`}
           >
             Save
-          </PrimaryButton>
+          </button>
         </div>
-      </SectionCard>
+      </DarkCard>
 
-      <AccountStatusConfirmDialog
+      <ConfirmDialog
         isOpen={showConfirm}
         isSaving={isSaving}
+        titleId="account-status-confirm-title"
+        title="Confirm account status change"
+        description="Are you sure you want to change this user's account status? Suspended and blocked accounts cannot authenticate normally."
         onCancel={handleCancelConfirm}
         onConfirm={() => void handleConfirmStatusChange()}
+        triggerRef={saveButtonRef}
       />
     </>
   )
@@ -606,6 +718,7 @@ function AccountStatusManagementSection({
 export default function AdminUserDetailPage() {
   const params = useParams()
   const userId = Number(params.id)
+  const { user: currentAdmin } = useAuth()
 
   const [user, setUser] = useState<AdminUserDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -687,67 +800,100 @@ export default function AdminUserDetailPage() {
       <AdminPageShell>
         <Link
           href="/admin/users"
-          className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700"
+          className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-[#DFC58A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           Back to users
         </Link>
 
         {error || !user ? (
           <>
-            <PageHeader title="User Details" subtitle="Account overview." />
-            <SectionCard>
-              <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
+            <header>
+              <p className="text-xs font-bold uppercase tracking-wide text-[#DFC58A]">
+                User Management
+              </p>
+              <h1 className="mt-2 text-2xl font-extrabold tracking-tight text-[#F5F5F5] md:text-3xl">
+                User Details
+              </h1>
+              <p className="mt-2 text-sm text-[#B8B8B8]">Account overview.</p>
+            </header>
+
+            <section
+              role="alert"
+              className="rounded-[24px] border border-red-400/20 bg-red-950/30 p-5"
+            >
+              <p className="text-sm font-medium text-red-100">
                 {error || "User not found."}
               </p>
-              <div className="mt-4">
-                <PrimaryButton href="/admin/users">Back to users</PrimaryButton>
-              </div>
-            </SectionCard>
+              <Link
+                href="/admin/users"
+                className="mt-4 inline-flex h-11 items-center rounded-2xl bg-[#DFC58A] px-4 text-sm font-semibold text-[#1B1B1B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+              >
+                Back to users
+              </Link>
+            </section>
           </>
         ) : (
           <>
-            <PageHeader
-              title="User Details"
-              subtitle="Account overview, role, and status management."
-            />
+            <header>
+              <p className="text-xs font-bold uppercase tracking-wide text-[#DFC58A]">
+                User Management
+              </p>
+              <h1 className="mt-2 text-2xl font-extrabold tracking-tight text-[#F5F5F5] md:text-3xl">
+                User Details
+              </h1>
+              <p className="mt-2 text-sm text-[#B8B8B8]">
+                Account overview, role, and status management.
+              </p>
+            </header>
 
-            <ProfileSection user={user} />
-            <AccountSection user={user} />
-            <ContactSection user={user} />
-            <RoleManagementSection
-              key={`${user.id}-${user.role}`}
-              user={user}
-              onRoleUpdated={setUser}
-              onSuccess={() => setToastMessage("Role updated successfully.")}
-            />
-            <AccountStatusManagementSection
-              key={`${user.id}-${user.account_status}`}
-              user={user}
-              onUserUpdated={setUser}
-              onSuccess={() =>
-                setToastMessage("Account status updated successfully.")
-              }
-            />
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-start">
+              <div className="space-y-4">
+                <ProfileSection user={user} />
+                <AccountSection user={user} />
+                <ContactSection user={user} />
+                {user.application_status && (
+                  <DarkCard>
+                    <h2 className="text-sm font-bold text-[#F5F5F5]">
+                      Realtor Application
+                    </h2>
+                    <p className="mt-2 text-sm text-[#B8B8B8]">
+                      Latest application status:{" "}
+                      <span className="font-semibold text-[#F5F5F5]">
+                        {user.application_status}
+                      </span>
+                    </p>
+                  </DarkCard>
+                )}
+              </div>
 
-            {user.application_status && (
-              <SectionCard>
-                <h2 className="text-sm font-bold text-zinc-900">
-                  Realtor Application
-                </h2>
-                <p className="mt-2 text-sm text-zinc-500">
-                  Latest application status:{" "}
-                  <span className="font-semibold text-zinc-700">
-                    {user.application_status}
-                  </span>
-                </p>
-              </SectionCard>
-            )}
+              <div className="space-y-4">
+                <RoleManagementSection
+                  key={`${user.id}-${user.role}`}
+                  user={user}
+                  onRoleUpdated={setUser}
+                  onSuccess={() => setToastMessage("Role updated successfully.")}
+                />
+                <AccountStatusManagementSection
+                  key={`${user.id}-${user.account_status}`}
+                  user={user}
+                  currentAdminId={currentAdmin?.id}
+                  onUserUpdated={setUser}
+                  onSuccess={() =>
+                    setToastMessage("Account status updated successfully.")
+                  }
+                />
+              </div>
+            </div>
           </>
         )}
 
         {toastMessage && (
-          <div className="fixed bottom-24 left-1/2 z-[60] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl bg-zinc-900 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg">
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-6 left-1/2 z-[60] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border border-[#DFC58A]/30 bg-[#2D2D2D] px-4 py-3 text-center text-sm font-semibold text-[#F5F5F5] shadow-lg"
+          >
             {toastMessage}
           </div>
         )}

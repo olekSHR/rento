@@ -656,8 +656,8 @@ export type AdminUserListItem = {
 export type AdminUsersResponse = {
   items: AdminUserListItem[]
   total: number
-  page: number
   limit: number
+  offset: number
 }
 
 export type AdminUsersQuery = {
@@ -677,9 +677,15 @@ export async function getAdminUsers(
       ? { page: pageOrQuery, limit }
       : { page: 1, limit: 20, ...pageOrQuery }
 
+  const rawPage = query.page ?? 1
+  const page =
+    Number.isFinite(rawPage) && rawPage >= 1 ? Math.floor(rawPage) : 1
+  const limitValue = query.limit ?? 20
+  const offset = (page - 1) * limitValue
+
   const params = new URLSearchParams({
-    page: String(query.page ?? 1),
-    limit: String(query.limit ?? 20),
+    limit: String(limitValue),
+    offset: String(offset),
   })
 
   const normalizedQuery = query.q?.trim()
