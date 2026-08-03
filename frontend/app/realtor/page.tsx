@@ -39,6 +39,40 @@ const ALLOWED_AVATAR_TYPES = [
   "image/webp",
 ] as const
 
+const WORKSPACE_SEARCH_ID = "realtor-workspace-search"
+
+const workspaceShellClassName =
+  "min-h-screen bg-[#1B1B1B] text-[#F5F5F5] px-5 py-6 pb-24 md:px-8 md:py-8 md:pb-28"
+
+const workspaceContainerClassName = "mx-auto max-w-[1280px] space-y-5 md:space-y-6"
+
+const workspaceCardClassName =
+  "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5 md:p-6"
+
+const workspacePrimaryCtaClassName =
+  "flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#DFC58A] text-sm font-semibold text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B] md:h-14"
+
+const workspaceSecondaryLinkClassName =
+  "inline-flex min-h-11 items-center text-sm font-semibold text-[#DFC58A] underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+
+const workspaceInputClassName =
+  "min-h-11 w-full rounded-xl border border-white/[0.08] bg-[#252525] py-3 pl-11 pr-4 text-sm text-[#F5F5F5] placeholder:text-[#B8B8B8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
+
+const workspaceErrorClassName =
+  "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
+
+const workspaceBadgeGoldClassName =
+  "inline-flex rounded-full border border-[#DFC58A]/20 bg-[#252525] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#DFC58A]"
+
+const workspaceBadgeMutedClassName =
+  "inline-flex rounded-full border border-white/10 bg-[#252525] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#B8B8B8]"
+
+const workspaceStatCardClassName =
+  "rounded-2xl border border-white/8 bg-[#252525] px-4 py-3 md:py-4"
+
+const workspaceIconButtonClassName =
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-[#252525] text-[#DFC58A] transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
+
 function loadImageElement(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const image = new window.Image()
@@ -184,12 +218,17 @@ function getProfileInitials(profile: RealtorProfile | null): string {
 
 function WorkspaceSkeleton() {
   return (
-    <main className="min-h-screen bg-zinc-100 px-4 py-6 pb-24">
-      <div className="mx-auto max-w-md space-y-4">
-        <div className="h-72 animate-pulse rounded-3xl bg-zinc-200" />
-        <div className="h-14 animate-pulse rounded-2xl bg-zinc-200" />
-        <div className="h-10 animate-pulse rounded-2xl bg-zinc-200" />
-        <PropertyListSkeleton />
+    <main className={workspaceShellClassName}>
+      <div className={workspaceContainerClassName}>
+        <div role="status" aria-live="polite">
+          <span className="sr-only">Loading workspace</span>
+          <div className="h-52 animate-pulse rounded-[24px] bg-white/10 motion-reduce:animate-none md:h-44" />
+          <div className="mt-5 h-14 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
+          <div className="mt-5 h-10 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
+          <div className="mt-6">
+            <PropertyListSkeleton />
+          </div>
+        </div>
       </div>
     </main>
   )
@@ -486,16 +525,15 @@ export default function RealtorWorkspacePage() {
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-zinc-100 px-4 py-6 pb-24">
-        <div className="mx-auto max-w-md rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-          <h1 className="text-2xl font-bold text-zinc-900">Login required</h1>
-          <p className="mt-2 text-sm text-zinc-500">
+      <main className={workspaceShellClassName}>
+        <div className={`mx-auto max-w-[1280px] ${workspaceCardClassName}`}>
+          <h1 className="text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
+            Login required
+          </h1>
+          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
             Sign in to access your realtor workspace.
           </p>
-          <Link
-            href="/login"
-            className="mt-6 flex h-12 items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white"
-          >
+          <Link href="/login" className={`mt-6 ${workspacePrimaryCtaClassName}`}>
             Go to login
           </Link>
         </div>
@@ -505,10 +543,12 @@ export default function RealtorWorkspacePage() {
 
   if (!isRealtor) {
     return (
-      <main className="min-h-screen bg-zinc-100 px-4 py-6 pb-24">
-        <div className="mx-auto max-w-md rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-          <h1 className="text-2xl font-bold text-zinc-900">Access denied</h1>
-          <p className="mt-2 text-sm text-zinc-500">
+      <main className={workspaceShellClassName}>
+        <div className={`mx-auto max-w-[1280px] ${workspaceCardClassName}`}>
+          <h1 className="text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
+            Access denied
+          </h1>
+          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
             This workspace is available only for realtor accounts.
           </p>
         </div>
@@ -517,150 +557,157 @@ export default function RealtorWorkspacePage() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-100 px-4 py-6 pb-24">
-      <div className="mx-auto max-w-md space-y-5">
-        <header className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
-          <div className="bg-gradient-to-br from-blue-700 via-blue-700 to-blue-800 px-5 pb-5 pt-5 text-white">
-            <div className="flex items-start gap-3.5">
-              <div className="relative shrink-0">
-                <button
-                  type="button"
-                  onClick={() => avatarInputRef.current?.click()}
-                  disabled={isAvatarUploading || isAvatarPreviewOpen}
-                  aria-label="Upload profile photo"
-                  className="relative h-14 w-14 overflow-hidden rounded-2xl bg-blue-600 ring-2 ring-white/20 active:scale-95 disabled:opacity-80"
-                >
-                  {avatarUrl ? (
-                    <Image
-                      src={avatarUrl}
-                      alt={getProfileDisplayName(profile)}
-                      fill
-                      unoptimized
-                      className="object-cover"
-                      sizes="56px"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center text-lg font-bold text-white">
-                      {getProfileInitials(profile)}
-                    </div>
-                  )}
+    <main className={workspaceShellClassName}>
+      <div className={workspaceContainerClassName}>
+        <header className={workspaceCardClassName}>
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#B8B8B8]">
+            Realtor workspace
+          </p>
 
-                  {isAvatarUploading ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-blue-900/60">
-                      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    </div>
-                  ) : (
-                    <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full bg-white text-blue-700 shadow-sm ring-2 ring-blue-700">
-                      <Camera className="h-3.5 w-3.5" />
-                    </span>
-                  )}
-                </button>
-
-                <input
-                  ref={avatarInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  className="hidden"
-                  onChange={handleAvatarChange}
-                />
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-blue-100">
-                  {getTimeGreeting()},
-                </p>
-                <h1 className="mt-0.5 truncate text-2xl font-extrabold tracking-tight">
-                  {greetingName}
-                </h1>
-                <div className="mt-2.5">
-                  {profile?.is_verified ? (
-                    <span className="inline-flex rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold text-white ring-1 ring-white/25">
-                      Verified
-                    </span>
-                  ) : (
-                    <span className="inline-flex rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-blue-100 ring-1 ring-white/20">
-                      Verification soon
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <Link
-                href="/realtor/profile"
-                aria-label={profileActionLabel}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-white ring-1 ring-white/20 active:scale-95"
+          <div className="mt-4 flex items-start gap-3.5 md:gap-4">
+            <div className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => avatarInputRef.current?.click()}
+                disabled={isAvatarUploading || isAvatarPreviewOpen}
+                aria-label="Upload profile photo"
+                className="relative h-14 w-14 overflow-hidden rounded-2xl border border-[#DFC58A]/25 bg-[#252525] transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-80"
               >
-                <Pencil className="h-5 w-5" />
-              </Link>
+                {avatarUrl ? (
+                  <Image
+                    src={avatarUrl}
+                    alt={getProfileDisplayName(profile)}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                    sizes="56px"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-lg font-semibold text-[#DFC58A]">
+                    {getProfileInitials(profile)}
+                  </div>
+                )}
+
+                {isAvatarUploading ? (
+                  <div className="absolute inset-0 flex items-center justify-center bg-[#1B1B1B]/70">
+                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-[#DFC58A] border-t-transparent motion-reduce:animate-none" />
+                  </div>
+                ) : (
+                  <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border border-[#DFC58A]/25 bg-[#2D2D2D] text-[#DFC58A]">
+                    <Camera className="h-3.5 w-3.5" aria-hidden="true" />
+                  </span>
+                )}
+              </button>
+
+              <input
+                ref={avatarInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
             </div>
 
-            {avatarError && (
-              <p className="mt-3 text-xs font-medium text-red-200">
-                {avatarError}
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium text-[#B8B8B8]">
+                {getTimeGreeting()},
               </p>
-            )}
+              <h1 className="mt-0.5 truncate text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
+                {greetingName}
+              </h1>
+              <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+                Manage your listings, track review status, and take the next
+                step.
+              </p>
+              <div className="mt-2.5">
+                {profile?.is_verified ? (
+                  <span className={workspaceBadgeGoldClassName}>Verified</span>
+                ) : (
+                  <span className={workspaceBadgeMutedClassName}>
+                    Verification soon
+                  </span>
+                )}
+              </div>
+            </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
-                <p className="text-2xl font-extrabold leading-none">
-                  {stats.active}
-                </p>
-                <p className="mt-1.5 text-xs font-semibold text-blue-100">
-                  Active listings
-                </p>
-              </div>
-              <div className="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
-                <p className="text-2xl font-extrabold leading-none">
-                  {stats.pending}
-                </p>
-                <p className="mt-1.5 text-xs font-semibold text-blue-100">
-                  Pending listings
-                </p>
-              </div>
+            <Link
+              href="/realtor/profile"
+              aria-label={profileActionLabel}
+              className={workspaceIconButtonClassName}
+            >
+              <Pencil className="h-5 w-5" aria-hidden="true" />
+            </Link>
+          </div>
+
+          {avatarError && (
+            <p
+              role="alert"
+              className="mt-3 text-xs font-medium text-red-200/90"
+            >
+              {avatarError}
+            </p>
+          )}
+
+          <div className="mt-5 grid grid-cols-2 gap-3 md:max-w-md">
+            <div className={workspaceStatCardClassName}>
+              <p className="text-2xl font-semibold leading-none text-[#F5F5F5]">
+                {stats.active}
+              </p>
+              <p className="mt-1.5 text-xs font-semibold text-[#B8B8B8]">
+                Active listings
+              </p>
+            </div>
+            <div className={workspaceStatCardClassName}>
+              <p className="text-2xl font-semibold leading-none text-[#F5F5F5]">
+                {stats.pending}
+              </p>
+              <p className="mt-1.5 text-xs font-semibold text-[#B8B8B8]">
+                Pending listings
+              </p>
             </div>
           </div>
 
-          <div className="space-y-4 px-5 py-5">
+          <div className="mt-5 space-y-4 border-t border-white/8 pt-5">
             {nextAction && (
               <Link
                 href={nextAction.href}
-                className={`block rounded-2xl px-4 py-3.5 active:scale-[0.99] ${
+                className={`block rounded-2xl px-4 py-3.5 transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] ${
                   nextAction.tone === "urgent"
-                    ? "bg-blue-50 ring-1 ring-blue-100"
-                    : "bg-zinc-50 ring-1 ring-zinc-100"
+                    ? "border border-[#DFC58A]/20 bg-[#252525]"
+                    : "border border-white/8 bg-[#252525]"
                 }`}
               >
-                <p className="text-[11px] font-bold uppercase tracking-wide text-zinc-500">
+                <p className="text-[11px] font-bold uppercase tracking-wide text-[#B8B8B8]">
                   Suggested next step
                 </p>
-                <p className="mt-1 text-sm font-bold text-zinc-900">
+                <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">
                   {nextAction.title}
                 </p>
-                <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">
+                <p className="mt-0.5 text-xs leading-relaxed text-[#B8B8B8]">
                   {nextAction.description}
                 </p>
               </Link>
             )}
 
             <div>
-              <div className="mb-2.5 flex items-center justify-between text-xs font-semibold text-zinc-500">
+              <div className="mb-2.5 flex items-center justify-between text-xs font-semibold text-[#B8B8B8]">
                 <span>Profile completion</span>
-                <span className="text-zinc-900">{profileCompletion}%</span>
+                <span className="text-[#F5F5F5]">{profileCompletion}%</span>
               </div>
-              <div className="h-2.5 overflow-hidden rounded-full bg-zinc-100">
+              <div className="h-2.5 overflow-hidden rounded-full bg-[#252525]">
                 <div
-                  className="h-full rounded-full bg-blue-600 transition-all duration-300"
+                  className="h-full rounded-full bg-[#DFC58A] transition-all duration-300 motion-reduce:transition-none"
                   style={{ width: `${profileCompletion}%` }}
                 />
               </div>
               {canCreateListing ? (
-                <p className="mt-2.5 text-xs leading-relaxed text-zinc-500">
+                <p className="mt-2.5 text-xs leading-relaxed text-[#B8B8B8]">
                   Your profile is complete
                 </p>
               ) : (
                 <Link
                   href="/realtor/profile"
-                  className="mt-2.5 block text-xs font-semibold leading-relaxed text-blue-700 active:opacity-80"
+                  className={`mt-2.5 block ${workspaceSecondaryLinkClassName}`}
                 >
                   Complete your profile to publish listings
                 </Link>
@@ -670,19 +717,13 @@ export default function RealtorWorkspacePage() {
         </header>
 
         {canCreateListing ? (
-          <Link
-            href="/realtor/properties/create"
-            className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-blue-700 text-sm font-bold text-white shadow-[0_12px_28px_rgba(29,78,216,0.28)] active:scale-[0.98]"
-          >
-            <Plus className="h-5 w-5" />
+          <Link href="/realtor/properties/create" className={workspacePrimaryCtaClassName}>
+            <Plus className="h-5 w-5" aria-hidden="true" />
             Add Property
           </Link>
         ) : (
-          <Link
-            href="/realtor/profile"
-            className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-blue-700 text-sm font-bold text-white shadow-[0_12px_28px_rgba(29,78,216,0.28)] active:scale-[0.98]"
-          >
-            <Plus className="h-5 w-5" />
+          <Link href="/realtor/profile" className={workspacePrimaryCtaClassName}>
+            <Plus className="h-5 w-5" aria-hidden="true" />
             Complete profile to add property
           </Link>
         )}
@@ -690,70 +731,81 @@ export default function RealtorWorkspacePage() {
         {continueEditingProperty && (
           <Link
             href={`/realtor/properties/${continueEditingProperty.id}/edit`}
-            className="flex items-center justify-between rounded-3xl border border-zinc-200 bg-white p-4 shadow-sm active:scale-[0.99]"
+            className={`flex items-center justify-between ${workspaceCardClassName} transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]`}
           >
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#DFC58A]">
                 Continue editing
               </p>
-              <p className="mt-1 text-sm font-bold text-zinc-900">
+              <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">
                 {continueEditingProperty.title}
               </p>
-              <p className="mt-0.5 text-xs text-zinc-500">
+              <p className="mt-0.5 text-xs text-[#B8B8B8]">
                 {getPropertyStatusLabel(continueEditingProperty.status)}
               </p>
             </div>
-            <ChevronRight className="h-5 w-5 text-zinc-400" />
+            <ChevronRight className="h-5 w-5 text-[#B8B8B8]" aria-hidden="true" />
           </Link>
         )}
 
         {actionItems.length > 0 && (
-          <section className="rounded-3xl border border-zinc-200 bg-white p-4 shadow-sm">
+          <section
+            aria-labelledby="realtor-action-center-heading"
+            className={workspaceCardClassName}
+          >
             <div className="mb-3 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-blue-700" />
-              <h2 className="text-sm font-bold text-zinc-900">Action center</h2>
+              <Sparkles className="h-4 w-4 text-[#DFC58A]" aria-hidden="true" />
+              <h2
+                id="realtor-action-center-heading"
+                className="text-sm font-semibold text-[#F5F5F5]"
+              >
+                Action center
+              </h2>
             </div>
             <div className="space-y-2">
               {actionItems.map((action) => (
                 <Link
                   key={action.id}
                   href={action.href}
-                  className={`flex items-center justify-between rounded-2xl px-3 py-3 ${
+                  className={`flex items-center justify-between rounded-2xl px-3 py-3 transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] ${
                     action.tone === "urgent"
-                      ? "bg-blue-50 ring-1 ring-blue-100"
-                      : "bg-zinc-50 ring-1 ring-zinc-100"
+                      ? "border border-[#DFC58A]/20 bg-[#252525]"
+                      : "border border-white/8 bg-[#252525]"
                   }`}
                 >
                   <div>
-                    <p className="text-sm font-semibold text-zinc-900">
+                    <p className="text-sm font-semibold text-[#F5F5F5]">
                       {action.title}
                     </p>
-                    <p className="mt-0.5 text-xs text-zinc-500">
+                    <p className="mt-0.5 text-xs text-[#B8B8B8]">
                       {action.description}
                     </p>
                   </div>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-zinc-400" />
+                  <ChevronRight
+                    className="h-4 w-4 shrink-0 text-[#B8B8B8]"
+                    aria-hidden="true"
+                  />
                 </Link>
               ))}
             </div>
           </section>
         )}
 
-        <section className="grid grid-cols-4 gap-2">
+        <section
+          aria-label="Listing totals"
+          className="grid grid-cols-2 gap-2 sm:grid-cols-4"
+        >
           {[
             { label: "Active", value: stats.active },
             { label: "Pending", value: stats.pending },
             { label: "Rented", value: stats.rented },
             { label: "Archived", value: stats.archived },
           ].map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl border border-zinc-200 bg-white p-2.5 text-center shadow-sm"
-            >
-              <p className="text-base font-extrabold text-zinc-900">
+            <div key={stat.label} className={`${workspaceStatCardClassName} text-center`}>
+              <p className="text-base font-semibold text-[#F5F5F5]">
                 {stat.value}
               </p>
-              <p className="text-[10px] font-semibold text-zinc-500">
+              <p className="text-[10px] font-semibold text-[#B8B8B8]">
                 {stat.label}
               </p>
             </div>
@@ -761,31 +813,53 @@ export default function RealtorWorkspacePage() {
         </section>
 
         {error && (
-          <p className="rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-600 ring-1 ring-red-100">
+          <p role="alert" className={workspaceErrorClassName}>
             {error}
           </p>
         )}
 
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-zinc-900">My properties</h2>
-            <span className="text-xs font-semibold text-zinc-500">
+        <section aria-labelledby="realtor-properties-heading" className="space-y-4">
+          <div className="flex items-center justify-between gap-3">
+            <h2
+              id="realtor-properties-heading"
+              className="text-lg font-semibold text-[#F5F5F5]"
+            >
+              My properties
+            </h2>
+            <span className="text-xs font-semibold text-[#B8B8B8]">
               {visibleProperties.length} shown
             </span>
           </div>
 
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Search title, city, or price"
-              className="w-full rounded-2xl border border-zinc-200 bg-white py-3.5 pl-11 pr-4 text-sm text-zinc-900 outline-none ring-0 placeholder:text-zinc-400"
-            />
+          <div>
+            <label
+              htmlFor={WORKSPACE_SEARCH_ID}
+              className="mb-1.5 block text-[13px] font-medium text-[#F5F5F5]"
+            >
+              Search listings
+            </label>
+            <div className="relative">
+              <Search
+                className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#B8B8B8]"
+                aria-hidden="true"
+              />
+              <input
+                id={WORKSPACE_SEARCH_ID}
+                type="search"
+                name="property-search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search title, city, or price"
+                className={workspaceInputClassName}
+              />
+            </div>
           </div>
 
-          <div className="flex gap-2 overflow-x-auto pb-1">
+          <div
+            className="flex gap-2 overflow-x-auto pb-1"
+            role="group"
+            aria-label="Filter listings by status"
+          >
             {PROPERTY_FILTER_OPTIONS.map((filter) => {
               const isActive = activeFilter === filter.id
 
@@ -794,10 +868,11 @@ export default function RealtorWorkspacePage() {
                   key={filter.id}
                   type="button"
                   onClick={() => setActiveFilter(filter.id)}
-                  className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 ${
+                  aria-pressed={isActive}
+                  className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B] motion-reduce:transition-none ${
                     isActive
-                      ? "scale-[1.02] bg-zinc-900 text-white shadow-sm"
-                      : "bg-white text-zinc-600 ring-1 ring-zinc-200"
+                      ? "border border-[#DFC58A]/30 bg-[#252525] text-[#DFC58A] ring-1 ring-[#DFC58A]/20"
+                      : "border border-white/8 bg-[#2D2D2D] text-[#B8B8B8]"
                   }`}
                 >
                   {filter.label}
@@ -820,7 +895,7 @@ export default function RealtorWorkspacePage() {
               canCreateListing={canCreateListing}
             />
           ) : (
-            <div className="space-y-4 transition-opacity duration-200">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 transition-opacity duration-200 motion-reduce:transition-none">
               {visibleProperties.map((property) => (
                 <RealtorPropertyCard
                   key={property.id}
@@ -840,28 +915,28 @@ export default function RealtorWorkspacePage() {
       />
 
       {isAvatarPreviewOpen && avatarPreviewUrl && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/50 p-4">
+        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-[#1B1B1B]/80 p-4">
           <div
-            className="w-full max-w-md overflow-hidden rounded-3xl bg-white p-5 shadow-xl"
+            className="w-full max-w-md overflow-hidden rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5 shadow-[0_8px_32px_rgba(0,0,0,0.32)]"
             role="dialog"
             aria-modal="true"
             aria-labelledby="avatar-preview-title"
           >
             <h2
               id="avatar-preview-title"
-              className="text-lg font-bold text-zinc-900"
+              className="text-lg font-semibold text-[#F5F5F5]"
             >
               Adjust profile photo
             </h2>
-            <p className="mt-1 text-sm text-zinc-500">
+            <p className="mt-1 text-sm leading-relaxed text-[#B8B8B8]">
               Zoom and preview how your avatar will appear.
             </p>
-            <p className="mt-2 text-xs text-zinc-400">
+            <p className="mt-2 text-xs text-[#B8B8B8]/80">
               Drag to position. Use slider to zoom.
             </p>
 
             <div
-              className={`mx-auto mt-5 flex h-44 w-44 touch-none items-center justify-center overflow-hidden rounded-full bg-zinc-100 ring-4 ring-blue-100 ${
+              className={`mx-auto mt-5 flex h-44 w-44 touch-none items-center justify-center overflow-hidden rounded-full border-4 border-[#DFC58A]/25 bg-[#252525] ${
                 isAvatarDragging ? "cursor-grabbing" : "cursor-grab"
               }`}
               onPointerDown={handleAvatarCropPointerDown}
@@ -883,9 +958,9 @@ export default function RealtorWorkspacePage() {
             </div>
 
             <div className="mt-6">
-              <div className="mb-2 flex items-center justify-between text-xs font-semibold text-zinc-500">
+              <div className="mb-2 flex items-center justify-between text-xs font-semibold text-[#B8B8B8]">
                 <span>Zoom</span>
-                <span className="text-zinc-900">{avatarZoom.toFixed(2)}x</span>
+                <span className="text-[#F5F5F5]">{avatarZoom.toFixed(2)}x</span>
               </div>
               <input
                 type="range"
@@ -897,7 +972,7 @@ export default function RealtorWorkspacePage() {
                   handleAvatarZoomChange(Number(event.target.value))
                 }
                 disabled={isAvatarUploading}
-                className="h-2 w-full cursor-pointer accent-blue-700"
+                className="h-2 w-full cursor-pointer accent-[#DFC58A]"
                 aria-label="Avatar zoom"
               />
             </div>
@@ -907,7 +982,7 @@ export default function RealtorWorkspacePage() {
                 type="button"
                 onClick={handleAvatarCancel}
                 disabled={isAvatarUploading}
-                className="flex h-12 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700 active:scale-[0.98] disabled:opacity-60"
+                className="flex h-12 items-center justify-center rounded-2xl border border-white/10 bg-[#252525] text-sm font-semibold text-[#F5F5F5] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-60"
               >
                 Cancel
               </button>
@@ -915,7 +990,8 @@ export default function RealtorWorkspacePage() {
                 type="button"
                 onClick={handleAvatarSave}
                 disabled={isAvatarUploading}
-                className="flex h-12 items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white active:scale-[0.98] disabled:opacity-60"
+                aria-busy={isAvatarUploading}
+                className="flex h-12 items-center justify-center rounded-2xl bg-[#DFC58A] text-sm font-semibold text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-60"
               >
                 {isAvatarUploading ? "Saving..." : "Save photo"}
               </button>

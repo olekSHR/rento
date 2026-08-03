@@ -8,6 +8,12 @@ type PropertyEmptyStateProps = {
   canCreateListing: boolean
 }
 
+const cardClassName =
+  "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5 md:p-6"
+
+const primaryCtaClassName =
+  "flex h-12 w-full items-center justify-center rounded-2xl bg-[#DFC58A] text-sm font-semibold text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
+
 export default function PropertyEmptyState({
   variant,
   filterLabel,
@@ -15,9 +21,9 @@ export default function PropertyEmptyState({
 }: PropertyEmptyStateProps) {
   if (variant === "no-listings") {
     return (
-      <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-        <h3 className="text-lg font-bold text-zinc-900">No listings yet</h3>
-        <p className="mt-2 text-sm text-zinc-500">
+      <div role="status" className={cardClassName}>
+        <h3 className="text-lg font-semibold text-[#F5F5F5]">No listings yet</h3>
+        <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
           Publish your first property to start managing rentals from this
           workspace.
         </p>
@@ -30,12 +36,12 @@ export default function PropertyEmptyState({
           ].map((step, index) => (
             <li
               key={step}
-              className="flex gap-3 rounded-2xl bg-zinc-50 p-3 ring-1 ring-zinc-100"
+              className="flex gap-3 rounded-2xl border border-white/8 bg-[#252525] p-3"
             >
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#DFC58A]/25 bg-[#2D2D2D] text-xs font-bold text-[#DFC58A]">
                 {index + 1}
               </span>
-              <p className="text-sm font-medium text-zinc-800">{step}</p>
+              <p className="text-sm font-medium text-[#F5F5F5]">{step}</p>
             </li>
           ))}
         </ol>
@@ -46,7 +52,7 @@ export default function PropertyEmptyState({
               ? "/realtor/properties/create"
               : "/realtor/profile"
           }
-          className="mt-6 flex h-12 w-full items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white"
+          className={`mt-6 ${primaryCtaClassName}`}
         >
           Create first property
         </Link>
@@ -56,9 +62,11 @@ export default function PropertyEmptyState({
 
   if (variant === "no-results") {
     return (
-      <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-center shadow-sm">
-        <h3 className="text-base font-bold text-zinc-900">No matches found</h3>
-        <p className="mt-2 text-sm text-zinc-500">
+      <div role="status" className={`${cardClassName} text-center`}>
+        <h3 className="text-base font-semibold text-[#F5F5F5]">
+          No matches found
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
           Try a different search by title, city, or price.
         </p>
       </div>
@@ -66,17 +74,14 @@ export default function PropertyEmptyState({
   }
 
   return (
-    <div className="rounded-3xl border border-zinc-200 bg-white p-6 text-center shadow-sm">
-      <h3 className="text-base font-bold text-zinc-900">
+    <div role="status" className={`${cardClassName} text-center`}>
+      <h3 className="text-base font-semibold text-[#F5F5F5]">
         No {filterLabel?.toLowerCase()} listings
       </h3>
-      <p className="mt-2 text-sm text-zinc-500">
+      <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
         Switch to another filter or publish a new property.
       </p>
-      <Link
-        href="/realtor/properties/create"
-        className="mt-5 inline-flex h-11 items-center justify-center rounded-2xl bg-zinc-900 px-5 text-sm font-bold text-white"
-      >
+      <Link href="/realtor/properties/create" className={`mt-5 ${primaryCtaClassName}`}>
         Add property
       </Link>
     </div>
