@@ -3,8 +3,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
-import { BedDouble, MapPin } from "lucide-react"
+import { useEffect, useMemo, useId, useRef, useState } from "react"
+import { BedDouble, MapPin, Upload } from "lucide-react"
 
 import RealtorRoute from "@/components/RealtorRoute"
 import { getImageUrl } from "@/lib/getImageUrl"
@@ -37,6 +37,48 @@ const EMPTY_FORM = {
   rooms: "",
 }
 
+const shellClassName =
+  "min-h-screen bg-[#1B1B1B] text-[#F5F5F5] px-5 py-6 pb-24 md:px-8 md:py-8 md:pb-28"
+
+const containerClassName = "mx-auto max-w-[1280px] space-y-5 md:space-y-6"
+
+const wizardColumnClassName = "mx-auto w-full max-w-xl space-y-5 md:space-y-6"
+
+const cardClassName =
+  "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5 md:p-6"
+
+const surfaceClassName =
+  "rounded-2xl border border-white/8 bg-[#252525] px-4 py-3 md:py-4"
+
+const primaryButtonClassName =
+  "inline-flex min-h-11 w-full items-center justify-center rounded-2xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B] disabled:cursor-not-allowed disabled:opacity-60 md:min-h-12"
+
+const secondaryButtonClassName =
+  "inline-flex min-h-11 w-full items-center justify-center rounded-2xl border border-white/10 bg-[#252525] px-5 text-sm font-semibold text-[#F5F5F5] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:cursor-not-allowed disabled:opacity-60 md:min-h-12"
+
+const secondaryLinkClassName =
+  "inline-flex min-h-11 items-center text-sm font-semibold text-[#DFC58A] underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+
+const inputClassName =
+  "min-h-11 w-full rounded-xl border border-white/[0.08] bg-[#252525] px-4 py-3 text-sm text-[#F5F5F5] placeholder:text-[#B8B8B8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-60 aria-[invalid=true]:border-red-400/40"
+
+const labelClassName = "mb-2 block text-sm font-semibold text-[#F5F5F5]"
+
+const errorAlertClassName =
+  "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
+
+const warningAlertClassName =
+  "rounded-xl border border-amber-400/15 bg-[#2A2720] px-4 py-3 text-left text-sm font-medium leading-relaxed text-amber-100/90"
+
+const infoPanelClassName =
+  "rounded-2xl border border-[#DFC58A]/15 bg-[#252525] p-4 text-sm text-[#F5F5F5]"
+
+const overlayBadgeClassName =
+  "absolute left-2 top-2 rounded-full bg-[#1B1B1B]/80 px-3 py-1 text-xs font-semibold text-[#F5F5F5]"
+
+const overlayActionClassName =
+  "absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-[#1B1B1B]/80 text-sm font-bold text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
+
 function getCoverImageUrl(images: GalleryImage[]): string | undefined {
   return images.find((image) => image.is_cover)?.url ?? images[0]?.url
 }
@@ -51,8 +93,21 @@ function normalizeDescription(description: string): string {
   return "Rental property available. Contact the realtor for more details."
 }
 
+function CreateWizardSkeleton() {
+  return (
+    <div role="status" aria-live="polite" className={wizardColumnClassName}>
+      <span className="sr-only">Loading create listing wizard</span>
+      <div className="h-28 animate-pulse rounded-[24px] bg-white/10 motion-reduce:animate-none md:h-24" />
+      <div className="h-12 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
+      <div className="h-72 animate-pulse rounded-[24px] bg-white/10 motion-reduce:animate-none" />
+    </div>
+  )
+}
+
 export default function RealtorCreatePropertyPage() {
   const router = useRouter()
+  const photoInputId = useId()
+  const photoInputRef = useRef<HTMLInputElement>(null)
 
   const [isCheckingProfile, setIsCheckingProfile] = useState(true)
   const [step, setStep] = useState<WizardStep>("details")
@@ -60,6 +115,8 @@ export default function RealtorCreatePropertyPage() {
   const [isUploadingPhotos, setIsUploadingPhotos] = useState(false)
   const [publishWarning, setPublishWarning] = useState("")
   const [createdPropertyId, setCreatedPropertyId] = useState<number | null>(null)
+  const [uploadError, setUploadError] = useState("")
+  const [publishError, setPublishError] = useState("")
 
   const [formData, setFormData] = useState(EMPTY_FORM)
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
@@ -115,6 +172,7 @@ export default function RealtorCreatePropertyPage() {
     }
 
     try {
+      setUploadError("")
       setIsUploadingPhotos(true)
 
       for (const file of files) {
@@ -131,7 +189,7 @@ export default function RealtorCreatePropertyPage() {
       }
     } catch (error) {
       console.error(error)
-      alert("Failed to upload images")
+      setUploadError("Failed to upload images")
     } finally {
       setIsUploadingPhotos(false)
       event.target.value = ""
@@ -165,6 +223,8 @@ export default function RealtorCreatePropertyPage() {
     setGalleryImages([])
     setPublishWarning("")
     setCreatedPropertyId(null)
+    setUploadError("")
+    setPublishError("")
   }
 
   async function handlePublish() {
@@ -173,6 +233,7 @@ export default function RealtorCreatePropertyPage() {
     }
 
     try {
+      setPublishError("")
       setIsPublishing(true)
       setPublishWarning("")
 
@@ -212,7 +273,7 @@ export default function RealtorCreatePropertyPage() {
       setStep("success")
     } catch (error) {
       console.error(error)
-      alert("Failed to publish listing")
+      setPublishError("Failed to publish listing")
     } finally {
       setIsPublishing(false)
     }
@@ -221,11 +282,9 @@ export default function RealtorCreatePropertyPage() {
   if (isCheckingProfile) {
     return (
       <RealtorRoute>
-        <main className="min-h-screen bg-zinc-100 px-4 pb-24 pt-6">
-          <div className="mx-auto max-w-md space-y-4">
-            <div className="h-8 w-48 animate-pulse rounded-2xl bg-zinc-200" />
-            <div className="h-40 animate-pulse rounded-3xl bg-zinc-200" />
-            <div className="h-14 animate-pulse rounded-2xl bg-zinc-200" />
+        <main className={shellClassName}>
+          <div className={containerClassName}>
+            <CreateWizardSkeleton />
           </div>
         </main>
       </RealtorRoute>
@@ -234,139 +293,239 @@ export default function RealtorCreatePropertyPage() {
 
   return (
     <RealtorRoute>
-      <main className="min-h-screen bg-zinc-100 px-4 pb-24 pt-6">
-        <div className="mx-auto max-w-md">
-          <header className="mb-6">
-            <Link
-              href="/realtor"
-              className="text-sm font-semibold text-blue-700"
-            >
-              ← Back to workspace
-            </Link>
+      <main className={shellClassName}>
+        <div className={containerClassName}>
+          <header className={cardClassName}>
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+              <div className="min-w-0">
+                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#B8B8B8]">
+                  Create listing
+                </p>
+                <h1 className="mt-2 text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
+                  Add Property
+                </h1>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#B8B8B8]">
+                  Create a listing, upload photos, and submit for admin review.
+                  Contact details are taken from your realtor profile.
+                </p>
+              </div>
 
-            <p className="mt-4 text-sm font-semibold text-blue-700">
-              Publish Listing
-            </p>
-
-            <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-zinc-900">
-              Add Property
-            </h1>
-
-            <p className="mt-2 text-sm text-zinc-500">
-              Create a listing, upload photos, and submit for admin review.
-            </p>
+              <Link href="/realtor" className={`${secondaryLinkClassName} md:shrink-0`}>
+                Back to dashboard
+              </Link>
+            </div>
           </header>
 
-          {step !== "success" && (
-            <div className="mb-6 flex gap-2">
-              {WIZARD_STEPS.map((wizardStep) => {
-                const isActive = step === wizardStep.id
-                const isPast =
-                  WIZARD_STEPS.findIndex((item) => item.id === step) >
-                  WIZARD_STEPS.findIndex((item) => item.id === wizardStep.id)
+          <div className={wizardColumnClassName}>
+            {step !== "success" && (
+              <nav aria-label="Listing creation steps">
+                <ol className="flex gap-2">
+                  {WIZARD_STEPS.map((wizardStep) => {
+                    const isActive = step === wizardStep.id
+                    const isPast =
+                      WIZARD_STEPS.findIndex((item) => item.id === step) >
+                      WIZARD_STEPS.findIndex((item) => item.id === wizardStep.id)
 
-                return (
-                  <div
-                    key={wizardStep.id}
-                    className={`flex-1 rounded-2xl px-3 py-2 text-center text-xs font-bold ${
-                      isActive
-                        ? "bg-blue-700 text-white"
-                        : isPast
-                          ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
-                          : "bg-white text-zinc-400 ring-1 ring-zinc-200"
-                    }`}
-                  >
-                    {wizardStep.label}
+                    return (
+                      <li key={wizardStep.id} className="flex-1">
+                        <div
+                          aria-current={isActive ? "step" : undefined}
+                          className={`rounded-2xl px-3 py-2.5 text-center text-xs font-bold ${
+                            isActive
+                              ? "border border-[#DFC58A]/25 bg-[#252525] text-[#DFC58A]"
+                              : isPast
+                                ? "border border-emerald-400/15 bg-[#252525] text-emerald-200/90"
+                                : "border border-white/8 bg-[#252525] text-[#B8B8B8]"
+                          }`}
+                        >
+                          {wizardStep.label}
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ol>
+              </nav>
+            )}
+
+            {step === "details" && (
+              <section aria-labelledby="create-listing-details-heading" className={cardClassName}>
+                <h2
+                  id="create-listing-details-heading"
+                  className="text-sm font-semibold text-[#F5F5F5]"
+                >
+                  Property details
+                </h2>
+                <p className="mt-1 text-xs leading-relaxed text-[#B8B8B8]">
+                  Required fields must be completed before you upload photos.
+                </p>
+
+                <form className="mt-6 space-y-5" onSubmit={(event) => event.preventDefault()}>
+                  <div>
+                    <label htmlFor="create-listing-title" className={labelClassName}>
+                      Title
+                    </label>
+                    <input
+                      id="create-listing-title"
+                      type="text"
+                      name="title"
+                      autoComplete="off"
+                      required
+                      value={formData.title}
+                      onChange={handleChange}
+                      aria-invalid={formData.title.trim().length === 0}
+                      className={inputClassName}
+                    />
                   </div>
-                )
-              })}
-            </div>
-          )}
 
-          {step === "details" && (
-            <section className="space-y-4">
-              <input
-                type="text"
-                name="title"
-                placeholder="Title *"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-900 outline-none"
-              />
+                  <div>
+                    <label htmlFor="create-listing-description" className={labelClassName}>
+                      Description
+                    </label>
+                    <textarea
+                      id="create-listing-description"
+                      name="description"
+                      rows={4}
+                      autoComplete="off"
+                      value={formData.description}
+                      onChange={handleChange}
+                      className={`${inputClassName} resize-y`}
+                    />
+                    <p
+                      id="create-listing-description-help"
+                      className="mt-2 text-xs leading-relaxed text-[#B8B8B8]"
+                    >
+                      Recommended. A default description is used if left empty.
+                    </p>
+                  </div>
 
-              <textarea
-                name="description"
-                placeholder="Description (recommended)"
-                value={formData.description}
-                onChange={handleChange}
-                rows={4}
-                className="w-full rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-900 outline-none"
-              />
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="create-listing-price" className={labelClassName}>
+                        Price (€)
+                      </label>
+                      <input
+                        id="create-listing-price"
+                        type="number"
+                        name="price"
+                        min={1}
+                        inputMode="numeric"
+                        autoComplete="off"
+                        required
+                        value={formData.price}
+                        onChange={handleChange}
+                        aria-invalid={!(Number(formData.price) > 0)}
+                        className={inputClassName}
+                      />
+                    </div>
 
-              <input
-                type="number"
-                name="price"
-                placeholder="Price (€) *"
-                value={formData.price}
-                onChange={handleChange}
-                className="w-full rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-900 outline-none"
-              />
+                    <div>
+                      <label htmlFor="create-listing-rooms" className={labelClassName}>
+                        Rooms
+                      </label>
+                      <input
+                        id="create-listing-rooms"
+                        type="number"
+                        name="rooms"
+                        min={1}
+                        inputMode="numeric"
+                        autoComplete="off"
+                        required
+                        value={formData.rooms}
+                        onChange={handleChange}
+                        aria-invalid={!(Number(formData.rooms) > 0)}
+                        className={inputClassName}
+                      />
+                    </div>
+                  </div>
 
-              <input
-                type="text"
-                name="city"
-                placeholder="City *"
-                value={formData.city}
-                onChange={handleChange}
-                className="w-full rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-900 outline-none"
-              />
+                  <div>
+                    <label htmlFor="create-listing-city" className={labelClassName}>
+                      City
+                    </label>
+                    <input
+                      id="create-listing-city"
+                      type="text"
+                      name="city"
+                      autoComplete="address-level2"
+                      required
+                      value={formData.city}
+                      onChange={handleChange}
+                      aria-invalid={formData.city.trim().length === 0}
+                      className={inputClassName}
+                    />
+                  </div>
 
-              <input
-                type="number"
-                name="rooms"
-                placeholder="Rooms *"
-                value={formData.rooms}
-                onChange={handleChange}
-                className="w-full rounded-2xl border border-zinc-200 bg-white p-4 text-zinc-900 outline-none"
-              />
+                  <button
+                    type="button"
+                    disabled={!isDetailsValid}
+                    onClick={() => setStep("photos")}
+                    className={primaryButtonClassName}
+                  >
+                    Continue to Photos
+                  </button>
+                </form>
+              </section>
+            )}
 
-              <button
-                type="button"
-                disabled={!isDetailsValid}
-                onClick={() => setStep("photos")}
-                className="w-full rounded-2xl bg-blue-700 p-4 font-semibold text-white transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
-              >
-                Continue to Photos
-              </button>
-            </section>
-          )}
-
-          {step === "photos" && (
-            <section className="space-y-4">
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-zinc-900">
+            {step === "photos" && (
+              <section aria-labelledby="create-listing-photos-heading" className={cardClassName}>
+                <h2
+                  id="create-listing-photos-heading"
+                  className="text-sm font-semibold text-[#F5F5F5]"
+                >
                   Property photos
-                </label>
+                </h2>
+                <p className="mt-1 text-xs leading-relaxed text-[#B8B8B8]">
+                  Upload at least one photo before previewing your listing.
+                </p>
 
-                <label className="flex min-h-40 w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-3xl border border-dashed border-zinc-300 bg-white text-zinc-400 transition-all duration-200 active:scale-[0.98]">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
+                {uploadError && (
+                  <p role="alert" aria-live="assertive" className={`mt-4 ${errorAlertClassName}`}>
+                    {uploadError}
+                  </p>
+                )}
 
-                  {galleryImages.length > 0 ? (
-                    <div className="grid w-full grid-cols-2 gap-3 p-3">
+                <input
+                  ref={photoInputRef}
+                  id={photoInputId}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageUpload}
+                  className="sr-only"
+                />
+
+                {galleryImages.length === 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => photoInputRef.current?.click()}
+                    disabled={isUploadingPhotos}
+                    aria-controls={photoInputId}
+                    aria-busy={isUploadingPhotos}
+                    className="mt-6 flex min-h-40 w-full cursor-pointer flex-col items-center justify-center rounded-[24px] border border-dashed border-white/15 bg-[#252525] text-[#B8B8B8] transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-60"
+                  >
+                    <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-[#2D2D2D] text-[#DFC58A]">
+                      {isUploadingPhotos ? (
+                        <span className="h-6 w-6 animate-spin rounded-full border-2 border-[#DFC58A] border-t-transparent motion-reduce:animate-none" />
+                      ) : (
+                        <Upload className="h-7 w-7" aria-hidden="true" />
+                      )}
+                    </span>
+                    <span className="text-sm font-semibold text-[#F5F5F5]">
+                      {isUploadingPhotos ? "Uploading..." : "Add photos"}
+                    </span>
+                  </button>
+                ) : (
+                  <div className="mt-6 space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
                       {galleryImages.map((image, index) => (
                         <div
                           key={`${image.url}-${index}`}
-                          className="relative h-32 overflow-hidden rounded-2xl border border-zinc-200"
+                          className="relative h-32 overflow-hidden rounded-2xl border border-white/8 bg-[#252525]"
                         >
                           <Image
                             src={getImageUrl(image.url) || "/placeholder.jpg"}
-                            alt={`Preview ${index + 1}`}
+                            alt={`Uploaded photo ${index + 1}`}
                             fill
                             unoptimized
                             sizes="(max-width: 768px) 50vw, 200px"
@@ -374,201 +533,215 @@ export default function RealtorCreatePropertyPage() {
                           />
 
                           {image.is_cover && (
-                            <div className="absolute left-2 top-2 rounded-full bg-black/80 px-3 py-1 text-xs font-semibold text-white">
-                              Cover
-                            </div>
+                            <div className={overlayBadgeClassName}>Cover</div>
                           )}
 
                           <button
                             type="button"
-                            onClick={(clickEvent) => {
-                              clickEvent.preventDefault()
-                              handleSetCover(index)
-                            }}
-                            className="absolute bottom-2 left-2 rounded-full bg-white/90 px-2 py-1 text-[10px] font-bold text-zinc-800"
+                            onClick={() => handleSetCover(index)}
+                            className="absolute bottom-2 left-2 min-h-8 rounded-full bg-[#1B1B1B]/80 px-2.5 py-1 text-[10px] font-bold text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
                           >
                             Set cover
                           </button>
 
                           <button
                             type="button"
-                            onClick={(clickEvent) => {
-                              clickEvent.preventDefault()
-                              handleRemoveGalleryImage(index)
-                            }}
-                            className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 text-sm font-bold text-white"
+                            onClick={() => handleRemoveGalleryImage(index)}
+                            aria-label={`Remove photo ${index + 1}`}
+                            className={overlayActionClassName}
                           >
                             ×
                           </button>
                         </div>
                       ))}
                     </div>
-                  ) : (
-                    <>
-                      <span className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-zinc-100 text-4xl text-zinc-900">
-                        +
-                      </span>
-                      <span className="text-sm">
-                        {isUploadingPhotos ? "Uploading..." : "Add photos"}
-                      </span>
-                    </>
-                  )}
-                </label>
-              </div>
 
-              <p className="text-xs text-zinc-500">
-                Tap &quot;Set cover&quot; to choose the main photo. Photos are
-                attached to the listing after you publish.
-              </p>
-
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setStep("details")}
-                  className="flex-1 rounded-2xl border border-zinc-200 bg-white p-4 font-semibold text-zinc-700"
-                >
-                  Back
-                </button>
-
-                <button
-                  type="button"
-                  disabled={!canProceedToPreview || isUploadingPhotos}
-                  onClick={() => setStep("preview")}
-                  className="flex-1 rounded-2xl bg-blue-700 p-4 font-semibold text-white disabled:opacity-50"
-                >
-                  Preview
-                </button>
-              </div>
-            </section>
-          )}
-
-          {step === "preview" && (
-            <section className="space-y-4">
-              <article className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
-                <div className="relative h-48 bg-zinc-100">
-                  {coverImageUrl ? (
-                    <Image
-                      src={getImageUrl(coverImageUrl) || "/placeholder.jpg"}
-                      alt={formData.title}
-                      fill
-                      unoptimized
-                      className="object-cover"
-                      sizes="(max-width: 448px) 100vw, 448px"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-sm font-semibold text-zinc-400">
-                      No cover photo
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-4">
-                  <h2 className="text-xl font-extrabold text-zinc-900">
-                    {formData.title}
-                  </h2>
-
-                  <p className="mt-2 text-2xl font-extrabold text-zinc-900">
-                    €{Number(formData.price) || 0}
-                  </p>
-
-                  <div className="mt-3 flex flex-wrap gap-2 text-sm text-zinc-600">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-zinc-100 px-3 py-1">
-                      <MapPin className="h-3.5 w-3.5" />
-                      {formData.city}
-                    </span>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-zinc-100 px-3 py-1">
-                      <BedDouble className="h-3.5 w-3.5" />
-                      {formData.rooms} rooms
-                    </span>
+                    <button
+                      type="button"
+                      onClick={() => photoInputRef.current?.click()}
+                      disabled={isUploadingPhotos}
+                      aria-controls={photoInputId}
+                      className={secondaryButtonClassName}
+                    >
+                      {isUploadingPhotos ? "Uploading..." : "Add more photos"}
+                    </button>
                   </div>
-
-                  <p className="mt-4 text-sm leading-6 text-zinc-600">
-                    {formData.description.trim() ||
-                      "Description will use a default placeholder if left empty."}
-                  </p>
-                </div>
-              </article>
-
-              <div className="rounded-2xl border border-blue-100 bg-blue-50 p-4 text-sm text-blue-900">
-                <p className="font-semibold">Before you publish</p>
-                <ul className="mt-2 list-disc space-y-1 pl-4 text-blue-800">
-                  <li>
-                    Contact information will be taken from your realtor profile.
-                  </li>
-                  <li>
-                    After publishing, the listing will be submitted for review.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setStep("photos")}
-                  className="flex-1 rounded-2xl border border-zinc-200 bg-white p-4 font-semibold text-zinc-700"
-                >
-                  Back
-                </button>
-
-                <button
-                  type="button"
-                  disabled={isPublishing}
-                  onClick={handlePublish}
-                  className="flex-1 rounded-2xl bg-blue-700 p-4 font-semibold text-white disabled:opacity-50"
-                >
-                  {isPublishing ? "Publishing..." : "Publish"}
-                </button>
-              </div>
-            </section>
-          )}
-
-          {step === "success" && (
-            <section className="rounded-3xl border border-emerald-200 bg-white p-6 text-center shadow-sm">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl">
-                ✓
-              </div>
-
-              <h2 className="mt-4 text-2xl font-extrabold text-zinc-900">
-                Listing submitted
-              </h2>
-
-              <p className="mt-2 text-sm text-zinc-500">
-                After review, it will appear in the catalog.
-              </p>
-
-              {publishWarning && (
-                <p className="mt-4 rounded-2xl bg-amber-50 p-3 text-left text-sm text-amber-800 ring-1 ring-amber-200">
-                  {publishWarning}
-                </p>
-              )}
-
-              <div className="mt-6 space-y-3">
-                <Link
-                  href="/realtor"
-                  className="flex h-12 w-full items-center justify-center rounded-2xl bg-blue-700 text-sm font-bold text-white"
-                >
-                  Back to dashboard
-                </Link>
-
-                {createdPropertyId && publishWarning && (
-                  <Link
-                    href={`/realtor/properties/${createdPropertyId}/edit`}
-                    className="flex h-12 w-full items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-50 text-sm font-bold text-zinc-700"
-                  >
-                    Finish photos on edit page
-                  </Link>
                 )}
 
-                <button
-                  type="button"
-                  onClick={resetWizard}
-                  className="flex h-12 w-full items-center justify-center rounded-2xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700"
+                <p className="mt-4 text-xs leading-relaxed text-[#B8B8B8]">
+                  Tap &quot;Set cover&quot; to choose the main photo. Photos are
+                  attached to the listing after you publish.
+                </p>
+
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <button
+                    type="button"
+                    onClick={() => setStep("details")}
+                    className={secondaryButtonClassName}
+                  >
+                    Back
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={!canProceedToPreview || isUploadingPhotos}
+                    onClick={() => setStep("preview")}
+                    className={primaryButtonClassName}
+                  >
+                    Preview
+                  </button>
+                </div>
+              </section>
+            )}
+
+            {step === "preview" && (
+              <section aria-labelledby="create-listing-preview-heading" className="space-y-4">
+                <h2 id="create-listing-preview-heading" className="sr-only">
+                  Listing preview
+                </h2>
+
+                {publishError && (
+                  <p role="alert" aria-live="assertive" className={errorAlertClassName}>
+                    {publishError}
+                  </p>
+                )}
+
+                <article className={`overflow-hidden ${cardClassName} p-0`}>
+                  <div className="relative h-48 bg-[#252525]">
+                    {coverImageUrl ? (
+                      <Image
+                        src={getImageUrl(coverImageUrl) || "/placeholder.jpg"}
+                        alt={formData.title}
+                        fill
+                        unoptimized
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, 576px"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-sm font-semibold text-[#B8B8B8]">
+                        No cover photo
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-5">
+                    <h3 className="text-xl font-semibold text-[#F5F5F5]">
+                      {formData.title}
+                    </h3>
+
+                    <p className="mt-2 text-2xl font-semibold text-[#DFC58A]">
+                      €{Number(formData.price) || 0}
+                    </p>
+
+                    <div className="mt-3 flex flex-wrap gap-2 text-sm text-[#B8B8B8]">
+                      <span className={`inline-flex items-center gap-1 ${surfaceClassName}`}>
+                        <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                        {formData.city}
+                      </span>
+                      <span className={`inline-flex items-center gap-1 ${surfaceClassName}`}>
+                        <BedDouble className="h-3.5 w-3.5" aria-hidden="true" />
+                        {formData.rooms} rooms
+                      </span>
+                    </div>
+
+                    <p className="mt-4 text-sm leading-6 text-[#B8B8B8]">
+                      {formData.description.trim() ||
+                        "Description will use a default placeholder if left empty."}
+                    </p>
+                  </div>
+                </article>
+
+                <div className={infoPanelClassName}>
+                  <p className="font-semibold text-[#F5F5F5]">Before you publish</p>
+                  <ul className="mt-2 list-disc space-y-1 pl-4 text-[#B8B8B8]">
+                    <li>
+                      Contact information will be taken from your realtor profile.
+                    </li>
+                    <li>
+                      After publishing, the listing will be submitted for review.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <button
+                    type="button"
+                    onClick={() => setStep("photos")}
+                    className={secondaryButtonClassName}
+                  >
+                    Back
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={isPublishing}
+                    aria-busy={isPublishing}
+                    onClick={handlePublish}
+                    className={primaryButtonClassName}
+                  >
+                    {isPublishing ? "Publishing..." : "Publish"}
+                  </button>
+                </div>
+              </section>
+            )}
+
+            {step === "success" && (
+              <section
+                aria-labelledby="create-listing-success-heading"
+                className={`${cardClassName} text-center`}
+                role="status"
+                aria-live="polite"
+              >
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#DFC58A]/25 bg-[#252525] text-2xl text-[#DFC58A]">
+                  ✓
+                </div>
+
+                <h2
+                  id="create-listing-success-heading"
+                  className="mt-4 text-2xl font-semibold text-[#F5F5F5]"
                 >
-                  Add another property
-                </button>
-              </div>
-            </section>
-          )}
+                  Listing submitted
+                </h2>
+
+                <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+                  After review, it will appear in the catalog.
+                </p>
+
+                {publishWarning && (
+                  <p
+                    role="alert"
+                    aria-live="assertive"
+                    className={`mt-4 ${warningAlertClassName}`}
+                  >
+                    {publishWarning}
+                  </p>
+                )}
+
+                <div className="mt-6 space-y-3">
+                  <Link href="/realtor" className={primaryButtonClassName}>
+                    Back to dashboard
+                  </Link>
+
+                  {createdPropertyId && publishWarning && (
+                    <Link
+                      href={`/realtor/properties/${createdPropertyId}/edit`}
+                      className={secondaryButtonClassName}
+                    >
+                      Finish photos on edit page
+                    </Link>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={resetWizard}
+                    className={secondaryButtonClassName}
+                  >
+                    Add another property
+                  </button>
+                </div>
+              </section>
+            )}
+          </div>
         </div>
       </main>
     </RealtorRoute>
