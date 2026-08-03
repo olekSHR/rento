@@ -4,13 +4,14 @@ import { useState } from "react"
 
 import ConsumerShell from "./ConsumerShell"
 import Modal from "./Modal"
-import FiltersBar from "./FiltersBar"
+import FiltersBar, { type FilterValues } from "./FiltersBar"
 
 type Props = {
   children: React.ReactNode
+  activeFilters?: FilterValues
 }
 
-export default function HomePageContent({ children }: Props) {
+export default function HomePageContent({ children, activeFilters }: Props) {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)
 
   return (
@@ -18,12 +19,19 @@ export default function HomePageContent({ children }: Props) {
       <Modal
         isOpen={isFiltersOpen}
         onClose={() => setIsFiltersOpen(false)}
+        labelledBy="home-filters-modal-title"
       >
-        <h2 className="mb-5 text-2xl font-bold">
+        <h2
+          id="home-filters-modal-title"
+          className="mb-5 pr-12 text-xl font-semibold tracking-tight text-[#F5F5F5]"
+        >
           Filters
         </h2>
 
-        <FiltersBar onSearch={() => setIsFiltersOpen(false)} />
+        <FiltersBar
+          initialValues={activeFilters}
+          onSearch={() => setIsFiltersOpen(false)}
+        />
       </Modal>
 
       <ConsumerShell

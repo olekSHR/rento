@@ -1,12 +1,16 @@
 export default function Loading() {
   return (
     <main
+      role="status"
+      aria-live="polite"
       className="
         min-h-screen
         bg-zinc-100
         pb-24
       "
     >
+      <span className="sr-only">Loading page</span>
+
       <header
         className="
           sticky
@@ -20,6 +24,7 @@ export default function Loading() {
       >
         <div className="max-w-md mx-auto px-4 h-16 flex items-center">
           <div
+            aria-hidden="true"
             className="
               h-8
               w-40
@@ -42,6 +47,7 @@ export default function Loading() {
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
+            aria-hidden="true"
             className="
               bg-white
               rounded-2xl
@@ -113,6 +119,7 @@ export default function Loading() {
       </div>
 
       <div
+        aria-hidden="true"
         className="
           fixed
           bottom-24

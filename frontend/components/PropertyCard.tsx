@@ -92,15 +92,18 @@ export default function PropertyCard({
   const showRealtorRow = Boolean(realtorAvatarUrl || contact_name?.trim())
 
   return (
-    <article className="relative mx-auto mb-5 w-full max-w-md overflow-hidden rounded-[28px] border border-zinc-200/80 bg-white shadow-[0_14px_35px_rgba(15,23,42,0.08)] transition-all duration-300 active:scale-[0.985] md:max-w-lg">
+    <article className="relative mx-auto mb-5 w-full max-w-md overflow-hidden rounded-[26px] border border-white/8 bg-[#2D2D2D] shadow-[0_10px_30px_rgba(0,0,0,0.22)] transition-[transform,box-shadow] duration-300 active:scale-[0.99] md:max-w-lg">
       <ShareButton
         title={title}
         url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://rentonow.ro"}/properties/${id}`}
       />
       <FavoriteButton propertyId={id} />
 
-      <Link href={`/properties/${id}`} className="block">
-        <div className="relative h-56 w-full overflow-hidden bg-zinc-200">
+      <Link
+        href={`/properties/${id}`}
+        className="block rounded-[26px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+      >
+        <div className="relative h-60 w-full overflow-hidden bg-[#252525]">
           {coverImage ? (
             <Image
               src={getImageUrl(coverImage) || ""}
@@ -108,61 +111,66 @@ export default function PropertyCard({
               fill
               unoptimized
               sizes="(max-width: 768px) 100vw, 512px"
-              className="object-cover transition-transform duration-500 hover:scale-105"
+              className="object-cover transition-transform duration-500 hover:scale-[1.02]"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-zinc-500">
+            <div className="flex h-full w-full items-center justify-center text-sm font-medium text-[#B8B8B8]">
               No Image
             </div>
           )}
 
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/55 to-transparent" />
-        </div>
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#1B1B1B]/70 via-[#1B1B1B]/20 to-transparent" />
 
-        <div className="p-4 pb-0">
           <div
             className={`
-              mb-3
+              absolute
+              bottom-3
+              left-3
+              z-[1]
               inline-flex
+              max-w-[calc(100%-1.5rem)]
               items-center
-              gap-1.5
+              gap-1
               rounded-full
-              px-3
-              py-1.5
-              text-xs
-              font-semibold
+              px-2.5
+              py-1
+              text-[11px]
+              font-medium
+              backdrop-blur-sm
               ${
                 isVerified
-                  ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100"
-                  : "bg-amber-50 text-amber-700 ring-1 ring-amber-100"
+                  ? "bg-[#252525]/90 text-[#DFC58A] ring-1 ring-white/15"
+                  : "bg-[#252525]/90 text-[#F5F5F5] ring-1 ring-white/15"
               }
             `}
           >
-            <BadgeCheck className="h-4 w-4" />
-            {verificationLabel}
+            <BadgeCheck className="h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">{verificationLabel}</span>
           </div>
+        </div>
 
-          <h2 className="line-clamp-1 text-xl font-bold tracking-tight text-zinc-950">
+        <div className="px-5 pb-5 pt-4">
+          <h2 className="line-clamp-2 text-lg font-semibold leading-snug tracking-tight text-[#F5F5F5]">
             {title}
           </h2>
 
-          <div className="mt-2 flex items-center gap-1.5 text-sm font-medium text-zinc-500">
-            <MapPin className="h-4 w-4" />
-            <span>{city || "Unknown city"}</span>
+          <div className="mt-2 flex items-center gap-1.5 text-sm text-[#B8B8B8]">
+            <MapPin className="h-4 w-4 shrink-0" />
+            <span className="truncate">{city || "Unknown city"}</span>
           </div>
 
-          <div className="mt-5 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
+          <div className="mt-4 flex items-end justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#B8B8B8]">
                 Monthly rent
               </p>
-              <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-950">
+              <p className="mt-1 text-[1.625rem] font-bold leading-none tracking-tight text-[#DFC58A]">
                 €{price || 0}
               </p>
             </div>
 
-            <div className="flex items-center gap-2 rounded-2xl bg-zinc-100 px-3 py-2 text-sm font-semibold text-zinc-700">
-              <BedDouble className="h-4 w-4" />
+            <div className="flex shrink-0 items-center gap-2 rounded-xl bg-[#252525] px-3 py-2 text-sm font-medium text-[#F5F5F5] ring-1 ring-white/10">
+              <BedDouble className="h-4 w-4 text-[#B8B8B8]" />
               <span>{rooms || 0} rooms</span>
             </div>
           </div>
@@ -170,12 +178,12 @@ export default function PropertyCard({
       </Link>
 
       {showRealtorRow && (
-        <div className="flex items-center gap-2.5 border-t border-zinc-100 px-4 pb-4 pt-4">
+        <div className="flex items-center gap-3 border-t border-white/8 px-5 pb-5 pt-4">
           {realtorAvatarUrl ? (
             <RealtorAvatarEnlargeTrigger
               imageUrl={realtorAvatarUrl}
               alt={contact_name || "Realtor"}
-              className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-blue-700 ring-1 ring-zinc-200 active:scale-95"
+              className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-[#252525] ring-1 ring-[#DFC58A]/30 active:scale-95"
             >
               <Image
                 src={realtorAvatarUrl}
@@ -187,17 +195,17 @@ export default function PropertyCard({
               />
             </RealtorAvatarEnlargeTrigger>
           ) : (
-            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-700 ring-1 ring-zinc-200">
-              <span className="text-xs font-bold text-white">
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#252525] ring-1 ring-[#DFC58A]/30">
+              <span className="text-xs font-semibold text-[#DFC58A]">
                 {getContactInitials(contact_name)}
               </span>
             </div>
           )}
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-zinc-800">
+            <p className="truncate text-sm font-medium text-[#F5F5F5]">
               {contact_name || "Realtor"}
             </p>
-            <p className="text-xs text-zinc-500">Listing agent</p>
+            <p className="text-xs text-[#B8B8B8]">Listing agent</p>
           </div>
         </div>
       )}

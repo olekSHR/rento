@@ -12,15 +12,26 @@ export default function HeaderAuthButton() {
       <Link
         href="/login"
         className="
+          inline-flex
+          h-11
+          shrink-0
+          items-center
+          justify-center
           rounded-full
-          bg-blue-50
+          border
+          border-[#DFC58A]/45
+          bg-[#2D2D2D]
           px-4
-          py-2
           text-sm
-          font-semibold
-          text-blue-700
-          active:scale-95
+          font-medium
+          text-[#DFC58A]
           transition
+          active:scale-95
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-[#DFC58A]
+          focus-visible:ring-offset-2
+          focus-visible:ring-offset-[#252525]
         "
       >
         Login
@@ -33,15 +44,26 @@ export default function HeaderAuthButton() {
       type="button"
       onClick={logout}
       className="
+        inline-flex
+        h-11
+        shrink-0
+        items-center
+        justify-center
         rounded-full
-        bg-zinc-900
+        border
+        border-white/12
+        bg-[#2D2D2D]
         px-4
-        py-2
         text-sm
-        font-semibold
-        text-white
-        active:scale-95
+        font-medium
+        text-[#F5F5F5]
         transition
+        active:scale-95
+        focus-visible:outline-none
+        focus-visible:ring-2
+        focus-visible:ring-[#DFC58A]
+        focus-visible:ring-offset-2
+        focus-visible:ring-offset-[#252525]
       "
     >
       Logout
