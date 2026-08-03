@@ -5,14 +5,19 @@ import type { ReactNode } from "react"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 
+const DEFAULT_DRAG_HANDLE_CLASSNAME =
+  "absolute left-2 top-2 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white shadow backdrop-blur touch-none active:scale-95"
+
 type SortableGalleryItemProps = {
   id: number
   children: ReactNode
+  dragHandleClassName?: string
 }
 
 export default function SortableGalleryItem({
   id,
   children,
+  dragHandleClassName = DEFAULT_DRAG_HANDLE_CLASSNAME,
 }: SortableGalleryItemProps) {
   const {
     attributes,
@@ -49,34 +54,17 @@ export default function SortableGalleryItem({
         type="button"
         {...attributes}
         {...listeners}
-        className="
-          absolute
-          left-2
-          top-2
-          z-20
-          flex
-          h-9
-          w-9
-          items-center
-          justify-center
-          rounded-full
-          bg-black/60
-          text-white
-          shadow
-          backdrop-blur
-          touch-none
-          active:scale-95
-        "
+        className={dragHandleClassName}
         aria-label="Drag image"
       >
         <span className="grid grid-cols-2 gap-0.5">
-  <span className="h-1 w-1 rounded-full bg-white" />
-  <span className="h-1 w-1 rounded-full bg-white" />
-  <span className="h-1 w-1 rounded-full bg-white" />
-  <span className="h-1 w-1 rounded-full bg-white" />
-  <span className="h-1 w-1 rounded-full bg-white" />
-  <span className="h-1 w-1 rounded-full bg-white" />
-</span>
+          <span className="h-1 w-1 rounded-full bg-white" />
+          <span className="h-1 w-1 rounded-full bg-white" />
+          <span className="h-1 w-1 rounded-full bg-white" />
+          <span className="h-1 w-1 rounded-full bg-white" />
+          <span className="h-1 w-1 rounded-full bg-white" />
+          <span className="h-1 w-1 rounded-full bg-white" />
+        </span>
       </button>
 
       {children}

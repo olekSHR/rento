@@ -1,7 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useId, useRef, useState } from "react"
+import { Upload } from "lucide-react"
 import {
   DndContext,
   DragOverlay,
@@ -33,13 +34,75 @@ type RealtorPropertyGalleryProps = {
   propertyId: number
 }
 
+const sectionClassName =
+  "scroll-mt-24 rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5 md:p-6"
+
+const uploadZoneClassName =
+  "mb-4 flex min-h-11 cursor-pointer flex-col items-center justify-center rounded-[24px] border border-dashed border-[#DFC58A]/25 bg-[#252525] px-4 py-8 text-center transition-transform active:scale-[0.99] focus-within:outline-none focus-within:ring-2 focus-within:ring-[#DFC58A] focus-within:ring-offset-2 focus-within:ring-offset-[#2D2D2D] disabled:cursor-not-allowed disabled:opacity-60"
+
+const errorAlertClassName =
+  "mb-4 rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
+
+const emptyStateClassName =
+  "rounded-2xl border border-white/8 bg-[#252525] p-4 text-center text-sm leading-relaxed text-[#B8B8B8]"
+
+const cardClassName =
+  "overflow-hidden rounded-2xl border border-white/8 bg-[#252525]"
+
+const coverBadgeClassName =
+  "absolute left-2 top-2 rounded-full border border-[#DFC58A]/25 bg-[#1B1B1B]/80 px-2.5 py-1 text-[10px] font-bold text-[#DFC58A]"
+
+const coverButtonClassName =
+  "inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-white/10 bg-[#2D2D2D] px-2 text-[11px] font-bold text-[#F5F5F5] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] disabled:cursor-not-allowed disabled:opacity-50"
+
+const mainPhotoClassName =
+  "inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-[#DFC58A]/25 bg-[#2A2820] px-2 text-[11px] font-bold text-[#DFC58A]"
+
+const removeButtonClassName =
+  "inline-flex min-h-11 items-center justify-center rounded-xl border border-red-400/20 bg-[#2A2222] px-3 text-[11px] font-bold text-red-100/90 transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] disabled:cursor-not-allowed disabled:opacity-50"
+
+const confirmPanelClassName =
+  "rounded-xl border border-amber-400/15 bg-[#2A2720] p-2 text-[11px] leading-relaxed text-amber-100/90"
+
+const confirmActionClassName =
+  "inline-flex min-h-11 flex-1 items-center justify-center rounded-xl bg-[#DFC58A] px-2 text-[11px] font-bold text-[#1B1B1B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
+
+const cancelActionClassName =
+  "inline-flex min-h-11 flex-1 items-center justify-center rounded-xl border border-white/10 bg-[#2D2D2D] px-2 text-[11px] font-bold text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
+
+const dragHandleClassName =
+  "absolute left-2 top-2 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#1B1B1B]/80 text-[#F5F5F5] shadow backdrop-blur touch-none active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
+
+const previewCloseClassName =
+  "absolute right-4 top-4 z-10 inline-flex min-h-11 items-center justify-center rounded-full border border-white/10 bg-[#1B1B1B]/80 px-4 text-sm font-semibold text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A]"
+
+function GallerySkeleton() {
+  return (
+    <div role="status" aria-live="polite" className="grid grid-cols-2 gap-3">
+      <span className="sr-only">Loading gallery images</span>
+      {Array.from({ length: 4 }).map((_, index) => (
+        <div
+          key={index}
+          className="h-36 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none"
+        />
+      ))}
+    </div>
+  )
+}
+
 export default function RealtorPropertyGallery({
   propertyId,
 }: RealtorPropertyGalleryProps) {
+  const uploadInputId = useId()
+  const previewCloseRef = useRef<HTMLButtonElement>(null)
+
   const [images, setImages] = useState<PropertyImage[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isUploading, setIsUploading] = useState(false)
   const [settingCoverId, setSettingCoverId] = useState<number | null>(null)
+  const [deletingImageId, setDeletingImageId] = useState<number | null>(null)
+  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null)
+  const [uploadError, setUploadError] = useState("")
   const [previewIndex, setPreviewIndex] = useState<number | null>(null)
   const [activeImageId, setActiveImageId] = useState<number | null>(null)
 
@@ -73,6 +136,26 @@ export default function RealtorPropertyGallery({
     loadImages()
   }, [refreshImages])
 
+  useEffect(() => {
+    if (previewIndex === null) {
+      return
+    }
+
+    previewCloseRef.current?.focus()
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setPreviewIndex(null)
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [previewIndex])
+
   async function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files || [])
     event.target.value = ""
@@ -82,6 +165,7 @@ export default function RealtorPropertyGallery({
     }
 
     try {
+      setUploadError("")
       setIsUploading(true)
 
       for (const file of files) {
@@ -92,7 +176,7 @@ export default function RealtorPropertyGallery({
       await refreshImages()
     } catch (error) {
       console.error("Failed to upload images", error)
-      alert("Failed to upload images")
+      setUploadError("Failed to upload images")
     } finally {
       setIsUploading(false)
     }
@@ -110,15 +194,24 @@ export default function RealtorPropertyGallery({
     }
   }
 
-  async function handleDelete(imageId: number) {
-    const confirmed = window.confirm("Remove this photo?")
-    if (!confirmed) return
+  function handleRemoveClick(imageId: number) {
+    setPendingDeleteId(imageId)
+  }
 
+  function handleCancelDelete() {
+    setPendingDeleteId(null)
+  }
+
+  async function handleConfirmDelete(imageId: number) {
     try {
+      setDeletingImageId(imageId)
       await deletePropertyImage(propertyId, imageId)
       await refreshImages()
+      setPendingDeleteId(null)
     } catch (error) {
       console.error("Failed to delete image", error)
+    } finally {
+      setDeletingImageId(null)
     }
   }
 
@@ -157,39 +250,53 @@ export default function RealtorPropertyGallery({
     previewIndex !== null ? images[previewIndex] : null
 
   return (
-    <section
-      id="gallery"
-      className="rounded-3xl border border-zinc-200 bg-white p-4 shadow-sm"
-    >
+    <section id="gallery" className={sectionClassName}>
       <div className="mb-4">
-        <h2 className="text-lg font-bold text-zinc-900">Gallery</h2>
-        <p className="mt-1 text-sm text-zinc-500">
+        <h2 className="text-sm font-semibold text-[#F5F5F5]">Gallery</h2>
+        <p className="mt-1 text-xs leading-relaxed text-[#B8B8B8]">
           Upload photos, set a cover image, and drag to reorder.
         </p>
       </div>
 
-      <label className="mb-4 flex min-h-[88px] cursor-pointer items-center justify-center rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 text-sm font-semibold text-zinc-500 active:scale-[0.99]">
+      {uploadError && (
+        <p role="alert" aria-live="assertive" className={errorAlertClassName}>
+          {uploadError}
+        </p>
+      )}
+
+      <label
+        htmlFor={uploadInputId}
+        aria-busy={isUploading}
+        className={uploadZoneClassName}
+      >
         <input
+          id={uploadInputId}
           type="file"
           accept="image/*"
           multiple
+          disabled={isUploading}
           onChange={handleUpload}
-          className="hidden"
+          className="sr-only"
         />
-        {isUploading ? "Uploading photos..." : "+ Upload photos"}
+        <span className="mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-[#DFC58A]/20 bg-[#2D2D2D] text-[#DFC58A]">
+          {isUploading ? (
+            <span className="h-6 w-6 animate-spin rounded-full border-2 border-[#DFC58A] border-t-transparent motion-reduce:animate-none" />
+          ) : (
+            <Upload className="h-6 w-6" aria-hidden="true" />
+          )}
+        </span>
+        <span className="text-sm font-semibold text-[#F5F5F5]">
+          {isUploading ? "Uploading photos..." : "Upload photos"}
+        </span>
+        <span className="mt-1 text-xs text-[#B8B8B8]">
+          JPEG, PNG, or WebP
+        </span>
       </label>
 
       {isLoading ? (
-        <div className="grid grid-cols-2 gap-3">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-36 animate-pulse rounded-2xl bg-zinc-200"
-            />
-          ))}
-        </div>
+        <GallerySkeleton />
       ) : images.length === 0 ? (
-        <p className="rounded-2xl bg-zinc-50 p-4 text-center text-sm text-zinc-500">
+        <p className={emptyStateClassName}>
           No photos yet. Upload at least one image for a stronger listing.
         </p>
       ) : (
@@ -209,50 +316,90 @@ export default function RealtorPropertyGallery({
           >
             <div className="grid grid-cols-2 gap-3">
               {images.map((image, index) => (
-                <SortableGalleryItem key={image.id} id={image.id}>
-                  <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+                <SortableGalleryItem
+                  key={image.id}
+                  id={image.id}
+                  dragHandleClassName={dragHandleClassName}
+                >
+                  <div className={cardClassName}>
                     <button
                       type="button"
                       onClick={() => setPreviewIndex(index)}
-                      className="relative block h-36 w-full"
+                      className="relative block h-36 w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#DFC58A]"
                     >
                       <Image
                         src={getImageUrl(image.url) || ""}
-                        alt="Property"
+                        alt={`Uploaded photo ${index + 1}`}
                         fill
                         unoptimized
                         className="object-cover"
                         sizes="(max-width: 448px) 50vw, 224px"
                       />
                       {image.is_cover && (
-                        <span className="absolute left-2 top-2 rounded-full bg-zinc-900 px-2 py-0.5 text-[10px] font-bold text-white">
-                          Cover
-                        </span>
+                        <span className={coverBadgeClassName}>Cover</span>
                       )}
                     </button>
 
-                    <div className="flex gap-2 p-2">
-                      {!image.is_cover ? (
-                        <button
-                          type="button"
-                          disabled={settingCoverId === image.id}
-                          onClick={() => handleSetCover(image.id)}
-                          className="flex-1 rounded-xl bg-zinc-100 py-2 text-[11px] font-bold text-zinc-700 disabled:opacity-50"
+                    <div className="space-y-2 p-2">
+                      {pendingDeleteId === image.id ? (
+                        <div
+                          role="alertdialog"
+                          aria-labelledby={`delete-photo-${image.id}-title`}
+                          className={confirmPanelClassName}
                         >
-                          {settingCoverId === image.id ? "..." : "Cover"}
-                        </button>
+                          <p
+                            id={`delete-photo-${image.id}-title`}
+                            className="mb-2 font-semibold"
+                          >
+                            Remove this photo?
+                          </p>
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              disabled={deletingImageId === image.id}
+                              onClick={() => handleConfirmDelete(image.id)}
+                              className={confirmActionClassName}
+                            >
+                              {deletingImageId === image.id
+                                ? "Removing..."
+                                : "Remove"}
+                            </button>
+                            <button
+                              type="button"
+                              disabled={deletingImageId === image.id}
+                              onClick={handleCancelDelete}
+                              className={cancelActionClassName}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
                       ) : (
-                        <span className="flex flex-1 items-center justify-center rounded-xl bg-emerald-50 py-2 text-[11px] font-bold text-emerald-700">
-                          Main photo
-                        </span>
+                        <div className="flex gap-2">
+                          {!image.is_cover ? (
+                            <button
+                              type="button"
+                              disabled={settingCoverId === image.id}
+                              aria-busy={settingCoverId === image.id}
+                              onClick={() => handleSetCover(image.id)}
+                              className={coverButtonClassName}
+                            >
+                              {settingCoverId === image.id ? "..." : "Cover"}
+                            </button>
+                          ) : (
+                            <span className={mainPhotoClassName}>
+                              Main photo
+                            </span>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveClick(image.id)}
+                            className={removeButtonClassName}
+                          >
+                            Remove
+                          </button>
+                        </div>
                       )}
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(image.id)}
-                        className="rounded-xl bg-red-50 px-3 py-2 text-[11px] font-bold text-red-600"
-                      >
-                        Remove
-                      </button>
                     </div>
                   </div>
                 </SortableGalleryItem>
@@ -262,7 +409,7 @@ export default function RealtorPropertyGallery({
 
           <DragOverlay>
             {activeImageId ? (
-              <div className="relative h-36 w-28 overflow-hidden rounded-2xl border border-zinc-200 shadow-xl">
+              <div className="relative h-36 w-28 overflow-hidden rounded-2xl border border-white/10 bg-[#252525] shadow-xl">
                 <Image
                   src={
                     getImageUrl(
@@ -270,7 +417,7 @@ export default function RealtorPropertyGallery({
                         ""
                     ) || ""
                   }
-                  alt="Dragging"
+                  alt="Dragging property photo"
                   fill
                   unoptimized
                   className="object-cover"
@@ -282,11 +429,17 @@ export default function RealtorPropertyGallery({
       )}
 
       {previewImage && previewIndex !== null && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photo preview"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-[#1B1B1B]/90 p-4"
+        >
           <button
+            ref={previewCloseRef}
             type="button"
             onClick={() => setPreviewIndex(null)}
-            className="absolute right-4 top-4 rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-white"
+            className={previewCloseClassName}
           >
             Close
           </button>
@@ -294,7 +447,7 @@ export default function RealtorPropertyGallery({
           <div className="relative h-[70vh] w-full max-w-md">
             <Image
               src={getImageUrl(previewImage.url) || ""}
-              alt="Preview"
+              alt={`Preview photo ${previewIndex + 1}`}
               fill
               unoptimized
               className="object-contain"
@@ -302,7 +455,7 @@ export default function RealtorPropertyGallery({
             />
           </div>
 
-          <p className="absolute bottom-6 text-sm font-semibold text-white/80">
+          <p className="absolute bottom-6 text-sm font-semibold text-[#B8B8B8]">
             {previewIndex + 1} / {images.length}
           </p>
         </div>
