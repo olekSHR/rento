@@ -46,9 +46,11 @@ export default function BottomNav({ onOpenFilters }: BottomNavProps) {
     pathname === "/realtor" ||
     pathname.startsWith("/realtor/");
   const isProfileRoute = pathname === "/profile";
+  const isBecomeRealtorRoute = pathname === "/become-realtor";
   const isProfile = pathname === "/login" || isProfileRoute;
 
-  const isDarkNav = isHome || isFavorites || isProfileRoute;
+  const isDarkNav =
+    isHome || isFavorites || isProfileRoute || isBecomeRealtorRoute;
 
   const appearance = isDarkNav
     ? {
