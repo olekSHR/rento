@@ -2,122 +2,55 @@
 
 import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
+import AdminRealtorApplicationCard from "@/components/admin/AdminRealtorApplicationCard"
 import AdminRoute from "@/components/AdminRoute"
-import EmptyState from "@/components/ui/EmptyState"
-import PageHeader from "@/components/ui/PageHeader"
 import AdminPageShell from "@/components/admin/AdminPageShell"
-import PrimaryButton from "@/components/ui/PrimaryButton"
-import SecondaryButton from "@/components/ui/SecondaryButton"
-import SectionCard from "@/components/ui/SectionCard"
-import StatusBadge from "@/components/ui/StatusBadge"
 import {
   getRealtorApplications,
   reviewRealtorApplication,
   type RealtorApplication,
 } from "@/services/api"
 
-function formatCreatedAt(value: string): string {
-  return new Date(value).toLocaleString(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  })
-}
-
-function getStatusVariant(
-  status: string
-): "success" | "warning" | "danger" | "neutral" {
-  if (status === "approved") {
-    return "success"
-  }
-
-  if (status === "rejected") {
-    return "danger"
-  }
-
-  if (status === "pending") {
-    return "warning"
-  }
-
-  return "neutral"
-}
-
 function ApplicationsSkeleton() {
   return (
-    <div className="space-y-3">
-      <div className="h-48 animate-pulse rounded-3xl bg-zinc-200" />
-      <div className="h-48 animate-pulse rounded-3xl bg-zinc-200" />
+    <div
+      role="status"
+      aria-live="polite"
+      className="grid grid-cols-1 gap-4 md:grid-cols-2"
+    >
+      <span className="sr-only">Loading pending realtor applications</span>
+      {Array.from({ length: 2 }).map((_, index) => (
+        <div
+          key={index}
+          className="rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5"
+        >
+          <div className="space-y-3">
+            <div className="h-5 w-2/3 animate-pulse rounded bg-white/10 motion-reduce:animate-none" />
+            <div className="h-4 w-1/2 animate-pulse rounded bg-white/10 motion-reduce:animate-none" />
+            <div className="h-20 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="h-11 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
+              <div className="h-11 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
 
-function ApplicationCard({
-  application,
-  isReviewing,
-  errorMessage,
-  onApprove,
-  onReject,
-}: {
-  application: RealtorApplication
-  isReviewing: boolean
-  errorMessage?: string
-  onApprove: () => void
-  onReject: () => void
-}) {
-  return (
-    <SectionCard>
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h2 className="text-base font-bold text-zinc-900">
-            {application.full_name}
-          </h2>
-          <p className="mt-1 text-sm text-zinc-500">{application.phone}</p>
-        </div>
-        <StatusBadge variant={getStatusVariant(application.status)}>
-          {application.status}
-        </StatusBadge>
-      </div>
+function getPendingSummary(count: number): string {
+  if (count === 0) {
+    return "No applications awaiting review"
+  }
 
-      <dl className="mt-4 space-y-3 text-sm">
-        <div>
-          <dt className="font-semibold text-zinc-700">Agency</dt>
-          <dd className="mt-0.5 text-zinc-500">
-            {application.agency_name || "—"}
-          </dd>
-        </div>
+  if (count === 1) {
+    return "1 application awaiting review"
+  }
 
-        <div>
-          <dt className="font-semibold text-zinc-700">Message</dt>
-          <dd className="mt-0.5 whitespace-pre-wrap text-zinc-500">
-            {application.message || "—"}
-          </dd>
-        </div>
-
-        <div>
-          <dt className="font-semibold text-zinc-700">Submitted</dt>
-          <dd className="mt-0.5 text-zinc-500">
-            {formatCreatedAt(application.created_at)}
-          </dd>
-        </div>
-      </dl>
-
-      {errorMessage && (
-        <p className="mt-4 rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
-          {errorMessage}
-        </p>
-      )}
-
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        <PrimaryButton disabled={isReviewing} onClick={onApprove}>
-          {isReviewing ? "..." : "Approve"}
-        </PrimaryButton>
-        <SecondaryButton disabled={isReviewing} onClick={onReject}>
-          Reject
-        </SecondaryButton>
-      </div>
-    </SectionCard>
-  )
+  return `${count.toLocaleString()} applications awaiting review`
 }
 
 export default function AdminRealtorApplicationsPage() {
@@ -126,6 +59,14 @@ export default function AdminRealtorApplicationsPage() {
   const [loadError, setLoadError] = useState("")
   const [reviewingId, setReviewingId] = useState<number | null>(null)
   const [cardErrors, setCardErrors] = useState<Record<number, string>>({})
+  const [successMessage, setSuccessMessage] = useState("")
+
+  const queueHeadingRef = useRef<HTMLHeadingElement>(null)
+  const successMessageRef = useRef<HTMLDivElement>(null)
+  const cardHeadingRefs = useRef<Map<number, HTMLHeadingElement>>(new Map())
+  const reviewInFlightRef = useRef(false)
+
+  const isQueueBusy = reviewingId !== null
 
   const loadApplications = useCallback(async () => {
     setLoadError("")
@@ -148,38 +89,105 @@ export default function AdminRealtorApplicationsPage() {
     void loadApplications()
   }, [loadApplications])
 
+  useEffect(() => {
+    if (!successMessage) {
+      return
+    }
+
+    successMessageRef.current?.focus()
+
+    const timer = window.setTimeout(() => setSuccessMessage(""), 3200)
+
+    return () => window.clearTimeout(timer)
+  }, [successMessage])
+
+  function registerCardHeading(
+    applicationId: number,
+    element: HTMLHeadingElement | null
+  ) {
+    if (element) {
+      cardHeadingRefs.current.set(applicationId, element)
+      return
+    }
+
+    cardHeadingRefs.current.delete(applicationId)
+  }
+
+  function focusAfterRemoval(
+    removedId: number,
+    remainingApplications: RealtorApplication[]
+  ) {
+    if (remainingApplications.length === 0) {
+      queueHeadingRef.current?.focus()
+      return
+    }
+
+    const removedIndex = applications.findIndex(
+      (application) => application.id === removedId
+    )
+    const focusIndex = Math.min(
+      Math.max(removedIndex, 0),
+      remainingApplications.length - 1
+    )
+    const nextApplication = remainingApplications[focusIndex]
+
+    if (nextApplication) {
+      cardHeadingRefs.current.get(nextApplication.id)?.focus()
+    }
+  }
+
   async function handleReview(
     application: RealtorApplication,
     status: "approved" | "rejected"
   ) {
-    const previousApplications = applications
+    if (reviewInFlightRef.current) {
+      return
+    }
 
-    setCardErrors((prev) => {
-      const next = { ...prev }
+    reviewInFlightRef.current = true
+
+    setCardErrors((previous) => {
+      const next = { ...previous }
       delete next[application.id]
       return next
     })
 
-    setApplications((prev) =>
-      prev.filter((item) => item.id !== application.id)
-    )
+    setReviewingId(application.id)
 
     try {
-      setReviewingId(application.id)
-
       await reviewRealtorApplication(application.id, status)
+
+      const remainingApplications = applications.filter(
+        (item) => item.id !== application.id
+      )
+
+      setApplications(remainingApplications)
+      setSuccessMessage(
+        status === "approved"
+          ? `${application.full_name} was approved as a Realtor.`
+          : `${application.full_name}'s application was rejected.`
+      )
+
+      window.requestAnimationFrame(() => {
+        focusAfterRemoval(application.id, remainingApplications)
+      })
     } catch (error) {
-      setApplications(previousApplications)
-      setCardErrors((prev) => ({
-        ...prev,
+      setCardErrors((previous) => ({
+        ...previous,
         [application.id]:
           error instanceof Error
             ? error.message
             : "Failed to update application.",
       }))
     } finally {
+      reviewInFlightRef.current = false
       setReviewingId(null)
     }
+  }
+
+  function handleRetryLoad() {
+    setIsLoading(true)
+    void loadApplications()
   }
 
   return (
@@ -187,53 +195,94 @@ export default function AdminRealtorApplicationsPage() {
       <AdminPageShell>
         <Link
           href="/admin"
-          className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700"
+          className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-[#DFC58A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           Back to admin
         </Link>
 
-        <PageHeader
-          title="Realtor Applications"
-          subtitle="Review and approve realtor access requests."
-        />
+        <header>
+          <p className="text-xs font-bold uppercase tracking-wide text-[#DFC58A]">
+            Realtor Applications
+          </p>
+          <h1
+            ref={queueHeadingRef}
+            tabIndex={-1}
+            className="mt-2 text-2xl font-extrabold tracking-tight text-[#F5F5F5] outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B] md:text-3xl"
+          >
+            Realtor Applications
+          </h1>
+          <p className="mt-2 text-sm text-[#B8B8B8]">
+            Review pending requests and grant or deny access to the Realtor
+            workspace.
+          </p>
+          {!isLoading && !loadError && (
+            <p className="mt-3 text-sm text-[#F5F5F5]">
+              {getPendingSummary(applications.length)}
+            </p>
+          )}
+        </header>
+
+        {successMessage && (
+          <div
+            ref={successMessageRef}
+            role="status"
+            aria-live="polite"
+            tabIndex={-1}
+            className="rounded-[24px] border border-[#DFC58A]/30 bg-[#252525] px-4 py-3 text-sm font-semibold text-[#F5F5F5] outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+          >
+            {successMessage}
+          </div>
+        )}
 
         {isLoading ? (
           <ApplicationsSkeleton />
         ) : loadError ? (
-          <SectionCard>
-            <p className="rounded-2xl bg-red-50 p-3 text-sm font-medium text-red-600 ring-1 ring-red-100">
-              {loadError}
-            </p>
-            <div className="mt-4">
-              <PrimaryButton
-                onClick={() => {
-                  setIsLoading(true)
-                  void loadApplications()
-                }}
-              >
-                Try again
-              </PrimaryButton>
-            </div>
-          </SectionCard>
+          <section
+            role="alert"
+            className="rounded-[24px] border border-red-400/20 bg-red-950/30 p-5"
+          >
+            <h2 className="text-base font-semibold text-[#F5F5F5]">
+              Unable to load applications
+            </h2>
+            <p className="mt-2 text-sm text-red-100">{loadError}</p>
+            <button
+              type="button"
+              onClick={handleRetryLoad}
+              className="mt-4 inline-flex h-11 items-center rounded-2xl bg-[#DFC58A] px-4 text-sm font-semibold text-[#1B1B1B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+            >
+              Try again
+            </button>
+          </section>
         ) : applications.length === 0 ? (
-          <EmptyState
-            title="No pending applications"
-            description="New realtor requests will appear here."
-          />
+          <section className="rounded-[24px] border border-white/8 bg-[#2D2D2D] p-6 text-center">
+            <h2 className="text-lg font-semibold text-[#F5F5F5]">
+              No pending applications
+            </h2>
+            <p className="mt-2 text-sm text-[#B8B8B8]">
+              New Realtor requests will appear here.
+            </p>
+          </section>
         ) : (
-          <div className="space-y-3">
+          <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {applications.map((application) => (
-              <ApplicationCard
-                key={application.id}
-                application={application}
-                isReviewing={reviewingId === application.id}
-                errorMessage={cardErrors[application.id]}
-                onApprove={() => handleReview(application, "approved")}
-                onReject={() => handleReview(application, "rejected")}
-              />
+              <li key={application.id}>
+                <AdminRealtorApplicationCard
+                  application={application}
+                  isQueueBusy={isQueueBusy}
+                  isCardBusy={reviewingId === application.id}
+                  error={cardErrors[application.id]}
+                  headingRef={(element) =>
+                    registerCardHeading(application.id, element)
+                  }
+                  onConfirmApprove={() =>
+                    void handleReview(application, "approved")
+                  }
+                  onReject={() => void handleReview(application, "rejected")}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </AdminPageShell>
     </AdminRoute>
