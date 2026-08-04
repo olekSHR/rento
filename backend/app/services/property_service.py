@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.repositories import property_repository, realtor_profile_repository
 from app.core.exceptions import BadRequestException, ForbiddenException, NotFoundException
 from app.core.observability.signals import emit_privileged_signal, emit_transition_signal
+from app.core.upload_cleanup import collect_property_upload_urls, delete_upload_files
 
 
 PROPERTY_STATUS_AVAILABLE = "available"
@@ -461,10 +462,21 @@ def delete_property(
             "Property not found"
         )
 
+    images = property_repository.get_property_images(
+        db,
+        property_id,
+    )
+    upload_urls = collect_property_upload_urls(
+        property_item.image_url,
+        *(image.url for image in images),
+    )
+
     property_repository.delete_property(
         db,
         property_item
     )
+
+    delete_upload_files(upload_urls)
 
     if actor_user_id is not None:
         emit_privileged_signal(
