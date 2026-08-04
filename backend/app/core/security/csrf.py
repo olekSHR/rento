@@ -51,6 +51,9 @@ def validate_csrf_request(request: Request) -> None:
     if request.method not in {"POST", "PUT", "PATCH", "DELETE"}:
         return
 
+    if not request.cookies.get(settings.SESSION_COOKIE_NAME):
+        return
+
     cookie_token = request.cookies.get(settings.CSRF_COOKIE_NAME)
     header_token = request.headers.get(settings.CSRF_HEADER_NAME)
 

@@ -1,10 +1,12 @@
 from types import SimpleNamespace
 
 import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.exceptions import BadRequestException, ForbiddenException, UnauthorizedException
 from app.core.security.hashing import hash_password
 from app.core.upload_cleanup import (
@@ -481,3 +483,171 @@ def test_realtor_router_delete_removes_archived_listing(
     assert response["success"] is True
     assert db_session.query(Property).filter_by(id=property_item.id).first() is None
     assert owned_file.exists() is False
+
+
+@pytest.fixture
+def api_client():
+    from app.main import app
+
+    with TestClient(app) as client:
+        yield client
+
+
+def csrf_headers(client) -> dict[str, str]:
+    token = client.cookies.get(settings.CSRF_COOKIE_NAME)
+    return {settings.CSRF_HEADER_NAME: token or ""}
+
+
+def login_realtor(client, email: str, password: str = "password123") -> None:
+    client.get("/auth/csrf")
+    client.post(
+        "/auth/login",
+        data={"username": email, "password": password},
+    )
+
+
+def test_http_unauthenticated_archive_returns_401(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="available")
+
+    response = api_client.post(
+        f"/realtor/properties/{property_item.id}/archive",
+    )
+
+    assert response.status_code == 401
+    assert response.json()["success"] is False
+
+
+def test_http_unauthenticated_restore_returns_401(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="archived")
+
+    response = api_client.post(
+        f"/realtor/properties/{property_item.id}/restore",
+    )
+
+    assert response.status_code == 401
+    assert response.json()["success"] is False
+
+
+def test_http_unauthenticated_delete_returns_401(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="archived")
+
+    response = api_client.delete(
+        f"/realtor/properties/{property_item.id}",
+    )
+
+    assert response.status_code == 401
+    assert response.json()["success"] is False
+
+
+def test_http_user_role_archive_returns_403(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    user = seed_user(db_session, role="user", email="user@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="available")
+
+    login_realtor(api_client, user.email)
+    response = api_client.post(
+        f"/realtor/properties/{property_item.id}/archive",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 403
+    assert response.json()["success"] is False
+
+
+def test_http_cross_realtor_archive_returns_403(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    other = seed_user(db_session, email="other@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="available")
+
+    login_realtor(api_client, other.email)
+    response = api_client.post(
+        f"/realtor/properties/{property_item.id}/archive",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 403
+    assert response.json()["success"] is False
+
+
+def test_http_owner_archive_returns_success(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="available")
+
+    login_realtor(api_client, owner.email)
+    response = api_client.post(
+        f"/realtor/properties/{property_item.id}/archive",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "archived"
+
+
+def test_http_owner_restore_returns_success(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="archived")
+
+    login_realtor(api_client, owner.email)
+    response = api_client.post(
+        f"/realtor/properties/{property_item.id}/restore",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "available"
+
+
+def test_http_owner_archived_delete_returns_success(
+    api_client,
+    db_session,
+    isolated_uploads,
+):
+    owner = seed_user(db_session, email="owner@example.com")
+    owned_file = isolated_uploads / "http-owned.jpg"
+    owned_file.write_bytes(b"owned")
+    property_item = seed_property(
+        db_session,
+        owner_id=owner.id,
+        status="archived",
+        image_url="/uploads/http-owned.jpg",
+    )
+
+    login_realtor(api_client, owner.email)
+    response = api_client.delete(
+        f"/realtor/properties/{property_item.id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 200
+    assert response.json()["success"] is True
+    assert db_session.query(Property).filter_by(id=property_item.id).first() is None
+
+
+def test_http_owner_non_archived_delete_returns_400(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="available")
+
+    login_realtor(api_client, owner.email)
+    response = api_client.delete(
+        f"/realtor/properties/{property_item.id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 400
+    assert response.json()["success"] is False
+
+
+def test_http_authenticated_missing_csrf_returns_403(api_client, db_session):
+    owner = seed_user(db_session, email="owner@example.com")
+    property_item = seed_property(db_session, owner_id=owner.id, status="available")
+
+    login_realtor(api_client, owner.email)
+    response = api_client.post(
+        f"/realtor/properties/{property_item.id}/archive",
+    )
+
+    assert response.status_code == 403
+    assert response.json()["message"] == "CSRF validation failed"

@@ -50,7 +50,10 @@ def _cors_allow_origins() -> list[str]:
 class CSRFMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):
-        validate_csrf_request(request)
+        try:
+            validate_csrf_request(request)
+        except ForbiddenException as exc:
+            return await forbidden_exception_handler(request, exc)
         return await call_next(request)
 
 app = FastAPI(

@@ -117,11 +117,21 @@ def test_csrf_missing_token_rejected():
     request = Mock()
     request.method = "POST"
     request.url.path = "/favorites/1"
-    request.cookies = {}
+    request.cookies = {settings.SESSION_COOKIE_NAME: "session-token"}
     request.headers = {}
 
     with pytest.raises(ForbiddenException):
         csrf.validate_csrf_request(request)
+
+
+def test_csrf_skipped_without_session_cookie():
+    request = Mock()
+    request.method = "POST"
+    request.url.path = "/favorites/1"
+    request.cookies = {}
+    request.headers = {}
+
+    csrf.validate_csrf_request(request)
 
 
 def test_csrf_valid_token_accepted():
