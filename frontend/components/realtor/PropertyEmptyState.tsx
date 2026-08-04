@@ -3,7 +3,11 @@
 import Link from "next/link"
 
 type PropertyEmptyStateProps = {
-  variant: "no-listings" | "no-results" | "no-filter-results"
+  variant:
+    | "no-listings"
+    | "no-results"
+    | "no-filter-results"
+    | "no-archived"
   filterLabel?: string
   canCreateListing: boolean
 }
@@ -68,6 +72,20 @@ export default function PropertyEmptyState({
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
           Try a different search by title, city, or price.
+        </p>
+      </div>
+    )
+  }
+
+  if (variant === "no-archived") {
+    return (
+      <div role="status" className={`${cardClassName} text-center`}>
+        <h3 className="text-base font-semibold text-[#F5F5F5]">
+          No archived listings
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+          Archived listings will appear here after you archive them from your
+          current listings.
         </p>
       </div>
     )

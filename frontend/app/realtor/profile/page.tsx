@@ -301,7 +301,6 @@ export default function RealtorProfilePage() {
         phone: formData.phone,
         whatsapp: formData.whatsapp,
         agency_name: formData.agency_name,
-        avatar_url: formData.avatar_url,
         bio: formData.bio,
         city: formData.city,
       })
@@ -819,22 +818,6 @@ export default function RealtorProfilePage() {
                       name="city"
                       autoComplete="address-level2"
                       value={formData.city}
-                      onChange={handleChange}
-                      disabled={isSaving}
-                      className={inputClassName}
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="realtor-profile-avatar-url" className={labelClassName}>
-                      Avatar URL
-                    </label>
-                    <input
-                      id="realtor-profile-avatar-url"
-                      type="url"
-                      name="avatar_url"
-                      autoComplete="off"
-                      value={formData.avatar_url}
                       onChange={handleChange}
                       disabled={isSaving}
                       className={inputClassName}

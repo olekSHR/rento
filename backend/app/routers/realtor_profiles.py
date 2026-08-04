@@ -1,17 +1,19 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.core.exceptions import ForbiddenException
+from app.core.exceptions import BadRequestException, ForbiddenException
 from app.core.security.dependencies import get_current_user
 from app.database.database import get_db
 from app.models.user import User
+from app.schemas.common import MessageResponse
 from app.schemas.realtor_profile import (
     RealtorProfileResponse,
     RealtorProfileUpdate,
 )
 from app.services import realtor_profile_service
-from app.schemas.property import PropertyListResponse
+from app.schemas.property import PropertyListResponse, PropertyResponse
 from app.services import property_service
+from app.services.property_service import PROPERTY_STATUS_ARCHIVED
 router = APIRouter(
     prefix="/realtor",
     tags=["realtor"],
@@ -72,3 +74,79 @@ def get_my_realtor_properties(
         limit,
         offset,
     )
+
+
+@router.post(
+    "/properties/{property_id}/archive",
+    response_model=PropertyResponse,
+)
+def archive_my_property(
+    property_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_realtor),
+):
+    property_item = property_service.get_property_by_id(db, property_id)
+    property_service.ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
+
+    return property_service.archive_property(
+        db,
+        property_id,
+        actor_user_id=current_user.id,
+    )
+
+
+@router.post(
+    "/properties/{property_id}/restore",
+    response_model=PropertyResponse,
+)
+def restore_my_property(
+    property_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_realtor),
+):
+    property_item = property_service.get_property_by_id(db, property_id)
+    property_service.ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
+
+    return property_service.activate_property(
+        db,
+        property_id,
+        actor_user_id=current_user.id,
+    )
+
+
+@router.delete(
+    "/properties/{property_id}",
+    response_model=MessageResponse,
+)
+def delete_my_archived_property(
+    property_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_realtor),
+):
+    property_item = property_service.get_property_by_id(db, property_id)
+    property_service.ensure_property_mutation_allowed(
+        property_item,
+        current_user,
+    )
+
+    if property_item.status != PROPERTY_STATUS_ARCHIVED:
+        raise BadRequestException(
+            "Only archived listings can be permanently deleted"
+        )
+
+    property_service.delete_property(
+        db,
+        property_id,
+        actor_user_id=current_user.id,
+    )
+
+    return {
+        "success": True,
+        "message": "Property deleted",
+    }

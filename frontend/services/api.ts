@@ -446,6 +446,57 @@ export async function getMyRealtorProperties() {
   return response.json()
 }
 
+export async function archiveMyRealtorProperty(id: number) {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/realtor/properties/${id}/archive`,
+    {
+      method: "POST",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to archive property")
+    )
+  }
+
+  return response.json()
+}
+
+export async function restoreMyRealtorProperty(id: number) {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/realtor/properties/${id}/restore`,
+    {
+      method: "POST",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to restore property")
+    )
+  }
+
+  return response.json()
+}
+
+export async function deleteMyArchivedRealtorProperty(id: number) {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/realtor/properties/${id}`,
+    {
+      method: "DELETE",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to delete property")
+    )
+  }
+
+  return response.json()
+}
+
 export type RealtorProfile = {
   id: number
   user_id: number

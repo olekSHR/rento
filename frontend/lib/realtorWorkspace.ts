@@ -1,8 +1,18 @@
 import type { RealtorProfile } from "@/services/api"
 import type { Property } from "@/types/property"
 
+export type ListingView = "current" | "archived"
+
+export const LISTING_VIEW_OPTIONS: {
+  id: ListingView
+  label: string
+}[] = [
+  { id: "current", label: "My listings" },
+  { id: "archived", label: "Archived" },
+]
+
 export type PropertyFilter =
-  | "all"
+  | "current"
   | "active"
   | "pending"
   | "reserved"
@@ -13,7 +23,7 @@ export const PROPERTY_FILTER_OPTIONS: {
   id: PropertyFilter
   label: string
 }[] = [
-  { id: "all", label: "All" },
+  { id: "current", label: "My listings" },
   { id: "active", label: "Active" },
   { id: "pending", label: "Pending" },
   { id: "reserved", label: "Reserved" },
@@ -70,11 +80,24 @@ export function getWorkspaceGreetingName(
   return "there"
 }
 
+export function filterPropertiesByView(
+  properties: Property[],
+  view: ListingView
+): Property[] {
+  if (view === "archived") {
+    return properties.filter((property) => property.status === "archived")
+  }
+
+  return properties.filter((property) => property.status !== "archived")
+}
+
 export function filterProperties(
   properties: Property[],
   filter: PropertyFilter
 ): Property[] {
   switch (filter) {
+    case "current":
+      return properties.filter((property) => property.status !== "archived")
     case "active":
       return properties.filter((property) => property.status === "available")
     case "pending":
@@ -86,7 +109,7 @@ export function filterProperties(
     case "archived":
       return properties.filter((property) => property.status === "archived")
     default:
-      return properties
+      return properties.filter((property) => property.status !== "archived")
   }
 }
 
@@ -146,7 +169,11 @@ export function buildWorkspaceActions(
     })
   }
 
-  if (profile?.is_completed && properties.length === 0) {
+  const currentProperties = properties.filter(
+    (property) => property.status !== "archived"
+  )
+
+  if (profile?.is_completed && currentProperties.length === 0) {
     actions.push({
       id: "first-property",
       title: "Add first property",

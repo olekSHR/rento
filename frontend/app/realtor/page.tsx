@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Camera, ChevronRight, Pencil, Plus, Search, Sparkles } from "lucide-react"
 
+import ConfirmDialog from "@/components/realtor/ConfirmDialog"
 import PropertyBottomSheet from "@/components/realtor/PropertyBottomSheet"
 import PropertyEmptyState from "@/components/realtor/PropertyEmptyState"
 import PropertyListSkeleton from "@/components/realtor/PropertyListSkeleton"
@@ -12,19 +13,22 @@ import RealtorPropertyCard from "@/components/realtor/RealtorPropertyCard"
 import { useAuth } from "@/context/AuthContext"
 import { getImageUrl } from "@/lib/getImageUrl"
 import {
-  PROPERTY_FILTER_OPTIONS,
+  LISTING_VIEW_OPTIONS,
   buildWorkspaceActions,
   computeProfileCompletionPercent,
-  filterProperties,
+  filterPropertiesByView,
   getContinueEditingProperty,
   getPropertyStatusLabel,
   getWorkspaceGreetingName,
   searchProperties,
-  type PropertyFilter,
+  type ListingView,
 } from "@/lib/realtorWorkspace"
 import {
+  archiveMyRealtorProperty,
+  deleteMyArchivedRealtorProperty,
   getMyRealtorProfile,
   getMyRealtorProperties,
+  restoreMyRealtorProperty,
   updateMyRealtorProfile,
   uploadImage,
   type RealtorProfile,
@@ -242,8 +246,17 @@ export default function RealtorWorkspacePage() {
   const [isDataLoading, setIsDataLoading] = useState(true)
   const [error, setError] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
-  const [activeFilter, setActiveFilter] = useState<PropertyFilter>("all")
+  const [listingView, setListingView] = useState<ListingView>("current")
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
+  const [lifecycleError, setLifecycleError] = useState("")
+  const [busyPropertyId, setBusyPropertyId] = useState<number | null>(null)
+  const [busyAction, setBusyAction] = useState<
+    "archive" | "restore" | "delete" | null
+  >(null)
+  const [pendingArchiveProperty, setPendingArchiveProperty] =
+    useState<Property | null>(null)
+  const [pendingDeleteProperty, setPendingDeleteProperty] =
+    useState<Property | null>(null)
   const [isAvatarUploading, setIsAvatarUploading] = useState(false)
   const [avatarError, setAvatarError] = useState("")
   const [isAvatarPreviewOpen, setIsAvatarPreviewOpen] = useState(false)
@@ -478,6 +491,132 @@ export default function RealtorWorkspacePage() {
     closeAvatarPreview()
   }
 
+  function clearLifecycleError() {
+    setLifecycleError("")
+  }
+
+  function handleArchiveRequest(property: Property) {
+    clearLifecycleError()
+    setPendingArchiveProperty(property)
+  }
+
+  async function handleArchiveConfirm() {
+    if (!pendingArchiveProperty) {
+      return
+    }
+
+    const propertyId = pendingArchiveProperty.id
+
+    try {
+      setBusyPropertyId(propertyId)
+      setBusyAction("archive")
+      clearLifecycleError()
+
+      const updatedProperty = await archiveMyRealtorProperty(propertyId)
+
+      setProperties((previous) =>
+        previous.map((property) =>
+          property.id === propertyId
+            ? {
+                ...property,
+                status: updatedProperty.status,
+                last_verified_at: updatedProperty.last_verified_at,
+              }
+            : property
+        )
+      )
+      setPendingArchiveProperty(null)
+      setSelectedProperty(null)
+    } catch (archiveError) {
+      setLifecycleError(
+        archiveError instanceof Error
+          ? archiveError.message
+          : "Failed to archive property"
+      )
+    } finally {
+      setBusyPropertyId(null)
+      setBusyAction(null)
+    }
+  }
+
+  async function handleRestore(property: Property) {
+    try {
+      setBusyPropertyId(property.id)
+      setBusyAction("restore")
+      clearLifecycleError()
+
+      const updatedProperty = await restoreMyRealtorProperty(property.id)
+
+      setProperties((previous) =>
+        previous.map((item) =>
+          item.id === property.id
+            ? {
+                ...item,
+                status: updatedProperty.status,
+                last_verified_at: updatedProperty.last_verified_at,
+              }
+            : item
+        )
+      )
+      setSelectedProperty(null)
+    } catch (restoreError) {
+      setLifecycleError(
+        restoreError instanceof Error
+          ? restoreError.message
+          : "Failed to restore property"
+      )
+    } finally {
+      setBusyPropertyId(null)
+      setBusyAction(null)
+    }
+  }
+
+  function handleDeleteRequest(property: Property) {
+    clearLifecycleError()
+    setPendingDeleteProperty(property)
+  }
+
+  async function handleDeleteConfirm() {
+    if (!pendingDeleteProperty) {
+      return
+    }
+
+    const propertyId = pendingDeleteProperty.id
+
+    try {
+      setBusyPropertyId(propertyId)
+      setBusyAction("delete")
+      clearLifecycleError()
+
+      await deleteMyArchivedRealtorProperty(propertyId)
+
+      setProperties((previous) =>
+        previous.filter((property) => property.id !== propertyId)
+      )
+      setPendingDeleteProperty(null)
+      setSelectedProperty(null)
+    } catch (deleteError) {
+      setLifecycleError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : "Failed to delete property"
+      )
+    } finally {
+      setBusyPropertyId(null)
+      setBusyAction(null)
+    }
+  }
+
+  const currentListingsCount = useMemo(
+    () => properties.filter((property) => property.status !== "archived").length,
+    [properties]
+  )
+
+  const archivedListingsCount = useMemo(
+    () => properties.filter((property) => property.status === "archived").length,
+    [properties]
+  )
+
   const profileCompletion = computeProfileCompletionPercent(profile)
   const canCreateListing = profile?.is_completed === true
   const profileActionLabel = canCreateListing
@@ -508,13 +647,9 @@ export default function RealtorWorkspacePage() {
   )
 
   const visibleProperties = useMemo(() => {
-    const filtered = filterProperties(properties, activeFilter)
+    const filtered = filterPropertiesByView(properties, listingView)
     return searchProperties(filtered, searchQuery)
-  }, [properties, activeFilter, searchQuery])
-
-  const activeFilterLabel =
-    PROPERTY_FILTER_OPTIONS.find((option) => option.id === activeFilter)
-      ?.label ?? "filtered"
+  }, [properties, listingView, searchQuery])
 
   const greetingName = getWorkspaceGreetingName(profile, user?.email)
   const nextAction = actionItems[0] ?? null
@@ -818,13 +953,19 @@ export default function RealtorWorkspacePage() {
           </p>
         )}
 
+        {lifecycleError && (
+          <p role="alert" className={workspaceErrorClassName}>
+            {lifecycleError}
+          </p>
+        )}
+
         <section aria-labelledby="realtor-properties-heading" className="space-y-4">
           <div className="flex items-center justify-between gap-3">
             <h2
               id="realtor-properties-heading"
               className="text-lg font-semibold text-[#F5F5F5]"
             >
-              My properties
+              {listingView === "current" ? "My listings" : "Archived"}
             </h2>
             <span className="text-xs font-semibold text-[#B8B8B8]">
               {visibleProperties.length} shown
@@ -857,43 +998,45 @@ export default function RealtorWorkspacePage() {
 
           <div
             className="flex gap-2 overflow-x-auto pb-1"
-            role="group"
-            aria-label="Filter listings by status"
+            role="tablist"
+            aria-label="Listing views"
           >
-            {PROPERTY_FILTER_OPTIONS.map((filter) => {
-              const isActive = activeFilter === filter.id
+            {LISTING_VIEW_OPTIONS.map((viewOption) => {
+              const isActive = listingView === viewOption.id
+              const count =
+                viewOption.id === "current"
+                  ? currentListingsCount
+                  : archivedListingsCount
 
               return (
                 <button
-                  key={filter.id}
+                  key={viewOption.id}
                   type="button"
-                  onClick={() => setActiveFilter(filter.id)}
-                  aria-pressed={isActive}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setListingView(viewOption.id)}
                   className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B] motion-reduce:transition-none ${
                     isActive
                       ? "border border-[#DFC58A]/30 bg-[#252525] text-[#DFC58A] ring-1 ring-[#DFC58A]/20"
                       : "border border-white/8 bg-[#2D2D2D] text-[#B8B8B8]"
                   }`}
                 >
-                  {filter.label}
+                  {viewOption.label}
+                  {count > 0 ? ` (${count})` : ""}
                 </button>
               )
             })}
           </div>
 
-          {properties.length === 0 ? (
+          {listingView === "current" && currentListingsCount === 0 ? (
             <PropertyEmptyState
               variant="no-listings"
               canCreateListing={canCreateListing}
             />
+          ) : listingView === "archived" && archivedListingsCount === 0 ? (
+            <PropertyEmptyState variant="no-archived" canCreateListing={false} />
           ) : visibleProperties.length === 0 && searchQuery.trim() ? (
-            <PropertyEmptyState variant="no-results" canCreateListing />
-          ) : visibleProperties.length === 0 ? (
-            <PropertyEmptyState
-              variant="no-filter-results"
-              filterLabel={activeFilterLabel}
-              canCreateListing={canCreateListing}
-            />
+            <PropertyEmptyState variant="no-results" canCreateListing={false} />
           ) : (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 transition-opacity duration-200 motion-reduce:transition-none">
               {visibleProperties.map((property) => (
@@ -911,7 +1054,48 @@ export default function RealtorWorkspacePage() {
       <PropertyBottomSheet
         property={selectedProperty}
         isOpen={selectedProperty !== null}
+        listingView={listingView}
+        isBusy={busyPropertyId === selectedProperty?.id}
+        busyAction={
+          busyPropertyId === selectedProperty?.id ? busyAction : null
+        }
         onClose={() => setSelectedProperty(null)}
+        onArchive={handleArchiveRequest}
+        onRestore={handleRestore}
+        onDelete={handleDeleteRequest}
+      />
+
+      <ConfirmDialog
+        isOpen={pendingArchiveProperty !== null}
+        isPending={busyAction === "archive"}
+        titleId="archive-listing-title"
+        title="Archive listing?"
+        description={
+          pendingArchiveProperty
+            ? `"${pendingArchiveProperty.title}" will disappear from your current listings and public search. You can restore it later from Archived.`
+            : ""
+        }
+        confirmLabel="Archive"
+        pendingLabel="Archiving..."
+        onCancel={() => setPendingArchiveProperty(null)}
+        onConfirm={() => void handleArchiveConfirm()}
+      />
+
+      <ConfirmDialog
+        isOpen={pendingDeleteProperty !== null}
+        isPending={busyAction === "delete"}
+        titleId="delete-listing-title"
+        title="Permanently delete listing?"
+        description={
+          pendingDeleteProperty
+            ? `"${pendingDeleteProperty.title}" will be permanently deleted. This action cannot be undone.`
+            : ""
+        }
+        confirmLabel="Delete permanently"
+        pendingLabel="Deleting..."
+        destructive
+        onCancel={() => setPendingDeleteProperty(null)}
+        onConfirm={() => void handleDeleteConfirm()}
       />
 
       {isAvatarPreviewOpen && avatarPreviewUrl && (
