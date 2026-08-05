@@ -19,6 +19,7 @@ import ShareButton from "@/components/ShareButton"
 import ReportButton from "@/components/ReportButton"
 import { RealtorAvatarEnlargeTrigger } from "@/components/RealtorAvatarLightbox"
 import { SAFE_BOTTOM_CONTENT_CLASS } from "@/lib/bottomNavLayout"
+import { getPropertyCoordinates } from "@/lib/mapConfig"
 import { getImageUrl, hasPropertyListingImage } from "@/lib/getImageUrl"
 import {
   getProperties,
@@ -27,6 +28,7 @@ import {
 } from "@/services/api"
 
 import { PropertyLocationSection } from "@/components/map/PropertyLocationSectionLazy"
+import { NearbyInfrastructureSectionLazy } from "@/components/nearby/NearbyInfrastructureSectionLazy"
 import type { Property } from "@/types/property"
 
 type Props = {
@@ -192,6 +194,8 @@ export default async function PropertyPage({ params }: Props) {
     property.contact_name?.trim() || property.avatar_url
   )
   const hasContactMethods = Boolean(property.phone || property.whatsapp)
+  const hasCoordinates =
+    getPropertyCoordinates(property.latitude, property.longitude) !== null
 
   const galleryImages =
     property.images && property.images.length > 0
@@ -355,6 +359,11 @@ export default async function PropertyPage({ params }: Props) {
               latitude={property.latitude}
               longitude={property.longitude}
               city={property.city}
+            />
+
+            <NearbyInfrastructureSectionLazy
+              propertyId={property.id}
+              hasCoordinates={hasCoordinates}
             />
 
             {hasContactMethods && (

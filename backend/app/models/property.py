@@ -6,6 +6,7 @@ from sqlalchemy import (
     Boolean,
     ForeignKey,
     Numeric,
+    JSON,
 )
 
 from sqlalchemy.orm import relationship
@@ -58,6 +59,16 @@ class Property(Base):
 
     longitude = Column(
         Numeric(9, 6),
+        nullable=True,
+    )
+
+    nearby_infrastructure = Column(
+        JSON,
+        nullable=True,
+    )
+
+    nearby_infrastructure_at = Column(
+        DateTime(timezone=True),
         nullable=True,
     )
 

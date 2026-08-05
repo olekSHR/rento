@@ -12,6 +12,8 @@ from app.schemas.property import (
 )
 
 from app.services import property_service
+from app.services import nearby_infrastructure_service
+from app.schemas.nearby_infrastructure import NearbyInfrastructureResponse
 
 from app.core.security.dependencies import (
     get_current_user_optional,
@@ -137,6 +139,22 @@ def get_property(
 ):
 
     return property_service.get_property_by_id_for_viewer(
+        db,
+        property_id,
+        current_user,
+    )
+
+
+@router.get(
+    "/{property_id}/nearby",
+    response_model=NearbyInfrastructureResponse,
+)
+async def get_property_nearby(
+    property_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user_optional),
+):
+    return await nearby_infrastructure_service.get_nearby_infrastructure_for_property(
         db,
         property_id,
         current_user,

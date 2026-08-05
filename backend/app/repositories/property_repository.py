@@ -363,6 +363,34 @@ def update_property(
     return property_item
 
 
+def clear_nearby_infrastructure_cache(
+    db: Session,
+    property_item,
+):
+    property_item.nearby_infrastructure = None
+    property_item.nearby_infrastructure_at = None
+
+    db.commit()
+    db.refresh(property_item)
+
+    return property_item
+
+
+def save_nearby_infrastructure_cache(
+    db: Session,
+    property_item,
+    payload: dict,
+    fetched_at,
+):
+    property_item.nearby_infrastructure = payload
+    property_item.nearby_infrastructure_at = fetched_at
+
+    db.commit()
+    db.refresh(property_item)
+
+    return property_item
+
+
 def update_property_status(
     db: Session,
     property_item,

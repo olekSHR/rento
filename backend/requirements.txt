@@ -41,3 +41,4 @@ urllib3==2.6.2
 uvicorn==0.47.0
 slowapi==0.1.10
 limits==5.8.0
+httpx==0.28.1

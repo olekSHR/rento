@@ -54,6 +54,18 @@ class Settings(BaseSettings):
 
     CSRF_HEADER_NAME: str = "X-CSRF-Token"
 
+    OVERPASS_API_URL: str = "https://overpass-api.de/api/interpreter"
+
+    OVERPASS_USER_AGENT: str = (
+        "Rento/1.0 (https://rentonow.ro; nearby-infrastructure)"
+    )
+
+    NEARBY_CACHE_TTL_DAYS: int = 30
+
+    NEARBY_SEARCH_RADIUS_M: int = 1500
+
+    OVERPASS_TIMEOUT_S: float = 8.0
+
 
     class Config:
 

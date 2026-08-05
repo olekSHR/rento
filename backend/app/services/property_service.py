@@ -315,6 +315,7 @@ def update_property(
     ):
         update_kwargs["latitude"] = property_data.latitude
         update_kwargs["longitude"] = property_data.longitude
+        property_repository.clear_nearby_infrastructure_cache(db, property_item)
 
     return property_repository.update_property(
         db,
