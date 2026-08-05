@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from datetime import UTC, datetime, timedelta
 
 from sqlalchemy.orm import Session
@@ -8,8 +9,10 @@ from app.clients.overpass_client import (
     CATEGORY_LABELS,
     CATEGORY_ORDER,
     OverpassPoint,
+    classify_overpass_failure,
     fetch_overpass_points,
     format_distance_label,
+    get_overpass_provider_host,
     haversine_distance_m,
     select_nearest_by_category,
 )
@@ -21,6 +24,31 @@ from app.schemas.nearby_infrastructure import (
     NearbyInfrastructureResponse,
 )
 from app.services import property_service
+
+logger = logging.getLogger(__name__)
+
+
+def _log_overpass_refresh_failure(
+    property_id: int,
+    *,
+    failure: str,
+    fallback: str,
+    status_code: int | None = None,
+) -> None:
+    fields = [
+        f"property_id={property_id}",
+        f"provider={get_overpass_provider_host()}",
+        f"failure={failure}",
+        f"fallback={fallback}",
+    ]
+
+    if status_code is not None:
+        fields.append(f"status_code={status_code}")
+
+    logger.warning(
+        "Nearby infrastructure refresh failed %s",
+        " ".join(fields),
+    )
 
 
 def _has_coordinates(property_item: Property) -> bool:
@@ -195,14 +223,29 @@ async def get_nearby_infrastructure_for_property(
 
     try:
         points = await fetch_overpass_points(latitude, longitude)
-    except Exception:
+    except Exception as exc:
+        failure, status_code = classify_overpass_failure(exc)
+
         if isinstance(property_item.nearby_infrastructure, dict):
             cached = _build_response_from_cache(
                 property_item,
                 property_item.nearby_infrastructure,
             )
             if cached.available:
+                _log_overpass_refresh_failure(
+                    property_id,
+                    failure=failure,
+                    fallback="stale_cache",
+                    status_code=status_code,
+                )
                 return cached
+
+        _log_overpass_refresh_failure(
+            property_id,
+            failure=failure,
+            fallback="unavailable",
+            status_code=status_code,
+        )
         return _empty_response(property_id)
 
     nearest_by_category = select_nearest_by_category(points, latitude, longitude)

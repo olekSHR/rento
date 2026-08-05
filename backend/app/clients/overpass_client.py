@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+import json
+import logging
 import math
 from dataclasses import dataclass
+from urllib.parse import urlparse
 
 import httpx
 
 from app.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -31,6 +36,47 @@ CATEGORY_LABELS = {
     "hospital": "Hospital",
     "bus_stop": "Bus stop",
 }
+
+
+def get_overpass_provider_host(api_url: str | None = None) -> str:
+    parsed = urlparse(api_url or settings.OVERPASS_API_URL)
+    return parsed.netloc or "overpass"
+
+
+def classify_overpass_failure(exc: BaseException) -> tuple[str, int | None]:
+    if isinstance(exc, httpx.HTTPStatusError):
+        return "http_error", exc.response.status_code
+
+    if isinstance(exc, httpx.TimeoutException):
+        return "timeout", None
+
+    if isinstance(exc, httpx.RequestError):
+        return "connection_failure", None
+
+    if isinstance(exc, json.JSONDecodeError):
+        return "invalid_json", None
+
+    return "provider_error", None
+
+
+def _log_overpass_fetch_failure(
+    *,
+    failure: str,
+    status_code: int | None = None,
+) -> None:
+    fields = [
+        f"operation=nearby_infrastructure_fetch",
+        f"provider={get_overpass_provider_host()}",
+        f"failure={failure}",
+    ]
+
+    if status_code is not None:
+        fields.append(f"status_code={status_code}")
+
+    logger.warning(
+        "Nearby infrastructure Overpass fetch failed %s",
+        " ".join(fields),
+    )
 
 
 def _build_overpass_query(
@@ -231,6 +277,7 @@ async def fetch_overpass_points(
 
     elements = payload.get("elements")
     if not isinstance(elements, list):
+        _log_overpass_fetch_failure(failure="malformed_response")
         return []
 
     return parse_overpass_elements(elements, latitude, longitude)

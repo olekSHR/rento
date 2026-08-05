@@ -1,5 +1,7 @@
 from datetime import UTC, datetime, timedelta
+import logging
 
+import httpx
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import event
@@ -8,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from app.clients.overpass_client import (
     OverpassPoint,
+    classify_overpass_failure,
     format_distance_label,
     haversine_distance_m,
     parse_overpass_elements,
@@ -76,6 +79,27 @@ def seed_available_property(db_session: Session, **overrides) -> Property:
     db_session.commit()
     db_session.refresh(property_item)
     return property_item
+
+
+def test_classify_overpass_failure():
+    request = httpx.Request("POST", "https://overpass-api.de/api/interpreter")
+    response = httpx.Response(429, request=request)
+
+    assert classify_overpass_failure(
+        httpx.HTTPStatusError(
+            "rate limited",
+            request=request,
+            response=response,
+        )
+    ) == ("http_error", 429)
+    assert classify_overpass_failure(httpx.TimeoutException("timed out")) == (
+        "timeout",
+        None,
+    )
+    assert classify_overpass_failure(httpx.ConnectError("connection failed")) == (
+        "connection_failure",
+        None,
+    )
 
 
 def test_haversine_and_distance_label():
@@ -214,6 +238,87 @@ def test_nearby_overpass_failure_returns_unavailable(
     api_client,
     db_session,
     monkeypatch,
+    caplog,
+):
+    seed_available_property(db_session)
+    caplog.set_level(logging.WARNING)
+
+    async def fail_fetch(*args, **kwargs):
+        request = httpx.Request("POST", "https://overpass-api.de/api/interpreter")
+        response = httpx.Response(500, request=request)
+        raise httpx.HTTPStatusError("server error", request=request, response=response)
+
+    monkeypatch.setattr(
+        "app.services.nearby_infrastructure_service.fetch_overpass_points",
+        fail_fetch,
+    )
+
+    response = api_client.get("/properties/1/nearby")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["available"] is False
+    assert payload["items"] == []
+
+    messages = " ".join(record.message for record in caplog.records)
+    assert "Nearby infrastructure refresh failed" in messages
+    assert "property_id=1" in messages
+    assert "failure=http_error" in messages
+    assert "status_code=500" in messages
+    assert "fallback=unavailable" in messages
+
+
+def test_nearby_overpass_failure_returns_stale_cache_and_logs(
+    api_client,
+    db_session,
+    monkeypatch,
+    caplog,
+):
+    property_item = seed_available_property(db_session)
+    property_repository.save_nearby_infrastructure_cache(
+        db_session,
+        property_item,
+        {
+            "items": [
+                {
+                    "category": "supermarket",
+                    "label": "Supermarket",
+                    "name": "Penny",
+                    "distance_m": 350,
+                    "distance_label": "350 m",
+                }
+            ]
+        },
+        datetime.now(UTC) - timedelta(days=31),
+    )
+    caplog.set_level(logging.WARNING)
+
+    async def fail_fetch(*args, **kwargs):
+        raise httpx.TimeoutException("timed out")
+
+    monkeypatch.setattr(
+        "app.services.nearby_infrastructure_service.fetch_overpass_points",
+        fail_fetch,
+    )
+
+    response = api_client.get("/properties/1/nearby")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["available"] is True
+    assert payload["items"][0]["name"] == "Penny"
+
+    messages = " ".join(record.message for record in caplog.records)
+    assert "Nearby infrastructure refresh failed" in messages
+    assert "property_id=1" in messages
+    assert "failure=timeout" in messages
+    assert "fallback=stale_cache" in messages
+
+
+def test_nearby_overpass_failure_returns_unavailable_without_cache(
+    api_client,
+    db_session,
+    monkeypatch,
 ):
     seed_available_property(db_session)
 
@@ -231,6 +336,40 @@ def test_nearby_overpass_failure_returns_unavailable(
     payload = response.json()
     assert payload["available"] is False
     assert payload["items"] == []
+
+
+def test_fetch_overpass_malformed_response_logs_warning(monkeypatch, caplog):
+    from app.clients import overpass_client
+
+    caplog.set_level(logging.WARNING)
+
+    class FakeResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {"elements": "not-a-list"}
+
+    class FakeClient:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return False
+
+        async def post(self, *args, **kwargs):
+            return FakeResponse()
+
+    monkeypatch.setattr(overpass_client.httpx, "AsyncClient", lambda **kwargs: FakeClient())
+
+    import asyncio
+
+    points = asyncio.run(overpass_client.fetch_overpass_points(44.4268, 26.1025))
+
+    assert points == []
+    messages = " ".join(record.message for record in caplog.records)
+    assert "Nearby infrastructure Overpass fetch failed" in messages
+    assert "failure=malformed_response" in messages
 
 
 def test_update_coordinates_invalidates_nearby_cache(db_session):
