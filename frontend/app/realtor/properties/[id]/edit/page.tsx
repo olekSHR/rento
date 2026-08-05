@@ -6,7 +6,13 @@ import { useParams, useRouter } from "next/navigation"
 
 import RealtorRoute from "@/components/RealtorRoute"
 import RealtorPropertyGallery from "@/components/realtor/RealtorPropertyGallery"
+import PropertyLocationPicker from "@/components/map/PropertyLocationPickerLazy"
 import { getPropertyStatusLabel } from "@/lib/realtorWorkspace"
+import {
+  buildCoordinatePayload,
+  coordinatesFromProperty,
+  EMPTY_PROPERTY_LOCATION,
+} from "@/lib/propertyLocation"
 import { getPropertyById, updateProperty } from "@/services/api"
 import type { Property, PropertyStatus } from "@/types/property"
 
@@ -107,6 +113,7 @@ export default function RealtorEditPropertyPage() {
     city: "",
     rooms: "",
   })
+  const [location, setLocation] = useState(EMPTY_PROPERTY_LOCATION)
 
   const isValidPropertyId = Number.isFinite(propertyId)
 
@@ -129,6 +136,7 @@ export default function RealtorEditPropertyPage() {
           city: property.city ?? "",
           rooms: property.rooms?.toString() ?? "",
         })
+        setLocation(coordinatesFromProperty(property))
         setLoadState("ready")
       } catch (error) {
         console.error(error)
@@ -180,6 +188,7 @@ export default function RealtorEditPropertyPage() {
         rooms: Number(formData.rooms),
         image_url: property.image_url ?? "",
         status: propertyStatus,
+        ...buildCoordinatePayload(location),
       })
 
       setSaveMessage("Changes saved successfully")
@@ -348,6 +357,14 @@ export default function RealtorEditPropertyPage() {
                         onChange={handleChange}
                         aria-invalid={formData.city.trim().length === 0}
                         className={inputClassName}
+                      />
+                    </div>
+
+                    <div>
+                      <p className={labelClassName}>Approximate location</p>
+                      <PropertyLocationPicker
+                        value={location}
+                        onChange={setLocation}
                       />
                     </div>
 

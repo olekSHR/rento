@@ -143,6 +143,8 @@ type CreatePropertyData = {
   contact_name?: string
   phone?: string
   whatsapp?: string
+  latitude?: number | null
+  longitude?: number | null
 }
 
 export async function createProperty(data: CreatePropertyData) {
@@ -209,6 +211,8 @@ type UpdatePropertyData = {
   contact_name?: string
   phone?: string
   whatsapp?: string
+  latitude?: number | null
+  longitude?: number | null
 }
 
 export async function updateProperty(

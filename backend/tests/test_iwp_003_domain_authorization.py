@@ -344,6 +344,8 @@ def test_realtor_create_uses_current_user_profile_not_client_protected_fields(mo
         contact_name=None,
         phone=None,
         whatsapp=None,
+        latitude=None,
+        longitude=None,
     ):
         calls.append(
             {

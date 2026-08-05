@@ -26,6 +26,7 @@ import {
   getPropertyImages,
 } from "@/services/api"
 
+import { PropertyLocationSection } from "@/components/map/PropertyLocationSectionLazy"
 import type { Property } from "@/types/property"
 
 type Props = {
@@ -349,6 +350,12 @@ export default async function PropertyPage({ params }: Props) {
                 {property.description || "No description available."}
               </p>
             </section>
+
+            <PropertyLocationSection
+              latitude={property.latitude}
+              longitude={property.longitude}
+              city={property.city}
+            />
 
             {hasContactMethods && (
               <section

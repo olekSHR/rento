@@ -22,6 +22,8 @@ export type Property = {
   rooms: number | null
   image_url: string | null
   status: PropertyStatus
+  latitude?: number | null
+  longitude?: number | null
   images?: PropertyImage[]
   contact_name?: string | null
   phone?: string | null

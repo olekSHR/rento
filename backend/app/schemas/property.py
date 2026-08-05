@@ -1,6 +1,25 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, model_validator
+
+
+def validate_coordinate_pair(
+    latitude: float | None,
+    longitude: float | None,
+) -> None:
+    if (latitude is None) != (longitude is None):
+        raise ValueError(
+            "latitude and longitude must both be provided or both omitted"
+        )
+
+    if latitude is None:
+        return
+
+    if latitude < -90 or latitude > 90:
+        raise ValueError("latitude must be between -90 and 90")
+
+    if longitude < -180 or longitude > 180:
+        raise ValueError("longitude must be between -180 and 180")
 
 
 class PropertyCreate(BaseModel):
@@ -30,6 +49,15 @@ class PropertyCreate(BaseModel):
 
     image_url: str | None = None
 
+    latitude: float | None = None
+
+    longitude: float | None = None
+
+    @model_validator(mode="after")
+    def validate_coordinates(self):
+        validate_coordinate_pair(self.latitude, self.longitude)
+        return self
+
 
 class PropertyUpdate(BaseModel):
 
@@ -57,6 +85,15 @@ class PropertyUpdate(BaseModel):
     )
 
     image_url: str | None = None
+
+    latitude: float | None = None
+
+    longitude: float | None = None
+
+    @model_validator(mode="after")
+    def validate_coordinates(self):
+        validate_coordinate_pair(self.latitude, self.longitude)
+        return self
 
 
 class PropertyImageResponse(BaseModel):
@@ -149,6 +186,10 @@ class PropertyResponse(BaseModel):
     last_verified_at: datetime | None
 
     report_count: int = 0
+
+    latitude: float | None = None
+
+    longitude: float | None = None
 
     images: list[PropertyImageResponse] = []
 

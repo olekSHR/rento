@@ -278,7 +278,9 @@ def create_property(
         status,
         contact_name,
         phone,
-        whatsapp
+        whatsapp,
+        getattr(property_data, "latitude", None),
+        getattr(property_data, "longitude", None),
     )
 
     if current_user.role == "realtor":
@@ -304,6 +306,16 @@ def update_property(
         current_user,
     )
 
+    update_kwargs = {}
+    fields_set = getattr(property_data, "model_fields_set", None)
+
+    if fields_set is not None and (
+        "latitude" in fields_set
+        or "longitude" in fields_set
+    ):
+        update_kwargs["latitude"] = property_data.latitude
+        update_kwargs["longitude"] = property_data.longitude
+
     return property_repository.update_property(
         db,
         property_item,
@@ -313,6 +325,7 @@ def update_property(
         property_data.city,
         property_data.rooms,
         property_data.image_url,
+        **update_kwargs,
     )
 
 

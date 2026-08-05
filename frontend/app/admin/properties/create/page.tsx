@@ -8,7 +8,12 @@ import { useRouter } from "next/navigation"
 
 import AdminPageShell from "@/components/admin/AdminPageShell"
 import AdminRoute from "@/components/AdminRoute"
+import PropertyLocationPicker from "@/components/map/PropertyLocationPickerLazy"
 import { getImageUrl } from "@/lib/getImageUrl"
+import {
+  buildCoordinatePayload,
+  EMPTY_PROPERTY_LOCATION,
+} from "@/lib/propertyLocation"
 import {
   addPropertyImage,
   createProperty,
@@ -54,6 +59,7 @@ export default function CreatePropertyPage() {
     phone: "",
     whatsapp: "",
   })
+  const [location, setLocation] = useState(EMPTY_PROPERTY_LOCATION)
 
   const qualityChecks = [
     {
@@ -183,6 +189,7 @@ export default function CreatePropertyPage() {
         contact_name: formData.contact_name,
         phone: formData.phone,
         whatsapp: formData.whatsapp,
+        ...buildCoordinatePayload(location),
       })
 
       await Promise.all(
@@ -334,6 +341,14 @@ export default function CreatePropertyPage() {
                 value={formData.city}
                 onChange={handleChange}
                 className={fieldClassName}
+              />
+            </div>
+
+            <div>
+              <p className={labelClassName}>Approximate location</p>
+              <PropertyLocationPicker
+                value={location}
+                onChange={setLocation}
               />
             </div>
 

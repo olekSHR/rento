@@ -5,6 +5,7 @@ from sqlalchemy import (
     DateTime,
     Boolean,
     ForeignKey,
+    Numeric,
 )
 
 from sqlalchemy.orm import relationship
@@ -48,6 +49,16 @@ class Property(Base):
     city = Column(
         String,
         nullable=True
+    )
+
+    latitude = Column(
+        Numeric(9, 6),
+        nullable=True,
+    )
+
+    longitude = Column(
+        Numeric(9, 6),
+        nullable=True,
     )
 
     rooms = Column(

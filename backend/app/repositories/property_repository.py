@@ -8,6 +8,7 @@ from datetime import datetime, UTC
 
 
 PUBLIC_PROPERTY_STATUS = "available"
+_COORDINATES_UNSET = object()
 
 def get_all_properties(
     db: Session,
@@ -297,6 +298,8 @@ def create_property(
     contact_name: str | None = None,
     phone: str | None = None,
     whatsapp: str | None = None,
+    latitude: float | None = None,
+    longitude: float | None = None,
 ):
 
     new_property = models.Property(
@@ -311,6 +314,8 @@ def create_property(
         contact_name=contact_name,
         phone=phone,
         whatsapp=whatsapp,
+        latitude=latitude,
+        longitude=longitude,
     )
 
     db.add(new_property)
@@ -332,6 +337,8 @@ def update_property(
     city: str,
     rooms: int,
     image_url: str | None = None,
+    latitude=_COORDINATES_UNSET,
+    longitude=_COORDINATES_UNSET,
 ):
 
     property_item.title = title
@@ -339,6 +346,12 @@ def update_property(
     property_item.price = price
     property_item.city = city
     property_item.rooms = rooms
+
+    if latitude is not _COORDINATES_UNSET:
+        property_item.latitude = latitude
+
+    if longitude is not _COORDINATES_UNSET:
+        property_item.longitude = longitude
 
     if image_url is not None:
         property_item.image_url = image_url

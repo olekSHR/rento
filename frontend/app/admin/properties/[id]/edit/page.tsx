@@ -9,7 +9,13 @@ import { useParams, useRouter } from "next/navigation"
 import AdminGalleryManager from "@/components/admin/AdminGalleryManager"
 import AdminPageShell from "@/components/admin/AdminPageShell"
 import AdminRoute from "@/components/AdminRoute"
+import PropertyLocationPicker from "@/components/map/PropertyLocationPickerLazy"
 import { getImageUrl } from "@/lib/getImageUrl"
+import {
+  buildCoordinatePayload,
+  coordinatesFromProperty,
+  EMPTY_PROPERTY_LOCATION,
+} from "@/lib/propertyLocation"
 import {
   getPropertyById,
   updateProperty,
@@ -69,6 +75,7 @@ export default function EditPropertyPage() {
     phone: "",
     whatsapp: "",
   })
+  const [location, setLocation] = useState(EMPTY_PROPERTY_LOCATION)
 
   useEffect(() => {
     async function loadProperty() {
@@ -92,6 +99,7 @@ export default function EditPropertyPage() {
           phone: property.phone ?? "",
           whatsapp: property.whatsapp ?? "",
         })
+        setLocation(coordinatesFromProperty(property))
 
         setImagePreview(property.image_url ?? "")
       } catch (error) {
@@ -170,6 +178,7 @@ export default function EditPropertyPage() {
         contact_name: formData.contact_name,
         phone: formData.phone,
         whatsapp: formData.whatsapp,
+        ...buildCoordinatePayload(location),
       })
 
       router.push("/admin/properties")
@@ -342,6 +351,14 @@ export default function EditPropertyPage() {
                     value={formData.city}
                     onChange={handleChange}
                     className={fieldClassName}
+                  />
+                </div>
+
+                <div>
+                  <p className={labelClassName}>Approximate location</p>
+                  <PropertyLocationPicker
+                    value={location}
+                    onChange={setLocation}
                   />
                 </div>
 

@@ -7,7 +7,12 @@ import { useEffect, useMemo, useId, useRef, useState } from "react"
 import { BedDouble, MapPin, Upload } from "lucide-react"
 
 import RealtorRoute from "@/components/RealtorRoute"
+import PropertyLocationPicker from "@/components/map/PropertyLocationPickerLazy"
 import { getImageUrl } from "@/lib/getImageUrl"
+import {
+  buildCoordinatePayload,
+  EMPTY_PROPERTY_LOCATION,
+} from "@/lib/propertyLocation"
 import {
   addPropertyImage,
   createProperty,
@@ -120,6 +125,7 @@ export default function RealtorCreatePropertyPage() {
 
   const [formData, setFormData] = useState(EMPTY_FORM)
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
+  const [location, setLocation] = useState(EMPTY_PROPERTY_LOCATION)
 
   useEffect(() => {
     async function checkProfile() {
@@ -246,6 +252,7 @@ export default function RealtorCreatePropertyPage() {
         city: formData.city.trim(),
         rooms: Number(formData.rooms),
         ...(coverUrl ? { image_url: coverUrl } : {}),
+        ...buildCoordinatePayload(location),
       })
 
       const failedImages: string[] = []
@@ -452,6 +459,14 @@ export default function RealtorCreatePropertyPage() {
                       onChange={handleChange}
                       aria-invalid={formData.city.trim().length === 0}
                       className={inputClassName}
+                    />
+                  </div>
+
+                  <div>
+                    <p className={labelClassName}>Approximate location</p>
+                    <PropertyLocationPicker
+                      value={location}
+                      onChange={setLocation}
                     />
                   </div>
 
