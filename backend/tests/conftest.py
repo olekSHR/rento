@@ -2,6 +2,7 @@ import os
 import sys
 from pathlib import Path
 
+import pytest
 from pydantic_settings.sources.providers.dotenv import DotEnvSettingsSource
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -54,3 +55,12 @@ def _configure_thread_safe_sqlite_engine() -> None:
 
 
 _configure_thread_safe_sqlite_engine()
+
+
+@pytest.fixture(autouse=True)
+def disable_rate_limit_for_tests(monkeypatch):
+    from app.core import rate_limit as rate_limit_module
+    from app.core.config import settings
+
+    monkeypatch.setattr(settings, "RATE_LIMIT_ENABLED", False)
+    monkeypatch.setattr(rate_limit_module.limiter, "enabled", False)

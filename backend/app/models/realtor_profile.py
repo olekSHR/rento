@@ -20,6 +20,7 @@ class RealtorProfile(Base):
     full_name = Column(String, nullable=True)
     phone = Column(String, nullable=True)
     whatsapp = Column(String, nullable=True)
+    telegram_username = Column(String, nullable=True)
     agency_name = Column(String, nullable=True)
     avatar_url = Column(String, nullable=True)
     bio = Column(String, nullable=True)

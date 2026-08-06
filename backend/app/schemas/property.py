@@ -155,6 +155,26 @@ class PropertyCardResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+class PropertyRealtorSummary(BaseModel):
+
+    user_id: int
+
+    full_name: str | None = None
+
+    agency_name: str | None = None
+
+    avatar_url: str | None = None
+
+    is_verified: bool = False
+
+    member_since: datetime | None = None
+
+    active_listings_count: int = 0
+
+    telegram_username: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
+
 class PropertyResponse(BaseModel):
 
     id: int
@@ -192,6 +212,8 @@ class PropertyResponse(BaseModel):
     longitude: float | None = None
 
     images: list[PropertyImageResponse] = []
+
+    realtor: PropertyRealtorSummary | None = None
 
     model_config = ConfigDict(from_attributes=True)
 

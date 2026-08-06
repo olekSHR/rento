@@ -12,6 +12,17 @@ export type PropertyImage = {
   sort_order: number
 }
 
+export type PropertyRealtorSummary = {
+  user_id: number
+  full_name?: string | null
+  agency_name?: string | null
+  avatar_url?: string | null
+  is_verified: boolean
+  member_since?: string | null
+  active_listings_count: number
+  telegram_username?: string | null
+}
+
 export type Property = {
   id: number
   owner_id?: number | null
@@ -31,4 +42,5 @@ export type Property = {
   avatar_url?: string | null
   last_verified_at?: string | null
   report_count?: number
+  realtor?: PropertyRealtorSummary | null
 }

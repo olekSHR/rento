@@ -526,6 +526,7 @@ export type RealtorProfile = {
   full_name: string | null
   phone: string | null
   whatsapp: string | null
+  telegram_username: string | null
   agency_name: string | null
   avatar_url: string | null
   bio: string | null
@@ -540,6 +541,7 @@ export type RealtorProfileUpdate = {
   full_name?: string
   phone?: string
   whatsapp?: string
+  telegram_username?: string
   agency_name?: string
   avatar_url?: string
   bio?: string

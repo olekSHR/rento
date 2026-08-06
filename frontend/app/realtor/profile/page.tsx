@@ -217,6 +217,7 @@ export default function RealtorProfilePage() {
     full_name: "",
     phone: "",
     whatsapp: "",
+    telegram_username: "",
     agency_name: "",
     avatar_url: "",
     bio: "",
@@ -256,6 +257,7 @@ export default function RealtorProfilePage() {
           full_name: data.full_name || "",
           phone: data.phone || "",
           whatsapp: data.whatsapp || "",
+          telegram_username: data.telegram_username || "",
           agency_name: data.agency_name || "",
           avatar_url: data.avatar_url || "",
           bio: data.bio || "",
@@ -300,6 +302,7 @@ export default function RealtorProfilePage() {
         full_name: formData.full_name,
         phone: formData.phone,
         whatsapp: formData.whatsapp,
+        telegram_username: formData.telegram_username,
         agency_name: formData.agency_name,
         bio: formData.bio,
         city: formData.city,
@@ -790,6 +793,29 @@ export default function RealtorProfilePage() {
                         className={inputClassName}
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="realtor-profile-telegram-username"
+                      className={labelClassName}
+                    >
+                      Telegram username
+                    </label>
+                    <input
+                      id="realtor-profile-telegram-username"
+                      type="text"
+                      name="telegram_username"
+                      autoComplete="off"
+                      placeholder="@username"
+                      value={formData.telegram_username}
+                      onChange={handleChange}
+                      disabled={isSaving}
+                      className={inputClassName}
+                    />
+                    <p className="mt-2 text-xs text-[#B8B8B8]">
+                      Optional. Used for the Telegram contact button on your listings.
+                    </p>
                   </div>
 
                   <div>

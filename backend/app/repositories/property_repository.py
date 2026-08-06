@@ -139,6 +139,19 @@ def get_properties_by_owner_id(
         "offset": offset
     }
 
+def count_available_by_owner_id(
+    db: Session,
+    owner_id: int,
+) -> int:
+    return (
+        db.query(models.Property)
+        .filter(
+            models.Property.owner_id == owner_id,
+            models.Property.status == PUBLIC_PROPERTY_STATUS,
+        )
+        .count()
+    )
+
 def get_property_by_id(
     db: Session,
     property_id: int

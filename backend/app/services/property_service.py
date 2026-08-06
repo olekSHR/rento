@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 
+from types import SimpleNamespace
+
 from app.repositories import property_repository, realtor_profile_repository
 from app.core.exceptions import BadRequestException, ForbiddenException, NotFoundException
 from app.core.observability.signals import emit_privileged_signal, emit_transition_signal
@@ -25,6 +27,46 @@ def _apply_profile_contacts(property_item, profile):
     property_item.phone = profile.phone
     property_item.whatsapp = profile.whatsapp
     property_item.avatar_url = profile.avatar_url
+
+    return property_item
+
+
+def _attach_realtor_summary(db: Session, property_item):
+    property_item.realtor = None
+
+    if not property_item.owner_id:
+        return property_item
+
+    profile = realtor_profile_repository.get_by_user_id(
+        db,
+        property_item.owner_id,
+    )
+
+    if not profile:
+        return property_item
+
+    active_listings_count = property_repository.count_available_by_owner_id(
+        db,
+        property_item.owner_id,
+    )
+
+    property_item.realtor = SimpleNamespace(
+        user_id=property_item.owner_id,
+        full_name=profile.full_name,
+        agency_name=profile.agency_name,
+        avatar_url=profile.avatar_url,
+        is_verified=bool(profile.is_verified),
+        member_since=profile.created_at,
+        active_listings_count=active_listings_count,
+        telegram_username=profile.telegram_username,
+    )
+
+    return property_item
+
+
+def _resolve_public_property_view(db: Session, property_item):
+    property_item = _resolve_property_contacts_from_profile(db, property_item)
+    property_item = _attach_realtor_summary(db, property_item)
 
     return property_item
 
@@ -197,7 +239,7 @@ def get_property_by_id_for_viewer(
                 "Property not found"
             )
 
-        return _resolve_property_contacts_from_profile(db, property_item)
+        return _resolve_public_property_view(db, property_item)
 
     if current_user.role == "admin":
 
@@ -219,7 +261,7 @@ def get_property_by_id_for_viewer(
             "Property not found"
         )
 
-    return _resolve_property_contacts_from_profile(db, property_item)
+    return _resolve_public_property_view(db, property_item)
 
 
 def get_property_images_for_viewer(
