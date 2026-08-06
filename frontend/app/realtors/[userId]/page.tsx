@@ -11,6 +11,7 @@ import { RealtorAvatarEnlargeTrigger } from "@/components/RealtorAvatarLightbox"
 import { RealtorContactActions } from "@/components/RealtorContactActions"
 import { SAFE_BOTTOM_CONTENT_CLASS } from "@/lib/bottomNavLayout"
 import { getImageUrl } from "@/lib/getImageUrl"
+import { isApiHttpError } from "@/lib/apiError"
 import { getPublicRealtorProfile } from "@/services/api"
 import type { PublicRealtorProfilePage } from "@/types/publicRealtor"
 import type { PropertyRealtorSummary } from "@/types/property"
@@ -71,6 +72,14 @@ function toTrustCardRealtor(
   }
 }
 
+function handlePublicRealtorProfileError(error: unknown): never {
+  if (isApiHttpError(error) && error.status === 404) {
+    notFound()
+  }
+
+  throw error
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { userId } = await params
   const parsedUserId = Number(userId)
@@ -79,12 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `/realtors/${encodeURIComponent(userId)}`
 
   if (!Number.isFinite(parsedUserId)) {
-    return {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }
+    notFound()
   }
 
   try {
@@ -107,13 +111,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         follow: true,
       },
     }
-  } catch {
-    return {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }
+  } catch (error) {
+    handlePublicRealtorProfileError(error)
   }
 }
 
@@ -129,8 +128,8 @@ export default async function PublicRealtorProfilePage({ params }: Props) {
 
   try {
     profile = await getPublicRealtorProfile(parsedUserId)
-  } catch {
-    notFound()
+  } catch (error) {
+    handlePublicRealtorProfileError(error)
   }
 
   const { realtor, properties } = profile

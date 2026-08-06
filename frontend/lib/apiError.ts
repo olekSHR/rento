@@ -28,3 +28,17 @@ export async function parseApiErrorMessage(
 
   return fallback
 }
+
+export class ApiHttpError extends Error {
+  readonly status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.name = "ApiHttpError"
+    this.status = status
+  }
+}
+
+export function isApiHttpError(error: unknown): error is ApiHttpError {
+  return error instanceof ApiHttpError
+}

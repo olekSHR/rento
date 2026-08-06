@@ -1,6 +1,6 @@
 import { getServerApiBaseUrl } from "@/lib/apiBaseUrl"
 import { getCsrfHeaderValue } from "@/lib/csrf"
-import { parseApiErrorMessage } from "@/lib/apiError"
+import { parseApiErrorMessage, ApiHttpError } from "@/lib/apiError"
 import { dispatchAuthUnauthorized } from "@/lib/authSessionEvents"
 import { normalizeImagePath } from "@/lib/getImageUrl"
 import type { NearbyInfrastructureResponse } from "@/types/nearbyInfrastructure"
@@ -144,8 +144,9 @@ export async function getPublicRealtorProfile(
   })
 
   if (!response.ok) {
-    throw new Error(
-      await parseApiErrorMessage(response, "Failed to fetch realtor profile")
+    throw new ApiHttpError(
+      await parseApiErrorMessage(response, "Failed to fetch realtor profile"),
+      response.status
     )
   }
 
