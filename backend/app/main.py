@@ -15,6 +15,7 @@ from app.routers import realtor_applications
 from app.routers import ai
 from app.routers import admin_stats
 from app.routers import admin_users
+from app.routers import public_realtors
 from app.database.database import engine
 from app.core.exceptions import (
     NotFoundException,
@@ -90,6 +91,7 @@ app.include_router(realtor_applications.router)
 app.include_router(ai.router)
 app.include_router(admin_stats.router)
 app.include_router(admin_users.router)
+app.include_router(public_realtors.router)
 app.add_exception_handler(
     NotFoundException,
     not_found_exception_handler,

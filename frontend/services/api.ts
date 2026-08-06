@@ -4,6 +4,7 @@ import { parseApiErrorMessage } from "@/lib/apiError"
 import { dispatchAuthUnauthorized } from "@/lib/authSessionEvents"
 import { normalizeImagePath } from "@/lib/getImageUrl"
 import type { NearbyInfrastructureResponse } from "@/types/nearbyInfrastructure"
+import type { PublicRealtorProfilePage } from "@/types/publicRealtor"
 import type { PropertyImage } from "@/types/property"
 
 const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"])
@@ -127,6 +128,24 @@ export async function getPropertyById(
   if (!response.ok) {
     throw new Error(
       await parseApiErrorMessage(response, "Failed to fetch property")
+    )
+  }
+
+  return response.json()
+}
+
+export async function getPublicRealtorProfile(
+  userId: number
+): Promise<PublicRealtorProfilePage> {
+  const url = `${getServerApiBaseUrl()}/realtors/${userId}`
+
+  const response = await fetch(url, {
+    cache: "no-store",
+  })
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Failed to fetch realtor profile")
     )
   }
 

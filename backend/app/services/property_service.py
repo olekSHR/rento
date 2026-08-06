@@ -1,9 +1,8 @@
 from sqlalchemy.orm import Session
 
-from types import SimpleNamespace
-
 from app.repositories import property_repository, realtor_profile_repository
 from app.core.exceptions import BadRequestException, ForbiddenException, NotFoundException
+from app.services.realtor_public_summary import build_realtor_public_summary
 from app.core.observability.signals import emit_privileged_signal, emit_transition_signal
 from app.core.upload_cleanup import collect_property_upload_urls, delete_upload_files
 
@@ -50,15 +49,10 @@ def _attach_realtor_summary(db: Session, property_item):
         property_item.owner_id,
     )
 
-    property_item.realtor = SimpleNamespace(
-        user_id=property_item.owner_id,
-        full_name=profile.full_name,
-        agency_name=profile.agency_name,
-        avatar_url=profile.avatar_url,
-        is_verified=bool(profile.is_verified),
-        member_since=profile.created_at,
-        active_listings_count=active_listings_count,
-        telegram_username=profile.telegram_username,
+    property_item.realtor = build_realtor_public_summary(
+        profile,
+        property_item.owner_id,
+        active_listings_count,
     )
 
     return property_item

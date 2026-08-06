@@ -139,6 +139,38 @@ def get_properties_by_owner_id(
         "offset": offset
     }
 
+def get_available_properties_by_owner_id(
+    db: Session,
+    owner_id: int,
+    limit: int = 12,
+    offset: int = 0,
+):
+    query = (
+        db.query(models.Property)
+        .filter(
+            models.Property.owner_id == owner_id,
+            models.Property.status == PUBLIC_PROPERTY_STATUS,
+        )
+        .order_by(models.Property.created_at.desc())
+    )
+
+    total = query.count()
+
+    items = (
+        query
+        .limit(limit)
+        .offset(offset)
+        .all()
+    )
+
+    return {
+        "items": items,
+        "total": total,
+        "limit": limit,
+        "offset": offset,
+    }
+
+
 def count_available_by_owner_id(
     db: Session,
     owner_id: int,
