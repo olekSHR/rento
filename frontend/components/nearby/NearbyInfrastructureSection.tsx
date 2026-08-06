@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import type { LucideIcon } from "lucide-react"
 import {
   Bus,
@@ -10,6 +10,8 @@ import {
   Trees,
 } from "lucide-react"
 
+import { AreaLifestyleCard } from "@/components/nearby/AreaLifestyleCard"
+import { buildAreaLifestyleItems } from "@/lib/areaLifestyle"
 import { getPropertyNearby } from "@/services/api"
 import type { NearbyInfrastructureItem } from "@/types/nearbyInfrastructure"
 
@@ -49,12 +51,43 @@ function NearbyRow({ item }: { item: NearbyInfrastructureItem }) {
   )
 }
 
+function LifestyleSkeleton() {
+  return (
+    <div className={`${shellClassName} mt-4 space-y-2.5`}>
+      {Array.from({ length: 4 }).map((_, index) => (
+        <div
+          key={index}
+          className="h-5 animate-pulse rounded-lg bg-white/10 motion-reduce:animate-none"
+        />
+      ))}
+    </div>
+  )
+}
+
+function NearbySkeleton() {
+  return (
+    <div className={`${shellClassName} mt-4 space-y-3`}>
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div
+          key={index}
+          className="h-10 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none"
+        />
+      ))}
+    </div>
+  )
+}
+
 export default function NearbyInfrastructureSection({
   propertyId,
 }: NearbyInfrastructureSectionProps) {
   const [items, setItems] = useState<NearbyInfrastructureItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isVisible, setIsVisible] = useState(false)
+
+  const lifestyleItems = useMemo(
+    () => buildAreaLifestyleItems(items),
+    [items]
+  )
 
   useEffect(() => {
     let cancelled = false
@@ -98,41 +131,55 @@ export default function NearbyInfrastructureSection({
   }
 
   return (
-    <section aria-labelledby="property-nearby-heading" className="mt-8">
-      <h2
-        id="property-nearby-heading"
-        className="text-xl font-semibold tracking-tight text-[#F5F5F5]"
+    <>
+      <section
+        aria-labelledby="property-area-lifestyle-heading"
+        className="mt-8"
       >
-        Nearby
-      </h2>
-
-      {isLoading ? (
-        <div
-          className={`${shellClassName} mt-4 space-y-3`}
-          role="status"
-          aria-live="polite"
+        <h2
+          id="property-area-lifestyle-heading"
+          className="text-xl font-semibold tracking-tight text-[#F5F5F5]"
         >
-          <span className="sr-only">Loading nearby places</span>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-10 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none"
-            />
-          ))}
-        </div>
-      ) : (
-        <div className={`${shellClassName} mt-4`}>
-          <ul className="divide-y divide-white/8">
-            {items.map((item) => (
-              <NearbyRow key={item.category} item={item} />
-            ))}
-          </ul>
-          <p className="mt-4 text-[11px] leading-relaxed text-[#B8B8B8]">
-            Straight-line distances from the approximate map point. Data from
-            OpenStreetMap contributors.
-          </p>
-        </div>
-      )}
-    </section>
+          Area at a glance
+        </h2>
+
+        {isLoading ? (
+          <div role="status" aria-live="polite">
+            <span className="sr-only">Loading area summary</span>
+            <LifestyleSkeleton />
+          </div>
+        ) : (
+          <AreaLifestyleCard items={lifestyleItems} />
+        )}
+      </section>
+
+      <section aria-labelledby="property-nearby-heading" className="mt-6">
+        <h2
+          id="property-nearby-heading"
+          className="text-xl font-semibold tracking-tight text-[#F5F5F5]"
+        >
+          Nearby
+        </h2>
+
+        {isLoading ? (
+          <div role="status" aria-live="polite">
+            <span className="sr-only">Loading nearby places</span>
+            <NearbySkeleton />
+          </div>
+        ) : (
+          <div className={`${shellClassName} mt-4`}>
+            <ul className="divide-y divide-white/8">
+              {items.map((item) => (
+                <NearbyRow key={item.category} item={item} />
+              ))}
+            </ul>
+            <p className="mt-4 text-[11px] leading-relaxed text-[#B8B8B8]">
+              Straight-line distances from the approximate map point. Data from
+              OpenStreetMap contributors.
+            </p>
+          </div>
+        )}
+      </section>
+    </>
   )
 }
