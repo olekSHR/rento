@@ -174,6 +174,17 @@ function RealtorViewingRequestsContent() {
                   </p>
                 ) : null}
 
+                {item.status === "accepted" ? (
+                  <div className="mt-5">
+                    <Link
+                      href={`/properties/${item.property_id}#property-documents`}
+                      className="inline-flex h-11 items-center justify-center rounded-2xl border border-white/15 bg-[#252525] px-4 text-sm font-semibold text-[#F5F5F5] transition active:scale-[0.98]"
+                    >
+                      Manage rental documents
+                    </Link>
+                  </div>
+                ) : null}
+
                 {item.status === "pending" ? (
                   <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                     <button

@@ -6,3 +6,4 @@ from app.models.realtor_application import RealtorApplication
 from app.models.password_reset_token import PasswordResetToken
 from app.models.auth_session import AuthSession
 from app.models.viewing_request import ViewingRequest
+from app.models.rental_document import RentalDocument

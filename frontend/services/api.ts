@@ -7,6 +7,11 @@ import type { NearbyInfrastructureResponse } from "@/types/nearbyInfrastructure"
 import type { PublicRealtorProfilePage } from "@/types/publicRealtor"
 import type { PropertyImage } from "@/types/property"
 import type {
+  RentalDocument,
+  RentalDocumentListResponse,
+  RentalDocumentType,
+} from "@/types/rentalDocument"
+import type {
   ViewingRequest,
   ViewingRequestListResponse,
   ViewingRequestRealtor,
@@ -1085,4 +1090,93 @@ export async function declineViewingRequest(
   }
 
   return response.json()
+}
+
+export async function getRentalDocuments(
+  viewingRequestId: number
+): Promise<RentalDocumentListResponse> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/viewing-requests/${viewingRequestId}/rental-documents`
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load rental documents.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function uploadRentalDocument(
+  viewingRequestId: number,
+  file: File,
+  documentType: RentalDocumentType,
+  title?: string
+): Promise<RentalDocument> {
+  const formData = new FormData()
+  formData.append("file", file)
+  formData.append("document_type", documentType)
+
+  if (title?.trim()) {
+    formData.append("title", title.trim())
+  }
+
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/viewing-requests/${viewingRequestId}/rental-documents`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to upload rental document.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function archiveRentalDocument(
+  documentId: number
+): Promise<RentalDocument> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/rental-documents/${documentId}/archive`,
+    {
+      method: "POST",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to archive rental document.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function downloadRentalDocument(documentId: number): Promise<void> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/rental-documents/${documentId}/download`
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to download rental document.")
+    )
+  }
+
+  const blob = await response.blob()
+  const disposition = response.headers.get("Content-Disposition") ?? ""
+  const filenameMatch = disposition.match(/filename="?([^"]+)"?/)
+  const filename = filenameMatch?.[1] ?? "document.pdf"
+  const objectUrl = URL.createObjectURL(blob)
+  const link = document.createElement("a")
+  link.href = objectUrl
+  link.download = filename
+  link.click()
+  URL.revokeObjectURL(objectUrl)
 }

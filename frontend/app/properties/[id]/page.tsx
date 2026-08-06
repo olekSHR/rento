@@ -28,6 +28,7 @@ import {
 import { PropertyTrustCard } from "@/components/PropertyTrustCard"
 import { RealtorContactActions } from "@/components/RealtorContactActions"
 import RequestViewingSection from "@/components/RequestViewingSection"
+import RentalDocumentsSection from "@/components/RentalDocumentsSection"
 import { PropertyLocationSection } from "@/components/map/PropertyLocationSectionLazy"
 import { NearbyInfrastructureSectionLazy } from "@/components/nearby/NearbyInfrastructureSectionLazy"
 import type { Property } from "@/types/property"
@@ -428,6 +429,8 @@ export default async function PropertyPage({ params }: Props) {
                 />
               </section>
             )}
+
+            <RentalDocumentsSection propertyId={property.id} />
 
             <ReportButton propertyId={property.id} />
 

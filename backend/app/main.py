@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
+
+from app.core.public_uploads import PublicUploadsStaticFiles
 
 
 
@@ -17,6 +18,7 @@ from app.routers import admin_stats
 from app.routers import admin_users
 from app.routers import public_realtors
 from app.routers import viewing_requests
+from app.routers import rental_documents
 from app.database.database import engine
 from app.core.exceptions import (
     NotFoundException,
@@ -80,7 +82,7 @@ app.add_middleware(
 
 app.mount(
     "/uploads",
-    StaticFiles(directory="uploads"),
+    PublicUploadsStaticFiles(directory="uploads"),
     name="uploads",
 )
 
@@ -97,6 +99,7 @@ app.include_router(admin_users.router)
 app.include_router(public_realtors.router)
 app.include_router(viewing_requests.router)
 app.include_router(viewing_requests.realtor_router)
+app.include_router(rental_documents.router)
 app.add_exception_handler(
     NotFoundException,
     not_found_exception_handler,

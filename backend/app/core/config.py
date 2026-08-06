@@ -40,6 +40,8 @@ class Settings(BaseSettings):
 
     RATE_LIMIT_VIEWING_REQUEST: str = "10/hour"
 
+    MAX_DOCUMENT_UPLOAD_BYTES: int = 15 * 1024 * 1024
+
     ENABLE_API_DOCS: bool = False
 
     SESSION_COOKIE_NAME: str = "rento_session"

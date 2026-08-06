@@ -46,6 +46,7 @@ from app.models import (
     RealtorProfile,
     User,
     ViewingRequest,
+    RentalDocument,
 )
 
 # Import every model class so Alembic autogenerate sees the complete metadata set.
@@ -57,6 +58,7 @@ _registered_models = (
     RealtorProfile,
     User,
     ViewingRequest,
+    RentalDocument,
 )
 
 target_metadata = Base.metadata
