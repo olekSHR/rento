@@ -16,12 +16,14 @@ from app.routers import ai
 from app.routers import admin_stats
 from app.routers import admin_users
 from app.routers import public_realtors
+from app.routers import viewing_requests
 from app.database.database import engine
 from app.core.exceptions import (
     NotFoundException,
     BadRequestException,
     UnauthorizedException,
     ForbiddenException,
+    ConflictException,
 )
 
 from app.core.handlers import (
@@ -29,6 +31,7 @@ from app.core.handlers import (
     bad_request_exception_handler,
     unauthorized_exception_handler,
     forbidden_exception_handler,
+    conflict_exception_handler,
 )
 from app.core.config import settings
 from app.core.rate_limit import register_rate_limiting
@@ -92,6 +95,8 @@ app.include_router(ai.router)
 app.include_router(admin_stats.router)
 app.include_router(admin_users.router)
 app.include_router(public_realtors.router)
+app.include_router(viewing_requests.router)
+app.include_router(viewing_requests.realtor_router)
 app.add_exception_handler(
     NotFoundException,
     not_found_exception_handler,
@@ -110,6 +115,11 @@ app.add_exception_handler(
 app.add_exception_handler(
     ForbiddenException,
     forbidden_exception_handler,
+)
+
+app.add_exception_handler(
+    ConflictException,
+    conflict_exception_handler,
 )
 
 

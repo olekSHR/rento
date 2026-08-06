@@ -85,3 +85,22 @@ async def unauthorized_exception_handler(
             "message": exc.detail
         }
     )
+
+
+async def conflict_exception_handler(
+    request: Request,
+    exc,
+):
+    emit_failure_signal(
+        "conflict",
+        path=_request_path(request),
+        status_code=409,
+    )
+
+    return JSONResponse(
+        status_code=409,
+        content={
+            "success": False,
+            "message": exc.detail
+        }
+    )

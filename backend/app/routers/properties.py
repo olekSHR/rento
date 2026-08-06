@@ -1,5 +1,5 @@
 from app.schemas.property import PropertyImageCreate, PropertyImageResponse
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.orm import Session
 from app.schemas.common import MessageResponse
 from app.database.database import get_db
@@ -10,12 +10,21 @@ from app.schemas.property import (
     PropertyCardResponse,
     PropertyListResponse
 )
+from app.schemas.viewing_request import (
+    ViewingRequestCreate,
+    ViewingRequestRenterResponse,
+)
+
+from app.core.config import settings
+from app.core.rate_limit import get_upload_rate_limit_key, limiter
 
 from app.services import property_service
 from app.services import nearby_infrastructure_service
+from app.services import viewing_request_service
 from app.schemas.nearby_infrastructure import NearbyInfrastructureResponse
 
 from app.core.security.dependencies import (
+    get_current_user,
     get_current_user_optional,
     require_admin,
     require_admin_or_realtor,
@@ -320,3 +329,27 @@ def delete_property_image(
         "success": True,
         "message": "Image deleted"
     }
+
+
+@router.post(
+    "/{property_id}/viewing-requests",
+    response_model=ViewingRequestRenterResponse,
+    status_code=201,
+)
+@limiter.limit(
+    settings.RATE_LIMIT_VIEWING_REQUEST,
+    key_func=get_upload_rate_limit_key,
+)
+def create_viewing_request(
+    property_id: int,
+    request_data: ViewingRequestCreate,
+    request: Request,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    return viewing_request_service.create_viewing_request(
+        db,
+        current_user,
+        property_id,
+        request_data.message,
+    )

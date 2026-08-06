@@ -6,6 +6,12 @@ import { normalizeImagePath } from "@/lib/getImageUrl"
 import type { NearbyInfrastructureResponse } from "@/types/nearbyInfrastructure"
 import type { PublicRealtorProfilePage } from "@/types/publicRealtor"
 import type { PropertyImage } from "@/types/property"
+import type {
+  ViewingRequest,
+  ViewingRequestListResponse,
+  ViewingRequestRealtor,
+  ViewingRequestRealtorListResponse,
+} from "@/types/viewingRequest"
 
 const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"])
 
@@ -889,6 +895,192 @@ export async function updateAdminUserAccountStatus(
   if (!response.ok) {
     throw new Error(
       await parseApiErrorMessage(response, "Unable to update account status.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function createViewingRequest(
+  propertyId: number,
+  message?: string | null
+): Promise<ViewingRequest> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/properties/${propertyId}/viewing-requests`,
+    {
+      method: "POST",
+      body: JSON.stringify({ message: message ?? null }),
+    }
+  )
+
+  if (response.status === 401) {
+    throw new Error("Please sign in to request a viewing.")
+  }
+
+  if (response.status === 409) {
+    throw new Error(
+      await parseApiErrorMessage(
+        response,
+        "You already have an active viewing request for this property."
+      )
+    )
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to submit viewing request.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function getMyViewingRequests(options?: {
+  propertyId?: number
+  status?: string
+  limit?: number
+  offset?: number
+}): Promise<ViewingRequestListResponse> {
+  const params = new URLSearchParams()
+
+  if (options?.propertyId !== undefined) {
+    params.set("property_id", String(options.propertyId))
+  }
+
+  if (options?.status) {
+    params.set("status", options.status)
+  }
+
+  if (options?.limit !== undefined) {
+    params.set("limit", String(options.limit))
+  }
+
+  if (options?.offset !== undefined) {
+    params.set("offset", String(options.offset))
+  }
+
+  const query = params.toString()
+  const url = query
+    ? `${getServerApiBaseUrl()}/viewing-requests?${query}`
+    : `${getServerApiBaseUrl()}/viewing-requests`
+
+  const response = await sessionFetch(url, {
+    cache: "no-store",
+  })
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load viewing requests.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function cancelViewingRequest(
+  requestId: number
+): Promise<ViewingRequest> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/viewing-requests/${requestId}/cancel`,
+    {
+      method: "PATCH",
+    }
+  )
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to cancel viewing request.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function getRealtorViewingRequests(options?: {
+  status?: string
+  limit?: number
+  offset?: number
+}): Promise<ViewingRequestRealtorListResponse> {
+  const params = new URLSearchParams()
+
+  if (options?.status) {
+    params.set("status", options.status)
+  }
+
+  if (options?.limit !== undefined) {
+    params.set("limit", String(options.limit))
+  }
+
+  if (options?.offset !== undefined) {
+    params.set("offset", String(options.offset))
+  }
+
+  const query = params.toString()
+  const url = query
+    ? `${getServerApiBaseUrl()}/realtor/viewing-requests?${query}`
+    : `${getServerApiBaseUrl()}/realtor/viewing-requests`
+
+  const response = await sessionFetch(url, {
+    cache: "no-store",
+  })
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (response.status === 403) {
+    throw new Error("Only realtors can access viewing requests.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load viewing requests.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function acceptViewingRequest(
+  requestId: number
+): Promise<ViewingRequestRealtor> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/realtor/viewing-requests/${requestId}/accept`,
+    {
+      method: "PATCH",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to accept viewing request.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function declineViewingRequest(
+  requestId: number
+): Promise<ViewingRequestRealtor> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/realtor/viewing-requests/${requestId}/decline`,
+    {
+      method: "PATCH",
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to decline viewing request.")
     )
   }
 

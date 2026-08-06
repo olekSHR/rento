@@ -27,6 +27,7 @@ import {
 
 import { PropertyTrustCard } from "@/components/PropertyTrustCard"
 import { RealtorContactActions } from "@/components/RealtorContactActions"
+import RequestViewingSection from "@/components/RequestViewingSection"
 import { PropertyLocationSection } from "@/components/map/PropertyLocationSectionLazy"
 import { NearbyInfrastructureSectionLazy } from "@/components/nearby/NearbyInfrastructureSectionLazy"
 import type { Property } from "@/types/property"
@@ -197,6 +198,10 @@ export default async function PropertyPage({ params }: Props) {
     property.phone || property.whatsapp || property.realtor?.telegram_username
   )
   const showContactSection = Boolean(property.realtor || hasContactMethods)
+  const canRequestViewing =
+    property.status === "available" &&
+    Boolean(property.owner_id) &&
+    Boolean(property.realtor)
   const hasCoordinates =
     getPropertyCoordinates(property.latitude, property.longitude) !== null
 
@@ -397,6 +402,29 @@ export default async function PropertyPage({ params }: Props) {
                   phone={property.phone}
                   whatsapp={property.whatsapp}
                   telegramUsername={property.realtor?.telegram_username}
+                />
+
+                <RequestViewingSection
+                  propertyId={property.id}
+                  canRequest={canRequestViewing}
+                />
+              </section>
+            )}
+
+            {!showContactSection && canRequestViewing && (
+              <section
+                aria-labelledby="property-viewing-heading"
+                className="mt-8 scroll-mt-6 rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5"
+              >
+                <h2
+                  id="property-viewing-heading"
+                  className="text-xs font-medium uppercase tracking-[0.12em] text-[#B8B8B8]"
+                >
+                  Viewing
+                </h2>
+                <RequestViewingSection
+                  propertyId={property.id}
+                  canRequest={canRequestViewing}
                 />
               </section>
             )}

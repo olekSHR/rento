@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense, useState } from "react"
 
 import AuthField from "@/components/auth/AuthField"
 import AuthShell, {
@@ -14,10 +14,15 @@ import AuthShell, {
   authSecondaryTextClassName,
 } from "@/components/auth/AuthShell"
 import { useAuth } from "@/context/AuthContext"
+import { sanitizeReturnUrl } from "@/lib/returnUrl"
 
 const FORM_ERROR_ID = "login-form-error"
 
-function getPostLoginPath(role: string): string {
+function getPostLoginPath(role: string, returnUrl: string | null): string {
+  if (returnUrl) {
+    return returnUrl
+  }
+
   if (role === "admin") {
     return "/admin"
   }
@@ -29,8 +34,10 @@ function getPostLoginPath(role: string): string {
   return "/"
 }
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const returnUrl = sanitizeReturnUrl(searchParams.get("returnUrl"))
 
   const { login } = useAuth()
 
@@ -53,7 +60,7 @@ export default function LoginPage() {
         password,
       })
 
-      router.push(getPostLoginPath(user.role))
+      router.push(getPostLoginPath(user.role, returnUrl))
     } catch (err) {
       if (err instanceof Error && err.message) {
         setError(err.message)
@@ -131,10 +138,25 @@ export default function LoginPage() {
 
       <p className={`mt-4 text-center ${authSecondaryTextClassName}`}>
         Don&apos;t have an account?{" "}
-        <Link href="/register" className={authLinkClassName}>
+        <Link
+          href={
+            returnUrl
+              ? `/register?returnUrl=${encodeURIComponent(returnUrl)}`
+              : "/register"
+          }
+          className={authLinkClassName}
+        >
           Create account
         </Link>
       </p>
     </AuthShell>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   )
 }

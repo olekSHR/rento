@@ -863,6 +863,24 @@ export default function RealtorWorkspacePage() {
           </Link>
         )}
 
+        <Link
+          href="/realtor/viewing-requests"
+          className={`flex items-center justify-between ${workspaceCardClassName} transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]`}
+        >
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#DFC58A]">
+              Inbox
+            </p>
+            <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">
+              Viewing requests
+            </p>
+            <p className="mt-0.5 text-xs text-[#B8B8B8]">
+              Review renter viewing requests for your listings
+            </p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-[#B8B8B8]" aria-hidden="true" />
+        </Link>
+
         {continueEditingProperty && (
           <Link
             href={`/realtor/properties/${continueEditingProperty.id}/edit`}
