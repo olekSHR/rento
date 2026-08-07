@@ -267,7 +267,7 @@ export default async function PropertyPage({ params }: Props) {
                 <span>{verificationLabel}</span>
               </div>
 
-              <h1 className="mt-4 text-[1.75rem] font-semibold leading-tight tracking-tight text-[#F5F5F5] md:text-[2rem]">
+              <h1 className="mt-4 break-words text-[1.75rem] font-semibold leading-tight tracking-tight text-[#F5F5F5] md:text-[2rem]">
                 {property.title}
               </h1>
 
@@ -359,7 +359,7 @@ export default async function PropertyPage({ params }: Props) {
                 About this property
               </h2>
 
-              <p className="mt-4 max-w-3xl text-[15px] leading-7 text-[#B8B8B8]">
+              <p className="mt-4 max-w-3xl break-words text-[15px] leading-7 text-[#B8B8B8]">
                 {property.description || "No description available."}
               </p>
             </section>
