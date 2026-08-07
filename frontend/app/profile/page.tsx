@@ -235,6 +235,32 @@ export default function ProfilePage() {
                 </div>
               </section>
 
+              <section
+                aria-labelledby="profile-viewing-heading"
+                className={profileCardClassName}
+              >
+                <h2
+                  id="profile-viewing-heading"
+                  className="text-sm font-semibold text-[#F5F5F5]"
+                >
+                  Viewing requests
+                </h2>
+
+                <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+                  Track submitted viewing requests and follow next steps for
+                  accepted listings.
+                </p>
+
+                <div className="mt-4">
+                  <Link
+                    href="/viewing-requests"
+                    className={profilePrimaryCtaClassName}
+                  >
+                    View Viewing Requests
+                  </Link>
+                </div>
+              </section>
+
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
                 <section
                   aria-labelledby="profile-recent-heading"
