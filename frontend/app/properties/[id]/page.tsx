@@ -320,6 +320,7 @@ export default async function PropertyPage({ params }: Props) {
                   {hasContactMethods ? (
                     <a
                       href="#property-contact"
+                      aria-label={`View contact options for ${realtorDisplayName}`}
                       className="flex min-w-0 flex-1 items-center gap-2 rounded-xl py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
                     >
                       <div className="min-w-0 flex-1">
@@ -327,7 +328,7 @@ export default async function PropertyPage({ params }: Props) {
                           {realtorDisplayName}
                         </p>
                         <p className="mt-0.5 truncate text-xs text-[#B8B8B8]">
-                          Listing agent
+                          Listing agent · View contact options
                         </p>
                       </div>
                       <ChevronRight
