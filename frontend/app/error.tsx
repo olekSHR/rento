@@ -1,80 +1,35 @@
 "use client"
 
+import { authPrimaryButtonClassName } from "@/components/auth/AuthShell"
+
 type Props = {
   error: Error
   reset: () => void
 }
 
-export default function ErrorPage({
-  error,
-  reset,
-}: Props) {
-
+export default function ErrorPage({ error, reset }: Props) {
   console.error(error)
 
   return (
-    <main
-      className="
-        min-h-screen
-        bg-zinc-100
-        flex
-        items-center
-        justify-center
-        p-6
-      "
-    >
-      <div
-        className="
-          w-full
-          max-w-md
-          bg-white
-          rounded-3xl
-          p-8
-          shadow-sm
-          text-center
-        "
-      >
-        <div className="text-6xl mb-5">
-          ⚠️
-        </div>
+    <main className="flex min-h-screen items-center justify-center bg-[#1B1B1B] px-4 py-6">
+      <div className="w-full max-w-[460px]">
+        <section className="rounded-[24px] border border-white/[0.08] bg-[#2D2D2D] p-5 text-center md:p-6">
+          <h1 className="text-[1.5rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.625rem]">
+            Something went wrong
+          </h1>
 
-        <h1
-          className="
-            text-3xl
-            font-bold
-            text-black
-            mb-3
-          "
-        >
-          Something went wrong
-        </h1>
+          <p className="mt-3 text-sm leading-relaxed text-[#B8B8B8]">
+            Failed to load data. Please try again.
+          </p>
 
-        <p
-          className="
-            text-zinc-500
-            leading-7
-            mb-8
-          "
-        >
-          Failed to load data.
-          Please try again.
-        </p>
-
-        <button
-          onClick={reset}
-          className="
-            w-full
-            h-14
-            rounded-2xl
-            bg-black
-            text-white
-            font-medium
-            active:scale-[0.98]
-            transition-transform
-          "
-        >
-          Retry
-        </button>
+          <button
+            type="button"
+            onClick={reset}
+            className={`mt-6 ${authPrimaryButtonClassName}`}
+          >
+            Retry
+          </button>
+        </section>
       </div>
     </main>
   )

@@ -11,10 +11,19 @@ type RealtorRouteProps = {
 
 function RealtorRouteSkeleton() {
   return (
-    <main className="min-h-screen bg-zinc-100 px-4 pt-6">
-      <div className="mx-auto max-w-md space-y-4">
-        <div className="h-12 w-48 animate-pulse rounded-xl bg-zinc-200" />
-        <div className="h-64 animate-pulse rounded-3xl bg-zinc-200" />
+    <main
+      role="status"
+      aria-live="polite"
+      className="min-h-screen bg-[#1B1B1B] px-5 pt-6 text-[#F5F5F5] md:px-8 md:pt-8"
+    >
+      <span className="sr-only">Loading</span>
+
+      <div className="mx-auto max-w-[1280px] space-y-4">
+        <div className="h-12 w-48 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none" />
+
+        <div className="h-64 animate-pulse rounded-[24px] bg-white/10 motion-reduce:animate-none" />
+
+        <div className="h-64 animate-pulse rounded-[24px] bg-white/10 motion-reduce:animate-none" />
       </div>
     </main>
   );

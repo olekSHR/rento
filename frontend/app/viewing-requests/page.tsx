@@ -81,12 +81,18 @@ function ViewingRequestsContent() {
 
   return (
     <ConsumerShell>
-      <main className={`mx-auto max-w-md px-5 py-6 ${BOTTOM_NAV_CONTENT_CLASS}`}>
-        <header className="mb-6">
-          <h1 className="text-2xl font-semibold tracking-tight text-[#F5F5F5]">
+      <main
+        className={`min-h-screen bg-[#1B1B1B] text-[#F5F5F5] ${BOTTOM_NAV_CONTENT_CLASS}`}
+      >
+        <div className="mx-auto max-w-[1280px] px-5 py-6 md:px-8 md:py-8">
+        <header className="mb-6 md:mb-8">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#B8B8B8]">
+            Your activity
+          </p>
+          <h1 className="mt-2 text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
             Viewing requests
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-[#B8B8B8]">
             Track your submitted viewing requests in one place.
           </p>
         </header>
@@ -98,12 +104,13 @@ function ViewingRequestsContent() {
         ) : null}
 
         {isLoading ? (
-          <div className="space-y-4">
+          <div role="status" aria-live="polite" className="space-y-4">
+            <span className="sr-only">Loading viewing requests</span>
             {[0, 1].map((item) => (
               <div
                 key={item}
                 aria-hidden="true"
-                className={`${cardClassName} h-40 animate-pulse bg-white/5`}
+                className={`${cardClassName} h-40 animate-pulse bg-white/5 motion-reduce:animate-none`}
               />
             ))}
           </div>
@@ -181,6 +188,7 @@ function ViewingRequestsContent() {
             })}
           </ul>
         )}
+        </div>
       </main>
     </ConsumerShell>
   )

@@ -73,14 +73,7 @@ export default function RootLayout({
         antialiased
       `}
     >
-      <body
-        className="
-          min-h-full
-          bg-zinc-100
-          text-black
-          overflow-x-hidden
-        "
-      >
+      <body className="min-h-full overflow-x-hidden bg-[#1B1B1B] text-[#F5F5F5]">
         <AuthProvider>
           <FavoritesProvider>{children}</FavoritesProvider>
         </AuthProvider>

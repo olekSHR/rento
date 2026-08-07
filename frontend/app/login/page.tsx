@@ -12,6 +12,7 @@ import AuthShell, {
   authPrimaryButtonClassName,
   authRealtorNoteClassName,
   authSecondaryTextClassName,
+  authSkeletonClassName,
 } from "@/components/auth/AuthShell"
 import { useAuth } from "@/context/AuthContext"
 import { sanitizeReturnUrl } from "@/lib/returnUrl"
@@ -155,7 +156,21 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        <AuthShell
+          title="Login"
+          description="Sign in to save favorites and access your account."
+        >
+          <div className="space-y-3" role="status" aria-live="polite">
+            <span className="sr-only">Loading login</span>
+            <div className={authSkeletonClassName} aria-hidden="true" />
+            <div className={authSkeletonClassName} aria-hidden="true" />
+            <div className={authSkeletonClassName} aria-hidden="true" />
+          </div>
+        </AuthShell>
+      }
+    >
       <LoginForm />
     </Suspense>
   )
