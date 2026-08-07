@@ -63,6 +63,25 @@ function pickViewingRequest(
   )
 }
 
+function SectionHeader() {
+  return (
+    <div className="flex items-start gap-3">
+      <FileText className="mt-0.5 h-5 w-5 text-[#DFC58A]" aria-hidden="true" />
+      <div className="min-w-0 flex-1">
+        <h2
+          id="property-documents-heading"
+          className="text-xs font-medium uppercase tracking-[0.12em] text-[#B8B8B8]"
+        >
+          Rental Documents
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+          Private rental documents shared for this viewing request relationship.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export default function RentalDocumentsSection({
   propertyId,
 }: RentalDocumentsSectionProps) {
@@ -75,13 +94,15 @@ export default function RentalDocumentsSection({
   )
   const [documents, setDocuments] = useState<RentalDocument[]>([])
   const [isFetching, setIsFetching] = useState(false)
+  const [loadError, setLoadError] = useState("")
+  const [reloadNonce, setReloadNonce] = useState(0)
   const [documentType, setDocumentType] =
     useState<RentalDocumentType>("lease_agreement")
   const [title, setTitle] = useState("")
   const [isUploading, setIsUploading] = useState(false)
   const [isWorking, setIsWorking] = useState(false)
   const [pendingArchiveId, setPendingArchiveId] = useState<number | null>(null)
-  const [error, setError] = useState("")
+  const [actionError, setActionError] = useState("")
 
   const canUpload = isRealtor && viewingRequestStatus === "accepted"
 
@@ -94,16 +115,14 @@ export default function RentalDocumentsSection({
 
     async function loadContext() {
       setIsFetching(true)
-      setError("")
+      setLoadError("")
 
       try {
         const response = isRealtor
           ? await getRealtorViewingRequests()
           : await getMyViewingRequests({ propertyId })
 
-        const selected = isRealtor
-          ? pickViewingRequest(response.items, propertyId)
-          : pickViewingRequest(response.items, propertyId)
+        const selected = pickViewingRequest(response.items, propertyId)
 
         if (!selected) {
           if (!cancelled) {
@@ -127,11 +146,16 @@ export default function RentalDocumentsSection({
           setViewingRequestStatus(null)
           setDocuments([])
         }
-      } catch {
+      } catch (err) {
         if (!cancelled) {
           setViewingRequestId(null)
           setViewingRequestStatus(null)
           setDocuments([])
+          setLoadError(
+            err instanceof Error
+              ? err.message
+              : "Unable to load rental documents."
+          )
         }
       } finally {
         if (!cancelled) {
@@ -145,15 +169,64 @@ export default function RentalDocumentsSection({
     return () => {
       cancelled = true
     }
-  }, [isAuthenticated, isLoading, isRealtor, propertyId])
+  }, [isAuthenticated, isLoading, isRealtor, propertyId, reloadNonce])
 
-  if (
-    !isAuthenticated ||
-    isLoading ||
-    isFetching ||
-    !viewingRequestId ||
-    (documents.length === 0 && !canUpload)
-  ) {
+  if (!isAuthenticated || isLoading) {
+    return null
+  }
+
+  if (isFetching) {
+    return (
+      <section
+        id="property-documents"
+        aria-labelledby="property-documents-heading"
+        className={`${cardClassName} mt-8 scroll-mt-6`}
+      >
+        <SectionHeader />
+        <div role="status" aria-live="polite" className="mt-5 space-y-3">
+          <span className="sr-only">Loading rental documents</span>
+          <div
+            aria-hidden="true"
+            className="h-24 animate-pulse rounded-2xl bg-white/5 motion-reduce:animate-none"
+          />
+        </div>
+      </section>
+    )
+  }
+
+  if (loadError) {
+    return (
+      <section
+        id="property-documents"
+        aria-labelledby="property-documents-heading"
+        className={`${cardClassName} mt-8 scroll-mt-6`}
+      >
+        <SectionHeader />
+        <div className="mt-5 space-y-3">
+          <p role="alert" className={errorClassName}>
+            {loadError}
+          </p>
+          <p className="text-sm leading-relaxed text-[#B8B8B8]">
+            We could not load rental documents for this property. Please try
+            again.
+          </p>
+          <button
+            type="button"
+            onClick={() => setReloadNonce((current) => current + 1)}
+            className={secondaryButtonClassName}
+          >
+            Retry
+          </button>
+        </div>
+      </section>
+    )
+  }
+
+  if (!viewingRequestId) {
+    return null
+  }
+
+  if (viewingRequestStatus !== "accepted" && documents.length === 0) {
     return null
   }
 
@@ -168,7 +241,7 @@ export default function RentalDocumentsSection({
     }
 
     try {
-      setError("")
+      setActionError("")
       setIsUploading(true)
       await uploadRentalDocument(
         viewingRequestId,
@@ -179,7 +252,7 @@ export default function RentalDocumentsSection({
       await refreshDocuments(viewingRequestId)
       setTitle("")
     } catch (err) {
-      setError(
+      setActionError(
         err instanceof Error ? err.message : "Unable to upload rental document."
       )
     } finally {
@@ -189,11 +262,11 @@ export default function RentalDocumentsSection({
 
   async function handleDownload(documentId: number) {
     try {
-      setError("")
+      setActionError("")
       setIsWorking(true)
       await downloadRentalDocument(documentId)
     } catch (err) {
-      setError(
+      setActionError(
         err instanceof Error ? err.message : "Unable to download rental document."
       )
     } finally {
@@ -207,12 +280,12 @@ export default function RentalDocumentsSection({
     }
 
     try {
-      setError("")
+      setActionError("")
       setIsWorking(true)
       await archiveRentalDocument(documentId)
       await refreshDocuments(viewingRequestId)
     } catch (err) {
-      setError(
+      setActionError(
         err instanceof Error ? err.message : "Unable to archive rental document."
       )
     } finally {
@@ -227,28 +300,15 @@ export default function RentalDocumentsSection({
       aria-labelledby="property-documents-heading"
       className={`${cardClassName} mt-8 scroll-mt-6`}
     >
-      <div className="flex items-start gap-3">
-        <FileText className="mt-0.5 h-5 w-5 text-[#DFC58A]" aria-hidden="true" />
-        <div className="min-w-0 flex-1">
-          <h2
-            id="property-documents-heading"
-            className="text-xs font-medium uppercase tracking-[0.12em] text-[#B8B8B8]"
-          >
-            Rental Documents
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-            Private rental documents shared for this viewing request relationship.
-          </p>
-        </div>
-      </div>
+      <SectionHeader />
 
-      {error && (
+      {actionError ? (
         <p role="alert" className={`${errorClassName} mt-4`}>
-          {error}
+          {actionError}
         </p>
-      )}
+      ) : null}
 
-      {canUpload && (
+      {canUpload ? (
         <div className="mt-5 space-y-3 rounded-2xl border border-white/8 bg-[#252525] p-4">
           <p className="text-sm font-medium text-[#F5F5F5]">Upload document</p>
 
@@ -308,7 +368,7 @@ export default function RentalDocumentsSection({
             {isUploading ? "Uploading..." : "Upload PDF"}
           </button>
         </div>
-      )}
+      ) : null}
 
       <div className="mt-5 space-y-3">
         {documents.length === 0 ? (

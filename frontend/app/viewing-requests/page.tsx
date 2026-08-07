@@ -97,12 +97,6 @@ function ViewingRequestsContent() {
           </p>
         </header>
 
-        {error ? (
-          <p role="alert" className={`mb-4 ${errorClassName}`}>
-            {error}
-          </p>
-        ) : null}
-
         {isLoading ? (
           <div role="status" aria-live="polite" className="space-y-4">
             <span className="sr-only">Loading viewing requests</span>
@@ -113,6 +107,12 @@ function ViewingRequestsContent() {
                 className={`${cardClassName} h-40 animate-pulse bg-white/5 motion-reduce:animate-none`}
               />
             ))}
+          </div>
+        ) : error && items.length === 0 ? (
+          <div className={cardClassName}>
+            <p role="alert" className={errorClassName}>
+              {error}
+            </p>
           </div>
         ) : items.length === 0 ? (
           <div className={cardClassName}>
@@ -127,7 +127,14 @@ function ViewingRequestsContent() {
             </Link>
           </div>
         ) : (
-          <ul className="space-y-4">
+          <>
+            {error ? (
+              <p role="alert" className={`mb-4 ${errorClassName}`}>
+                {error}
+              </p>
+            ) : null}
+
+            <ul className="space-y-4">
             {items.map((item) => {
               const imageSrc = getImageUrl(item.property.image_url)
 
@@ -186,7 +193,8 @@ function ViewingRequestsContent() {
               </li>
               )
             })}
-          </ul>
+            </ul>
+          </>
         )}
         </div>
       </main>

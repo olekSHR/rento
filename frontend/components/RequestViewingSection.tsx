@@ -50,6 +50,8 @@ export default function RequestViewingSection({
 
   const [activeRequest, setActiveRequest] = useState<ViewingRequest | null>(null)
   const [isFetching, setIsFetching] = useState(false)
+  const [fetchError, setFetchError] = useState("")
+  const [reloadNonce, setReloadNonce] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [message, setMessage] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -65,6 +67,7 @@ export default function RequestViewingSection({
 
     async function loadActiveRequest() {
       setIsFetching(true)
+      setFetchError("")
 
       try {
         const response = await getMyViewingRequests({ propertyId })
@@ -73,9 +76,13 @@ export default function RequestViewingSection({
         if (!cancelled) {
           setActiveRequest(latest)
         }
-      } catch {
+      } catch (err) {
         if (!cancelled) {
-          setActiveRequest(null)
+          setFetchError(
+            err instanceof Error
+              ? err.message
+              : "Unable to determine your viewing request for this property."
+          )
         }
       } finally {
         if (!cancelled) {
@@ -89,7 +96,7 @@ export default function RequestViewingSection({
     return () => {
       cancelled = true
     }
-  }, [canRequest, isAuthenticated, isLoading, propertyId])
+  }, [canRequest, isAuthenticated, isLoading, propertyId, reloadNonce])
 
   if (!canRequest) {
     return null
@@ -106,6 +113,7 @@ export default function RequestViewingSection({
       )
 
       setActiveRequest(created)
+      setFetchError("")
       setMessage("")
       setIsModalOpen(false)
     } catch (err) {
@@ -143,6 +151,19 @@ export default function RequestViewingSection({
     setIsModalOpen(true)
   }
 
+  function handleRetryLoad() {
+    setReloadNonce((current) => current + 1)
+  }
+
+  const showRequestStatus = Boolean(activeRequest)
+  const showFetchFailure = Boolean(fetchError) && !isFetching && !showRequestStatus
+  const showNoRequestCta =
+    isAuthenticated &&
+    !isLoading &&
+    !isFetching &&
+    !fetchError &&
+    !activeRequest
+
   return (
     <div className="mt-5 border-t border-white/8 pt-5">
       <div className="flex items-start gap-3">
@@ -164,12 +185,42 @@ export default function RequestViewingSection({
             </p>
           ) : null}
 
+          {fetchError && showRequestStatus ? (
+            <p role="alert" className={`mt-3 ${errorClassName}`}>
+              {fetchError}
+            </p>
+          ) : null}
+
           {isLoading || isFetching ? (
             <div
-              aria-hidden="true"
-              className="mt-4 h-12 animate-pulse rounded-2xl bg-white/5"
-            />
-          ) : activeRequest ? (
+              role="status"
+              aria-live="polite"
+              className="mt-4 space-y-2"
+            >
+              <span className="sr-only">Loading viewing request status</span>
+              <div
+                aria-hidden="true"
+                className="h-12 animate-pulse rounded-2xl bg-white/5 motion-reduce:animate-none"
+              />
+            </div>
+          ) : showFetchFailure ? (
+            <div className="mt-4 space-y-3">
+              <p role="alert" className={errorClassName}>
+                {fetchError}
+              </p>
+              <p className="text-sm leading-relaxed text-[#B8B8B8]">
+                We could not determine your viewing request for this property.
+                Please try again.
+              </p>
+              <button
+                type="button"
+                onClick={handleRetryLoad}
+                className={secondaryButtonClassName}
+              >
+                Retry
+              </button>
+            </div>
+          ) : showRequestStatus && activeRequest ? (
             <div className="mt-4 space-y-3">
               <span className={statusBadgeClassName}>
                 {getViewingRequestStatusLabel(activeRequest.status)}
@@ -201,7 +252,7 @@ export default function RequestViewingSection({
                 </Link>
               </p>
             </div>
-          ) : (
+          ) : showNoRequestCta || !isAuthenticated ? (
             <button
               type="button"
               onClick={handleRequestClick}
@@ -209,7 +260,7 @@ export default function RequestViewingSection({
             >
               Request a viewing
             </button>
-          )}
+          ) : null}
         </div>
       </div>
 
