@@ -2,9 +2,10 @@
 
 import { useEffect } from "react";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { useAuth } from "@/context/AuthContext";
+import { buildLoginHref, sanitizeReturnUrl } from "@/lib/returnUrl";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -34,6 +35,7 @@ export default function ProtectedRoute({
   children,
 }: ProtectedRouteProps) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const {
     isAuthenticated,
@@ -44,9 +46,13 @@ export default function ProtectedRoute({
 
   useEffect(() => {
     if (isDenied) {
-      router.push("/login");
+      const search = window.location.search;
+      const requestedPath = search ? `${pathname}${search}` : pathname;
+      const returnPath = sanitizeReturnUrl(requestedPath) ?? pathname;
+
+      router.push(buildLoginHref(returnPath));
     }
-  }, [isDenied, router]);
+  }, [isDenied, pathname, router]);
 
   if (isLoading || isDenied) {
     return <ProtectedRouteSkeleton />;

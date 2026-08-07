@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { Suspense, useState } from "react"
 
 import AuthField from "@/components/auth/AuthField"
 import AuthShell, {
@@ -14,6 +15,7 @@ import AuthShell, {
   authSuccessClassName,
 } from "@/components/auth/AuthShell"
 import { registerUser } from "@/services/authApi"
+import { buildLoginHref, sanitizeReturnUrl } from "@/lib/returnUrl"
 
 const FORM_ERROR_ID = "register-form-error"
 
@@ -33,7 +35,11 @@ function getRegistrationErrorMessage(error: unknown): string {
   return error.message || "Registration failed. Please try again."
 }
 
-export default function RegisterPage() {
+function RegisterForm() {
+  const searchParams = useSearchParams()
+  const returnUrl = sanitizeReturnUrl(searchParams.get("returnUrl"))
+  const loginHref = returnUrl ? buildLoginHref(returnUrl) : "/login"
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -99,7 +105,7 @@ export default function RegisterPage() {
             Account created. You can now sign in.
           </p>
 
-          <Link href="/login" className={authPrimaryButtonClassName}>
+          <Link href={loginHref} className={authPrimaryButtonClassName}>
             Go to login
           </Link>
         </div>
@@ -168,12 +174,43 @@ export default function RegisterPage() {
 
           <p className={`mt-4 text-center ${authSecondaryTextClassName}`}>
             Already have an account?{" "}
-            <Link href="/login" className={authLinkClassName}>
+            <Link href={loginHref} className={authLinkClassName}>
               Sign in
             </Link>
           </p>
         </>
       )}
     </AuthShell>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <AuthShell
+          title="Create account"
+          description="Register to save favorites and use Rento across devices."
+        >
+          <div className="space-y-3" role="status" aria-live="polite">
+            <span className="sr-only">Loading registration</span>
+            <div
+              className="h-12 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none"
+              aria-hidden="true"
+            />
+            <div
+              className="h-12 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none"
+              aria-hidden="true"
+            />
+            <div
+              className="h-12 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none"
+              aria-hidden="true"
+            />
+          </div>
+        </AuthShell>
+      }
+    >
+      <RegisterForm />
+    </Suspense>
   )
 }
