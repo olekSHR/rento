@@ -14,6 +14,12 @@ type Props = {
 export default function HomePageContent({ children, activeFilters }: Props) {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)
 
+  const hasActiveFilters = Boolean(
+    activeFilters?.city?.trim() ||
+      activeFilters?.min_price?.trim() ||
+      activeFilters?.rooms?.trim()
+  )
+
   return (
     <>
       <Modal
@@ -36,6 +42,7 @@ export default function HomePageContent({ children, activeFilters }: Props) {
 
       <ConsumerShell
         hideBottomNav={isFiltersOpen}
+        hasActiveFilters={hasActiveFilters}
         onOpenFilters={() => setIsFiltersOpen(true)}
       >
         {children}

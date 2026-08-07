@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 
 export type FilterValues = {
@@ -17,15 +17,34 @@ type Props = {
 const fieldClassName =
   "h-12 w-full rounded-xl border border-white/10 bg-[#1B1B1B] px-4 text-sm text-[#F5F5F5] placeholder:text-[#B8B8B8]/70 outline-none transition focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-1 focus-visible:ring-offset-[#252525]"
 
+const primaryButtonClassName =
+  "h-12 rounded-xl bg-[#DFC58A] text-sm font-medium text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#252525] disabled:cursor-not-allowed disabled:opacity-70"
+
+const secondaryButtonClassName =
+  "h-12 rounded-xl border border-white/10 bg-transparent text-sm font-medium text-[#B8B8B8] transition active:scale-[0.98] hover:border-white/15 hover:text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#252525] disabled:cursor-not-allowed disabled:opacity-60"
+
 export default function FiltersBar({ onSearch, initialValues }: Props) {
   const [city, setCity] = useState(initialValues?.city ?? "")
   const [minPrice, setMinPrice] = useState(initialValues?.min_price ?? "")
   const [rooms, setRooms] = useState(initialValues?.rooms ?? "")
+  const [isPending, startTransition] = useTransition()
+  const shouldCloseAfterTransitionRef = useRef(false)
 
   const router = useRouter()
 
+  useEffect(() => {
+    if (shouldCloseAfterTransitionRef.current && !isPending) {
+      shouldCloseAfterTransitionRef.current = false
+      onSearch?.()
+    }
+  }, [isPending, onSearch])
+
   function handleSearch(event?: React.FormEvent<HTMLFormElement>) {
     event?.preventDefault()
+
+    if (isPending) {
+      return
+    }
 
     const params = new URLSearchParams()
 
@@ -42,9 +61,20 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
     }
 
     const query = params.toString()
-    router.push(query ? `/?${query}` : "/")
-    onSearch?.()
+
+    shouldCloseAfterTransitionRef.current = true
+    startTransition(() => {
+      router.push(query ? `/?${query}` : "/")
+    })
   }
+
+  function handleClear() {
+    setCity("")
+    setMinPrice("")
+    setRooms("")
+  }
+
+  const hasFormValues = Boolean(city.trim() || minPrice.trim() || rooms.trim())
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSearch}>
@@ -55,10 +85,11 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
         <input
           id="filter-city"
           type="text"
-          placeholder="e.g. Bucharest"
+          placeholder="e.g. Galați"
           value={city}
           onChange={(event) => setCity(event.target.value)}
           autoComplete="address-level2"
+          disabled={isPending}
           className={fieldClassName}
         />
       </div>
@@ -79,6 +110,7 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
             value={minPrice}
             onChange={(event) => setMinPrice(event.target.value)}
             inputMode="numeric"
+            disabled={isPending}
             className={fieldClassName}
           />
         </div>
@@ -104,17 +136,31 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
               setRooms(event.target.value)
             }}
             inputMode="numeric"
+            disabled={isPending}
             className={fieldClassName}
           />
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="h-12 rounded-xl bg-[#DFC58A] text-sm font-medium text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#252525]"
-      >
-        Apply filters
-      </button>
+      <div className="flex flex-col gap-3">
+        <button
+          type="submit"
+          disabled={isPending}
+          aria-busy={isPending}
+          className={primaryButtonClassName}
+        >
+          {isPending ? "Applying…" : "Apply filters"}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleClear}
+          disabled={isPending || !hasFormValues}
+          className={secondaryButtonClassName}
+        >
+          Clear filters
+        </button>
+      </div>
     </form>
   )
 }

@@ -13,6 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 
 type BottomNavProps = {
   onOpenFilters?: () => void;
+  hasActiveFilters?: boolean;
 };
 
 const itemBaseClassName = `
@@ -33,7 +34,10 @@ const itemBaseClassName = `
   active:scale-95
 `;
 
-export default function BottomNav({ onOpenFilters }: BottomNavProps) {
+export default function BottomNav({
+  onOpenFilters,
+  hasActiveFilters = false,
+}: BottomNavProps) {
   const pathname = usePathname();
 
   const { isRealtor, isAuthenticated } = useAuth();
@@ -157,9 +161,15 @@ export default function BottomNav({ onOpenFilters }: BottomNavProps) {
           <button
             type="button"
             onClick={onOpenFilters}
-            aria-label="Open filters"
+            aria-label={hasActiveFilters ? "Open filters (active)" : "Open filters"}
             className={`${itemBaseClassName} ${appearance.focus} ${appearance.actionItem}`}
           >
+            {hasActiveFilters && (
+              <span
+                aria-hidden="true"
+                className="absolute top-2 right-[calc(50%-1rem)] h-1.5 w-1.5 rounded-full bg-[#DFC58A]"
+              />
+            )}
             <Search className={`h-5 w-5 stroke-[2.3] ${appearance.actionIcon}`} />
             <span className="mt-1">Filters</span>
           </button>

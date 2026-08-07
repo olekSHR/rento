@@ -77,6 +77,16 @@ export default async function HomePage({
   const showPhotographedEmptyState =
     !showFilteredEmptyState && photographedProperties.length === 0
 
+  const listingsEyebrow = hasActiveFilters
+    ? activeFilters.city.trim()
+      ? `Filtered in ${activeFilters.city.trim()}`
+      : "Filtered results"
+    : "Available now in Galați"
+
+  const listingsHeading = hasActiveFilters
+    ? "Matching your search"
+    : "Latest available rentals"
+
   return (
     <main className={`min-h-screen bg-[#1B1B1B] ${BOTTOM_NAV_CONTENT_CLASS}`}>
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#252525]/95 shadow-[0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md">
@@ -113,14 +123,14 @@ export default async function HomePage({
         >
           <div className="mb-6 md:mb-8">
             <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#B8B8B8]">
-              Available now in Galați
+              {listingsEyebrow}
             </p>
 
             <h2
               id="home-listings-heading"
               className="mt-2 text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]"
             >
-              Latest available rentals
+              {listingsHeading}
             </h2>
           </div>
 
