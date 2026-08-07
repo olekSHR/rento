@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -22,14 +23,21 @@ interface FavoritesContextType {
 
   isFavorite: (propertyId: number) => boolean;
 
-  toggleFavorite: (propertyId: number) => Promise<void>;
+  toggleFavorite: (propertyId: number) => Promise<boolean>;
 
   isLoading: boolean;
+
+  isToggling: (propertyId: number) => boolean;
+
+  getToggleError: (propertyId: number) => string | null;
 }
 
 const FavoritesContext = createContext<
   FavoritesContextType | undefined
 >(undefined);
+
+const TOGGLE_ERROR_MESSAGE =
+  "Could not update favorites. Please try again.";
 
 interface FavoritesProviderProps {
   children: React.ReactNode;
@@ -42,6 +50,13 @@ export function FavoritesProvider({
 
   const [favorites, setFavorites] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [togglingIds, setTogglingIds] = useState<Set<number>>(
+    () => new Set()
+  );
+  const [toggleErrors, setToggleErrors] = useState<
+    Record<number, string>
+  >({});
+  const togglingRef = useRef<Set<number>>(new Set());
 
   const loadFavorites = useCallback(async () => {
     try {
@@ -76,18 +91,18 @@ export function FavoritesProvider({
   }, [isAuthenticated]);
 
   useEffect(() => {
-  if (authLoading) {
-    return;
-  }
+    if (authLoading) {
+      return;
+    }
 
-  const timeoutId = window.setTimeout(() => {
-    void loadFavorites();
-  }, 0);
+    const timeoutId = window.setTimeout(() => {
+      void loadFavorites();
+    }, 0);
 
-  return () => {
-    window.clearTimeout(timeoutId);
-  };
-}, [authLoading, loadFavorites]);
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [authLoading, loadFavorites]);
 
   const saveLocalFavorites = (updatedFavorites: number[]) => {
     localStorage.setItem(
@@ -96,6 +111,50 @@ export function FavoritesProvider({
     );
   };
 
+  const beginToggle = useCallback((propertyId: number) => {
+    setTogglingIds((prev) => {
+      if (prev.has(propertyId)) {
+        return prev;
+      }
+
+      const next = new Set(prev);
+      next.add(propertyId);
+      return next;
+    });
+
+    setToggleErrors((prev) => {
+      if (!(propertyId in prev)) {
+        return prev;
+      }
+
+      const next = { ...prev };
+      delete next[propertyId];
+      return next;
+    });
+  }, []);
+
+  const endToggle = useCallback((propertyId: number) => {
+    setTogglingIds((prev) => {
+      if (!prev.has(propertyId)) {
+        return prev;
+      }
+
+      const next = new Set(prev);
+      next.delete(propertyId);
+      return next;
+    });
+  }, []);
+
+  const setToggleError = useCallback(
+    (propertyId: number, message: string) => {
+      setToggleErrors((prev) => ({
+        ...prev,
+        [propertyId]: message,
+      }));
+    },
+    []
+  );
+
   const isFavorite = useCallback(
     (propertyId: number) => {
       return favorites.includes(propertyId);
@@ -103,43 +162,80 @@ export function FavoritesProvider({
     [favorites]
   );
 
+  const isToggling = useCallback(
+    (propertyId: number) => togglingIds.has(propertyId),
+    [togglingIds]
+  );
+
+  const getToggleError = useCallback(
+    (propertyId: number) => toggleErrors[propertyId] ?? null,
+    [toggleErrors]
+  );
+
   const toggleFavorite = useCallback(
     async (propertyId: number) => {
+      if (togglingRef.current.has(propertyId)) {
+        return false;
+      }
+
+      togglingRef.current.add(propertyId);
+
       const exists = favorites.includes(propertyId);
+
+      beginToggle(propertyId);
 
       try {
         if (isAuthenticated) {
-          if (exists) {
-            await removeFavorite(propertyId);
+          const previousFavorites = favorites;
 
-            setFavorites((prev) =>
-              prev.filter((id) => id !== propertyId)
-            );
-          } else {
-            await addFavorite(propertyId);
+          setFavorites((prev) =>
+            exists
+              ? prev.filter((id) => id !== propertyId)
+              : [...prev, propertyId]
+          );
 
-            setFavorites((prev) => [...prev, propertyId]);
+          try {
+            if (exists) {
+              await removeFavorite(propertyId);
+            } else {
+              await addFavorite(propertyId);
+            }
+
+            return true;
+          } catch (error) {
+            console.error("Favorite toggle error:", error);
+            setFavorites(previousFavorites);
+            setToggleError(propertyId, TOGGLE_ERROR_MESSAGE);
+            return false;
           }
-        } else {
-          let updatedFavorites: number[];
-
-          if (exists) {
-            updatedFavorites = favorites.filter(
-              (id) => id !== propertyId
-            );
-          } else {
-            updatedFavorites = [...favorites, propertyId];
-          }
-
-          setFavorites(updatedFavorites);
-
-          saveLocalFavorites(updatedFavorites);
         }
-      } catch (error) {
-        console.error("Favorite toggle error:", error);
+
+        let updatedFavorites: number[];
+
+        if (exists) {
+          updatedFavorites = favorites.filter(
+            (id) => id !== propertyId
+          );
+        } else {
+          updatedFavorites = [...favorites, propertyId];
+        }
+
+        setFavorites(updatedFavorites);
+        saveLocalFavorites(updatedFavorites);
+
+        return true;
+      } finally {
+        togglingRef.current.delete(propertyId);
+        endToggle(propertyId);
       }
     },
-    [favorites, isAuthenticated]
+    [
+      beginToggle,
+      endToggle,
+      favorites,
+      isAuthenticated,
+      setToggleError,
+    ]
   );
 
   const value = useMemo(
@@ -148,8 +244,17 @@ export function FavoritesProvider({
       isFavorite,
       toggleFavorite,
       isLoading,
+      isToggling,
+      getToggleError,
     }),
-    [favorites, isFavorite, toggleFavorite, isLoading]
+    [
+      favorites,
+      getToggleError,
+      isFavorite,
+      isLoading,
+      isToggling,
+      toggleFavorite,
+    ]
   );
 
   return (

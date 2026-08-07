@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import ConsumerShell from "@/components/ConsumerShell"
 import PropertyCard from "@/components/PropertyCard"
@@ -90,27 +90,55 @@ function FavoritesEmptyState() {
   )
 }
 
+function FavoritesPartialWarning({ message }: { message: string }) {
+  return (
+    <div
+      role="status"
+      className="mb-6 rounded-[24px] border border-[#DFC58A]/20 bg-[#2D2D2D] px-5 py-4 text-sm font-medium leading-relaxed text-[#F5F5F5]"
+    >
+      {message}
+    </div>
+  )
+}
+
 export default function FavoritesPage() {
   const { favorites, isLoading: favoritesLoading } = useFavorites()
 
   const [properties, setProperties] = useState<Property[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [partialWarning, setPartialWarning] = useState<string | null>(
+    null
+  )
+  const initialLoadDoneRef = useRef(false)
 
   useEffect(() => {
-    async function loadProperties() {
+    if (favoritesLoading) {
+      return
+    }
+
+    let cancelled = false
+
+    async function loadInitialProperties() {
+      setIsInitialLoading(true)
+      setError(null)
+      setPartialWarning(null)
+
+      if (favorites.length === 0) {
+        setProperties([])
+        initialLoadDoneRef.current = true
+        setIsInitialLoading(false)
+        return
+      }
+
       try {
-        setIsLoading(true)
-        setError(null)
-
-        if (favorites.length === 0) {
-          setProperties([])
-          return
-        }
-
         const results = await Promise.allSettled(
           favorites.map((id) => getPropertyById(id))
         )
+
+        if (cancelled) {
+          return
+        }
 
         const validProperties = results
           .filter(
@@ -119,24 +147,110 @@ export default function FavoritesPage() {
           )
           .map((result) => result.value)
 
+        const failedCount = results.filter(
+          (result) => result.status === "rejected"
+        ).length
+
         setProperties(validProperties)
+
+        if (failedCount > 0) {
+          setPartialWarning(
+            failedCount === 1
+              ? "One saved property could not be loaded."
+              : `${failedCount} saved properties could not be loaded.`
+          )
+        }
       } catch (loadError) {
         console.error(loadError)
 
-        setError("Failed to load saved properties.")
-
-        setProperties([])
+        if (!cancelled) {
+          setError("Failed to load saved properties.")
+          setProperties([])
+        }
       } finally {
-        setIsLoading(false)
+        if (!cancelled) {
+          initialLoadDoneRef.current = true
+          setIsInitialLoading(false)
+        }
       }
     }
 
-    if (!favoritesLoading) {
-      loadProperties()
+    async function syncIncrementalProperties() {
+      if (favorites.length === 0) {
+        setProperties([])
+        setPartialWarning(null)
+        return
+      }
+
+      setProperties((prev) => {
+        const filtered = prev.filter((property) =>
+          favorites.includes(property.id)
+        )
+        const knownIds = new Set(filtered.map((property) => property.id))
+        const missingIds = favorites.filter((id) => !knownIds.has(id))
+
+        if (missingIds.length > 0) {
+          void (async () => {
+            const results = await Promise.allSettled(
+              missingIds.map((id) => getPropertyById(id))
+            )
+
+            if (cancelled) {
+              return
+            }
+
+            const validProperties = results
+              .filter(
+                (result): result is PromiseFulfilledResult<Property> =>
+                  result.status === "fulfilled"
+              )
+              .map((result) => result.value)
+
+            const failedCount = results.filter(
+              (result) => result.status === "rejected"
+            ).length
+
+            if (validProperties.length > 0) {
+              setProperties((current) => {
+                const currentIds = new Set(
+                  current.map((property) => property.id)
+                )
+                const additions = validProperties.filter(
+                  (property) => !currentIds.has(property.id)
+                )
+
+                return additions.length > 0
+                  ? [...current, ...additions]
+                  : current
+              })
+            }
+
+            if (failedCount > 0) {
+              setPartialWarning(
+                failedCount === 1
+                  ? "One saved property could not be loaded."
+                  : `${failedCount} saved properties could not be loaded.`
+              )
+            }
+          })()
+        }
+
+        return filtered
+      })
+    }
+
+    if (!initialLoadDoneRef.current) {
+      void loadInitialProperties()
+    } else {
+      void syncIncrementalProperties()
+    }
+
+    return () => {
+      cancelled = true
     }
   }, [favorites, favoritesLoading])
 
-  const isPageLoading = favoritesLoading || isLoading
+  const showInitialSkeleton = favoritesLoading || isInitialLoading
 
   return (
     <ProtectedRoute>
@@ -145,7 +259,7 @@ export default function FavoritesPage() {
           className={`min-h-screen bg-[#1B1B1B] text-[#F5F5F5] ${BOTTOM_NAV_CONTENT_CLASS}`}
         >
           <div className="mx-auto max-w-[1280px] px-5 pb-8 pt-6 md:px-8 md:pb-10 md:pt-8 lg:px-10">
-            {isPageLoading ? (
+            {showInitialSkeleton ? (
               <div role="status" aria-live="polite">
                 <span className="sr-only">Loading saved properties</span>
                 <FavoritesHeaderSkeleton />
@@ -163,6 +277,10 @@ export default function FavoritesPage() {
                     {error}
                   </div>
                 )}
+
+                {partialWarning && !error ? (
+                  <FavoritesPartialWarning message={partialWarning} />
+                ) : null}
 
                 {!error && properties.length === 0 && <FavoritesEmptyState />}
 
