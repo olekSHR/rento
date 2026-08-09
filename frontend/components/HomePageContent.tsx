@@ -35,6 +35,7 @@ export default function HomePageContent({ children, activeFilters }: Props) {
         </h2>
 
         <FiltersBar
+          key={`${activeFilters?.city ?? ""}:${activeFilters?.min_price ?? ""}:${activeFilters?.rooms ?? ""}`}
           initialValues={activeFilters}
           onSearch={() => setIsFiltersOpen(false)}
         />

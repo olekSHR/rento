@@ -69,12 +69,27 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
   }
 
   function handleClear() {
+    if (isPending) {
+      return
+    }
+
     setCity("")
     setMinPrice("")
     setRooms("")
+
+    shouldCloseAfterTransitionRef.current = true
+    startTransition(() => {
+      router.push("/")
+    })
   }
 
+  const hasAppliedFilters = Boolean(
+    initialValues?.city?.trim() ||
+      initialValues?.min_price?.trim() ||
+      initialValues?.rooms?.trim()
+  )
   const hasFormValues = Boolean(city.trim() || minPrice.trim() || rooms.trim())
+  const canClear = hasFormValues || hasAppliedFilters
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSearch}>
@@ -155,7 +170,7 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
         <button
           type="button"
           onClick={handleClear}
-          disabled={isPending || !hasFormValues}
+          disabled={isPending || !canClear}
           className={secondaryButtonClassName}
         >
           Clear filters

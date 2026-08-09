@@ -158,6 +158,13 @@ export default async function HomePage({
               <p className="max-w-xs text-[#B8B8B8]">
                 Try changing filters or search another city
               </p>
+
+              <Link
+                href="/"
+                className="mt-6 inline-flex h-12 min-h-11 items-center justify-center rounded-xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B] transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+              >
+                Clear filters
+              </Link>
             </div>
           ) : showPhotographedEmptyState ? (
             <PhotographedListingsEmptyState />
