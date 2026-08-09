@@ -59,7 +59,6 @@ export default function ShareButton({ url, className }: Props) {
   async function handleShare() {
     const shareUrl = url || window.location.href
     const shareText = "Discover homes on Rento"
-    const clipboardText = `${shareText}\n${shareUrl}`
 
     if (shouldUseNativeShare()) {
       try {
@@ -79,7 +78,7 @@ export default function ShareButton({ url, className }: Props) {
     }
 
     try {
-      await navigator.clipboard.writeText(clipboardText)
+      await navigator.clipboard.writeText(shareUrl)
       showFeedback("Link copied")
     } catch (error) {
       console.error(error)
