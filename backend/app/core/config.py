@@ -34,6 +34,8 @@ class Settings(BaseSettings):
 
     RATE_LIMIT_LOGIN: str = "5/minute"
 
+    RATE_LIMIT_REGISTER: str = "5/minute"
+
     RATE_LIMIT_FORGOT_PASSWORD: str = "3/15minute"
 
     RATE_LIMIT_UPLOAD: str = "20/minute"

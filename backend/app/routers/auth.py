@@ -53,7 +53,9 @@ def issue_csrf_token(
     response_model=UserResponse,
     status_code=201
 )
+@limiter.limit(settings.RATE_LIMIT_REGISTER)
 def register(
+    request: Request,
     user: UserCreate,
     response: Response,
     db: Session = Depends(get_db)
