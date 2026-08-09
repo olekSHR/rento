@@ -223,6 +223,21 @@ def get_property_image(
     )
 
 
+def has_cover_image(
+    db: Session,
+    property_id: int,
+) -> bool:
+    return (
+        db.query(models.PropertyImage.id)
+        .filter(
+            models.PropertyImage.property_id == property_id,
+            models.PropertyImage.is_cover.is_(True),
+        )
+        .first()
+        is not None
+    )
+
+
 def create_property_image(
     db: Session,
     property_id: int,
@@ -246,6 +261,18 @@ def create_property_image(
         )
 
         db.add(image)
+
+        if is_cover:
+            property_item = (
+                db.query(models.Property)
+                .filter(models.Property.id == property_id)
+                .first()
+            )
+
+            if property_item is not None:
+                property_item.image_url = url
+                db.add(property_item)
+
         db.commit()
         db.refresh(image)
 

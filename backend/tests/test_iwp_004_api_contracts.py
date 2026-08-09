@@ -403,6 +403,9 @@ def test_property_image_repository_rolls_back_failed_create():
         def update(self, values):
             return None
 
+        def first(self):
+            return None
+
     class FakeDb:
         def __init__(self):
             self.rolled_back = False

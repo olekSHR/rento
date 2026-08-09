@@ -366,6 +366,13 @@ def update_property(
     )
 
 
+def _has_effective_cover(db: Session, property_item) -> bool:
+    if (property_item.image_url or "").strip():
+        return True
+
+    return property_repository.has_cover_image(db, property_item.id)
+
+
 def add_property_image(
     db: Session,
     property_id: int,
@@ -382,11 +389,15 @@ def add_property_image(
         current_user,
     )
 
+    is_cover = bool(image_data.is_cover)
+    if not is_cover and not _has_effective_cover(db, property_item):
+        is_cover = True
+
     return property_repository.create_property_image(
         db,
         property_id,
         image_data.url,
-        image_data.is_cover,
+        is_cover,
         image_data.sort_order,
     )
 
