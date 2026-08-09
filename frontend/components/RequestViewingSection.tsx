@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState, type ReactNode } from "react"
 import { CalendarCheck } from "lucide-react"
 
 import Modal from "@/components/Modal"
@@ -19,9 +19,17 @@ import {
   type ViewingRequest,
 } from "@/types/viewingRequest"
 
+export type ViewingStickyActionsRenderProps = {
+  openRequest: () => void
+  canOpenRequest: boolean
+}
+
 type RequestViewingSectionProps = {
   propertyId: number
   canRequest: boolean
+  renderStickyActions?: (
+    actions: ViewingStickyActionsRenderProps
+  ) => ReactNode
 }
 
 const MAX_MESSAGE_LENGTH = 500
@@ -44,6 +52,7 @@ const errorClassName =
 export default function RequestViewingSection({
   propertyId,
   canRequest,
+  renderStickyActions,
 }: RequestViewingSectionProps) {
   const router = useRouter()
   const { isAuthenticated, isLoading } = useAuth()
@@ -98,6 +107,31 @@ export default function RequestViewingSection({
     }
   }, [canRequest, isAuthenticated, isLoading, propertyId, reloadNonce])
 
+  const openRequest = useCallback(() => {
+    if (!isAuthenticated) {
+      router.push(buildLoginHref(`/properties/${propertyId}`))
+      return
+    }
+
+    setError("")
+    setIsModalOpen(true)
+  }, [isAuthenticated, propertyId, router])
+
+  const showRequestStatus = Boolean(activeRequest)
+  const showFetchFailure = Boolean(fetchError) && !isFetching && !showRequestStatus
+  const showNoRequestCta =
+    isAuthenticated &&
+    !isLoading &&
+    !isFetching &&
+    !fetchError &&
+    !activeRequest
+  const showRequestButton =
+    !isLoading &&
+    !isFetching &&
+    !showFetchFailure &&
+    !(showRequestStatus && activeRequest) &&
+    (showNoRequestCta || !isAuthenticated)
+
   if (!canRequest) {
     return null
   }
@@ -141,28 +175,9 @@ export default function RequestViewingSection({
     }
   }
 
-  function handleRequestClick() {
-    if (!isAuthenticated) {
-      router.push(buildLoginHref(`/properties/${propertyId}`))
-      return
-    }
-
-    setError("")
-    setIsModalOpen(true)
-  }
-
   function handleRetryLoad() {
     setReloadNonce((current) => current + 1)
   }
-
-  const showRequestStatus = Boolean(activeRequest)
-  const showFetchFailure = Boolean(fetchError) && !isFetching && !showRequestStatus
-  const showNoRequestCta =
-    isAuthenticated &&
-    !isLoading &&
-    !isFetching &&
-    !fetchError &&
-    !activeRequest
 
   return (
     <div className="mt-5 border-t border-white/8 pt-5">
@@ -252,10 +267,10 @@ export default function RequestViewingSection({
                 </Link>
               </p>
             </div>
-          ) : showNoRequestCta || !isAuthenticated ? (
+          ) : showRequestButton ? (
             <button
               type="button"
-              onClick={handleRequestClick}
+              onClick={openRequest}
               className={`mt-4 ${primaryButtonClassName}`}
             >
               Request a viewing
@@ -325,6 +340,11 @@ export default function RequestViewingSection({
           </div>
         </div>
       </Modal>
+
+      {renderStickyActions?.({
+        openRequest,
+        canOpenRequest: showRequestButton,
+      })}
     </div>
   )
 }

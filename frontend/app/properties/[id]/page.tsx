@@ -13,6 +13,7 @@ import FavoriteButton from "@/components/FavoriteButton"
 import BackButton from "@/components/BackButton"
 import PropertyGallery from "@/components/PropertyGallery"
 import PropertyCard from "@/components/PropertyCard"
+import PropertyDetailViewingSection from "@/components/PropertyDetailViewingSection"
 import ShareButton from "@/components/ShareButton"
 import ReportButton from "@/components/ReportButton"
 import { RealtorAvatarEnlargeTrigger } from "@/components/RealtorAvatarLightbox"
@@ -27,7 +28,6 @@ import {
 
 import { PropertyTrustCard } from "@/components/PropertyTrustCard"
 import { RealtorContactActions } from "@/components/RealtorContactActions"
-import RequestViewingSection from "@/components/RequestViewingSection"
 import RentalDocumentsSection from "@/components/RentalDocumentsSection"
 import { PropertyLocationSection } from "@/components/map/PropertyLocationSectionLazy"
 import { NearbyInfrastructureSectionLazy } from "@/components/nearby/NearbyInfrastructureSectionLazy"
@@ -223,7 +223,11 @@ export default async function PropertyPage({ params }: Props) {
   return (
     <ConsumerShell hideBottomNav>
       <main
-        className={`min-h-screen bg-[#1B1B1B] text-[#F5F5F5] ${SAFE_BOTTOM_CONTENT_CLASS}`}
+        className={`min-h-screen bg-[#1B1B1B] text-[#F5F5F5] ${
+          canRequestViewing
+            ? "max-md:pb-bottom-nav md:pb-safe-bottom"
+            : SAFE_BOTTOM_CONTENT_CLASS
+        }`}
       >
         <div className="mx-auto max-w-7xl">
           <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-10 lg:px-8 lg:pt-8">
@@ -406,9 +410,11 @@ export default async function PropertyPage({ params }: Props) {
                   telegramUsername={property.realtor?.telegram_username}
                 />
 
-                <RequestViewingSection
+                <PropertyDetailViewingSection
                   propertyId={property.id}
                   canRequest={canRequestViewing}
+                  canRequestViewing={canRequestViewing}
+                  showContact={showContactSection}
                 />
               </section>
             )}
@@ -424,9 +430,11 @@ export default async function PropertyPage({ params }: Props) {
                 >
                   Viewing
                 </h2>
-                <RequestViewingSection
+                <PropertyDetailViewingSection
                   propertyId={property.id}
                   canRequest={canRequestViewing}
+                  canRequestViewing={canRequestViewing}
+                  showContact={false}
                 />
               </section>
             )}
