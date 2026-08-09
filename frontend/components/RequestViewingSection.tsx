@@ -16,6 +16,7 @@ import {
 import {
   canCancelViewingRequest,
   getViewingRequestStatusLabel,
+  isActiveViewingRequest,
   type ViewingRequest,
 } from "@/types/viewingRequest"
 
@@ -57,6 +58,7 @@ export default function RequestViewingSection({
   const router = useRouter()
   const { isAuthenticated, isLoading } = useAuth()
 
+  const [latestRequest, setLatestRequest] = useState<ViewingRequest | null>(null)
   const [activeRequest, setActiveRequest] = useState<ViewingRequest | null>(null)
   const [isFetching, setIsFetching] = useState(false)
   const [fetchError, setFetchError] = useState("")
@@ -74,16 +76,21 @@ export default function RequestViewingSection({
 
     let cancelled = false
 
-    async function loadActiveRequest() {
+    async function loadViewingRequests() {
       setIsFetching(true)
       setFetchError("")
 
       try {
         const response = await getMyViewingRequests({ propertyId })
         const latest = response.items[0] ?? null
+        const active =
+          response.items.find((item) =>
+            isActiveViewingRequest(item.status)
+          ) ?? null
 
         if (!cancelled) {
-          setActiveRequest(latest)
+          setLatestRequest(latest)
+          setActiveRequest(active)
         }
       } catch (err) {
         if (!cancelled) {
@@ -100,7 +107,7 @@ export default function RequestViewingSection({
       }
     }
 
-    void loadActiveRequest()
+    void loadViewingRequests()
 
     return () => {
       cancelled = true
@@ -117,8 +124,9 @@ export default function RequestViewingSection({
     setIsModalOpen(true)
   }, [isAuthenticated, propertyId, router])
 
-  const showRequestStatus = Boolean(activeRequest)
-  const showFetchFailure = Boolean(fetchError) && !isFetching && !showRequestStatus
+  const showRequestStatus = Boolean(latestRequest)
+  const showFetchFailure =
+    Boolean(fetchError) && !isFetching && !showRequestStatus
   const showNoRequestCta =
     isAuthenticated &&
     !isLoading &&
@@ -129,7 +137,7 @@ export default function RequestViewingSection({
     !isLoading &&
     !isFetching &&
     !showFetchFailure &&
-    !(showRequestStatus && activeRequest) &&
+    !activeRequest &&
     (showNoRequestCta || !isAuthenticated)
 
   if (!canRequest) {
@@ -146,6 +154,7 @@ export default function RequestViewingSection({
         message.trim() ? message.trim() : null
       )
 
+      setLatestRequest(created)
       setActiveRequest(created)
       setFetchError("")
       setMessage("")
@@ -167,7 +176,8 @@ export default function RequestViewingSection({
       setIsCancelling(true)
 
       const updated = await cancelViewingRequest(activeRequest.id)
-      setActiveRequest(updated)
+      setLatestRequest(updated)
+      setActiveRequest(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to cancel request.")
     } finally {
@@ -235,19 +245,20 @@ export default function RequestViewingSection({
                 Retry
               </button>
             </div>
-          ) : showRequestStatus && activeRequest ? (
+          ) : showRequestStatus && latestRequest ? (
             <div className="mt-4 space-y-3">
               <span className={statusBadgeClassName}>
-                {getViewingRequestStatusLabel(activeRequest.status)}
+                {getViewingRequestStatusLabel(latestRequest.status)}
               </span>
 
-              {activeRequest.message ? (
+              {latestRequest.message ? (
                 <p className="text-sm leading-relaxed text-[#B8B8B8]">
-                  {activeRequest.message}
+                  {latestRequest.message}
                 </p>
               ) : null}
 
-              {canCancelViewingRequest(activeRequest.status) ? (
+              {activeRequest &&
+              canCancelViewingRequest(activeRequest.status) ? (
                 <button
                   type="button"
                   onClick={() => void handleCancel()}
@@ -267,7 +278,9 @@ export default function RequestViewingSection({
                 </Link>
               </p>
             </div>
-          ) : showRequestButton ? (
+          ) : null}
+
+          {showRequestButton ? (
             <button
               type="button"
               onClick={openRequest}

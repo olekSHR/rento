@@ -57,6 +57,10 @@ export function getViewingRequestStatusLabel(status: ViewingRequestStatus): stri
   }
 }
 
-export function canCancelViewingRequest(status: ViewingRequestStatus): boolean {
+export function isActiveViewingRequest(status: ViewingRequestStatus): boolean {
   return status === "pending" || status === "accepted"
+}
+
+export function canCancelViewingRequest(status: ViewingRequestStatus): boolean {
+  return isActiveViewingRequest(status)
 }
