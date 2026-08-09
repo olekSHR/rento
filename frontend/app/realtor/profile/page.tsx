@@ -9,6 +9,10 @@ import RealtorRoute from "@/components/RealtorRoute"
 import { getImageUrl } from "@/lib/getImageUrl"
 import { computeProfileCompletionPercent } from "@/lib/realtorWorkspace"
 import {
+  getTelegramUsernameInputError,
+  TELEGRAM_USERNAME_VALIDATION_MESSAGE,
+} from "@/lib/telegram"
+import {
   getMyRealtorProfile,
   updateMyRealtorProfile,
   uploadImage,
@@ -18,6 +22,7 @@ import {
 const PROFILE_FORM_ID = "realtor-profile-form"
 const PROFILE_ERROR_ID = "realtor-profile-error"
 const PROFILE_SUCCESS_ID = "realtor-profile-success"
+const TELEGRAM_ERROR_ID = "realtor-profile-telegram-error"
 
 const AVATAR_OUTPUT_SIZE = 512
 const AVATAR_CROP_PREVIEW_SIZE = 176
@@ -211,6 +216,7 @@ export default function RealtorProfilePage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState("")
+  const [telegramError, setTelegramError] = useState("")
   const [success, setSuccess] = useState("")
 
   const [formData, setFormData] = useState({
@@ -284,18 +290,33 @@ export default function RealtorProfilePage() {
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
+    const { name, value } = event.target
+
+    if (name === "telegram_username") {
+      setTelegramError(getTelegramUsernameInputError(value) ?? "")
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [event.target.name]: event.target.value,
+      [name]: value,
     }))
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
+    const nextTelegramError =
+      getTelegramUsernameInputError(formData.telegram_username) ?? ""
+
+    setError("")
+    setTelegramError(nextTelegramError)
+    setSuccess("")
+
+    if (nextTelegramError) {
+      return
+    }
+
     try {
-      setError("")
-      setSuccess("")
       setIsSaving(true)
 
       const updatedProfile = await updateMyRealtorProfile({
@@ -310,8 +331,18 @@ export default function RealtorProfilePage() {
 
       setProfile(updatedProfile)
       setSuccess("Profile saved")
-    } catch {
-      setError("Failed to save profile")
+    } catch (saveError) {
+      const message =
+        saveError instanceof Error && saveError.message.trim().length > 0
+          ? saveError.message
+          : "Failed to save profile"
+
+      if (message === TELEGRAM_USERNAME_VALIDATION_MESSAGE) {
+        setTelegramError(message)
+        setError("")
+      } else {
+        setError(message)
+      }
     } finally {
       setIsSaving(false)
     }
@@ -811,11 +842,27 @@ export default function RealtorProfilePage() {
                       value={formData.telegram_username}
                       onChange={handleChange}
                       disabled={isSaving}
+                      aria-invalid={telegramError ? true : undefined}
+                      aria-describedby={
+                        telegramError ? TELEGRAM_ERROR_ID : undefined
+                      }
                       className={inputClassName}
                     />
-                    <p className="mt-2 text-xs text-[#B8B8B8]">
-                      Optional. Used for the Telegram contact button on your listings.
-                    </p>
+                    {telegramError ? (
+                      <p
+                        id={TELEGRAM_ERROR_ID}
+                        role="alert"
+                        className="mt-2 text-xs font-medium text-red-200/90"
+                      >
+                        {telegramError}
+                      </p>
+                    ) : (
+                      <p className="mt-2 text-xs text-[#B8B8B8]">
+                        Optional. Used for the Telegram contact button on your
+                        listings. Must contain 5–32 characters and start with a
+                        letter.
+                      </p>
+                    )}
                   </div>
 
                   <div>
