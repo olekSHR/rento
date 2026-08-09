@@ -10,6 +10,7 @@ from app.database.database import Base, SessionLocal, engine
 from app.models.property import Property
 from app.models.realtor_profile import RealtorProfile
 from app.models.user import User
+from app.models.viewing_request import ViewingRequest
 
 
 @event.listens_for(Engine, "connect")
@@ -136,6 +137,46 @@ def test_create_viewing_request_returns_201(api_client, db_session):
     assert payload["status"] == "pending"
     assert payload["message"] == "I would like to visit."
     assert payload["property"]["id"] == listing.id
+
+
+def test_create_viewing_request_with_rate_limit_enabled_returns_201(
+    api_client,
+    db_session,
+    monkeypatch,
+):
+    from app.core import rate_limit as rate_limit_module
+
+    monkeypatch.setattr(settings, "RATE_LIMIT_ENABLED", True)
+    monkeypatch.setattr(rate_limit_module.limiter, "enabled", True)
+
+    realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
+    seed_realtor_profile(db_session, realtor.id)
+    listing = seed_property(db_session, owner_id=realtor.id)
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+    response = api_client.post(
+        f"/properties/{listing.id}/viewing-requests",
+        json={"message": "Rate limit path check."},
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 201
+    payload = response.json()
+    assert payload["status"] == "pending"
+    assert payload["message"] == "Rate limit path check."
+    assert payload["property"]["id"] == listing.id
+    assert response.headers.get("X-RateLimit-Limit") is not None
+
+    created_count = (
+        db_session.query(ViewingRequest)
+        .filter(
+            ViewingRequest.property_id == listing.id,
+            ViewingRequest.requester_id == renter.id,
+        )
+        .count()
+    )
+    assert created_count == 1
 
 
 def test_create_viewing_request_duplicate_returns_409(api_client, db_session):

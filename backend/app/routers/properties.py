@@ -1,5 +1,5 @@
 from app.schemas.property import PropertyImageCreate, PropertyImageResponse
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter, Depends, Query, Request, Response
 from sqlalchemy.orm import Session
 from app.schemas.common import MessageResponse
 from app.database.database import get_db
@@ -344,6 +344,7 @@ def create_viewing_request(
     property_id: int,
     request_data: ViewingRequestCreate,
     request: Request,
+    response: Response,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
