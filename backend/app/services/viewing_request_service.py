@@ -319,6 +319,25 @@ def get_viewing_request_for_requester(
     return _build_renter_response(db, request_item)
 
 
+def get_viewing_request_for_realtor(
+    db: Session,
+    current_user: User,
+    request_id: int,
+) -> ViewingRequestRealtorResponse:
+    if current_user.role != "realtor":
+        raise ForbiddenException(
+            "Only realtor can access this resource"
+        )
+
+    request_item = _get_request_for_realtor(
+        db,
+        request_id,
+        current_user.id,
+    )
+
+    return _build_realtor_response(db, request_item)
+
+
 def cancel_viewing_request(
     db: Session,
     current_user: User,

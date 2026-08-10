@@ -98,6 +98,22 @@ def list_realtor_viewing_requests(
     )
 
 
+@realtor_router.get(
+    "/{request_id}",
+    response_model=ViewingRequestRealtorResponse,
+)
+def get_realtor_viewing_request(
+    request_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return viewing_request_service.get_viewing_request_for_realtor(
+        db,
+        current_user,
+        request_id,
+    )
+
+
 @realtor_router.patch(
     "/{request_id}/accept",
     response_model=ViewingRequestRealtorResponse,

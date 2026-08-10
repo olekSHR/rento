@@ -13,6 +13,7 @@ import {
 } from "@/services/api"
 import {
   getViewingRequestStatusLabel,
+  isPropertyPubliclyAvailable,
   type ViewingRequestRealtor,
 } from "@/types/viewingRequest"
 
@@ -207,8 +208,11 @@ function RealtorViewingRequestsContent() {
           </div>
         ) : (
           <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {items.map((item) => (
-              <li key={item.id} className={cardClassName}>
+            {items.map((item) => {
+              const isPublic = isPropertyPubliclyAvailable(item.property.status)
+
+              return (
+                <li key={item.id} className={cardClassName}>
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="truncate text-base font-semibold text-[#F5F5F5]">
@@ -239,24 +243,38 @@ function RealtorViewingRequestsContent() {
                       details.
                     </p>
                     <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                      <Link
+                        href={`/realtor/viewing-requests/${item.id}`}
+                        className={primaryActionClassName}
+                      >
+                        Manage relationship
+                      </Link>
                       <a
                         href={`mailto:${item.requester_email}`}
-                        className={primaryActionClassName}
+                        className={secondaryActionClassName}
                       >
                         Email renter
                       </a>
-                      <Link
-                        href={`/properties/${item.property_id}#property-documents`}
-                        className={secondaryActionClassName}
-                      >
-                        Manage rental documents
-                      </Link>
+                      {isPublic ? (
+                        <Link
+                          href={`/properties/${item.property_id}`}
+                          className={secondaryActionClassName}
+                        >
+                          Open property
+                        </Link>
+                      ) : null}
                     </div>
                   </div>
                 ) : null}
 
                 {item.status === "pending" ? (
-                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                    <Link
+                      href={`/realtor/viewing-requests/${item.id}`}
+                      className={secondaryActionClassName}
+                    >
+                      Review request
+                    </Link>
                     <button
                       type="button"
                       onClick={() =>
@@ -277,8 +295,9 @@ function RealtorViewingRequestsContent() {
                     </button>
                   </div>
                 ) : null}
-              </li>
-            ))}
+                </li>
+              )
+            })}
           </ul>
         )}
       </div>

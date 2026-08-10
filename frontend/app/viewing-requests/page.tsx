@@ -12,6 +12,7 @@ import { cancelViewingRequest, getMyViewingRequests } from "@/services/api"
 import {
   canCancelViewingRequest,
   getViewingRequestStatusLabel,
+  isPropertyPubliclyAvailable,
   type ViewingRequest,
   type ViewingRequestStatus,
 } from "@/types/viewingRequest"
@@ -160,6 +161,7 @@ function ViewingRequestsContent() {
               {items.map((item) => {
                 const imageSrc = getImageUrl(item.property.image_url)
                 const cancelError = cancelErrors[item.id]
+                const isPublic = isPropertyPubliclyAvailable(item.property.status)
 
                 return (
                   <li key={item.id} className={cardClassName}>
@@ -209,22 +211,33 @@ function ViewingRequestsContent() {
 
                     <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                       <Link
-                        href={`/properties/${item.property_id}`}
-                        className={secondaryActionClassName}
+                        href={`/viewing-requests/${item.id}`}
+                        className={primaryActionClassName}
                       >
-                        Open property
+                        View relationship
                       </Link>
+
+                      {isPublic ? (
+                        <Link
+                          href={`/properties/${item.property_id}`}
+                          className={secondaryActionClassName}
+                        >
+                          Open property
+                        </Link>
+                      ) : null}
 
                       {item.status === "accepted" ? (
                         <>
+                          {isPublic ? (
+                            <Link
+                              href={`/properties/${item.property_id}#property-contact`}
+                              className={secondaryActionClassName}
+                            >
+                              Arrange viewing
+                            </Link>
+                          ) : null}
                           <Link
-                            href={`/properties/${item.property_id}#property-contact`}
-                            className={primaryActionClassName}
-                          >
-                            Arrange viewing
-                          </Link>
-                          <Link
-                            href={`/properties/${item.property_id}#property-documents`}
+                            href={`/viewing-requests/${item.id}#property-documents-heading`}
                             className={secondaryActionClassName}
                           >
                             View rental documents

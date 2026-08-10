@@ -20,10 +20,17 @@ import {
   type RentalDocument,
   type RentalDocumentType,
 } from "@/types/rentalDocument"
-import type { ViewingRequest, ViewingRequestRealtor } from "@/types/viewingRequest"
+import type {
+  ViewingRequest,
+  ViewingRequestRealtor,
+  ViewingRequestStatus,
+} from "@/types/viewingRequest"
 
 type RentalDocumentsSectionProps = {
-  propertyId: number
+  propertyId?: number
+  viewingRequestId?: number
+  viewingRequestStatus?: ViewingRequestStatus | string | null
+  variant?: "property-page" | "relationship-page"
 }
 
 const cardClassName =
@@ -84,14 +91,19 @@ function SectionHeader() {
 
 export default function RentalDocumentsSection({
   propertyId,
+  viewingRequestId: explicitViewingRequestId,
+  viewingRequestStatus: explicitViewingRequestStatus,
+  variant = "property-page",
 }: RentalDocumentsSectionProps) {
   const { isAuthenticated, isLoading, isRealtor } = useAuth()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const [viewingRequestId, setViewingRequestId] = useState<number | null>(null)
-  const [viewingRequestStatus, setViewingRequestStatus] = useState<string | null>(
+  const [discoveredRequestId, setDiscoveredRequestId] = useState<number | null>(
     null
   )
+  const [discoveredRequestStatus, setDiscoveredRequestStatus] = useState<
+    string | null
+  >(null)
   const [documents, setDocuments] = useState<RentalDocument[]>([])
   const [isFetching, setIsFetching] = useState(false)
   const [loadError, setLoadError] = useState("")
@@ -104,7 +116,18 @@ export default function RentalDocumentsSection({
   const [pendingArchiveId, setPendingArchiveId] = useState<number | null>(null)
   const [actionError, setActionError] = useState("")
 
-  const canUpload = isRealtor && viewingRequestStatus === "accepted"
+  const usesExplicitContext = explicitViewingRequestId !== undefined
+  const activeRequestId = usesExplicitContext
+    ? explicitViewingRequestId
+    : discoveredRequestId
+  const activeRequestStatus = usesExplicitContext
+    ? explicitViewingRequestStatus ?? null
+    : discoveredRequestStatus
+  const canUpload = isRealtor && activeRequestStatus === "accepted"
+  const sectionClassName =
+    variant === "property-page"
+      ? `${cardClassName} mt-8 scroll-mt-6`
+      : `${cardClassName} mt-6`
 
   useEffect(() => {
     if (!isAuthenticated || isLoading) {
@@ -118,6 +141,33 @@ export default function RentalDocumentsSection({
       setLoadError("")
 
       try {
+        if (usesExplicitContext && explicitViewingRequestId !== undefined) {
+          const docs = await getRentalDocuments(explicitViewingRequestId)
+
+          if (!cancelled) {
+            setDocuments(docs.items)
+          }
+
+          if (
+            !cancelled &&
+            docs.total === 0 &&
+            explicitViewingRequestStatus !== "accepted"
+          ) {
+            setDocuments([])
+          }
+
+          return
+        }
+
+        if (propertyId === undefined) {
+          if (!cancelled) {
+            setDiscoveredRequestId(null)
+            setDiscoveredRequestStatus(null)
+            setDocuments([])
+          }
+          return
+        }
+
         const response = isRealtor
           ? await getRealtorViewingRequests()
           : await getMyViewingRequests({ propertyId })
@@ -126,8 +176,8 @@ export default function RentalDocumentsSection({
 
         if (!selected) {
           if (!cancelled) {
-            setViewingRequestId(null)
-            setViewingRequestStatus(null)
+            setDiscoveredRequestId(null)
+            setDiscoveredRequestStatus(null)
             setDocuments([])
           }
           return
@@ -136,20 +186,20 @@ export default function RentalDocumentsSection({
         const docs = await getRentalDocuments(selected.id)
 
         if (!cancelled) {
-          setViewingRequestId(selected.id)
-          setViewingRequestStatus(selected.status)
+          setDiscoveredRequestId(selected.id)
+          setDiscoveredRequestStatus(selected.status)
           setDocuments(docs.items)
         }
 
         if (!cancelled && docs.total === 0 && selected.status !== "accepted") {
-          setViewingRequestId(null)
-          setViewingRequestStatus(null)
+          setDiscoveredRequestId(null)
+          setDiscoveredRequestStatus(null)
           setDocuments([])
         }
       } catch (err) {
         if (!cancelled) {
-          setViewingRequestId(null)
-          setViewingRequestStatus(null)
+          setDiscoveredRequestId(null)
+          setDiscoveredRequestStatus(null)
           setDocuments([])
           setLoadError(
             err instanceof Error
@@ -169,7 +219,16 @@ export default function RentalDocumentsSection({
     return () => {
       cancelled = true
     }
-  }, [isAuthenticated, isLoading, isRealtor, propertyId, reloadNonce])
+  }, [
+    isAuthenticated,
+    isLoading,
+    isRealtor,
+    propertyId,
+    reloadNonce,
+    usesExplicitContext,
+    explicitViewingRequestId,
+    explicitViewingRequestStatus,
+  ])
 
   if (!isAuthenticated || isLoading) {
     return null
@@ -178,9 +237,9 @@ export default function RentalDocumentsSection({
   if (isFetching) {
     return (
       <section
-        id="property-documents"
+        id={variant === "property-page" ? "property-documents" : undefined}
         aria-labelledby="property-documents-heading"
-        className={`${cardClassName} mt-8 scroll-mt-6`}
+        className={sectionClassName}
       >
         <SectionHeader />
         <div role="status" aria-live="polite" className="mt-5 space-y-3">
@@ -197,9 +256,9 @@ export default function RentalDocumentsSection({
   if (loadError) {
     return (
       <section
-        id="property-documents"
+        id={variant === "property-page" ? "property-documents" : undefined}
         aria-labelledby="property-documents-heading"
-        className={`${cardClassName} mt-8 scroll-mt-6`}
+        className={sectionClassName}
       >
         <SectionHeader />
         <div className="mt-5 space-y-3">
@@ -207,8 +266,8 @@ export default function RentalDocumentsSection({
             {loadError}
           </p>
           <p className="text-sm leading-relaxed text-[#B8B8B8]">
-            We could not load rental documents for this property. Please try
-            again.
+            We could not load rental documents for this viewing request. Please
+            try again.
           </p>
           <button
             type="button"
@@ -222,11 +281,11 @@ export default function RentalDocumentsSection({
     )
   }
 
-  if (!viewingRequestId) {
+  if (!activeRequestId) {
     return null
   }
 
-  if (viewingRequestStatus !== "accepted" && documents.length === 0) {
+  if (activeRequestStatus !== "accepted" && documents.length === 0) {
     return null
   }
 
@@ -236,7 +295,7 @@ export default function RentalDocumentsSection({
   }
 
   async function handleUpload(file: File) {
-    if (!viewingRequestId || !canUpload) {
+    if (!activeRequestId || !canUpload) {
       return
     }
 
@@ -244,12 +303,12 @@ export default function RentalDocumentsSection({
       setActionError("")
       setIsUploading(true)
       await uploadRentalDocument(
-        viewingRequestId,
+        activeRequestId,
         file,
         documentType,
         documentType === "other" ? title : undefined
       )
-      await refreshDocuments(viewingRequestId)
+      await refreshDocuments(activeRequestId)
       setTitle("")
     } catch (err) {
       setActionError(
@@ -275,7 +334,7 @@ export default function RentalDocumentsSection({
   }
 
   async function handleArchive(documentId: number) {
-    if (!viewingRequestId) {
+    if (!activeRequestId) {
       return
     }
 
@@ -283,7 +342,7 @@ export default function RentalDocumentsSection({
       setActionError("")
       setIsWorking(true)
       await archiveRentalDocument(documentId)
-      await refreshDocuments(viewingRequestId)
+      await refreshDocuments(activeRequestId)
     } catch (err) {
       setActionError(
         err instanceof Error ? err.message : "Unable to archive rental document."
@@ -296,9 +355,9 @@ export default function RentalDocumentsSection({
 
   return (
     <section
-      id="property-documents"
+      id={variant === "property-page" ? "property-documents" : undefined}
       aria-labelledby="property-documents-heading"
-      className={`${cardClassName} mt-8 scroll-mt-6`}
+      className={sectionClassName}
     >
       <SectionHeader />
 

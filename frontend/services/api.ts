@@ -986,6 +986,56 @@ export async function getMyViewingRequests(options?: {
   return response.json()
 }
 
+export async function getMyViewingRequest(
+  requestId: number
+): Promise<ViewingRequest> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/viewing-requests/${requestId}`,
+    {
+      cache: "no-store",
+    }
+  )
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load viewing request.")
+    )
+  }
+
+  return response.json()
+}
+
+export async function getRealtorViewingRequest(
+  requestId: number
+): Promise<ViewingRequestRealtor> {
+  const response = await sessionFetch(
+    `${getServerApiBaseUrl()}/realtor/viewing-requests/${requestId}`,
+    {
+      cache: "no-store",
+    }
+  )
+
+  if (response.status === 401) {
+    throw new Error("Please sign in again.")
+  }
+
+  if (response.status === 403) {
+    throw new Error("Only realtors can access viewing requests.")
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      await parseApiErrorMessage(response, "Unable to load viewing request.")
+    )
+  }
+
+  return response.json()
+}
+
 export async function cancelViewingRequest(
   requestId: number
 ): Promise<ViewingRequest> {

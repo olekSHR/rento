@@ -64,3 +64,9 @@ export function isActiveViewingRequest(status: ViewingRequestStatus): boolean {
 export function canCancelViewingRequest(status: ViewingRequestStatus): boolean {
   return isActiveViewingRequest(status)
 }
+
+export function isPropertyPubliclyAvailable(
+  propertyStatus: string | null | undefined
+): boolean {
+  return propertyStatus === "available"
+}

@@ -444,3 +444,220 @@ def test_new_request_allowed_after_decline(api_client, db_session):
     )
 
     assert response.status_code == 201
+
+
+def _create_accepted_viewing_request(api_client, db_session):
+    realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
+    seed_realtor_profile(db_session, realtor.id)
+    listing = seed_property(db_session, owner_id=realtor.id)
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+    created = api_client.post(
+        f"/properties/{listing.id}/viewing-requests",
+        json={},
+        headers=csrf_headers(api_client),
+    )
+    request_id = created.json()["id"]
+
+    login_user(api_client, realtor.email)
+    api_client.patch(
+        f"/realtor/viewing-requests/{request_id}/accept",
+        headers=csrf_headers(api_client),
+    )
+
+    return realtor, renter, listing, request_id
+
+
+def test_realtor_can_get_own_viewing_request_by_id(api_client, db_session):
+    realtor, renter, listing, request_id = _create_accepted_viewing_request(
+        api_client,
+        db_session,
+    )
+
+    login_user(api_client, realtor.email)
+    response = api_client.get(
+        f"/realtor/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["id"] == request_id
+    assert payload["status"] == "accepted"
+    assert payload["requester_email"] == renter.email
+    assert payload["property"]["id"] == listing.id
+
+
+def test_realtor_cannot_get_other_realtor_viewing_request_by_id(
+    api_client,
+    db_session,
+):
+    owner = seed_user(db_session, role="realtor", email="owner@example.com")
+    other = seed_user(db_session, role="realtor", email="other@example.com")
+    seed_realtor_profile(db_session, owner.id)
+    seed_realtor_profile(db_session, other.id)
+    listing = seed_property(db_session, owner_id=owner.id)
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+    created = api_client.post(
+        f"/properties/{listing.id}/viewing-requests",
+        json={},
+        headers=csrf_headers(api_client),
+    )
+    request_id = created.json()["id"]
+
+    login_user(api_client, other.email)
+    response = api_client.get(
+        f"/realtor/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 404
+
+
+def test_renter_cannot_use_realtor_viewing_request_get_path(api_client, db_session):
+    _realtor, renter, _listing, request_id = _create_accepted_viewing_request(
+        api_client,
+        db_session,
+    )
+
+    login_user(api_client, renter.email)
+    response = api_client.get(
+        f"/realtor/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 403
+
+
+def test_realtor_get_viewing_request_after_property_archive(api_client, db_session):
+    from app.services import property_service
+
+    realtor, _renter, listing, request_id = _create_accepted_viewing_request(
+        api_client,
+        db_session,
+    )
+
+    property_service.archive_property(
+        db_session,
+        listing.id,
+        actor_user_id=realtor.id,
+    )
+
+    login_user(api_client, realtor.email)
+    response = api_client.get(
+        f"/realtor/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 200
+    assert response.json()["property"]["status"] == "archived"
+
+
+def test_renter_get_viewing_request_after_property_archive(api_client, db_session):
+    from app.services import property_service
+
+    realtor, renter, listing, request_id = _create_accepted_viewing_request(
+        api_client,
+        db_session,
+    )
+
+    property_service.archive_property(
+        db_session,
+        listing.id,
+        actor_user_id=realtor.id,
+    )
+
+    login_user(api_client, renter.email)
+    response = api_client.get(
+        f"/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 200
+    assert response.json()["property"]["status"] == "archived"
+
+
+def test_archived_listing_private_relationship_lifecycle(api_client, db_session):
+    from app.models.rental_document import RentalDocument
+    from app.models.viewing_request import ViewingRequest
+    from app.services import property_service
+
+    PDF_BYTES = b"%PDF-1.4\n1 0 obj\n<<>>\nendobj\ntrailer\n<<>>\n%%EOF"
+
+    realtor, renter, listing, request_id = _create_accepted_viewing_request(
+        api_client,
+        db_session,
+    )
+    outsider = seed_user(db_session, email="outsider@example.com")
+
+    login_user(api_client, realtor.email)
+    uploaded = api_client.post(
+        f"/viewing-requests/{request_id}/rental-documents",
+        files={"file": ("lease.pdf", PDF_BYTES, "application/pdf")},
+        data={"document_type": "lease_agreement"},
+        headers=csrf_headers(api_client),
+    )
+    assert uploaded.status_code == 201
+    document_id = uploaded.json()["id"]
+
+    property_service.archive_property(
+        db_session,
+        listing.id,
+        actor_user_id=realtor.id,
+    )
+
+    login_user(api_client, renter.email)
+    property_response = api_client.get(f"/properties/{listing.id}")
+    assert property_response.status_code == 404
+
+    renter_detail = api_client.get(
+        f"/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+    assert renter_detail.status_code == 200
+
+    login_user(api_client, realtor.email)
+    realtor_detail = api_client.get(
+        f"/realtor/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+    assert realtor_detail.status_code == 200
+
+    login_user(api_client, renter.email)
+    listed = api_client.get(
+        f"/viewing-requests/{request_id}/rental-documents",
+        headers=csrf_headers(api_client),
+    )
+    assert listed.status_code == 200
+    assert listed.json()["total"] == 1
+
+    download = api_client.get(
+        f"/rental-documents/{document_id}/download",
+        headers=csrf_headers(api_client),
+    )
+    assert download.status_code == 200
+
+    login_user(api_client, outsider.email)
+    outsider_detail = api_client.get(
+        f"/viewing-requests/{request_id}",
+        headers=csrf_headers(api_client),
+    )
+    assert outsider_detail.status_code == 404
+
+    outsider_docs = api_client.get(
+        f"/viewing-requests/{request_id}/rental-documents",
+        headers=csrf_headers(api_client),
+    )
+    assert outsider_docs.status_code == 404
+
+    assert (
+        db_session.query(ViewingRequest).filter_by(id=request_id).count()
+        == 1
+    )
+    assert (
+        db_session.query(RentalDocument).filter_by(id=document_id).count()
+        == 1
+    )
