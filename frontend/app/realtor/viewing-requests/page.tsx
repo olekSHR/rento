@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { ChevronLeft } from "lucide-react"
 
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
-import RealtorRoute from "@/components/RealtorRoute"
+import { useAuth } from "@/context/AuthContext"
 import {
   acceptViewingRequest,
   declineViewingRequest,
@@ -35,9 +35,31 @@ function formatDate(value: string): string {
   }).format(new Date(value))
 }
 
+function ViewingRequestsSkeleton() {
+  return (
+    <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
+      <div className="mx-auto max-w-[1280px] space-y-5">
+        <div className="h-12 w-48 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none" />
+        <div className="space-y-4">
+          {[0, 1].map((item) => (
+            <div
+              key={item}
+              aria-hidden="true"
+              className={`${cardClassName} h-44 animate-pulse bg-white/5`}
+            />
+          ))}
+        </div>
+      </div>
+    </main>
+  )
+}
+
 function RealtorViewingRequestsContent() {
+  const { isLoading: isAuthLoading, isAuthenticated, user } = useAuth()
+  const isRealtor = user?.role === "realtor"
+
   const [items, setItems] = useState<ViewingRequestRealtor[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [pendingAction, setPendingAction] = useState<{
     request: ViewingRequestRealtor
@@ -46,6 +68,10 @@ function RealtorViewingRequestsContent() {
   const [isWorking, setIsWorking] = useState(false)
 
   useEffect(() => {
+    if (isAuthLoading || !isAuthenticated || !isRealtor) {
+      return
+    }
+
     let cancelled = false
 
     async function loadRequests() {
@@ -75,7 +101,43 @@ function RealtorViewingRequestsContent() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [isAuthLoading, isAuthenticated, isRealtor])
+
+  if (isAuthLoading || (isAuthenticated && isRealtor && isLoading)) {
+    return <ViewingRequestsSkeleton />
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
+        <div className={`mx-auto max-w-[1280px] ${cardClassName}`}>
+          <h1 className="text-2xl font-semibold tracking-tight">Login required</h1>
+          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+            Sign in to review viewing requests for your listings.
+          </p>
+          <Link
+            href="/login"
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B]"
+          >
+            Go to login
+          </Link>
+        </div>
+      </main>
+    )
+  }
+
+  if (!isRealtor) {
+    return (
+      <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
+        <div className={`mx-auto max-w-[1280px] ${cardClassName}`}>
+          <h1 className="text-2xl font-semibold tracking-tight">Access denied</h1>
+          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
+            Viewing requests are available only for realtor accounts.
+          </p>
+        </div>
+      </main>
+    )
+  }
 
   async function handleConfirmAction() {
     if (!pendingAction) {
@@ -131,17 +193,7 @@ function RealtorViewingRequestsContent() {
           </p>
         ) : null}
 
-        {isLoading ? (
-          <div className="space-y-4">
-            {[0, 1].map((item) => (
-              <div
-                key={item}
-                aria-hidden="true"
-                className={`${cardClassName} h-44 animate-pulse bg-white/5`}
-              />
-            ))}
-          </div>
-        ) : items.length === 0 ? (
+        {items.length === 0 ? (
           <div className={cardClassName}>
             <p className="text-sm leading-relaxed text-[#B8B8B8]">
               No viewing requests yet.
@@ -244,9 +296,5 @@ function RealtorViewingRequestsContent() {
 }
 
 export default function RealtorViewingRequestsPage() {
-  return (
-    <RealtorRoute>
-      <RealtorViewingRequestsContent />
-    </RealtorRoute>
-  )
+  return <RealtorViewingRequestsContent />
 }

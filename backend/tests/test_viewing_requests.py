@@ -356,6 +356,39 @@ def test_realtor_cannot_manage_other_realtor_request(api_client, db_session):
     assert response.status_code == 404
 
 
+def test_list_realtor_viewing_requests_returns_pending_request(
+    api_client,
+    db_session,
+):
+    realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
+    seed_realtor_profile(db_session, realtor.id)
+    listing = seed_property(db_session, owner_id=realtor.id)
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+    created = api_client.post(
+        f"/properties/{listing.id}/viewing-requests",
+        json={"message": "Please confirm"},
+        headers=csrf_headers(api_client),
+    )
+    assert created.status_code == 201
+    request_id = created.json()["id"]
+
+    login_user(api_client, realtor.email)
+    response = api_client.get(
+        "/realtor/viewing-requests",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["total"] == 1
+    assert payload["items"][0]["id"] == request_id
+    assert payload["items"][0]["status"] == "pending"
+    assert payload["items"][0]["requester_email"] == renter.email
+    assert payload["items"][0]["property"]["id"] == listing.id
+
+
 def test_list_my_viewing_requests(api_client, db_session):
     realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
     seed_realtor_profile(db_session, realtor.id)
