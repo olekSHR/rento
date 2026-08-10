@@ -46,7 +46,7 @@ def get_all_properties(
     if rooms is not None:
 
         query = query.filter(
-            models.Property.rooms == rooms
+            models.Property.rooms >= rooms
         )
 
     allowed_sort_fields = {
