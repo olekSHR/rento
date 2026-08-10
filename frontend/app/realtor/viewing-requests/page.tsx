@@ -28,6 +28,12 @@ const acceptButtonClassName =
 const declineButtonClassName =
   "inline-flex h-11 flex-1 items-center justify-center rounded-2xl border border-red-400/20 bg-[#2A2020] text-sm font-semibold text-red-200 transition active:scale-[0.98] disabled:opacity-70"
 
+const primaryActionClassName =
+  "inline-flex h-11 items-center justify-center rounded-2xl bg-[#DFC58A] px-4 text-sm font-semibold text-[#1B1B1B] transition hover:bg-[#e8d099] active:scale-[0.98]"
+
+const secondaryActionClassName =
+  "inline-flex h-11 items-center justify-center rounded-2xl border border-white/15 bg-[#252525] px-4 text-sm font-semibold text-[#F5F5F5] transition active:scale-[0.98]"
+
 function formatDate(value: string): string {
   return new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
@@ -227,13 +233,25 @@ function RealtorViewingRequestsContent() {
                 ) : null}
 
                 {item.status === "accepted" ? (
-                  <div className="mt-5">
-                    <Link
-                      href={`/properties/${item.property_id}#property-documents`}
-                      className="inline-flex h-11 items-center justify-center rounded-2xl border border-white/15 bg-[#252525] px-4 text-sm font-semibold text-[#F5F5F5] transition active:scale-[0.98]"
-                    >
-                      Manage rental documents
-                    </Link>
+                  <div className="mt-5 space-y-3">
+                    <p className="text-sm leading-relaxed text-[#B8B8B8]">
+                      Contact the renter to arrange the viewing time and meeting
+                      details.
+                    </p>
+                    <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                      <a
+                        href={`mailto:${item.requester_email}`}
+                        className={primaryActionClassName}
+                      >
+                        Email renter
+                      </a>
+                      <Link
+                        href={`/properties/${item.property_id}#property-documents`}
+                        className={secondaryActionClassName}
+                      >
+                        Manage rental documents
+                      </Link>
+                    </div>
                   </div>
                 ) : null}
 

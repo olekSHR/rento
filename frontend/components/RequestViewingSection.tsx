@@ -257,6 +257,19 @@ export default function RequestViewingSection({
                 </p>
               ) : null}
 
+              {latestRequest.status === "accepted" ? (
+                <p className="text-sm leading-relaxed text-[#B8B8B8]">
+                  Your request was accepted. Use the{" "}
+                  <a
+                    href="#property-contact"
+                    className="font-semibold text-[#DFC58A] underline-offset-4 hover:underline"
+                  >
+                    contact options
+                  </a>{" "}
+                  to arrange the viewing.
+                </p>
+              ) : null}
+
               {activeRequest &&
               canCancelViewingRequest(activeRequest.status) ? (
                 <button

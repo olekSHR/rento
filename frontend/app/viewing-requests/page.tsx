@@ -45,7 +45,7 @@ function getViewingRequestStatusGuidance(
     case "pending":
       return "Your request is waiting for the listing realtor to respond."
     case "accepted":
-      return "Your request was accepted. View rental documents on the property page when you are ready."
+      return "Your request was accepted. Contact the realtor to arrange the viewing time. Rental documents remain available if you decide to proceed afterward."
     case "declined":
       return "The realtor declined this viewing request."
     case "cancelled":
@@ -216,12 +216,20 @@ function ViewingRequestsContent() {
                       </Link>
 
                       {item.status === "accepted" ? (
-                        <Link
-                          href={`/properties/${item.property_id}#property-documents`}
-                          className={primaryActionClassName}
-                        >
-                          View rental documents
-                        </Link>
+                        <>
+                          <Link
+                            href={`/properties/${item.property_id}#property-contact`}
+                            className={primaryActionClassName}
+                          >
+                            Arrange viewing
+                          </Link>
+                          <Link
+                            href={`/properties/${item.property_id}#property-documents`}
+                            className={secondaryActionClassName}
+                          >
+                            View rental documents
+                          </Link>
+                        </>
                       ) : null}
 
                       {canCancelViewingRequest(item.status) ? (
