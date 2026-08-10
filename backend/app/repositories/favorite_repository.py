@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 
 from app.models.favorite import Favorite
+from app.models.property import Property
+from app.services.property_service import PROPERTY_STATUS_AVAILABLE
 
 
 def create_favorite(
@@ -28,9 +30,15 @@ def get_user_favorites(
     user_id: int
 ):
 
-    return db.query(Favorite).filter(
-        Favorite.user_id == user_id
-    ).all()
+    return (
+        db.query(Favorite)
+        .join(Property, Favorite.property_id == Property.id)
+        .filter(
+            Favorite.user_id == user_id,
+            Property.status == PROPERTY_STATUS_AVAILABLE,
+        )
+        .all()
+    )
 
 
 def get_favorite(
