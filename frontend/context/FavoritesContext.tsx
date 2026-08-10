@@ -36,8 +36,120 @@ const FavoritesContext = createContext<
   FavoritesContextType | undefined
 >(undefined);
 
+const GUEST_FAVORITES_STORAGE_KEY = "favorites";
+
 const TOGGLE_ERROR_MESSAGE =
   "Could not update favorites. Please try again.";
+
+function readGuestFavoriteIds(): number[] {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  try {
+    const localFavorites = JSON.parse(
+      localStorage.getItem(GUEST_FAVORITES_STORAGE_KEY) || "[]"
+    );
+
+    return localFavorites
+      .map((id: string | number) => Number(id))
+      .filter((id: number) => Number.isFinite(id));
+  } catch {
+    return [];
+  }
+}
+
+function writeGuestFavoriteIds(ids: number[]) {
+  localStorage.setItem(
+    GUEST_FAVORITES_STORAGE_KEY,
+    JSON.stringify(ids)
+  );
+}
+
+function clearGuestFavoriteIds() {
+  localStorage.removeItem(GUEST_FAVORITES_STORAGE_KEY);
+}
+
+function normalizeFavoriteRecords(
+  records: Awaited<ReturnType<typeof getFavorites>>
+): number[] {
+  return records
+    .map((favorite) => Number(favorite.property_id))
+    .filter((id) => Number.isFinite(id));
+}
+
+function isTransientFavoriteMergeError(error: unknown): boolean {
+  if (error instanceof TypeError) {
+    return true;
+  }
+
+  if (error instanceof Error) {
+    const message = error.message.toLowerCase();
+
+    if (message.includes("failed: 5")) {
+      return true;
+    }
+
+    if (message.includes("network") || message.includes("fetch")) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+async function mergeGuestFavoritesIntoBackend(
+  mergeLockRef: React.MutableRefObject<Promise<void> | null>
+): Promise<void> {
+  const guestIds = readGuestFavoriteIds();
+
+  if (guestIds.length === 0) {
+    return;
+  }
+
+  if (mergeLockRef.current) {
+    await mergeLockRef.current;
+    return;
+  }
+
+  const mergeTask = (async () => {
+    const serverFavorites = await getFavorites();
+    const serverIds = new Set(normalizeFavoriteRecords(serverFavorites));
+    const uniqueGuestIds = [...new Set(guestIds)];
+    const missingIds = uniqueGuestIds.filter((id) => !serverIds.has(id));
+    const retryIds: number[] = [];
+
+    for (const propertyId of missingIds) {
+      try {
+        await addFavorite(propertyId);
+      } catch (error) {
+        if (isTransientFavoriteMergeError(error)) {
+          retryIds.push(propertyId);
+          continue;
+        }
+
+        // Permanent failures (400/404/403, invalid property, etc.) are discarded.
+      }
+    }
+
+    if (retryIds.length === 0) {
+      clearGuestFavoriteIds();
+      return;
+    }
+
+    writeGuestFavoriteIds(retryIds);
+  })();
+
+  mergeLockRef.current = mergeTask;
+
+  try {
+    await mergeTask;
+  } finally {
+    if (mergeLockRef.current === mergeTask) {
+      mergeLockRef.current = null;
+    }
+  }
+}
 
 interface FavoritesProviderProps {
   children: React.ReactNode;
@@ -57,30 +169,23 @@ export function FavoritesProvider({
     Record<number, string>
   >({});
   const togglingRef = useRef<Set<number>>(new Set());
+  const guestMergeLockRef = useRef<Promise<void> | null>(null);
 
   const loadFavorites = useCallback(async () => {
     try {
       setIsLoading(true);
 
       if (isAuthenticated) {
-        const backendFavorites = await getFavorites();
+        await mergeGuestFavoritesIntoBackend(guestMergeLockRef);
 
-        const favoriteIds = backendFavorites
-          .map((favorite) => Number(favorite.property_id))
-          .filter((id) => Number.isFinite(id));
+        const backendFavorites = await getFavorites();
+        const favoriteIds = normalizeFavoriteRecords(backendFavorites);
 
         setFavorites(favoriteIds);
-      } else {
-        const localFavorites = JSON.parse(
-          localStorage.getItem("favorites") || "[]"
-        );
-
-        const normalizedFavorites = localFavorites
-          .map((id: string | number) => Number(id))
-          .filter((id: number) => Number.isFinite(id));
-
-        setFavorites(normalizedFavorites);
+        return;
       }
+
+      setFavorites(readGuestFavoriteIds());
     } catch (error) {
       console.error("Favorites loading error:", error);
 
@@ -102,13 +207,10 @@ export function FavoritesProvider({
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [authLoading, loadFavorites]);
+  }, [authLoading, isAuthenticated, loadFavorites]);
 
   const saveLocalFavorites = (updatedFavorites: number[]) => {
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(updatedFavorites)
-    );
+    writeGuestFavoriteIds(updatedFavorites);
   };
 
   const beginToggle = useCallback((propertyId: number) => {
