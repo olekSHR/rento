@@ -39,10 +39,11 @@ Procedure is **readiness evidence only**.
 | `git` | Verify repository state |
 | `docker compose` | Render, build, and run stack |
 | `docker compose run` | One-off Alembic migration against `db` |
+| `scripts/ops/rento-preserve-rollback-images.sh` | Preserve durable rollback tags before application image rebuild |
 | Local filesystem | Bind mount `./backend/uploads` |
 | Secret store (local) | `backend/.env` and shell `POSTGRES_PASSWORD` — values **not** in repository |
 
-No deployment scripts, CI/CD, or cloud provider tooling are defined in this repository.
+No full deployment automation, CI/CD, or cloud provider tooling are defined in this repository.
 
 ---
 
@@ -73,6 +74,72 @@ docker compose config
 4. Ensure `backend/.env` contains required backend configuration.
 5. Review `PRODUCTION_CONFIGURATION_INVENTORY.md` for variable completeness.
 6. Confirm deployment authorization exists if target is not local/disposable.
+
+---
+
+## 5.1 Application Deployment Identity And Rollback Preservation
+
+Use this section only for **application deployments** that rebuild `backend` and/or
+`frontend` images on an already-running environment.
+
+Ops-only changes (for example systemd unit updates) that do **not** rebuild
+application images must **not** run rollback image preservation.
+
+### 5.1.1 Determine the currently running application release SHA
+
+Record the **application release SHA** currently represented by the running
+`rento-backend:latest` and `rento-frontend:latest` images.
+
+**Warning:** Do **not** use arbitrary current production `git rev-parse HEAD` as
+the application release identity. Ops-only commits can advance the production
+Git checkout without rebuilding application images.
+
+Use the explicitly known application deployment SHA from the deployment baseline
+or rollback capture record (for example `83ac26c0859308ef875ce2e6479e1121a8ac2e0f`).
+
+### 5.1.2 Capture current immutable image IDs
+
+Before rebuild, record:
+
+- `rento-backend:latest` immutable image ID
+- `rento-frontend:latest` immutable image ID
+
+### 5.1.3 Preserve rollback tags (required before rebuild)
+
+Run from the deployment host:
+
+```bash
+bash scripts/ops/rento-preserve-rollback-images.sh <CURRENT_APP_SHA>
+```
+
+Example:
+
+```bash
+bash scripts/ops/rento-preserve-rollback-images.sh 83ac26c0859308ef875ce2e6479e1121a8ac2e0f
+```
+
+Expected durable tags:
+
+- `rento-backend:rollback-<APP_SHA_SHORT>`
+- `rento-frontend:rollback-<APP_SHA_SHORT>`
+
+**Stop condition:** Do not run `docker compose build backend frontend` until
+preservation succeeds and both rollback tags verify against the captured source
+image IDs.
+
+### 5.1.4 Application deployment order (production update)
+
+After §5.1.3 succeeds:
+
+1. Fetch and check out the authorized new application commit.
+2. Build application images: `docker compose build backend frontend`.
+3. Deploy application services: `docker compose up -d --no-deps backend frontend`.
+4. Verify infrastructure health (§7).
+5. Run production acceptance smoke for the increment.
+6. Only after acceptance **PASS**, old rollback tags from **2+ releases ago**
+   become eligible for explicit removal (§10.2).
+
+Do **not** remove preserved rollback tags immediately after `docker compose up`.
 
 ---
 
@@ -177,11 +244,67 @@ Record failure, unavailable evidence, and residual risk. Do not claim successful
 
 ## 10. Application / Image Rollback Procedure (R4)
 
-**Release rollback** (application/image level) — procedure only:
+**Release rollback** (application/image level) — procedure only.
+
+Before rollback, record the current failed/new backend and frontend immutable image
+IDs for diagnostic evidence.
+
+### 10.1 Preferred fast rollback (when preserved tags exist)
+
+If §5.1.3 was executed for the known-good release, use the preserved rollback tags.
+
+**Backend only:**
+
+```bash
+docker tag rento-backend:rollback-<APP_SHA_SHORT> rento-backend:latest
+docker compose up -d --no-deps --force-recreate backend
+```
+
+**Frontend only:**
+
+```bash
+docker tag rento-frontend:rollback-<APP_SHA_SHORT> rento-frontend:latest
+docker compose up -d --no-deps --force-recreate frontend
+```
+
+**Full application rollback:**
+
+```bash
+docker tag rento-backend:rollback-<APP_SHA_SHORT> rento-backend:latest
+docker tag rento-frontend:rollback-<APP_SHA_SHORT> rento-frontend:latest
+docker compose up -d --no-deps --force-recreate backend frontend
+```
+
+Then re-run health verification (§7).
+
+### 10.2 Post-acceptance rollback tag retention and cleanup
+
+Retention policy:
+
+- Keep the immediately previous known-good application rollback tag pair.
+- Do **not** remove preserved rollback tags before the new release passes
+  production acceptance smoke.
+- After acceptance **PASS**, rollback tags from **2+ releases ago** may be
+  removed explicitly by the operator.
+
+Example explicit cleanup (only after verifying the tag names and that they are
+no longer needed):
+
+```bash
+docker rmi rento-backend:rollback-<OLD_APP_SHA_SHORT>
+docker rmi rento-frontend:rollback-<OLD_APP_SHA_SHORT>
+```
+
+Do **not** use broad cleanup commands such as `docker image prune` or
+`docker system prune` as part of normal deployment.
+
+### 10.3 Secondary fallback — Git SHA + rebuild
+
+Use this fallback when preserved rollback tags are unavailable.
 
 1. Stop affected services: `docker compose stop frontend backend`.
-2. Check out previous **authorized** repository commit or deploy previous **authorized** image tag — when release authority exists.
-3. Rebuild if needed: `docker compose build backend frontend`.
+2. Check out previous **authorized** repository commit — when release authority exists.
+3. Rebuild: `docker compose build backend frontend`.
 4. Ensure database migration state is compatible — **Alembic downgrade is not automatic and may not be safe**; assess separately.
 5. Restart services in order: `db` → migration check if needed → `backend` → `frontend`.
 6. Re-run health verification (§7).
