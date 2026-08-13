@@ -4,7 +4,7 @@
 |-------|-------|
 | ID | TASK-002 |
 | TITLE | Public property list filter query validation |
-| STATUS | READY_TO_DEPLOY |
+| STATUS | CLOSED |
 | RISK | MEDIUM |
 
 > STATUS: DISCOVERY means application code must not be modified. Discovery for this task is complete; separate IMPLEMENTATION authorization is required before code changes.
@@ -545,13 +545,95 @@ Invalid filter values are rejected by FastAPI `Query(ge=1)` on the router **befo
 
 ## Commit
 
-_Not started._
+| Item | Value |
+|------|-------|
+| SHA | `9af97e65efaef764628cb2d97ea3205f40020667` |
+| Message | `fix(properties): validate public filter bounds` |
+| Files | `backend/app/routers/properties.py`, `backend/tests/test_property_list_filter_validation.py`, task doc |
 
 ---
 
 ## Production Result
 
-_Not started._
+**Verified at:** production `https://rentonow.ro` — 2026-08-13 (UTC)
+
+### Deploy
+
+| Item | Result |
+|------|--------|
+| Candidate SHA | `9af97e65efaef764628cb2d97ea3205f40020667` |
+| Scope | `BACKEND_ONLY` |
+| Deployment | PASS |
+| Pre-deploy production Git HEAD | `3e812bbf37c8ffc1080bb76ae7744cb5c8058e18` |
+| Post-deploy production Git HEAD | `9af97e65efaef764628cb2d97ea3205f40020667` |
+| Pre-deploy backend image | `sha256:52430fa7a897…` |
+| Post-deploy backend image | `sha256:aa7c6685a7d1bb155b73cab03ff5c95089066515dc7b5eef06294aa80570688c` |
+| Frontend image | unchanged (`sha256:d925419eca7e…`) |
+| Backend restarted | YES |
+| Frontend restarted | NO |
+| nginx restarted | NO |
+| db touched | NO |
+| migrations run | NO |
+| Rollback artifact | `rento-backend:rollback-8dbb0ce` → `sha256:52430fa7a897…` |
+
+### Production acceptance — invalid matrix (6/6)
+
+| Query | Expected | Actual | Result |
+|-------|----------|--------|--------|
+| `rooms=0` | 422 | 422 | PASS |
+| `rooms=-1` | 422 | 422 | PASS |
+| `min_price=0` | 422 | 422 | PASS |
+| `min_price=-1` | 422 | 422 | PASS |
+| `max_price=0` | 422 | 422 | PASS |
+| `max_price=-1` | 422 | 422 | PASS |
+
+### Production acceptance — boundary-valid matrix (3/3)
+
+| Query | Expected | Actual | Result |
+|-------|----------|--------|--------|
+| `rooms=1` | not 422 | 200 | PASS |
+| `min_price=1` | not 422 | 200 | PASS |
+| `max_price=1` | not 422 | 200 | PASS |
+
+### Existing rooms semantics
+
+| Query | Result | Evidence |
+|-------|--------|----------|
+| `rooms=2` | PASS — 200; listings returned with `rooms >= 2` | `total` includes id 12 (`rooms: 2`) |
+| `rooms=3` | PASS — 200; stricter filter | `total: 1`, listing id 3 (`rooms: 3`) |
+
+Minimum-rooms semantics preserved; endpoint behaves normally for valid positive values.
+
+### Combined / optional filters
+
+| Query | Expected | Actual | Result |
+|-------|----------|--------|--------|
+| `rooms=2&min_price=1&max_price=5000` | not 422 | 200 | PASS |
+| no filters (`GET /api/properties/`) | not 422 | 200 | PASS |
+
+### Validation response quality
+
+| Check | Result | Evidence |
+|-------|--------|----------|
+| Standard FastAPI validation JSON | PASS | `{"detail":[{"type":"greater_than_equal","loc":["query","rooms"],...}]}` |
+| Parameter identified | PASS | `loc`: `["query","rooms"]`, `["query","min_price"]` |
+| Constraint communicated | PASS | `"msg":"Input should be greater than or equal to 1"`, `"ctx":{"ge":1}` |
+| Internal details exposed | PASS — none | No traceback/stack trace in response body |
+
+### Public / runtime health
+
+| Check | Result |
+|-------|--------|
+| `/` | HTTP/2 200 |
+| `/login` | HTTP/2 200 |
+| backend health after acceptance | healthy |
+| backend logs | clean — expected 422 access-log entries only; no tracebacks/500s |
+
+**Production acceptance result:** `PRODUCTION_ACCEPTANCE: PASS`
+
+**Remaining non-blocking NOT VERIFIED:**
+
+- `min_price > max_price` cross-field behavior — NOT APPLICABLE (out of scope)
 
 ---
 
@@ -570,14 +652,14 @@ _Not started._
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY        ← completed (candidate discovery)
-READY            ← completed (task defined)
-IMPLEMENTING     ← completed (router validation)
-VERIFYING        ← completed (final verification)
-READY_TO_DEPLOY  ← current stage (does not authorize commit/push/deploy)
-COMMIT
-PUSH
-DEPLOY
-PRODUCTION ACCEPTANCE
-CLOSED
+DISCOVERY               ← completed
+READY                   ← completed
+IMPLEMENTING            ← completed
+VERIFYING               ← completed
+READY_TO_DEPLOY         ← completed
+COMMIT                  ← completed (9af97e6)
+PUSH                    ← completed
+DEPLOY                  ← completed (BACKEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
 ```
