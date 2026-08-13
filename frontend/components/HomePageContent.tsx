@@ -17,6 +17,7 @@ export default function HomePageContent({ children, activeFilters }: Props) {
   const hasActiveFilters = Boolean(
     activeFilters?.city?.trim() ||
       activeFilters?.min_price?.trim() ||
+      activeFilters?.max_price?.trim() ||
       activeFilters?.rooms?.trim()
   )
 
@@ -35,7 +36,7 @@ export default function HomePageContent({ children, activeFilters }: Props) {
         </h2>
 
         <FiltersBar
-          key={`${activeFilters?.city ?? ""}:${activeFilters?.min_price ?? ""}:${activeFilters?.rooms ?? ""}`}
+          key={`${activeFilters?.city ?? ""}:${activeFilters?.min_price ?? ""}:${activeFilters?.max_price ?? ""}:${activeFilters?.rooms ?? ""}`}
           initialValues={activeFilters}
           onSearch={() => setIsFiltersOpen(false)}
         />

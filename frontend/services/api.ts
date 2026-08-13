@@ -67,6 +67,7 @@ async function sessionFetch(
 type PropertySearchParams = {
   city?: string
   min_price?: string
+  max_price?: string
   rooms?: string
 }
 
@@ -81,6 +82,10 @@ export async function getProperties(
 
   if (searchParams.min_price) {
     params.set("min_price", searchParams.min_price)
+  }
+
+  if (searchParams.max_price) {
+    params.set("max_price", searchParams.max_price)
   }
 
   if (searchParams.rooms) {

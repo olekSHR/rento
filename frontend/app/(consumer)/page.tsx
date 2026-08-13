@@ -32,6 +32,7 @@ export default async function HomePage({
   searchParams: Promise<{
     city?: string
     min_price?: string
+    max_price?: string
     rooms?: string
   }>
 }) {
@@ -40,17 +41,22 @@ export default async function HomePage({
   const properties = await getProperties({
     city: params.city,
     min_price: params.min_price,
+    max_price: params.max_price,
     rooms: params.rooms,
   })
 
   const activeFilters = {
     city: params.city ?? "",
     min_price: params.min_price ?? "",
+    max_price: params.max_price ?? "",
     rooms: params.rooms ?? "",
   }
 
   const hasActiveFilters = Boolean(
-    activeFilters.city || activeFilters.min_price || activeFilters.rooms
+    activeFilters.city ||
+      activeFilters.min_price ||
+      activeFilters.max_price ||
+      activeFilters.rooms
   )
 
   const activeFilterLabels: string[] = []
@@ -61,6 +67,10 @@ export default async function HomePage({
 
   if (activeFilters.min_price.trim()) {
     activeFilterLabels.push(`from €${activeFilters.min_price.trim()}`)
+  }
+
+  if (activeFilters.max_price.trim()) {
+    activeFilterLabels.push(`up to €${activeFilters.max_price.trim()}`)
   }
 
   if (activeFilters.rooms.trim()) {

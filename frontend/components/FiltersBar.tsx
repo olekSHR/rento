@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 export type FilterValues = {
   city?: string
   min_price?: string
+  max_price?: string
   rooms?: string
 }
 
@@ -26,6 +27,7 @@ const secondaryButtonClassName =
 export default function FiltersBar({ onSearch, initialValues }: Props) {
   const [city, setCity] = useState(initialValues?.city ?? "")
   const [minPrice, setMinPrice] = useState(initialValues?.min_price ?? "")
+  const [maxPrice, setMaxPrice] = useState(initialValues?.max_price ?? "")
   const [rooms, setRooms] = useState(initialValues?.rooms ?? "")
   const [isPending, startTransition] = useTransition()
   const shouldCloseAfterTransitionRef = useRef(false)
@@ -56,6 +58,10 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
       params.set("min_price", minPrice.trim())
     }
 
+    if (maxPrice.trim()) {
+      params.set("max_price", maxPrice.trim())
+    }
+
     if (rooms.trim()) {
       params.set("rooms", rooms.trim())
     }
@@ -75,6 +81,7 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
 
     setCity("")
     setMinPrice("")
+    setMaxPrice("")
     setRooms("")
 
     shouldCloseAfterTransitionRef.current = true
@@ -86,9 +93,12 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
   const hasAppliedFilters = Boolean(
     initialValues?.city?.trim() ||
       initialValues?.min_price?.trim() ||
+      initialValues?.max_price?.trim() ||
       initialValues?.rooms?.trim()
   )
-  const hasFormValues = Boolean(city.trim() || minPrice.trim() || rooms.trim())
+  const hasFormValues = Boolean(
+    city.trim() || minPrice.trim() || maxPrice.trim() || rooms.trim()
+  )
   const canClear = hasFormValues || hasAppliedFilters
 
   return (
@@ -109,7 +119,7 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
         />
       </div>
 
-      <div className="grid grid-cols-[minmax(0,1fr)_7rem] gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">
           <label
             htmlFor="filter-min-price"
@@ -131,30 +141,50 @@ export default function FiltersBar({ onSearch, initialValues }: Props) {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="filter-rooms" className="text-sm font-medium text-[#B8B8B8]">
-            Rooms
+          <label
+            htmlFor="filter-max-price"
+            className="text-sm font-medium text-[#B8B8B8]"
+          >
+            Max price
           </label>
           <input
-            id="filter-rooms"
+            id="filter-max-price"
             type="number"
             min="1"
-            placeholder="2"
-            value={rooms}
-            onChange={(event) => {
-              const value = Number(event.target.value)
-
-              if (value < 1 && event.target.value !== "") {
-                setRooms("1")
-                return
-              }
-
-              setRooms(event.target.value)
-            }}
+            placeholder="€"
+            value={maxPrice}
+            onChange={(event) => setMaxPrice(event.target.value)}
             inputMode="numeric"
             disabled={isPending}
             className={fieldClassName}
           />
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <label htmlFor="filter-rooms" className="text-sm font-medium text-[#B8B8B8]">
+          Rooms
+        </label>
+        <input
+          id="filter-rooms"
+          type="number"
+          min="1"
+          placeholder="2"
+          value={rooms}
+          onChange={(event) => {
+            const value = Number(event.target.value)
+
+            if (value < 1 && event.target.value !== "") {
+              setRooms("1")
+              return
+            }
+
+            setRooms(event.target.value)
+          }}
+          inputMode="numeric"
+          disabled={isPending}
+          className={fieldClassName}
+        />
       </div>
 
       <div className="flex flex-col gap-3">
