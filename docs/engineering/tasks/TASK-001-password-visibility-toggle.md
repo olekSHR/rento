@@ -4,7 +4,7 @@
 |-------|-------|
 | ID | TASK-001 |
 | TITLE | Password visibility toggle |
-| STATUS | READY_TO_DEPLOY |
+| STATUS | CLOSED |
 | RISK | LOW |
 
 > STATUS: DISCOVERY means application code must not be modified. This task completed discovery and is ready for a separate IMPLEMENTATION authorization.
@@ -399,13 +399,62 @@ Behavior applies automatically to all 5 in-scope password fields via shared `Aut
 
 ## Commit
 
-_Not started._
+| Item | Value |
+|------|-------|
+| SHA | `3e812bbf37c8ffc1080bb76ae7744cb5c8058e18` |
+| Message | `feat(auth): add password visibility toggle` |
+| Files | `frontend/components/auth/AuthField.tsx` |
 
 ---
 
 ## Production Result
 
-_Not started — frontend UX only; standard deploy path if separately authorized._
+**Verified at:** production `https://rentonow.ro` — 2026-08-13 (UTC+3)
+
+### Deploy
+
+| Item | Result |
+|------|--------|
+| Candidate SHA | `3e812bbf37c8ffc1080bb76ae7744cb5c8058e18` |
+| Scope | `FRONTEND_ONLY` |
+| Deployment | PASS |
+| Pre-deploy production Git HEAD | `8dbb0ce587113b67137bc7fa61430a639eeda9b5` |
+| Post-deploy production Git HEAD | `3e812bbf37c8ffc1080bb76ae7744cb5c8058e18` |
+| Pre-deploy frontend image | `sha256:d69f5311ec56…` |
+| Post-deploy frontend image | `sha256:d925419eca7e07a333334ecc5ab61ee2064b0b51f7d54f786318cf9ff5b3f96e` |
+| Backend image | unchanged (`sha256:52430fa7a897…`) |
+| Backend restarted | NO |
+| nginx restarted | NO |
+| db touched | NO |
+| migrations run | NO |
+| Rollback artifact | `rento-frontend:rollback-8dbb0ce` |
+
+### Production acceptance
+
+| Check | Result | Evidence |
+|-------|--------|----------|
+| `/login` password toggle | PASS | Default masked; Show/Hide toggles `password`↔`text`; value preserved (`SecretTest123`, `AcceptTest123`); toggle did not navigate/submit |
+| `/register` password toggle | PASS | Independent toggle; confirm remained masked when password revealed (`RegPass111` / `RegConfirm222`) |
+| `/register` confirm toggle | PASS | Independent toggle; password visibility unchanged when confirm revealed |
+| `/reset-password?token=test-token-for-ui` new password | PASS | Form rendered; toggle reveals/hides new password only (`ResetNew111`) |
+| `/reset-password?token=test-token-for-ui` confirm | PASS | Independent toggle; new password remained masked when confirm revealed (`ResetConfirm222`) |
+| Keyboard tab order (login) | PASS | Focus order: email → password → Show/Hide toggle → Forgot password → Login |
+| Toggle keyboard activation | PASS | Toggle focusable; native `type="button"` with `aria-pressed`; operable when focused |
+| Enter-key submit after toggle | NOT VERIFIED | Automation did not reproduce Enter-in-password submit; Login button submit after visible-password toggle reached backend (`Signing in…` → `Invalid email or password`) — submit path not broken |
+| Login authentication success | NOT VERIFIED | No approved production test account available; invalid-credentials submit exercised only |
+| Password manager / autofill | NOT VERIFIED | `id`, `name`, `autoComplete="current-password"` unchanged; toggle did not clear typed value; no live manager runtime test |
+| Public smoke | PASS | `/` HTTP 200; `/login` HTTP 200 |
+| Runtime health | PASS | frontend, backend, nginx, db — all healthy; frontend logs clean (`next start` ready) |
+
+**Production acceptance result:** `PRODUCTION_ACCEPTANCE: PASS`
+
+**Remaining non-blocking NOT VERIFIED items:**
+
+- Dedicated Enter-key-in-password-field submit (form handler verified via Login button after toggle)
+- Successful login with real credentials
+- Password-manager-specific autofill runtime
+
+**Rationale:** LOW-risk presentation-only change; all five in-scope fields behave correctly on production; independent per-field toggles verified; no service regression observed.
 
 ---
 
@@ -421,12 +470,13 @@ _Not started — frontend UX only; standard deploy path if separately authorized
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY        ← completed
-IMPLEMENTATION   ← completed
-VERIFICATION     ← completed
-READY_TO_DEPLOY  ← current stage (does not authorize commit/push/deploy)
-COMMIT
-PUSH
-DEPLOY
-PRODUCTION ACCEPTANCE
+DISCOVERY               ← completed
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed
+READY_TO_DEPLOY         ← completed
+COMMIT                  ← completed (3e812bb)
+PUSH                    ← completed
+DEPLOY                  ← completed (FRONTEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
 ```
