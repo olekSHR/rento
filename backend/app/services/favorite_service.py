@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from app.repositories import favorite_repository
-from app.core.exceptions import BadRequestException
+from app.repositories import favorite_repository, property_repository
+from app.core.exceptions import BadRequestException, NotFoundException
 
 
 def add_to_favorites(
@@ -9,6 +9,17 @@ def add_to_favorites(
     user_id: int,
     property_id: int
 ):
+
+    property_item = property_repository.get_property_by_id(
+        db,
+        property_id,
+    )
+
+    if not property_item:
+
+        raise NotFoundException(
+            "Property not found"
+        )
 
     existing_favorite = favorite_repository.get_favorite(
         db,
