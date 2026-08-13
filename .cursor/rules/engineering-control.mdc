@@ -1,0 +1,142 @@
+---
+description: AI Engineering Control — evidence-first bounded task discipline for discovery, implementation, verification, and production gates
+alwaysApply: true
+---
+
+# Engineering Control
+
+Operational encoding for AI-assisted engineering work.
+
+This rule is **not** Repository Authority. If it conflicts with published repository documents under `docs/engineering/` or `docs/implementation/`, those documents control.
+
+Repository is durable engineering memory. Chat sessions are temporary working tools.
+
+## Evidence labels
+
+Use exactly:
+
+```text
+VERIFIED
+INFERRED
+UNKNOWN
+NOT APPLICABLE
+```
+
+Do not present INFERRED or UNKNOWN claims as VERIFIED.
+
+## Task start
+
+Before substantive work, read:
+
+1. `docs/engineering/reference/REFERENCE_SOFTWARE_ARCHITECTURE_MAP_v1.md`
+2. `docs/engineering/baseline/PROJECT_BASELINE.md`
+3. current task file if one exists
+
+Then verify Git baseline (`branch`, `HEAD`, clean/dirty worktree, relevant divergence).
+
+## STATUS: DISCOVERY
+
+When task STATUS is `DISCOVERY`:
+
+- Application code modification is prohibited.
+- Focus on evidence, current/target behavior, layers, risks, verification, and rollback planning.
+
+## Before implementation
+
+Require explicit articulation of:
+
+```text
+CURRENT BEHAVIOR
+TARGET BEHAVIOR
+AFFECTED LAYERS
+REQUEST / USE-CASE LIFECYCLE
+FILES
+DATA IMPACT
+AUTH IMPACT
+RISKS
+VERIFICATION PLAN
+ROLLBACK IMPACT
+```
+
+## Working constraints
+
+- One bounded task at a time.
+- No unrelated refactor.
+- No opportunistic dependency upgrades.
+- Unrelated findings are recorded separately (task Follow-up or a new task/failure record).
+
+## Separate gates
+
+Treat these as separate approvals:
+
+```text
+DISCOVERY
+IMPLEMENTATION
+VERIFICATION
+COMMIT
+PUSH
+DEPLOY
+PRODUCTION ACCEPTANCE
+```
+
+Approval of one stage must **not** imply approval of later stages.
+
+Hard distinctions:
+
+```text
+CODE WRITTEN != DONE
+COMMITTED != DEPLOYED
+DEPLOYED != ACCEPTED
+HTTP 200 != BUSINESS CORRECTNESS
+TEST PASS != PRODUCTION CORRECTNESS
+```
+
+## Before declaring success
+
+Run and review:
+
+```bash
+git status --short
+git diff --stat
+git diff --check
+git diff
+```
+
+Review the diff for:
+
+- unexpected files
+- unexpected deletions
+- unrelated formatting
+- dependency changes
+- migration changes
+- secrets
+- debug artifacts
+
+Then run task-appropriate verification.
+
+## Production-changing work
+
+Before deploy-related claims, establish:
+
+```text
+current application release
+candidate release
+migration state
+runtime health
+rollback target
+backup relevance
+```
+
+Explicitly prohibit assuming:
+
+```text
+production Git HEAD == deployed application release
+```
+
+Repository HEAD and deployed application release identity are separate facts.
+
+## Authority / scope notes
+
+- Do not populate or invent `PROJECT_BASELINE.md` facts without evidence.
+- Do not create tasks unless work is authorized.
+- Prefer minimal safe changes that preserve existing architecture.
