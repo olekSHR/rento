@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-004 |
 | TITLE | Favorite creation rejects nonexistent property |
-| STATUS | READY_TO_DEPLOY |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Backend API correctness / error semantics |
 
-> STATUS: READY_TO_DEPLOY means local implementation and final verification are complete; commit/deploy/production acceptance remain separate gates.
+> STATUS: CLOSED means implementation, deployment, and production acceptance are complete.
 
 ---
 
@@ -536,24 +536,76 @@ Global `IntegrityError` handler: **not added**.
 
 Rollback note: preserve current running backend image before rebuild; do not assume an existing rollback tag is current without deployment preflight verification.
 
-### Remaining NOT VERIFIED
+### Remaining NOT VERIFIED (non-blocking)
 
-| Item | Status |
-|------|--------|
-| Production API behavior (`POST /api/favorites/{nonexistent_id}`) | **NOT VERIFIED** |
-| Production acceptance | **NOT VERIFIED** |
-| Deploy to production | **NOT VERIFIED** |
-| Commit / push | **NOT VERIFIED** (not performed) |
+| Item | Status | Notes |
+|------|--------|-------|
+| Duplicate favorite production behavior | **NOT VERIFIED** | Automated regression covers duplicate 400 |
+| Valid add production behavior | **NOT VERIFIED IN PRODUCTION** | Automated regression covers 201 |
+| Archived favorite production semantics | **NOT VERIFIED IN THIS ACCEPTANCE** | Existing archived suite passed pre-deploy |
 
-Do not mark Production Acceptance PASS or CLOSED until those gates complete.
+These items were not required for the primary TASK-004 acceptance contract.
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `c5c9de631ed560848fe00dd2246e60a697c062b4` |
+| Message | `fix(favorites): return 404 for missing property` |
 
 ## Production Result
 
-<!-- Filled only after deploy + production verification if applicable. -->
+**Date:** 2026-08-13
+**PRODUCTION_ACCEPTANCE:** **PASS**
+
+| Field | Value |
+|-------|-------|
+| DEPLOYED_SHA | `c5c9de631ed560848fe00dd2246e60a697c062b4` |
+| Backend image | `sha256:78d43a404a7eff11aae857fe2107b94f31b1c880abd1da1b0ee7f8a586a25090` |
+| Deployment scope | BACKEND_ONLY |
+| Production acceptance identity | user id `27`, `role=user` (OPS-001 dedicated acceptance user) |
+
+**Primary production contract:**
+
+| Check | Result |
+|-------|--------|
+| Nonexistent property ID | `100012` (verified absent; max property id was `12`) |
+| Favorite row before | `0` |
+| `POST /api/favorites/100012` | HTTP **404** |
+| Message | `"Property not found"` |
+| HTTP 500 | **NO** |
+| IntegrityError | **NO** |
+| Traceback | **NO** |
+| Favorite row after | `0` |
+| Persistent favorite created | **NO** |
+
+**Authenticated session flow:**
+
+| Step | Result |
+|------|--------|
+| Login | **200** |
+| `GET /api/favorites/` (authenticated) | **200** |
+| Logout | **200** |
+| `GET /api/favorites/` after logout | **401** |
+
+**Runtime (post-acceptance):**
+
+| Service | Result |
+|---------|--------|
+| backend | healthy |
+| frontend | healthy |
+| nginx | healthy |
+| db | healthy |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/login` | **200** |
+
+**Preservation evidence (non-blocking):**
+
+| Check | Result |
+|-------|--------|
+| Duplicate favorite production behavior | **NOT VERIFIED** |
+| Valid add production behavior | **NOT VERIFIED IN PRODUCTION** |
+| Archived favorite production semantics | **NOT VERIFIED IN THIS ACCEPTANCE** |
 
 ## Follow-up
 
