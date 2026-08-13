@@ -4,7 +4,7 @@
 |-------|-------|
 | ID | TASK-003 |
 | TITLE | Public max price filter |
-| STATUS | READY_TO_DEPLOY |
+| STATUS | CLOSED |
 | RISK | LOW |
 
 > STATUS: DISCOVERY means application code must not be modified. Discovery for this task is complete; separate IMPLEMENTATION authorization is required before code changes.
@@ -450,15 +450,49 @@ DEPLOYED != ACCEPTED
 
 No backend, `package.json`, or lockfile changes.
 
-**Pending gates (not performed in this session):** COMMIT · PUSH · DEPLOY · PRODUCTION ACCEPTANCE
+**Pending gates (completed):** COMMIT · PUSH · DEPLOY · PRODUCTION ACCEPTANCE
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `aa7bca6ea5a163e8a2a7fa168c022346c48b0518` |
+| Message | `feat(filters): add public max price filter` |
 
 ## Production Result
 
-<!-- Filled only after deploy + production verification if applicable. -->
+**PRODUCTION_ACCEPTANCE:** PASS
+
+**Deployed application release (VERIFIED):**
+
+| Field | Value | Evidence |
+|-------|-------|----------|
+| Candidate SHA | `aa7bca6ea5a163e8a2a7fa168c022346c48b0518` | production `git rev-parse HEAD` after deploy |
+| Deploy scope | FRONTEND_ONLY | backend/nginx/db image + StartedAt unchanged |
+| Pre-deploy frontend image | `sha256:d925419eca7e07a333334ecc5ab61ee2064b0b51f7d54f786318cf9ff5b3f96e` | docker inspect pre-deploy |
+| Post-deploy frontend image | `sha256:6f959a71da230b51da29c31715e67752b49c01e8f5598c079255559266dda1ed` | docker inspect post-deploy |
+| Rollback artifact | `rento-frontend:rollback-3e812bb` → `sha256:d925419eca7e…` | preserved pre-deploy |
+
+**Production acceptance evidence (2026-08-13, `https://rentonow.ro`):**
+
+| Case | Result | Evidence |
+|------|--------|----------|
+| Max only (`max_price=500`) | PASS | URL `?max_price=500`; chip `up to €500`; backend `GET /properties/?max_price=500` 200; modal prefill 500; reload persistence |
+| Min + Max (`100` / `500`) | PASS | URL both params; chip `from €100 · up to €500`; backend log 200; prefill both |
+| Full combination | PASS | URL `?city=Galati&min_price=100&max_price=500&rooms=2`; chip all four; backend log 200; modal prefills all fields |
+| Filter result semantics | PASS | `max_price=500` excludes €750 listing; `max_price=200` shows only €100 listing |
+| Manual URL `/?max_price=500` | PASS | searchParams read; API forwarded; prefill; active summary |
+| Clear | PASS | Clear → `/`; max_price removed from URL/summary; backend `GET /properties/` without max_price |
+| Existing Min price only | PASS | `/?min_price=100`; chip `from €100`; listings unchanged behavior |
+| Existing Rooms only | PASS | `/?rooms=2`; chip `2+ rooms`; listings unchanged behavior |
+| Backend validation `max_price=0` | PASS | `curl https://rentonow.ro/api/properties/?max_price=0` → **422** (TASK-002 contract intact) |
+| Responsive mobile (~375 px) | PASS | Min \| Max row + Rooms readable; Apply/Clear usable |
+| Responsive desktop | PASS | Same modal; labels/inputs readable |
+| Runtime health | PASS | all services healthy; frontend logs clean (`Ready in 169ms`); no backend 500s on max_price requests |
+
+**Remaining NOT VERIFIED:** none for TASK-003 scope.
+
+**Backend / data impact:** NONE (frontend-only deploy; no migration; no intentional data mutation).
 
 ## Follow-up
 
@@ -479,9 +513,9 @@ DISCOVERY        (complete)
 READY            (complete)
 IMPLEMENTATION   (complete)
 VERIFICATION     (complete — local)
-READY_TO_DEPLOY  (current)
-COMMIT
-PUSH
-DEPLOY
-PRODUCTION ACCEPTANCE
+READY_TO_DEPLOY  (complete)
+COMMIT           (complete — aa7bca6)
+PUSH             (complete)
+DEPLOY           (complete — frontend-only)
+PRODUCTION ACCEPTANCE (PASS — CLOSED)
 ```
