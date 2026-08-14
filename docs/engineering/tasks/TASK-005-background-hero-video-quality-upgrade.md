@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-005 |
 | TITLE | Background Hero Video Quality Upgrade |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Frontend media asset upgrade |
 
-> Discovery complete (2026-08-14). Local implementation and verification complete; **COMMIT**, **PUSH**, **DEPLOY**, and **PRODUCTION ACCEPTANCE** remain separately authorized.
+> STATUS: CLOSED means implementation, deployment, and production acceptance are complete. Archive remains a separate authorization gate.
 
 **Discovery reference:** Background/Hero Video Discovery (2026-08-14) — recommendation: `ASSET_ONLY`; deployment: `FRONTEND_ONLY`.
 
@@ -536,27 +536,68 @@ NEW FILE EXISTS != VISUAL ACCEPTANCE
 
 No application source, backend, dependency, or config changes.
 
-**Pending gates:** COMMIT · PUSH · DEPLOY · PRODUCTION ACCEPTANCE
+**Pending gates (completed):** COMMIT · PUSH · DEPLOY · PRODUCTION ACCEPTANCE
 
 ---
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `0615b1645dcd3bbeb1e5e8554525b634ae3d9e5f` |
+| Message | `feat(home): upgrade hero background media` |
 
 ---
 
 ## Production Result
 
-<!-- Filled only after deploy + production verification if applicable. -->
+**Date:** 2026-08-14
+**PRODUCTION_ACCEPTANCE:** **PASS**
 
-Expected deploy scope:
+**Deployed application release (VERIFIED):**
 
-```text
-FRONTEND_ONLY
-```
+| Field | Value | Evidence |
+|-------|-------|----------|
+| DEPLOYED_SHA | `0615b1645dcd3bbeb1e5e8554525b634ae3d9e5f` | production `git rev-parse HEAD` after checkout |
+| Deploy scope | FRONTEND_ONLY | `docker compose build frontend`; `docker compose up -d --no-deps frontend` |
+| Pre-deploy frontend image | `sha256:6f959a71da230b51da29c31715e67752b49c01e8f5598c079255559266dda1ed` | docker inspect pre-deploy |
+| Post-deploy frontend image | `sha256:a669eea190c08b94c2b7f2aafff7da89bbb0fbb81b932ef00f212ac50f97931d` | docker inspect post-deploy |
+| Frontend rebuilt | YES | new image ID ≠ pre-deploy |
+| Frontend recreated | YES | new container ID; health healthy |
+| Backend recreated | NO | container ID + StartedAt unchanged |
+| Database restarted | NO | container ID + StartedAt unchanged |
+| Nginx recreated | NO | container ID + StartedAt unchanged |
+| Migration | NONE | no migration run |
+| Rollback artifact | `rento-frontend:rollback-aa7bca6` → `sha256:6f959a71…` | preserved pre-deploy; still valid post-acceptance |
 
-No backend rebuild, db restart, nginx restart, or migration expected unless later evidence proves required.
+**Production acceptance evidence (2026-08-14, `https://rentonow.ro`):**
+
+| Case | Result | Evidence |
+|------|--------|----------|
+| Desktop — hero video present | PASS | production screenshot; `<video>` playing |
+| Desktop — autoplay / muted / loop | PASS | JS probe: `autoplay:true muted:true loop:true paused:false` |
+| Desktop — crop / no black bars | PASS | `object-cover`; no visible letterboxing |
+| Desktop — text / CTA readability | PASS | headline + “View listings” readable over gradient |
+| Desktop — poster → video transition | PASS | no broken media state; video plays over poster layer |
+| Desktop — visual quality improvement | PASS | sharp interior footage; materially improved vs prior hero |
+| Mobile (~390px) — inline playback | PASS | `playsInline:true`; video playing |
+| Mobile — crop / hero sizing | PASS | hero height ~422px; subject visible; no horizontal overflow |
+| Mobile — CTA / readability | PASS | headline + CTA usable |
+| Mobile — bottom navigation | PASS | Home / Favorites / Filters / Profile present |
+| Reduced motion — video hidden | PASS | emulated `prefers-reduced-motion: reduce`; video `display:none` |
+| Reduced motion — poster visible / hero usable | PASS | CSS poster layer visible; text + CTA readable |
+| Loop (~13.8s) | PASS | duration 13.833s; seamless wrap without pause |
+| Network — video | PASS | `GET /media/home/hero-galati.mp4` → **200**; Content-Length **3,738,519** |
+| Network — poster | PASS | `GET /media/home/hero-galati-poster.webp` → **200**; Content-Length **213,698** |
+| Asset identity conflict | NO | deployment smoke SHA-256 match; browser HEAD sizes match |
+| Regression — header / hero / listings | PASS | header, hero region, 3 listing cards render |
+| Regression — filters / navigation | PASS | filters button + bottom nav present |
+| Runtime / console errors | PASS | no Next.js error overlay |
+| Runtime health | PASS | frontend/backend/db/nginx healthy; frontend RestartCount **0** |
+
+**Remaining NOT VERIFIED:** none for TASK-005 scope.
+
+**Backend / data impact:** NONE (frontend-only deploy; no migration; no intentional data mutation).
 
 ---
 
@@ -577,13 +618,28 @@ Separate findings — do not expand this task:
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY        (complete — 2026-08-14)
-TASK DEFINITION  (complete)
-ASSET SELECTION  (complete — user accepted)
-IMPLEMENTATION   (complete — local asset replacement)
-VERIFICATION     (complete — local browser PASS)
-COMMIT           (NOT authorized)
-PUSH             (NOT authorized)
-DEPLOY           (NOT authorized)
-PRODUCTION ACCEPTANCE (NOT authorized)
+DISCOVERY               (complete — 2026-08-14)
+TASK DEFINITION         (complete)
+ASSET SELECTION         (complete — user accepted)
+IMPLEMENTATION          (complete)
+VERIFICATION            (complete — local browser PASS)
+COMMIT                  (complete — 0615b16)
+PUSH                    (complete)
+DEPLOY                  (complete — frontend-only)
+PRODUCTION ACCEPTANCE   (PASS — CLOSED)
+CLOSURE                 (complete — 2026-08-14)
+ARCHIVE                 (NOT YET)
+```
+
+**Lifecycle (closure):**
+
+```text
+implementation:          COMPLETE
+local verification:      PASS
+commit:                  COMPLETE
+push:                    COMPLETE
+deployment:              PASS
+production acceptance:   PASS
+closure:                 COMPLETE
+archive:                 NOT YET
 ```
