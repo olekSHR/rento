@@ -4,11 +4,24 @@
 |-------|-------|
 | ID | TASK-007 |
 | TITLE | Public Property Filter Rejects Inverted Price Range |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Backend API correctness / query validation |
 
-> STATUS: VERIFYING means local implementation and local verification are complete. Commit, push, deploy, production acceptance, and closure are **not** authorized by this update.
+> STATUS: CLOSED means implementation, deployment, and production acceptance are complete. Archive remains a separate authorization gate.
+
+**Lifecycle (2026-08-16):**
+
+| Gate | State |
+|------|-------|
+| Implementation | COMPLETE |
+| Local verification | PASS |
+| Commit | COMPLETE |
+| Push | COMPLETE |
+| Deployment | PASS |
+| Production acceptance | PASS |
+| Closure | COMPLETE |
+| Archive | NOT YET |
 
 **Discovery reference:** Post TASK-006 bounded discovery (2026-08-16) — recommendation: `Public property filter rejects inverted price range`; deployment: `BACKEND_ONLY`.
 
@@ -434,6 +447,8 @@ Done requires:
 | Why not repository | Valid-range predicates (`price >= min` AND `price <= max`) are correct; the defect is accepting an impossible range as a successful query |
 | Why not `BadRequestException` | Current handler maps it to HTTP **400**, not **422** |
 | How 422 is produced | FastAPI default `RequestValidationError` handler (same family as `Query(ge=1)`) |
+| Mechanism review | **MECHANISM_ACCEPTABLE** |
+| Response contract vs `Query(ge=1)` | **CONSISTENT** — both use FastAPI `{"detail": [...]}` |
 
 **GREEN:**
 
@@ -506,13 +521,94 @@ python -m compileall app/routers/properties.py tests/test_property_list_filter_v
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `ac683dff165acce35ede007b468bbd0b76cacc1f` |
+| Message | `fix(filters): reject inverted public price range` |
 
 ---
 
 ## Production Result
 
-<!-- Filled only after deploy + production verification if applicable. -->
+**Date:** 2026-08-16
+**PRODUCTION_ACCEPTANCE:** **PASS**
+
+### Deployment
+
+| Field | Value |
+|-------|-------|
+| DEPLOYED_SHA | `ac683dff165acce35ede007b468bbd0b76cacc1f` |
+| Deployment scope | BACKEND_ONLY |
+| Backend rebuilt | YES |
+| Backend recreated | YES |
+| Frontend recreated | NO |
+| Database restarted | NO |
+| Nginx recreated | NO |
+| Migration | NONE |
+| Post-deploy backend image | `sha256:17bec3f8c81fafb72a5805b1238e0e25da6f5e28a98dac78f4b9fd244685b0c7` |
+
+### Final accepted API contract
+
+Rento-specific decision (not a universal REST rule):
+
+```text
+PUBLIC GET /properties/
+if min_price > max_price
+→ HTTP 422
+→ FastAPI validation envelope {"detail":[...]}
+   loc includes query / min_price
+```
+
+Valid combinations remain accepted:
+
+| Case | Contract |
+|------|----------|
+| `min_price < max_price` | HTTP **200** |
+| `min_price == max_price` | HTTP **200** |
+| min-only | HTTP **200** |
+| max-only | HTTP **200** |
+| `min_price=0` / `max_price=0` (TASK-002 `ge=1`) | HTTP **422** unchanged |
+
+### Primary production contract
+
+| Check | Result |
+|-------|--------|
+| Auth required | **NO** — public GET |
+| `GET /api/properties/?min_price=5000&max_price=1000` | HTTP **422** |
+| Response | `{"detail":[{"type":"value_error","loc":["query","min_price"],"msg":"Value error, min_price must be less than or equal to max_price","input":5000}]}` |
+| `GET /api/properties/?min_price=1000&max_price=5000` | HTTP **200** — list envelope |
+| `GET /api/properties/?min_price=1000&max_price=1000` | HTTP **200** — list envelope |
+| `GET /api/properties/?min_price=1000` | HTTP **200** — list envelope |
+| `GET /api/properties/?max_price=5000` | HTTP **200** — list envelope |
+| `GET /api/properties/?min_price=0` | HTTP **422** — `greater_than_equal` / `ge=1` |
+| HTTP 500 | **NO** |
+| IntegrityError | **NO** |
+| Traceback | **NO** |
+| Unexpected exception | **NO** |
+| Backend log inverted | `GET /properties/?min_price=5000&max_price=1000` → **422 Unprocessable Entity** |
+
+### Runtime (post-acceptance)
+
+| Service | Result |
+|---------|--------|
+| backend | healthy |
+| frontend | healthy |
+| db | healthy |
+| nginx | healthy |
+| backend RestartCount | **0** |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/api/` | **200** |
+
+### Rollback posture
+
+| Field | Value |
+|-------|-------|
+| Tag | `rento-backend:rollback-dec9601` |
+| Immutable image | `sha256:fdc6ed9d0dafb07edb4282ea60ec544057f25971daaff901546a6630c5cc1e3d` |
+| Still valid after deploy/acceptance | **YES** |
+| Meaning | Verified pre-TASK-007 backend image (TASK-006 runtime) |
+
+Do not remove or retag this artifact during closure. Database rollback is **NOT REQUIRED**.
 
 ---
 
@@ -531,14 +627,15 @@ Possible separate future tasks (not part of TASK-007):
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY               COMPLETE
-IMPLEMENTATION          COMPLETE (local)
-VERIFICATION            PASS (local)
-COMMIT                  NOT YET
-PUSH                    NOT YET
-DEPLOY                  NOT YET
-PRODUCTION ACCEPTANCE   NOT YET
-CLOSURE                 NOT YET
+DISCOVERY               ← completed
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed
+COMMIT                  ← completed (ac683df)
+PUSH                    ← completed
+DEPLOY                  ← completed (BACKEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
+ARCHIVE                 ← NOT YET (separate authorization)
 ```
 
-**Next gate:** COMMIT REVIEW. Do not stage, commit, push, or deploy from this update.
+**Next gate:** ARCHIVE authorization (separate). Do not create TASK-008 in this document.
