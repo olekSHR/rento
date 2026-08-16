@@ -54,7 +54,7 @@ def remove_from_favorites(
 
     if not favorite:
 
-        raise BadRequestException(
+        raise NotFoundException(
             "Favorite not found"
         )
 

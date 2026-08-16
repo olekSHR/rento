@@ -152,3 +152,20 @@ def test_add_duplicate_favorite_preserves_400(api_client, db_session):
 
     assert duplicate_response.status_code == 400
     assert duplicate_response.json()["message"] == "Property already in favorites"
+
+
+def test_remove_missing_favorite_returns_404(api_client, db_session):
+    realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
+    listing = seed_property(db_session, owner_id=realtor.id)
+    seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, "renter@example.com")
+
+    response = api_client.delete(
+        f"/favorites/{listing.id}",
+        headers=csrf_headers(api_client),
+    )
+
+    assert response.status_code == 404
+    assert response.json()["success"] is False
+    assert response.json()["message"] == "Favorite not found"
