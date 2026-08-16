@@ -1,5 +1,6 @@
 from app.schemas.property import PropertyImageCreate, PropertyImageResponse
 from fastapi import APIRouter, Depends, Query, Request, Response
+from fastapi.exceptions import RequestValidationError
 from sqlalchemy.orm import Session
 from app.schemas.common import MessageResponse
 from app.database.database import get_db
@@ -64,6 +65,21 @@ def get_properties(
     db: Session = Depends(get_db),
     
 ):
+    if (
+        min_price is not None
+        and max_price is not None
+        and min_price > max_price
+    ):
+        raise RequestValidationError(
+            [
+                {
+                    "type": "value_error",
+                    "loc": ("query", "min_price"),
+                    "msg": "Value error, min_price must be less than or equal to max_price",
+                    "input": min_price,
+                }
+            ]
+        )
 
     return property_service.get_all_properties(
     db,

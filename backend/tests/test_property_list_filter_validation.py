@@ -77,3 +77,31 @@ def test_public_properties_accepts_boundary_valid_filter_values(
     response = api_client.get("/properties/", params=params)
 
     assert response.status_code != 422
+
+
+def test_property_list_rejects_inverted_price_range(api_client, db_session):
+    response = api_client.get(
+        "/properties/",
+        params={"min_price": 5000, "max_price": 1000},
+    )
+
+    assert response.status_code == 422
+
+
+VALID_PRICE_RANGE_CASES = [
+    pytest.param({"min_price": 1000, "max_price": 5000}, id="min<max"),
+    pytest.param({"min_price": 1000, "max_price": 1000}, id="min==max"),
+    pytest.param({"min_price": 1000}, id="min-only"),
+    pytest.param({"max_price": 5000}, id="max-only"),
+]
+
+
+@pytest.mark.parametrize("params", VALID_PRICE_RANGE_CASES)
+def test_public_properties_accepts_valid_price_ranges(
+    api_client,
+    db_session,
+    params,
+):
+    response = api_client.get("/properties/", params=params)
+
+    assert response.status_code == 200
