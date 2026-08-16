@@ -4,23 +4,24 @@
 |-------|-------|
 | ID | TASK-006 |
 | TITLE | DELETE Missing Favorite Returns 404 |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Backend API correctness / error semantics |
 
-> STATUS: VERIFYING means bounded implementation and local verification are complete. COMMIT, PUSH, DEPLOY, and PRODUCTION ACCEPTANCE remain separate unauthorized gates.
+> STATUS: CLOSED means implementation, deployment, and production acceptance are complete. Archive remains a separate authorization gate.
 
-**Local gate posture (2026-08-16):**
+**Lifecycle (2026-08-16):**
 
 | Gate | State |
 |------|-------|
 | Implementation | COMPLETE |
 | Local verification | PASS |
-| Commit | NOT YET |
-| Push | NOT YET |
-| Deployment | NOT YET |
-| Production acceptance | NOT YET |
-| Closure | NOT YET |
+| Commit | COMPLETE |
+| Push | COMPLETE |
+| Deployment | PASS |
+| Production acceptance | PASS |
+| Closure | COMPLETE |
+| Archive | NOT YET |
 
 **Discovery reference:** Post TASK-005 bounded discovery (2026-08-16) — recommendation: `DELETE missing favorite returns 404`; deployment: `BACKEND_ONLY`.
 
@@ -541,13 +542,100 @@ python -m compileall app/services/favorite_service.py tests/test_favorites_nonex
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `dec96016f8464f04c5f884f5075d2e5f58d3bc6a` |
+| Message | `fix(favorites): return 404 when favorite is missing` |
 
 ---
 
 ## Production Result
 
-<!-- Filled only after deploy + production verification if applicable. -->
+**Date:** 2026-08-16
+**PRODUCTION_ACCEPTANCE:** **PASS**
+
+### Deployment
+
+| Field | Value |
+|-------|-------|
+| DEPLOYED_SHA | `dec96016f8464f04c5f884f5075d2e5f58d3bc6a` |
+| Deployment scope | BACKEND_ONLY |
+| Backend rebuilt | YES |
+| Backend recreated | YES |
+| Frontend recreated | NO |
+| Database restarted | NO |
+| Nginx recreated | NO |
+| Migration | NONE |
+| Post-deploy backend image | `sha256:fdc6ed9d0dafb07edb4282ea60ec544057f25971daaff901546a6630c5cc1e3d` |
+
+### Final accepted API contract
+
+Rento-specific decision (not a universal REST rule):
+
+```text
+DELETE /favorites/{property_id}
+authenticated user
++ Favorite relation absent
+→ HTTP 404
+→ { "success": false, "message": "Favorite not found" }
+```
+
+Preserved contracts (local regression; not re-mutated in production):
+
+| Case | Contract |
+|------|----------|
+| Valid Favorite DELETE | HTTP **200** |
+| Duplicate POST favorite | HTTP **400** |
+| POST nonexistent property | HTTP **404** (TASK-004) |
+
+### Primary production contract
+
+| Check | Result |
+|-------|--------|
+| Acceptance identity | `acceptance@rentonow.ro`, user id `27`, `role=user` (OPS-001) |
+| Credentials exposed | **NO** |
+| Selected property | id `3`, exists, `available` |
+| Favorite rows before | **0** |
+| `DELETE /api/favorites/3` | HTTP **404** |
+| Response | `{ "success": false, "message": "Favorite not found" }` |
+| Favorite rows after | **0** |
+| Favorite mutation | **NO** (`before = 0`, `after = 0`) |
+| HTTP 500 | **NO** |
+| IntegrityError | **NO** |
+| Traceback | **NO** |
+| Unexpected exception | **NO** |
+| Observability | `failure_class=not_found`, `status_code=404` |
+
+### Authenticated session flow
+
+| Step | Result |
+|------|--------|
+| Login | **PASS** |
+| Session | **PASS** |
+| Logout | **PASS** |
+| Post-logout `GET /api/favorites/` | **401** |
+
+### Runtime (post-acceptance)
+
+| Service | Result |
+|---------|--------|
+| backend | healthy |
+| frontend | healthy |
+| db | healthy |
+| nginx | healthy |
+| backend RestartCount | **0** |
+| `https://rentonow.ro/api/` | **200** |
+
+### Rollback posture
+
+| Field | Value |
+|-------|-------|
+| Tag | `rento-backend:rollback-aa7bca6` |
+| Immutable image | `sha256:78d43a404a7eff11aae857fe2107b94f31b1c880abd1da1b0ee7f8a586a25090` |
+| Still valid after deploy/acceptance | **YES** |
+| Naming | Historically imprecise (`aa7bca6` is not the backend release SHA); immutable ID matches the pre-deploy running backend |
+
+Do not remove or retag this artifact during closure.
 
 ---
 
@@ -566,13 +654,15 @@ Possible separate future tasks (not part of TASK-006):
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY               ← task definition complete in this document
-IMPLEMENTATION          ← not authorized by definition alone
-VERIFICATION
-COMMIT
-PUSH
-DEPLOY
-PRODUCTION ACCEPTANCE
+DISCOVERY               ← completed
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed
+COMMIT                  ← completed (dec9601)
+PUSH                    ← completed
+DEPLOY                  ← completed (BACKEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
+ARCHIVE                 ← NOT YET (separate authorization)
 ```
 
-**Next gate after local verification:** COMMIT authorization (separate gate).
+**Next gate:** ARCHIVE authorization (separate). Do not create TASK-007 in this document.
