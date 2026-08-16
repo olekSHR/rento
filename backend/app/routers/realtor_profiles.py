@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.core.exceptions import BadRequestException, ForbiddenException
@@ -63,8 +63,8 @@ def update_my_realtor_profile(
     response_model=PropertyListResponse,
 )
 def get_my_realtor_properties(
-    limit: int = 100,
-    offset: int = 0,
+    limit: int = Query(default=100, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
     current_user: User = Depends(require_realtor),
 ):
