@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-008 |
 | TITLE | Admin/Realtor Property List Pagination Bounds |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Backend API correctness / query validation |
 
-> STATUS: VERIFYING means local implementation and local verification are complete. Commit, push, deploy, production acceptance, and closure are **not** authorized by this update.
+> STATUS: CLOSED means implementation, local verification, commit, push, backend-only deployment, and production acceptance are complete. Archive remains a separate gate.
 
 **Discovery reference:** Post TASK-007 bounded discovery (2026-08-16) — recommendation: `C1 — Bound admin and realtor property-list pagination`; deployment: `BACKEND_ONLY`.
 
@@ -519,19 +519,161 @@ python -m compileall app/routers/properties.py app/routers/realtor_profiles.py t
 
 **Quality:** `python -m compileall` on changed files: PASS. No established ruff/mypy gate beyond pytest.
 
-**Diff hygiene:** routers + new test module + this task document. `git diff --check`: clean. Not staged / not committed / not pushed.
+**Diff hygiene:** routers + new test module + this task document. `git diff --check`: clean. Committed and pushed at `f8b7d602`.
 
 ---
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `f8b7d60220c76f662eaf39c2d330dfa3064611fa` |
+| Message | `fix(pagination): bound admin and realtor property lists` |
 
 ---
 
 ## Production Result
 
-<!-- Filled only after deploy + production verification if applicable. -->
+**Date:** 2026-08-16
+**PRODUCTION_ACCEPTANCE:** **PASS**
+
+### Deployment
+
+| Field | Value |
+|-------|-------|
+| DEPLOYED_SHA | `f8b7d60220c76f662eaf39c2d330dfa3064611fa` |
+| Deployment scope | BACKEND_ONLY |
+| Backend rebuilt | YES |
+| Backend recreated | YES |
+| Frontend recreated | NO |
+| Database restarted | NO |
+| Nginx recreated | NO |
+| Migration | NONE |
+| Post-deploy backend image | `sha256:3cd9a3f9526dcf91bc91e30ddd6f3c9fdc6453cbad4a521fea98a13c6a4d58ef` |
+
+### Final accepted API contract
+
+For authenticated authorized **admin** (`GET /properties/admin/all`) and **realtor** (`GET /realtor/properties`) property-list endpoints:
+
+```text
+limit:  default 100, ge=1, le=100
+offset: default 0,   ge=0
+```
+
+Invalid authorized query:
+
+| Condition | HTTP |
+|-----------|------|
+| `limit < 1` | **422** |
+| `limit > 100` | **422** |
+| `offset < 0` | **422** |
+
+Invalid responses use standard FastAPI validation envelope `{"detail":[...]}` with `loc` referencing `query/limit` or `query/offset`.
+
+Preserved unchanged:
+
+- **401** unauthenticated
+- **403** wrong role
+- default `limit=100`, `offset=0`
+- valid `limit` in `1..100`
+- service/repository behavior for valid pages
+- public `GET /properties/` pagination contract
+
+### Admin production acceptance
+
+Identity: `acceptance-admin@rentonow.ro` (id=28, role=`admin`, account_status=`active`). Login: **PASS**. Logout: **PASS**. Post-logout protected request: **401**.
+
+| Request | Result |
+|---------|--------|
+| `GET /api/properties/admin/all?limit=0` | HTTP **422** |
+| `GET /api/properties/admin/all?limit=1` | HTTP **200** |
+| `GET /api/properties/admin/all?limit=100` | HTTP **200** |
+| `GET /api/properties/admin/all?limit=101` | HTTP **422** |
+| `GET /api/properties/admin/all?offset=-1` | HTTP **422** |
+| `GET /api/properties/admin/all` (default) | HTTP **200** — metadata `limit=100`, `offset=0` |
+
+Validation envelope on invalid admin requests: `detail` present; loc includes `query/limit` or `query/offset`.
+
+### Realtor production acceptance
+
+Identity: `acceptance-realtor@rentonow.ro` (id=29, role=`realtor`, account_status=`active`). Login: **PASS**. Logout: **PASS**. Post-logout protected request: **401**.
+
+| Request | Result |
+|---------|--------|
+| `GET /api/realtor/properties?limit=0` | HTTP **422** |
+| `GET /api/realtor/properties?limit=1` | HTTP **200** |
+| `GET /api/realtor/properties?limit=100` | HTTP **200** |
+| `GET /api/realtor/properties?limit=101` | HTTP **422** |
+| `GET /api/realtor/properties?offset=-1` | HTTP **422** |
+| `GET /api/realtor/properties` (default) | HTTP **200** — metadata `limit=100`, `offset=0`, empty list valid |
+
+Validation envelope on invalid realtor requests: `detail` present; loc includes `query/limit` or `query/offset`.
+
+### Authorization regression
+
+| Check | Result |
+|-------|--------|
+| Unauthenticated `GET /api/properties/admin/all` | HTTP **401** |
+| Unauthenticated `GET /api/realtor/properties` | HTTP **401** |
+| OPS-001 (`acceptance@rentonow.ro`, id=27, role=`user`) admin list | HTTP **403** |
+| OPS-001 realtor list | HTTP **403** |
+| OPS-001 role/status after acceptance | unchanged — id=27, role=`user`, active |
+
+No role mutation occurred during TASK-008 Production Acceptance.
+
+### Data non-mutation
+
+| Check | Result |
+|-------|--------|
+| Admin identity (id=28) role/status | unchanged — `admin`, active |
+| Realtor identity (id=29) role/status | unchanged — `realtor`, active |
+| OPS-001 (id=27) | unchanged |
+| Realtor id=29 `realtor_profiles` | **0** |
+| Realtor id=29 `realtor_applications` | **0** |
+| Realtor id=29 `properties` | **0** |
+| Business rows created during acceptance | **NO** |
+| Database schema changed | **NO** |
+
+### Backend / runtime evidence
+
+| Check | Result |
+|-------|--------|
+| frontend | healthy |
+| backend | healthy |
+| db | healthy |
+| nginx | healthy |
+| backend RestartCount | **0** |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/api/` | **200** |
+| HTTP 500 during acceptance | **NO** |
+| Traceback | **NO** |
+| IntegrityError | **NO** |
+| Unexpected exception | **NO** |
+
+Expected acceptance statuses observed in backend logs: 200, 401, 403, 422.
+
+### Rollback posture
+
+| Field | Value |
+|-------|-------|
+| Tag | `rento-backend:rollback-ac683df` |
+| Immutable image | `sha256:17bec3f8c81fafb72a5805b1238e0e25da6f5e28a98dac78f4b9fd244685b0c7` |
+| Still valid after deploy/acceptance | **YES** |
+| Meaning | Verified pre-TASK-008 backend image (TASK-007 runtime) |
+
+Do not remove or retag this artifact during closure. Database rollback is **NOT REQUIRED**.
+
+### Acceptance identity note
+
+TASK-008 Production Acceptance required dedicated production acceptance identities (supporting OPS provisioning gate, not an application runtime change):
+
+| Identity | Email | User id | Role | Status |
+|----------|-------|---------|------|--------|
+| Admin acceptance | `acceptance-admin@rentonow.ro` | 28 | `admin` | active |
+| Realtor acceptance | `acceptance-realtor@rentonow.ro` | 29 | `realtor` | active |
+| OPS-001 (unchanged) | `acceptance@rentonow.ro` | 27 | `user` | active |
+
+Credentials stored operator-local outside Git (`~/.rento-ops/`). Passwords, cookies, CSRF tokens, and session tokens are not recorded in this document.
 
 ---
 
@@ -551,14 +693,15 @@ Possible separate future tasks (not part of TASK-008):
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY               COMPLETE
-IMPLEMENTATION          COMPLETE (local)
-VERIFICATION            PASS (local)
-COMMIT                  NOT YET
-PUSH                    NOT YET
-DEPLOY                  NOT YET
-PRODUCTION ACCEPTANCE   NOT YET
-CLOSURE                 NOT YET
+DISCOVERY               ← completed
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed (local)
+COMMIT                  ← completed (f8b7d60)
+PUSH                    ← completed
+DEPLOY                  ← completed (BACKEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
+ARCHIVE                 ← NOT YET (separate authorization)
 ```
 
-**Next gate:** COMMIT REVIEW. Do not stage, commit, push, or deploy from this update.
+**Next gate:** ARCHIVE authorization (separate). Do not create TASK-009 in this document.
