@@ -57,6 +57,23 @@ def _normalize_message(message: str | None) -> str | None:
     return trimmed
 
 
+def _normalize_list_status(status: str | None) -> str | None:
+    if status is None:
+        return None
+
+    normalized = status.strip()
+
+    if not normalized:
+        return None
+
+    if normalized not in VALID_STATUSES:
+        raise BadRequestException(
+            "Invalid viewing request status"
+        )
+
+    return normalized
+
+
 def _assert_requester_role(current_user: User) -> None:
     if current_user.role == "admin":
         raise BadRequestException(
@@ -283,10 +300,7 @@ def list_my_viewing_requests(
     limit: int = 20,
     offset: int = 0,
 ) -> dict:
-    if status and status not in VALID_STATUSES:
-        raise BadRequestException(
-            "Invalid viewing request status"
-        )
+    status = _normalize_list_status(status)
 
     items, total = viewing_request_repository.list_by_requester(
         db,
@@ -390,10 +404,7 @@ def list_realtor_viewing_requests(
             "Only realtor can access this resource"
         )
 
-    if status and status not in VALID_STATUSES:
-        raise BadRequestException(
-            "Invalid viewing request status"
-        )
+    status = _normalize_list_status(status)
 
     items, total = viewing_request_repository.list_by_realtor(
         db,

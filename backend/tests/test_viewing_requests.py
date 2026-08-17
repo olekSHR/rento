@@ -504,6 +504,84 @@ def test_list_my_viewing_requests_pagination_bounds(
     assert response.status_code == expected_status
 
 
+def test_list_my_viewing_requests_normalizes_status_filter_whitespace(
+    api_client,
+    db_session,
+):
+    realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
+    seed_realtor_profile(db_session, realtor.id)
+    listing = seed_property(db_session, owner_id=realtor.id)
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+    headers = csrf_headers(api_client)
+    created = api_client.post(
+        f"/properties/{listing.id}/viewing-requests",
+        json={"message": "Whitespace status filter"},
+        headers=headers,
+    )
+    assert created.status_code == 201
+
+    response = api_client.get(
+        "/viewing-requests",
+        params={"status": " pending "},
+        headers=headers,
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["total"] == 1
+    assert payload["items"][0]["status"] == "pending"
+
+
+def test_list_my_viewing_requests_whitespace_only_status_filter(
+    api_client,
+    db_session,
+):
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+
+    response = api_client.get(
+        "/viewing-requests",
+        params={"status": "   "},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["total"] == 0
+
+
+def test_list_realtor_viewing_requests_normalizes_status_filter_whitespace(
+    api_client,
+    db_session,
+):
+    realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
+    seed_realtor_profile(db_session, realtor.id)
+    listing = seed_property(db_session, owner_id=realtor.id)
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+    created = api_client.post(
+        f"/properties/{listing.id}/viewing-requests",
+        json={"message": "Realtor whitespace status filter"},
+        headers=csrf_headers(api_client),
+    )
+    assert created.status_code == 201
+    request_id = created.json()["id"]
+
+    login_user(api_client, realtor.email)
+    response = api_client.get(
+        "/realtor/viewing-requests",
+        params={"status": " pending "},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["total"] == 1
+    assert payload["items"][0]["id"] == request_id
+    assert payload["items"][0]["status"] == "pending"
+
+
 def test_list_my_viewing_requests_unauthenticated_returns_401(api_client):
     response = api_client.get("/viewing-requests")
 
