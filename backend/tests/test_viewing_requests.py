@@ -415,6 +415,110 @@ def test_list_my_viewing_requests(api_client, db_session):
     assert payload["items"][0]["message"] == "Hello"
 
 
+@pytest.mark.parametrize("invalid_property_id", [0, -1])
+def test_list_my_viewing_requests_rejects_invalid_property_id(
+    api_client,
+    db_session,
+    invalid_property_id,
+):
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+
+    response = api_client.get(
+        "/viewing-requests",
+        params={"property_id": invalid_property_id},
+    )
+
+    assert response.status_code == 422
+    detail = response.json()["detail"]
+    assert detail
+    assert any(
+        error.get("loc") == ["query", "property_id"]
+        for error in detail
+    )
+
+
+def test_list_my_viewing_requests_accepts_valid_property_id_boundaries(
+    api_client,
+    db_session,
+):
+    realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
+    seed_realtor_profile(db_session, realtor.id)
+    listing = seed_property(db_session, owner_id=realtor.id)
+    renter = seed_user(db_session, email="renter@example.com")
+
+    login_user(api_client, renter.email)
+    headers = csrf_headers(api_client)
+    api_client.post(
+        f"/properties/{listing.id}/viewing-requests",
+        json={"message": "Hello"},
+        headers=headers,
+    )
+
+    omitted = api_client.get("/viewing-requests")
+    assert omitted.status_code == 200
+    assert omitted.json()["total"] == 1
+
+    one = api_client.get("/viewing-requests", params={"property_id": 1})
+    assert one.status_code == 200
+
+    existing = api_client.get(
+        "/viewing-requests",
+        params={"property_id": listing.id},
+    )
+    assert existing.status_code == 200
+    assert existing.json()["total"] == 1
+
+    nonexistent = api_client.get(
+        "/viewing-requests",
+        params={"property_id": 999999},
+    )
+    assert nonexistent.status_code == 200
+    assert nonexistent.json()["total"] == 0
+
+
+@pytest.mark.parametrize(
+    "params,expected_status",
+    [
+        pytest.param({}, 200, id="default"),
+        pytest.param({"limit": 1}, 200, id="limit=1"),
+        pytest.param({"limit": 100}, 200, id="limit=100"),
+        pytest.param({"limit": 0}, 422, id="limit=0"),
+        pytest.param({"limit": 101}, 422, id="limit=101"),
+        pytest.param({"offset": 0}, 200, id="offset=0"),
+        pytest.param({"offset": -1}, 422, id="offset=-1"),
+    ],
+)
+def test_list_my_viewing_requests_pagination_bounds(
+    api_client,
+    db_session,
+    params,
+    expected_status,
+):
+    renter = seed_user(db_session, email="renter@example.com")
+    login_user(api_client, renter.email)
+
+    response = api_client.get("/viewing-requests", params=params)
+
+    assert response.status_code == expected_status
+
+
+def test_list_my_viewing_requests_unauthenticated_returns_401(api_client):
+    response = api_client.get("/viewing-requests")
+
+    assert response.status_code == 401
+
+
+def test_list_my_viewing_requests_unauthenticated_invalid_property_id(api_client):
+    response = api_client.get(
+        "/viewing-requests",
+        params={"property_id": 0},
+    )
+
+    assert response.status_code in {401, 422}
+
+
 def test_new_request_allowed_after_decline(api_client, db_session):
     realtor = seed_user(db_session, role="realtor", email="realtor@example.com")
     seed_realtor_profile(db_session, realtor.id)

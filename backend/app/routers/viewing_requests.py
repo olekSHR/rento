@@ -30,7 +30,7 @@ realtor_router = APIRouter(
 )
 def list_my_viewing_requests(
     status: str | None = Query(default=None),
-    property_id: int | None = Query(default=None),
+    property_id: int | None = Query(default=None, ge=1),
     limit: int = Query(default=20, ge=1, le=100),
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
