@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-012 |
 | TITLE | Realtor Workspace Shell and Persistent Navigation |
-| STATUS | VERIFYING — local browser verification PASS |
+| STATUS | CLOSED |
 | RISK | MEDIUM |
 | CLASSIFICATION | Frontend workspace infrastructure / navigation |
 
-> STATUS: VERIFYING means implementation is complete locally and verification evidence is recorded. Commit, push, deploy, production acceptance, closure, and archive are **not** authorized by this document.
+> STATUS: CLOSED means implementation, local verification, commit, push, frontend-only deployment, and production acceptance (with approved waiver) are complete. Archive remains a separate gate.
 
 **Initiative reference:** Realtor Workspace Evolution — Phase 1 discovery completed 2026-08-17 (`REALTOR_WORKSPACE_DISCOVERY_COMPLETE`).
 
@@ -22,7 +22,7 @@
 | Active tasks before creation | none (`docs/engineering/tasks/README.md` only) |
 | Prior task | TASK-011 — CLOSED / ARCHIVED / COMPLETE |
 
-**Runtime note:** Production application runtime remains at implementation SHA `0c911ca4051f250f7d0a4c508656621f812f1d2a`. Repository HEAD and deployed application release identity must not be assumed identical. Docs-only commits ahead of production runtime are not deploy drift.
+**Runtime note:** Production frontend runtime deployed at TASK-012 implementation SHA `076b888eb01946cbdbf67b0c71582cb41432b959`. Repository HEAD and deployed application release identity must not be assumed identical without verification.
 
 ---
 
@@ -526,19 +526,15 @@ Approval of one stage does not approve later stages:
 
 ```text
 DISCOVERY               COMPLETE
-IMPLEMENTATION          COMPLETE (local)
+IMPLEMENTATION          COMPLETE
 VERIFICATION            COMPLETE (local static + browser)
-COMMIT                  NOT YET
-PUSH                    NOT YET
-DEPLOY                  NOT YET
-PRODUCTION ACCEPTANCE   NOT YET
-CLOSURE                 NOT YET
+COMMIT                  COMPLETE
+PUSH                    COMPLETE
+DEPLOY                  COMPLETE (FRONTEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   COMPLETE (PASS WITH APPROVED WAIVER)
+CLOSURE                 COMPLETE
 ARCHIVE                 NOT YET
 ```
-
-**Current gate:** `TASK_012_LOCAL_BROWSER_VERIFICATION_PASS`
-
-**Next gate:** `READY_FOR_TASK_012_COMMIT`. Do not stage, commit, push, or deploy from this update.
 
 ---
 
@@ -747,4 +743,227 @@ git diff --check  # PASS
 
 **`TASK_012_LOCAL_BROWSER_VERIFICATION_PASS`**
 
-**Next gate:** `READY_FOR_TASK_012_COMMIT`
+---
+
+## Commit
+
+| Field | Value |
+|-------|-------|
+| SHA | `076b888eb01946cbdbf67b0c71582cb41432b959` |
+| Message | `feat(realtor): add workspace shell and navigation` |
+
+### Implementation scope
+
+- shared `/realtor` layout
+- centralized frontend realtor auth boundary
+- persistent desktop Workspace sidebar
+- Workspace header
+- responsive mobile navigation drawer
+- Dashboard navigation
+- Properties navigation / anchor behavior
+- Viewing Requests navigation
+- Profile navigation
+- dynamic Public Profile navigation
+- route active states
+- removal of redundant page-level frontend auth guards
+
+| Component | Changed |
+|-----------|---------|
+| Backend | **NO** |
+| Database | **NO** |
+| Migrations | **NO** |
+| Dependencies | **NO** |
+
+---
+
+## Production Result
+
+**Date:** 2026-08-17
+**PRODUCTION_ACCEPTANCE:** **PASS WITH APPROVED WAIVER**
+
+### Deployment
+
+| Field | Value |
+|-------|-------|
+| Deployment class | FRONTEND_ONLY |
+| Production deployed SHA | `076b888eb01946cbdbf67b0c71582cb41432b959` |
+| Frontend image | `sha256:5c2592b6c77dc246aaa41df52d926b2ffe67100dfeaaa1ff78d2f089799efeac` |
+| Frontend after deploy | healthy |
+| Frontend RestartCount | **0** |
+| Backend recreated | NO |
+| Database restarted | NO |
+| Nginx recreated | NO |
+| Migration | NONE |
+
+### Rollback posture
+
+| Field | Value |
+|-------|-------|
+| Tag | `rento-frontend:rollback-0615b16` |
+| Immutable image | `sha256:a669eea190c08b94c2b7f2aafff7da89bbb0fbb81b932ef00f212ac50f97931d` |
+| Still valid after deploy/acceptance | **YES** — PRESERVED |
+
+Rollback requires frontend image restoration + frontend recreation only. Database rollback is **NOT REQUIRED**.
+
+### Production acceptance — core (VERIFIED)
+
+Identity: `acceptance-realtor@rentonow.ro` (id=**29**, role=`realtor`, account_status=`active`). Credentials stored operator-local outside Git. Passwords, cookies, CSRF tokens, and session tokens are not recorded in this document.
+
+Login: **PASS**. `GET /api/users/me` → id=**29**, role=**realtor**, active.
+
+| Check | Result |
+|-------|--------|
+| Shared Workspace shell | PASS |
+| Desktop persistent sidebar | PASS |
+| Workspace header | PASS |
+| Dashboard navigation | PASS |
+| Properties same-page anchor | PASS — `/realtor#realtor-properties-heading` |
+| Properties cross-route anchor | PASS — from `/realtor/profile` and `/realtor/viewing-requests` |
+| Viewing Requests navigation | PASS |
+| Profile navigation | PASS |
+| Public Profile destination | PASS — `/realtors/29` reachable |
+| Desktop responsive behavior | PASS |
+| Tablet responsive behavior | PASS |
+| Mobile responsive behavior | PASS |
+| Mobile drawer | PASS |
+| Unauthenticated `/realtor` redirect | PASS — `/login?returnUrl=%2Frealtor` |
+| Unauthenticated `/realtor/viewing-requests` redirect | PASS — `/login?returnUrl=%2Frealtor%2Fviewing-requests` |
+| Authenticated non-realtor redirect | PASS — `acceptance@rentonow.ro` (id=27, role=`user`) → `/` |
+| Horizontal overflow | PASS — none observed |
+| Unexpected HTTP 500 | PASS — none observed |
+| JS / hydration failures | PASS — none observed |
+| Frontend RestartCount after acceptance | **0** |
+| All services healthy | PASS |
+| Rollback artifact preserved | PASS |
+
+Acceptance was navigation/GET-only except login/logout. No property create/edit, profile save, viewing-request actions, or other business mutations performed.
+
+### Production acceptance — descendant routes
+
+| Route | Production classification | Notes |
+|-------|---------------------------|-------|
+| `/realtor/properties/create` | **WAIVED — APPROVED** | See Production Acceptance Waiver below |
+| `/realtor/properties/[id]/edit` | **NOT VERIFIED** | No suitable listing fixture on acceptance account (0 listings) |
+| `/realtor/viewing-requests/[id]` | **NOT VERIFIED** | No suitable viewing-request fixture on acceptance account (0 requests) |
+
+Local browser verification for all three descendant routes: **PASS** (eligible local realtor fixture). TASK-012 changed shared shell/navigation only; domain behavior on these routes unchanged.
+
+### Data non-mutation
+
+| Check | Result |
+|-------|--------|
+| Realtor identity (id=29) role/status | unchanged — `realtor`, active |
+| Renter identity (id=27) role/status | unchanged — `user`, active |
+| Property created | **NO** |
+| Property updated | **NO** |
+| Profile changed | **NO** |
+| Viewing request status changed | **NO** |
+| User role changed | **NO** |
+| Other business entity changed | **NO** |
+| Database schema changed | **NO** |
+
+**No business data mutation.** Session persistence was not asserted unchanged — login/logout may legitimately mutate authentication-session storage.
+
+### Backend / runtime evidence
+
+| Check | Result |
+|-------|--------|
+| frontend | healthy |
+| backend | healthy |
+| db | healthy |
+| nginx | healthy |
+| frontend RestartCount | **0** |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/api/` | **200** |
+| HTTP 500 during acceptance | **NO** |
+| Unexpected exception | **NO** |
+
+---
+
+## Production Acceptance Waiver
+
+**Decision:** `WAIVER_APPROVED`
+
+**Waived criterion:** Direct production rendering verification of `/realtor/properties/create` inside the deployed Workspace shell.
+
+**Reason:** The dedicated production realtor acceptance identity has an incomplete realtor profile (`GET /api/realtor/profile` → `is_completed=false`) and is redirected by the pre-existing profile-completion guard to `/realtor/profile` before the create page mounts. No safe completed-profile acceptance fixture exists in the established secure production acceptance inventory (`~/.rento-ops/`).
+
+**TASK-012 did not modify:**
+
+- profile completion semantics
+- property-create eligibility
+- property-create business logic
+- backend property APIs
+- backend authorization
+- database schema
+
+**Supporting evidence:**
+
+- The same create route passed authenticated local browser verification with an eligible realtor (shell, Properties active, form renders, map/form reachable, no overlap, no shell overflow).
+- The shared deployed production Workspace shell was independently verified across sibling `/realtor/*` routes.
+- Satisfying the production create-route criterion would require either production business-data mutation or separately provisioned acceptance infrastructure — both outside TASK-012 acceptance scope.
+
+**Final governance decision:** `PRODUCTION_ACCEPTANCE_PASS_WITH_APPROVED_WAIVER`
+
+**Classification of waived criterion:** **WAIVED — APPROVED** (not VERIFIED)
+
+---
+
+## Scope Result
+
+TASK-012 delivered a reusable Realtor Workspace foundation:
+
+- one shared authorization boundary
+- persistent navigation
+- desktop Workspace shell
+- responsive mobile Workspace navigation
+- consistent route context
+- foundation for subsequent Realtor Workspace evolution
+
+**Intentionally deferred (not part of TASK-012):**
+
+| Capability | Status |
+|------------|--------|
+| Dashboard operational metrics | NOT part of TASK-012 |
+| Full light-theme migration of inner pages | NOT part of TASK-012 |
+| Relationships / Clients | NOT part of TASK-012 |
+| Documents portfolio | NOT part of TASK-012 |
+| Messages | NOT implemented |
+| Tasks | NOT implemented |
+| Calendar | NOT implemented |
+| Performance analytics | NOT implemented |
+
+---
+
+## Next Product State
+
+TASK-012 establishes the Workspace shell required for subsequent bounded Realtor Workspace evolution. Next product work requires a separate discovery/decision gate. TASK-013 is not defined in this document.
+
+---
+
+## Closure
+
+**Date:** 2026-08-17
+**Status:** COMPLETE
+
+Lifecycle: definition COMPLETE; implementation COMPLETE; static verification PASS; local browser verification PASS; commit COMPLETE; push COMPLETE; deployment PASS; production acceptance PASS WITH APPROVED WAIVER; closure COMPLETE; archive NOT YET.
+
+---
+
+## Gate reminder
+
+Approval of one stage does not approve later stages:
+
+```text
+DISCOVERY               ← completed
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed (local static + browser)
+COMMIT                  ← completed (076b888)
+PUSH                    ← completed
+DEPLOY                  ← completed (FRONTEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS WITH APPROVED WAIVER)
+CLOSED                  ← current stage
+ARCHIVE                 ← NOT YET (separate authorization)
+```
+
+**Next gate:** ARCHIVE authorization (separate). Do not archive in this gate.
