@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-011 |
 | TITLE | Viewing Request List Normalizes Status Filter Whitespace |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Backend API correctness / query validation |
 
-> STATUS: VERIFYING means minimal fix is implemented locally and GREEN/regression evidence is recorded. Commit, push, deploy, production acceptance, closure, and archive are **not** authorized by this document.
+> STATUS: CLOSED means implementation, local verification, commit, push, backend-only deployment, and production acceptance are complete. Archive remains a separate gate.
 
 **Discovery reference:** Post TASK-010 discovery (2026-08-17) — recommendation: align viewing-request list `status` filter whitespace normalization with sibling enum-like list filters; deployment class expected: `BACKEND_ONLY`.
 
@@ -552,20 +552,154 @@ Unchanged: router, repository, models, schemas, frontend, database, migrations, 
 
 ---
 
+## Commit
+
+| Field | Value |
+|-------|-------|
+| SHA | `0c911ca4051f250f7d0a4c508656621f812f1d2a` |
+| Message | `fix(viewings): normalize status filter whitespace` |
+
+---
+
+## Production Result
+
+**Date:** 2026-08-17
+**PRODUCTION_ACCEPTANCE:** **PASS**
+
+### Deployment
+
+| Field | Value |
+|-------|-------|
+| DEPLOYED_SHA | `0c911ca4051f250f7d0a4c508656621f812f1d2a` |
+| Deployment scope | BACKEND_ONLY |
+| Post-deploy backend image | `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd` |
+| Backend after deploy | healthy |
+| Backend RestartCount | **0** |
+| Frontend recreated | NO |
+| Database restarted | NO |
+| Nginx recreated | NO |
+| Migration | NONE |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/api/` | **200** |
+
+### Production acceptance — renter identity
+
+Identity: `acceptance@rentonow.ro` (id=**27**, role=`user`, account_status=`active`). Credentials stored operator-local outside Git. Passwords, cookies, CSRF tokens, and session tokens are not recorded in this document.
+
+Login: **PASS**. Current-user: id=**27**, role=**user**, active. Logout: **PASS**.
+
+| Request | Result |
+|---------|--------|
+| `GET /api/viewing-requests` (status omitted) | HTTP **200** |
+| `GET /api/viewing-requests?status=pending` | HTTP **200** |
+| `GET /api/viewing-requests?status= pending ` | HTTP **200** |
+| `GET /api/viewing-requests?status=   ` (whitespace-only) | HTTP **200** |
+| `GET /api/viewing-requests?status=bogus` | HTTP **400** |
+| `GET /api/viewing-requests?status= bogus ` | HTTP **400** |
+| `GET /api/viewing-requests?status=Pending` | HTTP **400** |
+| `GET /api/viewing-requests?status= Pending ` | HTTP **400** |
+
+**Whitespace-only equivalence:** `status=   ` produced identical list semantics to omitted status — `total=0`, `limit=20`, `offset=0`, `items=0`.
+
+**Auth regression:** post-logout `GET /api/viewing-requests` → **401**; post-logout `GET /api/viewing-requests?status= pending ` → **401**.
+
+### Production acceptance — realtor identity
+
+Identity: `acceptance-realtor@rentonow.ro` (id=**29**, role=`realtor`, account_status=`active`). Credentials stored operator-local outside Git.
+
+Login: **PASS**. Current-user: id=**29**, role=**realtor**, active. Logout: **PASS**.
+
+| Request | Result |
+|---------|--------|
+| `GET /api/realtor/viewing-requests` (status omitted) | HTTP **200** |
+| `GET /api/realtor/viewing-requests?status=pending` | HTTP **200** |
+| `GET /api/realtor/viewing-requests?status= pending ` | HTTP **200** |
+| `GET /api/realtor/viewing-requests?status=   ` (whitespace-only) | HTTP **200** |
+| `GET /api/realtor/viewing-requests?status=bogus` | HTTP **400** |
+| `GET /api/realtor/viewing-requests?status= bogus ` | HTTP **400** |
+| `GET /api/realtor/viewing-requests?status=Pending` | HTTP **400** |
+| `GET /api/realtor/viewing-requests?status= Pending ` | HTTP **400** |
+
+**Whitespace-only equivalence:** `status=   ` produced identical list semantics to omitted status — `total=0`, `limit=20`, `offset=0`, `items=0`.
+
+**Auth regression:** post-logout `GET /api/realtor/viewing-requests` → **401**; post-logout `GET /api/realtor/viewing-requests?status= pending ` → **401**.
+
+Acceptance was GET-only except login/logout. No create/accept/decline/cancel endpoints were called.
+
+### Data non-mutation
+
+| Check | Result |
+|-------|--------|
+| Renter identity (id=27) role/status | unchanged — `user`, active |
+| Realtor identity (id=29) role/status | unchanged — `realtor`, active |
+| Viewing requests created | **NO** |
+| Viewing request status changed | **NO** |
+| Property changed | **NO** |
+| Rental document changed | **NO** |
+| User role changed | **NO** |
+| Other business entity changed | **NO** |
+| Database schema changed | **NO** |
+
+Safe aggregate evidence after acceptance: total viewing requests **5 → 5**. **No business data mutation.**
+
+Session persistence was not asserted unchanged — login/logout may legitimately mutate authentication-session storage.
+
+Containers were not restarted during acceptance. Images were not rebuilt during acceptance. No deploy during acceptance.
+
+### Backend / runtime evidence
+
+| Check | Result |
+|-------|--------|
+| frontend | healthy |
+| backend | healthy |
+| db | healthy |
+| nginx | healthy |
+| backend RestartCount | **0** |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/api/` | **200** |
+| HTTP 500 during acceptance | **NO** |
+| Traceback | **NO** |
+| IntegrityError | **NO** |
+| Unexpected exception | **NO** |
+
+Expected acceptance statuses observed: **200**, **400**, **401**. Not observed: **500**, traceback, IntegrityError, unexpected application exception.
+
+### Rollback posture
+
+| Field | Value |
+|-------|-------|
+| Tag | `rento-backend:rollback-6589ead` |
+| Immutable image | `sha256:7d7a544a20efc361d72c474a0f629bed6a9827f4f8c2f770396de05c2cf12398` |
+| Meaning | Verified pre-TASK-011 backend image (TASK-010 runtime at `6589ead`) |
+| Still valid after deploy/acceptance | **YES** — PRESERVED |
+
+Rollback requires backend image restoration + backend recreation only. Database rollback is **NOT REQUIRED**. Do not remove or retag this artifact during closure.
+
+---
+
+## Closure
+
+**Date:** 2026-08-17
+**Status:** COMPLETE
+
+Lifecycle: definition COMPLETE; RED VERIFIED; implementation COMPLETE; local verification PASS; commit COMPLETE; push COMPLETE; deployment PASS; production acceptance PASS; closure COMPLETE; archive NOT YET.
+
+---
+
 ## Gate reminder
 
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY               COMPLETE (RED VERIFIED)
-IMPLEMENTATION          COMPLETE (local)
-VERIFICATION            COMPLETE (local)
-COMMIT                  NOT YET
-PUSH                    NOT YET
-DEPLOY                  NOT YET
-PRODUCTION ACCEPTANCE   NOT YET
-CLOSURE                 NOT YET
-ARCHIVE                 NOT YET
+DISCOVERY               ← completed
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed (local)
+COMMIT                  ← completed (0c911ca)
+PUSH                    ← completed
+DEPLOY                  ← completed (BACKEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
+ARCHIVE                 ← NOT YET (separate authorization)
 ```
 
-**Next gate:** COMMIT REVIEW. Do not stage, commit, push, or deploy from this update.
+**Next gate:** ARCHIVE authorization (separate). Do not archive in this gate.
