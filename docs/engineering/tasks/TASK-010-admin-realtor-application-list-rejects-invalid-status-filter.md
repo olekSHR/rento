@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-010 |
 | TITLE | Admin Realtor Application List Rejects Invalid Status Filter |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Backend API correctness / query validation |
 
-> STATUS: VERIFYING means local implementation and local verification are complete. Commit, push, deploy, production acceptance, and closure are **not** authorized by this update.
+> STATUS: CLOSED means implementation, local verification, commit, push, backend-only deployment, and production acceptance are complete. Archive remains a separate gate.
 
 **Discovery reference:** Post TASK-009 discovery (2026-08-17) — recommendation: reject invalid `status` query domain on admin `GET /realtor-applications`; deployment class expected: `BACKEND_ONLY`.
 
@@ -472,13 +472,174 @@ python -m compileall app/services/realtor_application_service.py tests/test_real
 
 **Quality:** `python -m compileall` on changed files: PASS.
 
-**Diff hygiene:** service + test module + this task document. `git diff --check`: clean. Not staged / not committed / not pushed.
+**Diff hygiene:** service + test module + this task document. `git diff --check`: clean. Implementation committed and pushed at `6589ead`.
 
 ---
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `6589ead20613d0001e4f05eb256813b036cc39e1` |
+| Message | `fix(realtor-applications): validate status filter` |
+
+---
+
+## Production Result
+
+**Date:** 2026-08-17
+**PRODUCTION_ACCEPTANCE:** **PASS**
+
+### Deployment
+
+| Field | Value |
+|-------|-------|
+| DEPLOYED_SHA | `6589ead20613d0001e4f05eb256813b036cc39e1` |
+| Deployment scope | BACKEND_ONLY |
+| Pre-deploy backend image | `sha256:f4720d1397ec3be55ee4966956b170322932903778db8d00d1cc6ab0acc276f0` |
+| Post-deploy backend image | `sha256:7d7a544a20efc361d72c474a0f629bed6a9827f4f8c2f770396de05c2cf12398` |
+| Backend rebuilt | YES |
+| Backend recreated | YES |
+| Backend after deploy | healthy |
+| Backend RestartCount | **0** |
+| Frontend recreated | NO |
+| Database restarted | NO |
+| Nginx recreated | NO |
+| Migration | NONE |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/api/` | **200** |
+
+### Final accepted API contract
+
+For authenticated admin `GET /realtor-applications`:
+
+```text
+status: optional; when provided must be pending | approved | rejected
+limit:  default 100, ge=1, le=100
+offset: default 0,   ge=0
+```
+
+**BEFORE TASK-010 (authenticated admin):**
+
+| Request | HTTP |
+|---------|------|
+| `GET /realtor-applications?status=not-a-valid-status` | **200** empty collection |
+| `GET /realtor-applications?status=bogus` | **200** empty collection |
+
+**AFTER TASK-010 (authenticated admin):**
+
+| Condition | HTTP |
+|-----------|------|
+| invalid `status` (e.g. `not-a-valid-status`, `bogus`) | **400** |
+
+**Preserved unchanged:**
+
+| Condition | HTTP / semantics |
+|-----------|------------------|
+| `status` omitted | **200** — all applications |
+| `status=pending` | **200** — filtered |
+| `status=approved` | **200** — filtered |
+| `status=rejected` | **200** — filtered |
+| valid status, zero matches | **200** empty collection — not 400 |
+| pagination `limit` / `offset` bounds | unchanged |
+| unauthenticated request | **401** |
+| authenticated non-admin | **403** |
+| create / review workflows | unchanged |
+
+Invalid responses use existing `BadRequestException` envelope (`success: false`, `message`).
+
+### Production acceptance (dedicated admin identity)
+
+Identity: `acceptance-admin@rentonow.ro` (id=28, role=`admin`, account_status=`active`). Credentials stored operator-local outside Git (`~/.rento-ops/`). Passwords, cookies, CSRF tokens, and session tokens are not recorded in this document.
+
+Login: **PASS**. Current-user: id=**28**, role=**admin**, active. Logout: **PASS**.
+
+| Request | Result |
+|---------|--------|
+| `GET /api/realtor-applications/?status=not-a-valid-status` | HTTP **400** — `success=false`, `message` present |
+| `GET /api/realtor-applications/?status=bogus` | HTTP **400** — `success=false`, `message` present |
+| `GET /api/realtor-applications/` (no filter) | HTTP **200** — `total=1`, `limit=100`, `offset=0` |
+| `GET /api/realtor-applications/?status=pending` | HTTP **200** — `total=0` |
+| `GET /api/realtor-applications/?status=approved` | HTTP **200** — `total=1` |
+| `GET /api/realtor-applications/?status=rejected` | HTTP **200** — `total=0` |
+| `GET /api/realtor-applications/?limit=1` | HTTP **200** |
+| `GET /api/realtor-applications/?limit=100` | HTTP **200** |
+| `GET /api/realtor-applications/?limit=0` | HTTP **422** |
+| `GET /api/realtor-applications/?limit=101` | HTTP **422** |
+| `GET /api/realtor-applications/?offset=0` | HTTP **200** |
+| `GET /api/realtor-applications/?offset=-1` | HTTP **422** |
+
+**Valid empty semantics:** PRESERVED — `status=pending` returned **200** with `total=0` and empty items while invalid status returned **400**.
+
+Exact invalid-status message text was **not** asserted in production acceptance.
+
+**Auth regression:** post-logout `GET /api/realtor-applications/` → **401**; post-logout `GET /api/realtor-applications/?status=bogus` → **401**. Observed behavior: unauthenticated auth failure wins before status validation.
+
+No approve/reject/create endpoints were called. Acceptance was GET-only except normal auth/session lifecycle.
+
+### Data non-mutation
+
+| Check | Result |
+|-------|--------|
+| Admin identity (id=28) role/status | unchanged — `admin`, active |
+| Applications created | **NO** |
+| Application status changed | **NO** |
+| User role changed | **NO** |
+| Other business data changed | **NO** |
+| Database schema changed | **NO** |
+
+Safe aggregate evidence after acceptance: total applications **1** (approved **1**). **No business data mutation.**
+
+Containers were not restarted during acceptance. Images were not rebuilt during acceptance. No deploy during acceptance.
+
+### Backend / runtime evidence
+
+| Check | Result |
+|-------|--------|
+| frontend | healthy |
+| backend | healthy |
+| db | healthy |
+| nginx | healthy |
+| backend RestartCount | **0** |
+| `https://rentonow.ro/api/` | **200** |
+| HTTP 500 during acceptance | **NO** |
+| Traceback | **NO** |
+| IntegrityError | **NO** |
+| Unexpected exception | **NO** |
+
+Expected acceptance statuses observed in backend logs: **200**, **400**, **401**, **422**.
+
+### Rollback posture
+
+| Field | Value |
+|-------|-------|
+| Tag | `rento-backend:rollback-6f8db8d` |
+| Immutable image | `sha256:f4720d1397ec3be55ee4966956b170322932903778db8d00d1cc6ab0acc276f0` |
+| Meaning | Verified pre-TASK-010 backend image (TASK-009 runtime at `6f8db8d`) |
+| Still valid after deploy/acceptance | **YES** — PRESERVED |
+
+Rollback requires backend image restoration + backend recreation only. Database rollback is **NOT REQUIRED**. Do not remove or retag this artifact during closure.
+
+### Final risk
+
+| Area | Assessment |
+|------|------------|
+| Database | NONE |
+| Migration | NONE |
+| Authentication | UNCHANGED |
+| Authorization | UNCHANGED |
+| API compatibility | LOW BUT NON-ZERO |
+| Production | LOW |
+| Rollback | LOW |
+
+---
+
+## Closure
+
+**Date:** 2026-08-17
+**Status:** COMPLETE
+
+Lifecycle: definition COMPLETE; RED VERIFIED; implementation COMPLETE; local verification PASS; commit COMPLETE; push COMPLETE; deployment PASS; production acceptance PASS; closure COMPLETE; archive NOT YET.
 
 ---
 
@@ -488,14 +649,14 @@ Approval of one stage does not approve later stages:
 
 ```text
 DISCOVERY               ← completed
-IMPLEMENTATION          ← completed (local)
-VERIFICATION            ← PASS (local)
-COMMIT                  NOT YET
-PUSH                    NOT YET
-DEPLOY                  NOT YET
-PRODUCTION ACCEPTANCE   NOT YET
-CLOSURE                 NOT YET
-ARCHIVE                 NOT YET
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed (local)
+COMMIT                  ← completed (6589ead)
+PUSH                    ← completed
+DEPLOY                  ← completed (BACKEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
+ARCHIVE                 ← NOT YET (separate authorization)
 ```
 
-**Next gate:** COMMIT REVIEW. Do not stage, commit, push, or deploy from this update.
+**Next gate:** ARCHIVE authorization (separate). Do not archive in this gate.
