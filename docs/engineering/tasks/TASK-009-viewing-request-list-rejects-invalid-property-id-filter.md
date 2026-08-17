@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-009 |
 | TITLE | Viewing Request List Rejects Invalid Property ID Filter |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Backend API correctness / query validation |
 
-> STATUS: VERIFYING means local implementation and local verification are complete. Commit, push, deploy, production acceptance, and closure are **not** authorized by this update.
+> STATUS: CLOSED means implementation, local verification, commit, push, backend-only deployment, and production acceptance are complete. Archive remains a separate gate.
 
 **Discovery reference:** Post TASK-008 discovery (2026-08-16) — recommendation from TASK-008 archive follow-up: bound `property_id` lower bound on renter `GET /viewing-requests`; deployment class expected: `BACKEND_ONLY`.
 
@@ -491,13 +491,159 @@ Create/cancel/accept/decline, realtor flows, and archived-listing lifecycle test
 
 **Quality:** `python -m compileall` on changed files: PASS.
 
-**Diff hygiene:** router + test module + this task document. `git diff --check`: clean. Not staged / not committed / not pushed.
+**Diff hygiene:** router + test module + this task document. `git diff --check`: clean. Implementation committed and pushed at `6f8db8d`.
 
 ---
 
 ## Commit
 
-<!-- Hash/message only after an approved commit stage. -->
+| Field | Value |
+|-------|-------|
+| SHA | `6f8db8d6155408eff0fff034b288c9665613f4eb` |
+| Message | `fix(viewings): validate property_id filter` |
+
+---
+
+## Production Result
+
+**Date:** 2026-08-17
+**PRODUCTION_ACCEPTANCE:** **PASS**
+
+### Deployment
+
+| Field | Value |
+|-------|-------|
+| DEPLOYED_SHA | `6f8db8d6155408eff0fff034b288c9665613f4eb` |
+| Deployment scope | BACKEND_ONLY |
+| Pre-deploy backend image | `sha256:3cd9a3f9526dcf91bc91e30ddd6f3c9fdc6453cbad4a521fea98a13c6a4d58ef` |
+| Post-deploy backend image | `sha256:f4720d1397ec3be55ee4966956b170322932903778db8d00d1cc6ab0acc276f0` |
+| Backend rebuilt | YES |
+| Backend recreated | YES |
+| Backend after deploy | healthy |
+| Backend RestartCount | **0** |
+| Frontend recreated | NO |
+| Database restarted | NO |
+| Nginx recreated | NO |
+| Migration | NONE |
+| `https://rentonow.ro/` | **200** |
+| `https://rentonow.ro/api/` | **200** |
+
+### Final accepted API contract
+
+For authenticated renter `GET /viewing-requests`:
+
+```text
+property_id: optional int, ge=1 when provided
+limit:       default 20, ge=1, le=100
+offset:      default 0,   ge=0
+```
+
+**BEFORE TASK-009 (authenticated):**
+
+| Request | HTTP |
+|---------|------|
+| `GET /viewing-requests?property_id=0` | **200** empty collection |
+| `GET /viewing-requests?property_id=-1` | **200** empty collection |
+
+**AFTER TASK-009 (authenticated):**
+
+| Condition | HTTP |
+|-----------|------|
+| `property_id=0` | **422** |
+| `property_id<0` (e.g. `-1`) | **422** |
+
+**Preserved unchanged:**
+
+| Condition | HTTP / semantics |
+|-----------|------------------|
+| `property_id` omitted | **200** — normal collection |
+| `property_id>=1` | valid filter — **200** |
+| positive nonexistent ID (e.g. `999999`) | **200** empty collection — not 404 |
+| pagination `limit` / `offset` bounds | unchanged |
+| unauthenticated request | **401** |
+| service / repository semantics | unchanged |
+
+Invalid responses use standard FastAPI validation envelope `{"detail":[...]}` with `loc` referencing `query` / `property_id`.
+
+### Production acceptance (OPS-001)
+
+Identity: `acceptance@rentonow.ro` (id=27, role=`user`, account_status=`active`). Credentials stored operator-local outside Git (`~/.rento-ops/`). Passwords, cookies, CSRF tokens, and session tokens are not recorded in this document.
+
+Login: **PASS**. Current-user: id=**27**, role=**user**, active. Logout: **PASS**.
+
+| Request | Result |
+|---------|--------|
+| `GET /api/viewing-requests?property_id=0` | HTTP **422** |
+| `GET /api/viewing-requests?property_id=-1` | HTTP **422** |
+| `GET /api/viewing-requests` (no filter) | HTTP **200** — `total=0`, `limit=20`, `offset=0` |
+| `GET /api/viewing-requests?property_id=1` | HTTP **200** — `total=0` |
+| `GET /api/viewing-requests?property_id=999999` | HTTP **200** — `total=0` |
+| `GET /api/viewing-requests?limit=1` | HTTP **200** |
+| `GET /api/viewing-requests?limit=100` | HTTP **200** |
+| `GET /api/viewing-requests?limit=0` | HTTP **422** |
+| `GET /api/viewing-requests?limit=101` | HTTP **422** |
+| `GET /api/viewing-requests?offset=0` | HTTP **200** |
+| `GET /api/viewing-requests?offset=-1` | HTTP **422** |
+
+Validation envelope on invalid `property_id`: `detail` present; loc includes `query` / `property_id`.
+
+**Existence semantics:** PRESERVED — positive nonexistent `property_id` returns **200** empty collection, not 404/422.
+
+**Auth regression:** post-logout `GET /api/viewing-requests` → **401**; post-logout `GET /api/viewing-requests?property_id=0` → **401**. Observed behavior: authentication failure wins before query validation for unauthenticated callers.
+
+### Data non-mutation
+
+| Check | Result |
+|-------|--------|
+| OPS-001 (id=27) role/status | unchanged — `user`, active |
+| Viewing requests changed | **NO** — `total` remained **0** |
+| Properties changed | **NO** |
+| Rental documents changed | **NO** |
+| Business data changed | **NO** |
+| Database schema changed | **NO** |
+| Users created | **NO** |
+| Roles changed | **NO** |
+
+Acceptance was GET-only except normal auth/session lifecycle (login/logout). **No business data mutation.**
+
+Containers were not restarted during acceptance. Images were not rebuilt during acceptance. No deploy during acceptance.
+
+### Backend / runtime evidence
+
+| Check | Result |
+|-------|--------|
+| frontend | healthy |
+| backend | healthy |
+| db | healthy |
+| nginx | healthy |
+| backend RestartCount | **0** |
+| `https://rentonow.ro/api/` | **200** |
+| HTTP 500 during acceptance | **NO** |
+| Traceback | **NO** |
+| IntegrityError | **NO** |
+| Unexpected exception | **NO** |
+
+Expected acceptance statuses observed in backend logs: **200**, **401**, **422**.
+
+### Rollback posture
+
+| Field | Value |
+|-------|-------|
+| Tag | `rento-backend:rollback-f8b7d60` |
+| Immutable image | `sha256:3cd9a3f9526dcf91bc91e30ddd6f3c9fdc6453cbad4a521fea98a13c6a4d58ef` |
+| Meaning | Verified pre-TASK-009 backend image (TASK-008 runtime at `f8b7d602`) |
+| Still valid after deploy/acceptance | **YES** — PRESERVED |
+
+Rollback requires backend image restoration + backend recreation only. Database rollback is **NOT REQUIRED**. Do not remove or retag this artifact during closure.
+
+---
+
+## Closure
+
+**Date:** 2026-08-17
+**Status:** COMPLETE
+
+Lifecycle: definition COMPLETE; RED VERIFIED; implementation COMPLETE; local verification PASS; commit COMPLETE; push COMPLETE; deployment PASS; production acceptance PASS; closure COMPLETE; archive NOT YET.
 
 ---
 
@@ -506,15 +652,15 @@ Create/cancel/accept/decline, realtor flows, and archived-listing lifecycle test
 Approval of one stage does not approve later stages:
 
 ```text
-DISCOVERY               COMPLETE
-IMPLEMENTATION          COMPLETE (local)
-VERIFICATION            PASS (local)
-COMMIT                  NOT YET
-PUSH                    NOT YET
-DEPLOY                  NOT YET
-PRODUCTION ACCEPTANCE   NOT YET
-CLOSURE                 NOT YET
-ARCHIVE                 NOT YET
+DISCOVERY               ← completed
+IMPLEMENTATION          ← completed
+VERIFICATION            ← completed (local)
+COMMIT                  ← completed (6f8db8d)
+PUSH                    ← completed
+DEPLOY                  ← completed (BACKEND_ONLY, PASS)
+PRODUCTION ACCEPTANCE   ← completed (PASS)
+CLOSED                  ← current stage
+ARCHIVE                 ← NOT YET (separate authorization)
 ```
 
-**Next gate:** COMMIT REVIEW. Do not stage, commit, push, or deploy from this update.
+**Next gate:** ARCHIVE authorization (separate). Do not archive in this gate.
