@@ -6,7 +6,6 @@ import { useEffect, useState } from "react"
 
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
 import ViewingRequestRelationshipDetail from "@/components/ViewingRequestRelationshipDetail"
-import { useAuth } from "@/context/AuthContext"
 import {
   acceptViewingRequest,
   declineViewingRequest,
@@ -183,58 +182,12 @@ function RealtorViewingRequestDetailContent({ requestId }: { requestId: number }
 }
 
 function RealtorViewingRequestDetailPageContent() {
-  const { isLoading: isAuthLoading, isAuthenticated, user } = useAuth()
-  const isRealtor = user?.role === "realtor"
   const params = useParams()
   const requestId = parseRequestId(params?.id)
 
   if (requestId === null) {
     return (
       <ViewingRequestUnavailable message="This viewing request could not be found." />
-    )
-  }
-
-  if (isAuthLoading) {
-    return (
-      <div
-        role="status"
-        aria-live="polite"
-        className="mx-auto max-w-[1280px]"
-      >
-        <span className="sr-only">Loading viewing request</span>
-        <div
-          aria-hidden="true"
-          className={`${cardClassName} h-56 animate-pulse bg-white/5 motion-reduce:animate-none`}
-        />
-      </div>
-    )
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className={`mx-auto max-w-[1280px] ${cardClassName}`}>
-        <h1 className="text-2xl font-semibold tracking-tight">Login required</h1>
-        <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-          Sign in to review viewing requests for your listings.
-        </p>
-        <Link
-          href="/login"
-          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B]"
-        >
-          Go to login
-        </Link>
-      </div>
-    )
-  }
-
-  if (!isRealtor) {
-    return (
-      <div className={`mx-auto max-w-[1280px] ${cardClassName}`}>
-        <h1 className="text-2xl font-semibold tracking-tight">Access denied</h1>
-        <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-          Viewing requests are available only for realtor accounts.
-        </p>
-      </div>
     )
   }
 

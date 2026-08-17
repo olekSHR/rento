@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { ChevronLeft } from "lucide-react"
 
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
-import { useAuth } from "@/context/AuthContext"
 import {
   acceptViewingRequest,
   declineViewingRequest,
@@ -62,9 +61,6 @@ function ViewingRequestsSkeleton() {
 }
 
 function RealtorViewingRequestsContent() {
-  const { isLoading: isAuthLoading, isAuthenticated, user } = useAuth()
-  const isRealtor = user?.role === "realtor"
-
   const [items, setItems] = useState<ViewingRequestRealtor[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -75,10 +71,6 @@ function RealtorViewingRequestsContent() {
   const [isWorking, setIsWorking] = useState(false)
 
   useEffect(() => {
-    if (isAuthLoading || !isAuthenticated || !isRealtor) {
-      return
-    }
-
     let cancelled = false
 
     async function loadRequests() {
@@ -108,42 +100,10 @@ function RealtorViewingRequestsContent() {
     return () => {
       cancelled = true
     }
-  }, [isAuthLoading, isAuthenticated, isRealtor])
+  }, [])
 
-  if (isAuthLoading || (isAuthenticated && isRealtor && isLoading)) {
+  if (isLoading) {
     return <ViewingRequestsSkeleton />
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
-        <div className={`mx-auto max-w-[1280px] ${cardClassName}`}>
-          <h1 className="text-2xl font-semibold tracking-tight">Login required</h1>
-          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-            Sign in to review viewing requests for your listings.
-          </p>
-          <Link
-            href="/login"
-            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B]"
-          >
-            Go to login
-          </Link>
-        </div>
-      </main>
-    )
-  }
-
-  if (!isRealtor) {
-    return (
-      <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
-        <div className={`mx-auto max-w-[1280px] ${cardClassName}`}>
-          <h1 className="text-2xl font-semibold tracking-tight">Access denied</h1>
-          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-            Viewing requests are available only for realtor accounts.
-          </p>
-        </div>
-      </main>
-    )
   }
 
   async function handleConfirmAction() {

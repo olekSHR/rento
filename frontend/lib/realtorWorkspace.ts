@@ -241,3 +241,89 @@ export function getPropertyStatusTone(
       return "bg-zinc-100 text-zinc-600 ring-zinc-200"
   }
 }
+
+export const REALTOR_PROPERTIES_SECTION_ID = "realtor-properties-heading"
+
+export const REALTOR_PROPERTIES_HREF = `/realtor#${REALTOR_PROPERTIES_SECTION_ID}`
+
+export type WorkspaceNavItemId =
+  | "dashboard"
+  | "properties"
+  | "viewing-requests"
+  | "profile"
+  | "public-profile"
+
+export type WorkspaceNavItem = {
+  id: WorkspaceNavItemId
+  label: string
+  href: string
+  group: "Overview" | "Work" | "Account"
+  external?: boolean
+}
+
+export function buildWorkspaceNavItems(userId?: number | null): WorkspaceNavItem[] {
+  const items: WorkspaceNavItem[] = [
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      href: "/realtor",
+      group: "Overview",
+    },
+    {
+      id: "properties",
+      label: "Properties",
+      href: REALTOR_PROPERTIES_HREF,
+      group: "Work",
+    },
+    {
+      id: "viewing-requests",
+      label: "Viewing Requests",
+      href: "/realtor/viewing-requests",
+      group: "Work",
+    },
+    {
+      id: "profile",
+      label: "Profile",
+      href: "/realtor/profile",
+      group: "Account",
+    },
+  ]
+
+  if (userId) {
+    items.push({
+      id: "public-profile",
+      label: "Public Profile",
+      href: `/realtors/${userId}`,
+      group: "Account",
+      external: true,
+    })
+  }
+
+  return items
+}
+
+export function getActiveWorkspaceNavId(pathname: string): WorkspaceNavItemId {
+  if (pathname.startsWith("/realtor/properties/")) {
+    return "properties"
+  }
+
+  if (
+    pathname === "/realtor/viewing-requests" ||
+    pathname.startsWith("/realtor/viewing-requests/")
+  ) {
+    return "viewing-requests"
+  }
+
+  if (pathname === "/realtor/profile") {
+    return "profile"
+  }
+
+  return "dashboard"
+}
+
+export function scrollToRealtorPropertiesSection(behavior: ScrollBehavior = "smooth") {
+  document.getElementById(REALTOR_PROPERTIES_SECTION_ID)?.scrollIntoView({
+    behavior,
+    block: "start",
+  })
+}

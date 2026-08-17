@@ -14,12 +14,14 @@ import { useAuth } from "@/context/AuthContext"
 import { getImageUrl } from "@/lib/getImageUrl"
 import {
   LISTING_VIEW_OPTIONS,
+  REALTOR_PROPERTIES_SECTION_ID,
   buildWorkspaceActions,
   computeProfileCompletionPercent,
   filterPropertiesByView,
   getContinueEditingProperty,
   getPropertyStatusLabel,
   getWorkspaceGreetingName,
+  scrollToRealtorPropertiesSection,
   searchProperties,
   type ListingView,
 } from "@/lib/realtorWorkspace"
@@ -239,7 +241,7 @@ function WorkspaceSkeleton() {
 }
 
 export default function RealtorWorkspacePage() {
-  const { isLoading, isAuthenticated, user } = useAuth()
+  const { user } = useAuth()
 
   const [properties, setProperties] = useState<Property[]>([])
   const [profile, setProfile] = useState<RealtorProfile | null>(null)
@@ -279,13 +281,7 @@ export default function RealtorWorkspacePage() {
     offsetY: number
   } | null>(null)
 
-  const isRealtor = user?.role === "realtor"
-
   useEffect(() => {
-    if (isLoading || !isAuthenticated || !isRealtor) {
-      return
-    }
-
     async function loadWorkspace() {
       try {
         setIsDataLoading(true)
@@ -305,8 +301,18 @@ export default function RealtorWorkspacePage() {
       }
     }
 
-    loadWorkspace()
-  }, [isLoading, isAuthenticated, isRealtor])
+    void loadWorkspace()
+  }, [])
+
+  useEffect(() => {
+    if (isDataLoading) {
+      return
+    }
+
+    if (window.location.hash === `#${REALTOR_PROPERTIES_SECTION_ID}`) {
+      scrollToRealtorPropertiesSection("auto")
+    }
+  }, [isDataLoading])
 
   useEffect(() => {
     return () => {
@@ -654,41 +660,8 @@ export default function RealtorWorkspacePage() {
   const greetingName = getWorkspaceGreetingName(profile, user?.email)
   const nextAction = actionItems[0] ?? null
 
-  if (isLoading || (isAuthenticated && isRealtor && isDataLoading)) {
+  if (isDataLoading) {
     return <WorkspaceSkeleton />
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <main className={workspaceShellClassName}>
-        <div className={`mx-auto max-w-[1280px] ${workspaceCardClassName}`}>
-          <h1 className="text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
-            Login required
-          </h1>
-          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-            Sign in to access your realtor workspace.
-          </p>
-          <Link href="/login" className={`mt-6 ${workspacePrimaryCtaClassName}`}>
-            Go to login
-          </Link>
-        </div>
-      </main>
-    )
-  }
-
-  if (!isRealtor) {
-    return (
-      <main className={workspaceShellClassName}>
-        <div className={`mx-auto max-w-[1280px] ${workspaceCardClassName}`}>
-          <h1 className="text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
-            Access denied
-          </h1>
-          <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-            This workspace is available only for realtor accounts.
-          </p>
-        </div>
-      </main>
-    )
   }
 
   return (

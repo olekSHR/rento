@@ -4,7 +4,6 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 
-import RealtorRoute from "@/components/RealtorRoute"
 import RealtorPropertyGallery from "@/components/realtor/RealtorPropertyGallery"
 import PropertyLocationPicker from "@/components/map/PropertyLocationPickerLazy"
 import { getPropertyStatusLabel } from "@/lib/realtorWorkspace"
@@ -149,15 +148,13 @@ export default function RealtorEditPropertyPage() {
 
   if (!isValidPropertyId) {
     return (
-      <RealtorRoute>
-        <main className={shellClassName}>
-          <div className={containerClassName}>
-            <div className={contentColumnClassName}>
-              <PropertyNotFoundPanel />
-            </div>
+      <main className={shellClassName}>
+        <div className={containerClassName}>
+          <div className={contentColumnClassName}>
+            <PropertyNotFoundPanel />
           </div>
-        </main>
-      </RealtorRoute>
+        </div>
+      </main>
     )
   }
 
@@ -202,8 +199,7 @@ export default function RealtorEditPropertyPage() {
   }
 
   return (
-    <RealtorRoute>
-      <main className={shellClassName}>
+    <main className={shellClassName}>
         <div className={containerClassName}>
           {loadState !== "not-found" && (
             <header className={cardClassName}>
@@ -421,6 +417,5 @@ export default function RealtorEditPropertyPage() {
           </div>
         )}
       </main>
-    </RealtorRoute>
   )
 }

@@ -5,7 +5,6 @@ import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { Camera, ChevronRight, Plus } from "lucide-react"
 
-import RealtorRoute from "@/components/RealtorRoute"
 import { getImageUrl } from "@/lib/getImageUrl"
 import { computeProfileCompletionPercent } from "@/lib/realtorWorkspace"
 import {
@@ -530,8 +529,7 @@ export default function RealtorProfilePage() {
   const avatarUrl = profile?.avatar_url ? getImageUrl(profile.avatar_url) : null
 
   return (
-    <RealtorRoute>
-      <main className={shellClassName}>
+    <main className={shellClassName}>
         <div className={containerClassName}>
           <header className={cardClassName}>
             <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -1022,6 +1020,5 @@ export default function RealtorProfilePage() {
           </div>
         )}
       </main>
-    </RealtorRoute>
   )
 }

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useId, useRef, useState } from "react"
 import { BedDouble, MapPin, Upload } from "lucide-react"
 
-import RealtorRoute from "@/components/RealtorRoute"
 import PropertyLocationPicker from "@/components/map/PropertyLocationPickerLazy"
 import { getImageUrl } from "@/lib/getImageUrl"
 import {
@@ -288,19 +287,16 @@ export default function RealtorCreatePropertyPage() {
 
   if (isCheckingProfile) {
     return (
-      <RealtorRoute>
-        <main className={shellClassName}>
-          <div className={containerClassName}>
-            <CreateWizardSkeleton />
-          </div>
-        </main>
-      </RealtorRoute>
+      <main className={shellClassName}>
+        <div className={containerClassName}>
+          <CreateWizardSkeleton />
+        </div>
+      </main>
     )
   }
 
   return (
-    <RealtorRoute>
-      <main className={shellClassName}>
+    <main className={shellClassName}>
         <div className={containerClassName}>
           <header className={cardClassName}>
             <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -759,6 +755,5 @@ export default function RealtorCreatePropertyPage() {
           </div>
         </div>
       </main>
-    </RealtorRoute>
   )
 }
