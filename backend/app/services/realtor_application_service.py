@@ -20,6 +20,27 @@ ALLOWED_REVIEW_STATUSES = frozenset(
         REVIEW_STATUS_REJECTED,
     }
 )
+VALID_LIST_STATUSES = frozenset(
+    {
+        REVIEW_STATUS_PENDING,
+        REVIEW_STATUS_APPROVED,
+        REVIEW_STATUS_REJECTED,
+    }
+)
+
+
+def _validate_list_status(status: str | None) -> str | None:
+    if status is None or not status.strip():
+        return None
+
+    status = status.strip()
+
+    if status not in VALID_LIST_STATUSES:
+        raise BadRequestException(
+            "Invalid application status filter."
+        )
+
+    return status
 
 
 def create_application(
@@ -82,9 +103,11 @@ def list_applications(
     db: Session,
     status: str | None = None,
 ) -> list[RealtorApplication]:
+    validated_status = _validate_list_status(status)
+
     return realtor_application_repository.list_applications(
         db,
-        status,
+        validated_status,
     )
 
 
