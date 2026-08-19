@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-013 |
 | TITLE | Realtor Operational Dashboard Top Section |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | MEDIUM |
 | CLASSIFICATION | Frontend operational dashboard / dashboard content |
 
-> STATUS: VERIFYING means implementation and local verification evidence are recorded. Commit, push, deploy, production acceptance, closure, and archive are **not** authorized by this document.
+> STATUS: CLOSED means implementation, local verification, commit, push, deployment, production acceptance, and closure documentation are complete. Archive is **not** yet performed.
 
 **Initiative reference:** Realtor Workspace Evolution — Operational Dashboard v1 discovery completed 2026-08-19 (`OPERATIONAL_DASHBOARD_V1_DISCOVERY_COMPLETE`).
 
@@ -512,7 +512,16 @@ Promise.all([
 
 **Diff scope:** TASK-013 frontend only. No unexpected files.
 
-**False future lifecycle claims:** NO — commit/push/deploy/production acceptance not claimed.
+**Commit (VERIFIED 2026-08-19):**
+
+| Field | Value |
+|-------|-------|
+| Implementation SHA | `3e13437c0185c2ad5e290e264925f050b43b2341` |
+| Commit message | `feat(realtor): add operational dashboard` |
+| origin/main | synced to implementation SHA |
+| divergence | `0 0` |
+
+**False future lifecycle claims:** NO — commit/push/deploy/production acceptance recorded in Closure Evidence below.
 
 ---
 
@@ -626,19 +635,150 @@ No business-data mutation required for dashboard verification (GET/navigation on
 
 ---
 
-## Production Acceptance Boundary (future gate)
+## Deployment Evidence (2026-08-19)
 
-Predominantly GET/navigation-only:
+**Gate:** `TASK_013_FRONTEND_DEPLOYMENT_PASS`
 
-- Verify metric cards against API totals for acceptance identity
-- Verify Requires Attention links navigate correctly
-- Verify recent pending list links
-- Verify My Listings regression (no mutation)
-- Empty states valid when fixture has zero pending requests / zero listings
+| Field | Value |
+|-------|-------|
+| Production deployed SHA | `3e13437c0185c2ad5e290e264925f050b43b2341` |
+| Deployment class | FRONTEND_ONLY |
+| Frontend image | `sha256:2cf0e45de1da1294be3d4e5b7032b71ac717c032f4a89adaab65d6df83474cf0` |
+| Frontend container | `7fe63bcf06115f7c1491fff1f42c24b1ade0e93fc388271b1661b201291ca320` |
+| Frontend StartedAt | `2026-08-19T16:59:10Z` |
+| Frontend RestartCount | `0` |
+| Rollback tag | `rento-frontend:rollback-076b888` |
+| Rollback image | `sha256:5c2592b6c77dc246aaa41df52d926b2ffe67100dfeaaa1ff78d2f089799efeac` |
 
-Do **not** require: property create, profile save, accept/decline viewing requests, archive/restore/delete during acceptance.
+**Runtime scope deployed:**
 
-Use existing production acceptance identities. Credentials not recorded in task evidence.
+- `/realtor` operational dashboard top section
+- 4 summary metrics
+- Requires Attention
+- recent pending viewing requests
+- quick actions
+- dashboard helpers
+- existing My Listings preserved
+
+**Explicitly unchanged:**
+
+| Component | Changed |
+|-----------|---------|
+| Backend | NO |
+| Database | NO |
+| Migrations | NONE |
+| Auth/shell | NO |
+| Dependencies | NO |
+| nginx | NO |
+
+**Deploy method:** frontend-only build/recreate. Backend, DB, and nginx containers not recreated. All services healthy post-deploy.
+
+---
+
+## Production Acceptance Evidence (2026-08-19)
+
+**Gate:** `PRODUCTION_ACCEPTANCE_PASS`
+
+**Mode:** authenticated production acceptance only — no deploy, no business-data mutation.
+
+**Acceptance identity (credentials not recorded):**
+
+| Field | Value |
+|-------|-------|
+| Email | `acceptance-realtor@rentonow.ro` |
+| User ID | `29` |
+| Role | `realtor` |
+| Account status | `active` |
+| Login | PASS → redirect to `/realtor` |
+| `GET /api/users/me` | PASS — matches expected identity |
+
+**Production API truth during acceptance (authenticated GET only):**
+
+| Field | Value |
+|-------|-------|
+| `profile.is_completed` | `false` |
+| Properties `total` | `0` |
+| Active listings (`status=available`) | `0` |
+| Pending moderation (`status=pending`) | `0` |
+| Pending viewing requests `total` | `0` |
+| Accepted viewing requests `total` | `0` |
+| Pending viewing requests `items.length` | `0` |
+| Missing-photo condition | none (no properties) |
+
+**Metric acceptance:**
+
+| Card | Expected | UI | Verdict |
+|------|----------|-----|---------|
+| Active Listings | 0 | 0 | PASS |
+| Pending Moderation | 0 | 0 | PASS |
+| Pending Viewing Requests | 0 | 0 | PASS |
+| Accepted Viewing Requests | 0 | 0 | PASS |
+
+Forbidden speculative cards absent: Rented, Reserved, Revenue, Leads, Views — **PASS**.
+
+**Requires Attention acceptance:**
+
+| Trigger | Expected | Observed | Verdict |
+|---------|----------|----------|---------|
+| Incomplete profile | present | present | PASS |
+| Pending viewing requests | absent (`total=0`) | absent | PASS |
+| Missing photos | absent (no properties) | absent | PASS |
+| Pending Moderation in attention | must be absent | absent | PASS |
+
+**Recent pending viewing requests:**
+
+| Check | Expected | Observed | Verdict |
+|-------|----------|----------|---------|
+| State | empty (`total=0`) | “No pending viewing requests” | PASS |
+| Row count | 0 | 0 | PASS |
+| Stale rows | none | none | PASS |
+| Accept/Decline controls | absent | absent | PASS |
+
+**Quick actions:**
+
+| Action | Expected | Observed | Verdict |
+|--------|----------|----------|---------|
+| Primary | Complete Profile → `/realtor/profile` | PASS | PASS |
+| Review Viewing Requests | absent (`pending total=0`) | absent | PASS |
+| Manage Listings | hash → `#realtor-properties-heading`, section visible | PASS | PASS |
+
+Add Property production behavior **not exercised** — acceptance fixture has incomplete profile; expected, not a TASK-013 defect.
+
+**Regression (production):**
+
+| Check | Verdict |
+|-------|---------|
+| My Listings heading, search, tabs, empty state | PASS |
+| Avatar upload entry point present (no upload performed) | PASS |
+| TASK-012 shell, sidebar, workspace header | PASS |
+| Dashboard nav active on `/realtor` | PASS |
+| Viewing Requests nav | PASS |
+| Profile nav | PASS |
+| Mobile drawer | PASS |
+| Desktop ~1280×900 — no horizontal overflow | PASS |
+| Mobile ~390×844 — no horizontal overflow | PASS |
+| Unauthenticated `/realtor` → login redirect | PASS |
+| Unauthenticated `/realtor/viewing-requests` → login redirect | PASS |
+| Authenticated non-realtor `acceptance@rentonow.ro` → redirect away from `/realtor` | PASS |
+
+**Browser / network / stability:**
+
+| Check | Result |
+|-------|--------|
+| Uncaught JS / React / hydration errors | none observed |
+| Unexpected 500 | none |
+| Unexpected auth errors while authenticated on allowed data | none |
+| Redirect loops | none |
+| All services healthy post-acceptance | PASS |
+| Frontend RestartCount | `0` |
+| Frontend image unchanged | PASS |
+| Backend unchanged | PASS |
+| Rollback artifact intact | PASS |
+| Homepage HTTP | 200 |
+| `/api/` HTTP | 200 |
+| Business data mutation | **NO** |
+
+Auth session storage may change because login/logout occurred during acceptance.
 
 ---
 
@@ -704,22 +844,200 @@ Per `docs/engineering/protocol/DEFINITION_OF_DONE.md`:
 
 ---
 
+## Closure Evidence (2026-08-19)
+
+**Gate:** `TASK_013_CLOSURE_DOCUMENTATION_PASS`
+
+**Closure baseline (VERIFIED):**
+
+| Field | Value |
+|-------|-------|
+| HEAD | `3e13437c0185c2ad5e290e264925f050b43b2341` |
+| origin/main | `3e13437c0185c2ad5e290e264925f050b43b2341` |
+| divergence | `0 0` |
+| Worktree | clean |
+
+### Lifecycle (final)
+
+| Stage | Status |
+|-------|--------|
+| Definition | COMPLETE |
+| Implementation | COMPLETE |
+| Local Verification | PASS |
+| Commit | COMPLETE |
+| Push | COMPLETE |
+| Deployment | PASS |
+| Production Acceptance | PASS |
+| Closure | COMPLETE |
+| Archive | NOT YET |
+
+### Final implementation evidence
+
+| Field | Value |
+|-------|-------|
+| Implementation SHA | `3e13437c0185c2ad5e290e264925f050b43b2341` |
+| Commit message | `feat(realtor): add operational dashboard` |
+| Deployment class | FRONTEND_ONLY |
+
+**Runtime files (7 files in commit):**
+
+- `frontend/app/realtor/page.tsx`
+- `frontend/lib/realtorWorkspace.ts`
+- `frontend/components/realtor/dashboard/DashboardMetrics.tsx`
+- `frontend/components/realtor/dashboard/DashboardQuickActions.tsx`
+- `frontend/components/realtor/dashboard/DashboardRecentPendingRequests.tsx`
+- `frontend/components/realtor/dashboard/DashboardRequiresAttention.tsx`
+- `docs/engineering/tasks/TASK-013-realtor-operational-dashboard-top-section.md`
+
+### Metric contract — final evidence
+
+TASK-013 delivers exactly four truthful metrics:
+
+1. **Active Listings** — count loaded properties with `status === "available"`
+2. **Pending Moderation** — count loaded properties with `status === "pending"`
+3. **Pending Viewing Requests** — filtered API response **`total`**
+4. **Accepted Viewing Requests** — filtered API response **`total`**
+
+Explicit exclusions:
+
+- no Rented metric
+- no Reserved metric
+- no fake leads/views/revenue metrics
+- viewing-request totals are **not** derived from `items.length`
+
+### Known property limitation (preserved)
+
+`GET /realtor/properties` is capped at 100 items. Client-derived listing metrics are exact only within the loaded property set. TASK-013 intentionally did **not** introduce backend aggregation. This is a documented limitation, not a defect.
+
+### Requires Attention — final contract
+
+Supported actionable triggers:
+
+- incomplete profile
+- pending viewing requests
+- missing property photos
+
+**Pending Moderation is NOT a Requires Attention trigger.** It is informational/admin-moderated state without a dedicated dashboard action.
+
+### Recent pending viewing requests — final contract
+
+| Field | Value |
+|-------|-------|
+| Source | `GET /realtor/viewing-requests?status=pending&limit=5` |
+| Display | up to 5 items, real backend order |
+| Fields | property title, requester email, created date |
+| Navigation | request detail link |
+| Mutations | none — no Accept/Decline controls |
+| Empty state | explicit when `total = 0` |
+
+Local verification branches:
+
+| Scenario | Result |
+|----------|--------|
+| Scenario B — pending > 0 | PASS |
+| Scenario A — pending = 0 | PASS |
+| Stale-state transition | PASS |
+
+### Quick actions — final behavior
+
+| Action | Condition | Target |
+|--------|-----------|--------|
+| Complete Profile (primary) | `!profile.is_completed` | `/realtor/profile` |
+| Add Property (primary) | `profile.is_completed` | `/realtor/properties/create` |
+| Review Viewing Requests (secondary) | pending VR `total > 0` | `/realtor/viewing-requests` |
+| Manage Listings (secondary) | always | `/realtor#realtor-properties-heading` |
+
+No unsupported destinations.
+
+### Preserved workflows
+
+TASK-013 preserved without business-logic rewrite:
+
+- My Listings section
+- search
+- current/archived tabs
+- listing cards
+- bottom sheet
+- archive / restore / delete
+- lifecycle errors/loading
+- listings hash anchor `#realtor-properties-heading`
+- avatar upload/crop workflow
+- TASK-012 shared shell
+- TASK-012 nav/auth boundary
+
+### Local verification evidence (summary)
+
+| Category | Result |
+|----------|--------|
+| `npm run lint` | PASS |
+| `npm run typecheck` | PASS |
+| `npm run build` | PASS |
+| `git diff --check` | PASS |
+| Desktop browser | PASS |
+| Mobile browser | PASS |
+| No horizontal overflow | PASS |
+| Pending > 0 (Scenario B) | PASS |
+| Pending = 0 (Scenario A) | PASS |
+| Stale-state transition | PASS |
+| My Listings regression | PASS |
+| Avatar preservation | PASS |
+| TASK-012 integration | PASS |
+
+Local test/dev data mutation used only to create zero-pending scenario. **Production was not touched during local verification.**
+
+### Scope result
+
+TASK-013 converts the top of `/realtor` from a fragmented listings-oriented header into an operational dashboard using real Rento data. It now surfaces:
+
+- operational listing state
+- pending realtor workload
+- accepted viewing-request volume
+- actionable attention conditions
+- recent pending requests
+- contextual quick actions
+
+without introducing unsupported analytics.
+
+### Deferred / out of scope (preserved)
+
+| Item | Status |
+|------|--------|
+| Full My Listings light-theme migration | NOT YET |
+| Backend dashboard aggregation endpoint | NOT YET |
+| Exact metrics beyond 100 properties | NOT YET |
+| Recent listings panel | NOT YET |
+| Clients / CRM | NOT YET |
+| Documents dashboard | NOT YET |
+| Messages | NOT YET |
+| Tasks | NOT YET |
+| Calendar | NOT YET |
+| Analytics / revenue / leads / views / conversion | NOT YET |
+| Avatar refactor | NOT YET |
+
+TASK-014 was **not** created.
+
+---
+
 ## Gate reminder
 
 Approval of one stage does not approve later stages:
 
 ```text
 DISCOVERY               COMPLETE
-IMPLEMENTATION          COMPLETE (local)
-VERIFICATION            IN PROGRESS (local browser PASS; Scenario A not exercised)
-COMMIT                  NOT YET
-PUSH                    NOT YET
-DEPLOY                  NOT YET
-PRODUCTION ACCEPTANCE   NOT YET
-CLOSURE                 NOT YET
+IMPLEMENTATION          COMPLETE
+LOCAL VERIFICATION      PASS
+COMMIT                  COMPLETE
+PUSH                    COMPLETE
+DEPLOY                  PASS
+PRODUCTION ACCEPTANCE   PASS
+CLOSURE                 COMPLETE
 ARCHIVE                 NOT YET
 ```
 
-**Current gate:** `TASK_013_IMPLEMENTATION_VERIFIED`
+**Previous lifecycle:** VERIFYING (implementation + local verification recorded; commit/deploy/acceptance pending)
 
-**Next gate:** `READY_FOR_TASK_013_COMMIT_REVIEW`. Do not commit from this document.
+**Current gate:** `TASK_013_CLOSURE_DOCUMENTATION_PASS`
+
+**Next gate:** `READY_FOR_TASK_013_CLOSURE_COMMIT`
+
+Do not commit, push, archive, or deploy from this gate without separate authorization.
