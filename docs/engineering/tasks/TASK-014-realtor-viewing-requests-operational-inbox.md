@@ -4,11 +4,25 @@
 |-------|-------|
 | ID | TASK-014 |
 | TITLE | Realtor Viewing Requests Operational Inbox |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | MEDIUM |
 | CLASSIFICATION | Frontend operational inbox / viewing-request workspace content |
 
-> STATUS: VERIFYING means implementation and local verification evidence are recorded. Commit, push, deploy, production acceptance, closure, and archive are **not** authorized by this document.
+> STATUS: CLOSED means definition, implementation, local verification, commit, push, deployment, and production acceptance are complete and recorded, and closure documentation is complete. Production acceptance result is **PASS WITH FIXTURE LIMITATIONS** (see Production Fixture Limitations). Archive is **NOT YET** performed.
+
+**Final lifecycle (VERIFIED 2026-08-19):**
+
+| Stage | State |
+|-------|-------|
+| Definition | COMPLETE |
+| Implementation | COMPLETE |
+| Local Verification | PASS |
+| Commit | COMPLETE |
+| Push | COMPLETE |
+| Deployment | PASS |
+| Production Acceptance | PASS WITH FIXTURE LIMITATIONS |
+| Closure | COMPLETE |
+| Archive | NOT YET |
 
 **Initiative reference:** Realtor Workspace Evolution — next bounded increment selected 2026-08-19 (`NEXT_REALTOR_WORKSPACE_DISCOVERY_COMPLETE`).
 
@@ -774,7 +788,9 @@ Active-filter `response.total` displayed (e.g. “1 pending viewing request”, 
 
 ## Gate reminder
 
-Approval of one stage does not approve later stages:
+Approval of one stage does not approve later stages.
+
+**Historical gate state at implementation verification (point-in-time, 2026-08-19 — preserved as history):**
 
 ```text
 DISCOVERY               COMPLETE
@@ -788,9 +804,23 @@ CLOSURE                 NOT YET
 ARCHIVE                 NOT YET
 ```
 
-**Current gate:** `TASK_014_IMPLEMENTATION_VERIFIED`
+Gate at that time: `TASK_014_IMPLEMENTATION_VERIFIED` → next `READY_FOR_TASK_014_COMMIT_REVIEW`.
 
-**Next gate:** `READY_FOR_TASK_014_COMMIT_REVIEW`. Do not commit from this document without explicit authorization.
+**Reconciled final gate history (VERIFIED 2026-08-19):**
+
+```text
+DISCOVERY               COMPLETE
+IMPLEMENTATION          COMPLETE (committed 0139d6760c22f2df8e5c2a1babc4cc65cc3d64d7)
+LOCAL VERIFICATION      PASS
+COMMIT                  COMPLETE
+PUSH                    COMPLETE
+DEPLOY                  PASS (FRONTEND_ONLY)
+PRODUCTION ACCEPTANCE   PASS WITH FIXTURE LIMITATIONS
+CLOSURE                 COMPLETE
+ARCHIVE                 NOT YET
+```
+
+The earlier `COMMIT NOT YET` / `PUSH NOT YET` lines were factual when written and are retained as history above; they are superseded by the reconciled history in this closure section. The implementation commit did not exist before it was actually created.
 
 ---
 
@@ -820,3 +850,343 @@ ARCHIVE                 NOT YET
 | `git diff --check` | PASS |
 
 **Commit review gate:** `TASK_014_COMMIT_REVIEW_PASS` → next `READY_FOR_TASK_014_COMMIT`
+
+---
+
+## Implementation identity (VERIFIED 2026-08-19)
+
+| Field | Value |
+|-------|-------|
+| Implementation SHA | `0139d6760c22f2df8e5c2a1babc4cc65cc3d64d7` |
+| Commit message | `feat(realtor): evolve viewing requests inbox` |
+| Deployment class | `FRONTEND_ONLY` |
+| Frontend production image | `sha256:c6c3ccb70f5dee8ad1aae043dc4ad153afc020b4c2d9a85c93b71e6e8fa0fcda` |
+| Immediate rollback tag | `rento-frontend:rollback-3e13437` |
+| Rollback image | `sha256:2cf0e45de1da1294be3d4e5b7032b71ac717c032f4a89adaab65d6df83474cf0` |
+| Previous production application SHA | `3e13437c0185c2ad5e290e264925f050b43b2341` (TASK-013) |
+
+**Explicit change boundary:**
+
+| Area | Changed |
+|------|---------|
+| Backend | NO |
+| Database | NO |
+| Migration | NONE |
+| Auth / session contract | NO |
+| API contract | NO |
+| Dependencies | NO |
+
+---
+
+## Delivered product contract (VERIFIED 2026-08-19)
+
+TASK-014 delivered:
+
+- operational Viewing Requests inbox
+- Pending as intentional default filter
+- All / Pending / Accepted / Declined / Cancelled filters
+- server-side status filtering
+- one request per active filter
+- stale-response protection
+- filter-specific empty states
+- light Workspace-aligned list
+- improved property/request context
+- realtor-specific pending status copy
+- terminal-state detail navigation
+- preserved Accept/Decline actions
+- accepted relationship navigation
+- light detail wrapper
+- preserved relationship/document semantics
+- mobile usable status tabs
+
+---
+
+## Default filter contract — production evidence (VERIFIED 2026-08-19)
+
+| Field | Value |
+|-------|-------|
+| Default filter | Pending |
+| Production verified | YES |
+| Observed production initial API request | `GET /api/realtor/viewing-requests?status=pending&limit=100` |
+| Automatic fallback to All | NONE |
+| Verdict | PASS |
+
+This is an intentional UX delta from the previous mixed-status inbox.
+
+---
+
+## Production filter matrix (VERIFIED 2026-08-19)
+
+| Filter | API `status` | API `total` | UI empty state | Verdict |
+|--------|--------------|-------------|----------------|---------|
+| Pending | `status=pending` | 0 | correct | PASS |
+| All | omitted | 0 | correct | PASS |
+| Accepted | `status=accepted` | 0 | correct | PASS |
+| Declined | `status=declined` | 0 | correct | PASS |
+| Cancelled | `status=cancelled` | 0 | correct | PASS |
+
+| Check | Result |
+|-------|--------|
+| Every endpoint returned HTTP 200 | YES |
+| Active tab state correct (`aria-selected`) | YES |
+| Stale rows observed | NO |
+| Automatic filter fallback observed | NO |
+| Unexpected 500 | NONE |
+
+---
+
+## Empty-state production evidence (VERIFIED 2026-08-19)
+
+| Filter | Production copy |
+|--------|-----------------|
+| Pending | No pending viewing requests |
+| Accepted | No accepted viewing requests |
+| Declined | No declined viewing requests |
+| Cancelled | No cancelled viewing requests |
+| All | No viewing requests yet |
+
+All matched API `total=0`. API failure was not rendered as an empty success state.
+
+**Production verdict:** PASS
+
+---
+
+## Production Fixture Limitations
+
+**Production acceptance realtor identity (credentials not recorded):**
+
+| Field | Value |
+|-------|-------|
+| Email | `acceptance-realtor@rentonow.ro` |
+| User ID | `29` |
+| Role | `realtor` |
+| Account status | `active` |
+
+**Production data for that identity:**
+
+| Status | Total |
+|--------|-------|
+| Pending | 0 |
+| Accepted | 0 |
+| Declined | 0 |
+| Cancelled | 0 |
+| All | 0 |
+
+Because no viewing-request data existed, the following TASK-014 branches were **not executable in production**:
+
+| # | Criterion | Local | Production |
+|---|-----------|-------|------------|
+| 1 | Realtor pending copy (“Awaiting your response”) | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 2 | Renter pending copy (“Waiting for realtor response”) | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 3 | `ViewingRequestListCard` populated-data presentation | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 4 | Pending Review rendering | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 5 | Pending Accept/Decline rendering | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 6 | Accepted Manage relationship rendering | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 7 | Declined View details | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 8 | Cancelled View details | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 9 | Pending detail | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 10 | Accepted relationship detail | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+| 11 | Rental Documents section through an accepted fixture | VERIFIED | NOT VERIFIED — FIXTURE UNAVAILABLE |
+
+These criteria must not be reclassified as production verified. No production fixtures were manufactured.
+
+---
+
+## Why fixture limitations do not block closure
+
+**Governance decision:** `ACCEPTED_FOR_CLOSURE`
+
+Reasoning (factual):
+
+- core deployed TASK-014 architecture executed successfully in production
+- exact production bundle is healthy
+- all five filtered API paths executed
+- default Pending behavior executed
+- empty-state branches executed
+- shell/nav/auth/mobile paths executed
+- frontend-only deployment introduced no server/domain delta
+- fixture-dependent branches were exercised locally before commit
+- final committed runtime remained unchanged from local verification
+- manufacturing production requests solely for acceptance would require business-data mutation and disproportionate fixture infrastructure
+- unavailable fixtures are recorded as limitations rather than falsely classified as production verified
+
+**NO WAIVER WAS USED.**
+
+Reason: no mandatory core acceptance criterion was waived. The production evidence classification remains truthful.
+
+---
+
+## Local evidence for fixture-dependent paths (VERIFIED 2026-08-19)
+
+Preserved from local verification and commit review (no fixture credentials recorded):
+
+| Path | Local result |
+|------|--------------|
+| Pending → Review → detail | PASS |
+| Pending Accept/Decline | PASS |
+| Post-action authoritative refetch | PASS |
+| Accepted → Manage relationship | PASS |
+| Declined → View details | PASS |
+| Cancelled → View details | PASS |
+| Realtor pending copy — “Awaiting your response” | PASS |
+| Renter pending copy — “Waiting for realtor response” | PASS |
+| Accepted relationship detail + Rental Documents | PASS locally |
+
+**Targeted post-action test:**
+
+| Field | Value |
+|-------|-------|
+| Pending total | 1 → 0 after Decline |
+| Pending card | removed |
+| Pending tab | remained active |
+| Declined result | request present |
+
+---
+
+## Race / filter safety (VERIFIED 2026-08-19)
+
+Final implementation evidence:
+
+- page-local active filter state
+- `loadSequenceRef` stale-response protection
+- an older in-flight request cannot overwrite a newer active filter
+- error and loading transitions are also sequence guarded
+- no five-tab API count fanout
+- API status filtering used instead of filtering one 100-item client result
+
+| Check | Result |
+|-------|--------|
+| Local review | PASS |
+| Production rapid filter switching | no stale behavior observed |
+
+---
+
+## Security / auth production evidence (VERIFIED 2026-08-19)
+
+| Case | Observed | Verdict |
+|------|----------|---------|
+| Unauthenticated `/realtor/viewing-requests` | redirect to `/login?returnUrl=%2Frealtor%2Fviewing-requests` | PASS |
+| Authenticated renter / non-realtor — realtor APIs | `403 Only realtor can access this resource` | PASS |
+| Authenticated renter / non-realtor — Realtor Workspace | redirect away to `/` | PASS |
+| Authenticated realtor — authorized list endpoints | `200` | PASS |
+| Unexpected 401/403 under realtor session | none | PASS |
+
+Server authorization unchanged by TASK-014.
+
+---
+
+## Responsive production evidence (VERIFIED 2026-08-19)
+
+| Check | Result |
+|-------|--------|
+| Desktop ~1280×900 | PASS |
+| Desktop horizontal overflow | none (`scrollWidth == clientWidth == 1280`) |
+| Mobile ~390×844 | PASS |
+| Mobile viewport overflow | none (`scrollWidth == clientWidth == 390`) |
+| Status tab list | intentionally horizontally scrollable (`scrollWidth 472 > clientWidth 398`) |
+| Workspace drawer | PASS |
+| Viewing Requests navigation from drawer | PASS |
+| Filter switching on mobile | PASS |
+
+---
+
+## Production runtime stability (VERIFIED 2026-08-19)
+
+| Field | Value |
+|-------|-------|
+| Production Git SHA | `0139d6760c22f2df8e5c2a1babc4cc65cc3d64d7` |
+| Frontend image | `sha256:c6c3ccb70f5dee8ad1aae043dc4ad153afc020b4c2d9a85c93b71e6e8fa0fcda` |
+| Frontend container | `7c8a0be12bd3acd0fdf04c130608c218dcdb8eca80219bd615bfd6de9d5db097` |
+| Frontend RestartCount | `0` |
+| frontend | healthy |
+| backend | healthy / unchanged (`1f63695435605ae683b694c6f73fed58c3d72ba298ac97fb5a75e905532b02da`) |
+| db | healthy / unchanged |
+| nginx | healthy / unchanged |
+| Rollback artifact | intact (`rento-frontend:rollback-3e13437`) |
+| Homepage HTTP | `200` |
+| `/api/` HTTP | `200` |
+
+Not observed: unexpected 500, uncaught JS exceptions, hydration errors, failed chunks, redirect loops. Expected `401 /api/users/me` occurred only on unauthenticated page loads and after logout.
+
+**NO BUSINESS DATA MUTATION.**
+
+---
+
+## Session hygiene note
+
+During an additional mobile acceptance pass, one or more auth sessions may have remained active because the logout control was not exercised/found in that specific pass. Sessions expire by idle/absolute timeout.
+
+**Classification:** NON-BLOCKING ACCEPTANCE HYGIENE NOTE
+
+It is not:
+
+- business-data mutation
+- a TASK-014 functional regression
+- a security boundary failure proven by current evidence
+
+No DB/session mutation was performed during closure. No follow-up task was created automatically.
+
+---
+
+## Known limitations (carried forward, not new production defects)
+
+- list query capped at 100 items per filter
+- no pagination redesign
+- no URL filter persistence
+- no global tab counts
+- list/detail pending action duplication remains
+- some internal shared relationship-detail styling may remain legacy
+- production fixture-dependent populated paths not executed
+
+---
+
+## Out of scope / deferred (not delivered)
+
+- Dashboard changes
+- My Listings light migration
+- scheduling
+- calendar
+- messaging
+- notifications
+- decline reason
+- realtor cancel
+- CRM
+- analytics
+- document redesign
+- backend pagination redesign
+- new API endpoints
+- TASK-015
+
+---
+
+## Product result
+
+TASK-014 evolves Viewing Requests from a legacy mixed-status dark page into an operational Realtor Workspace inbox.
+
+The realtor now has:
+
+- Pending-first triage
+- status-specific views
+- truthful server-side filtering
+- clearer role-specific status semantics
+- consistent empty/error states
+- navigable terminal relationships
+- stronger list context
+- mobile-operational navigation
+
+while preserving existing server-side viewing-request and document rules.
+
+---
+
+## Closure
+
+| Field | Value |
+|-------|-------|
+| Production acceptance result | `PRODUCTION_ACCEPTANCE_PASS_WITH_FIXTURE_LIMITATIONS` |
+| Governance decision | `ACCEPTED_FOR_CLOSURE` |
+| Waiver used | NO |
+| Closure gate | `TASK_014_CLOSURE_DOCUMENTATION_PASS` |
+| Next gate | `READY_FOR_TASK_014_CLOSURE_COMMIT` |
+| Archive | NOT YET |
+
+Closure documentation changed documentation only. No runtime code change, no commit, no push, no archive, no deployment, and no production access were performed in the closure documentation gate.
