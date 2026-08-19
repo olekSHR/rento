@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
 import ViewingRequestRelationshipDetail from "@/components/ViewingRequestRelationshipDetail"
+import SectionCard from "@/components/ui/SectionCard"
 import {
   acceptViewingRequest,
   declineViewingRequest,
@@ -13,11 +14,8 @@ import {
 } from "@/services/api"
 import type { ViewingRequestRealtor } from "@/types/viewingRequest"
 
-const cardClassName =
-  "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5"
-
 const errorClassName =
-  "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
+  "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium leading-relaxed text-red-700"
 
 function parseRequestId(rawId: string | string[] | undefined): number | null {
   if (typeof rawId !== "string" || !/^\d+$/.test(rawId)) {
@@ -30,8 +28,8 @@ function parseRequestId(rawId: string | string[] | undefined): number | null {
 function ViewingRequestUnavailable({ message }: { message: string }) {
   return (
     <div className="mx-auto max-w-[1280px]">
-      <div className={cardClassName}>
-        <h1 className="text-xl font-semibold tracking-tight">
+      <SectionCard>
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-900">
           Viewing request unavailable
         </h1>
         <p role="alert" className={`mt-4 ${errorClassName}`}>
@@ -39,11 +37,11 @@ function ViewingRequestUnavailable({ message }: { message: string }) {
         </p>
         <Link
           href="/realtor/viewing-requests"
-          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B]"
+          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-blue-700 px-5 text-sm font-semibold text-white transition active:scale-[0.98]"
         >
           Back to viewing requests
         </Link>
-      </div>
+      </SectionCard>
     </div>
   )
 }
@@ -127,7 +125,7 @@ function RealtorViewingRequestDetailContent({ requestId }: { requestId: number }
         <span className="sr-only">Loading viewing request</span>
         <div
           aria-hidden="true"
-          className={`${cardClassName} h-56 animate-pulse bg-white/5 motion-reduce:animate-none`}
+          className="h-56 animate-pulse rounded-2xl bg-zinc-100 motion-reduce:animate-none"
         />
       </div>
     )
@@ -196,8 +194,8 @@ function RealtorViewingRequestDetailPageContent() {
 
 export default function RealtorViewingRequestDetailPage() {
   return (
-    <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
+    <div className="pb-6 md:pb-8">
       <RealtorViewingRequestDetailPageContent />
-    </main>
+    </div>
   )
 }

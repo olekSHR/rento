@@ -57,6 +57,23 @@ export function getViewingRequestStatusLabel(status: ViewingRequestStatus): stri
   }
 }
 
+export function getRealtorViewingRequestStatusLabel(
+  status: ViewingRequestStatus
+): string {
+  switch (status) {
+    case "pending":
+      return "Awaiting your response"
+    case "accepted":
+      return "Accepted"
+    case "declined":
+      return "Declined"
+    case "cancelled":
+      return "Cancelled"
+    default:
+      return status
+  }
+}
+
 export function isActiveViewingRequest(status: ViewingRequestStatus): boolean {
   return status === "pending" || status === "accepted"
 }

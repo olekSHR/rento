@@ -7,6 +7,7 @@ import RentalDocumentsSection from "@/components/RentalDocumentsSection"
 import { getImageUrl } from "@/lib/getImageUrl"
 import {
   canCancelViewingRequest,
+  getRealtorViewingRequestStatusLabel,
   getViewingRequestStatusLabel,
   isPropertyPubliclyAvailable,
   type ViewingRequest,
@@ -163,11 +164,18 @@ export default function ViewingRequestRelationshipDetail({
               <p className="mt-1 text-xs text-[#B8B8B8]">{request.property.city}</p>
             ) : null}
             <p className="mt-2 text-sm font-medium text-[#DFC58A]">
-              {getViewingRequestStatusLabel(request.status)}
+              {role === "realtor"
+                ? getRealtorViewingRequestStatusLabel(request.status)
+                : getViewingRequestStatusLabel(request.status)}
             </p>
             <p className="mt-1 text-xs text-[#B8B8B8]">
               Requested {formatDate(request.created_at)}
             </p>
+            {request.responded_at ? (
+              <p className="mt-0.5 text-xs text-[#B8B8B8]">
+                Responded {formatDate(request.responded_at)}
+              </p>
+            ) : null}
           </div>
         </div>
 

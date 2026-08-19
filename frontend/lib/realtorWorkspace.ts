@@ -413,3 +413,72 @@ export function formatDashboardDateTime(value: string): string {
     timeStyle: "short",
   }).format(new Date(value))
 }
+
+export type ViewingRequestInboxFilter =
+  | "all"
+  | "pending"
+  | "accepted"
+  | "declined"
+  | "cancelled"
+
+export const VIEWING_REQUEST_INBOX_FILTERS: {
+  id: ViewingRequestInboxFilter
+  label: string
+}[] = [
+  { id: "pending", label: "Pending" },
+  { id: "all", label: "All" },
+  { id: "accepted", label: "Accepted" },
+  { id: "declined", label: "Declined" },
+  { id: "cancelled", label: "Cancelled" },
+]
+
+export const DEFAULT_VIEWING_REQUEST_INBOX_FILTER: ViewingRequestInboxFilter =
+  "pending"
+
+export function getViewingRequestInboxApiStatus(
+  filter: ViewingRequestInboxFilter
+): string | undefined {
+  if (filter === "all") {
+    return undefined
+  }
+
+  return filter
+}
+
+export function getViewingRequestInboxEmptyTitle(
+  filter: ViewingRequestInboxFilter
+): string {
+  switch (filter) {
+    case "pending":
+      return "No pending viewing requests"
+    case "accepted":
+      return "No accepted viewing requests"
+    case "declined":
+      return "No declined viewing requests"
+    case "cancelled":
+      return "No cancelled viewing requests"
+    default:
+      return "No viewing requests yet"
+  }
+}
+
+export function getViewingRequestInboxResultLabel(
+  filter: ViewingRequestInboxFilter,
+  total: number
+): string {
+  const noun =
+    total === 1 ? "viewing request" : "viewing requests"
+
+  switch (filter) {
+    case "pending":
+      return `${total} pending ${noun}`
+    case "accepted":
+      return `${total} accepted ${noun}`
+    case "declined":
+      return `${total} declined ${noun}`
+    case "cancelled":
+      return `${total} cancelled ${noun}`
+    default:
+      return `${total} ${noun}`
+  }
+}

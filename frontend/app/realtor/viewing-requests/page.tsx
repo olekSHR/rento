@@ -1,96 +1,113 @@
 "use client"
 
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import { ChevronLeft } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
+import ViewingRequestListCard from "@/components/realtor/viewing-requests/ViewingRequestListCard"
+import ViewingRequestStatusTabs from "@/components/realtor/viewing-requests/ViewingRequestStatusTabs"
+import EmptyState from "@/components/ui/EmptyState"
+import SectionCard from "@/components/ui/SectionCard"
+import {
+  DEFAULT_VIEWING_REQUEST_INBOX_FILTER,
+  getViewingRequestInboxApiStatus,
+  getViewingRequestInboxEmptyTitle,
+  getViewingRequestInboxResultLabel,
+  type ViewingRequestInboxFilter,
+} from "@/lib/realtorWorkspace"
 import {
   acceptViewingRequest,
   declineViewingRequest,
   getRealtorViewingRequests,
 } from "@/services/api"
-import {
-  getViewingRequestStatusLabel,
-  isPropertyPubliclyAvailable,
-  type ViewingRequestRealtor,
-} from "@/types/viewingRequest"
-
-const cardClassName =
-  "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5"
+import type { ViewingRequestRealtor } from "@/types/viewingRequest"
 
 const errorClassName =
-  "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
-
-const acceptButtonClassName =
-  "inline-flex h-11 flex-1 items-center justify-center rounded-2xl bg-[#DFC58A] text-sm font-semibold text-[#1B1B1B] transition active:scale-[0.98] disabled:opacity-70"
-
-const declineButtonClassName =
-  "inline-flex h-11 flex-1 items-center justify-center rounded-2xl border border-red-400/20 bg-[#2A2020] text-sm font-semibold text-red-200 transition active:scale-[0.98] disabled:opacity-70"
-
-const primaryActionClassName =
-  "inline-flex h-11 items-center justify-center rounded-2xl bg-[#DFC58A] px-4 text-sm font-semibold text-[#1B1B1B] transition hover:bg-[#e8d099] active:scale-[0.98]"
-
-const secondaryActionClassName =
-  "inline-flex h-11 items-center justify-center rounded-2xl border border-white/15 bg-[#252525] px-4 text-sm font-semibold text-[#F5F5F5] transition active:scale-[0.98]"
-
-function formatDate(value: string): string {
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(new Date(value))
-}
+  "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium leading-relaxed text-red-700"
 
 function ViewingRequestsSkeleton() {
   return (
-    <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
-      <div className="mx-auto max-w-[1280px] space-y-5">
-        <div className="h-12 w-48 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none" />
-        <div className="space-y-4">
-          {[0, 1].map((item) => (
-            <div
-              key={item}
-              aria-hidden="true"
-              className={`${cardClassName} h-44 animate-pulse bg-white/5`}
-            />
-          ))}
-        </div>
+    <div className="mx-auto max-w-[1280px] space-y-5">
+      <div className="h-10 w-56 animate-pulse rounded-xl bg-zinc-200 motion-reduce:animate-none" />
+      <div className="h-11 w-full max-w-xl animate-pulse rounded-full bg-zinc-200 motion-reduce:animate-none" />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        {[0, 1].map((item) => (
+          <div
+            key={item}
+            aria-hidden="true"
+            className="h-52 animate-pulse rounded-2xl bg-zinc-100 motion-reduce:animate-none"
+          />
+        ))}
       </div>
-    </main>
+    </div>
   )
 }
 
 function RealtorViewingRequestsContent() {
+  const [activeFilter, setActiveFilter] = useState<ViewingRequestInboxFilter>(
+    DEFAULT_VIEWING_REQUEST_INBOX_FILTER
+  )
   const [items, setItems] = useState<ViewingRequestRealtor[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [total, setTotal] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const [error, setError] = useState("")
   const [pendingAction, setPendingAction] = useState<{
     request: ViewingRequestRealtor
     action: "accept" | "decline"
   } | null>(null)
   const [isWorking, setIsWorking] = useState(false)
+  const loadSequenceRef = useRef(0)
+
+  function handleFilterChange(filter: ViewingRequestInboxFilter) {
+    if (filter === activeFilter) {
+      return
+    }
+
+    loadSequenceRef.current += 1
+    setActiveFilter(filter)
+    setIsLoading(true)
+    setError("")
+    setItems([])
+    setTotal(0)
+  }
 
   useEffect(() => {
     let cancelled = false
+    const filter = activeFilter
+    const requestSequence = ++loadSequenceRef.current
 
     async function loadRequests() {
       setIsLoading(true)
       setError("")
+      setItems([])
 
       try {
-        const response = await getRealtorViewingRequests({ limit: 100 })
-        if (!cancelled) {
-          setItems(response.items)
+        const status = getViewingRequestInboxApiStatus(filter)
+        const response = await getRealtorViewingRequests({
+          ...(status ? { status } : {}),
+          limit: 100,
+        })
+
+        if (cancelled || requestSequence !== loadSequenceRef.current) {
+          return
         }
+
+        setItems(response.items)
+        setTotal(response.total)
       } catch (err) {
-        if (!cancelled) {
-          setError(
-            err instanceof Error ? err.message : "Unable to load viewing requests."
-          )
+        if (cancelled || requestSequence !== loadSequenceRef.current) {
+          return
         }
+
+        setItems([])
+        setTotal(0)
+        setError(
+          err instanceof Error ? err.message : "Unable to load viewing requests."
+        )
       } finally {
-        if (!cancelled) {
+        if (!cancelled && requestSequence === loadSequenceRef.current) {
           setIsLoading(false)
+          setHasLoadedOnce(true)
         }
       }
     }
@@ -100,10 +117,44 @@ function RealtorViewingRequestsContent() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [activeFilter])
 
-  if (isLoading) {
-    return <ViewingRequestsSkeleton />
+  async function reloadActiveFilter(filter: ViewingRequestInboxFilter) {
+    const requestSequence = ++loadSequenceRef.current
+
+    setIsLoading(true)
+    setError("")
+    setItems([])
+
+    try {
+      const status = getViewingRequestInboxApiStatus(filter)
+      const response = await getRealtorViewingRequests({
+        ...(status ? { status } : {}),
+        limit: 100,
+      })
+
+      if (requestSequence !== loadSequenceRef.current) {
+        return
+      }
+
+      setItems(response.items)
+      setTotal(response.total)
+    } catch (err) {
+      if (requestSequence !== loadSequenceRef.current) {
+        return
+      }
+
+      setItems([])
+      setTotal(0)
+      setError(
+        err instanceof Error ? err.message : "Unable to load viewing requests."
+      )
+    } finally {
+      if (requestSequence === loadSequenceRef.current) {
+        setIsLoading(false)
+        setHasLoadedOnce(true)
+      }
+    }
   }
 
   async function handleConfirmAction() {
@@ -115,15 +166,14 @@ function RealtorViewingRequestsContent() {
       setIsWorking(true)
       setError("")
 
-      const updated =
-        pendingAction.action === "accept"
-          ? await acceptViewingRequest(pendingAction.request.id)
-          : await declineViewingRequest(pendingAction.request.id)
+      if (pendingAction.action === "accept") {
+        await acceptViewingRequest(pendingAction.request.id)
+      } else {
+        await declineViewingRequest(pendingAction.request.id)
+      }
 
-      setItems((current) =>
-        current.map((item) => (item.id === updated.id ? updated : item))
-      )
       setPendingAction(null)
+      await reloadActiveFilter(activeFilter)
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Unable to update viewing request."
@@ -133,134 +183,76 @@ function RealtorViewingRequestsContent() {
     }
   }
 
+  if (!hasLoadedOnce && isLoading && items.length === 0 && !error) {
+    return <ViewingRequestsSkeleton />
+  }
+
   return (
-    <main className="min-h-screen bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8">
-      <div className="mx-auto max-w-[1280px] space-y-5">
-        <header className="flex items-center gap-3">
-          <Link
-            href="/realtor"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-[#2D2D2D] text-[#F5F5F5]"
-            aria-label="Back to workspace"
-          >
-            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-          </Link>
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Viewing requests
-            </h1>
-            <p className="mt-1 text-sm text-[#B8B8B8]">
-              Review renter viewing requests for your listings.
-            </p>
-          </div>
-        </header>
+    <div className="mx-auto max-w-[1280px] space-y-5">
+      <header>
+        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+          Viewing requests
+        </h1>
+        <p className="mt-1 text-sm text-zinc-500">
+          Review and respond to renter viewing requests for your listings.
+        </p>
+      </header>
 
-        {error ? (
-          <p role="alert" className={errorClassName}>
-            {error}
-          </p>
-        ) : null}
+      <ViewingRequestStatusTabs
+        activeFilter={activeFilter}
+        onFilterChange={handleFilterChange}
+        disabled={isWorking}
+      />
 
-        {items.length === 0 ? (
-          <div className={cardClassName}>
-            <p className="text-sm leading-relaxed text-[#B8B8B8]">
-              No viewing requests yet.
-            </p>
-          </div>
-        ) : (
-          <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {items.map((item) => {
-              const isPublic = isPropertyPubliclyAvailable(item.property.status)
+      {error ? (
+        <p role="alert" className={errorClassName}>
+          {error}
+        </p>
+      ) : null}
 
-              return (
-                <li key={item.id} className={cardClassName}>
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="truncate text-base font-semibold text-[#F5F5F5]">
-                      {item.property.title}
-                    </p>
-                    <p className="mt-1 text-sm text-[#B8B8B8]">
-                      {item.requester_email}
-                    </p>
-                    <p className="mt-1 text-xs text-[#B8B8B8]">
-                      {formatDate(item.created_at)}
-                    </p>
-                  </div>
-                  <span className="shrink-0 rounded-full border border-white/10 bg-[#252525] px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#DFC58A]">
-                    {getViewingRequestStatusLabel(item.status)}
-                  </span>
-                </div>
+      {!error && !isLoading && total > 0 ? (
+        <p className="text-sm font-medium text-zinc-600">
+          {getViewingRequestInboxResultLabel(activeFilter, total)}
+        </p>
+      ) : null}
 
-                {item.message ? (
-                  <p className="mt-4 text-sm leading-relaxed text-[#B8B8B8]">
-                    {item.message}
-                  </p>
-                ) : null}
-
-                {item.status === "accepted" ? (
-                  <div className="mt-5 space-y-3">
-                    <p className="text-sm leading-relaxed text-[#B8B8B8]">
-                      Contact the renter to arrange the viewing time and meeting
-                      details.
-                    </p>
-                    <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                      <Link
-                        href={`/realtor/viewing-requests/${item.id}`}
-                        className={primaryActionClassName}
-                      >
-                        Manage relationship
-                      </Link>
-                      <a
-                        href={`mailto:${item.requester_email}`}
-                        className={secondaryActionClassName}
-                      >
-                        Email renter
-                      </a>
-                      {isPublic ? (
-                        <Link
-                          href={`/properties/${item.property_id}`}
-                          className={secondaryActionClassName}
-                        >
-                          Open property
-                        </Link>
-                      ) : null}
-                    </div>
-                  </div>
-                ) : null}
-
-                {item.status === "pending" ? (
-                  <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                    <Link
-                      href={`/realtor/viewing-requests/${item.id}`}
-                      className={secondaryActionClassName}
-                    >
-                      Review request
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setPendingAction({ request: item, action: "accept" })
-                      }
-                      className={acceptButtonClassName}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setPendingAction({ request: item, action: "decline" })
-                      }
-                      className={declineButtonClassName}
-                    >
-                      Decline
-                    </button>
-                  </div>
-                ) : null}
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </div>
+      {isLoading ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="grid grid-cols-1 gap-4 lg:grid-cols-2"
+        >
+          <span className="sr-only">Loading viewing requests</span>
+          {[0, 1].map((item) => (
+            <div
+              key={item}
+              aria-hidden="true"
+              className="h-52 animate-pulse rounded-2xl bg-zinc-100 motion-reduce:animate-none"
+            />
+          ))}
+        </div>
+      ) : error ? null : items.length === 0 ? (
+        <SectionCard>
+          <EmptyState title={getViewingRequestInboxEmptyTitle(activeFilter)} />
+        </SectionCard>
+      ) : (
+        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {items.map((item) => (
+            <li key={item.id}>
+              <ViewingRequestListCard
+                item={item}
+                onAccept={(request) =>
+                  setPendingAction({ request, action: "accept" })
+                }
+                onDecline={(request) =>
+                  setPendingAction({ request, action: "decline" })
+                }
+                actionsDisabled={isWorking}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
 
       <ConfirmDialog
         isOpen={pendingAction !== null}
@@ -288,7 +280,7 @@ function RealtorViewingRequestsContent() {
         }}
         onConfirm={() => void handleConfirmAction()}
       />
-    </main>
+    </div>
   )
 }
 
