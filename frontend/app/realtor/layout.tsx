@@ -16,13 +16,13 @@ function RealtorWorkspaceSkeleton() {
     <div
       role="status"
       aria-live="polite"
-      className="min-h-screen bg-zinc-50 px-4 py-6 md:px-8"
+      className="min-h-screen bg-[#1B1B1B] px-4 py-6 md:px-8"
     >
       <span className="sr-only">Loading realtor workspace</span>
       <div className="mx-auto max-w-[1280px] space-y-4">
-        <div className="h-12 w-48 animate-pulse rounded-xl bg-zinc-200 motion-reduce:animate-none" />
-        <div className="h-64 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none" />
-        <div className="h-64 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none" />
+        <div className="h-12 w-48 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none" />
+        <div className="h-64 animate-pulse rounded-3xl bg-white/10 motion-reduce:animate-none" />
+        <div className="h-64 animate-pulse rounded-3xl bg-white/10 motion-reduce:animate-none" />
       </div>
     </div>
   )

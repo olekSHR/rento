@@ -42,12 +42,15 @@ function getNavItemKey(item: WorkspaceNavItem, index: number) {
   return `${item.group}-${item.label}-${index}`
 }
 
+const navLinkBaseClassName =
+  "flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#252525]"
+
 function getNavLinkClassName(isActive: boolean) {
   if (isActive) {
-    return "bg-blue-50 text-blue-700 ring-1 ring-blue-100"
+    return "bg-[#2D2D2D] font-semibold text-[#DFC58A] ring-1 ring-[#DFC58A]/40"
   }
 
-  return "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
+  return "font-medium text-[#B8B8B8] hover:bg-white/5 hover:text-[#F5F5F5]"
 }
 
 type WorkspaceNavListProps = {
@@ -91,7 +94,7 @@ function WorkspaceNavList({
 
         return (
           <div key={group}>
-            <p className="px-3 text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
+            <p className="px-3 text-[11px] font-semibold uppercase tracking-wide text-[#B8B8B8]">
               {group}
             </p>
             <ul className="mt-2 space-y-1">
@@ -113,7 +116,7 @@ function WorkspaceNavList({
 
                         onNavigate?.()
                       }}
-                      className={`flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 ${getNavLinkClassName(isActive)}`}
+                      className={`${navLinkBaseClassName} ${getNavLinkClassName(isActive)}`}
                       aria-current={isActive ? "page" : undefined}
                     >
                       <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -162,13 +165,13 @@ export default function RealtorWorkspaceShell({
     user?.email?.split("@")[0]?.trim() || "Realtor workspace"
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
+    <div className="min-h-screen bg-[#1B1B1B] text-[#F5F5F5]">
       <div className="flex min-h-screen">
-        <aside className="hidden w-64 shrink-0 border-r border-zinc-200 bg-white lg:flex lg:flex-col">
-          <div className="border-b border-zinc-200 px-5 py-5">
+        <aside className="hidden w-64 shrink-0 border-r border-white/10 bg-[#252525] lg:flex lg:flex-col">
+          <div className="border-b border-white/10 px-5 py-5">
             <Link
               href="/realtor"
-              className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2"
+              className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#252525]"
             >
               <Image
                 src={getRentoLogoSrc("symbol")}
@@ -178,10 +181,10 @@ export default function RealtorWorkspaceShell({
                 className="h-7 w-7"
               />
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-zinc-900">
+                <p className="text-sm font-semibold text-[#F5F5F5]">
                   Realtor Workspace
                 </p>
-                <p className="truncate text-xs text-zinc-500">{displayName}</p>
+                <p className="truncate text-xs text-[#B8B8B8]">{displayName}</p>
               </div>
             </Link>
           </div>
@@ -196,12 +199,12 @@ export default function RealtorWorkspaceShell({
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/95 backdrop-blur">
+          <header className="sticky top-0 z-30 border-b border-white/10 bg-[#252525]/95 backdrop-blur">
             <div className="flex items-center justify-between gap-3 px-4 py-3 md:px-6">
               <div className="flex min-w-0 items-center gap-3">
                 <button
                   type="button"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 text-zinc-700 transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 lg:hidden"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 text-[#B8B8B8] transition-colors hover:bg-white/5 hover:text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#252525] lg:hidden"
                   aria-label="Open workspace navigation"
                   aria-expanded={isMobileNavOpen}
                   aria-controls="realtor-workspace-mobile-nav"
@@ -211,22 +214,27 @@ export default function RealtorWorkspaceShell({
                 </button>
 
                 <div className="min-w-0 lg:hidden">
-                  <p className="truncate text-sm font-semibold text-zinc-900">
+                  <p className="truncate text-sm font-semibold text-[#F5F5F5]">
                     Realtor Workspace
                   </p>
-                  <p className="truncate text-xs text-zinc-500">{displayName}</p>
+                  <p className="truncate text-xs text-[#B8B8B8]">{displayName}</p>
                 </div>
               </div>
 
               <div className="hidden items-center gap-2 sm:flex">
-                <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+                <span className="rounded-full bg-[#2D2D2D] px-3 py-1 text-xs font-semibold text-[#DFC58A] ring-1 ring-[#DFC58A]/25">
                   Realtor
                 </span>
               </div>
             </div>
           </header>
 
-          <main className="min-w-0 flex-1 overflow-x-hidden">{children}</main>
+          {/* Content surface stays light until the dashboard and viewing-requests
+              pages define their own backgrounds: their headings and body copy are
+              still zinc and rely on this inherited light context. */}
+          <main className="min-w-0 flex-1 overflow-x-hidden bg-zinc-50 text-zinc-900">
+            {children}
+          </main>
         </div>
       </div>
 
@@ -234,28 +242,28 @@ export default function RealtorWorkspaceShell({
         <div className="fixed inset-0 z-40 lg:hidden">
           <button
             type="button"
-            className="absolute inset-0 bg-zinc-900/30"
+            className="absolute inset-0 bg-[#1B1B1B]/80 backdrop-blur-[2px]"
             aria-label="Close workspace navigation"
             onClick={() => setIsMobileNavOpen(false)}
           />
 
           <div
             id="realtor-workspace-mobile-nav"
-            className="absolute inset-y-0 left-0 flex w-[min(100%,20rem)] flex-col border-r border-zinc-200 bg-white shadow-xl"
+            className="absolute inset-y-0 left-0 flex w-[min(100%,20rem)] flex-col border-r border-white/10 bg-[#252525] shadow-xl"
             role="dialog"
             aria-modal="true"
             aria-label="Realtor workspace navigation"
           >
-            <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-4">
+            <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-zinc-900">
+                <p className="text-sm font-semibold text-[#F5F5F5]">
                   Navigation
                 </p>
-                <p className="truncate text-xs text-zinc-500">{displayName}</p>
+                <p className="truncate text-xs text-[#B8B8B8]">{displayName}</p>
               </div>
               <button
                 type="button"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 text-zinc-700 transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#2D2D2D] text-[#B8B8B8] transition-colors hover:text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#252525]"
                 aria-label="Close workspace navigation"
                 onClick={() => setIsMobileNavOpen(false)}
               >
