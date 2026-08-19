@@ -51,6 +51,10 @@ const ALLOWED_AVATAR_TYPES = [
 
 const WORKSPACE_SEARCH_ID = "realtor-workspace-search"
 
+// The workspace shell content surface is still light (TASK-015 deviation D1)
+// because Viewing Requests depends on it, so this page owns its own dark surface.
+const dashboardShellClassName = "min-h-full bg-[#1B1B1B] text-[#F5F5F5]"
+
 const dashboardContainerClassName =
   "mx-auto max-w-[1280px] space-y-5 px-4 py-6 md:px-8 md:py-8"
 
@@ -66,13 +70,13 @@ const workspaceErrorClassName =
   "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
 
 const workspaceBadgeGoldClassName =
-  "inline-flex rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-700"
+  "inline-flex rounded-full border border-[#DFC58A]/20 bg-[#252525] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#DFC58A]"
 
 const workspaceBadgeMutedClassName =
-  "inline-flex rounded-full border border-zinc-200 bg-zinc-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-500"
+  "inline-flex rounded-full border border-white/10 bg-[#252525] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#B8B8B8]"
 
 const dashboardIconButtonClassName =
-  "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-zinc-700 transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2"
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-[#252525] text-[#B8B8B8] transition-transform active:scale-95 hover:text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
 
 function loadImageElement(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -219,26 +223,28 @@ function getProfileInitials(profile: RealtorProfile | null): string {
 
 function WorkspaceSkeleton() {
   return (
-    <div className={dashboardContainerClassName}>
-      <div role="status" aria-live="polite">
-        <span className="sr-only">Loading workspace</span>
-        <div className="h-40 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none md:h-36" />
-        <div className="mt-5 h-12 animate-pulse rounded-2xl bg-zinc-200 motion-reduce:animate-none" />
-        <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-20 animate-pulse rounded-2xl bg-zinc-200 motion-reduce:animate-none"
-            />
-          ))}
-        </div>
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          <div className="h-56 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none" />
-          <div className="h-56 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none" />
-        </div>
-        <div className={`mt-8 ${listingsShellClassName}`}>
-          <div className={listingsContainerClassName}>
-            <PropertyListSkeleton />
+    <div className={dashboardShellClassName}>
+      <div className={dashboardContainerClassName}>
+        <div role="status" aria-live="polite">
+          <span className="sr-only">Loading workspace</span>
+          <div className="h-40 animate-pulse rounded-3xl bg-white/10 motion-reduce:animate-none md:h-36" />
+          <div className="mt-5 h-12 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
+          <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-20 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none"
+              />
+            ))}
+          </div>
+          <div className="mt-5 grid gap-5 lg:grid-cols-2">
+            <div className="h-56 animate-pulse rounded-3xl bg-white/10 motion-reduce:animate-none" />
+            <div className="h-56 animate-pulse rounded-3xl bg-white/10 motion-reduce:animate-none" />
+          </div>
+          <div className={`mt-8 ${listingsShellClassName}`}>
+            <div className={listingsContainerClassName}>
+              <PropertyListSkeleton />
+            </div>
           </div>
         </div>
       </div>
@@ -686,22 +692,22 @@ export default function RealtorWorkspacePage() {
 
   if (error) {
     return (
-      <div className={dashboardContainerClassName}>
-        <p
-          role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium leading-relaxed text-red-700"
-        >
-          {error}
-        </p>
+      <div className={dashboardShellClassName}>
+        <div className={dashboardContainerClassName}>
+          <p role="alert" className={workspaceErrorClassName}>
+            {error}
+          </p>
+        </div>
       </div>
     )
   }
 
   return (
     <>
+      <div className={dashboardShellClassName}>
       <div className={dashboardContainerClassName}>
-        <header className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm md:p-6">
-          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-zinc-500">
+        <header className="rounded-3xl border border-white/8 bg-[#2D2D2D] p-5 md:p-6">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#B8B8B8]">
             Realtor workspace
           </p>
 
@@ -712,7 +718,7 @@ export default function RealtorWorkspacePage() {
                 onClick={() => avatarInputRef.current?.click()}
                 disabled={isAvatarUploading || isAvatarPreviewOpen}
                 aria-label="Upload profile photo"
-                className="relative h-14 w-14 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 disabled:opacity-80"
+                className="relative h-14 w-14 overflow-hidden rounded-2xl border border-white/10 bg-[#252525] transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-80"
               >
                 {avatarUrl ? (
                   <Image
@@ -724,17 +730,17 @@ export default function RealtorWorkspacePage() {
                     sizes="56px"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-lg font-semibold text-blue-700">
+                  <div className="flex h-full w-full items-center justify-center text-lg font-semibold text-[#DFC58A]">
                     {getProfileInitials(profile)}
                   </div>
                 )}
 
                 {isAvatarUploading ? (
-                  <div className="absolute inset-0 flex items-center justify-center bg-white/70">
-                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-blue-700 border-t-transparent motion-reduce:animate-none" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-[#1B1B1B]/70">
+                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-[#DFC58A] border-t-transparent motion-reduce:animate-none" />
                   </div>
                 ) : (
-                  <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700">
+                  <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-[#252525] text-[#B8B8B8]">
                     <Camera className="h-3.5 w-3.5" aria-hidden="true" />
                   </span>
                 )}
@@ -750,13 +756,13 @@ export default function RealtorWorkspacePage() {
             </div>
 
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-zinc-500">
+              <p className="text-sm font-medium text-[#B8B8B8]">
                 {getTimeGreeting()},
               </p>
-              <h1 className="mt-0.5 truncate text-[1.625rem] font-semibold tracking-tight text-zinc-900 md:text-[1.875rem]">
+              <h1 className="mt-0.5 truncate text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
                 {greetingName}
               </h1>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+              <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
                 Review what needs attention and manage your listings.
               </p>
               <div className="mt-2.5">
@@ -782,7 +788,7 @@ export default function RealtorWorkspacePage() {
           {avatarError && (
             <p
               role="alert"
-              className="mt-3 text-xs font-medium text-red-600"
+              className="mt-3 text-xs font-medium text-red-200"
             >
               {avatarError}
             </p>
@@ -910,6 +916,7 @@ export default function RealtorWorkspacePage() {
         </section>
         </div>
       </section>
+      </div>
 
       <PropertyBottomSheet
         property={selectedProperty}

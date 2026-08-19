@@ -36,12 +36,14 @@ export default function DashboardMetrics({
       {metricCards.map((card) => (
         <div
           key={card.key}
-          className="rounded-2xl border border-zinc-200 bg-white px-4 py-3 shadow-sm"
+          className="rounded-2xl border border-white/8 bg-[#252525] px-4 py-3"
         >
-          <p className="text-2xl font-semibold leading-none text-zinc-900">
+          <p className="text-2xl font-semibold leading-none text-[#F5F5F5]">
             {metrics[card.key]}
           </p>
-          <p className="mt-1.5 text-xs font-semibold text-zinc-500">{card.label}</p>
+          <p className="mt-1.5 text-xs font-semibold text-[#B8B8B8]">
+            {card.label}
+          </p>
         </div>
       ))}
     </section>
