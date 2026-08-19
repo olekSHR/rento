@@ -327,3 +327,89 @@ export function scrollToRealtorPropertiesSection(behavior: ScrollBehavior = "smo
     block: "start",
   })
 }
+
+export type DashboardMetrics = {
+  activeListings: number
+  pendingModeration: number
+  pendingViewingRequests: number
+  acceptedViewingRequests: number
+}
+
+export function computeDashboardMetrics(
+  properties: Property[],
+  pendingViewingRequestTotal: number,
+  acceptedViewingRequestTotal: number
+): DashboardMetrics {
+  return {
+    activeListings: properties.filter((property) => property.status === "available")
+      .length,
+    pendingModeration: properties.filter((property) => property.status === "pending")
+      .length,
+    pendingViewingRequests: pendingViewingRequestTotal,
+    acceptedViewingRequests: acceptedViewingRequestTotal,
+  }
+}
+
+export type DashboardAttentionItem = {
+  id: string
+  title: string
+  description: string
+  href: string
+  tone: "urgent" | "default"
+}
+
+export function buildRequiresAttentionItems(
+  profile: RealtorProfile | null,
+  properties: Property[],
+  pendingViewingRequestTotal: number
+): DashboardAttentionItem[] {
+  const items: DashboardAttentionItem[] = []
+
+  if (!profile?.is_completed) {
+    items.push({
+      id: "complete-profile",
+      title: "Complete profile",
+      description: "Add your name, city, and contact details",
+      href: "/realtor/profile",
+      tone: "urgent",
+    })
+  }
+
+  if (pendingViewingRequestTotal > 0) {
+    items.push({
+      id: "pending-viewing-requests",
+      title: "Review viewing requests",
+      description: `${pendingViewingRequestTotal} pending request${
+        pendingViewingRequestTotal === 1 ? "" : "s"
+      } need your response`,
+      href: "/realtor/viewing-requests",
+      tone: "urgent",
+    })
+  }
+
+  const missingPhotos = properties.filter((property) => !property.image_url)
+
+  if (missingPhotos.length > 0) {
+    const count = missingPhotos.length
+
+    items.push({
+      id: "missing-photos",
+      title: "Add missing photos",
+      description:
+        count === 1
+          ? `"${missingPhotos[0].title}" needs photos`
+          : `${count} listings need photos`,
+      href: `/realtor/properties/${missingPhotos[0].id}/edit`,
+      tone: "default",
+    })
+  }
+
+  return items
+}
+
+export function formatDashboardDateTime(value: string): string {
+  return new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(value))
+}

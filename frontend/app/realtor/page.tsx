@@ -3,9 +3,13 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Camera, ChevronRight, Pencil, Plus, Search, Sparkles } from "lucide-react"
+import { Camera, Pencil, Search } from "lucide-react"
 
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
+import DashboardMetrics from "@/components/realtor/dashboard/DashboardMetrics"
+import DashboardQuickActions from "@/components/realtor/dashboard/DashboardQuickActions"
+import DashboardRecentPendingRequests from "@/components/realtor/dashboard/DashboardRecentPendingRequests"
+import DashboardRequiresAttention from "@/components/realtor/dashboard/DashboardRequiresAttention"
 import PropertyBottomSheet from "@/components/realtor/PropertyBottomSheet"
 import PropertyEmptyState from "@/components/realtor/PropertyEmptyState"
 import PropertyListSkeleton from "@/components/realtor/PropertyListSkeleton"
@@ -15,11 +19,9 @@ import { getImageUrl } from "@/lib/getImageUrl"
 import {
   LISTING_VIEW_OPTIONS,
   REALTOR_PROPERTIES_SECTION_ID,
-  buildWorkspaceActions,
-  computeProfileCompletionPercent,
+  buildRequiresAttentionItems,
+  computeDashboardMetrics,
   filterPropertiesByView,
-  getContinueEditingProperty,
-  getPropertyStatusLabel,
   getWorkspaceGreetingName,
   scrollToRealtorPropertiesSection,
   searchProperties,
@@ -30,12 +32,14 @@ import {
   deleteMyArchivedRealtorProperty,
   getMyRealtorProfile,
   getMyRealtorProperties,
+  getRealtorViewingRequests,
   restoreMyRealtorProperty,
   updateMyRealtorProfile,
   uploadImage,
   type RealtorProfile,
 } from "@/services/api"
 import type { Property } from "@/types/property"
+import type { ViewingRequestRealtor } from "@/types/viewingRequest"
 
 const AVATAR_OUTPUT_SIZE = 512
 const AVATAR_CROP_PREVIEW_SIZE = 176
@@ -47,19 +51,13 @@ const ALLOWED_AVATAR_TYPES = [
 
 const WORKSPACE_SEARCH_ID = "realtor-workspace-search"
 
-const workspaceShellClassName =
-  "min-h-screen bg-[#1B1B1B] text-[#F5F5F5] px-5 py-6 pb-24 md:px-8 md:py-8 md:pb-28"
+const dashboardContainerClassName =
+  "mx-auto max-w-[1280px] space-y-5 px-4 py-6 md:px-8 md:py-8"
 
-const workspaceContainerClassName = "mx-auto max-w-[1280px] space-y-5 md:space-y-6"
+const listingsShellClassName =
+  "bg-[#1B1B1B] px-5 py-6 pb-24 text-[#F5F5F5] md:px-8 md:py-8 md:pb-28"
 
-const workspaceCardClassName =
-  "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5 md:p-6"
-
-const workspacePrimaryCtaClassName =
-  "flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#DFC58A] text-sm font-semibold text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B] md:h-14"
-
-const workspaceSecondaryLinkClassName =
-  "inline-flex min-h-11 items-center text-sm font-semibold text-[#DFC58A] underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+const listingsContainerClassName = "mx-auto max-w-[1280px] space-y-5 md:space-y-6"
 
 const workspaceInputClassName =
   "min-h-11 w-full rounded-xl border border-white/[0.08] bg-[#252525] py-3 pl-11 pr-4 text-sm text-[#F5F5F5] placeholder:text-[#B8B8B8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
@@ -68,16 +66,13 @@ const workspaceErrorClassName =
   "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
 
 const workspaceBadgeGoldClassName =
-  "inline-flex rounded-full border border-[#DFC58A]/20 bg-[#252525] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#DFC58A]"
+  "inline-flex rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-blue-700"
 
 const workspaceBadgeMutedClassName =
-  "inline-flex rounded-full border border-white/10 bg-[#252525] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#B8B8B8]"
+  "inline-flex rounded-full border border-zinc-200 bg-zinc-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-zinc-500"
 
-const workspaceStatCardClassName =
-  "rounded-2xl border border-white/8 bg-[#252525] px-4 py-3 md:py-4"
-
-const workspaceIconButtonClassName =
-  "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-[#252525] text-[#DFC58A] transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
+const dashboardIconButtonClassName =
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-zinc-200 bg-white text-zinc-700 transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2"
 
 function loadImageElement(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -224,19 +219,30 @@ function getProfileInitials(profile: RealtorProfile | null): string {
 
 function WorkspaceSkeleton() {
   return (
-    <main className={workspaceShellClassName}>
-      <div className={workspaceContainerClassName}>
-        <div role="status" aria-live="polite">
-          <span className="sr-only">Loading workspace</span>
-          <div className="h-52 animate-pulse rounded-[24px] bg-white/10 motion-reduce:animate-none md:h-44" />
-          <div className="mt-5 h-14 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
-          <div className="mt-5 h-10 animate-pulse rounded-2xl bg-white/10 motion-reduce:animate-none" />
-          <div className="mt-6">
+    <div className={dashboardContainerClassName}>
+      <div role="status" aria-live="polite">
+        <span className="sr-only">Loading workspace</span>
+        <div className="h-40 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none md:h-36" />
+        <div className="mt-5 h-12 animate-pulse rounded-2xl bg-zinc-200 motion-reduce:animate-none" />
+        <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div
+              key={index}
+              className="h-20 animate-pulse rounded-2xl bg-zinc-200 motion-reduce:animate-none"
+            />
+          ))}
+        </div>
+        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+          <div className="h-56 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none" />
+          <div className="h-56 animate-pulse rounded-3xl bg-zinc-200 motion-reduce:animate-none" />
+        </div>
+        <div className={`mt-8 ${listingsShellClassName}`}>
+          <div className={listingsContainerClassName}>
             <PropertyListSkeleton />
           </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
 
@@ -245,6 +251,12 @@ export default function RealtorWorkspacePage() {
 
   const [properties, setProperties] = useState<Property[]>([])
   const [profile, setProfile] = useState<RealtorProfile | null>(null)
+  const [pendingViewingRequests, setPendingViewingRequests] = useState<
+    ViewingRequestRealtor[]
+  >([])
+  const [pendingViewingRequestTotal, setPendingViewingRequestTotal] = useState(0)
+  const [acceptedViewingRequestTotal, setAcceptedViewingRequestTotal] =
+    useState(0)
   const [isDataLoading, setIsDataLoading] = useState(true)
   const [error, setError] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
@@ -287,13 +299,23 @@ export default function RealtorWorkspacePage() {
         setIsDataLoading(true)
         setError("")
 
-        const [propertiesData, profileData] = await Promise.all([
+        const [
+          propertiesData,
+          profileData,
+          pendingViewingRequestsData,
+          acceptedViewingRequestsData,
+        ] = await Promise.all([
           getMyRealtorProperties(),
           getMyRealtorProfile(),
+          getRealtorViewingRequests({ status: "pending", limit: 5 }),
+          getRealtorViewingRequests({ status: "accepted", limit: 1 }),
         ])
 
         setProperties(propertiesData.items || [])
         setProfile(profileData)
+        setPendingViewingRequests(pendingViewingRequestsData.items || [])
+        setPendingViewingRequestTotal(pendingViewingRequestsData.total)
+        setAcceptedViewingRequestTotal(acceptedViewingRequestsData.total)
       } catch {
         setError("Failed to load your workspace")
       } finally {
@@ -623,7 +645,6 @@ export default function RealtorWorkspacePage() {
     [properties]
   )
 
-  const profileCompletion = computeProfileCompletionPercent(profile)
   const canCreateListing = profile?.is_completed === true
   const profileActionLabel = canCreateListing
     ? "Edit Profile"
@@ -632,24 +653,24 @@ export default function RealtorWorkspacePage() {
     ? getImageUrl(profile.avatar_url)
     : null
 
-  const stats = useMemo(
-    () => ({
-      active: properties.filter((p) => p.status === "available").length,
-      pending: properties.filter((p) => p.status === "pending").length,
-      rented: properties.filter((p) => p.status === "rented").length,
-      archived: properties.filter((p) => p.status === "archived").length,
-    }),
-    [properties]
+  const dashboardMetrics = useMemo(
+    () =>
+      computeDashboardMetrics(
+        properties,
+        pendingViewingRequestTotal,
+        acceptedViewingRequestTotal
+      ),
+    [properties, pendingViewingRequestTotal, acceptedViewingRequestTotal]
   )
 
-  const actionItems = useMemo(
-    () => buildWorkspaceActions(profile, properties),
-    [profile, properties]
-  )
-
-  const continueEditingProperty = useMemo(
-    () => getContinueEditingProperty(properties),
-    [properties]
+  const attentionItems = useMemo(
+    () =>
+      buildRequiresAttentionItems(
+        profile,
+        properties,
+        pendingViewingRequestTotal
+      ),
+    [profile, properties, pendingViewingRequestTotal]
   )
 
   const visibleProperties = useMemo(() => {
@@ -658,17 +679,29 @@ export default function RealtorWorkspacePage() {
   }, [properties, listingView, searchQuery])
 
   const greetingName = getWorkspaceGreetingName(profile, user?.email)
-  const nextAction = actionItems[0] ?? null
 
   if (isDataLoading) {
     return <WorkspaceSkeleton />
   }
 
+  if (error) {
+    return (
+      <div className={dashboardContainerClassName}>
+        <p
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium leading-relaxed text-red-700"
+        >
+          {error}
+        </p>
+      </div>
+    )
+  }
+
   return (
-    <main className={workspaceShellClassName}>
-      <div className={workspaceContainerClassName}>
-        <header className={workspaceCardClassName}>
-          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#B8B8B8]">
+    <>
+      <div className={dashboardContainerClassName}>
+        <header className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm md:p-6">
+          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-zinc-500">
             Realtor workspace
           </p>
 
@@ -679,7 +712,7 @@ export default function RealtorWorkspacePage() {
                 onClick={() => avatarInputRef.current?.click()}
                 disabled={isAvatarUploading || isAvatarPreviewOpen}
                 aria-label="Upload profile photo"
-                className="relative h-14 w-14 overflow-hidden rounded-2xl border border-[#DFC58A]/25 bg-[#252525] transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] disabled:opacity-80"
+                className="relative h-14 w-14 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 disabled:opacity-80"
               >
                 {avatarUrl ? (
                   <Image
@@ -691,17 +724,17 @@ export default function RealtorWorkspacePage() {
                     sizes="56px"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-lg font-semibold text-[#DFC58A]">
+                  <div className="flex h-full w-full items-center justify-center text-lg font-semibold text-blue-700">
                     {getProfileInitials(profile)}
                   </div>
                 )}
 
                 {isAvatarUploading ? (
-                  <div className="absolute inset-0 flex items-center justify-center bg-[#1B1B1B]/70">
-                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-[#DFC58A] border-t-transparent motion-reduce:animate-none" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-white/70">
+                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-blue-700 border-t-transparent motion-reduce:animate-none" />
                   </div>
                 ) : (
-                  <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border border-[#DFC58A]/25 bg-[#2D2D2D] text-[#DFC58A]">
+                  <span className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700">
                     <Camera className="h-3.5 w-3.5" aria-hidden="true" />
                   </span>
                 )}
@@ -717,15 +750,14 @@ export default function RealtorWorkspacePage() {
             </div>
 
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-[#B8B8B8]">
+              <p className="text-sm font-medium text-zinc-500">
                 {getTimeGreeting()},
               </p>
-              <h1 className="mt-0.5 truncate text-[1.625rem] font-semibold tracking-tight text-[#F5F5F5] md:text-[1.875rem]">
+              <h1 className="mt-0.5 truncate text-[1.625rem] font-semibold tracking-tight text-zinc-900 md:text-[1.875rem]">
                 {greetingName}
               </h1>
-              <p className="mt-2 text-sm leading-relaxed text-[#B8B8B8]">
-                Manage your listings, track review status, and take the next
-                step.
+              <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+                Review what needs attention and manage your listings.
               </p>
               <div className="mt-2.5">
                 {profile?.is_verified ? (
@@ -741,7 +773,7 @@ export default function RealtorWorkspacePage() {
             <Link
               href="/realtor/profile"
               aria-label={profileActionLabel}
-              className={workspaceIconButtonClassName}
+              className={dashboardIconButtonClassName}
             >
               <Pencil className="h-5 w-5" aria-hidden="true" />
             </Link>
@@ -750,200 +782,36 @@ export default function RealtorWorkspacePage() {
           {avatarError && (
             <p
               role="alert"
-              className="mt-3 text-xs font-medium text-red-200/90"
+              className="mt-3 text-xs font-medium text-red-600"
             >
               {avatarError}
             </p>
           )}
-
-          <div className="mt-5 grid grid-cols-2 gap-3 md:max-w-md">
-            <div className={workspaceStatCardClassName}>
-              <p className="text-2xl font-semibold leading-none text-[#F5F5F5]">
-                {stats.active}
-              </p>
-              <p className="mt-1.5 text-xs font-semibold text-[#B8B8B8]">
-                Active listings
-              </p>
-            </div>
-            <div className={workspaceStatCardClassName}>
-              <p className="text-2xl font-semibold leading-none text-[#F5F5F5]">
-                {stats.pending}
-              </p>
-              <p className="mt-1.5 text-xs font-semibold text-[#B8B8B8]">
-                Pending listings
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-5 space-y-4 border-t border-white/8 pt-5">
-            {nextAction && (
-              <Link
-                href={nextAction.href}
-                className={`block rounded-2xl px-4 py-3.5 transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] ${
-                  nextAction.tone === "urgent"
-                    ? "border border-[#DFC58A]/20 bg-[#252525]"
-                    : "border border-white/8 bg-[#252525]"
-                }`}
-              >
-                <p className="text-[11px] font-bold uppercase tracking-wide text-[#B8B8B8]">
-                  Suggested next step
-                </p>
-                <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">
-                  {nextAction.title}
-                </p>
-                <p className="mt-0.5 text-xs leading-relaxed text-[#B8B8B8]">
-                  {nextAction.description}
-                </p>
-              </Link>
-            )}
-
-            <div>
-              <div className="mb-2.5 flex items-center justify-between text-xs font-semibold text-[#B8B8B8]">
-                <span>Profile completion</span>
-                <span className="text-[#F5F5F5]">{profileCompletion}%</span>
-              </div>
-              <div className="h-2.5 overflow-hidden rounded-full bg-[#252525]">
-                <div
-                  className="h-full rounded-full bg-[#DFC58A] transition-all duration-300 motion-reduce:transition-none"
-                  style={{ width: `${profileCompletion}%` }}
-                />
-              </div>
-              {canCreateListing ? (
-                <p className="mt-2.5 text-xs leading-relaxed text-[#B8B8B8]">
-                  Your profile is complete
-                </p>
-              ) : (
-                <Link
-                  href="/realtor/profile"
-                  className={`mt-2.5 block ${workspaceSecondaryLinkClassName}`}
-                >
-                  Complete your profile to publish listings
-                </Link>
-              )}
-            </div>
-          </div>
         </header>
 
-        {canCreateListing ? (
-          <Link href="/realtor/properties/create" className={workspacePrimaryCtaClassName}>
-            <Plus className="h-5 w-5" aria-hidden="true" />
-            Add Property
-          </Link>
-        ) : (
-          <Link href="/realtor/profile" className={workspacePrimaryCtaClassName}>
-            <Plus className="h-5 w-5" aria-hidden="true" />
-            Complete profile to add property
-          </Link>
-        )}
+        <DashboardQuickActions
+          canCreateListing={canCreateListing}
+          pendingViewingRequestTotal={pendingViewingRequestTotal}
+        />
 
-        <Link
-          href="/realtor/viewing-requests"
-          className={`flex items-center justify-between ${workspaceCardClassName} transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]`}
-        >
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#DFC58A]">
-              Inbox
-            </p>
-            <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">
-              Viewing requests
-            </p>
-            <p className="mt-0.5 text-xs text-[#B8B8B8]">
-              Review renter viewing requests for your listings
-            </p>
-          </div>
-          <ChevronRight className="h-5 w-5 text-[#B8B8B8]" aria-hidden="true" />
-        </Link>
+        <div className="grid gap-5 lg:grid-cols-2">
+          <DashboardRequiresAttention
+            items={attentionItems}
+            className="order-3 lg:order-2 lg:col-start-1"
+          />
+          <DashboardMetrics
+            metrics={dashboardMetrics}
+            className="order-4 lg:order-1 lg:col-span-2"
+          />
+          <DashboardRecentPendingRequests
+            items={pendingViewingRequests}
+            className="order-5 lg:order-2 lg:col-start-2"
+          />
+        </div>
+      </div>
 
-        {continueEditingProperty && (
-          <Link
-            href={`/realtor/properties/${continueEditingProperty.id}/edit`}
-            className={`flex items-center justify-between ${workspaceCardClassName} transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]`}
-          >
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#DFC58A]">
-                Continue editing
-              </p>
-              <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">
-                {continueEditingProperty.title}
-              </p>
-              <p className="mt-0.5 text-xs text-[#B8B8B8]">
-                {getPropertyStatusLabel(continueEditingProperty.status)}
-              </p>
-            </div>
-            <ChevronRight className="h-5 w-5 text-[#B8B8B8]" aria-hidden="true" />
-          </Link>
-        )}
-
-        {actionItems.length > 0 && (
-          <section
-            aria-labelledby="realtor-action-center-heading"
-            className={workspaceCardClassName}
-          >
-            <div className="mb-3 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-[#DFC58A]" aria-hidden="true" />
-              <h2
-                id="realtor-action-center-heading"
-                className="text-sm font-semibold text-[#F5F5F5]"
-              >
-                Action center
-              </h2>
-            </div>
-            <div className="space-y-2">
-              {actionItems.map((action) => (
-                <Link
-                  key={action.id}
-                  href={action.href}
-                  className={`flex items-center justify-between rounded-2xl px-3 py-3 transition-transform active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D] ${
-                    action.tone === "urgent"
-                      ? "border border-[#DFC58A]/20 bg-[#252525]"
-                      : "border border-white/8 bg-[#252525]"
-                  }`}
-                >
-                  <div>
-                    <p className="text-sm font-semibold text-[#F5F5F5]">
-                      {action.title}
-                    </p>
-                    <p className="mt-0.5 text-xs text-[#B8B8B8]">
-                      {action.description}
-                    </p>
-                  </div>
-                  <ChevronRight
-                    className="h-4 w-4 shrink-0 text-[#B8B8B8]"
-                    aria-hidden="true"
-                  />
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
-
-        <section
-          aria-label="Listing totals"
-          className="grid grid-cols-2 gap-2 sm:grid-cols-4"
-        >
-          {[
-            { label: "Active", value: stats.active },
-            { label: "Pending", value: stats.pending },
-            { label: "Rented", value: stats.rented },
-            { label: "Archived", value: stats.archived },
-          ].map((stat) => (
-            <div key={stat.label} className={`${workspaceStatCardClassName} text-center`}>
-              <p className="text-base font-semibold text-[#F5F5F5]">
-                {stat.value}
-              </p>
-              <p className="text-[10px] font-semibold text-[#B8B8B8]">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </section>
-
-        {error && (
-          <p role="alert" className={workspaceErrorClassName}>
-            {error}
-          </p>
-        )}
-
+      <section className={listingsShellClassName}>
+        <div className={listingsContainerClassName}>
         {lifecycleError && (
           <p role="alert" className={workspaceErrorClassName}>
             {lifecycleError}
@@ -1040,7 +908,8 @@ export default function RealtorWorkspacePage() {
             </div>
           )}
         </section>
-      </div>
+        </div>
+      </section>
 
       <PropertyBottomSheet
         property={selectedProperty}
@@ -1174,6 +1043,6 @@ export default function RealtorWorkspacePage() {
           </div>
         </div>
       )}
-    </main>
+    </>
   )
 }
