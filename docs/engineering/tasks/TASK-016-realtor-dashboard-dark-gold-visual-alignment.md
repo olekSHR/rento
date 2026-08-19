@@ -4,24 +4,30 @@
 |-------|-------|
 | ID | TASK-016 |
 | TITLE | Realtor Dashboard Dark/Gold Visual Alignment |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | MEDIUM |
 | CLASSIFICATION | Frontend presentation-only alignment / realtor operational Dashboard |
 
-> STATUS: VERIFYING means implementation and local verification are complete and under review. **COMMIT NOT AUTHORIZED.** Nothing has been staged, committed, pushed, deployed, or accepted.
+> STATUS: CLOSED means definition, implementation, local verification, commit review, commit, push, deployment preflight, rollback preservation, frontend-only deployment, and authenticated production acceptance are complete and recorded, and closure documentation is complete. Production acceptance result is **PASS** with documented observability limitations (see Accepted Observability Limitations). Archive is **NOT YET** performed.
 
-**Lifecycle at 2026-08-20 (implementation gate):**
+**Final lifecycle (VERIFIED 2026-08-20):**
 
 | Stage | State |
 |-------|-------|
 | Discovery | COMPLETE — `NEXT_VISUAL_INCREMENT_DISCOVERY_COMPLETE` |
 | Definition | COMPLETE — `TASK_016_DEFINITION_COMPLETE` |
-| Implementation | COMPLETE (this gate) |
-| Local Verification | COMPLETE (this gate) |
-| Commit | NOT AUTHORIZED |
-| Push | NOT AUTHORIZED |
-| Deploy | NOT AUTHORIZED |
-| Production Acceptance | NOT AUTHORIZED |
+| Implementation | COMPLETE |
+| Local Verification | PASS |
+| Commit Review | PASS |
+| Commit | COMPLETE — `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` |
+| Push Review | PASS |
+| Push | COMPLETE — `origin/main` at `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` |
+| Deployment Preflight | PASS |
+| Rollback Preservation | PASS — `rento-frontend:rollback-264e478` |
+| Deployment | PASS — FRONTEND_ONLY |
+| Production Acceptance | PASS |
+| Closure | COMPLETE |
+| Archive | NOT YET |
 
 **Initiative reference:** Next visual increment discovery (2026-08-20) selected OPTION B — Dashboard vertical slice. Prior closed increment: TASK-015 — Realtor Workspace Shell Dark/Gold Visual Alignment (CLOSED / ARCHIVED / COMPLETE).
 
@@ -37,7 +43,9 @@
 | Prior task | TASK-015 — CLOSED / ARCHIVED / COMPLETE |
 | TASK-016 identifier | free (historical “NOT CREATED” / “OUT OF SCOPE” mentions inside archived TASK-015 are not a collision) |
 
-**Runtime note:** Production frontend runtime remains on the TASK-015 implementation SHA `264e478eae30cc18ca8d22701e77ae00876f6df8`. Repository HEAD additionally contains TASK-015 closure/archive documentation commits. This is expected and must not be treated as deployment drift. Production was not accessed during this definition gate.
+**Runtime note (historical at definition):** Production frontend runtime was on the TASK-015 implementation SHA `264e478eae30cc18ca8d22701e77ae00876f6df8`. Repository HEAD additionally contained TASK-015 closure/archive documentation commits. This was expected and was not treated as deployment drift.
+
+**Production state at closure (VERIFIED 2026-08-20):** Production Git HEAD and deployed frontend runtime are at TASK-016 implementation SHA `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff`. Application identity is classified **INFERRED** — Docker image does not contain immutable Git SHA metadata (see Production Deployment Evidence).
 
 ---
 
@@ -761,13 +769,218 @@ The five changed files were scanned for `password`, `secret`, `token`, `cookie`,
 
 **NONE.** No blocking defect from the defect policy was observed, and no corrective iteration was required.
 
-## Commit
+## Commit and Push Evidence
 
-Not started. **COMMIT NOT AUTHORIZED.** Nothing staged, committed, or pushed.
+| Field | Value |
+|-------|-------|
+| Commit | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` |
+| Message | `feat(realtor): align dashboard with dark gold workspace` |
+| Parent | `5814d7e644f3522031c9faeb1d5e096a4997b889` |
+| Scope | 6 files — 5 runtime, 1 task document |
+| Whitespace | `git diff HEAD^ HEAD --check` PASS |
+| Push | `5814d7e..e19e78f  main -> main`, fast-forward, no force, no tags |
+| Post-push | HEAD == `origin/main` == `e19e78f…`, divergence `0 0`, worktree clean |
 
-## Production Result
+Committed runtime scope: exactly the five authorized Dashboard files. No amend and no additional implementation commit were created.
 
-Not started. NOT APPLICABLE at this gate. Production was not accessed. `CODE WRITTEN != DONE`; `COMMITTED != DEPLOYED`; `DEPLOYED != ACCEPTED`.
+---
+
+## Production Deployment Evidence
+
+**Deployment class:** FRONTEND_ONLY. Deployed 2026-08-19 (UTC) from the exact implementation SHA.
+
+| Component | Result |
+|-----------|--------|
+| backend deployed | NO |
+| database mutated | NO |
+| migration executed | NONE |
+| nginx changed | NO |
+| dependencies changed | NO |
+| auth/session changed | NO |
+| API contract changed | NO |
+
+| Field | Value |
+|-------|-------|
+| Implementation SHA | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` |
+| Production Git HEAD | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` (detached), worktree clean |
+| Previous application SHA | `264e478eae30cc18ca8d22701e77ae00876f6df8` (TASK-015) |
+| CURRENT_APP_SHA | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` — **INFERRED** |
+| Frontend container before | `11a0cc841b7ab301f2ac82e4a528ffaad81d432eea907cfa96de16cba6a6439e` |
+| Frontend image before | `sha256:ce3ea0171c3463f56a60fa4af23aa650e1df90ca06fd70335d45f24440d9cded` |
+| Frontend container after | `07d352c7654f65549f38e21be4b87ce0bb38ec9245356b4e07c3fab3580b29fb` |
+| Frontend image after | `sha256:c5d99851579c43f5ecf4834d5c9a64e287d6d87115f631f0a47f4fd6e99692a7` |
+| StartedAt | `2026-08-19T22:23:27.365917705Z` |
+| RestartCount | `0` |
+| Health | healthy |
+| Backend | UNCHANGED — `1f63695435605ae683b694c6f73fed58c3d72ba298ac97fb5a75e905532b02da`, `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd`, StartedAt `2026-08-17T09:54:28.171472284Z` |
+| DB | UNCHANGED — `c682d3268990049d941f2f5ccb4b7909d43f2e9057701217442148807e2a3b77`, StartedAt `2026-07-29T11:33:03.086550421Z` |
+| Nginx | UNCHANGED — `cf97dbc1786d05955ba75c4e9597e428f8871ebf06e52b58ea7f5642c9a6ae68`, StartedAt `2026-08-09T21:48:15.711102691Z` |
+
+**Application identity classification — INFERRED, not VERIFIED:** Docker image labels contain only Compose metadata (`com.docker.compose.project`, `com.docker.compose.service`, `com.docker.compose.version`); no immutable Git SHA label exists. Supporting evidence for INFERRED identity:
+
+1. exact detached checkout of `e19e78f…` before build, worktree clean;
+2. `docker compose build frontend` succeeded against that checkout;
+3. running container uses newly built image `c5d99851…`;
+4. candidate blob identity matched production checkout (`HEAD:frontend/app/realtor/page.tsx` = `68f5beb…`, `HEAD:frontend/components/realtor/dashboard/DashboardQuickActions.tsx` = `cdc0d03…`).
+
+Deployment steps executed: rollback preservation via `scripts/ops/rento-preserve-rollback-images.sh 264e478…`, `git fetch origin main`, `git checkout --detach e19e78f…`, build of the `frontend` service only, recreate of the `frontend` service only with `--no-deps`. Health reached `healthy` within ~10 seconds. Unauthenticated HTTP smoke: `/` 200, `/realtor` 200, `/api/` 200. Frontend startup log contained only normal Next.js ready output; fatal/chunk/hydration/5xx scans returned zero matches.
+
+---
+
+## Rollback Evidence
+
+| Field | Value |
+|-------|-------|
+| Immediate rollback tag | `rento-frontend:rollback-264e478` |
+| Points to | `sha256:ce3ea0171c3463f56a60fa4af23aa650e1df90ca06fd70335d45f24440d9cded` |
+| Classification | exact pre-TASK-016 frontend runtime (the image that was actually running) |
+| Backend rollback tag | `rento-backend:rollback-264e478` → `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd` (unchanged backend; preserved by script) |
+| Verified | before build, after build, after recreate, and after production acceptance |
+| Historical rollback | `rento-frontend:rollback-0139d67` → `sha256:c6c3ccb70f5dee8ad1aae043dc4ad153afc020b4c2d9a85c93b71e6e8fa0fcda`; `rento-frontend:rollback-3e13437` → `sha256:2cf0e45de1da1294be3d4e5b7032b71ac717c032f4a89adaab65d6df83474cf0` — both intact |
+
+Tag `rollback-264e478` was created before build; no existing tag was overwritten. **Rollback was NOT executed.** Database rollback is NOT REQUIRED.
+
+Prepared recovery (NOT executed):
+
+```bash
+docker tag rento-frontend:rollback-264e478 rento-frontend:latest
+docker compose up -d --no-deps frontend
+git checkout --detach 264e478eae30cc18ca8d22701e77ae00876f6df8
+```
+
+---
+
+## Production Acceptance Evidence
+
+**Result:** `TASK_016_PRODUCTION_ACCEPTANCE_PASS` (2026-08-20).
+
+Authentication was performed manually by the operator in a browser session; credentials were not recorded in this document. Production acceptance used an existing production realtor account with 0 listings and 0 pending viewing requests.
+
+### Desktop `/realtor` (~1280 × 900) — VERIFIED
+
+| Area | Observed |
+|------|----------|
+| Dashboard wrapper | `rgb(27,27,27)` = `#1B1B1B`, text `rgb(245,245,245)` = `#F5F5F5`, `min-height: 100%` |
+| D1 shell | `main` remains `bg-zinc-50` / `lab(98.26 0 0)` — globally light and unchanged (TASK-015) |
+| D1 gutter | wrapper height = main height = **1423 px**; no exposed zinc-50 gutter |
+| Shell → Dashboard continuity | dark wrapper covers inherited light `main` completely |
+| Dashboard → My Listings continuity | listings section `rgb(27,27,27)`; continuous dark transition |
+| Welcome header | `rgb(45,45,45)` = `#2D2D2D`, border `white/0.08`, no shadow |
+| Primary CTA | `Add Property` — bg `#DFC58A`, text `#1B1B1B`, h=48; no blue |
+| Secondary CTA | `Manage Listings` — bg `#252525`, text `#F5F5F5`, h=48 |
+| Metric cards ×4 | all `rgb(37,37,37)` = `#252525`, neutral (no semantic color inference) |
+| Requires Attention | section `#2D2D2D`; empty state `#252525 ring-white/10` |
+| Recent Pending | section `#2D2D2D`; empty state dark; `View all` `#DFC58A`, not blue |
+| White operational cards | none inside Dashboard scope (only intentional gold CTAs) |
+| Horizontal overflow | `scrollWidth = clientWidth = 1265` |
+
+### Mobile `/realtor` (~390 × 844) — VERIFIED
+
+| Area | Observed |
+|------|----------|
+| Full Dashboard dark | wrapper `#1B1B1B` |
+| D1 gutter | wrapper height = main height = **1720 px** |
+| Horizontal overflow | `innerWidth = scrollWidth = clientWidth = 390` |
+| Primary CTA | 358 × 48 px, gold with dark text |
+| Secondary CTA | 358 × 48 px, usable |
+| Metrics | 2-column layout preserved; long labels wrap without clipping |
+| Touch targets | pencil 44 × 44; CTAs h=48 |
+| Section ordering | preserved; continuous dark into My Listings |
+
+### Functional preservation (read-only) — VERIFIED
+
+| Contract | Result |
+|----------|--------|
+| Unauthenticated `/realtor` | redirect to `/login?returnUrl=%2Frealtor` |
+| Add Property destination | `/realtor/properties/create` (route reached; nothing submitted) |
+| Manage Listings hash | `#realtor-properties-heading`, scroll to heading |
+| Profile pencil | `/realtor/profile` (no save) |
+| `View all` | `/realtor/viewing-requests` |
+| My Listings search | type and clear worked; no mutation |
+| SPA navigation | functional across tested routes |
+
+**NO business-data mutations were performed during production acceptance.**
+
+### Viewing Requests regression — VERIFIED
+
+`/realtor/viewing-requests` remains intentionally light: `main` = `bg-zinc-50 text-zinc-900`, white `SectionCard` (`border-zinc-200 bg-white`), white filter chips, zero dark surfaces detected. Conclusion: **shared UI implementations were not globally recolored.** Deployed artifact retains `bg-blue-700` in 29 build files and `bg-zinc-50` in 7 files alongside TASK-016-specific classes (`bg-[#2A2718]`, `bg-[#DFC58A]`, etc.).
+
+### Accessibility — VERIFIED (with limitation)
+
+| Check | Result |
+|-------|--------|
+| Gold-filled controls | dark text `#1B1B1B` only — no white/light text on gold |
+| Focus styling | gold ring `#DFC58A` with dark offset (`#1B1B1B` or `#2D2D2D` matching surface) — verified via production `:focus-visible` computed-style inspection |
+| Pencil size | 44 × 44 px |
+| CTA height | 48 px |
+| Muted text | readable on dark surfaces |
+| Keyboard Tab order | **NOT DIRECTLY OBSERVED** — browser-tool limitation; focus styling verified separately |
+
+### Console / network / health — VERIFIED
+
+| Check | Result |
+|-------|--------|
+| Uncaught JS errors | 0 |
+| Unhandled rejections | 0 |
+| `console.error` | 0 |
+| `console.warn` | 0 |
+| Hydration errors | 0 observed |
+| Failed chunks attributable to TASK-016 | 0 |
+| Relevant 5xx | 0 (client, frontend log, backend log, nginx log) |
+| HTTP `/` | 200 |
+| HTTP `/realtor` | 200 |
+| HTTP `/api/` | 200 |
+| Frontend RestartCount | 0, healthy before and after acceptance |
+| Backend / DB / nginx | unchanged and healthy |
+
+### Loading / error observability
+
+```text
+LOADING: PRODUCTION VERIFIED
+```
+
+Directly observed during SPA transition `/realtor/profile → /realtor`: wrapper remained `#1B1B1B`, 26 pulse elements with restrained `white/10` backgrounds; no white flash; no exposed D1 gutter.
+
+```text
+ERROR: NOT DIRECTLY OBSERVED IN PRODUCTION
+LOCAL VERIFIED
+STATIC CONTRACT VERIFIED
+```
+
+No production failure was intentionally induced.
+
+### Session-local visual evidence
+
+Browser screenshots were captured during acceptance for operator review. They are **session-local temporary artifacts** only and were **not** copied into the repository. Closure evidence relies on measured computed styles, runtime identity, HTTP results, console/network results, Docker health, and the acceptance observations above.
+
+---
+
+## Accepted Observability Limitations
+
+These are **not closure blockers**: the principal TASK-016 dark/gold Dashboard contract was directly verified in production; affected conditional branches were locally verified; deployed artifact/static evidence supports their implementation; no contradictory production evidence exists.
+
+1. **Verified gold badge branch — NOT DIRECTLY OBSERVED.** Production account rendered `VERIFICATION SOON` (muted dark styling). Forcing verification state was prohibited.
+2. **Urgent amber attention row — NOT DIRECTLY OBSERVED.** Current data produced empty state only. Creating urgent items was prohibited.
+3. **Non-empty Requires Attention rows — NOT DIRECTLY OBSERVED.** Same data limitation.
+4. **Recent pending rows — NOT DIRECTLY OBSERVED.** Pending count was 0.
+5. **Review Viewing Requests conditional CTA — NOT RENDERED.** Pending total = 0.
+6. **Complete Profile CTA branch — NOT DIRECTLY OBSERVED.** `Add Property` branch rendered (`profile.is_completed` sufficient for create route on this account).
+7. **Property cards in My Listings — NOT DIRECTLY OBSERVED.** Account had 0 listings; empty state rendered.
+8. **Keyboard Tab order — NOT DIRECTLY OBSERVED.** Browser-tool limitation; focus styling verified via computed-style / `:focus-visible` inspection.
+9. **Error state — NOT DIRECTLY OBSERVED IN PRODUCTION.** No natural error occurred; inducing failure was prohibited. Local and static contract verified.
+10. **Archived tab switch — NOT PERFORMED.** Search type/clear verified; tab switch omitted to minimize interaction scope.
+
+---
+
+## Intermediate Product State (confirmed in production)
+
+After TASK-016, the following surfaces intentionally remain light and are **EXPECTED INTERMEDIATE STATE**, not TASK-016 defects:
+
+- Viewing Requests inbox and detail outer wrapper
+- inherited D1 `bg-zinc-50` content surface in `RealtorWorkspaceShell` (required until remaining light routes migrate)
+- shared `components/ui/*` primitive implementations used by light routes
+
+TASK-016 eliminated the operational Dashboard light/blue sandwich inside `/realtor`. Remaining light surfaces are OUT OF SCOPE for this task.
 
 ---
 
@@ -778,54 +991,119 @@ Not started. NOT APPLICABLE at this gate. Production was not accessed. `CODE WRI
 - Later D1 removal from `RealtorWorkspaceShell` **only after** remaining light inner routes are migrated
 - `BottomNav` dark theme on renter viewing-request routes
 - `app/admin/properties/[id]/page.tsx` dark/gold alignment
+- Add immutable Git SHA labels to frontend Docker images to enable VERIFIED application identity at deploy/acceptance gates
 
 ---
 
 ## Acceptance Criteria Result
 
-All 40 criteria pass against local verification evidence. Criteria 1–34 were confirmed by browser measurement and diff review; 35–38 by the static checks above; 39–40 by the full diff (no backend, API, DB, auth, dependency, or business-logic change).
-
-Production acceptance is **not** claimed. `DEPLOYED != ACCEPTED`.
+All 40 criteria pass. Criteria 1–34 were confirmed by local verification and production acceptance where observable; 35–38 by static checks; 39–40 by diff review. Production acceptance PASS recorded 2026-08-20. Conditional branches not naturally rendered in production are covered by local verification and deployed-artifact evidence (see Accepted Observability Limitations).
 
 ---
 
 ## Definition of Done (TASK-016)
 
-Not claimed. CODE WRITTEN ≠ DONE. Implementation and local verification are complete; commit, push, deploy, and production acceptance remain separate unauthorized gates.
+| Criterion | Result |
+|-----------|--------|
+| Bounded product problem solved — operational Dashboard dark/gold on `/realtor` | PASS |
+| Implementation scope respected — exactly five runtime files | PASS |
+| No backend, API, DB, migration, or dependency impact | PASS |
+| Local lint / typecheck / build | PASS |
+| Local desktop and mobile verification | PASS |
+| Commit reviewed and pushed | PASS |
+| Rollback preserved before build | PASS |
+| Frontend-only deployment | PASS |
+| Production acceptance | PASS |
+| Functional navigation contracts preserved | PASS |
+| Accessibility contract preserved (with documented Tab-order limitation) | PASS |
+| No business data mutation | PASS |
+| Rollback available | PASS |
+| Observability limitations truthfully classified | PASS |
+| Remaining visual debt explicitly OUT OF SCOPE | PASS |
+
+Verdict: **PASS**.
 
 ---
 
-## Mutation Statement (implementation gate, 2026-08-20)
+## Mutation Statement (implementation gate — historical record)
+
+State at the end of the implementation gate. Commit, push, deployment, and production acceptance happened later under their own authorizations.
 
 | Action | State |
 |--------|-------|
 | Runtime code changed | YES — exactly the five authorized files |
-| Task document changed | YES — this file |
-| Shared UI primitive implementations changed | NO — imports dropped from Dashboard only |
+| Task document changed | YES |
+| Shared UI primitive implementations changed | NO |
 | Shell / D1 changed | NO |
 | My Listings internals changed | NO — page-level background wrapper only |
-| Avatar crop modal changed | NO |
 | Viewing Requests changed | NO |
-| `globals.css` / Tailwind config / design tokens | NO |
-| Backend / API / DB / schema / migration | NO |
-| Auth / session / security | NO |
-| Dependencies changed | NO |
-| Business data created or mutated | NO |
-| Commit created | NO |
-| Staged | NO |
-| Push performed | NO |
-| Deployment performed | NO |
-| Production accessed | NO |
+| Backend / DB / schema / migration | NO |
+| Commit created | NO (at implementation gate) |
+| Push performed | NO (at implementation gate) |
+| Production accessed | NO (at implementation gate) |
+| Deployment performed | NO (at implementation gate) |
 | TASK-017 created | NO |
 
 ---
 
-## Next Gate
+## Mutation Statement (closure gate, 2026-08-20)
+
+| Action | State |
+|--------|-------|
+| Runtime code modified | NO |
+| Task document modified | YES — exactly this file |
+| Closure commit created | YES — exactly one documentation commit |
+| Push performed | NO |
+| Production accessed | NO |
+| Production mutated | NO |
+| Deployment performed | NO |
+| Rollback performed | NO |
+| TASK-016 archived | NO |
+| TASK-017 created | NO |
+| Temporary screenshots added to repository | NO |
+
+---
+
+## Closure
+
+| Field | Value |
+|-------|-------|
+| Production acceptance result | `TASK_016_PRODUCTION_ACCEPTANCE_PASS` |
+| Waiver used | NO |
+| Implementation commit | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` |
+| Production Git HEAD | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` |
+| CURRENT_APP_SHA | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` — INFERRED |
+| Production frontend image | `sha256:c5d99851579c43f5ecf4834d5c9a64e287d6d87115f631f0a47f4fd6e99692a7` |
+| Production frontend container | `07d352c7654f65549f38e21be4b87ce0bb38ec9245356b4e07c3fab3580b29fb` |
+| Immediate rollback | `rento-frontend:rollback-264e478` → `sha256:ce3ea0171c3463f56a60fa4af23aa650e1df90ca06fd70335d45f24440d9cded` |
+| Archive | NOT YET |
+| TASK-017 | NOT CREATED |
+
+**Closure rationale:** implementation complete; local verification passed; commit and push complete; rollback preserved; frontend-only production deployment passed; production acceptance passed; no blocking defects; no business-data mutation; accepted limitations documented.
+
+**Final gate state:**
 
 ```text
-TASK_016_IMPLEMENTATION_VERIFIED
-Next:
-READY_FOR_TASK_016_COMMIT_REVIEW
+DISCOVERY               COMPLETE
+DEFINITION              COMPLETE
+IMPLEMENTATION          COMPLETE
+LOCAL VERIFICATION      PASS
+COMMIT REVIEW           PASS
+COMMIT                  COMPLETE
+PUSH REVIEW             PASS
+PUSH                    COMPLETE
+DEPLOYMENT PREFLIGHT    PASS
+ROLLBACK PRESERVATION   PASS
+DEPLOYMENT              PASS
+PRODUCTION ACCEPTANCE   PASS
+CLOSURE                 COMPLETE
+ARCHIVE                 NOT YET
 ```
 
-Do not commit until a separate commit authorization is recorded.
+```text
+TASK_016_CLOSED
+Next:
+READY_FOR_TASK_016_CLOSURE_PUSH_AUTHORIZATION
+```
+
+Archive remains a separate gate. Any further dark/gold work on Viewing Requests or shared primitives requires its own discovery, definition, and authorization.
