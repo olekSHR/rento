@@ -11,6 +11,16 @@ type ViewingRequestStatusTabsProps = {
   disabled?: boolean
 }
 
+// The tabs sit directly on the route background, so the focus ring offset uses
+// the page surface rather than an elevated card surface.
+const tabBaseClassName =
+  "inline-flex min-h-11 shrink-0 items-center rounded-full border px-4 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B] disabled:opacity-60"
+
+const tabActiveClassName = "border-[#DFC58A] bg-[#DFC58A] text-[#1B1B1B]"
+
+const tabInactiveClassName =
+  "border-white/10 bg-[#252525] text-[#B8B8B8] hover:bg-white/5 hover:text-[#F5F5F5]"
+
 export default function ViewingRequestStatusTabs({
   activeFilter,
   onFilterChange,
@@ -33,10 +43,8 @@ export default function ViewingRequestStatusTabs({
             aria-selected={isActive}
             disabled={disabled}
             onClick={() => onFilterChange(filter.id)}
-            className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 disabled:opacity-60 ${
-              isActive
-                ? "bg-blue-700 text-white"
-                : "border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50"
+            className={`${tabBaseClassName} ${
+              isActive ? tabActiveClassName : tabInactiveClassName
             }`}
           >
             {filter.label}

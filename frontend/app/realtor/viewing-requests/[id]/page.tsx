@@ -6,7 +6,6 @@ import { useEffect, useState } from "react"
 
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
 import ViewingRequestRelationshipDetail from "@/components/ViewingRequestRelationshipDetail"
-import SectionCard from "@/components/ui/SectionCard"
 import {
   acceptViewingRequest,
   declineViewingRequest,
@@ -14,8 +13,21 @@ import {
 } from "@/services/api"
 import type { ViewingRequestRealtor } from "@/types/viewingRequest"
 
+// The workspace shell content surface is still light (TASK-015 deviation D1),
+// so this route owns its own dark surface. The relationship detail supplies its
+// own horizontal padding, therefore the shell wrapper only owns the background.
+const pageShellClassName = "min-h-full bg-[#1B1B1B] pb-6 text-[#F5F5F5] md:pb-8"
+
+const routeContainerClassName =
+  "mx-auto max-w-[1280px] px-5 py-6 md:px-8 md:py-8"
+
+const cardClassName = "rounded-[24px] border border-white/8 bg-[#2D2D2D] p-5"
+
 const errorClassName =
-  "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium leading-relaxed text-red-700"
+  "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
+
+const backActionClassName =
+  "mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B] transition-transform active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
 
 function parseRequestId(rawId: string | string[] | undefined): number | null {
   if (typeof rawId !== "string" || !/^\d+$/.test(rawId)) {
@@ -27,21 +39,18 @@ function parseRequestId(rawId: string | string[] | undefined): number | null {
 
 function ViewingRequestUnavailable({ message }: { message: string }) {
   return (
-    <div className="mx-auto max-w-[1280px]">
-      <SectionCard>
-        <h1 className="text-xl font-semibold tracking-tight text-zinc-900">
+    <div className={routeContainerClassName}>
+      <section className={cardClassName}>
+        <h1 className="text-xl font-semibold tracking-tight text-[#F5F5F5]">
           Viewing request unavailable
         </h1>
         <p role="alert" className={`mt-4 ${errorClassName}`}>
           {message}
         </p>
-        <Link
-          href="/realtor/viewing-requests"
-          className="mt-6 inline-flex min-h-11 items-center justify-center rounded-2xl bg-blue-700 px-5 text-sm font-semibold text-white transition active:scale-[0.98]"
-        >
+        <Link href="/realtor/viewing-requests" className={backActionClassName}>
           Back to viewing requests
         </Link>
-      </SectionCard>
+      </section>
     </div>
   )
 }
@@ -117,15 +126,11 @@ function RealtorViewingRequestDetailContent({ requestId }: { requestId: number }
 
   if (isLoading) {
     return (
-      <div
-        role="status"
-        aria-live="polite"
-        className="mx-auto max-w-[1280px]"
-      >
+      <div role="status" aria-live="polite" className={routeContainerClassName}>
         <span className="sr-only">Loading viewing request</span>
         <div
           aria-hidden="true"
-          className="h-56 animate-pulse rounded-2xl bg-zinc-100 motion-reduce:animate-none"
+          className="h-56 animate-pulse rounded-[24px] border border-white/8 bg-white/5 motion-reduce:animate-none"
         />
       </div>
     )
@@ -194,7 +199,7 @@ function RealtorViewingRequestDetailPageContent() {
 
 export default function RealtorViewingRequestDetailPage() {
   return (
-    <div className="pb-6 md:pb-8">
+    <div className={pageShellClassName}>
       <RealtorViewingRequestDetailPageContent />
     </div>
   )

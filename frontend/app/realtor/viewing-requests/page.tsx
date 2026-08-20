@@ -5,8 +5,6 @@ import { useEffect, useRef, useState } from "react"
 import ConfirmDialog from "@/components/realtor/ConfirmDialog"
 import ViewingRequestListCard from "@/components/realtor/viewing-requests/ViewingRequestListCard"
 import ViewingRequestStatusTabs from "@/components/realtor/viewing-requests/ViewingRequestStatusTabs"
-import EmptyState from "@/components/ui/EmptyState"
-import SectionCard from "@/components/ui/SectionCard"
 import {
   DEFAULT_VIEWING_REQUEST_INBOX_FILTER,
   getViewingRequestInboxApiStatus,
@@ -21,22 +19,41 @@ import {
 } from "@/services/api"
 import type { ViewingRequestRealtor } from "@/types/viewingRequest"
 
+// The workspace shell content surface is still light (TASK-015 deviation D1)
+// because it is shared with any remaining light route, so this route owns its
+// own dark surface.
+const pageShellClassName = "min-h-full bg-[#1B1B1B] text-[#F5F5F5]"
+
+const pageContainerClassName =
+  "mx-auto max-w-[1280px] space-y-5 px-4 py-6 md:px-8 md:py-8"
+
 const errorClassName =
-  "rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium leading-relaxed text-red-700"
+  "rounded-xl border border-red-400/15 bg-[#2A2222] px-4 py-3 text-sm font-medium leading-relaxed text-red-100/90"
+
+const emptyStateShellClassName =
+  "rounded-3xl border border-white/8 bg-[#2D2D2D] p-5"
+
+const emptyStateClassName =
+  "rounded-2xl border border-white/10 bg-[#252525] p-4 text-center"
+
+const cardSkeletonClassName =
+  "h-52 animate-pulse rounded-2xl border border-white/8 bg-white/5 motion-reduce:animate-none"
 
 function ViewingRequestsSkeleton() {
   return (
-    <div className="mx-auto max-w-[1280px] space-y-5">
-      <div className="h-10 w-56 animate-pulse rounded-xl bg-zinc-200 motion-reduce:animate-none" />
-      <div className="h-11 w-full max-w-xl animate-pulse rounded-full bg-zinc-200 motion-reduce:animate-none" />
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {[0, 1].map((item) => (
-          <div
-            key={item}
-            aria-hidden="true"
-            className="h-52 animate-pulse rounded-2xl bg-zinc-100 motion-reduce:animate-none"
-          />
-        ))}
+    <div className={pageShellClassName}>
+      <div className={pageContainerClassName}>
+        <div className="h-10 w-56 animate-pulse rounded-xl bg-white/10 motion-reduce:animate-none" />
+        <div className="h-11 w-full max-w-xl animate-pulse rounded-full bg-white/10 motion-reduce:animate-none" />
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {[0, 1].map((item) => (
+            <div
+              key={item}
+              aria-hidden="true"
+              className={cardSkeletonClassName}
+            />
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -188,98 +205,104 @@ function RealtorViewingRequestsContent() {
   }
 
   return (
-    <div className="mx-auto max-w-[1280px] space-y-5">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-          Viewing requests
-        </h1>
-        <p className="mt-1 text-sm text-zinc-500">
-          Review and respond to renter viewing requests for your listings.
-        </p>
-      </header>
+    <div className={pageShellClassName}>
+      <div className={pageContainerClassName}>
+        <header>
+          <h1 className="text-2xl font-semibold tracking-tight text-[#F5F5F5]">
+            Viewing requests
+          </h1>
+          <p className="mt-1 text-sm text-[#B8B8B8]">
+            Review and respond to renter viewing requests for your listings.
+          </p>
+        </header>
 
-      <ViewingRequestStatusTabs
-        activeFilter={activeFilter}
-        onFilterChange={handleFilterChange}
-        disabled={isWorking}
-      />
+        <ViewingRequestStatusTabs
+          activeFilter={activeFilter}
+          onFilterChange={handleFilterChange}
+          disabled={isWorking}
+        />
 
-      {error ? (
-        <p role="alert" className={errorClassName}>
-          {error}
-        </p>
-      ) : null}
+        {error ? (
+          <p role="alert" className={errorClassName}>
+            {error}
+          </p>
+        ) : null}
 
-      {!error && !isLoading && total > 0 ? (
-        <p className="text-sm font-medium text-zinc-600">
-          {getViewingRequestInboxResultLabel(activeFilter, total)}
-        </p>
-      ) : null}
+        {!error && !isLoading && total > 0 ? (
+          <p className="text-sm font-medium text-[#B8B8B8]">
+            {getViewingRequestInboxResultLabel(activeFilter, total)}
+          </p>
+        ) : null}
 
-      {isLoading ? (
-        <div
-          role="status"
-          aria-live="polite"
-          className="grid grid-cols-1 gap-4 lg:grid-cols-2"
-        >
-          <span className="sr-only">Loading viewing requests</span>
-          {[0, 1].map((item) => (
-            <div
-              key={item}
-              aria-hidden="true"
-              className="h-52 animate-pulse rounded-2xl bg-zinc-100 motion-reduce:animate-none"
-            />
-          ))}
-        </div>
-      ) : error ? null : items.length === 0 ? (
-        <SectionCard>
-          <EmptyState title={getViewingRequestInboxEmptyTitle(activeFilter)} />
-        </SectionCard>
-      ) : (
-        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          {items.map((item) => (
-            <li key={item.id}>
-              <ViewingRequestListCard
-                item={item}
-                onAccept={(request) =>
-                  setPendingAction({ request, action: "accept" })
-                }
-                onDecline={(request) =>
-                  setPendingAction({ request, action: "decline" })
-                }
-                actionsDisabled={isWorking}
+        {isLoading ? (
+          <div
+            role="status"
+            aria-live="polite"
+            className="grid grid-cols-1 gap-4 lg:grid-cols-2"
+          >
+            <span className="sr-only">Loading viewing requests</span>
+            {[0, 1].map((item) => (
+              <div
+                key={item}
+                aria-hidden="true"
+                className={cardSkeletonClassName}
               />
-            </li>
-          ))}
-        </ul>
-      )}
+            ))}
+          </div>
+        ) : error ? null : items.length === 0 ? (
+          <section className={emptyStateShellClassName}>
+            <div className={emptyStateClassName}>
+              <h3 className="text-sm font-bold text-[#F5F5F5]">
+                {getViewingRequestInboxEmptyTitle(activeFilter)}
+              </h3>
+            </div>
+          </section>
+        ) : (
+          <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {items.map((item) => (
+              <li key={item.id}>
+                <ViewingRequestListCard
+                  item={item}
+                  onAccept={(request) =>
+                    setPendingAction({ request, action: "accept" })
+                  }
+                  onDecline={(request) =>
+                    setPendingAction({ request, action: "decline" })
+                  }
+                  actionsDisabled={isWorking}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
 
-      <ConfirmDialog
-        isOpen={pendingAction !== null}
-        isPending={isWorking}
-        titleId="viewing-request-action-title"
-        title={
-          pendingAction?.action === "accept"
-            ? "Accept viewing request?"
-            : "Decline viewing request?"
-        }
-        description={
-          pendingAction?.action === "accept"
-            ? "The renter will see that you accepted the request. Continue coordination through your existing contact methods."
-            : "The renter will see that this viewing request was declined."
-        }
-        confirmLabel={
-          pendingAction?.action === "accept" ? "Accept" : "Decline"
-        }
-        pendingLabel="Working..."
-        destructive={pendingAction?.action === "decline"}
-        onCancel={() => {
-          if (!isWorking) {
-            setPendingAction(null)
+        <ConfirmDialog
+          isOpen={pendingAction !== null}
+          isPending={isWorking}
+          titleId="viewing-request-action-title"
+          title={
+            pendingAction?.action === "accept"
+              ? "Accept viewing request?"
+              : "Decline viewing request?"
           }
-        }}
-        onConfirm={() => void handleConfirmAction()}
-      />
+          description={
+            pendingAction?.action === "accept"
+              ? "The renter will see that you accepted the request. Continue coordination through your existing contact methods."
+              : "The renter will see that this viewing request was declined."
+          }
+          confirmLabel={
+            pendingAction?.action === "accept" ? "Accept" : "Decline"
+          }
+          pendingLabel="Working..."
+          destructive={pendingAction?.action === "decline"}
+          onCancel={() => {
+            if (!isWorking) {
+              setPendingAction(null)
+            }
+          }}
+          onConfirm={() => void handleConfirmAction()}
+        />
+      </div>
     </div>
   )
 }
