@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useState } from "react"
 
 import AuthField from "@/components/auth/AuthField"
@@ -12,12 +12,30 @@ import AuthShell, {
   authPrimaryButtonClassName,
   authRealtorNoteClassName,
   authSecondaryTextClassName,
-  authSuccessClassName,
 } from "@/components/auth/AuthShell"
-import { registerUser } from "@/services/authApi"
+import { useAuth } from "@/context/AuthContext"
 import { buildLoginHref, sanitizeReturnUrl } from "@/lib/returnUrl"
 
 const FORM_ERROR_ID = "register-form-error"
+
+// Self-registration always yields role `user`; the API accepts no role field.
+const SELF_REGISTRATION_ROLE = "user"
+
+function getPostLoginPath(role: string, returnUrl: string | null): string {
+  if (returnUrl) {
+    return returnUrl
+  }
+
+  if (role === "admin") {
+    return "/admin"
+  }
+
+  if (role === "realtor") {
+    return "/realtor"
+  }
+
+  return "/"
+}
 
 function getRegistrationErrorMessage(error: unknown): string {
   if (!(error instanceof Error)) {
@@ -36,9 +54,12 @@ function getRegistrationErrorMessage(error: unknown): string {
 }
 
 function RegisterForm() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const returnUrl = sanitizeReturnUrl(searchParams.get("returnUrl"))
   const loginHref = returnUrl ? buildLoginHref(returnUrl) : "/login"
+
+  const { register } = useAuth()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -46,7 +67,6 @@ function RegisterForm() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
-  const [isSuccess, setIsSuccess] = useState(false)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -76,12 +96,12 @@ function RegisterForm() {
     try {
       setIsLoading(true)
 
-      await registerUser({
+      await register({
         email: email.trim(),
         password,
       })
 
-      setIsSuccess(true)
+      router.push(getPostLoginPath(SELF_REGISTRATION_ROLE, returnUrl))
     } catch (registerError) {
       setError(getRegistrationErrorMessage(registerError))
     } finally {
@@ -99,87 +119,73 @@ function RegisterForm() {
         </p>
       }
     >
-      {isSuccess ? (
-        <div className="space-y-3">
-          <p role="alert" aria-live="polite" className={authSuccessClassName}>
-            Account created. You can now sign in.
+      <form onSubmit={handleSubmit} className={authFormStackClassName}>
+        <AuthField
+          id="register-email"
+          label="Email"
+          name="email"
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          autoComplete="email"
+          required
+          invalid={Boolean(error)}
+          errorDescribedBy={error ? FORM_ERROR_ID : undefined}
+        />
+
+        <AuthField
+          id="register-password"
+          label="Password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          autoComplete="new-password"
+          required
+          invalid={Boolean(error)}
+          errorDescribedBy={error ? FORM_ERROR_ID : undefined}
+        />
+
+        <AuthField
+          id="register-confirm-password"
+          label="Confirm password"
+          name="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          autoComplete="new-password"
+          required
+          invalid={Boolean(error)}
+          errorDescribedBy={error ? FORM_ERROR_ID : undefined}
+        />
+
+        {error ? (
+          <p
+            id={FORM_ERROR_ID}
+            role="alert"
+            aria-live="polite"
+            className={authErrorClassName}
+          >
+            {error}
           </p>
+        ) : null}
 
-          <Link href={loginHref} className={authPrimaryButtonClassName}>
-            Go to login
-          </Link>
-        </div>
-      ) : (
-        <>
-          <form onSubmit={handleSubmit} className={authFormStackClassName}>
-            <AuthField
-              id="register-email"
-              label="Email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              autoComplete="email"
-              required
-              invalid={Boolean(error)}
-              errorDescribedBy={error ? FORM_ERROR_ID : undefined}
-            />
+        <button
+          type="submit"
+          disabled={isLoading}
+          aria-busy={isLoading}
+          className={authPrimaryButtonClassName}
+        >
+          {isLoading ? "Creating account..." : "Create account"}
+        </button>
+      </form>
 
-            <AuthField
-              id="register-password"
-              label="Password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              autoComplete="new-password"
-              required
-              invalid={Boolean(error)}
-              errorDescribedBy={error ? FORM_ERROR_ID : undefined}
-            />
-
-            <AuthField
-              id="register-confirm-password"
-              label="Confirm password"
-              name="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-              autoComplete="new-password"
-              required
-              invalid={Boolean(error)}
-              errorDescribedBy={error ? FORM_ERROR_ID : undefined}
-            />
-
-            {error ? (
-              <p
-                id={FORM_ERROR_ID}
-                role="alert"
-                aria-live="polite"
-                className={authErrorClassName}
-              >
-                {error}
-              </p>
-            ) : null}
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              aria-busy={isLoading}
-              className={authPrimaryButtonClassName}
-            >
-              {isLoading ? "Creating account..." : "Create account"}
-            </button>
-          </form>
-
-          <p className={`mt-4 text-center ${authSecondaryTextClassName}`}>
-            Already have an account?{" "}
-            <Link href={loginHref} className={authLinkClassName}>
-              Sign in
-            </Link>
-          </p>
-        </>
-      )}
+      <p className={`mt-4 text-center ${authSecondaryTextClassName}`}>
+        Already have an account?{" "}
+        <Link href={loginHref} className={authLinkClassName}>
+          Sign in
+        </Link>
+      </p>
     </AuthShell>
   )
 }
