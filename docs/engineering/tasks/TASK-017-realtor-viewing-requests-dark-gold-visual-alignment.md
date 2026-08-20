@@ -4,24 +4,29 @@
 |-------|-------|
 | ID | TASK-017 |
 | TITLE | Realtor Viewing Requests Dark/Gold Visual Alignment |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW-MEDIUM |
 | CLASSIFICATION | Frontend presentation-only alignment / realtor Viewing Requests vertical slice |
 
-> **COMMIT NOT AUTHORIZED.** Implementation and local verification are complete. Staging, commit, push, deploy, and production access require separate gates.
+> STATUS: CLOSED means definition, implementation, local verification, commit review, commit, push, deployment preflight, rollback preservation, frontend-only deployment, and authenticated production acceptance are complete and recorded, and closure documentation is complete. Production acceptance result is **PASS** with documented observability limitations (see Accepted Observability Limitations). Archive is **NOT YET** performed.
 
-**Lifecycle (VERIFIED 2026-08-20):**
+**Final lifecycle (VERIFIED 2026-08-20):**
 
 | Stage | State |
 |-------|-------|
 | Next-increment discovery | COMPLETE — `NEXT_INCREMENT_DISCOVERY_COMPLETE` |
 | Definition | COMPLETE — `TASK_017_DEFINITION_COMPLETE` |
-| Implementation | COMPLETE — 4 authorized runtime files, uncommitted |
+| Implementation | COMPLETE — 4 authorized runtime files |
 | Local Verification | PASS — `TASK_017_IMPLEMENTATION_VERIFIED` |
-| Commit | NOT AUTHORIZED |
-| Push | NOT AUTHORIZED |
-| Deployment | NOT AUTHORIZED |
-| Production Acceptance | NOT AUTHORIZED |
+| Commit Review | PASS — `TASK_017_COMMIT_REVIEW_PASS` |
+| Commit | COMPLETE — `52f5a4a410e4518f4d76b6312a83d9828855dd5b` |
+| Push | COMPLETE — `origin/main` at `52f5a4a410e4518f4d76b6312a83d9828855dd5b` |
+| Deployment Preflight | PASS — `TASK_017_DEPLOYMENT_PREFLIGHT_PASS` |
+| Rollback Preservation | PASS — `rento-frontend:rollback-e19e78f` |
+| Deployment | PASS — FRONTEND_ONLY — `TASK_017_DEPLOYMENT_PASS` |
+| Production Acceptance | PASS — `TASK_017_PRODUCTION_ACCEPTANCE_PASS` |
+| Closure | COMPLETE |
+| Archive | NOT YET |
 
 **Initiative reference:** Next-increment discovery (2026-08-20) selected **OPTION B — Inbox + Realtor Detail Page Vertical Slice**. Prior closed increment: TASK-016 — Realtor Dashboard Dark/Gold Visual Alignment (CLOSED / ARCHIVED / COMPLETE).
 
@@ -38,7 +43,7 @@
 | TASK-017 identifier | free (historical `TASK-017 NOT CREATED` / `OUT` mentions inside archived TASK-016 are not a collision) |
 | Discovery HEAD typo | **DISCOVERY_HEAD_TYPO_CONFIRMED** — discovery report contained invalid SHA `12ff9b31…62e62e38`; actual Git output matches authoritative `12ff9b31b593165c1f1b0f6c494d35d255e62e38` |
 
-**Production note:** Production frontend application commit remains `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` (TASK-016 implementation). Repository HEAD additionally contains TASK-016 closure/archive documentation commits. This is expected and must not be treated as deployment drift.
+**Production note (at closure):** Production Git HEAD and deployed frontend application are at implementation commit `52f5a4a410e4518f4d76b6312a83d9828855dd5b` (TASK-017). `CURRENT_APP_SHA` remains **INFERRED** because Docker image labels contain only Compose metadata. Repository may be ahead of production by this docs-only closure commit until a separate closure-push gate is authorized.
 
 ---
 
@@ -816,7 +821,7 @@ Also recorded as intentional presentational adjustments inside the authorized fi
 
 ### Verification method and business-data safety
 
-Local dev server (`next dev`, port 3000) was pointed at a throwaway mock API outside the repository (`%TEMP%`) exposing `/users/me`, `/realtor/viewing-requests`, `/realtor/viewing-requests/{id}`, the accept/decline actions, and the renter equivalents, with fixtures covering pending / accepted / declined / cancelled, an archived-property relationship, a very long title and a very long renter email. No production access occurred, no production request status changed, and the harness was deleted after verification — no verification code exists in the repository (VERIFIED).
+Local dev server (`next dev`, port 3000) was pointed at a throwaway mock API outside the repository exposing `/users/me`, `/realtor/viewing-requests`, `/realtor/viewing-requests/{id}`, the accept/decline actions, and the renter equivalents, with fixtures covering pending / accepted / declined / cancelled, an archived-property relationship, a very long title and a very long renter email. No production access occurred, no production request status changed, and the harness was deleted after verification — no verification code exists in the repository (VERIFIED).
 
 ### D1 coverage (measured, `main` is light `lab(98.26 0 0)`)
 
@@ -912,14 +917,302 @@ Pre-existing missing route padding on the inbox (and on the detail loading/unava
 - Synthetic key events did not reach the page in this embedded browser, so focus rings were verified through forced `:focus-visible` pseudo-state rather than physical Tab traversal.
 - Contrast ratios for the semantic amber/emerald/red tints were not numerically recomputed; they use light Tailwind `*-200` tints on near-black surfaces and the established dark palette ratios.
 - The realtor dashboard regression check ran against a mock lacking dashboard endpoints, so it confirms dark shell integrity rather than full dashboard content.
-- No production access, no commit, no push, no deployment.
+- Production access occurred only during separate deployment and production-acceptance gates authorized after this section was first written.
 
 ---
 
-## Gate Decision
+## Commit Evidence
+
+| Field | Value |
+|-------|-------|
+| Implementation SHA | `52f5a4a410e4518f4d76b6312a83d9828855dd5b` |
+| Subject | `feat(realtor): align viewing requests with dark gold workspace` |
+| Parent | `12ff9b31b593165c1f1b0f6c494d35d255e62e38` |
+| Files in commit | 4 runtime files + this task document |
+| Commit review | PASS — bounded, presentation-only, cross-role safe |
+| Push | COMPLETE — `origin/main` advanced to `52f5a4a…` with divergence `0 0` after push |
+
+Runtime files in implementation commit:
 
 ```text
-TASK_017_IMPLEMENTATION_VERIFIED
-Next:
-READY_FOR_TASK_017_COMMIT_REVIEW
+frontend/app/realtor/viewing-requests/page.tsx
+frontend/app/realtor/viewing-requests/[id]/page.tsx
+frontend/components/realtor/viewing-requests/ViewingRequestListCard.tsx
+frontend/components/realtor/viewing-requests/ViewingRequestStatusTabs.tsx
 ```
+
+Protected areas unchanged in implementation commit:
+
+```text
+ViewingRequestRelationshipDetail.tsx
+RentalDocumentsSection.tsx
+ConfirmDialog.tsx
+components/ui/*
+app/viewing-requests/*
+RealtorWorkspaceShell.tsx
+app/realtor/layout.tsx
+frontend/lib/
+backend/
+```
+
+---
+
+## Deployment Evidence
+
+**Result:** `TASK_017_DEPLOYMENT_PASS` (2026-08-20).
+
+| Field | Value |
+|-------|-------|
+| Deployment class | FRONTEND_ONLY |
+| Previous application SHA | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` (TASK-016) — **INFERRED** |
+| Production Git HEAD before deploy | `e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff` (detached), worktree clean |
+| Production Git HEAD after deploy | `52f5a4a410e4518f4d76b6312a83d9828855dd5b` (detached), worktree clean |
+| CURRENT_APP_SHA after deploy | `52f5a4a410e4518f4d76b6312a83d9828855dd5b` — **INFERRED** |
+| Frontend container before | `07d352c7654f65549f38e21be4b87ce0bb38ec9245356b4e07c3fab3580b29fb` |
+| Frontend image before | `sha256:c5d99851579c43f5ecf4834d5c9a64e287d6d87115f631f0a47f4fd6e99692a7` |
+| Frontend container after | `65e5f1cc51e07bca7e61b179fbf3042f9eb2f1ba1263a91e93181df29e21f9fe` |
+| Frontend image after | `sha256:84fe7eddaa4f52d47243bde2a0e5575edf9222b98194c1dcb1d110a92af6e4d8` |
+| StartedAt | `2026-08-20T13:13:58.274933218Z` |
+| RestartCount | `0` |
+| Health | healthy |
+| Backend | UNCHANGED — `1f63695435605ae683b694c6f73fed58c3d72ba298ac97fb5a75e905532b02da`, `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd` |
+| DB | UNCHANGED — `c682d3268990049d941f2f5ccb4b7909d43f2e9057701217442148807e2a3b77` |
+| Nginx | UNCHANGED — `cf97dbc1786d05955ba75c4e9597e428f8871ebf06e52b58ea7f5642c9a6ae68` |
+
+**Application identity classification — INFERRED, not VERIFIED:** Docker image labels contain only Compose metadata. Supporting evidence:
+
+1. exact detached checkout of `52f5a4a…` before build, worktree clean;
+2. `docker compose build frontend` succeeded against that checkout;
+3. running container uses newly built image `84fe7edd…`;
+4. production→candidate runtime delta is exactly the four TASK-017 frontend files.
+
+Deployment steps executed: rollback preservation via `scripts/ops/rento-preserve-rollback-images.sh e19e78f…`, `git fetch origin main`, `git checkout --detach 52f5a4a…`, build of the `frontend` service only, recreate of the `frontend` service only with `--no-deps`. Health reached `healthy` within ~9 seconds. Unauthenticated HTTP smoke after deploy: `/` 200, `/realtor` 200, `/realtor/viewing-requests` 200, `/api/` 200. Frontend startup log contained only normal Next.js ready output; fatal/chunk/hydration scans returned zero matches.
+
+Actual production→candidate runtime delta remained **FRONTEND_ONLY** — exactly four scoped files; no backend, migration, dependency, nginx, auth, or cross-role shared component changes.
+
+---
+
+## Rollback Evidence
+
+| Field | Value |
+|-------|-------|
+| Immediate rollback tag | `rento-frontend:rollback-e19e78f` |
+| Points to | `sha256:c5d99851579c43f5ecf4834d5c9a64e287d6d87115f631f0a47f4fd6e99692a7` |
+| Classification | exact pre-TASK-017 frontend runtime (TASK-016 accepted image) |
+| Backend rollback tag | `rento-backend:rollback-e19e78f` → `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd` (unchanged backend; preserved by script) |
+| Verified | before build, after build, after recreate, and after production acceptance |
+| Historical rollback tags intact | `rollback-264e478`, `rollback-0139d67`, `rollback-3e13437`, and earlier preserved tags unchanged |
+
+Tag `rollback-e19e78f` was created before build; no existing tag was overwritten. **Rollback was NOT executed.** Database rollback is NOT REQUIRED.
+
+Prepared recovery (NOT executed):
+
+```bash
+docker tag rento-frontend:rollback-e19e78f rento-frontend:latest
+docker compose up -d --no-deps frontend
+git checkout --detach e19e78fd4fbae0f6aca82d3c02944fbdca8f3dff
+```
+
+---
+
+## Production Acceptance Evidence
+
+**Result:** `TASK_017_PRODUCTION_ACCEPTANCE_PASS` (2026-08-20).
+
+Authentication used an existing production Realtor acceptance account via operator-local credentials outside Git. Credentials were not recorded in this document. The account had **0 viewing requests in all filters** at acceptance time.
+
+### Unauthenticated behavior — VERIFIED
+
+`/realtor/viewing-requests` redirects to `/login?returnUrl=%2Frealtor%2Fviewing-requests`.
+
+### Desktop inbox `/realtor/viewing-requests` (~1280 × 900) — VERIFIED
+
+| Area | Observed |
+|------|----------|
+| Route wrapper | `rgb(27,27,27)` = `#1B1B1B`, text `#F5F5F5`, `min-height: 100%` |
+| D1 shell | `main` remains globally light (`lab(98.26 0 0)`) and unchanged |
+| D1 gutter | local wrapper covers content area; no visible zinc gutter |
+| Heading / description | `#F5F5F5` / `#B8B8B8` |
+| Active tab | `#DFC58A` background, `#1B1B1B` text, h=44 |
+| Inactive tabs | `#252525` surfaces, `#B8B8B8` text, h=44 |
+| Empty state (Pending) | dark elevated shell `#2D2D2D`, title `#F5F5F5` — «No pending viewing requests» |
+| Horizontal overflow | `scrollWidth = clientWidth = 1280` |
+| D3 padding | container `padding-left/right: 32px`; content no longer flush against sidebar edge |
+
+### Desktop detail unavailable — VERIFIED
+
+| Route | Observed |
+|-------|----------|
+| `/realtor/viewing-requests/abc` | dark wrapper; H1 «Viewing request unavailable»; `role="alert"`; gold back CTA `#DFC58A` / `#1B1B1B`, h=44; back href `/realtor/viewing-requests` |
+| `/realtor/viewing-requests/99999999` | same dark unavailable presentation; alert «Viewing request not found» (safe GET only) |
+
+### Mobile inbox (~390 × 844) — VERIFIED
+
+| Area | Observed |
+|------|----------|
+| Full dark route | wrapper `#1B1B1B` |
+| Horizontal overflow | `innerWidth = scrollWidth = clientWidth = 390` |
+| Tabs | h=44; horizontal scroll preserved (`scrollWidth 470 > clientWidth 366`) |
+| Empty state | dark presentation fits viewport |
+| D3 padding | `padding-left: 16px` |
+
+### Mobile detail unavailable (~390 × 844) — VERIFIED
+
+Dark page chrome, readable unavailable card, gold back CTA 44 px, no horizontal overflow.
+
+### Filter functional acceptance (non-mutating) — VERIFIED
+
+| Filter | Empty copy observed |
+|--------|---------------------|
+| Pending | No pending viewing requests |
+| All | No viewing requests yet |
+| Accepted | No accepted viewing requests |
+| Declined | No declined viewing requests |
+| Cancelled | No cancelled viewing requests |
+
+Active selection updates correctly. `GET /api/realtor/viewing-requests` returned HTTP 200. No Accept/Decline mutation was performed.
+
+### Realtor regression — VERIFIED
+
+`/realtor` dashboard remains dark/gold; TASK-016 visual result intact; shell intact; My Listings section present.
+
+### Cross-role regression — VERIFIED (partial) + STATIC/DIFF
+
+| Check | Result |
+|-------|--------|
+| `/viewing-requests` renter list while authenticated | renter layout («YOUR ACTIVITY»); no Realtor TASK-017 wrapper leak |
+| Renter detail `/viewing-requests/[id]` | **NOT DIRECTLY OBSERVED — PRODUCTION FIXTURE LIMITATION** |
+| Deploy delta on shared components | `ViewingRequestRelationshipDetail.tsx`, `RentalDocumentsSection.tsx`, `app/viewing-requests/*`, `components/ui/*` unchanged — **STATIC/DIFF CONTRACT VERIFIED** |
+
+### Accessibility — VERIFIED (with limitation)
+
+| Check | Result |
+|-------|--------|
+| Gold-filled controls | dark text `#1B1B1B` only |
+| Focus styling | gold ring `#DFC58A` with dark offset `#1B1B1B` — verified via production `:focus-visible` computed-style inspection on filter tab |
+| Touch targets | tabs 44 px; unavailable back CTA 44 px |
+| Keyboard Tab order | **NOT DIRECTLY OBSERVED** |
+
+### Console / network / runtime health — VERIFIED
+
+| Check | Result |
+|-------|--------|
+| Uncaught JS errors | 0 observed |
+| Unhandled rejections | 0 observed |
+| Hydration errors | 0 observed |
+| Chunk-load failures | 0 observed |
+| Relevant 5xx | 0 observed |
+| Frontend after acceptance | same container `65e5f1cc…`, image `84fe7edd…`, healthy, RestartCount 0 |
+| Backend / DB / nginx | unchanged and healthy |
+| HTTP `/`, `/realtor`, `/realtor/viewing-requests`, `/api/` | all 200 |
+| Rollback `rollback-e19e78f` | intact → `sha256:c5d99851…` |
+
+### Business-data safety — VERIFIED
+
+```text
+business data created: NO
+business data modified: NO
+viewing request accepted: NO
+viewing request declined: NO
+document uploaded: NO
+document archived: NO
+database mutated: NO
+```
+
+---
+
+## Accepted Observability Limitations
+
+The following branches were **NOT DIRECTLY OBSERVED in production** because the existing production Realtor acceptance account had zero viewing requests and no renter detail fixture was available. Local verification and/or static/diff contract evidence exists where noted; these do **not** upgrade the production classification to VERIFIED.
+
+| # | Branch | Supporting evidence |
+|---|--------|---------------------|
+| 1 | Request card presentation | LOCAL VERIFIED |
+| 2 | Card-level pending status presentation | LOCAL VERIFIED |
+| 3 | Card-level accepted status presentation | LOCAL VERIFIED |
+| 4 | Card-level declined status presentation | LOCAL VERIFIED |
+| 5 | Card-level cancelled status presentation | LOCAL VERIFIED |
+| 6 | Review action presentation | LOCAL VERIFIED |
+| 7 | Accept action presentation | LOCAL VERIFIED |
+| 8 | Decline action presentation | LOCAL VERIFIED |
+| 9 | Successful Realtor detail route | LOCAL VERIFIED |
+| 10 | Shared relationship detail on Realtor success fixture | LOCAL VERIFIED; STATIC/DIFF CONTRACT VERIFIED |
+| 11 | D3 double-padding check on successful detail fixture | NOT DIRECTLY OBSERVED — CURRENT PRODUCTION DATA |
+| 12 | Renter detail route | STATIC/DIFF CONTRACT VERIFIED |
+| 13 | Natural production loading skeleton | LOCAL VERIFIED; STATIC CONTRACT VERIFIED |
+| 14 | Unexpected production API error state | LOCAL VERIFIED; STATIC CONTRACT VERIFIED |
+| 15 | Physical keyboard Tab traversal | focus styling verified separately; tab order not observed |
+
+---
+
+## D3 Final Classification
+
+```text
+D3:
+ACCEPTED BOUNDED CORRECTION
+```
+
+Reason:
+
+- Realtor Viewing Requests routes lacked route-owned padding while shell `main` provides none;
+- correction remained inside the four authorized route/component files only;
+- no shell/layout/shared component scope expansion;
+- production acceptance verified desktop padding (`32px`) and mobile padding (`16px`) without horizontal overflow;
+- content no longer sits flush against sidebar/viewport edge on inbox and unavailable/loading detail branches.
+
+Successful-detail double-padding remains:
+
+```text
+NOT DIRECTLY OBSERVED — CURRENT PRODUCTION DATA
+```
+
+No success fixture existed at acceptance time; this limitation is not converted into PASS or FAIL.
+
+---
+
+## Final Scope Result
+
+```text
+runtime files modified: 4
+```
+
+Exactly:
+
+```text
+frontend/app/realtor/viewing-requests/page.tsx
+frontend/app/realtor/viewing-requests/[id]/page.tsx
+frontend/components/realtor/viewing-requests/ViewingRequestListCard.tsx
+frontend/components/realtor/viewing-requests/ViewingRequestStatusTabs.tsx
+```
+
+Protected areas remained unchanged throughout implementation, deployment, and acceptance.
+
+---
+
+## Closure
+
+**Closure rationale:** implementation complete; local verification passed; commit and push complete; rollback preserved; frontend-only production deployment passed; production acceptance passed with honestly recorded fixture limitations; no blocking defects; no business-data mutation; D3 accepted bounded correction preserved.
+
+**Final gate state:**
+
+```text
+DEFINED
+→ IMPLEMENTED
+→ LOCALLY VERIFIED
+→ COMMIT REVIEWED
+→ COMMITTED
+→ PUSHED
+→ DEPLOYMENT PREFLIGHT PASS
+→ ROLLBACK PRESERVATION PASS
+→ DEPLOYED
+→ PRODUCTION ACCEPTED
+→ CLOSED
+```
+
+```text
+TASK_017_CLOSED
+Next:
+READY_FOR_TASK_017_CLOSURE_PUSH_AUTHORIZATION
+```
+
+Archive remains a separate gate. TASK-018 was not created.
