@@ -4,13 +4,13 @@
 |-------|-------|
 | ID | TASK-019 |
 | TITLE | Admin Reported Listings Queue |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW-MEDIUM |
 | CLASSIFICATION | Admin operational workflow / reported property moderation queue |
 
-> **COMMIT NOT AUTHORIZED.** Implementation and local verification are complete under the implementation authorization gate. Staging, commit, push, deploy, and production access require separate authorization gates.
+> STATUS: CLOSED means definition, implementation, local verification, commit review, commit, push, deployment preflight, rollback preservation, FULLSTACK deployment, production acceptance, and closure documentation are complete and recorded. Production acceptance result is **PASS** with documented observability limitations (see Production Acceptance Evidence and Accepted Limitations). Archive is **NOT YET** performed.
 
-**Lifecycle (VERIFIED 2026-08-22):**
+**Final lifecycle (VERIFIED 2026-08-22):**
 
 | Stage | State |
 |-------|-------|
@@ -18,10 +18,15 @@
 | Definition | COMPLETE — `TASK_019_DEFINITION_COMPLETE` |
 | Implementation | COMPLETE — 6 runtime files, 1 new backend test file |
 | Local Verification | COMPLETE — backend suite, frontend lint/typecheck/build, local API runtime probes |
-| Commit | NOT AUTHORIZED |
-| Push | NOT AUTHORIZED |
-| Deployment | NOT AUTHORIZED |
-| Production Acceptance | NOT AUTHORIZED |
+| Commit Review | PASS |
+| Commit | COMPLETE — `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73` |
+| Push | COMPLETE — fast-forward to `origin/main` |
+| Deployment Preflight | PASS |
+| Rollback Preservation | PASS — `rento-frontend:rollback-f4384f3`, `rento-backend:rollback-f4384f3` |
+| Deployment | PASS — FULLSTACK — `TASK_019_DEPLOYMENT_PASS` |
+| Production Acceptance | PASS — `TASK_019_PRODUCTION_ACCEPTANCE_PASS` |
+| Closure | COMPLETE |
+| Archive | NOT YET |
 
 **Initiative reference:** Next-increment discovery after TASK-018 (CLOSED + ARCHIVED + COMPLETE) selected **Admin Reported Listings Queue** over home price-filter validation, viewing-request discoverability, documents hub, and residual visual debt.
 
@@ -37,7 +42,11 @@
 | Prior task | TASK-018 — CLOSED + ARCHIVED + COMPLETE |
 | TASK-019 identifier | free (historical `TASK-019 NOT CREATED` / `OUT OF SCOPE` mentions inside archived TASK-018 are not a collision) |
 
-**Production note:** Production application remains at TASK-018 implementation SHA `f4384f3fa0d71da95e295a424a0c07a910738c3b` — **INFERRED**. Repository HEAD is ahead only by TASK-018 closure/archive documentation commits. This is **not** production drift.
+**Production note (historical at definition):** Production application was at TASK-018 implementation SHA `f4384f3fa0d71da95e295a424a0c07a910738c3b` — **INFERRED**. Repository HEAD was ahead only by TASK-018 closure/archive documentation commits. That was **not** production drift.
+
+**Production state after TASK-019 deploy (2026-08-22):** Production Git HEAD and deployed application are at TASK-019 implementation SHA `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73`. Application identity is classified **INFERRED** — see Production Deployment Evidence.
+
+**Production state at closure (VERIFIED 2026-08-22):** Same as post-deploy. Production acceptance Branch B (zero reported data). Principal invariant `0 == 0 == 0` PASS. Rollback tags intact; rollback **NOT executed**.
 
 ---
 
@@ -549,7 +558,244 @@ Status of each UI check:
 | Moderation refetch retains reported filter | **STATIC CONTRACT VERIFIED** | Fetch effect depends on `isReportedMode`; retry path bumps `reloadKey` while `isReportedMode` still gates the param |
 | Desktop 1280×900 / mobile 390×844 rendering | **NOT DIRECTLY OBSERVED** | Reported button reuses the existing filter-strip markup and `overflow-x-auto` container; no layout primitive was changed |
 
-**Residual verification gap:** visual/interaction confirmation of the reported queue in a real browser at desktop and mobile viewports. This should be covered during deployment verification or a dedicated UI verification pass before production acceptance.
+**Residual verification gap (pre-production):** visual/interaction confirmation of the reported queue in a real browser at desktop and mobile viewports. **Superseded for core reported-queue behavior by Production Acceptance Evidence below** (2026-08-22). Desktop/mobile viewport-specific rendering was not separately re-asserted in production acceptance.
+
+---
+
+## Commit and Push Evidence
+
+| Field | Value |
+|-------|-------|
+| Commit | `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73` |
+| Message | `feat(admin): add reported listings queue` |
+| Parent | `a2f84173d5a3ec6eae215f17aa0caf4413ce3ff1` |
+| Scope | 8 files — 6 runtime, 1 test, 1 task document |
+| Whitespace | `git diff HEAD^ HEAD --check` PASS (commit review gate) |
+| Push | fast-forward to `origin/main`, no force, no tags |
+| Post-push | HEAD == `origin/main` == `bcc4dd2…`, divergence `0 0`, worktree clean |
+
+Committed runtime scope: exactly the six authorized files. No amend and no additional implementation commit were created.
+
+---
+
+## Production Deployment Evidence
+
+**Deployment class:** FULLSTACK. Deployed 2026-08-22 (UTC) from the exact implementation SHA. Backend first, then frontend.
+
+| Component | Result |
+|-----------|--------|
+| backend deployed | YES |
+| frontend deployed | YES |
+| database mutated at deploy | NO |
+| migration executed | NONE |
+| nginx changed | NO |
+| dependencies changed | NO |
+| auth server contract changed | NO |
+| API contract changed | Backward-compatible extension only (`reported_only` optional) |
+
+| Field | Value |
+|-------|-------|
+| Implementation SHA | `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73` |
+| Production Git HEAD | `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73` (detached), worktree clean — **VERIFIED** |
+| Previous application SHA | `f4384f3fa0d71da95e295a424a0c07a910738c3b` (TASK-018) — **INFERRED** |
+| CURRENT_APP_SHA | `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73` — **INFERRED** |
+| Backend container before | `1f63695435605ae683b694c6f73fed58c3d72ba298ac97fb5a75e905532b02da` |
+| Backend image before | `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd` |
+| Backend container after | `c1da350360978040855014393809e7e0efa71bcc0452ce1a3d5acd3cfd332e97` |
+| Backend image after | `sha256:91ed80a479dd57c378640564cec7f0cafaf71a4fbe3adc062c6faf43532787dd` |
+| Backend StartedAt | `2026-08-22T16:10:11Z` |
+| Frontend container before | `468f6277d697bbd676bca2d28a7234ef5538003279557e99bd3fa760e8525b8d` |
+| Frontend image before | `sha256:b2d6969626c3edad324472a0178b235496df4ea20dbfcb8b4a6e39a060567428` |
+| Frontend container after | `b2a243ae8de834a4f0f618fe7fdafbc872c8d137400c9bd3f3703ed0333f725f` |
+| Frontend image after | `sha256:706c58484d08162d8b3f8fe90dcfbf45d563f7f6f688454a7c74ea65670ca492` |
+| Frontend StartedAt | `2026-08-22T16:11:34Z` |
+| RestartCount (backend/frontend) | `0` |
+| Health | healthy (both) |
+| DB | UNCHANGED — `c682d3268990049d941f2f5ccb4b7909d43f2e9057701217442148807e2a3b77`, StartedAt `2026-07-29T11:33:03.086550421Z` |
+| Nginx | UNCHANGED — `cf97dbc1786d05955ba75c4e9597e428f8871ebf06e52b58ea7f5642c9a6ae68`, StartedAt `2026-08-09T21:48:15.711102691Z` |
+
+**Application identity classification — INFERRED, not VERIFIED:** Docker image labels contain only Compose metadata; no immutable Git SHA label exists. Identity inferred from exact detached Git checkout before builds, backend and frontend images built from that checkout, both new containers running those images, and db/nginx unchanged.
+
+Deployment steps: rollback preservation via `scripts/ops/rento-preserve-rollback-images.sh f4384f3…`, fetch + detached checkout of `bcc4dd2…`, `docker compose build backend`, `docker compose up -d --no-deps backend`, backend health verified, `docker compose build frontend`, `docker compose up -d --no-deps frontend`, full service health verified. Unauthenticated HTTP smoke after deploy: `/`, `/admin`, `/admin/properties`, `/api/` all 200.
+
+**Gate:** `TASK_019_DEPLOYMENT_PASS` → `READY_FOR_TASK_019_PRODUCTION_ACCEPTANCE`.
+
+---
+
+## Rollback Evidence
+
+| Field | Value |
+|-------|-------|
+| Immediate frontend rollback tag | `rento-frontend:rollback-f4384f3` |
+| Points to | `sha256:b2d6969626c3edad324472a0178b235496df4ea20dbfcb8b4a6e39a060567428` (pre-TASK-019 frontend) |
+| Immediate backend rollback tag | `rento-backend:rollback-f4384f3` |
+| Points to | `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd` (pre-TASK-019 backend) |
+| Verified | at rollback preservation, after backend build, after frontend build, after production acceptance, and during acceptance evidence reconciliation (2026-08-22) |
+| Historical rollback tags | `rollback-52f5a4a`, `rollback-e19e78f`, `rollback-264e478`, and others — intact |
+
+**Rollback was NOT executed.** Database rollback is NOT REQUIRED.
+
+---
+
+## Production Acceptance Evidence
+
+**Result:** `TASK_019_PRODUCTION_ACCEPTANCE_PASS` (2026-08-22).
+
+**Acceptance branch:** **B — zero reported production data.** Production contained no properties with `report_count > 0`. No report fixture was created to manufacture Branch A evidence.
+
+**Authorized production mutation:** **NONE.** Production acceptance was read-only.
+
+### Principal production invariant
+
+| Source | Count |
+|--------|-------|
+| DB `COUNT(properties WHERE report_count > 0)` | **0** |
+| `GET /api/admin/stats` → `reported_listings` | **0** |
+| `GET /api/properties/admin/all?reported_only=true` → `total` | **0** |
+
+```text
+DB reported count == dashboard reported_listings == reported queue total
+0 == 0 == 0
+Result: PASS
+```
+
+Authoritative predicate: `report_count > 0`. No lifecycle status restriction.
+
+### Production DB ground truth
+
+| Field | Value |
+|-------|-------|
+| TOTAL_PROPERTIES | 3 |
+| REPORTED_PROPERTIES | 0 |
+| Reported count before acceptance | 0 |
+| Reported count after acceptance | 0 |
+| Report rows | empty result set |
+
+### API evidence (authenticated admin session)
+
+Observations from production acceptance gate session (2026-08-22). Authenticated GET via existing admin browser session cookies.
+
+| Probe | HTTP | Result |
+|-------|------|--------|
+| `GET /api/admin/stats` | 200 | `reported_listings = 0` |
+| `GET /api/properties/admin/all?reported_only=true` | 200 | `total = 0`, `items = []` |
+| `GET /api/properties/admin/all` | 200 | `total = 3`, `items = 3` |
+| `GET /api/properties/admin/all?reported_only=false` | 200 | `total = 3`, `items = 3` (same as omitted) |
+
+Omitted/false preserves prior behavior. No business-data POST/PUT/PATCH/DELETE during acceptance.
+
+### UI evidence (production-observed)
+
+| Check | Classification |
+|-------|----------------|
+| Dashboard «Reported listings» metric visible, count = 0 | **PRODUCTION VERIFIED** |
+| «Open reported queue» actionable link present | **PRODUCTION VERIFIED** |
+| Link `href = /admin/properties?filter=reported` | **PRODUCTION VERIFIED** (DOM) |
+| Obsolete «Report-focused filtering is not available…» copy absent | **PRODUCTION VERIFIED** |
+| Deep-link `/admin/properties?filter=reported` activates Reported mode | **PRODUCTION VERIFIED** |
+| Reported control visibly active (`aria-pressed`) | **PRODUCTION VERIFIED** |
+| Network request uses `reported_only=true` | **PRODUCTION VERIFIED** |
+| Empty state «No reported listings» + queue count 0 | **PRODUCTION VERIFIED** |
+| UI matches DB/API truth (zero reported) | **PRODUCTION VERIFIED** |
+| All mode: Reported deactivated, API omits `reported_only`, 3-property list restored | **PRODUCTION VERIFIED** |
+| Unknown `?filter=not-a-real-filter` → All fallback, no arbitrary backend filter | **PRODUCTION VERIFIED** |
+| Lifecycle controls All / Active / Pending / Archived / Reported render | **PRODUCTION VERIFIED** |
+
+### Dashboard click limitation (preserved honestly)
+
+| Aspect | Classification |
+|--------|----------------|
+| Actionable anchor directly observed | **PRODUCTION VERIFIED** |
+| Destination `href` directly verified | **PRODUCTION VERIFIED** |
+| Destination loaded directly (deep-link) | **PRODUCTION VERIFIED** |
+| Destination activates Reported mode + `reported_only=true` | **PRODUCTION VERIFIED** |
+| Automated click transition dashboard → navigation | **NOT DIRECTLY OBSERVED** (browser tooling timing) |
+
+This is **not** classified as a product defect. Deep-link and DOM contract prove the drill-down destination.
+
+### Authentication evidence
+
+| Check | Result |
+|-------|--------|
+| Existing authenticated admin browser session used | YES |
+| Known acceptance identity (historical inventory) | `acceptance-admin@rentonow.ro` (user_id=28, role=`admin`) — credentials operator-local outside Git |
+| New account created | NO |
+| Role changed | NO |
+| Credentials stored/exposed in this document | NO |
+| Business data mutation | NO |
+
+A separate PowerShell cookie-login attempt returned HTTP 422 (CSRF/session wiring) and was **not** used as acceptance evidence. Browser session was sufficient.
+
+### Populated reported rows — production limitation
+
+Production had **zero** reported properties. Acceptance directly proved empty queue, request contract, count equality, deep-link, and mode behavior. **Populated reported rows in production were NOT directly observed.** Populated-row behavior is supported by automated backend tests and local API runtime verification.
+
+### Post-acceptance runtime health
+
+| Component | Result |
+|-----------|--------|
+| PRODUCTION_GIT_HEAD | `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73`, worktree clean — **VERIFIED** |
+| Backend | `c1da3503…` / `sha256:91ed80a4…`, RestartCount 0, healthy |
+| Frontend | `b2a243ae…` / `sha256:706c5848…`, RestartCount 0, healthy |
+| DB / Nginx | unchanged and healthy |
+| HTTP `/`, `/admin`, `/admin/properties`, `/api/` | all 200 |
+| TASK-019-attributable fatal/traceback/500/chunk errors in log tail | none observed |
+
+```text
+CURRENT_APP_SHA: bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73 — INFERRED
+```
+
+**Gate:** `TASK_019_PRODUCTION_ACCEPTANCE_PASS` → `READY_FOR_TASK_019_ACCEPTANCE_EVIDENCE_RECONCILIATION_OR_CLOSURE`.
+
+---
+
+## Production Data Mutation Statement (acceptance)
+
+```text
+production report created: NO
+report_count changed: NO
+property lifecycle changed: NO
+account created: NO
+account role modified: NO
+database modified manually: NO
+business POST/PUT/PATCH/DELETE: NONE
+production acceptance was read-only: YES
+```
+
+---
+
+## Acceptance Criteria Reconciliation
+
+| # | Criterion | Classification |
+|---|-----------|----------------|
+| 1 | Backward compatible when `reported_only` omitted | PASS — AUTOMATED TEST + PASS — PRODUCTION |
+| 2 | `reported_only=true` returns only `report_count > 0` | PASS — AUTOMATED TEST + PASS — LOCAL + PRODUCTION (vacuous empty set) |
+| 3 | SQL filter before limit/offset | PASS — AUTOMATED TEST + PASS — LOCAL |
+| 4 | Response `total` reflects filtered dataset | PASS — AUTOMATED TEST + PASS — LOCAL + PASS — PRODUCTION (`total=0`) |
+| 5 | Dashboard count == queue total (same predicate) | PASS — AUTOMATED TEST + PASS — LOCAL + PASS — PRODUCTION (`0==0==0`) |
+| 6 | Dashboard metric actionable | PASS — STATIC CONTRACT + PASS — PRODUCTION (link/href) |
+| 7 | Admin properties Reported filter mode | PASS — STATIC CONTRACT + PASS — PRODUCTION |
+| 8 | Reported mode fetches `reported_only=true` | PASS — STATIC CONTRACT + PASS — PRODUCTION (network) |
+| 9 | No conflicting client lifecycle filter in reported mode | PASS — STATIC CONTRACT + PASS — PRODUCTION |
+| 10 | Reported-specific empty state | PASS — STATIC CONTRACT + PASS — PRODUCTION |
+| 11 | Non-reported status tabs unchanged | PASS — STATIC CONTRACT + PASS — PRODUCTION |
+| 12 | `report_count` badge on cards | PASS — STATIC CONTRACT — NOT DIRECTLY OBSERVED IN PRODUCTION (zero reported rows) |
+| 13 | Moderation actions unchanged | PASS — STATIC CONTRACT — moderation controls not exercised in acceptance |
+| 14 | Public report endpoint unchanged | PASS — STATIC CONTRACT (no code change) |
+| 15 | No `report_count` reset behavior | PASS — STATIC CONTRACT (no code change) |
+| 16 | Admin authorization unchanged | PASS — AUTOMATED TEST + PASS — PRODUCTION (authenticated admin GET 200) |
+| 17 | No DB migration | PASS — DEPLOYMENT EVIDENCE |
+| 18 | No reports table / report-detail model | PASS — STATIC CONTRACT |
+| 19 | Backend tests cover filter/pagination | PASS — AUTOMATED TEST |
+| 20 | Existing admin pagination/auth tests pass | PASS — AUTOMATED TEST |
+| 21 | Frontend lint/typecheck/build | PASS — LOCAL |
+| 22 | Backend relevant tests | PASS — AUTOMATED TEST |
+| 23 | `git diff --check` | PASS — LOCAL (commit review) |
+| 24 | No unrelated runtime changes | PASS — DEPLOYMENT EVIDENCE |
+| 25 | No production mutation during local verification | PASS — LOCAL |
+| 26 | Deployment classification FULLSTACK | PASS — DEPLOYMENT EVIDENCE |
+| 27 | Property lifecycle semantics unchanged | PASS — STATIC CONTRACT + PASS — PRODUCTION (observed statuses on normal list) |
+| 28 | Dashboard copy no longer claims filtering unavailable | PASS — STATIC CONTRACT + PASS — PRODUCTION |
 
 ---
 
@@ -559,22 +805,68 @@ Status of each UI check:
 2. Lifecycle status filtering remains client-side over the loaded page — a pre-existing limitation deliberately not repaired here.
 3. `report_count` is never reset by moderation, so a listing remains in the reported queue after a lifecycle action. Expected behavior per definition.
 4. The reported-mode header count reflects loaded items rather than server `total`; they coincide below the 100-item page limit.
+5. **Production acceptance Branch B (zero reported data):** populated reported rows were not directly observed in production. Populated-row behavior is covered by automated backend tests and local API runtime verification.
+6. **Dashboard automated click transition:** actionable link and `href` were directly verified; deep-link destination and Reported mode were directly verified; automated click transition was **NOT DIRECTLY OBSERVED** (browser tooling timing). Accepted tooling limitation — not a product defect.
+7. **CURRENT_APP_SHA** remains **INFERRED** — Docker images lack immutable Git SHA labels.
+
+---
+
+## Closure Summary
+
+**Before:** Admin dashboard surfaced `reported_listings` but offered no correct pagination-aware path to the corresponding reported properties queue.
+
+**After:** Admin can open the Reported queue from the dashboard (`/admin/properties?filter=reported`); backend filters server-side using `report_count > 0` before count/pagination; queue `total` matches dashboard semantics; normal admin list behavior remains backward-compatible when `reported_only` is omitted or false.
+
+| Field | Value |
+|-------|-------|
+| Production acceptance | **PASS** |
+| Acceptance branch | **B — zero reported production data** |
+| Principal production invariant | `0 == 0 == 0` |
+| Migration | NONE |
+| Auth change | NO |
+| Public reporting change | NO |
+| `report_count` reset | NO |
+| Reports subsystem | NO |
+| Production data mutation (acceptance) | NO |
+
+**Closure rationale:** implementation complete; local verification passed; commit and push complete; rollback preserved; FULLSTACK production deployment passed; production acceptance passed with honestly recorded observability limitations; no blocking defects within TASK-019 scope; operational dashboard → reported queue journey is production-verified for the zero-data state and fully supported by automated tests for populated datasets.
 
 ---
 
 ## Gate Decision
 
 ```text
-TASK_019_IMPLEMENTATION_VERIFIED
+TASK_019_CLOSED
 Next:
-READY_FOR_TASK_019_COMMIT_REVIEW
+READY_FOR_TASK_019_ARCHIVE_AUTHORIZATION
 ```
 
-Superseded: `TASK_019_DEFINITION_COMPLETE`.
+**Final gate state:**
+
+```text
+DEFINED
+→ IMPLEMENTED
+→ LOCALLY VERIFIED
+→ COMMIT REVIEWED
+→ COMMITTED
+→ PUSHED
+→ DEPLOYMENT PREFLIGHT PASS
+→ ROLLBACK PRESERVATION PASS
+→ DEPLOYED
+→ PRODUCTION ACCEPTED
+→ CLOSED
+```
+
+```text
+TASK-019 = CLOSED
+Archive: NO / NOT YET
+```
+
+Superseded: `TASK_019_ACCEPTANCE_EVIDENCE_RECONCILED` → `READY_FOR_TASK_019_CLOSURE_AUTHORIZATION`.
 
 ---
 
-## Mutation Statement (implementation gate)
+## Mutation Statement (implementation gate — historical)
 
 | Item | Value |
 |------|-------|
@@ -586,11 +878,46 @@ Superseded: `TASK_019_DEFINITION_COMPLETE`.
 | Public reporting changed | NO |
 | Auth changed | NO |
 | Files staged | NO |
+| Commit created | NO (at implementation gate) |
+| Push performed | NO (at implementation gate) |
+| Production accessed | NO (at implementation gate) |
+| Production mutated | NO |
+| Deployment performed | NO (at implementation gate) |
+| TASK-020 created | NO |
+
+Local dev database fixtures were seeded and temporary local dev servers were started and stopped for verification.
+
+---
+
+## Mutation Statement (acceptance evidence reconciliation gate — 2026-08-22)
+
+| Item | Value |
+|------|-------|
+| Runtime code changed | NO |
+| Test code changed | NO |
+| Task document changed | YES — exactly 1 file (this document) |
+| Files staged | NO |
 | Commit created | NO |
+| Push performed | NO |
+| Production accessed during reconciliation | NO |
+| Production mutated | NO |
+| Closure performed | NO |
+| Archive performed | NO |
+| TASK-020 created | NO |
+
+---
+
+## Mutation Statement (closure gate — 2026-08-22)
+
+| Item | Value |
+|------|-------|
+| Runtime code changed | NO |
+| Test code changed | NO |
+| Task document changed | YES — STATUS VERIFYING → CLOSED; closure summary added |
+| Files staged | YES — exactly 1 |
+| Closure commit created | YES — exactly 1 |
 | Push performed | NO |
 | Production accessed | NO |
 | Production mutated | NO |
-| Deployment performed | NO |
+| Archive performed | NO |
 | TASK-020 created | NO |
-
-Local dev database fixtures were seeded and temporary local dev servers were started and stopped for verification. No production system was contacted at any point.
