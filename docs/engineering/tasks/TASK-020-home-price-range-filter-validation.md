@@ -4,11 +4,11 @@
 |-------|-------|
 | ID | TASK-020 |
 | TITLE | Home Price Range Filter Validation |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Frontend UX / public home search filter correctness |
 
-> **Implementation + local verification complete (2026-08-22).** Runtime changes are uncommitted. Production acceptance NOT YET PERFORMED.
+> STATUS: CLOSED means definition, implementation, local verification, commit, push, deployment preflight, rollback preservation, FRONTEND_ONLY deployment, production acceptance, and closure documentation are complete and recorded. Production acceptance result is **PASS** with documented observability limitations (see Production Acceptance Evidence and Accepted Limitations). Archive is **NOT YET** performed.
 
 **Lifecycle (updated 2026-08-22):**
 
@@ -16,9 +16,13 @@
 |-------|-------|
 | Next-increment discovery | COMPLETE |
 | Definition | COMPLETE |
-| Implementation | COMPLETE — this gate |
-| Local Verification | COMPLETE — lint/typecheck/build PASS; browser smoke NOT DIRECTLY OBSERVED (dev server unavailable) |
-| Commit / Push / Deploy / Production Acceptance / Closure / Archive | NOT AUTHORIZED |
+| Implementation | COMPLETE |
+| Local Verification | COMPLETE |
+| Commit / Push | COMPLETE — `e1140b4` |
+| Deployment Preflight + Deploy | COMPLETE — FRONTEND_ONLY |
+| Production Acceptance | PASS — `TASK_020_PRODUCTION_ACCEPTANCE_PASS` |
+| Closure | COMPLETE |
+| Archive | NOT YET PERFORMED |
 
 **Initiative reference:** Post TASK-019 (CLOSED + ARCHIVED + COMPLETE) discovery selected **Home Price Range Filter Validation** over admin lifecycle server filters, viewing-request discoverability, authenticated auth-page redirect, rental documents hub, and residual visual debt.
 
@@ -34,7 +38,7 @@
 | Prior task | TASK-019 — CLOSED + ARCHIVED + COMPLETE |
 | TASK-020 identifier | free (historical `TASK-020 created: NO` mentions in archived TASK-019 are not a collision) |
 
-**Production note:** Production application remains at TASK-019 implementation SHA `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73` — **INFERRED**. Repository commits after that SHA are docs-only closure/archive for TASK-019. This is **not** runtime production drift.
+**Production note:** Production application deployed at TASK-020 implementation SHA `e1140b4326262ba7656811114e397aaa82fabf26` — **INFERRED** (frontend image/container identity; no immutable Git SHA label on Docker image). Repository commits after deployment may include docs-only closure for TASK-020; that is **not** runtime production drift.
 
 ---
 
@@ -362,7 +366,113 @@ No existing FiltersBar/search-param test infrastructure found. **No test files c
 
 ### Production acceptance
 
-**NOT YET PERFORMED**
+**PASS — 2026-08-22**
+
+---
+
+## Production Deployment Evidence (2026-08-22)
+
+| Field | Value |
+|-------|-------|
+| Release candidate | `e1140b4326262ba7656811114e397aaa82fabf26` |
+| Pre-deploy CURRENT_APP_SHA | `bcc4dd23ef8a7207ae55af7b56d008d2e23b4b73` — INFERRED |
+| PRODUCTION_GIT_HEAD (post-deploy) | `e1140b4326262ba7656811114e397aaa82fabf26` — VERIFIED |
+| CURRENT_APP_SHA (post-deploy) | `e1140b4326262ba7656811114e397aaa82fabf26` — INFERRED |
+| Classification | FRONTEND_ONLY |
+| Pre-deploy frontend image | `sha256:706c58484d08162d8b3f8fe90dcfbf45d563f7f6f688454a7c74ea65670ca492` |
+| Post-deploy frontend image | `sha256:d068f8488fc9dd5e5dbdeeb8c540d1a7c8f6e385599f3bcfad26a41d386965ab` |
+| Post-deploy frontend container | `a24d49aeb1bfb96292c1db996200dc2c5ecab8102b1b5edf0020154bf2507a11` |
+| Backend | UNCHANGED — `sha256:91ed80a479dd57c378640564cec7f0cafaf71a4fbe3adc062c6faf43532787dd` |
+| Rollback tag | `rento-frontend:rollback-bcc4dd2` → pre-TASK-020 frontend image |
+| db / nginx | UNCHANGED, healthy |
+
+Deployment steps: rollback preservation via `scripts/ops/rento-preserve-rollback-images.sh bcc4dd23…`, fetch + detached checkout of `e1140b4`, `docker compose build frontend` only, `docker compose up -d --no-deps frontend` only. Post-deploy HTTP smoke: `/`, valid range, inverted range, `/api/` all **200**. Inverted URL body contained recoverable copy; no generic crash text.
+
+---
+
+## Production Acceptance Evidence (2026-08-22)
+
+### Production baseline (VERIFIED)
+
+| Field | Value |
+|-------|-------|
+| PRODUCTION_GIT_HEAD | `e1140b4326262ba7656811114e397aaa82fabf26` (DETACHED_HEAD, clean worktree) |
+| Frontend image | `sha256:d068f8488fc9dd5e5dbdeeb8c540d1a7c8f6e385599f3bcfad26a41d386965ab` |
+| Frontend container | `a24d49aeb1bf…`, RC=0, healthy |
+| Backend / db / nginx | UNCHANGED from TASK-019 deploy, all healthy, RC=0 |
+
+### Direct URL acceptance (PRODUCTION VERIFIED)
+
+| URL | HTTP | Result |
+|-----|------|--------|
+| `/?min_price=1000&max_price=500` | **200** | “Invalid price range” + “Minimum price cannot…” visible; “Something went wrong” **absent** |
+| `/?min_price=500&max_price=1000` | **200** | “Matching your search”; normal browse |
+| `/?min_price=500&max_price=500` | **200** | Valid — backend `GET /properties/?min_price=500&max_price=500` 200 OK |
+| `/?min_price=500` | **200** | Valid — backend 200 OK |
+| `/?max_price=1000` | **200** | Valid — backend 200 OK |
+
+**Backend invalid inverted request sent:** **NO** — backend access log during acceptance contained valid-range requests only; no `GET /properties/?min_price=1000&max_price=500`.
+
+### Interactive FiltersBar (classification)
+
+| Check | Result |
+|-------|--------|
+| Inverted submit blocked | **NOT DIRECTLY OBSERVED IN PRODUCTION** |
+| Inline validation message | **STATIC CONTRACT: VERIFIED** (deployed `FiltersBar.tsx`) |
+| Valid submit after correction | **NOT DIRECTLY OBSERVED IN PRODUCTION** |
+| Clear filters / error recovery | **STATIC CONTRACT: VERIFIED** |
+
+**Reason:** browser automation/tooling unavailable. **Classification:** ACCEPTED VERIFICATION LIMITATION.
+
+**Supporting evidence:** direct URL SSR guard production-verified; no production error/log evidence contradicting interactive contract; lint/typecheck/build PASS at implementation.
+
+### Regression / health
+
+| Area | Result |
+|------|--------|
+| Other filters (city, rooms) | No TASK-020 regression observed in page render/static contract |
+| Backend | UNCHANGED — image/container identity preserved |
+| Auth / DB / API | NO changes |
+| Frontend logs | NO fatal/chunk/unhandled matches |
+| Backend logs | NO TASK-020-attributable failures |
+| HTTP smoke | `/`, inverted, valid, `/api/` all **200** |
+| Rollback | `rento-frontend:rollback-bcc4dd2` intact; **not executed** |
+| Business data mutation | **NONE** |
+
+---
+
+## Closure Summary
+
+**Before:** An inverted home price range (`min_price > max_price`) could reach the backend via FiltersBar navigation or direct URL, trigger HTTP **422**, and turn the primary renter browse route into a generic “Something went wrong” error page.
+
+**After:** FiltersBar blocks inverted submit with inline validation (static contract verified). Consumer SSR intercepts inverted URL params before `getProperties()`, rendering a recoverable “Invalid price range” state while preserving filter UI access. Backend validation contract unchanged.
+
+**Production Acceptance:** **PASS**
+
+**Accepted verification limitation:** Interactive FiltersBar submit was **not directly observed in production** (browser automation unavailable). Direct URL protection and all regression paths were production-verified.
+
+```text
+TASK_020_PRODUCTION_ACCEPTANCE_AND_CLOSURE_PASS
+Next:
+READY_FOR_TASK_020_ARCHIVE_AND_PUSH
+```
+
+---
+
+## Mutation Statement (closure gate, 2026-08-22)
+
+| Item | Value |
+|------|-------|
+| Runtime code changed | NO |
+| Test code changed | NO |
+| Task document changed | YES — STATUS VERIFYING → CLOSED; acceptance + closure evidence |
+| Production accessed | YES — read-only acceptance |
+| Business data mutated | NO |
+| Deployment performed | NO |
+| Closure commit created | YES — exactly 1 |
+| Closure pushed | YES |
+| Archive performed | NO |
+| TASK-021 created | NO |
 
 ---
 
