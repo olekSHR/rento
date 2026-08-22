@@ -43,6 +43,7 @@ router = APIRouter(
 def get_properties_admin(
     limit: int = Query(default=100, ge=1, le=100),
     offset: int = Query(default=0, ge=0),
+    reported_only: bool = Query(default=False),
     db: Session = Depends(get_db),
     current_user=Depends(require_admin)
 ):
@@ -50,7 +51,8 @@ def get_properties_admin(
     return property_service.get_all_properties_admin(
         db,
         limit,
-        offset
+        offset,
+        reported_only
     )
 @router.get("/", response_model=PropertyListResponse)
 def get_properties(

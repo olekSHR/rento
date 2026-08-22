@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 
 import AdminPropertyModerationCard from "@/components/admin/AdminPropertyModerationCard"
@@ -17,6 +18,10 @@ import type { Property } from "@/types/property"
 
 type StatusFilter = "all" | "active" | "pending" | "archived"
 
+// "reported" is not a lifecycle status: it is a server-side moderation view
+// backed by report_count > 0, so it never joins the status filter union.
+type PropertyFilter = StatusFilter | "reported"
+
 type ModerationAction = "verify" | "archive" | "activate" | "delete"
 
 type BusyState = {
@@ -30,12 +35,15 @@ const ACTIVE_PROPERTY_STATUSES: Property["status"][] = [
   "rented",
 ]
 
-const FILTER_OPTIONS: { value: StatusFilter; label: string }[] = [
+const FILTER_OPTIONS: { value: PropertyFilter; label: string }[] = [
   { value: "all", label: "All" },
   { value: "active", label: "Active" },
   { value: "pending", label: "Pending" },
   { value: "archived", label: "Archived" },
+  { value: "reported", label: "Reported" },
 ]
+
+const REPORTED_FILTER_PARAM = "reported"
 
 const filterButtonClassName =
   "inline-flex h-11 shrink-0 items-center rounded-xl px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
@@ -74,8 +82,13 @@ function PropertiesSkeleton() {
 }
 
 export default function AdminPropertiesPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
   const [properties, setProperties] = useState<Property[]>([])
-  const [filter, setFilter] = useState<StatusFilter>("all")
+  const [filter, setFilter] = useState<PropertyFilter>(() =>
+    searchParams.get("filter") === REPORTED_FILTER_PARAM ? "reported" : "all"
+  )
   const [isLoading, setIsLoading] = useState(true)
   const [loadError, setLoadError] = useState("")
   const [reloadKey, setReloadKey] = useState(0)
@@ -83,12 +96,16 @@ export default function AdminPropertiesPage() {
   const [cardErrors, setCardErrors] = useState<Record<number, string>>({})
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null)
 
+  const isReportedMode = filter === "reported"
+
   useEffect(() => {
     let isMounted = true
 
     async function loadProperties() {
       try {
-        const data = await getAdminProperties()
+        const data = await getAdminProperties(
+          isReportedMode ? { reportedOnly: true } : {}
+        )
 
         if (!isMounted) {
           return
@@ -119,11 +136,32 @@ export default function AdminPropertiesPage() {
     return () => {
       isMounted = false
     }
-  }, [reloadKey])
+  }, [isReportedMode, reloadKey])
+
+  useEffect(() => {
+    const nextQuery = isReportedMode ? `filter=${REPORTED_FILTER_PARAM}` : ""
+
+    if (nextQuery !== searchParams.toString()) {
+      router.replace(
+        nextQuery ? `/admin/properties?${nextQuery}` : "/admin/properties",
+        { scroll: false }
+      )
+    }
+  }, [isReportedMode, router, searchParams])
 
   function handleRetryLoad() {
     setIsLoading(true)
     setReloadKey((current) => current + 1)
+  }
+
+  function handleFilterChange(value: PropertyFilter) {
+    // Only the reported view changes the server query, so it is the only
+    // switch that needs a new loading cycle.
+    if ((value === "reported") !== isReportedMode) {
+      setIsLoading(true)
+    }
+
+    setFilter(value)
   }
 
   const pendingCount = useMemo(
@@ -132,7 +170,7 @@ export default function AdminPropertiesPage() {
   )
 
   const filteredProperties = useMemo(() => {
-    if (filter === "all") {
+    if (filter === "all" || filter === "reported") {
       return properties
     }
 
@@ -302,7 +340,7 @@ export default function AdminPropertiesPage() {
               Review listings, approve pending submissions, and manage
               marketplace availability.
             </p>
-            {!isLoading && !loadError && (
+            {!isLoading && !loadError && !isReportedMode && (
               <p className="mt-3 text-sm text-[#F5F5F5]">
                 <span className="font-semibold text-[#DFC58A]">
                   {pendingCount.toLocaleString()}
@@ -310,6 +348,16 @@ export default function AdminPropertiesPage() {
                 {pendingCount === 1
                   ? "listing awaiting review"
                   : "listings awaiting review"}
+              </p>
+            )}
+            {!isLoading && !loadError && isReportedMode && (
+              <p className="mt-3 text-sm text-[#F5F5F5]">
+                <span className="font-semibold text-[#DFC58A]">
+                  {properties.length.toLocaleString()}
+                </span>{" "}
+                {properties.length === 1
+                  ? "reported listing in the queue"
+                  : "reported listings in the queue"}
               </p>
             )}
           </div>
@@ -322,9 +370,9 @@ export default function AdminPropertiesPage() {
           </Link>
         </header>
 
-        <section aria-label="Status filters">
+        <section aria-label="Property filters">
           <p className="mb-2 text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
-            Status
+            Filter
           </p>
           <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
             {FILTER_OPTIONS.map((option) => {
@@ -335,11 +383,13 @@ export default function AdminPropertiesPage() {
                   key={option.value}
                   type="button"
                   aria-pressed={isActive}
-                  onClick={() => setFilter(option.value)}
+                  onClick={() => handleFilterChange(option.value)}
                   className={getFilterButtonClassName(isActive)}
                 >
                   {option.label}
-                  {option.value === "pending" && pendingCount > 0
+                  {option.value === "pending" &&
+                  !isReportedMode &&
+                  pendingCount > 0
                     ? ` (${pendingCount})`
                     : ""}
                 </button>
@@ -365,6 +415,23 @@ export default function AdminPropertiesPage() {
               className="mt-4 inline-flex h-11 items-center rounded-2xl bg-[#DFC58A] px-4 text-sm font-semibold text-[#1B1B1B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
             >
               Retry
+            </button>
+          </section>
+        ) : isReportedMode && properties.length === 0 ? (
+          <section className="rounded-[24px] border border-white/8 bg-[#2D2D2D] p-6 text-center">
+            <h2 className="text-lg font-semibold text-[#F5F5F5]">
+              No reported listings
+            </h2>
+            <p className="mt-2 text-sm text-[#B8B8B8]">
+              Nothing has been reported by users. Switch to All to review the
+              full moderation queue.
+            </p>
+            <button
+              type="button"
+              onClick={() => handleFilterChange("all")}
+              className="mt-6 inline-flex h-11 items-center rounded-2xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2D2D2D]"
+            >
+              View all listings
             </button>
           </section>
         ) : properties.length === 0 ? (

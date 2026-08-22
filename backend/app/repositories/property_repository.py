@@ -88,10 +88,14 @@ def get_all_properties(
 def get_all_properties_admin(
     db: Session,
     limit: int = 100,
-    offset: int = 0
+    offset: int = 0,
+    reported_only: bool = False
 ):
 
     query = db.query(models.Property)
+
+    if reported_only:
+        query = query.filter(models.Property.report_count > 0)
 
     total = query.count()
 

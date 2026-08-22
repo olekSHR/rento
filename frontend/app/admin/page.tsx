@@ -241,19 +241,29 @@ function PriorityQueuesSection({ stats }: { stats: AdminStats }) {
         </span>
       </Link>
 
-      <div className={`${cardClassName} border-white/6 bg-[#252525]`}>
+      <Link
+        href="/admin/properties?filter=reported"
+        className={`block ${cardClassName} transition-colors hover:border-[#DFC58A]/30 ${focusRingClassName}`}
+      >
         <p className="text-xs font-bold uppercase tracking-wide text-[#B8B8B8]">
           Reported listings
         </p>
-        <p className="mt-2 text-2xl font-extrabold tracking-tight text-[#F5F5F5]">
+        <p
+          className={`mt-2 text-2xl font-extrabold tracking-tight ${
+            reportedListings > 0 ? "text-[#DFC58A]" : "text-[#F5F5F5]"
+          }`}
+        >
           {reportedListings.toLocaleString()}
         </p>
         <p className="mt-2 text-sm text-[#B8B8B8]">
           {reportedListings > 0
-            ? "This count comes from platform stats. Report-focused filtering is not available on the dashboard yet."
+            ? "Open the reported queue to review every listing users have reported."
             : "No reported listings are recorded in platform stats."}
         </p>
-      </div>
+        <span className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#DFC58A]">
+          Open reported queue
+        </span>
+      </Link>
 
       <Link
         href="/admin/properties"

@@ -166,13 +166,15 @@ def get_all_properties(
 def get_all_properties_admin(
     db: Session,
     limit: int = 100,
-    offset: int = 0
+    offset: int = 0,
+    reported_only: bool = False
 ):
 
     return property_repository.get_all_properties_admin(
         db,
         limit,
-        offset
+        offset,
+        reported_only
     )
 
 def get_properties_by_owner_id(

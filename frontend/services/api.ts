@@ -111,8 +111,23 @@ export async function getProperties(
   return response.json()
 }
 
-export async function getAdminProperties() {
-  const response = await sessionFetch(`${getServerApiBaseUrl()}/properties/admin/all`, {
+export type AdminPropertiesQuery = {
+  reportedOnly?: boolean
+}
+
+export async function getAdminProperties(query: AdminPropertiesQuery = {}) {
+  const params = new URLSearchParams()
+
+  if (query.reportedOnly) {
+    params.set("reported_only", "true")
+  }
+
+  const search = params.toString()
+  const url = search
+    ? `${getServerApiBaseUrl()}/properties/admin/all?${search}`
+    : `${getServerApiBaseUrl()}/properties/admin/all`
+
+  const response = await sessionFetch(url, {
     cache: "no-store",
   })
 
