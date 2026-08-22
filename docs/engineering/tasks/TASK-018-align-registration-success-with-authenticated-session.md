@@ -4,24 +4,29 @@
 |-------|-------|
 | ID | TASK-018 |
 | TITLE | Align Registration Success With Authenticated Session |
-| STATUS | VERIFYING |
+| STATUS | CLOSED |
 | RISK | LOW |
 | CLASSIFICATION | Frontend auth UX alignment / registration success vs existing session |
 
-> **IMPLEMENTATION COMPLETE AND LOCALLY VERIFIED. NOT COMMITTED.** Staging, commit, push, deploy, and production access require separate gates.
+> STATUS: CLOSED means definition, implementation, local verification, commit review, commit, push, deployment preflight, rollback preservation, frontend-only deployment, production acceptance, and closure documentation are complete and recorded. Production acceptance result is **PASS** with documented observability limitations (see Accepted Observability Limitations). Archive is **NOT YET** performed.
 
-**Lifecycle (updated 2026-08-20, implementation gate):**
+**Final lifecycle (VERIFIED 2026-08-22):**
 
 | Stage | State |
 |-------|-------|
 | Next-increment discovery | COMPLETE — `NEXT_INCREMENT_DISCOVERY_COMPLETE` |
 | Definition | COMPLETE — this document |
-| Implementation | COMPLETE — `frontend/app/register/page.tsx` (uncommitted) |
-| Local Verification | COMPLETE — see "Implementation & Local Verification Evidence" |
-| Commit | NOT AUTHORIZED |
-| Push | NOT AUTHORIZED |
-| Deployment | NOT AUTHORIZED |
-| Production Acceptance | NOT AUTHORIZED |
+| Implementation | COMPLETE — `frontend/app/register/page.tsx` |
+| Local Verification | PASS — see "Implementation & Local Verification Evidence" |
+| Commit Review | PASS |
+| Commit | COMPLETE — `f4384f3fa0d71da95e295a424a0c07a910738c3b` |
+| Push | COMPLETE — `origin/main` at `f4384f3fa0d71da95e295a424a0c07a910738c3b` |
+| Deployment Preflight | PASS |
+| Rollback Preservation | PASS — `rento-frontend:rollback-52f5a4a` |
+| Deployment | PASS — FRONTEND_ONLY |
+| Production Acceptance | PASS — `TASK_018_PRODUCTION_ACCEPTANCE_PASS` |
+| Closure | COMPLETE |
+| Archive | NOT YET |
 
 **Initiative reference:** Next-increment discovery after TASK-017 (CLOSED + ARCHIVED + COMPLETE) selected registration success alignment over documents hub, viewing-lifecycle expansion, admin report queue, and residual D1 visual work.
 
@@ -37,7 +42,7 @@
 | Prior task | TASK-017 — CLOSED / ARCHIVED / COMPLETE |
 | TASK-018 identifier | free (historical `TASK-018` / `OUT OF SCOPE` mentions inside archived TASK-017 are not a collision) |
 
-**Production note:** Production application remains `52f5a4a410e4518f4d76b6312a83d9828855dd5b` (TASK-017 implementation). Repository HEAD is ahead only by TASK-017 closure/archive documentation commits. This is **not** production drift.
+**Production state at closure (VERIFIED 2026-08-22):** Production Git HEAD and deployed frontend runtime are at TASK-018 implementation SHA `f4384f3fa0d71da95e295a424a0c07a910738c3b`. Application identity is classified **INFERRED** — Docker image does not contain immutable Git SHA metadata (see Production Deployment Evidence).
 
 ---
 
@@ -697,12 +702,265 @@ Runtime files changed: 1. No unexpected files, deletions, dependency, lockfile, 
 
 ---
 
-## Gate Decision
+## Commit and Push Evidence
+
+| Field | Value |
+|-------|-------|
+| Commit | `f4384f3fa0d71da95e295a424a0c07a910738c3b` |
+| Message | `fix(auth): align registration with authenticated session` |
+| Parent | `8f4575bb8f9cbafdb8ec2b5220480a5c7c580682` |
+| Scope | 2 files — 1 runtime, 1 task document |
+| Whitespace | `git diff HEAD^ HEAD --check` PASS |
+| Push | `8f4575b..f4384f3  main -> main`, fast-forward, no force, no tags |
+| Post-push | HEAD == `origin/main` == `f4384f3…`, divergence `0 0`, worktree clean |
+
+Committed runtime scope: exactly the one authorized register page file. `LOCAL getPostLoginPath DUPLICATION` classified as **ACCEPTED BOUNDED IMPLEMENTATION** at commit review.
+
+---
+
+## Production Deployment Evidence
+
+**Deployment class:** FRONTEND_ONLY. Deployed 2026-08-20 (UTC) from the exact implementation SHA.
+
+| Component | Result |
+|-----------|--------|
+| backend deployed | NO |
+| database mutated at deploy | NO |
+| migration executed | NONE |
+| nginx changed | NO |
+| dependencies changed | NO |
+| auth server contract changed | NO |
+| API contract changed | NO |
+
+| Field | Value |
+|-------|-------|
+| Implementation SHA | `f4384f3fa0d71da95e295a424a0c07a910738c3b` |
+| Production Git HEAD | `f4384f3fa0d71da95e295a424a0c07a910738c3b` (detached), worktree clean — **VERIFIED** |
+| Previous application SHA | `52f5a4a410e4518f4d76b6312a83d9828855dd5b` (TASK-017) — **INFERRED** |
+| CURRENT_APP_SHA | `f4384f3fa0d71da95e295a424a0c07a910738c3b` — **INFERRED** |
+| Frontend container before | `65e5f1cc51e07bca7e61b179fbf3042f9eb2f1ba1263a91e93181df29e21f9fe` |
+| Frontend image before | `sha256:84fe7eddaa4f52d47243bde2a0e5575edf9222b98194c1dcb1d110a92af6e4d8` |
+| Frontend container after | `468f6277d697bbd676bca2d28a7234ef5538003279557e99bd3fa760e8525b8d` |
+| Frontend image after | `sha256:b2d6969626c3edad324472a0178b235496df4ea20dbfcb8b4a6e39a060567428` |
+| StartedAt | `2026-08-20T20:09:19.922039335Z` |
+| RestartCount | `0` |
+| Health | healthy |
+| Backend | UNCHANGED — `1f63695435605ae683b694c6f73fed58c3d72ba298ac97fb5a75e905532b02da`, `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd`, StartedAt `2026-08-17T09:54:28.171472284Z` |
+| DB | UNCHANGED — `c682d3268990049d941f2f5ccb4b7909d43f2e9057701217442148807e2a3b77`, StartedAt `2026-07-29T11:33:03.086550421Z` |
+| Nginx | UNCHANGED — `cf97dbc1786d05955ba75c4e9597e428f8871ebf06e52b58ea7f5642c9a6ae68`, StartedAt `2026-08-09T21:48:15.711102691Z` |
+
+**Application identity classification — INFERRED, not VERIFIED:** Docker image labels contain only Compose metadata; no immutable Git SHA label exists.
+
+Deployment steps: rollback preservation via `scripts/ops/rento-preserve-rollback-images.sh 52f5a4a…`, detached checkout of `f4384f3…`, `docker compose build frontend` only, `docker compose up -d --no-deps frontend` only. Runtime delta vs TASK-017: `frontend/app/register/page.tsx` only. Unauthenticated HTTP smoke after deploy: `/`, `/register`, `/login`, `/api/` all 200.
+
+**Gate:** `TASK_018_DEPLOYMENT_PASS` → `READY_FOR_TASK_018_PRODUCTION_ACCEPTANCE`.
+
+---
+
+## Rollback Evidence
+
+| Field | Value |
+|-------|-------|
+| Immediate frontend rollback tag | `rento-frontend:rollback-52f5a4a` |
+| Points to | `sha256:84fe7eddaa4f52d47243bde2a0e5575edf9222b98194c1dcb1d110a92af6e4d8` |
+| Backend rollback tag | `rento-backend:rollback-52f5a4a` → `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd` |
+| Verified | before build, after build, after recreate, after production acceptance, and during reconciliation gate (2026-08-22) |
+| Historical rollback tags | `rollback-e19e78f`, `rollback-264e478`, `rollback-0139d67` — intact |
+
+**Rollback was NOT executed.** Database rollback is NOT REQUIRED.
+
+---
+
+## Production Acceptance Evidence
+
+**Result:** `TASK_018_PRODUCTION_ACCEPTANCE_PASS` (evidence reconciliation completed 2026-08-22).
+
+**Authorized production mutation:** exactly one successful self-registration for a dedicated TASK-018 acceptance account. Credentials were not recorded in this document. Cleanup: **NOT PERFORMED**.
+
+### Principal production E2E — no returnUrl (2026-08-20 acceptance gate session)
+
+Observations below from the original production acceptance gate session unless marked as reconciliation reconfirmation. Durable network HAR was not archived; reconciliation gate reconfirmed account/session/runtime read-only without re-executing registration.
+
+| Observation | Classification |
+|-------------|----------------|
+| Exactly one successful production registration | **PRODUCTION VERIFIED** — dedicated TASK-018 acceptance account exists; read-only count = 1 (reconciliation gate) |
+| Registration endpoint | `POST https://rentonow.ro/api/auth/register` — **PRODUCTION VERIFIED** (acceptance session) |
+| Registration POST count | 1 — **PRODUCTION VERIFIED** (acceptance session) |
+| Registration response | HTTP 201 — **PRODUCTION VERIFIED** (acceptance session) |
+| Server auth session created | **PRODUCTION VERIFIED** — read-only `auth_sessions` row count = 1 for acceptance account (reconciliation gate) |
+| Post-registration current-user hydration | `GET https://rentonow.ro/api/users/me` after register — **PRODUCTION VERIFIED** (acceptance session); bootstrap `/users/me` may precede separately |
+| Login POST count after registration | 0 — **PRODUCTION VERIFIED** (acceptance session) |
+| Obsolete success copy («Account created. You can now sign in.») | not observed — **PRODUCTION VERIFIED** (acceptance session) |
+| «Go to login» required step | not observed — **PRODUCTION VERIFIED** (acceptance session) |
+| Navigation destination (no returnUrl) | `/` — **PRODUCTION VERIFIED** (acceptance session); matches `getPostLoginPath("user", null)` |
+| Login page navigation after success | none — **PRODUCTION VERIFIED** (acceptance session) |
+| Authenticated UI (`Logout` visible) | **PRODUCTION VERIFIED** (acceptance session) |
+| Refresh session persistence | authenticated UI restored — **PRODUCTION VERIFIED** (acceptance session) |
+| Protected route `/favorites` after refresh | loaded without login redirect — **PRODUCTION VERIFIED** (acceptance session) |
+| Manual second login required | NO — **PRODUCTION VERIFIED** (acceptance session) |
+| Account role | `user` — **PRODUCTION VERIFIED** (read-only DB, reconciliation gate) |
+| Account status | `active` — **PRODUCTION VERIFIED** (read-only DB, reconciliation gate) |
+
+### Pre-registration UI — desktop (~1280 × 900) — acceptance session
+
+Form structure unchanged: email, password, confirm password, password visibility toggles, submit control. No obsolete success UI before submit. No horizontal overflow observed. No console/hydration errors on clean load.
+
+### Desktop success transition — acceptance session
+
+Direct transition to authenticated destination observed; no obsolete success screen flash observed; no login screen flash observed.
+
+### Mobile regression (~390 × 844) — reconciliation gate (2026-08-22)
+
+| Check | Result |
+|-------|--------|
+| `/register` loads | YES — form fields, toggles, submit present |
+| Horizontal overflow | `scrollWidth = clientWidth = 390` — **PRODUCTION VERIFIED** |
+| Client validation (password mismatch) | exercised without API request — **PRODUCTION VERIFIED** |
+| Successful mobile registration | **NOT REPEATED** — expected |
+
+### Safe returnUrl — `/register?returnUrl=%2Ffavorites`
+
+| Classification | Result |
+|----------------|--------|
+| Page loads in unauthenticated context | **PRODUCTION VERIFIED** (reconciliation gate) |
+| `sanitizeReturnUrl("/favorites")` → `"/favorites"` | **LOCAL VERIFIED** + **STATIC/DEPLOYED CONTRACT VERIFIED** (`frontend/lib/returnUrl.ts`) |
+| Full production E2E with second account | **NOT RE-EXECUTED AS SECOND PRODUCTION REGISTRATION** |
+
+### Unsafe returnUrl
+
+| Input | Contract |
+|-------|----------|
+| `https://example.com`, `//example.com`, `javascript:...` | `sanitizeReturnUrl` → `null`; fallback internal default — **LOCAL VERIFIED** + **STATIC/DEPLOYED CONTRACT VERIFIED** |
+| Production E2E with second account | **NOT RE-EXECUTED AS SECOND PRODUCTION REGISTRATION** |
+| Open redirect introduced | NO according to deployed contract |
+
+### Error branches
+
+| Branch | Classification |
+|--------|----------------|
+| Duplicate email | **LOCAL VERIFIED** + **STATIC CONTRACT VERIFIED** — **NOT DIRECTLY RE-EXECUTED IN PRODUCTION** |
+| Rate limit | **LOCAL VERIFIED** + **STATIC CONTRACT VERIFIED** — **NOT DIRECTLY RE-EXECUTED IN PRODUCTION** |
+| Hydration failure after register | **LOCAL VERIFIED** + **STATIC CONTRACT VERIFIED** — **NOT FORCED IN PRODUCTION** |
+| Client-side validation | **LOCAL VERIFIED** + **PRODUCTION VERIFIED** (mobile mismatch test, reconciliation gate) — zero registration POST |
+
+### Console / network health
+
+| Check | Result |
+|-------|--------|
+| Uncaught JS errors during acceptance flow | 0 observed — **PRODUCTION VERIFIED** (acceptance session) |
+| Unhandled rejections | 0 observed |
+| Hydration errors on clean `/register` load | 0 observed |
+| Failed JS/CSS chunks | 0 observed |
+| TASK-018-attributable `console.error` | 0 observed |
+| Relevant 5xx during acceptance | 0 observed |
+| Expected auth bootstrap 401 before login | not classified as regression |
+
+### Post-acceptance runtime health — reconciliation gate (2026-08-22)
+
+| Component | Result |
+|-----------|--------|
+| PRODUCTION_GIT_HEAD | `f4384f3fa0d71da95e295a424a0c07a910738c3b`, worktree clean — **VERIFIED** |
+| Frontend container | `468f6277d697bbd676bca2d28a7234ef5538003279557e99bd3fa760e8525b8d` — unchanged |
+| Frontend image | `sha256:b2d6969626c3edad324472a0178b235496df4ea20dbfcb8b4a6e39a060567428` — unchanged |
+| RestartCount | 0 |
+| Health | healthy |
+| Backend / DB / Nginx | unchanged and healthy |
+| HTTP `/`, `/register`, `/login`, `/api/` | all 200 |
+| Frontend/backend fatal logs attributable to TASK-018 | none observed in recent log tail |
 
 ```text
-TASK_018_IMPLEMENTATION_VERIFIED
-Next:
-READY_FOR_TASK_018_COMMIT_REVIEW
+CURRENT_APP_SHA: f4384f3fa0d71da95e295a424a0c07a910738c3b — INFERRED
 ```
 
-Superseded: `TASK_018_DEFINITION_COMPLETE` (definition gate, 2026-08-20).
+---
+
+## Production Data Mutation Statement (acceptance)
+
+```text
+production account created: YES — exactly 1 dedicated TASK-018 acceptance account
+additional accounts created: NO
+account role modified: NO
+account status modified: NO
+favorites created: NO
+viewing requests created: NO
+properties created: NO
+documents created: NO
+database modified manually: NO
+acceptance fixture deleted: NO
+other business data modified: NO
+TASK-018 acceptance fixture cleanup: NOT PERFORMED
+```
+
+---
+
+## Accepted Observability Limitations
+
+| # | Branch | Supporting evidence |
+|---|--------|---------------------|
+| 1 | Safe returnUrl success E2E (`/register?returnUrl=/favorites` → `/favorites`) | LOCAL VERIFIED + STATIC/DEPLOYED CONTRACT VERIFIED; **NOT RE-EXECUTED AS SECOND PRODUCTION REGISTRATION** |
+| 2 | Unsafe returnUrl success E2E (off-site navigation attempt) | LOCAL VERIFIED + STATIC/DEPLOYED CONTRACT VERIFIED; **NOT RE-EXECUTED AS SECOND PRODUCTION REGISTRATION** |
+| 3 | Duplicate-email production error path | LOCAL VERIFIED + STATIC CONTRACT VERIFIED |
+| 4 | Rate-limit production error path | LOCAL VERIFIED + STATIC CONTRACT VERIFIED |
+| 5 | Forced hydration-failure production path | LOCAL VERIFIED + STATIC CONTRACT VERIFIED |
+| 6 | Durable archived network HAR for the single registration trace | **NOT ARCHIVED** — acceptance session observations reconstructed; read-only DB/session/runtime reconfirmation performed during reconciliation gate |
+| 7 | Second successful mobile registration E2E | **NOT REPEATED** — mobile layout/client validation only |
+
+---
+
+## Closure
+
+### Product Result
+
+**Before:** `POST /auth/register` already established a server-side authenticated session, but the register page bypassed `AuthContext.register()`, left client auth state unsynchronized, and required the user to sign in again.
+
+**After:** the register page uses the existing `AuthContext.register()` path, hydrates the registered user, and navigates directly to the sanitized authenticated destination without a redundant login step.
+
+**Runtime scope at closure:** exactly one file — `frontend/app/register/page.tsx`.
+
+**Implementation SHA:** `f4384f3fa0d71da95e295a424a0c07a910738c3b`.
+
+**Deployment:** FRONTEND_ONLY — `TASK_018_DEPLOYMENT_PASS`.
+
+**Production acceptance:** `TASK_018_PRODUCTION_ACCEPTANCE_PASS` — exactly one dedicated acceptance account created under explicit authorization; cleanup **NOT PERFORMED**.
+
+```text
+LOCAL getPostLoginPath DUPLICATION:
+ACCEPTED BOUNDED IMPLEMENTATION
+```
+
+Reason: TASK-018 authorized exactly one runtime file; extracting a shared helper would widen scope; behavior matches login; refactor not required for the defect.
+
+**CURRENT_APP_SHA:** `f4384f3fa0d71da95e295a424a0c07a910738c3b` — **INFERRED** (not upgraded to VERIFIED — frontend image lacks immutable Git SHA label).
+
+**Rollback readiness:** `rento-frontend:rollback-52f5a4a` → `sha256:84fe7eddaa4f52d47243bde2a0e5575edf9222b98194c1dcb1d110a92af6e4d8`; `rento-backend:rollback-52f5a4a` → `sha256:78b4b60bbb4b71d20226b90f8f485577163e827e599c2fedd59a1c3cd5e12bfd`. Backend, DB, and nginx unchanged. Rollback **NOT executed**.
+
+**Closure rationale:** implementation complete; local verification passed; commit and push complete; rollback preserved; frontend-only production deployment passed; production acceptance passed with honestly recorded observability limitations; no blocking defects; authorized production mutation limited to exactly one acceptance account; no cleanup performed.
+
+**Final gate state:**
+
+```text
+DEFINED
+→ IMPLEMENTED
+→ LOCALLY VERIFIED
+→ COMMIT REVIEWED
+→ COMMITTED
+→ PUSHED
+→ DEPLOYMENT PREFLIGHT PASS
+→ ROLLBACK PRESERVATION PASS
+→ DEPLOYED
+→ PRODUCTION ACCEPTED
+→ CLOSED
+```
+
+```text
+TASK-018 = CLOSED
+Archive: NO / NOT YET
+```
+
+```text
+TASK_018_CLOSURE_COMMIT_CREATED
+Next:
+READY_FOR_TASK_018_CLOSURE_PUSH_AUTHORIZATION
+```
+
+Superseded: `TASK_018_PRODUCTION_ACCEPTANCE_PASS`, `READY_FOR_TASK_018_CLOSURE`.
