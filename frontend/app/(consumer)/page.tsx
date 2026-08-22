@@ -10,6 +10,32 @@ import { getProperties } from "@/services/api"
 import type { Property } from "@/types/property"
 import HeaderAuthButton from "@/components/HeaderAuthButton"
 
+function parsePositivePrice(value: string | undefined): number | null {
+  const trimmed = value?.trim()
+
+  if (!trimmed) {
+    return null
+  }
+
+  const parsed = Number(trimmed)
+
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    return null
+  }
+
+  return parsed
+}
+
+function hasInvertedPriceRange(
+  minPrice: string | undefined,
+  maxPrice: string | undefined
+): boolean {
+  const min = parsePositivePrice(minPrice)
+  const max = parsePositivePrice(maxPrice)
+
+  return min !== null && max !== null && min > max
+}
+
 function PhotographedListingsEmptyState() {
   return (
     <div
@@ -38,12 +64,19 @@ export default async function HomePage({
 }) {
   const params = await searchParams
 
-  const properties = await getProperties({
-    city: params.city,
-    min_price: params.min_price,
-    max_price: params.max_price,
-    rooms: params.rooms,
-  })
+  const invertedPriceRange = hasInvertedPriceRange(
+    params.min_price,
+    params.max_price
+  )
+
+  const properties = invertedPriceRange
+    ? { items: [] as Property[] }
+    : await getProperties({
+        city: params.city,
+        min_price: params.min_price,
+        max_price: params.max_price,
+        rooms: params.rooms,
+      })
 
   const activeFilters = {
     city: params.city ?? "",
@@ -81,11 +114,17 @@ export default async function HomePage({
     hasPropertyListingImage(property)
   )
 
+  const showInvalidPriceRangeState = invertedPriceRange
+
   const showFilteredEmptyState =
-    properties.items.length === 0 && hasActiveFilters
+    !showInvalidPriceRangeState &&
+    properties.items.length === 0 &&
+    hasActiveFilters
 
   const showPhotographedEmptyState =
-    !showFilteredEmptyState && photographedProperties.length === 0
+    !showInvalidPriceRangeState &&
+    !showFilteredEmptyState &&
+    photographedProperties.length === 0
 
   const listingsEyebrow = hasActiveFilters
     ? activeFilters.city.trim()
@@ -159,7 +198,28 @@ export default async function HomePage({
             </div>
           )}
 
-          {showFilteredEmptyState ? (
+          {showInvalidPriceRangeState ? (
+            <div
+              role="alert"
+              className="flex flex-col items-center justify-center py-16 text-center md:py-20"
+            >
+              <h3 className="mb-2 text-2xl font-bold text-[#F5F5F5]">
+                Invalid price range
+              </h3>
+
+              <p className="max-w-xs text-[#B8B8B8]">
+                Minimum price cannot be greater than maximum price. Adjust the
+                filters and try again.
+              </p>
+
+              <Link
+                href="/"
+                className="mt-6 inline-flex h-12 min-h-11 items-center justify-center rounded-xl bg-[#DFC58A] px-5 text-sm font-semibold text-[#1B1B1B] transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DFC58A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1B1B1B]"
+              >
+                Clear filters
+              </Link>
+            </div>
+          ) : showFilteredEmptyState ? (
             <div className="flex flex-col items-center justify-center py-16 text-center md:py-20">
               <h3 className="mb-2 text-2xl font-bold text-[#F5F5F5]">
                 No properties found
